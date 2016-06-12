@@ -24,14 +24,17 @@
 
 int s2n_blob_init(struct s2n_blob *b, uint8_t *data, uint32_t size)
 {
+	__CPROVER_assume(b != NULL && data != NULL && size > 0);
     b->data = data;
     b->size = size;
+	__CPROVER_assert(b->data == data && b->size == size, "ERROR: blob_init");
     return 0;
 }
 
 int s2n_blob_zero(struct s2n_blob *b)
 {
+	__CPROVER_assume(b != NULL && b->data != NULL && b->size > 0);
     memset_check(b->data, 0, b->size);
-
+	__CPROVER_assert(__CPROVER_forall { uint32_t i; i < b->size ==> b->data[i] == 0 }, "ERROR: blob_zero");
     return 0;
 }

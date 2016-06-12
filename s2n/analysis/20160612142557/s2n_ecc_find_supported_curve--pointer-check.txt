@@ -1,0 +1,93 @@
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./crypto/s2n_ecc.c
+Converting
+Type-checking s2n_ecc
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 1 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 2 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 3 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 4 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 5 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 6 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 7 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 8 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 9 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Not unwinding loop s2n_ecc_find_supported_curve.0 iteration 10 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.1 iteration 1 (10 max) file ./crypto/s2n_ecc.c line 284 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 1 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 2 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 3 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 4 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 5 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 6 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 7 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 8 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.0 iteration 9 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Not unwinding loop s2n_ecc_find_supported_curve.0 iteration 10 (10 max) file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+Unwinding loop s2n_ecc_find_supported_curve.1 iteration 2 (10 max) file ./crypto/s2n_ecc.c line 284 function s2n_ecc_find_supported_curve thread 0
+size of program expression: 2149 steps
+simple slicing removed 790 assignments
+Generated 240 VCC(s), 179 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+6022 variables, 11596 clauses
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.032s
+Building error trace
+
+Counterexample:
+
+State 19 file ./crypto/s2n_ecc.c line 278 thread 0
+----------------------------------------------------
+  iana_ids=((struct s2n_blob { unsigned char *data; unsigned int size; unsigned int allocated; unsigned int mlocked : 1; unsigned __CPROVER_bitvector[7] $bit_field_pad0 : 7; unsigned __CPROVER_bitvector[56] $pad0; } *)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 20 file ./crypto/s2n_ecc.c line 278 thread 0
+----------------------------------------------------
+  found=&iana_ids_in!0@1.blob.data (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 21 file ./crypto/s2n_ecc.c line 280 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  iana_ids_in={ .blob={ .data=((unsigned char *)NULL), .size=0u, .allocated=0u,
+    .mlocked=0u, .$bit_field_pad0=0, .$pad0=0 }, .read_cursor=0u,
+    .write_cursor=0u, .wiped=0u, .alloced=0u,
+    .growable=0u, .tainted=0u, .$bit_field_pad0=0,
+    .$pad0=0 } ({ { 0000000000000000000000000000000000000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 0, 0000000, 00000000000000000000000000000000000000000000000000000000 }, 00000000000000000000000000000000, 00000000000000000000000000000000, 0, 0, 0, 0, 0000, 00000000000000000000000000000000000000000000000000000000 })
+
+State 34 file ./crypto/s2n_ecc.c line 284 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 35 file ./crypto/s2n_ecc.c line 284 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 37 file ./crypto/s2n_ecc.c line 285 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  supported_curve=((struct s2n_ecc_named_curve { unsigned short int iana_id; unsigned short int $pad0; signed int libcrypto_nid; } *)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 38 file ./crypto/s2n_ecc.c line 285 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  supported_curve=&s2n_ecc_supported_curves[0].iana_id (0000001100000000000000000000000000000000000000000000000000000000)
+
+State 39 file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  j=0 (00000000000000000000000000000000)
+
+State 40 file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve thread 0
+----------------------------------------------------
+  j=0 (00000000000000000000000000000000)
+
+Violated property:
+  file ./crypto/s2n_ecc.c line 286 function s2n_ecc_find_supported_curve
+  dereference failure: pointer NULL in *iana_ids
+  !(POINTER_OBJECT(iana_ids) == POINTER_OBJECT(((struct s2n_blob *)NULL)))
+
+VERIFICATION FAILED

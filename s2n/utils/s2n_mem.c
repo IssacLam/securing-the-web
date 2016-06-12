@@ -39,6 +39,7 @@ int s2n_mem_init(void)
 
 int s2n_alloc(struct s2n_blob *b, uint32_t size)
 {
+	__CPROVER_assuem(b != NULL && size > 0);
     b->data = NULL;
     b->size = 0;
     b->allocated = 0;

@@ -39,18 +39,22 @@ pid_t s2n_actual_getpid()
 
 int s2n_constant_time_equals(const uint8_t *a, const uint8_t *b, uint32_t len)
 {
+	__CPROVER_assume(a != NULL && b != NULL && len > 0);
     uint8_t xor = 0;
     for (int i = 0; i < len; i++) {
         xor |= a[i] ^ b[i];
     }
-
+	__CPROVER_assert((xor > 0 && __CPROVER_exists { int j; (j >= 0 && j < len) ==> a[j] != b[j]}) ||
+		( xor == 0 && __CPROVER_forall { int j; (j >= 0 && j < len) ==> a[j] == b[j] }), "ERROR: s2n_constant_time_equals");
     return !xor;
 }
 
 int s2n_constant_time_copy_or_dont(uint8_t *a, const uint8_t *b, uint32_t len, uint8_t dont)
-{
+{	
+	__CPROVER_assume(a != NULL && b != NULL && len > 0 && dont >= 0);
     uint8_t mask = ~(0xff << ((!dont) * 8));
 
+	__CPROVER_assert((dont > 0 && mask == 0x00) || (dont == 0 && mask == 0xff), "ERROR: mask");
     /* dont = 0 : mask = 0xff */
     /* dont > 0 : mask = 0x00 */
 
@@ -59,6 +63,6 @@ int s2n_constant_time_copy_or_dont(uint8_t *a, const uint8_t *b, uint32_t len, u
         uint8_t diff = (old ^ b[i]) & mask;
         a[i] = old ^ diff;
     }
-
+	__CPROVER_assert(dont > 0 || (dont == 0 && __CPROVER_forall { int j; (j >= 0 && j < len) ==> a[j] == b[j]}), "ERROR: s2n_constant_time_copy_or_dont");
     return 0;
 }

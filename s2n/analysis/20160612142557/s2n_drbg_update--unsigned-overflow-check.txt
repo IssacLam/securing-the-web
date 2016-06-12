@@ -1,0 +1,129 @@
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./crypto/s2n_drbg.c
+Converting
+Type-checking s2n_drbg
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop s2n_drbg_bits.0 iteration 1 (10 max) file ./crypto/s2n_drbg.c line 44 function s2n_drbg_bits thread 0
+Unwinding loop s2n_drbg_bits.0 iteration 2 (10 max) file ./crypto/s2n_drbg.c line 44 function s2n_drbg_bits thread 0
+Unwinding loop s2n_drbg_update.1 iteration 1 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 2 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 3 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 4 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 5 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 6 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 7 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 8 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop s2n_drbg_update.1 iteration 9 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Not unwinding loop s2n_drbg_update.1 iteration 10 (10 max) file ./crypto/s2n_drbg.c line 74 function s2n_drbg_update thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 1 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 2 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 3 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 4 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 5 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 6 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 7 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 8 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Unwinding loop __builtin___memcpy_chk.0 iteration 9 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+Not unwinding loop __builtin___memcpy_chk.0 iteration 10 (10 max) file <builtin-library-__builtin___memcpy_chk> line 21 function __builtin___memcpy_chk thread 0
+size of program expression: 520 steps
+simple slicing removed 96 assignments
+Generated 24 VCC(s), 13 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+9935 variables, 15737 clauses
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.021s
+Building error trace
+
+Counterexample:
+
+State 18 file ./crypto/s2n_drbg.c line 64 thread 0
+----------------------------------------------------
+  drbg=INVALID (0000000110111111011100000000000000011011110111110101001000000000)
+
+State 19 file ./crypto/s2n_drbg.c line 64 thread 0
+----------------------------------------------------
+  provided_data=((struct s2n_blob { unsigned char *data; unsigned int size; unsigned int allocated; unsigned int mlocked : 1; unsigned __CPROVER_bitvector[7] $bit_field_pad0 : 7; unsigned __CPROVER_bitvector[56] $pad0; } *)NULL) (0000000000000000000000000000000000000000000000000000000000000000)
+
+State 20 file ./crypto/s2n_drbg.c line 66 function s2n_drbg_update thread 0
+----------------------------------------------------
+  temp={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000 })
+
+State 21 file ./crypto/s2n_drbg.c line 67 function s2n_drbg_update thread 0
+----------------------------------------------------
+  temp_blob={ .data=((unsigned char *)NULL), .size=0u, .allocated=0u,
+    .mlocked=0u, .$bit_field_pad0=0, .$pad0=0 } ({ 0000000000000000000000000000000000000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 0, 0000000, 00000000000000000000000000000000000000000000000000000000 })
+
+State 22 file ./crypto/s2n_drbg.c line 67 function s2n_drbg_update thread 0
+----------------------------------------------------
+  temp_blob={ .data=temp!0@1, .size=32u, .allocated=0u, .mlocked=0u,
+    .$bit_field_pad0=0, .$pad0=0 } ({ 0000001000000000000000000000000000000000000000000000000000000000, 00000000000000000000000000100000, 00000000000000000000000000000000, 0, 0000000, 00000000000000000000000000000000000000000000000000000000 })
+
+State 28 file ./crypto/s2n_drbg.c line 71 function s2n_drbg_update thread 0
+----------------------------------------------------
+  drbg=INVALID (0000000110111111011100000000000000011011110111110101001000000000)
+
+State 29 file ./crypto/s2n_drbg.c line 71 function s2n_drbg_update thread 0
+----------------------------------------------------
+  out=&temp_blob!0@1.data (0000010000000000000000000000000000000000000000000000000000000000)
+
+State 30 file ./crypto/s2n_drbg.c line 40 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  value={ .data=((unsigned char *)NULL), .size=0u, .allocated=0u,
+    .mlocked=0u, .$bit_field_pad0=0, .$pad0=0 } ({ 0000000000000000000000000000000000000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 0, 0000000, 00000000000000000000000000000000000000000000000000000000 })
+
+State 31 file ./crypto/s2n_drbg.c line 40 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  value={ .data=INVALID, .size=16u, .allocated=0u, .mlocked=0u,
+    .$bit_field_pad0=0, .$pad0=0 } ({ 0000000110111111011100000000000000011011110111110101001010101000, 00000000000000000000000000010000, 00000000000000000000000000000000, 0, 0000000, 00000000000000000000000000000000000000000000000000000000 })
+
+State 32 file ./crypto/s2n_drbg.c line 41 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  block_aligned_size=0 (00000000000000000000000000000000)
+
+State 34 file ./crypto/s2n_drbg.c line 41 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  block_aligned_size=32 (00000000000000000000000000100000)
+
+State 35 file ./crypto/s2n_drbg.c line 44 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 36 file ./crypto/s2n_drbg.c line 44 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 47 file ./crypto/s2n_drbg.c line 46 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  ctx=INVALID (0000000110111111011100000000000000011011110111110101001000000000)
+
+State 48 file ./crypto/s2n_drbg.c line 46 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  in=INVALID (0000000110111111011100000000000000011011110111110101001010101000)
+
+State 49 file ./crypto/s2n_drbg.c line 46 function s2n_drbg_bits thread 0
+----------------------------------------------------
+  out=temp!0@1 (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 50 file ./crypto/s2n_drbg.c line 29 function s2n_drbg_block_encrypt thread 0
+----------------------------------------------------
+  len=0 (00000000000000000000000000000000)
+
+State 51 file ./crypto/s2n_drbg.c line 29 function s2n_drbg_block_encrypt thread 0
+----------------------------------------------------
+  len=16 (00000000000000000000000000010000)
+
+Violated property:
+  file ./crypto/s2n_drbg.c line 47 function s2n_drbg_bits
+  arithmetic overflow on unsigned + in drbg->bytes_used + (unsigned long long int)16
+  !overflow("+", unsigned long long int, drbg->bytes_used, 16ull)
+
+VERIFICATION FAILED
