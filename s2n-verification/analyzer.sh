@@ -1,6 +1,6 @@
 #/bin/bash
 timestamp=$(date +%Y%m%d%H%M%S)
-dir=./analysis/$timestamp
+dir=./s2n-analysis/$timestamp
 mkdir $dir 
 filename="$dir/results.csv"
 regex="^(\w+ )+\*?\w+\(.*\)$"
@@ -13,7 +13,7 @@ do
         echo -n "${line##* }," >> $filename;
         for check in "${buildInChecks[@]}"
         do
-                result=$(cbmc -I ./ -I ./api -I ./libcrypto-root/include $check $f --function ${line##* } --unwind 10)
+                result=$(cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/include $check $f --function ${line##* } --unwind 10)
                 if echo $result | grep -q "VERIFICATION SUCCESSFUL"; then
                         echo -n "1," >> $filename;
                 else
