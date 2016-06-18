@@ -1,11 +1,11 @@
-#/bin/bash
+#!/bin/bash
 timestamp=$(date +%Y%m%d%H%M%S)
 dir=./s2n-analysis/$timestamp
 mkdir $dir 
 filename="$dir/results.csv"
 regex="^(\w+ )+\*?\w+\(.*\)$"
 buildInChecks=(--bounds-check --div-by-zero-check --pointer-check --memory-leak-check --signed-overflow-check --unsigned-overflow-check --float-overflow-check)
-echo "filenName, functionName, --bounds-check, --div-by-zero-check, --pointer-check, --memory-leak-check, --signed-overflow-check, --unsigned-overflow-check, --float-overflow-check,"$'\n' >> $filename;
+echo "filenName, functionName, --bounds-check, --div-by-zero-check, --pointer-check, --memory-leak-check, --signed-overflow-check, --unsigned-overflow-check, --float-overflow-check," >> $filename;
 for f in $(find . -name '*.c' -not -path '*bin*' -not -path '*test*');
 do
         grep -E '^(\w+ )+\*?\w+\(.*\)$' $f | cut -d "(" -f 1 | tr -d "*" | while read -r line; do
