@@ -95,7 +95,7 @@ Functions to verify:
 - [ ] ./s2n/include/nondet.c : nondet_uint8
 - [ ] ./s2n/include/nondet.c : nondet_uint32
 - [ ] ./s2n/include/nondet.c : nondet_s2n_blob
-- [X] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_init
+- [X] ~~./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_init~~
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_alloc
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_growable_alloc
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_free
@@ -266,8 +266,8 @@ Functions to verify:
 - [ ] ./s2n/tls/s2n_server_key_exchange.c : s2n_server_key_send
 - [ ] ./s2n/tls/s2n_server_key_exchange.c : s2n_ecdhe_server_key_send
 - [ ] ./s2n/tls/s2n_server_key_exchange.c : s2n_dhe_server_key_send
-- [X] ./s2n/utils/s2n_blob.c : s2n_blob_init
-- [X] ./s2n/utils/s2n_blob.c : s2n_blob_zero
+- [X] ~~./s2n/utils/s2n_blob.c : s2n_blob_init~~
+- [X] ~~./s2n/utils/s2n_blob.c : s2n_blob_zero~~
 - [ ] ./s2n/utils/s2n_mem.c : s2n_mem_init
 - [ ] ./s2n/utils/s2n_mem.c : s2n_alloc
 - [ ] ./s2n/utils/s2n_mem.c : s2n_realloc
@@ -286,7 +286,7 @@ Functions to verify:
 - [ ] ./s2n/utils/s2n_random.c : s2n_init
 - [ ] ./s2n/utils/s2n_random.c : s2n_cleanup
 - [ ] ./s2n/utils/s2n_safety.c : s2n_actual_getpid
-- [X] ./s2n/utils/s2n_safety.c : s2n_constant_time_equals
+- [X] ~~./s2n/utils/s2n_safety.c : s2n_constant_time_equals~~
 - [ ] ./s2n/utils/s2n_safety.c : s2n_constant_time_copy_or_dont
 - [ ] ./s2n/utils/s2n_timer.c : s2n_timer_start
 - [ ] ./s2n/utils/s2n_timer.c : s2n_timer_elapsed
