@@ -95,7 +95,7 @@ Functions to verify:
 - [ ] ./s2n/include/nondet.c : nondet_uint8
 - [ ] ./s2n/include/nondet.c : nondet_uint32
 - [ ] ./s2n/include/nondet.c : nondet_s2n_blob
-- [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_init
+- [X] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_init
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_alloc
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_growable_alloc
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_free

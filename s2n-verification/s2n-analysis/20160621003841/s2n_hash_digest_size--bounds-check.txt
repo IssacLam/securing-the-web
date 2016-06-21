@@ -1,0 +1,43 @@
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./s2n/crypto/s2n_hash.c
+Converting
+Type-checking s2n_hash
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+size of program expression: 36 steps
+simple slicing removed 5 assignments
+Generated 2 VCC(s), 2 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+798 variables, 1825 clauses
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.003s
+Building error trace
+
+Counterexample:
+
+State 18 file ./s2n/crypto/s2n_hash.c line 25 thread 0
+----------------------------------------------------
+  alg=/*enum*/4294942720 (11111111111111111010000000000000)
+
+State 19 file ./s2n/crypto/s2n_hash.c line 27 function s2n_hash_digest_size thread 0
+----------------------------------------------------
+  sizes={ 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000 })
+
+State 20 file ./s2n/crypto/s2n_hash.c line 27 function s2n_hash_digest_size thread 0
+----------------------------------------------------
+  sizes={ 0, 16, 20, 28, 32, 48, 64, 36 } ({ 00000000000000000000000000000000, 00000000000000000000000000010000, 00000000000000000000000000010100, 00000000000000000000000000011100, 00000000000000000000000000100000, 00000000000000000000000000110000, 00000000000000000000000001000000, 00000000000000000000000000100100 })
+
+Violated property:
+  file ./s2n/crypto/s2n_hash.c line 29 function s2n_hash_digest_size
+  array `sizes' lower bound in sizes[(signed long int)alg]
+  4 * (signed long int)alg >= 0
+
+VERIFICATION FAILED

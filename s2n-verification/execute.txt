@@ -1,3 +1,6 @@
 cbmc -I./s2n -I./s2n/api/ -I./s2n/libcypto-root/include ./s2n-harness/s2n_blob_init_harness.c ./s2n/utils/s2n_blob.c
 cbmc -z3 -I./s2n -I./s2n/api/ -I./s2n/libcypto-root/include ./s2n-harness/s2n_blob_zero_harness.c ./s2n/utils/s2n_blob.c --unwind 1000
 cbmc -z3 -I./s2n -I./s2n/api/ -I./s2n/libcypto-root/include ./s2n-harness/s2n_constant_time_equals_harness.c ./s2n/utils/s2n_safety.c --unwind 1000
+
+cbmc -I./s2n -I./s2n/api/ -I./s2n/libcypto-root/include ./s2n-harness/s2n_stuffer_init_harness.c ./s2n/stuffer/s2n_stuffer.c
+

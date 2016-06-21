@@ -1,4 +1,3 @@
-#include "utils/s2n_safety.h"
 
 void *malloc(__CPROVER_size_t);
 uint32_t nondet_uint32();

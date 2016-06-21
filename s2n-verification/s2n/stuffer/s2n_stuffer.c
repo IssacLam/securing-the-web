@@ -27,7 +27,7 @@
 
 int s2n_stuffer_init(struct s2n_stuffer *stuffer, struct s2n_blob *in)
 {
-	__CPROVER_assume(stuffer != NULL && in != NULL && in->data != NULL && in->size > 0);
+    
     stuffer->blob.data = in->data;
     stuffer->blob.size = in->size;
     stuffer->wiped = 1;
@@ -36,15 +36,7 @@ int s2n_stuffer_init(struct s2n_stuffer *stuffer, struct s2n_blob *in)
     stuffer->tainted = 0;
     stuffer->read_cursor = 0;
     stuffer->write_cursor = 0;
-	__CPROVER_assert(stuffer != NULL && in != NULL && in->data != NULL && in->size > 0, "ERROR: s2n_stuffer_init weak condition");
-	__CPROVER_assert(stuffer->blob.data == in->data && 
-						stuffer->blob.size == in->size &&
-						stuffer->wiped == 1 &&
-						stuffer->alloced == 0 &&
-						stuffer->growable == 0 &&
-						stuffer->tainted == 0 &&
-						stuffer->read_cursor == 0 &&
-						stuffer->write_cursor == 0, "ERROR: s2n_stuffer_init initialization");
+
     return 0;
 }
 

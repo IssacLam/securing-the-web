@@ -1,15 +1,6 @@
-#include <string.h>
 
-#include "error/s2n_errno.h"
-
-#include "utils/s2n_safety.h"
-#include "utils/s2n_blob.h"
-
-#include <s2n.h>
-
-uint32_t nondet_unint32();
-uint8_t nondet_uint8();
 void *malloc(__CPROVER_size_t);
+uint32_t nondet_uint32();
 
 int main(int argc, char * const *argv){
     struct s2n_blob *b;
@@ -19,7 +10,7 @@ int main(int argc, char * const *argv){
 
     b = malloc(sizeof(struct s2n_blob));
     data = malloc(sizeof(uint8_t));
-    size = nondet_unint32();
+    size = nondet_uint32();
 
     __CPROVER_assume(size > 0);
 

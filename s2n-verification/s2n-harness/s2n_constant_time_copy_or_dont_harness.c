@@ -1,4 +1,3 @@
-#include "utils/s2n_safety.h"
 
 void *malloc(__CPROVER_size_t);
 uint8_t nondet_uint8();
@@ -25,7 +24,7 @@ int main(int argc, char * const *argv){
 
         result = s2n_constant_time_copy_or_dont(a, b, len, dont);
 
-        __CPROVER_assert(result = 0, "ERROR: s2n_constant_time_copy_or_dont");
+        __CPROVER_assert(result == 0, "ERROR: s2n_constant_time_copy_or_dont result");
         __CPROVER_assert((dont > 0 && __CPROVER_forall { int j; (j >= 0 && j < len) ==> a0[j] == a[j] } ) || (dont == 0 && __CPROVER_forall { int j; (j >= 0 && j < len) ==> a[j] == b[j] } ), "ERROR: s2n_constant_time_copy_or_dont");
 
         return 0;
