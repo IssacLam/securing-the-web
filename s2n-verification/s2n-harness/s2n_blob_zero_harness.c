@@ -1,3 +1,4 @@
+#include "utils/s2n_blob.h"
 
 uint32_t nondet_uint32();
 uint8_t nondet_uint8();

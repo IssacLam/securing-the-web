@@ -268,10 +268,10 @@ Functions to verify:
 - [ ] ./s2n/tls/s2n_server_key_exchange.c : s2n_dhe_server_key_send
 - [X] ~~./s2n/utils/s2n_blob.c : s2n_blob_init~~
 - [X] ~~./s2n/utils/s2n_blob.c : s2n_blob_zero~~
-- [ ] ./s2n/utils/s2n_mem.c : s2n_mem_init
-- [ ] ./s2n/utils/s2n_mem.c : s2n_alloc
+- [X] ~~./s2n/utils/s2n_mem.c : s2n_mem_init~~
+- [X] ~~./s2n/utils/s2n_mem.c : s2n_alloc~~
 - [ ] ./s2n/utils/s2n_mem.c : s2n_realloc
-- [ ] ./s2n/utils/s2n_mem.c : s2n_free
+- [X] ~~./s2n/utils/s2n_mem.c : s2n_free~~
 - [ ] ./s2n/utils/s2n_random.c : s2n_on_fork
 - [ ] ./s2n/utils/s2n_random.c : s2n_defend_if_forked
 - [ ] ./s2n/utils/s2n_random.c : s2n_get_public_random_data
