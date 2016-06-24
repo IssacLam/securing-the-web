@@ -23,6 +23,10 @@ function: s2n_alloc
 case 1: b != NULL, for any size
 if mlock in s2n_free fail leads to double free b->data;
 
+case 2: b != NULL, MAX_uint32_t
+uint32_t allocate = page_size * ((size + (page_size - 1)) / page_size);
+leads to buffer overflow;
+
 function: s2n_realloc
 case 1: b != NULL, for any size
 if mlock in s2n_free fail leads to double free b->data;

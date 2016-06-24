@@ -269,10 +269,10 @@ Functions to verify:
 - [X] ~~./s2n/utils/s2n_blob.c : s2n_blob_init~~
 - [X] ~~./s2n/utils/s2n_blob.c : s2n_blob_zero~~
 - [X] ~~./s2n/utils/s2n_mem.c : s2n_mem_init~~
-- [X] ~~./s2n/utils/s2n_mem.c : s2n_alloc~~
-- [ ] ./s2n/utils/s2n_mem.c : s2n_realloc
+- [X] __./s2n/utils/s2n_mem.c : s2n_alloc__
+- [X] __./s2n/utils/s2n_mem.c : s2n_realloc__
 - [X] ~~./s2n/utils/s2n_mem.c : s2n_free~~
-- [ ] ./s2n/utils/s2n_random.c : s2n_on_fork
+- [X] ~~./s2n/utils/s2n_random.c : s2n_on_fork~~
 - [ ] ./s2n/utils/s2n_random.c : s2n_defend_if_forked
 - [ ] ./s2n/utils/s2n_random.c : s2n_get_public_random_data
 - [ ] ./s2n/utils/s2n_random.c : s2n_get_private_random_data
@@ -281,8 +281,8 @@ Functions to verify:
 - [ ] ./s2n/utils/s2n_random.c : s2n_get_urandom_data
 - [ ] ./s2n/utils/s2n_random.c : s2n_public_random
 - [ ] ./s2n/utils/s2n_random.c : s2n_openssl_compat_rand
-- [ ] ./s2n/utils/s2n_random.c : s2n_openssl_compat_status
-- [ ] ./s2n/utils/s2n_random.c : s2n_openssl_compat_init
+- [X] ~~./s2n/utils/s2n_random.c : s2n_openssl_compat_status~~
+- [X] ~~./s2n/utils/s2n_random.c : s2n_openssl_compat_init~~
 - [ ] ./s2n/utils/s2n_random.c : s2n_init
 - [ ] ./s2n/utils/s2n_random.c : s2n_cleanup
 - [X] ~~./s2n/utils/s2n_safety.c : s2n_actual_getpid~~
