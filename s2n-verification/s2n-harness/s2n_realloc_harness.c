@@ -32,7 +32,7 @@ int main(int argc, char * const * argv)
 
         result = s2n_realloc(b, size);
 
-        __CPROVER_assert(result == -1 || (result == 0 && 
+        __CPROVER_assert(result == -1 || (result == 0 &&
                                 ((b->size == 0 && b->data == NULL) ||
                                  __CPROVER_forall { int j; (j >= 0 && j < size) ==> b0[j] == b[j] }) && 
                                 b->size == size &&

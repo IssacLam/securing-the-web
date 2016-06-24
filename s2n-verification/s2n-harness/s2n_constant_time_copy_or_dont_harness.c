@@ -18,15 +18,18 @@ int main(int argc, char * const *argv){
         __CPROVER_assume(len > 0 && len < 1000);
 
         for(int i = 0; i < len; i++){
-            a0[i] = nondet_uint8();
-            a[i] = a0[i];
-            b[i] = nondet_uint8();
+                a[i] = a0[i] = nondet_uint8();
+                b[i] = nondet_uint8();
         }
 
         result = s2n_constant_time_copy_or_dont(a, b, len, dont);
 
         __CPROVER_assert(result == 0, "ERROR: s2n_constant_time_copy_or_dont result");
-        __CPROVER_assert((dont > 0 && __CPROVER_forall { int j; (j >= 0 && j < len) ==> a0[j] == a[j] } ) || (dont == 0 && __CPROVER_forall { int j; (j >= 0 && j < len) ==> a[j] == b[j] } ), "ERROR: s2n_constant_time_copy_or_dont");
+
+        if(dont)
+                __CPROVER_assert(__CPROVER_forall { int j; (j >= 0 && j < len) ==> a[j] == a[j] }, "ERROR: s2n_constant_time_copy");
+        else
+                __CPROVER_assert(__CPROVER_forall { int j; (j >= 0 && j < len) ==> a[j] == b[j] }, "ERROR: s2n_constant_time_dont");
 
         return 0;
 }

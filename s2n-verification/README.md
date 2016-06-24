@@ -84,7 +84,7 @@ Functions to verify:
 - [ ] ./s2n/crypto/s2n_rsa.c : s2n_rsa_encrypt
 - [ ] ./s2n/crypto/s2n_rsa.c : s2n_rsa_decrypt
 - [ ] ./s2n/crypto/s2n_rsa.c : s2n_rsa_keys_match
-- [ ] ./s2n/crypto/s2n_sequence.c : s2n_increment_sequence_number
+- [X] ~~./s2n/crypto/s2n_sequence.c : s2n_increment_sequence_number~~
 - [ ] ./s2n/crypto/s2n_stream_cipher_null.c : s2n_stream_cipher_null_endecrypt
 - [ ] ./s2n/crypto/s2n_stream_cipher_null.c : s2n_stream_cipher_null_get_key
 - [ ] ./s2n/crypto/s2n_stream_cipher_null.c : s2n_stream_cipher_null_destroy_key
@@ -285,9 +285,9 @@ Functions to verify:
 - [ ] ./s2n/utils/s2n_random.c : s2n_openssl_compat_init
 - [ ] ./s2n/utils/s2n_random.c : s2n_init
 - [ ] ./s2n/utils/s2n_random.c : s2n_cleanup
-- [ ] ./s2n/utils/s2n_safety.c : s2n_actual_getpid
+- [X] ~~./s2n/utils/s2n_safety.c : s2n_actual_getpid~~
 - [X] ~~./s2n/utils/s2n_safety.c : s2n_constant_time_equals~~
-- [ ] ./s2n/utils/s2n_safety.c : s2n_constant_time_copy_or_dont
+- [X] ~~./s2n/utils/s2n_safety.c : s2n_constant_time_copy_or_dont~~
 - [ ] ./s2n/utils/s2n_timer.c : s2n_timer_start
 - [ ] ./s2n/utils/s2n_timer.c : s2n_timer_elapsed
 - [ ] ./s2n/utils/s2n_timer.c : s2n_timer_reset

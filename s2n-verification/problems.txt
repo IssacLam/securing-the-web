@@ -1,0 +1,43 @@
+function: s2n_blob_init 
+failed at pointer check: s2n_blob_init(null, data, n);
+
+function: s2n_blob_zero
+failed at pointer check: s2n_blob_zero(null);
+
+function: s2n_constant_time_equals
+failed at pointer check: s2n_constant_time_equals(null, null, n);
+a or b is null
+
+function: s2n_constant_time_copy_or_dont
+failed at pointer check: s2n_constant_time_copy_or_dont(null, null, n, m);
+a or b is null
+
+alarm at unsigned overflow check: s2n_constant_time_copy_or_dont(null, null, n, 0);
+expected overflow behaviour.
+
+function: s2n_free
+failed at pointer check: s2n_free(null);
+b is null / free invalid pointer
+
+function: s2n_alloc
+case 1: b != NULL, for any size
+if mlock in s2n_free fail leads to double free b->data;
+
+function: s2n_realloc
+case 1: b != NULL, for any size
+if mlock in s2n_free fail leads to double free b->data;
+
+function: s2n_increment_sequence_number
+case 1: sequence != NULL, sequence->size == 0 
+the function failed to increment the sequence number by 1 as the data size is 0;
+
+case 2: failed at pointer check: s2n_increment_sequence_number(null);
+sequence_number is null / free invalid pointer
+
+case 3: failed at unsigned overflow check: s2n_increment_sequence_number(any sequence number);
+sequence_number->data[i] += 1;
+Overflow when MAX_uint32_t + 1;
+
+case 4: failed at signed overflow check: s2n_increment_sequence_number(any sequence number);
+int i = sequence_number->size - 1; 
+Overflow when converting unsigned int to signed int;
