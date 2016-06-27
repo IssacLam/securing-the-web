@@ -8,12 +8,12 @@ int main(int argc, char * const *argv){
     uint8_t *data;
     uint32_t size;
     int result;
-
-    b = malloc(sizeof(struct s2n_blob));
-    data = malloc(sizeof(uint8_t));
+    
+    b = (struct s2n_blob *) malloc(sizeof(struct s2n_blob));
+    data = (uint8_t *) malloc(sizeof(uint8_t));
     size = nondet_uint32();
 
-    __CPROVER_assume(size > 0);
+    __CPROVER_assume(size >= 0);
 
     //for(int i = 0; i < size; i++)
       //      data[i] = nondet_uint8();

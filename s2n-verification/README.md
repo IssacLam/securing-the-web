@@ -173,8 +173,7 @@ Functions to verify:
 - [ ] ./s2n/tls/s2n_client_key_exchange.c : s2n_dhe_client_key_send
 - [ ] ./s2n/tls/s2n_client_key_exchange.c : s2n_rsa_client_key_send
 - [ ] ./s2n/tls/s2n_client_key_exchange.c : s2n_client_key_send
-- [ ] ./s2n/tls/s2n_config.c : get_nanoseconds_since_epoch
-- [ ] ./s2n/tls/s2n_config.c : get_nanoseconds_since_epoch
+- [X] ~~./s2n/tls/s2n_config.c : get_nanoseconds_since_epoch~~
 - [ ] ./s2n/tls/s2n_config.c : s2n_config_new
 - [ ] ./s2n/tls/s2n_config.c : s2n_config_free_cert_chain_and_key
 - [ ] ./s2n/tls/s2n_config.c : s2n_config_free_dhparams
