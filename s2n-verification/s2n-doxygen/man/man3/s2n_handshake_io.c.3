@@ -1,0 +1,147 @@
+.TH "s2n/tls/s2n_handshake_io.c" 3 "Tue Jun 28 2016" "s2n-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/tls/s2n_handshake_io.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_alerts\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_handshake_action\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS_HELLO_REQUEST\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_HELLO\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_HELLO\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_CERT\fP   11"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_KEY\fP   12"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_CERT_REQ\fP   13"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_HELLO_DONE\fP   14"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_CERT\fP   11  /* Same as SERVER_CERT */"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_CERT_VERIFY\fP   15"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_KEY\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_FINISHED\fP   20"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_FINISHED\fP   20  /* Same as CLIENT_FINISHED */"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_CERT_STATUS\fP   22"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_negotiate\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TLS_CLIENT_CERT   11  /* Same as SERVER_CERT */"
+
+.PP
+Definition at line 38 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_CERT_VERIFY   15"
+
+.PP
+Definition at line 39 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_FINISHED   20"
+
+.PP
+Definition at line 41 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_HELLO   1"
+
+.PP
+Definition at line 32 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_KEY   16"
+
+.PP
+Definition at line 40 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_HELLO_REQUEST   0"
+
+.PP
+Definition at line 31 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_CERT   11"
+
+.PP
+Definition at line 34 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_CERT_REQ   13"
+
+.PP
+Definition at line 36 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_CERT_STATUS   22"
+
+.PP
+Definition at line 43 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_FINISHED   20  /* Same as CLIENT_FINISHED */"
+
+.PP
+Definition at line 42 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_HELLO   2"
+
+.PP
+Definition at line 33 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_HELLO_DONE   14"
+
+.PP
+Definition at line 37 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_KEY   12"
+
+.PP
+Definition at line 35 of file s2n_handshake_io\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_negotiate (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 327 of file s2n_handshake_io\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen from the source code\&.

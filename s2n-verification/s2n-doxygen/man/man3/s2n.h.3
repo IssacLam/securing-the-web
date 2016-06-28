@@ -1,0 +1,582 @@
+.TH "s2n/api/s2n.h" 3 "Tue Jun 28 2016" "s2n-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/api/s2n.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_SSLv2\fP   20"
+.br
+.ti -1c
+.RI "#define \fBS2N_SSLv3\fP   30"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS10\fP   31"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS11\fP   32"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS12\fP   33"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBs2n_error\fP { \fBS2N_ERR_OK\fP, \fBS2N_ERR_KEY_INIT\fP, \fBS2N_ERR_ENCRYPT\fP, \fBS2N_ERR_DECRYPT\fP, \fBS2N_ERR_MADVISE\fP, \fBS2N_ERR_ALLOC\fP, \fBS2N_ERR_MLOCK\fP, \fBS2N_ERR_MUNLOCK\fP, \fBS2N_ERR_FSTAT\fP, \fBS2N_ERR_OPEN\fP, \fBS2N_ERR_MMAP\fP, \fBS2N_ERR_NULL\fP, \fBS2N_ERR_CLOSED\fP, \fBS2N_ERR_SAFETY\fP, \fBS2N_ERR_NOT_INITIALIZED\fP, \fBS2N_ERR_RANDOM_UNITIALIZED\fP, \fBS2N_ERR_OPEN_RANDOM\fP, \fBS2N_ERR_RESIZE_STATIC_STUFFER\fP, \fBS2N_ERR_RESIZE_TAINTED_STUFFER\fP, \fBS2N_ERR_STUFFER_OUT_OF_DATA\fP, \fBS2N_ERR_STUFFER_IS_FULL\fP, \fBS2N_ERR_INVALID_BASE64\fP, \fBS2N_ERR_INVALID_PEM\fP, \fBS2N_ERR_DH_COPYING_PARAMETERS\fP, \fBS2N_ERR_DH_COPYING_PUBLIC_KEY\fP, \fBS2N_ERR_DH_GENERATING_PARAMETERS\fP, \fBS2N_ERR_DH_PARAMS_CREATE\fP, \fBS2N_ERR_DH_SERIAZING\fP, \fBS2N_ERR_DH_SHARED_SECRET\fP, \fBS2N_ERR_DH_WRITING_PUBLIC_KEY\fP, \fBS2N_ERR_DH_FAILED_SIGNING\fP, \fBS2N_ERR_DH_TOO_SMALL\fP, \fBS2N_ERR_DH_PARAMETER_CHECK\fP, \fBS2N_ERR_INVALID_PKCS3\fP, \fBS2N_ERR_HASH_DIGEST_FAILED\fP, \fBS2N_ERR_HASH_INIT_FAILED\fP, \fBS2N_ERR_HASH_INVALID_ALGORITHM\fP, \fBS2N_ERR_HASH_UPDATE_FAILED\fP, \fBS2N_ERR_HMAC_INVALID_ALGORITHM\fP, \fBS2N_ERR_SIZE_MISMATCH\fP, \fBS2N_ERR_DECODE_CERTIFICATE\fP, \fBS2N_ERR_DECODE_PRIVATE_KEY\fP, \fBS2N_ERR_KEY_MISMATCH\fP, \fBS2N_ERR_NOMEM\fP, \fBS2N_ERR_SIGN\fP, \fBS2N_ERR_VERIFY_SIGNATURE\fP, \fBS2N_ERR_ALERT_PRESENT\fP, \fBS2N_ERR_ALERT\fP, \fBS2N_ERR_CBC_VERIFY\fP, \fBS2N_ERR_CIPHER_NOT_SUPPORTED\fP, \fBS2N_ERR_BAD_MESSAGE\fP, \fBS2N_ERR_INVALID_SIGNATURE_ALGORITHM\fP, \fBS2N_ERR_INVALID_KEY_EXCHANGE_ALGORITHM\fP, \fBS2N_ERR_NO_CERTIFICATE_IN_PEM\fP, \fBS2N_ERR_NO_ALERT\fP, \fBS2N_ERR_CLIENT_MODE\fP, \fBS2N_ERR_SERVER_NAME_TOO_LONG\fP, \fBS2N_ERR_CLIENT_MODE_DISABLED\fP, \fBS2N_ERR_HANDSHAKE_STATE\fP, \fBS2N_ERR_FALLBACK_DETECTED\fP, \fBS2N_ERR_INVALID_CIPHER_PREFERENCES\fP, \fBS2N_ERR_APPLICATION_PROTOCOL_TOO_LONG\fP, \fBS2N_ERR_NO_APPLICATION_PROTOCOL\fP, \fBS2N_ERR_DRBG\fP, \fBS2N_ERR_DRBG_REQUEST_SIZE\fP, \fBS2N_ERR_ECDHE_GEN_KEY\fP, \fBS2N_ERR_ECDHE_SHARED_SECRET\fP, \fBS2N_ERR_ECDHE_UNSUPPORTED_CURVE\fP, \fBS2N_ERR_ECDHE_SERIALIZING\fP, \fBS2N_ERR_SHUTDOWN_PAUSED\fP }"
+.br
+.ti -1c
+.RI "enum \fBs2n_status_request_type\fP { \fBS2N_STATUS_REQUEST_NONE\fP = 0, \fBS2N_STATUS_REQUEST_OCSP\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBs2n_mode\fP { \fBS2N_SERVER\fP, \fBS2N_CLIENT\fP }"
+.br
+.ti -1c
+.RI "enum \fBs2n_blinding\fP { \fBS2N_BUILT_IN_BLINDING\fP, \fBS2N_SELF_SERVICE_BLINDING\fP }"
+.br
+.ti -1c
+.RI "enum \fBs2n_blocked_status\fP { \fBS2N_NOT_BLOCKED\fP = 0, \fBS2N_BLOCKED_ON_READ\fP, \fBS2N_BLOCKED_ON_WRITE\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_init\fP (void)"
+.br
+.ti -1c
+.RI "int \fBs2n_cleanup\fP (void)"
+.br
+.ti -1c
+.RI "struct \fBs2n_config\fP * \fBs2n_config_new\fP (void)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free\fP (struct \fBs2n_config\fP *config)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free_dhparams\fP (struct \fBs2n_config\fP *config)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free_cert_chain_and_key\fP (struct \fBs2n_config\fP *config)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_nanoseconds_since_epoch_callback\fP (struct \fBs2n_config\fP *config, int(*nanoseconds_since_epoch)(void *, uint64_t *), void *data)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_strerror\fP (int error, const char *lang)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_cert_chain_and_key\fP (struct \fBs2n_config\fP *config, char *cert_chain_pem, char *private_key_pem)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_cert_chain_and_key_with_status\fP (struct \fBs2n_config\fP *config, char *cert_chain_pem, char *private_key_pem, const uint8_t *status, uint32_t length)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_dhparams\fP (struct \fBs2n_config\fP *config, char *dhparams_pem)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_key_exchange_preferences\fP (struct \fBs2n_config\fP *config, const char *\fBpreferences\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cipher_preferences\fP (struct \fBs2n_config\fP *config, const char *\fBversion\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_protocol_preferences\fP (struct \fBs2n_config\fP *config, const char *const *protocols, int protocol_count)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_status_request_type\fP (struct \fBs2n_config\fP *config, \fBs2n_status_request_type\fP type)"
+.br
+.ti -1c
+.RI "struct \fBs2n_connection\fP * \fBs2n_connection_new\fP (\fBs2n_mode\fP mode)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_config\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_config\fP *config)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_fd\fP (struct \fBs2n_connection\fP *conn, int readfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_read_fd\fP (struct \fBs2n_connection\fP *conn, int readfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_write_fd\fP (struct \fBs2n_connection\fP *conn, int readfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_throughput\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_low_latency\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_blinding\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blinding\fP blinding)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_connection_get_delay\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_set_server_name\fP (struct \fBs2n_connection\fP *conn, const char *server_name)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_server_name\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_application_protocol\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const uint8_t * \fBs2n_connection_get_ocsp_response\fP (struct \fBs2n_connection\fP *conn, uint32_t *length)"
+.br
+.ti -1c
+.RI "int \fBs2n_negotiate\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "ssize_t \fBs2n_send\fP (struct \fBs2n_connection\fP *conn, void *buf, ssize_t size, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "ssize_t \fBs2n_recv\fP (struct \fBs2n_connection\fP *conn, void *buf, ssize_t size, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_wipe\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_free\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_shutdown\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_in\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_out\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_server_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_actual_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_hello_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_connection_get_cipher\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_alert\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "__thread int \fBs2n_errno\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_SSLv2   20"
+
+.PP
+Definition at line 25 of file s2n\&.h\&.
+.SS "#define S2N_SSLv3   30"
+
+.PP
+Definition at line 26 of file s2n\&.h\&.
+.SS "#define S2N_TLS10   31"
+
+.PP
+Definition at line 27 of file s2n\&.h\&.
+.SS "#define S2N_TLS11   32"
+
+.PP
+Definition at line 28 of file s2n\&.h\&.
+.SS "#define S2N_TLS12   33"
+
+.PP
+Definition at line 29 of file s2n\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBs2n_blinding\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_BUILT_IN_BLINDING \fP\fP
+.TP
+\fB\fIS2N_SELF_SERVICE_BLINDING \fP\fP
+.PP
+Definition at line 140 of file s2n\&.h\&.
+.SS "enum \fBs2n_blocked_status\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_NOT_BLOCKED \fP\fP
+.TP
+\fB\fIS2N_BLOCKED_ON_READ \fP\fP
+.TP
+\fB\fIS2N_BLOCKED_ON_WRITE \fP\fP
+.PP
+Definition at line 149 of file s2n\&.h\&.
+.SS "enum \fBs2n_error\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_ERR_OK \fP\fP
+.TP
+\fB\fIS2N_ERR_KEY_INIT \fP\fP
+.TP
+\fB\fIS2N_ERR_ENCRYPT \fP\fP
+.TP
+\fB\fIS2N_ERR_DECRYPT \fP\fP
+.TP
+\fB\fIS2N_ERR_MADVISE \fP\fP
+.TP
+\fB\fIS2N_ERR_ALLOC \fP\fP
+.TP
+\fB\fIS2N_ERR_MLOCK \fP\fP
+.TP
+\fB\fIS2N_ERR_MUNLOCK \fP\fP
+.TP
+\fB\fIS2N_ERR_FSTAT \fP\fP
+.TP
+\fB\fIS2N_ERR_OPEN \fP\fP
+.TP
+\fB\fIS2N_ERR_MMAP \fP\fP
+.TP
+\fB\fIS2N_ERR_NULL \fP\fP
+.TP
+\fB\fIS2N_ERR_CLOSED \fP\fP
+.TP
+\fB\fIS2N_ERR_SAFETY \fP\fP
+.TP
+\fB\fIS2N_ERR_NOT_INITIALIZED \fP\fP
+.TP
+\fB\fIS2N_ERR_RANDOM_UNITIALIZED \fP\fP
+.TP
+\fB\fIS2N_ERR_OPEN_RANDOM \fP\fP
+.TP
+\fB\fIS2N_ERR_RESIZE_STATIC_STUFFER \fP\fP
+.TP
+\fB\fIS2N_ERR_RESIZE_TAINTED_STUFFER \fP\fP
+.TP
+\fB\fIS2N_ERR_STUFFER_OUT_OF_DATA \fP\fP
+.TP
+\fB\fIS2N_ERR_STUFFER_IS_FULL \fP\fP
+.TP
+\fB\fIS2N_ERR_INVALID_BASE64 \fP\fP
+.TP
+\fB\fIS2N_ERR_INVALID_PEM \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_COPYING_PARAMETERS \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_COPYING_PUBLIC_KEY \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_GENERATING_PARAMETERS \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_PARAMS_CREATE \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_SERIAZING \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_SHARED_SECRET \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_WRITING_PUBLIC_KEY \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_FAILED_SIGNING \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_TOO_SMALL \fP\fP
+.TP
+\fB\fIS2N_ERR_DH_PARAMETER_CHECK \fP\fP
+.TP
+\fB\fIS2N_ERR_INVALID_PKCS3 \fP\fP
+.TP
+\fB\fIS2N_ERR_HASH_DIGEST_FAILED \fP\fP
+.TP
+\fB\fIS2N_ERR_HASH_INIT_FAILED \fP\fP
+.TP
+\fB\fIS2N_ERR_HASH_INVALID_ALGORITHM \fP\fP
+.TP
+\fB\fIS2N_ERR_HASH_UPDATE_FAILED \fP\fP
+.TP
+\fB\fIS2N_ERR_HMAC_INVALID_ALGORITHM \fP\fP
+.TP
+\fB\fIS2N_ERR_SIZE_MISMATCH \fP\fP
+.TP
+\fB\fIS2N_ERR_DECODE_CERTIFICATE \fP\fP
+.TP
+\fB\fIS2N_ERR_DECODE_PRIVATE_KEY \fP\fP
+.TP
+\fB\fIS2N_ERR_KEY_MISMATCH \fP\fP
+.TP
+\fB\fIS2N_ERR_NOMEM \fP\fP
+.TP
+\fB\fIS2N_ERR_SIGN \fP\fP
+.TP
+\fB\fIS2N_ERR_VERIFY_SIGNATURE \fP\fP
+.TP
+\fB\fIS2N_ERR_ALERT_PRESENT \fP\fP
+.TP
+\fB\fIS2N_ERR_ALERT \fP\fP
+.TP
+\fB\fIS2N_ERR_CBC_VERIFY \fP\fP
+.TP
+\fB\fIS2N_ERR_CIPHER_NOT_SUPPORTED \fP\fP
+.TP
+\fB\fIS2N_ERR_BAD_MESSAGE \fP\fP
+.TP
+\fB\fIS2N_ERR_INVALID_SIGNATURE_ALGORITHM \fP\fP
+.TP
+\fB\fIS2N_ERR_INVALID_KEY_EXCHANGE_ALGORITHM \fP\fP
+.TP
+\fB\fIS2N_ERR_NO_CERTIFICATE_IN_PEM \fP\fP
+.TP
+\fB\fIS2N_ERR_NO_ALERT \fP\fP
+.TP
+\fB\fIS2N_ERR_CLIENT_MODE \fP\fP
+.TP
+\fB\fIS2N_ERR_SERVER_NAME_TOO_LONG \fP\fP
+.TP
+\fB\fIS2N_ERR_CLIENT_MODE_DISABLED \fP\fP
+.TP
+\fB\fIS2N_ERR_HANDSHAKE_STATE \fP\fP
+.TP
+\fB\fIS2N_ERR_FALLBACK_DETECTED \fP\fP
+.TP
+\fB\fIS2N_ERR_INVALID_CIPHER_PREFERENCES \fP\fP
+.TP
+\fB\fIS2N_ERR_APPLICATION_PROTOCOL_TOO_LONG \fP\fP
+.TP
+\fB\fIS2N_ERR_NO_APPLICATION_PROTOCOL \fP\fP
+.TP
+\fB\fIS2N_ERR_DRBG \fP\fP
+.TP
+\fB\fIS2N_ERR_DRBG_REQUEST_SIZE \fP\fP
+.TP
+\fB\fIS2N_ERR_ECDHE_GEN_KEY \fP\fP
+.TP
+\fB\fIS2N_ERR_ECDHE_SHARED_SECRET \fP\fP
+.TP
+\fB\fIS2N_ERR_ECDHE_UNSUPPORTED_CURVE \fP\fP
+.TP
+\fB\fIS2N_ERR_ECDHE_SERIALIZING \fP\fP
+.TP
+\fB\fIS2N_ERR_SHUTDOWN_PAUSED \fP\fP
+.PP
+Definition at line 33 of file s2n\&.h\&.
+.SS "enum \fBs2n_mode\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_SERVER \fP\fP
+.TP
+\fB\fIS2N_CLIENT \fP\fP
+.PP
+Definition at line 129 of file s2n\&.h\&.
+.SS "enum \fBs2n_status_request_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_STATUS_REQUEST_NONE \fP\fP
+.TP
+\fB\fIS2N_STATUS_REQUEST_OCSP \fP\fP
+.PP
+Definition at line 125 of file s2n\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_cleanup (void)"
+
+.PP
+Definition at line 248 of file s2n_random\&.c\&.
+.SS "int s2n_config_add_cert_chain_and_key (struct \fBs2n_config\fP * config, char * cert_chain_pem, char * private_key_pem)"
+
+.PP
+Definition at line 342 of file s2n_config\&.c\&.
+.SS "int s2n_config_add_cert_chain_and_key_with_status (struct \fBs2n_config\fP * config, char * cert_chain_pem, char * private_key_pem, const uint8_t * status, uint32_t length)"
+
+.PP
+Definition at line 274 of file s2n_config\&.c\&.
+.SS "int s2n_config_add_dhparams (struct \fBs2n_config\fP * config, char * dhparams_pem)"
+
+.PP
+Definition at line 349 of file s2n_config\&.c\&.
+.SS "int s2n_config_free (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 210 of file s2n_config\&.c\&.
+.SS "int s2n_config_free_cert_chain_and_key (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 165 of file s2n_config\&.c\&.
+.SS "int s2n_config_free_dhparams (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 195 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_config\fP* s2n_config_new (void)"
+
+.PP
+Definition at line 145 of file s2n_config\&.c\&.
+.SS "int s2n_config_set_cipher_preferences (struct \fBs2n_config\fP * config, const char * version)"
+
+.PP
+Definition at line 222 of file s2n_config\&.c\&.
+.SS "int s2n_config_set_key_exchange_preferences (struct \fBs2n_config\fP * config, const char * preferences)"
+
+.SS "int s2n_config_set_nanoseconds_since_epoch_callback (struct \fBs2n_config\fP * config, int(*)(void *, uint64_t *) nanoseconds_since_epoch, void * data)"
+
+.PP
+Definition at line 378 of file s2n_config\&.c\&.
+.SS "int s2n_config_set_protocol_preferences (struct \fBs2n_config\fP * config, const char *const * protocols, int protocol_count)"
+
+.PP
+Definition at line 234 of file s2n_config\&.c\&.
+.SS "int s2n_config_set_status_request_type (struct \fBs2n_config\fP * config, \fBs2n_status_request_type\fP type)"
+
+.PP
+Definition at line 267 of file s2n_config\&.c\&.
+.SS "int s2n_connection_free (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 152 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_actual_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 306 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_alert (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 316 of file s2n_connection\&.c\&.
+.SS "const char* s2n_connection_get_cipher (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 291 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_client_hello_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 311 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_client_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 296 of file s2n_connection\&.c\&.
+.SS "int64_t s2n_connection_get_delay (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 372 of file s2n_connection\&.c\&.
+.SS "const uint8_t* s2n_connection_get_ocsp_response (struct \fBs2n_connection\fP * conn, uint32_t * length)"
+
+.PP
+Definition at line 414 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_server_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 301 of file s2n_connection\&.c\&.
+.SS "uint64_t s2n_connection_get_wire_bytes_in (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 281 of file s2n_connection\&.c\&.
+.SS "uint64_t s2n_connection_get_wire_bytes_out (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 286 of file s2n_connection\&.c\&.
+.SS "struct \fBs2n_connection\fP* s2n_connection_new (\fBs2n_mode\fP mode)"
+
+.PP
+Definition at line 45 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_prefer_low_latency (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 431 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_prefer_throughput (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 424 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_blinding (struct \fBs2n_connection\fP * conn, \fBs2n_blinding\fP blinding)"
+
+.PP
+Definition at line 363 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_config (struct \fBs2n_connection\fP * conn, struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 169 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_fd (struct \fBs2n_connection\fP * conn, int readfd)"
+
+.PP
+Definition at line 274 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_read_fd (struct \fBs2n_connection\fP * conn, int readfd)"
+
+.PP
+Definition at line 262 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_write_fd (struct \fBs2n_connection\fP * conn, int readfd)"
+
+.PP
+Definition at line 268 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_wipe (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 175 of file s2n_connection\&.c\&.
+.SS "const char* s2n_get_application_protocol (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 354 of file s2n_connection\&.c\&.
+.SS "const char* s2n_get_server_name (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 345 of file s2n_connection\&.c\&.
+.SS "int s2n_init (void)"
+
+.PP
+Definition at line 190 of file s2n_random\&.c\&.
+.SS "int s2n_negotiate (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 327 of file s2n_handshake_io\&.c\&.
+.SS "ssize_t s2n_recv (struct \fBs2n_connection\fP * conn, void * buf, ssize_t size, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 105 of file s2n_recv\&.c\&.
+.SS "ssize_t s2n_send (struct \fBs2n_connection\fP * conn, void * buf, ssize_t size, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 82 of file s2n_send\&.c\&.
+.SS "int s2n_set_server_name (struct \fBs2n_connection\fP * conn, const char * server_name)"
+
+.PP
+Definition at line 329 of file s2n_connection\&.c\&.
+.SS "int s2n_shutdown (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 129 of file s2n_connection\&.c\&.
+.SS "const char* s2n_strerror (int error, const char * lang)"
+
+.PP
+Definition at line 105 of file s2n_errno\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "__thread int s2n_errno"
+
+.PP
+Definition at line 23 of file s2n_errno\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen from the source code\&.

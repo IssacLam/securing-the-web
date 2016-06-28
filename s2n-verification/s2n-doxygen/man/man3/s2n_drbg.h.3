@@ -1,0 +1,86 @@
+.TH "s2n/crypto/s2n_drbg.h" 3 "Tue Jun 28 2016" "s2n-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/crypto/s2n_drbg.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_drbg\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_DRBG_BLOCK_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBS2N_DRBG_RESEED_LIMIT\fP   34359738368"
+.br
+.ti -1c
+.RI "#define \fBS2N_DRBG_GENERATE_LIMIT\fP   8192"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_drbg_instantiate\fP (struct \fBs2n_drbg\fP *drbg, struct \fBs2n_blob\fP *personalization_string)"
+.br
+.ti -1c
+.RI "int \fBs2n_drbg_generate\fP (struct \fBs2n_drbg\fP *drbg, struct \fBs2n_blob\fP *returned_bits)"
+.br
+.ti -1c
+.RI "int \fBs2n_drbg_wipe\fP (struct \fBs2n_drbg\fP *drbg)"
+.br
+.ti -1c
+.RI "int \fBs2n_drbg_bytes_used\fP (struct \fBs2n_drbg\fP *drbg)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_DRBG_BLOCK_SIZE   16"
+
+.PP
+Definition at line 23 of file s2n_drbg\&.h\&.
+.SS "#define S2N_DRBG_GENERATE_LIMIT   8192"
+
+.PP
+Definition at line 29 of file s2n_drbg\&.h\&.
+.SS "#define S2N_DRBG_RESEED_LIMIT   34359738368"
+
+.PP
+Definition at line 26 of file s2n_drbg\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_drbg_bytes_used (struct \fBs2n_drbg\fP * drbg)"
+
+.PP
+Definition at line 168 of file s2n_drbg\&.c\&.
+.SS "int s2n_drbg_generate (struct \fBs2n_drbg\fP * drbg, struct \fBs2n_blob\fP * returned_bits)"
+
+.PP
+Definition at line 137 of file s2n_drbg\&.c\&.
+.SS "int s2n_drbg_instantiate (struct \fBs2n_drbg\fP * drbg, struct \fBs2n_blob\fP * personalization_string)"
+
+.PP
+Definition at line 112 of file s2n_drbg\&.c\&.
+.SS "int s2n_drbg_wipe (struct \fBs2n_drbg\fP * drbg)"
+
+.PP
+Definition at line 155 of file s2n_drbg\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen from the source code\&.

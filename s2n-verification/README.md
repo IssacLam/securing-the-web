@@ -91,10 +91,7 @@ Functions to verify:
 - [ ] ./s2n/crypto/s2n_stream_cipher_rc4.c : s2n_stream_cipher_rc4_endecrypt
 - [ ] ./s2n/crypto/s2n_stream_cipher_rc4.c : s2n_stream_cipher_rc4_get_key
 - [ ] ./s2n/crypto/s2n_stream_cipher_rc4.c : s2n_stream_cipher_rc4_destroy_key
-- [ ] ./s2n/error/s2n_errno.c : s2n_strerror
-- [ ] ./s2n/include/nondet.c : nondet_uint8
-- [ ] ./s2n/include/nondet.c : nondet_uint32
-- [ ] ./s2n/include/nondet.c : nondet_s2n_blob
+- [X] ~~./s2n/error/s2n_errno.c : s2n_strerror~~
 - [X] ~~./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_init~~
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_alloc
 - [ ] ./s2n/stuffer/s2n_stuffer.c : s2n_stuffer_growable_alloc

@@ -110,7 +110,6 @@ const char *s2n_strerror(int error, const char *lang)
     if (lang == NULL) {
         lang = "EN"; 
     }
-	__CPROVER_assert(lang != NULL, "ERROR: s2n_strerror lang");
 
     if (strcasecmp(lang, "EN")) {
         return no_such_language;

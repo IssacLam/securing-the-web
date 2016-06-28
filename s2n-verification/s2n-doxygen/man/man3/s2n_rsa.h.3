@@ -1,0 +1,115 @@
+.TH "s2n/crypto/s2n_rsa.h" 3 "Tue Jun 28 2016" "s2n-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/crypto/s2n_rsa.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_rsa_public_key\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_rsa_private_key\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_rsa_keys_match\fP (struct \fBs2n_rsa_public_key\fP *pub, struct \fBs2n_rsa_private_key\fP *priv)"
+.br
+.ti -1c
+.RI "int \fBs2n_asn1der_to_rsa_public_key\fP (struct \fBs2n_rsa_public_key\fP *key, struct \fBs2n_blob\fP *asn1der)"
+.br
+.ti -1c
+.RI "int \fBs2n_asn1der_to_rsa_private_key\fP (struct \fBs2n_rsa_private_key\fP *key, struct \fBs2n_blob\fP *asn1der)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_encrypt\fP (struct \fBs2n_rsa_public_key\fP *key, struct \fBs2n_blob\fP *in, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_decrypt\fP (struct \fBs2n_rsa_private_key\fP *key, struct \fBs2n_blob\fP *in, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_public_key_free\fP (struct \fBs2n_rsa_public_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_private_key_free\fP (struct \fBs2n_rsa_private_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_public_encrypted_size\fP (struct \fBs2n_rsa_public_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_private_encrypted_size\fP (struct \fBs2n_rsa_private_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_sign\fP (struct \fBs2n_rsa_private_key\fP *key, struct \fBs2n_hash_state\fP *digest, struct \fBs2n_blob\fP *signature)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_verify\fP (struct \fBs2n_rsa_public_key\fP *key, struct \fBs2n_hash_state\fP *digest, struct \fBs2n_blob\fP *signature)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_asn1der_to_rsa_private_key (struct \fBs2n_rsa_private_key\fP * key, struct \fBs2n_blob\fP * asn1der)"
+
+.PP
+Definition at line 67 of file s2n_rsa\&.c\&.
+.SS "int s2n_asn1der_to_rsa_public_key (struct \fBs2n_rsa_public_key\fP * key, struct \fBs2n_blob\fP * asn1der)"
+
+.PP
+Definition at line 31 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_decrypt (struct \fBs2n_rsa_private_key\fP * key, struct \fBs2n_blob\fP * in, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 179 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_encrypt (struct \fBs2n_rsa_public_key\fP * key, struct \fBs2n_blob\fP * in, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 165 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_keys_match (struct \fBs2n_rsa_public_key\fP * pub, struct \fBs2n_rsa_private_key\fP * priv)"
+
+.PP
+Definition at line 199 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_private_encrypted_size (struct \fBs2n_rsa_private_key\fP * key)"
+
+.PP
+Definition at line 104 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_private_key_free (struct \fBs2n_rsa_private_key\fP * key)"
+
+.PP
+Definition at line 89 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_public_encrypted_size (struct \fBs2n_rsa_public_key\fP * key)"
+
+.PP
+Definition at line 96 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_public_key_free (struct \fBs2n_rsa_public_key\fP * key)"
+
+.PP
+Definition at line 82 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_sign (struct \fBs2n_rsa_private_key\fP * key, struct \fBs2n_hash_state\fP * digest, struct \fBs2n_blob\fP * signature)"
+
+.PP
+Definition at line 112 of file s2n_rsa\&.c\&.
+.SS "int s2n_rsa_verify (struct \fBs2n_rsa_public_key\fP * key, struct \fBs2n_hash_state\fP * digest, struct \fBs2n_blob\fP * signature)"
+
+.PP
+Definition at line 141 of file s2n_rsa\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen from the source code\&.

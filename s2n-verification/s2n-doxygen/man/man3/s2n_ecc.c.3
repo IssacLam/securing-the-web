@@ -1,0 +1,118 @@
+.TH "s2n/crypto/s2n_ecc.c" 3 "Tue Jun 28 2016" "s2n-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/crypto/s2n_ecc.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'crypto/s2n_ecc\&.h'\fP
+.br
+\fC#include <openssl/ec\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/ecdh\&.h>\fP
+.br
+\fC#include <openssl/obj_mac\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS_EC_CURVE_TYPE_NAMED\fP   3"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_ecc_generate_ephemeral_key\fP (struct \fBs2n_ecc_params\fP *server_ecc_params)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_write_ecc_params\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *out, struct \fBs2n_blob\fP *written)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_read_ecc_params\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *in, struct \fBs2n_blob\fP *read)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_compute_shared_secret_as_server\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *Yc_in, struct \fBs2n_blob\fP *shared_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_compute_shared_secret_as_client\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *Yc_out, struct \fBs2n_blob\fP *shared_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_params_free\fP (struct \fBs2n_ecc_params\fP *server_ecc_params)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_find_supported_curve\fP (struct \fBs2n_blob\fP *iana_ids, const struct \fBs2n_ecc_named_curve\fP **found)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const struct \fBs2n_ecc_named_curve\fP \fBs2n_ecc_supported_curves\fP [2]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TLS_EC_CURVE_TYPE_NAMED   3"
+
+.PP
+Definition at line 28 of file s2n_ecc\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_ecc_compute_shared_secret_as_client (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * Yc_out, struct \fBs2n_blob\fP * shared_key)"
+
+.PP
+Definition at line 155 of file s2n_ecc\&.c\&.
+.SS "int s2n_ecc_compute_shared_secret_as_server (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * Yc_in, struct \fBs2n_blob\fP * shared_key)"
+
+.PP
+Definition at line 131 of file s2n_ecc\&.c\&.
+.SS "int s2n_ecc_find_supported_curve (struct \fBs2n_blob\fP * iana_ids, const struct \fBs2n_ecc_named_curve\fP ** found)"
+
+.PP
+Definition at line 278 of file s2n_ecc\&.c\&.
+.SS "int s2n_ecc_generate_ephemeral_key (struct \fBs2n_ecc_params\fP * server_ecc_params)"
+
+.PP
+Definition at line 42 of file s2n_ecc\&.c\&.
+.SS "int s2n_ecc_params_free (struct \fBs2n_ecc_params\fP * server_ecc_params)"
+
+.PP
+Definition at line 182 of file s2n_ecc\&.c\&.
+.SS "int s2n_ecc_read_ecc_params (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * in, struct \fBs2n_blob\fP * read)"
+
+.PP
+Definition at line 81 of file s2n_ecc\&.c\&.
+.SS "int s2n_ecc_write_ecc_params (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * out, struct \fBs2n_blob\fP * written)"
+
+.PP
+Definition at line 52 of file s2n_ecc\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const struct \fBs2n_ecc_named_curve\fP s2n_ecc_supported_curves[2]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    { \&.iana_id = TLS_EC_CURVE_SECP_256_R1 , \&.libcrypto_nid = NID_X9_62_prime256v1 },
+    { \&.iana_id = TLS_EC_CURVE_SECP_384_R1 , \&.libcrypto_nid = NID_secp384r1 },
+}
+.fi
+.PP
+Definition at line 30 of file s2n_ecc\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen from the source code\&.
