@@ -62,3 +62,12 @@ mach_absolute_time return ticks since last reboot (uptime).
 
 http://stackoverflow.com/questions/23378063/how-can-i-use-mach-absolute-time-without-overflowing
 
+function: s2n_timer_start
+function: s2n_timer_elapsed
+function: s2n_timer_reset
+
+case 1: failed at pointer check:  int s2n_timer_*(null, null [, nanoseconds])
+pointer invalid in config->nanoseconds_since_epoch
+
+case 2: failed at unsigned overflow check: 
+overflow because of get_nanoseconds_since_epoch *nanoseconds *= conversion_factor.numer

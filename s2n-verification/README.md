@@ -287,6 +287,6 @@ Functions to verify:
 - [X] ~~./s2n/utils/s2n_safety.c : s2n_actual_getpid~~
 - [X] ~~./s2n/utils/s2n_safety.c : s2n_constant_time_equals~~
 - [X] ~~./s2n/utils/s2n_safety.c : s2n_constant_time_copy_or_dont~~
-- [ ] ./s2n/utils/s2n_timer.c : s2n_timer_start
-- [ ] ./s2n/utils/s2n_timer.c : s2n_timer_elapsed
-- [ ] ./s2n/utils/s2n_timer.c : s2n_timer_reset
+- [X] ~~./s2n/utils/s2n_timer.c : s2n_timer_start~~
+- [X] ~~./s2n/utils/s2n_timer.c : s2n_timer_elapsed~~
+- [X] ~~./s2n/utils/s2n_timer.c : s2n_timer_reset~~

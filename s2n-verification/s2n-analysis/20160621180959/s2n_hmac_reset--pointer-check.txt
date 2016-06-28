@@ -1,0 +1,260 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing ./s2n/crypto/s2n_hmac.c
+Converting
+Type-checking s2n_hmac
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop s2n_hmac_reset.1 iteration 1 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 2 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 3 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 4 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 5 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 6 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 7 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 8 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Unwinding loop s2n_hmac_reset.1 iteration 9 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+Not unwinding loop s2n_hmac_reset.1 iteration 10 (10 max) file ./s2n/crypto/s2n_hmac.c line 237 function s2n_hmac_reset thread 0
+size of program expression: 206 steps
+simple slicing removed 27 assignments
+Generated 84 VCC(s), 84 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+7952 variables, 1468 clauses
+SAT checker: instance is SATISFIABLE
+Solving with MiniSAT 2.2.1 with simplifier
+7952 variables, 127 clauses
+SAT checker inconsistent: instance is UNSATISFIABLE
+Runtime decision procedure: 0.033s
+
+** Results:
+[] dereference failure: dead object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.1] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.2] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.4] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.5] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.6] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.7] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.8] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.9] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.10] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.11] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.12] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.13] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.14] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.15] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.16] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.17] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.18] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.19] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.20] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.21] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.22] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.23] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.24] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.25] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.26] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.27] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.28] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.29] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.30] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.31] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.32] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.33] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.34] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.35] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.36] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.37] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.38] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.39] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.40] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.41] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.42] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.43] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.44] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.45] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.46] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.47] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.48] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.49] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.50] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.51] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.52] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.53] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.54] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.55] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.56] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.57] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.58] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.59] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.60] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.61] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.62] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.63] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.64] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.65] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.66] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.67] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.68] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.69] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.70] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.71] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.72] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.73] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.74] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.75] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.76] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.77] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.78] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.79] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.80] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.81] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.82] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.83] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.84] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.85] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.86] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.87] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.88] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.89] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.90] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.91] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.92] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.93] dereference failure: pointer NULL in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.94] dereference failure: pointer invalid in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.95] dereference failure: deallocated dynamic object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.96] dereference failure: dead object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.97] dereference failure: pointer NULL in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.98] dereference failure: pointer invalid in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.99] dereference failure: deallocated dynamic object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.100] dereference failure: dead object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.101] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.102] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.103] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.104] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.105] dereference failure: pointer NULL in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.106] dereference failure: pointer invalid in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.107] dereference failure: deallocated dynamic object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.108] dereference failure: dead object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.109] dereference failure: pointer NULL in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.110] dereference failure: pointer invalid in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.111] dereference failure: deallocated dynamic object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.112] dereference failure: dead object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_init.pointer_dereference.113] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.114] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.115] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.116] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.117] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.118] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.119] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.120] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.121] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.122] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.123] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.124] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.125] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.126] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.127] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_init.pointer_dereference.128] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.1] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.2] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.4] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.5] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.6] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.7] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_update.pointer_dereference.8] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.1] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.2] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.4] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.5] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.6] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.7] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.8] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.9] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.10] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.11] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.12] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.13] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.14] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.15] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.16] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.17] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.18] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.19] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest.pointer_dereference.20] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.1] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.2] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.4] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.5] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.6] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.7] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_hmac_digest_two_compression_rounds.pointer_dereference.8] dereference failure: dead object in *state: SUCCESS
+[s2n_hmac_reset.pointer_dereference.1] dereference failure: pointer NULL in *state: FAILURE
+[s2n_hmac_reset.pointer_dereference.2] dereference failure: pointer invalid in *state: FAILURE
+[s2n_hmac_reset.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: FAILURE
+[s2n_hmac_reset.pointer_dereference.4] dereference failure: dead object in *state: FAILURE
+[s2n_hmac_reset.pointer_dereference.5] dereference failure: pointer NULL in ((char *)dst)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.6] dereference failure: pointer invalid in ((char *)dst)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.7] dereference failure: deallocated dynamic object in ((char *)dst)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.8] dereference failure: dead object in ((char *)dst)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.9] dereference failure: pointer NULL in ((const char *)src)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.10] dereference failure: pointer invalid in ((const char *)src)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.11] dereference failure: deallocated dynamic object in ((const char *)src)[(signed long int)i]: FAILURE
+[s2n_hmac_reset.pointer_dereference.12] dereference failure: dead object in ((const char *)src)[(signed long int)i]: FAILURE
+[s2n_hmac_copy.pointer_dereference.1] dereference failure: pointer NULL in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.2] dereference failure: pointer invalid in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.3] dereference failure: deallocated dynamic object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.4] dereference failure: dead object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.5] dereference failure: pointer NULL in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.6] dereference failure: pointer invalid in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.7] dereference failure: deallocated dynamic object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_hmac_copy.pointer_dereference.8] dereference failure: dead object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.1] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.2] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.4] dereference failure: dead object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.5] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.6] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.7] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.8] dereference failure: dead object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.9] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.10] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.11] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.12] dereference failure: dead object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.13] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.14] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.15] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_init.pointer_dereference.16] dereference failure: dead object in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.1] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.2] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.3] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.4] dereference failure: dead object in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.5] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.6] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.7] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.8] dereference failure: dead object in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.9] dereference failure: pointer NULL in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.10] dereference failure: pointer invalid in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.11] dereference failure: deallocated dynamic object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.12] dereference failure: dead object in ((char *)dst)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.13] dereference failure: pointer NULL in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.14] dereference failure: pointer invalid in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.15] dereference failure: deallocated dynamic object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.16] dereference failure: dead object in ((const char *)src)[(signed long int)i]: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.17] dereference failure: pointer NULL in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.18] dereference failure: pointer invalid in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.19] dereference failure: deallocated dynamic object in *state: SUCCESS
+[s2n_sslv3_mac_digest.pointer_dereference.20] dereference failure: dead object in *state: SUCCESS
+
+** 12 of 221 failed (2 iterations)
+VERIFICATION FAILED

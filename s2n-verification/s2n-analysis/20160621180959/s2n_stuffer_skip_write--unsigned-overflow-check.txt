@@ -1,0 +1,69 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing ./s2n/stuffer/s2n_stuffer.c
+Converting
+Type-checking s2n_stuffer
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 1 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 2 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 3 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 4 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 5 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 6 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 7 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 8 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Unwinding loop s2n_stuffer_wipe_n.1 iteration 9 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+Not unwinding loop s2n_stuffer_wipe_n.1 iteration 10 (10 max) file ./s2n/stuffer/s2n_stuffer.c line 121 function s2n_stuffer_wipe_n thread 0
+size of program expression: 536 steps
+simple slicing removed 47 assignments
+Generated 15 VCC(s), 15 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+8977 variables, 25987 clauses
+SAT checker: instance is SATISFIABLE
+Solving with MiniSAT 2.2.1 with simplifier
+8977 variables, 5295 clauses
+SAT checker: instance is SATISFIABLE
+Solving with MiniSAT 2.2.1 with simplifier
+8977 variables, 5295 clauses
+SAT checker: instance is SATISFIABLE
+Solving with MiniSAT 2.2.1 with simplifier
+8977 variables, 5295 clauses
+SAT checker: instance is UNSATISFIABLE
+Runtime decision procedure: 0.046s
+
+** Results:
+[] arithmetic overflow on unsigned + in i + 1ul: SUCCESS
+[s2n_stuffer_resize.overflow.1] arithmetic overflow on unsigned - in stuffer->blob.size - size: SUCCESS
+[s2n_stuffer_wipe_n.overflow.1] arithmetic overflow on unsigned + in i + 1ul: SUCCESS
+[s2n_stuffer_wipe_n.overflow.2] arithmetic overflow on unsigned - in stuffer->write_cursor - n: SUCCESS
+[s2n_stuffer_erase_and_read.overflow.1] arithmetic overflow on unsigned + in i + 1ul: SUCCESS
+[s2n_stuffer_skip_read.overflow.1] arithmetic overflow on unsigned - in stuffer->write_cursor - stuffer->read_cursor: SUCCESS
+[s2n_stuffer_skip_read.overflow.2] arithmetic overflow on unsigned + in stuffer->read_cursor + n: SUCCESS
+[s2n_stuffer_skip_write.overflow.1] arithmetic overflow on unsigned - in stuffer->blob.size - stuffer->write_cursor: FAILURE
+[s2n_stuffer_skip_write.overflow.2] arithmetic overflow on unsigned + in stuffer->blob.size + growth: FAILURE
+[s2n_stuffer_skip_write.overflow.3] arithmetic overflow on unsigned + in stuffer->write_cursor + n: FAILURE
+[s2n_stuffer_read_uint16.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned short int)((signed int)data[(signed long int)0] << 8): SUCCESS
+[s2n_stuffer_read_uint24.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned int)((signed int)data[(signed long int)0] << 16): SUCCESS
+[s2n_stuffer_read_uint24.overflow.2] arithmetic overflow on signed to unsigned type conversion in (unsigned int)((signed int)data[(signed long int)1] << 8): SUCCESS
+[s2n_stuffer_read_uint32.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned int)((signed int)data[(signed long int)1] << 16): SUCCESS
+[s2n_stuffer_read_uint32.overflow.2] arithmetic overflow on signed to unsigned type conversion in (unsigned int)((signed int)data[(signed long int)2] << 8): SUCCESS
+[s2n_stuffer_write_uint16.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned char)((signed int)u >> 8): SUCCESS
+[s2n_stuffer_write_uint16.overflow.2] arithmetic overflow on signed to unsigned type conversion in (unsigned char)((signed int)u & 0xff): SUCCESS
+[s2n_stuffer_write_uint24.overflow.1] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u >> 16): SUCCESS
+[s2n_stuffer_write_uint24.overflow.2] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u >> 8): SUCCESS
+[s2n_stuffer_write_uint24.overflow.3] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u & (unsigned int)0xff): SUCCESS
+[s2n_stuffer_write_uint32.overflow.1] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u >> 24): SUCCESS
+[s2n_stuffer_write_uint32.overflow.2] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u >> 16): SUCCESS
+[s2n_stuffer_write_uint32.overflow.3] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u >> 8): SUCCESS
+[s2n_stuffer_write_uint32.overflow.4] arithmetic overflow on unsigned to unsigned type conversion in (unsigned char)(u & (unsigned int)0xff): SUCCESS
+
+** 3 of 24 failed (4 iterations)
+VERIFICATION FAILED

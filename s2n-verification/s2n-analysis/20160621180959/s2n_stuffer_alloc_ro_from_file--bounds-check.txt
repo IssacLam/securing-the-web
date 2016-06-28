@@ -1,0 +1,37 @@
+CBMC version 5.4 64-bit x86_64 linux
+Parsing ./s2n/stuffer/s2n_stuffer_file.c
+Converting
+Type-checking s2n_stuffer_file
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 1 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 2 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 3 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 4 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 5 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 6 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 7 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 8 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 9 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+Not unwinding loop s2n_stuffer_alloc_ro_from_file.0 iteration 10 (10 max) file ./s2n/stuffer/s2n_stuffer_file.c line 104 function s2n_stuffer_alloc_ro_from_file thread 0
+size of program expression: 348 steps
+simple slicing removed 42 assignments
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+12571 variables, 22078 clauses
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.04s
+
+** Results:
+[close.array_bounds.1] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: FAILURE
+
+** 1 of 1 failed (1 iteration)
+VERIFICATION FAILED
