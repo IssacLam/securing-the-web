@@ -54,7 +54,7 @@ int s2n_constant_time_copy_or_dont(uint8_t *a, const uint8_t *b, uint32_t len, u
 //	__CPROVER_assume(a != NULL && b != NULL && len > 0 && dont >= 0);
     uint8_t mask = ~(0xff << ((!dont) * 8));
 
-	__CPROVER_assert((dont > 0 && mask == 0x00) || (dont == 0 && mask == 0xff), "ERROR: mask");
+	//__CPROVER_assert((dont > 0 && mask == 0x00) || (dont == 0 && mask == 0xff), "ERROR: mask");
     /* dont = 0 : mask = 0xff */
     /* dont > 0 : mask = 0x00 */
 

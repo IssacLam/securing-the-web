@@ -1,3 +1,10 @@
+Relink the dynamic library
+
+install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nc
+install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nd
+
+-----
+
 Functions to verify:
 
 - [ ] ./s2n/crypto/s2n_aead_cipher_aes_gcm.c : s2n_aead_cipher_aes_gcm_encrypt

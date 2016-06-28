@@ -1,0 +1,76 @@
+https://timothyohare1.wordpress.com/2015/07/02/building-and-testing-the-new-aws-s2n-tlsssl-protocol-implementation/
+
+s2n stands for signal to noise.
+
+The usage guide shows how to build it.
+
+After cloning it, build the crypto libaries in the crypto-build directory.
+
+I ran in to a problem when building s2n with LibreSSL with the following error:
+/usr/bin/ld: ../libcrypto-root/lib/libcrypto.a(libcrypto_la-cryptlib.o): relocation R_X86_64_32 against `.rodata.str1.8' can not be used when making a shared object; recompile with -fPIC
+
+Even though -fPIC was set in s2n.mk and referenced in the libreSSL configure output, I tried setting a CFLAGS variable and it fixed the problem
+
+export CFLAGS=-fPIC
+
+I think the libreSSL ./configure takes in any user defined CLAGS variables.
+
+Next problem was the unit tests. It failed with
+
+Running s2n_override_openssl_random_test.c ... FAILED test 20
+(mock_called) == (1) is not true (s2n_override_openssl_random_test.c line 114)
+Error Message: 'no error'
+Makefile:39: recipe for target 's2n_override_openssl_random_test' failed
+
+So I had to build OpenSSL
+
+curl https://www.openssl.org/source/openssl-1.0.2c.tar.gz > openssl-1.0.2c.tar.gz
+...
+
+Next was to raise the mem_lock limit.
+For this I modified /etc/security/limits.conf and added lines with
+* soft memlock 128000000
+* hard memlock 256000000
+
+Unfortunately, to make this work I had to reboot my system.
+
+After doing that the unit tests passed.
+
+At the bottom of the User Guide it says to try the examples in bin.
+
+First, I had to update my system to let it know where the libraries are. I choose to do this with ld.so.conf and created a s2n.conf file in the /etc/ld.so.conf.d/ directory (with sudo) and put the path to the libraries in it e.g.
+/home/{username}/dev/github/s2n/lib
+
+and ran
+sudo ldconfig
+
+After some trial and error,
+$ ./s2nd 127.0.0.1 50000
+Listening on 127.0.0.1:50000
+Failed to negotiate: 'No Alert present' -1
+
+$ ./s2nc -a default 127.0.0.1 50000
+Error getting new connection: 'client connections not allowed'
+
+ 
+
+I had to set the client flag in the shell that was running the client and it worked!
+$ ./s2nd 127.0.0.1 50000
+Listening on 127.0.0.1:50000
+Client hello version: 33
+Client protocol version: 33
+Server protocol version: 33
+Actual protocol version: 33
+Server name: 127.0.0.1
+Cipher negotiated: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+In the other shell
+$ export S2N_ENABLE_CLIENT_MODE=1
+$ ./s2nc -a default 127.0.0.1 50000
+Connected to 127.0.0.1:50000
+Client hello version: 33
+Client protocol version: 33
+Server protocol version: 33
+Actual protocol version: 33
+Server name: 127.0.0.1
+Cipher negotiated: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
