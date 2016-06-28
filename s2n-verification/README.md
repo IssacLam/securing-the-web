@@ -1,6 +1,7 @@
 Relink the dynamic library
 
 install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nc
+
 install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nd
 
 -----
