@@ -1,0 +1,235 @@
+.TH "s2n/libcrypto-build/openssl/apps/s_server.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/apps/s_server.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include 'apps\&.h'\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/ocsp\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/srp\&.h>\fP
+.br
+\fC#include 's_apps\&.h'\fP
+.br
+\fC#include 'timeouts\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBsrpsrvparm_st\fP"
+.br
+.ti -1c
+.RI "struct \fBtlsextctx_st\fP"
+.br
+.ti -1c
+.RI "struct \fBtlsextstatusctx_st\fP"
+.br
+.ti -1c
+.RI "struct \fBtlsextnextprotoctx_st\fP"
+.br
+.ti -1c
+.RI "struct \fBtlsextalpnctx_st\fP"
+.br
+.ti -1c
+.RI "struct \fBsimple_ssl_session_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fBBUFSIZZ\fP   16*1024"
+.br
+.ti -1c
+.RI "#define \fBTEST_CERT\fP   'server\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBTEST_CERT2\fP   'server2\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBPROG\fP   \fBs_server_main\fP"
+.br
+.ti -1c
+.RI "#define \fBno_jpake\fP   !jpake_secret"
+.br
+.ti -1c
+.RI "#define \fBMAX_SESSION_ID_ATTEMPTS\fP   10"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBsrpsrvparm_st\fP \fBsrpsrvparm\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBtlsextctx_st\fP \fBtlsextctx\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBtlsextstatusctx_st\fP \fBtlsextstatusctx\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBtlsextnextprotoctx_st\fP \fBtlsextnextprotoctx\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBtlsextalpnctx_st\fP \fBtlsextalpnctx\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBsimple_ssl_session_st\fP \fBsimple_ssl_session\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBMAIN\fP (int, char **)"
+.br
+.ti -1c
+.RI "int \fBMAIN\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverify_depth\fP"
+.br
+.ti -1c
+.RI "int \fBverify_return_error\fP"
+.br
+.ti -1c
+.RI "int \fBverify_quiet\fP"
+.br
+.ti -1c
+.RI "int \fBs_crlf\fP = 0"
+.br
+.ti -1c
+.RI "char * \fBpsk_key\fP = \fBNULL\fP"
+.br
+.ti -1c
+.RI "char * \fBclient_princ\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUFSIZZ   16*1024"
+
+.PP
+Definition at line 281 of file s_server\&.c\&.
+.SS "#define MAX_SESSION_ID_ATTEMPTS   10"
+
+.PP
+Definition at line 3361 of file s_server\&.c\&.
+.SS "#define no_jpake   !jpake_secret"
+
+.PP
+Definition at line 1074 of file s_server\&.c\&.
+.SS "#define PROG   \fBs_server_main\fP"
+
+.PP
+Definition at line 290 of file s_server\&.c\&.
+.SS "#define TEST_CERT   'server\&.pem'"
+
+.PP
+Definition at line 285 of file s_server\&.c\&.
+.SS "#define TEST_CERT2   'server2\&.pem'"
+
+.PP
+Definition at line 287 of file s_server\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 180 of file s_server\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBsimple_ssl_session_st\fP  \fBsimple_ssl_session\fP"
+
+.SS "typedef struct \fBsrpsrvparm_st\fP  \fBsrpsrvparm\fP"
+
+.SS "typedef struct \fBtlsextalpnctx_st\fP  \fBtlsextalpnctx\fP"
+
+.SS "typedef struct \fBtlsextctx_st\fP  \fBtlsextctx\fP"
+
+.SS "typedef struct \fBtlsextnextprotoctx_st\fP  \fBtlsextnextprotoctx\fP"
+
+.SS "typedef struct \fBtlsextstatusctx_st\fP  \fBtlsextstatusctx\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int MAIN (int, char **)"
+
+.PP
+Definition at line 89 of file asn1pars\&.c\&.
+.SS "int MAIN (int argc, char * argv[])"
+
+.PP
+Definition at line 1085 of file s_server\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "char* client_princ"
+
+.PP
+Definition at line 2738 of file s_server\&.c\&.
+.SS "char* psk_key = \fBNULL\fP"
+
+.PP
+Definition at line 350 of file s_server\&.c\&.
+.SS "int s_crlf = 0"
+
+.PP
+Definition at line 306 of file s_server\&.c\&.
+.SS "int verify_depth"
+
+.PP
+Definition at line 128 of file s_cb\&.c\&.
+.SS "int verify_quiet"
+
+.PP
+Definition at line 129 of file s_cb\&.c\&.
+.SS "int verify_return_error"
+
+.PP
+Definition at line 131 of file s_cb\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

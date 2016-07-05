@@ -1,0 +1,79 @@
+.TH "s2n/libcrypto-build/openssl/crypto/dh/dh_pmeth.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/dh/dh_pmeth.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include 'evp_locl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBDH_PKEY_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBdsa_builtin_paramgen\fP (\fBDSA\fP *ret, size_t \fBbits\fP, size_t qbits, const \fBEVP_MD\fP *evpmd, const unsigned char *seed_in, size_t seed_len, unsigned char *seed_out, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBdsa_builtin_paramgen2\fP (\fBDSA\fP *ret, size_t L, size_t \fBN\fP, const \fBEVP_MD\fP *evpmd, const unsigned char *seed_in, size_t seed_len, int idx, unsigned char *seed_out, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBEVP_PKEY_METHOD\fP \fBdh_pkey_meth\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_METHOD\fP \fBdhx_pkey_meth\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int dsa_builtin_paramgen (\fBDSA\fP * ret, size_t bits, size_t qbits, const \fBEVP_MD\fP * evpmd, const unsigned char * seed_in, size_t seed_len, unsigned char * seed_out, int * counter_ret, unsigned long * h_ret, \fBBN_GENCB\fP * cb)"
+
+.PP
+Definition at line 126 of file dsa_gen\&.c\&.
+.SS "int dsa_builtin_paramgen2 (\fBDSA\fP * ret, size_t L, size_t N, const \fBEVP_MD\fP * evpmd, const unsigned char * seed_in, size_t seed_len, int idx, unsigned char * seed_out, int * counter_ret, unsigned long * h_ret, \fBBN_GENCB\fP * cb)"
+
+.PP
+Definition at line 398 of file dsa_gen\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBEVP_PKEY_METHOD\fP dh_pkey_meth"
+
+.PP
+Definition at line 485 of file dh_pmeth\&.c\&.
+.SS "const \fBEVP_PKEY_METHOD\fP dhx_pkey_meth"
+
+.PP
+Definition at line 519 of file dh_pmeth\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

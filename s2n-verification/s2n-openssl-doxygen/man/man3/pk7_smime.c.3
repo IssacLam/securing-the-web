@@ -1,0 +1,75 @@
+.TH "s2n/libcrypto-build/openssl/crypto/pkcs7/pk7_smime.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/pkcs7/pk7_smime.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS7_sign\fP (\fBX509\fP *signcert, \fBEVP_PKEY\fP *pkey, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBBIO\fP *\fBdata\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_final\fP (\fBPKCS7\fP *p7, \fBBIO\fP *\fBdata\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS7_SIGNER_INFO\fP * \fBPKCS7_sign_add_signer\fP (\fBPKCS7\fP *p7, \fBX509\fP *signcert, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_verify\fP (\fBPKCS7\fP *p7, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *store, \fBBIO\fP *indata, \fBBIO\fP *\fBout\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS7_encrypt\fP (\fBSTACK_OF\fP(\fBX509\fP)*certs, \fBBIO\fP *\fBin\fP, const \fBEVP_CIPHER\fP *cipher, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_decrypt\fP (\fBPKCS7\fP *p7, \fBEVP_PKEY\fP *pkey, \fBX509\fP *cert, \fBBIO\fP *\fBdata\fP, int \fBflags\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int PKCS7_decrypt (\fBPKCS7\fP * p7, \fBEVP_PKEY\fP * pkey, \fBX509\fP * cert, \fBBIO\fP * data, int flags)"
+
+.PP
+Definition at line 522 of file pk7_smime\&.c\&.
+.SS "\fBPKCS7\fP* PKCS7_encrypt (\fBSTACK_OF\fP(\fBX509\fP)* certs, \fBBIO\fP * in, const \fBEVP_CIPHER\fP * cipher, int flags)"
+
+.PP
+Definition at line 481 of file pk7_smime\&.c\&.
+.SS "int PKCS7_final (\fBPKCS7\fP * p7, \fBBIO\fP * data, int flags)"
+
+.PP
+Definition at line 112 of file pk7_smime\&.c\&.
+.SS "\fBPKCS7\fP* PKCS7_sign (\fBX509\fP * signcert, \fBEVP_PKEY\fP * pkey, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBBIO\fP * data, int flags)"
+
+.PP
+Definition at line 69 of file pk7_smime\&.c\&.
+.SS "\fBPKCS7_SIGNER_INFO\fP* PKCS7_sign_add_signer (\fBPKCS7\fP * p7, \fBX509\fP * signcert, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md, int flags)"
+
+.PP
+Definition at line 155 of file pk7_smime\&.c\&.
+.SS "int PKCS7_verify (\fBPKCS7\fP * p7, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * store, \fBBIO\fP * indata, \fBBIO\fP * out, int flags)"
+
+.PP
+Definition at line 249 of file pk7_smime\&.c\&.
+.SS "STACK_OF (\fBX509\fP)"
+
+.PP
+Definition at line 417 of file pk7_smime\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

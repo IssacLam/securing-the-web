@@ -1,0 +1,146 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509_att.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509_att.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBX509at_get_attr_count\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509at_get_attr_by_NID\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509at_get_attr_by_OBJ\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*sk, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509at_get_attr\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509at_delete_attr\fP (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_ATTRIBUTE\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509at_get0_data_by_OBJ\fP (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create_by_NID\fP (\fBX509_ATTRIBUTE\fP **\fBattr\fP, int \fBnid\fP, int atrtype, const \fBvoid\fP *\fBdata\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create_by_OBJ\fP (\fBX509_ATTRIBUTE\fP **\fBattr\fP, const \fBASN1_OBJECT\fP *\fBobj\fP, int atrtype, const \fBvoid\fP *\fBdata\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create_by_txt\fP (\fBX509_ATTRIBUTE\fP **\fBattr\fP, const char *atrname, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ATTRIBUTE_set1_object\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, const \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ATTRIBUTE_set1_data\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, int attrtype, const \fBvoid\fP *\fBdata\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ATTRIBUTE_count\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBX509_ATTRIBUTE_get0_object\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_ATTRIBUTE_get0_data\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, int idx, int atrtype, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_TYPE\fP * \fBX509_ATTRIBUTE_get0_type\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, int idx)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "STACK_OF (\fBX509_ATTRIBUTE\fP)"
+
+.PP
+Definition at line 122 of file x509_att\&.c\&.
+.SS "int X509_ATTRIBUTE_count (\fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 350 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create_by_NID (\fBX509_ATTRIBUTE\fP ** attr, int nid, int atrtype, const \fBvoid\fP * data, int len)"
+
+.PP
+Definition at line 219 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create_by_OBJ (\fBX509_ATTRIBUTE\fP ** attr, const \fBASN1_OBJECT\fP * obj, int atrtype, const \fBvoid\fP * data, int len)"
+
+.PP
+Definition at line 237 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create_by_txt (\fBX509_ATTRIBUTE\fP ** attr, const char * atrname, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 267 of file x509_att\&.c\&.
+.SS "\fBvoid\fP* X509_ATTRIBUTE_get0_data (\fBX509_ATTRIBUTE\fP * attr, int idx, int atrtype, \fBvoid\fP * data)"
+
+.PP
+Definition at line 366 of file x509_att\&.c\&.
+.SS "\fBASN1_OBJECT\fP* X509_ATTRIBUTE_get0_object (\fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 359 of file x509_att\&.c\&.
+.SS "\fBASN1_TYPE\fP* X509_ATTRIBUTE_get0_type (\fBX509_ATTRIBUTE\fP * attr, int idx)"
+
+.PP
+Definition at line 380 of file x509_att\&.c\&.
+.SS "int X509_ATTRIBUTE_set1_data (\fBX509_ATTRIBUTE\fP * attr, int attrtype, const \fBvoid\fP * data, int len)"
+
+.PP
+Definition at line 296 of file x509_att\&.c\&.
+.SS "int X509_ATTRIBUTE_set1_object (\fBX509_ATTRIBUTE\fP * attr, const \fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 287 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509at_delete_attr (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, int loc)"
+
+.PP
+Definition at line 112 of file x509_att\&.c\&.
+.SS "\fBvoid\fP* X509at_get0_data_by_OBJ (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, \fBASN1_OBJECT\fP * obj, int lastpos, int type)"
+
+.PP
+Definition at line 203 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509at_get_attr (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, int loc)"
+
+.PP
+Definition at line 104 of file x509_att\&.c\&.
+.SS "int X509at_get_attr_by_NID (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, int nid, int lastpos)"
+
+.PP
+Definition at line 73 of file x509_att\&.c\&.
+.SS "int X509at_get_attr_by_OBJ (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* sk, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 84 of file x509_att\&.c\&.
+.SS "int X509at_get_attr_count (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x)"
+
+.PP
+Definition at line 68 of file x509_att\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

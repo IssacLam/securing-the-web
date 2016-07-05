@@ -1,0 +1,105 @@
+.TH "s2n/libcrypto-build/openssl/demos/ssl/serv.cpp" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/demos/ssl/serv.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <memory\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/socket\&.h>\fP
+.br
+\fC#include <netinet/in\&.h>\fP
+.br
+\fC#include <arpa/inet\&.h>\fP
+.br
+\fC#include <netdb\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHOME\fP   '\&./'"
+.br
+.ti -1c
+.RI "#define \fBCERTF\fP   \fBHOME\fP 'foo\-cert\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBKEYF\fP   \fBHOME\fP  'foo\-cert\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBCHK_NULL\fP(\fBx\fP)   \fBif\fP ((\fBx\fP)==\fBNULL\fP) \fBexit\fP (1)"
+.br
+.ti -1c
+.RI "#define \fBCHK_ERR\fP(err,  s)   \fBif\fP ((err)==\-1) { perror(s); \fBexit\fP(1); }"
+.br
+.ti -1c
+.RI "#define \fBCHK_SSL\fP(err)   \fBif\fP ((err)==\-1) { \fBERR_print_errors_fp\fP(stderr); \fBexit\fP(2); }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP ()"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CERTF   \fBHOME\fP 'foo\-cert\&.pem'"
+
+.PP
+Definition at line 31 of file serv\&.cpp\&.
+.SS "#define CHK_ERR(err, s)   \fBif\fP ((err)==\-1) { perror(s); \fBexit\fP(1); }"
+
+.PP
+Definition at line 36 of file serv\&.cpp\&.
+.SS "#define CHK_NULL(\fBx\fP)   \fBif\fP ((\fBx\fP)==\fBNULL\fP) \fBexit\fP (1)"
+
+.PP
+Definition at line 35 of file serv\&.cpp\&.
+.SS "#define CHK_SSL(err)   \fBif\fP ((err)==\-1) { \fBERR_print_errors_fp\fP(stderr); \fBexit\fP(2); }"
+
+.PP
+Definition at line 37 of file serv\&.cpp\&.
+.SS "#define HOME   '\&./'"
+
+.PP
+Definition at line 29 of file serv\&.cpp\&.
+.SS "#define KEYF   \fBHOME\fP  'foo\-cert\&.pem'"
+
+.PP
+Definition at line 32 of file serv\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP main (\fBvoid\fP)"
+
+.PP
+Definition at line 39 of file serv\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,1802 @@
+.TH "s2n/libcrypto-root/include/openssl/pem.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/pem.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem2\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBPEM_Encode_Seal_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpem_recip_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpem_ctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPEM_BUFSIZE\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_UNDEF\fP   0"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_X509\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_X509_REQ\fP   2"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_CRL\fP   3"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_SSL_SESSION\fP   4"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PRIV_KEY\fP   10"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PRIV_RSA\fP   11"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PRIV_DSA\fP   12"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PRIV_DH\fP   13"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PUB_RSA\fP   14"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PUB_DSA\fP   15"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PUB_DH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_DHPARAMS\fP   17"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_DSAPARAMS\fP   18"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PRIV_RSA_PUBLIC\fP   19"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PRIV_ECDSA\fP   20"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_PUB_ECDSA\fP   21"
+.br
+.ti -1c
+.RI "#define \fBPEM_OBJ_ECPARAMETERS\fP   22"
+.br
+.ti -1c
+.RI "#define \fBPEM_ERROR\fP   30"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_DES_CBC\fP   40"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_IDEA_CBC\fP   45"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_DES_EDE\fP   50"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_DES_ECB\fP   60"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_RSA\fP   70"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_RSA_MD2\fP   80"
+.br
+.ti -1c
+.RI "#define \fBPEM_DEK_RSA_MD5\fP   90"
+.br
+.ti -1c
+.RI "#define \fBPEM_MD_MD2\fP   \fBNID_md2\fP"
+.br
+.ti -1c
+.RI "#define \fBPEM_MD_MD5\fP   \fBNID_md5\fP"
+.br
+.ti -1c
+.RI "#define \fBPEM_MD_SHA\fP   \fBNID_sha\fP"
+.br
+.ti -1c
+.RI "#define \fBPEM_MD_MD2_RSA\fP   \fBNID_md2WithRSAEncryption\fP"
+.br
+.ti -1c
+.RI "#define \fBPEM_MD_MD5_RSA\fP   \fBNID_md5WithRSAEncryption\fP"
+.br
+.ti -1c
+.RI "#define \fBPEM_MD_SHA_RSA\fP   \fBNID_sha1WithRSAEncryption\fP"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509_OLD\fP   'X509 CERTIFICATE'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509\fP   'CERTIFICATE'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509_PAIR\fP   'CERTIFICATE PAIR'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509_TRUSTED\fP   'TRUSTED CERTIFICATE'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509_REQ_OLD\fP   'NEW CERTIFICATE REQUEST'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509_REQ\fP   'CERTIFICATE REQUEST'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_X509_CRL\fP   'X509 CRL'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_EVP_PKEY\fP   'ANY PRIVATE \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_PUBLIC\fP   'PUBLIC \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_RSA\fP   'RSA PRIVATE \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_RSA_PUBLIC\fP   'RSA PUBLIC \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_DSA\fP   'DSA PRIVATE \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_DSA_PUBLIC\fP   'DSA PUBLIC \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_PKCS7\fP   'PKCS7'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_PKCS7_SIGNED\fP   'PKCS #7 SIGNED DATA'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_PKCS8\fP   'ENCRYPTED PRIVATE \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_PKCS8INF\fP   'PRIVATE \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_DHPARAMS\fP   'DH PARAMETERS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_DHXPARAMS\fP   'X9\&.42 \fBDH\fP PARAMETERS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_SSL_SESSION\fP   'SSL SESSION PARAMETERS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_DSAPARAMS\fP   'DSA PARAMETERS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_ECDSA_PUBLIC\fP   'ECDSA PUBLIC \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_ECPARAMETERS\fP   'EC PARAMETERS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_ECPRIVATEKEY\fP   'EC PRIVATE \fBKEY\fP'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_PARAMETERS\fP   'PARAMETERS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_CMS\fP   'CMS'"
+.br
+.ti -1c
+.RI "#define \fBPEM_TYPE_ENCRYPTED\fP   10"
+.br
+.ti -1c
+.RI "#define \fBPEM_TYPE_MIC_ONLY\fP   20"
+.br
+.ti -1c
+.RI "#define \fBPEM_TYPE_MIC_CLEAR\fP   30"
+.br
+.ti -1c
+.RI "#define \fBPEM_TYPE_CLEAR\fP   40"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_read_fp\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_fp\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_fp_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_cb_fp\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_cb_fp_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_read_bio\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_bio\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_bio_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_cb_bio\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_cb_bio_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_cb\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_write_cb_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_read\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_rw\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_rw_const\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_PEM_rw_cb\fP(name,  \fBtype\fP,  str,  asn1)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_read_fp\fP(name,  \fBtype\fP)   \fBtype\fP *PEM_read_##name(FILE *\fBfp\fP, \fBtype\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP);"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_fp\fP(name,  \fBtype\fP)   int PEM_write_##name(FILE *\fBfp\fP, \fBtype\fP *\fBx\fP);"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_fp_const\fP(name,  \fBtype\fP)   int PEM_write_##name(FILE *\fBfp\fP, const \fBtype\fP *\fBx\fP);"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_cb_fp\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_read_bio\fP(name,  \fBtype\fP)   \fBtype\fP *PEM_read_bio_##name(\fBBIO\fP *\fBbp\fP, \fBtype\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP);"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_bio\fP(name,  \fBtype\fP)   int PEM_write_bio_##name(\fBBIO\fP *\fBbp\fP, \fBtype\fP *\fBx\fP);"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_bio_const\fP(name,  \fBtype\fP)   int PEM_write_bio_##name(\fBBIO\fP *\fBbp\fP, const \fBtype\fP *\fBx\fP);"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_cb_bio\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_const\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_write_cb\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_read\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_rw\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_rw_const\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_PEM_rw_cb\fP(name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_B2I_DSS\fP   127"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_B2I_PVK_BIO\fP   128"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_B2I_RSA\fP   129"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_CHECK_BITLEN_DSA\fP   130"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_CHECK_BITLEN_RSA\fP   131"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_D2I_PKCS8PRIVATEKEY_BIO\fP   120"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_D2I_PKCS8PRIVATEKEY_FP\fP   121"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_B2I\fP   132"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_B2I_BIO\fP   133"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_BLOB_HEADER\fP   134"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_PK8PKEY\fP   126"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_PK8PKEY_FP\fP   125"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_PVK_BODY\fP   135"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_DO_PVK_HEADER\fP   136"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_I2B_PVK\fP   137"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_I2B_PVK_BIO\fP   138"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_LOAD_IV\fP   101"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_ASN1_READ\fP   102"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_ASN1_READ_BIO\fP   103"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_ASN1_WRITE\fP   104"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_ASN1_WRITE_BIO\fP   105"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_DEF_CALLBACK\fP   100"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_DO_HEADER\fP   106"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_F_PEM_WRITE_PKCS8PRIVATEKEY\fP   118"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_GET_EVP_CIPHER_INFO\fP   107"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_PK8PKEY\fP   119"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ\fP   108"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ_BIO\fP   109"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ_BIO_DHPARAMS\fP   141"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ_BIO_PARAMETERS\fP   140"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ_BIO_PRIVATEKEY\fP   123"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ_DHPARAMS\fP   142"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_READ_PRIVATEKEY\fP   124"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_SEALFINAL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_SEALINIT\fP   111"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_SIGNFINAL\fP   112"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_WRITE\fP   113"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_WRITE_BIO\fP   114"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_WRITE_PRIVATEKEY\fP   139"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_X509_INFO_READ\fP   115"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_X509_INFO_READ_BIO\fP   116"
+.br
+.ti -1c
+.RI "#define \fBPEM_F_PEM_X509_INFO_WRITE_BIO\fP   117"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_BASE64_DECODE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_DECRYPT\fP   101"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_END_LINE\fP   102"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_IV_CHARS\fP   103"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_MAGIC_NUMBER\fP   116"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_PASSWORD_READ\fP   104"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BAD_VERSION_NUMBER\fP   117"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_BIO_WRITE_FAILURE\fP   118"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_CIPHER_IS_NULL\fP   127"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_ERROR_CONVERTING_PRIVATE_KEY\fP   115"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_EXPECTING_PRIVATE_KEY_BLOB\fP   119"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_EXPECTING_PUBLIC_KEY_BLOB\fP   120"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_INCONSISTENT_HEADER\fP   121"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_KEYBLOB_HEADER_PARSE_ERROR\fP   122"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_KEYBLOB_TOO_SHORT\fP   123"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_NOT_DEK_INFO\fP   105"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_NOT_ENCRYPTED\fP   106"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_NOT_PROC_TYPE\fP   107"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_NO_START_LINE\fP   108"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_PROBLEMS_GETTING_PASSWORD\fP   109"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_PUBLIC_KEY_NO_RSA\fP   110"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_PVK_DATA_TOO_SHORT\fP   124"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_PVK_TOO_SHORT\fP   125"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_READ_KEY\fP   111"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_SHORT_HEADER\fP   112"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_UNSUPPORTED_CIPHER\fP   113"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_UNSUPPORTED_ENCRYPTION\fP   114"
+.br
+.ti -1c
+.RI "#define \fBPEM_R_UNSUPPORTED_KEY_COMPONENTS\fP   126"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBPEM_Encode_Seal_st\fP \fBPEM_ENCODE_SEAL_CTX\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpem_recip_st\fP \fBPEM_USER\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpem_ctx_st\fP \fBPEM_CTX\fP"
+.br
+.ti -1c
+.RI "typedef int \fBpem_password_cb\fP(char *buf, int size, int rwflag, \fBvoid\fP *userdata)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBPEM_get_EVP_CIPHER_INFO\fP (char *header, \fBEVP_CIPHER_INFO\fP *cipher)"
+.br
+.ti -1c
+.RI "int \fBPEM_do_header\fP (\fBEVP_CIPHER_INFO\fP *cipher, unsigned char *\fBdata\fP, long *\fBlen\fP, \fBpem_password_cb\fP *\fBcallback\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_read_bio\fP (\fBBIO\fP *\fBbp\fP, char **name, char **header, unsigned char **\fBdata\fP, long *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio\fP (\fBBIO\fP *\fBbp\fP, const char *name, const char *hdr, const unsigned char *\fBdata\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_bytes_read_bio\fP (unsigned char **pdata, long *plen, char **pnm, const char *name, \fBBIO\fP *\fBbp\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBPEM_ASN1_read_bio\fP (d2i_of_void *\fBd2i\fP, const char *name, \fBBIO\fP *\fBbp\fP, \fBvoid\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_ASN1_write_bio\fP (i2d_of_void *i2d, const char *name, \fBBIO\fP *\fBbp\fP, \fBvoid\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_INFO\fP)*PEM_X509_INFO_read_bio(\fBBIO\fP *\fBbp\fP"
+.br
+.ti -1c
+.RI "int \fBPEM_X509_INFO_write_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_INFO\fP *xi, \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *cd, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_read\fP (FILE *\fBfp\fP, char **name, char **header, unsigned char **\fBdata\fP, long *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write\fP (FILE *\fBfp\fP, const char *name, const char *hdr, const unsigned char *\fBdata\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBPEM_ASN1_read\fP (d2i_of_void *\fBd2i\fP, const char *name, FILE *\fBfp\fP, \fBvoid\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_ASN1_write\fP (i2d_of_void *i2d, const char *name, FILE *\fBfp\fP, \fBvoid\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcallback\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_SealInit\fP (\fBPEM_ENCODE_SEAL_CTX\fP *\fBctx\fP, \fBEVP_CIPHER\fP *\fBtype\fP, \fBEVP_MD\fP *md_type, unsigned char **ek, int *ekl, unsigned char *iv, \fBEVP_PKEY\fP **pubk, int npubk)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_SealUpdate\fP (\fBPEM_ENCODE_SEAL_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int *outl, unsigned char *\fBin\fP, int inl)"
+.br
+.ti -1c
+.RI "int \fBPEM_SealFinal\fP (\fBPEM_ENCODE_SEAL_CTX\fP *\fBctx\fP, unsigned char *sig, int *sigl, unsigned char *\fBout\fP, int *outl, \fBEVP_PKEY\fP *priv)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_SignInit\fP (\fBEVP_MD_CTX\fP *\fBctx\fP, \fBEVP_MD\fP *\fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_SignUpdate\fP (\fBEVP_MD_CTX\fP *\fBctx\fP, unsigned char *d, unsigned int cnt)"
+.br
+.ti -1c
+.RI "int \fBPEM_SignFinal\fP (\fBEVP_MD_CTX\fP *\fBctx\fP, unsigned char *sigret, unsigned int *siglen, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBPEM_def_callback\fP (char *buf, int \fBnum\fP, int w, \fBvoid\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_proc_type\fP (char *buf, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_dek_info\fP (char *buf, const char *\fBtype\fP, int \fBlen\fP, char *str)"
+.br
+.ti -1c
+.RI "\fBDECLARE_PEM_rw\fP (\fBX509\fP, \fBX509\fP) DECLARE_PEM_rw(X509_AUX"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBDECLARE_PEM_rw\fP (\fBX509_CERT_PAIR\fP, \fBX509_CERT_PAIR\fP) DECLARE_PEM_rw(\fBX509_REQ\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBDECLARE_PEM_write\fP (X509_REQ_NEW, \fBX509_REQ\fP) \fBDECLARE_PEM_rw\fP(\fBX509_CRL\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBDECLARE_PEM_rw\fP (\fBPKCS7\fP, \fBPKCS7\fP) DECLARE_PEM_rw(\fBNETSCAPE_CERT_SEQUENCE\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBDECLARE_PEM_rw\fP (PKCS8, \fBX509_SIG\fP) DECLARE_PEM_rw(\fBPKCS8_PRIV_KEY_INFO\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBDECLARE_PEM_rw_cb\fP (\fBRSAPrivateKey\fP, \fBRSA\fP) \fBDECLARE_PEM_rw_const\fP(RSAPublicKey"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDECLARE_PEM_rw\fP (RSA_PUBKEY, \fBRSA\fP) \fBDECLARE_PEM_rw_cb\fP(DSAPrivateKey"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDECLARE_PEM_rw\fP (DSA_PUBKEY, \fBDSA\fP) \fBDECLARE_PEM_rw_const\fP(DSAparams"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBDECLARE_PEM_rw_const\fP (ECPKParameters, \fBEC_GROUP\fP) \fBDECLARE_PEM_rw_cb\fP(ECPrivateKey"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDECLARE_PEM_rw\fP (EC_PUBKEY, \fBEC_KEY\fP) \fBDECLARE_PEM_rw_const\fP(DHparams"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBDECLARE_PEM_write_const\fP (DHxparams, \fBDH\fP) \fBDECLARE_PEM_rw_cb\fP(PrivateKey"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBDECLARE_PEM_rw\fP (PUBKEY, \fBEVP_PKEY\fP) int \fBPEM_write_bio_PKCS8PrivateKey_nid\fP(\fBBIO\fP *\fBbp\fP"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio_PKCS8PrivateKey\fP (\fBBIO\fP *, \fBEVP_PKEY\fP *, const \fBEVP_CIPHER\fP *, char *, int, \fBpem_password_cb\fP *, \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKey_nid_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBx\fP, int \fBnid\fP, char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PKCS8PrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKey_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKey_nid_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBx\fP, int \fBnid\fP, char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_PKCS8PrivateKey_nid\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBx\fP, int \fBnid\fP, char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PKCS8PrivateKey_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_PKCS8PrivateKey\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *cd, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBPEM_read_bio_Parameters\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio_Parameters\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PrivateKey\fP (const unsigned char **\fBin\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PublicKey\fP (const unsigned char **\fBin\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PrivateKey_bio\fP (\fBBIO\fP *\fBin\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PublicKey_bio\fP (\fBBIO\fP *\fBin\fP)"
+.br
+.ti -1c
+.RI "int \fBi2b_PrivateKey_bio\fP (\fBBIO\fP *\fBout\fP, \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "int \fBi2b_PublicKey_bio\fP (\fBBIO\fP *\fBout\fP, \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PVK_bio\fP (\fBBIO\fP *\fBin\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBi2b_PVK_bio\fP (\fBBIO\fP *\fBout\fP, \fBEVP_PKEY\fP *pk, int enclevel, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_PEM_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBpem_password_cb\fP * \fBcb\fP"
+.br
+.ti -1c
+.RI "\fBpem_password_cb\fP \fBvoid\fP * \fBu\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP * \fBx\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int \fBnid\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int char * \fBkstr\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int char int \fBklen\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DECLARE_PEM_read(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_read_bio(name, type) \
+        DECLARE_PEM_read_fp(name, type)
+.fi
+.PP
+Definition at line 375 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_read_bio(name, \fBtype\fP)   \fBtype\fP *PEM_read_bio_##name(\fBBIO\fP *\fBbp\fP, \fBtype\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP);"
+
+.PP
+Definition at line 346 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_read_fp(name, \fBtype\fP)   \fBtype\fP *PEM_read_##name(FILE *\fBfp\fP, \fBtype\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP);"
+
+.PP
+Definition at line 330 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_rw(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_read(name, type) \
+        DECLARE_PEM_write(name, type)
+.fi
+.PP
+Definition at line 378 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_rw_cb(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_read(name, type) \
+        DECLARE_PEM_write_cb(name, type)
+.fi
+.PP
+Definition at line 384 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_rw_const(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_read(name, type) \
+        DECLARE_PEM_write_const(name, type)
+.fi
+.PP
+Definition at line 381 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_write_bio(name, type) \
+        DECLARE_PEM_write_fp(name, type)
+.fi
+.PP
+Definition at line 366 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_bio(name, \fBtype\fP)   int PEM_write_bio_##name(\fBBIO\fP *\fBbp\fP, \fBtype\fP *\fBx\fP);"
+
+.PP
+Definition at line 349 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_bio_const(name, \fBtype\fP)   int PEM_write_bio_##name(\fBBIO\fP *\fBbp\fP, const \fBtype\fP *\fBx\fP);"
+
+.PP
+Definition at line 352 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_cb(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_write_cb_bio(name, type) \
+        DECLARE_PEM_write_cb_fp(name, type)
+.fi
+.PP
+Definition at line 372 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_cb_bio(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_bio_##name(BIO *bp, type *x, const EVP_CIPHER *enc, \
+             unsigned char *kstr, int klen, pem_password_cb *cb, void *u);
+.fi
+.PP
+Definition at line 355 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_cb_fp(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_##name(FILE *fp, type *x, const EVP_CIPHER *enc, \
+             unsigned char *kstr, int klen, pem_password_cb *cb, void *u);
+.fi
+.PP
+Definition at line 339 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_const(name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+DECLARE_PEM_write_bio_const(name, type) \
+        DECLARE_PEM_write_fp_const(name, type)
+.fi
+.PP
+Definition at line 369 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_fp(name, \fBtype\fP)   int PEM_write_##name(FILE *\fBfp\fP, \fBtype\fP *\fBx\fP);"
+
+.PP
+Definition at line 333 of file pem\&.h\&.
+.SS "#define DECLARE_PEM_write_fp_const(name, \fBtype\fP)   int PEM_write_##name(FILE *\fBfp\fP, const \fBtype\fP *\fBx\fP);"
+
+.PP
+Definition at line 336 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_read(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_read_bio(name, type, str, asn1) \
+        IMPLEMENT_PEM_read_fp(name, type, str, asn1)
+.fi
+.PP
+Definition at line 305 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_read_bio(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+type *PEM_read_bio_##name(BIO *bp, type **x, pem_password_cb *cb, void *u)\
+{ \
+return PEM_ASN1_read_bio((d2i_of_void *)d2i_##asn1, str,bp,(void **)x,cb,u); \
+}
+.fi
+.PP
+Definition at line 257 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_read_fp(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+type *PEM_read_##name(FILE *fp, type **x, pem_password_cb *cb, void *u)\
+{ \
+return PEM_ASN1_read((d2i_of_void *)d2i_##asn1, str,fp,(void **)x,cb,u); \
+}
+.fi
+.PP
+Definition at line 221 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_rw(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_read(name, type, str, asn1) \
+        IMPLEMENT_PEM_write(name, type, str, asn1)
+.fi
+.PP
+Definition at line 309 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_rw_cb(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_read(name, type, str, asn1) \
+        IMPLEMENT_PEM_write_cb(name, type, str, asn1)
+.fi
+.PP
+Definition at line 317 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_rw_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_read(name, type, str, asn1) \
+        IMPLEMENT_PEM_write_const(name, type, str, asn1)
+.fi
+.PP
+Definition at line 313 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_write_bio(name, type, str, asn1) \
+        IMPLEMENT_PEM_write_fp(name, type, str, asn1)
+.fi
+.PP
+Definition at line 289 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_bio(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_bio_##name(BIO *bp, type *x) \
+{ \
+return PEM_ASN1_write_bio((i2d_of_void *)i2d_##asn1,str,bp,x,NULL,NULL,0,NULL,NULL); \
+}
+.fi
+.PP
+Definition at line 263 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_bio_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_bio_##name(BIO *bp, const type *x) \
+{ \
+return PEM_ASN1_write_bio((i2d_of_void *)i2d_##asn1,str,bp,(void *)x,NULL,NULL,0,NULL,NULL); \
+}
+.fi
+.PP
+Definition at line 269 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_cb(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_write_cb_bio(name, type, str, asn1) \
+        IMPLEMENT_PEM_write_cb_fp(name, type, str, asn1)
+.fi
+.PP
+Definition at line 297 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_cb_bio(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_bio_##name(BIO *bp, type *x, const EVP_CIPHER *enc, \
+             unsigned char *kstr, int klen, pem_password_cb *cb, void *u) \
+        { \
+        return PEM_ASN1_write_bio((i2d_of_void *)i2d_##asn1,str,bp,x,enc,kstr,klen,cb,u); \
+        }
+.fi
+.PP
+Definition at line 275 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_cb_bio_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_bio_##name(BIO *bp, type *x, const EVP_CIPHER *enc, \
+             unsigned char *kstr, int klen, pem_password_cb *cb, void *u) \
+        { \
+        return PEM_ASN1_write_bio((i2d_of_void *)i2d_##asn1,str,bp,(void *)x,enc,kstr,klen,cb,u); \
+        }
+.fi
+.PP
+Definition at line 282 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_cb_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_write_cb_bio_const(name, type, str, asn1) \
+        IMPLEMENT_PEM_write_cb_fp_const(name, type, str, asn1)
+.fi
+.PP
+Definition at line 301 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_cb_fp(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_##name(FILE *fp, type *x, const EVP_CIPHER *enc, \
+             unsigned char *kstr, int klen, pem_password_cb *cb, \
+                  void *u) \
+        { \
+        return PEM_ASN1_write((i2d_of_void *)i2d_##asn1,str,fp,x,enc,kstr,klen,cb,u); \
+        }
+.fi
+.PP
+Definition at line 239 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_cb_fp_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_##name(FILE *fp, type *x, const EVP_CIPHER *enc, \
+             unsigned char *kstr, int klen, pem_password_cb *cb, \
+                  void *u) \
+        { \
+        return PEM_ASN1_write((i2d_of_void *)i2d_##asn1,str,fp,x,enc,kstr,klen,cb,u); \
+        }
+.fi
+.PP
+Definition at line 247 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_PEM_write_bio_const(name, type, str, asn1) \
+        IMPLEMENT_PEM_write_fp_const(name, type, str, asn1)
+.fi
+.PP
+Definition at line 293 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_fp(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_##name(FILE *fp, type *x) \
+{ \
+return PEM_ASN1_write((i2d_of_void *)i2d_##asn1,str,fp,x,NULL,NULL,0,NULL,NULL); \
+}
+.fi
+.PP
+Definition at line 227 of file pem\&.h\&.
+.SS "#define IMPLEMENT_PEM_write_fp_const(name, \fBtype\fP, str, asn1)"
+\fBValue:\fP
+.PP
+.nf
+int PEM_write_##name(FILE *fp, const type *x) \
+{ \
+return PEM_ASN1_write((i2d_of_void *)i2d_##asn1,str,fp,(void *)x,NULL,NULL,0,NULL,NULL); \
+}
+.fi
+.PP
+Definition at line 233 of file pem\&.h\&.
+.SS "#define PEM_BUFSIZE   1024"
+
+.PP
+Definition at line 77 of file pem\&.h\&.
+.SS "#define PEM_DEK_DES_CBC   40"
+
+.PP
+Definition at line 99 of file pem\&.h\&.
+.SS "#define PEM_DEK_DES_ECB   60"
+
+.PP
+Definition at line 102 of file pem\&.h\&.
+.SS "#define PEM_DEK_DES_EDE   50"
+
+.PP
+Definition at line 101 of file pem\&.h\&.
+.SS "#define PEM_DEK_IDEA_CBC   45"
+
+.PP
+Definition at line 100 of file pem\&.h\&.
+.SS "#define PEM_DEK_RSA   70"
+
+.PP
+Definition at line 103 of file pem\&.h\&.
+.SS "#define PEM_DEK_RSA_MD2   80"
+
+.PP
+Definition at line 104 of file pem\&.h\&.
+.SS "#define PEM_DEK_RSA_MD5   90"
+
+.PP
+Definition at line 105 of file pem\&.h\&.
+.SS "#define PEM_ERROR   30"
+
+.PP
+Definition at line 98 of file pem\&.h\&.
+.SS "#define PEM_F_B2I_DSS   127"
+
+.PP
+Definition at line 539 of file pem\&.h\&.
+.SS "#define PEM_F_B2I_PVK_BIO   128"
+
+.PP
+Definition at line 540 of file pem\&.h\&.
+.SS "#define PEM_F_B2I_RSA   129"
+
+.PP
+Definition at line 541 of file pem\&.h\&.
+.SS "#define PEM_F_CHECK_BITLEN_DSA   130"
+
+.PP
+Definition at line 542 of file pem\&.h\&.
+.SS "#define PEM_F_CHECK_BITLEN_RSA   131"
+
+.PP
+Definition at line 543 of file pem\&.h\&.
+.SS "#define PEM_F_D2I_PKCS8PRIVATEKEY_BIO   120"
+
+.PP
+Definition at line 544 of file pem\&.h\&.
+.SS "#define PEM_F_D2I_PKCS8PRIVATEKEY_FP   121"
+
+.PP
+Definition at line 545 of file pem\&.h\&.
+.SS "#define PEM_F_DO_B2I   132"
+
+.PP
+Definition at line 546 of file pem\&.h\&.
+.SS "#define PEM_F_DO_B2I_BIO   133"
+
+.PP
+Definition at line 547 of file pem\&.h\&.
+.SS "#define PEM_F_DO_BLOB_HEADER   134"
+
+.PP
+Definition at line 548 of file pem\&.h\&.
+.SS "#define PEM_F_DO_PK8PKEY   126"
+
+.PP
+Definition at line 549 of file pem\&.h\&.
+.SS "#define PEM_F_DO_PK8PKEY_FP   125"
+
+.PP
+Definition at line 550 of file pem\&.h\&.
+.SS "#define PEM_F_DO_PVK_BODY   135"
+
+.PP
+Definition at line 551 of file pem\&.h\&.
+.SS "#define PEM_F_DO_PVK_HEADER   136"
+
+.PP
+Definition at line 552 of file pem\&.h\&.
+.SS "#define PEM_F_I2B_PVK   137"
+
+.PP
+Definition at line 553 of file pem\&.h\&.
+.SS "#define PEM_F_I2B_PVK_BIO   138"
+
+.PP
+Definition at line 554 of file pem\&.h\&.
+.SS "#define PEM_F_LOAD_IV   101"
+
+.PP
+Definition at line 555 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_ASN1_READ   102"
+
+.PP
+Definition at line 556 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_ASN1_READ_BIO   103"
+
+.PP
+Definition at line 557 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_ASN1_WRITE   104"
+
+.PP
+Definition at line 558 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_ASN1_WRITE_BIO   105"
+
+.PP
+Definition at line 559 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_DEF_CALLBACK   100"
+
+.PP
+Definition at line 560 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_DO_HEADER   106"
+
+.PP
+Definition at line 561 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_F_PEM_WRITE_PKCS8PRIVATEKEY   118"
+
+.PP
+Definition at line 562 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_GET_EVP_CIPHER_INFO   107"
+
+.PP
+Definition at line 563 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_PK8PKEY   119"
+
+.PP
+Definition at line 564 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ   108"
+
+.PP
+Definition at line 565 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ_BIO   109"
+
+.PP
+Definition at line 566 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ_BIO_DHPARAMS   141"
+
+.PP
+Definition at line 567 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ_BIO_PARAMETERS   140"
+
+.PP
+Definition at line 568 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ_BIO_PRIVATEKEY   123"
+
+.PP
+Definition at line 569 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ_DHPARAMS   142"
+
+.PP
+Definition at line 570 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_READ_PRIVATEKEY   124"
+
+.PP
+Definition at line 571 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_SEALFINAL   110"
+
+.PP
+Definition at line 572 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_SEALINIT   111"
+
+.PP
+Definition at line 573 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_SIGNFINAL   112"
+
+.PP
+Definition at line 574 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_WRITE   113"
+
+.PP
+Definition at line 575 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_WRITE_BIO   114"
+
+.PP
+Definition at line 576 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_WRITE_PRIVATEKEY   139"
+
+.PP
+Definition at line 577 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_X509_INFO_READ   115"
+
+.PP
+Definition at line 578 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_X509_INFO_READ_BIO   116"
+
+.PP
+Definition at line 579 of file pem\&.h\&.
+.SS "#define PEM_F_PEM_X509_INFO_WRITE_BIO   117"
+
+.PP
+Definition at line 580 of file pem\&.h\&.
+.SS "#define PEM_MD_MD2   \fBNID_md2\fP"
+
+.PP
+Definition at line 107 of file pem\&.h\&.
+.SS "#define PEM_MD_MD2_RSA   \fBNID_md2WithRSAEncryption\fP"
+
+.PP
+Definition at line 110 of file pem\&.h\&.
+.SS "#define PEM_MD_MD5   \fBNID_md5\fP"
+
+.PP
+Definition at line 108 of file pem\&.h\&.
+.SS "#define PEM_MD_MD5_RSA   \fBNID_md5WithRSAEncryption\fP"
+
+.PP
+Definition at line 111 of file pem\&.h\&.
+.SS "#define PEM_MD_SHA   \fBNID_sha\fP"
+
+.PP
+Definition at line 109 of file pem\&.h\&.
+.SS "#define PEM_MD_SHA_RSA   \fBNID_sha1WithRSAEncryption\fP"
+
+.PP
+Definition at line 112 of file pem\&.h\&.
+.SS "#define PEM_OBJ_CRL   3"
+
+.PP
+Definition at line 82 of file pem\&.h\&.
+.SS "#define PEM_OBJ_DHPARAMS   17"
+
+.PP
+Definition at line 91 of file pem\&.h\&.
+.SS "#define PEM_OBJ_DSAPARAMS   18"
+
+.PP
+Definition at line 92 of file pem\&.h\&.
+.SS "#define PEM_OBJ_ECPARAMETERS   22"
+
+.PP
+Definition at line 96 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PRIV_DH   13"
+
+.PP
+Definition at line 87 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PRIV_DSA   12"
+
+.PP
+Definition at line 86 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PRIV_ECDSA   20"
+
+.PP
+Definition at line 94 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PRIV_KEY   10"
+
+.PP
+Definition at line 84 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PRIV_RSA   11"
+
+.PP
+Definition at line 85 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PRIV_RSA_PUBLIC   19"
+
+.PP
+Definition at line 93 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PUB_DH   16"
+
+.PP
+Definition at line 90 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PUB_DSA   15"
+
+.PP
+Definition at line 89 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PUB_ECDSA   21"
+
+.PP
+Definition at line 95 of file pem\&.h\&.
+.SS "#define PEM_OBJ_PUB_RSA   14"
+
+.PP
+Definition at line 88 of file pem\&.h\&.
+.SS "#define PEM_OBJ_SSL_SESSION   4"
+
+.PP
+Definition at line 83 of file pem\&.h\&.
+.SS "#define PEM_OBJ_UNDEF   0"
+
+.PP
+Definition at line 79 of file pem\&.h\&.
+.SS "#define PEM_OBJ_X509   1"
+
+.PP
+Definition at line 80 of file pem\&.h\&.
+.SS "#define PEM_OBJ_X509_REQ   2"
+
+.PP
+Definition at line 81 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_BASE64_DECODE   100"
+
+.PP
+Definition at line 583 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_DECRYPT   101"
+
+.PP
+Definition at line 584 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_END_LINE   102"
+
+.PP
+Definition at line 585 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_IV_CHARS   103"
+
+.PP
+Definition at line 586 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_MAGIC_NUMBER   116"
+
+.PP
+Definition at line 587 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_PASSWORD_READ   104"
+
+.PP
+Definition at line 588 of file pem\&.h\&.
+.SS "#define PEM_R_BAD_VERSION_NUMBER   117"
+
+.PP
+Definition at line 589 of file pem\&.h\&.
+.SS "#define PEM_R_BIO_WRITE_FAILURE   118"
+
+.PP
+Definition at line 590 of file pem\&.h\&.
+.SS "#define PEM_R_CIPHER_IS_NULL   127"
+
+.PP
+Definition at line 591 of file pem\&.h\&.
+.SS "#define PEM_R_ERROR_CONVERTING_PRIVATE_KEY   115"
+
+.PP
+Definition at line 592 of file pem\&.h\&.
+.SS "#define PEM_R_EXPECTING_PRIVATE_KEY_BLOB   119"
+
+.PP
+Definition at line 593 of file pem\&.h\&.
+.SS "#define PEM_R_EXPECTING_PUBLIC_KEY_BLOB   120"
+
+.PP
+Definition at line 594 of file pem\&.h\&.
+.SS "#define PEM_R_INCONSISTENT_HEADER   121"
+
+.PP
+Definition at line 595 of file pem\&.h\&.
+.SS "#define PEM_R_KEYBLOB_HEADER_PARSE_ERROR   122"
+
+.PP
+Definition at line 596 of file pem\&.h\&.
+.SS "#define PEM_R_KEYBLOB_TOO_SHORT   123"
+
+.PP
+Definition at line 597 of file pem\&.h\&.
+.SS "#define PEM_R_NO_START_LINE   108"
+
+.PP
+Definition at line 601 of file pem\&.h\&.
+.SS "#define PEM_R_NOT_DEK_INFO   105"
+
+.PP
+Definition at line 598 of file pem\&.h\&.
+.SS "#define PEM_R_NOT_ENCRYPTED   106"
+
+.PP
+Definition at line 599 of file pem\&.h\&.
+.SS "#define PEM_R_NOT_PROC_TYPE   107"
+
+.PP
+Definition at line 600 of file pem\&.h\&.
+.SS "#define PEM_R_PROBLEMS_GETTING_PASSWORD   109"
+
+.PP
+Definition at line 602 of file pem\&.h\&.
+.SS "#define PEM_R_PUBLIC_KEY_NO_RSA   110"
+
+.PP
+Definition at line 603 of file pem\&.h\&.
+.SS "#define PEM_R_PVK_DATA_TOO_SHORT   124"
+
+.PP
+Definition at line 604 of file pem\&.h\&.
+.SS "#define PEM_R_PVK_TOO_SHORT   125"
+
+.PP
+Definition at line 605 of file pem\&.h\&.
+.SS "#define PEM_R_READ_KEY   111"
+
+.PP
+Definition at line 606 of file pem\&.h\&.
+.SS "#define PEM_R_SHORT_HEADER   112"
+
+.PP
+Definition at line 607 of file pem\&.h\&.
+.SS "#define PEM_R_UNSUPPORTED_CIPHER   113"
+
+.PP
+Definition at line 608 of file pem\&.h\&.
+.SS "#define PEM_R_UNSUPPORTED_ENCRYPTION   114"
+
+.PP
+Definition at line 609 of file pem\&.h\&.
+.SS "#define PEM_R_UNSUPPORTED_KEY_COMPONENTS   126"
+
+.PP
+Definition at line 610 of file pem\&.h\&.
+.SS "#define PEM_STRING_CMS   'CMS'"
+
+.PP
+Definition at line 139 of file pem\&.h\&.
+.SS "#define PEM_STRING_DHPARAMS   'DH PARAMETERS'"
+
+.PP
+Definition at line 131 of file pem\&.h\&.
+.SS "#define PEM_STRING_DHXPARAMS   'X9\&.42 \fBDH\fP PARAMETERS'"
+
+.PP
+Definition at line 132 of file pem\&.h\&.
+.SS "#define PEM_STRING_DSA   'DSA PRIVATE \fBKEY\fP'"
+
+.PP
+Definition at line 125 of file pem\&.h\&.
+.SS "#define PEM_STRING_DSA_PUBLIC   'DSA PUBLIC \fBKEY\fP'"
+
+.PP
+Definition at line 126 of file pem\&.h\&.
+.SS "#define PEM_STRING_DSAPARAMS   'DSA PARAMETERS'"
+
+.PP
+Definition at line 134 of file pem\&.h\&.
+.SS "#define PEM_STRING_ECDSA_PUBLIC   'ECDSA PUBLIC \fBKEY\fP'"
+
+.PP
+Definition at line 135 of file pem\&.h\&.
+.SS "#define PEM_STRING_ECPARAMETERS   'EC PARAMETERS'"
+
+.PP
+Definition at line 136 of file pem\&.h\&.
+.SS "#define PEM_STRING_ECPRIVATEKEY   'EC PRIVATE \fBKEY\fP'"
+
+.PP
+Definition at line 137 of file pem\&.h\&.
+.SS "#define PEM_STRING_EVP_PKEY   'ANY PRIVATE \fBKEY\fP'"
+
+.PP
+Definition at line 121 of file pem\&.h\&.
+.SS "#define PEM_STRING_PARAMETERS   'PARAMETERS'"
+
+.PP
+Definition at line 138 of file pem\&.h\&.
+.SS "#define PEM_STRING_PKCS7   'PKCS7'"
+
+.PP
+Definition at line 127 of file pem\&.h\&.
+.SS "#define PEM_STRING_PKCS7_SIGNED   'PKCS #7 SIGNED DATA'"
+
+.PP
+Definition at line 128 of file pem\&.h\&.
+.SS "#define PEM_STRING_PKCS8   'ENCRYPTED PRIVATE \fBKEY\fP'"
+
+.PP
+Definition at line 129 of file pem\&.h\&.
+.SS "#define PEM_STRING_PKCS8INF   'PRIVATE \fBKEY\fP'"
+
+.PP
+Definition at line 130 of file pem\&.h\&.
+.SS "#define PEM_STRING_PUBLIC   'PUBLIC \fBKEY\fP'"
+
+.PP
+Definition at line 122 of file pem\&.h\&.
+.SS "#define PEM_STRING_RSA   'RSA PRIVATE \fBKEY\fP'"
+
+.PP
+Definition at line 123 of file pem\&.h\&.
+.SS "#define PEM_STRING_RSA_PUBLIC   'RSA PUBLIC \fBKEY\fP'"
+
+.PP
+Definition at line 124 of file pem\&.h\&.
+.SS "#define PEM_STRING_SSL_SESSION   'SSL SESSION PARAMETERS'"
+
+.PP
+Definition at line 133 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509   'CERTIFICATE'"
+
+.PP
+Definition at line 115 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509_CRL   'X509 CRL'"
+
+.PP
+Definition at line 120 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509_OLD   'X509 CERTIFICATE'"
+
+.PP
+Definition at line 114 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509_PAIR   'CERTIFICATE PAIR'"
+
+.PP
+Definition at line 116 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509_REQ   'CERTIFICATE REQUEST'"
+
+.PP
+Definition at line 119 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509_REQ_OLD   'NEW CERTIFICATE REQUEST'"
+
+.PP
+Definition at line 118 of file pem\&.h\&.
+.SS "#define PEM_STRING_X509_TRUSTED   'TRUSTED CERTIFICATE'"
+
+.PP
+Definition at line 117 of file pem\&.h\&.
+.SS "#define PEM_TYPE_CLEAR   40"
+
+.PP
+Definition at line 155 of file pem\&.h\&.
+.SS "#define PEM_TYPE_ENCRYPTED   10"
+
+.PP
+Definition at line 152 of file pem\&.h\&.
+.SS "#define PEM_TYPE_MIC_CLEAR   30"
+
+.PP
+Definition at line 154 of file pem\&.h\&.
+.SS "#define PEM_TYPE_MIC_ONLY   20"
+
+.PP
+Definition at line 153 of file pem\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBpem_ctx_st\fP  \fBPEM_CTX\fP"
+
+.SS "typedef struct \fBPEM_Encode_Seal_st\fP  \fBPEM_ENCODE_SEAL_CTX\fP"
+
+.SS "typedef int pem_password_cb(char *buf, int size, int rwflag, \fBvoid\fP *userdata)"
+
+.PP
+Definition at line 389 of file pem\&.h\&.
+.SS "typedef struct \fBpem_recip_st\fP  \fBPEM_USER\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBEVP_PKEY\fP* b2i_PrivateKey (const unsigned char ** in, long length)"
+
+.PP
+Definition at line 399 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PrivateKey_bio (\fBBIO\fP * in)"
+
+.PP
+Definition at line 409 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PublicKey (const unsigned char ** in, long length)"
+
+.PP
+Definition at line 404 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PublicKey_bio (\fBBIO\fP * in)"
+
+.PP
+Definition at line 414 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PVK_bio (\fBBIO\fP * in, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 755 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PKCS8PrivateKey_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 159 of file pem_pk8\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PKCS8PrivateKey_fp (FILE * fp, \fBEVP_PKEY\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 239 of file pem_pk8\&.c\&.
+.SS "DECLARE_PEM_rw (\fBX509\fP, \fBX509\fP)"
+
+.SS "\fBX509\fP DECLARE_PEM_rw (\fBX509_CERT_PAIR\fP, \fBX509_CERT_PAIR\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP DECLARE_PEM_rw (\fBPKCS7\fP, \fBPKCS7\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP DECLARE_PEM_rw (PKCS8, \fBX509_SIG\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP DECLARE_PEM_rw (RSA_PUBKEY, \fBRSA\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP DECLARE_PEM_rw (DSA_PUBKEY, \fBDSA\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP DECLARE_PEM_rw (EC_PUBKEY, \fBEC_KEY\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP DECLARE_PEM_rw (PUBKEY, \fBEVP_PKEY\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP DECLARE_PEM_rw_cb (\fBRSAPrivateKey\fP, \fBRSA\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP DECLARE_PEM_rw_const (ECPKParameters, \fBEC_GROUP\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP DECLARE_PEM_write (X509_REQ_NEW, \fBX509_REQ\fP)"
+
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP DECLARE_PEM_write_const (DHxparams, \fBDH\fP)"
+
+.SS "\fBvoid\fP ERR_load_PEM_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 159 of file pem_err\&.c\&.
+.SS "int i2b_PrivateKey_bio (\fBBIO\fP * out, \fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 608 of file pvkfmt\&.c\&.
+.SS "int i2b_PublicKey_bio (\fBBIO\fP * out, \fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 613 of file pvkfmt\&.c\&.
+.SS "int i2b_PVK_bio (\fBBIO\fP * out, \fBEVP_PKEY\fP * pk, int enclevel, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 869 of file pvkfmt\&.c\&.
+.SS "int i2d_PKCS8PrivateKey_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * x, const \fBEVP_CIPHER\fP * enc, char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 97 of file pem_pk8\&.c\&.
+.SS "int i2d_PKCS8PrivateKey_fp (FILE * fp, \fBEVP_PKEY\fP * x, const \fBEVP_CIPHER\fP * enc, char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 197 of file pem_pk8\&.c\&.
+.SS "int i2d_PKCS8PrivateKey_nid_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * x, int nid, char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 104 of file pem_pk8\&.c\&.
+.SS "int i2d_PKCS8PrivateKey_nid_fp (FILE * fp, \fBEVP_PKEY\fP * x, int nid, char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 203 of file pem_pk8\&.c\&.
+.SS "\fBvoid\fP* PEM_ASN1_read (d2i_of_void * d2i, const char * name, FILE * fp, \fBvoid\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 171 of file pem_lib\&.c\&.
+.SS "\fBvoid\fP* PEM_ASN1_read_bio (d2i_of_void * d2i, const char * name, \fBBIO\fP * bp, \fBvoid\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 70 of file pem_oth\&.c\&.
+.SS "int PEM_ASN1_write (i2d_of_void * i2d, const char * name, FILE * fp, \fBvoid\fP * x, const \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * callback, \fBvoid\fP * u)"
+
+.PP
+Definition at line 325 of file pem_lib\&.c\&.
+.SS "int PEM_ASN1_write_bio (i2d_of_void * i2d, const char * name, \fBBIO\fP * bp, \fBvoid\fP * x, const \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 343 of file pem_lib\&.c\&.
+.SS "int PEM_bytes_read_bio (unsigned char ** pdata, long * plen, char ** pnm, const char * name, \fBBIO\fP * bp, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 280 of file pem_lib\&.c\&.
+.SS "int PEM_def_callback (char * buf, int num, int w, \fBvoid\fP * key)"
+
+.PP
+Definition at line 85 of file pem_lib\&.c\&.
+.SS "\fBvoid\fP PEM_dek_info (char * buf, const char * type, int len, char * str)"
+
+.PP
+Definition at line 150 of file pem_lib\&.c\&.
+.SS "int PEM_do_header (\fBEVP_CIPHER_INFO\fP * cipher, unsigned char * data, long * len, \fBpem_password_cb\fP * callback, \fBvoid\fP * u)"
+
+.PP
+Definition at line 445 of file pem_lib\&.c\&.
+.SS "int PEM_get_EVP_CIPHER_INFO (char * header, \fBEVP_CIPHER_INFO\fP * cipher)"
+
+.PP
+Definition at line 495 of file pem_lib\&.c\&.
+.SS "\fBvoid\fP PEM_proc_type (char * buf, int type)"
+
+.PP
+Definition at line 132 of file pem_lib\&.c\&.
+.SS "int PEM_read (FILE * fp, char ** name, char ** header, unsigned char ** data, long * len)"
+
+.PP
+Definition at line 664 of file pem_lib\&.c\&.
+.SS "int PEM_read_bio (\fBBIO\fP * bp, char ** name, char ** header, unsigned char ** data, long * len)"
+
+.PP
+Definition at line 681 of file pem_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* PEM_read_bio_Parameters (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** x)"
+
+.PP
+Definition at line 163 of file pem_pkey\&.c\&.
+.SS "int PEM_SealFinal (\fBPEM_ENCODE_SEAL_CTX\fP * ctx, unsigned char * sig, int * sigl, unsigned char * out, int * outl, \fBEVP_PKEY\fP * priv)"
+
+.PP
+Definition at line 145 of file pem_seal\&.c\&.
+.SS "int PEM_SealInit (\fBPEM_ENCODE_SEAL_CTX\fP * ctx, \fBEVP_CIPHER\fP * type, \fBEVP_MD\fP * md_type, unsigned char ** ek, int * ekl, unsigned char * iv, \fBEVP_PKEY\fP ** pubk, int npubk)"
+
+.PP
+Definition at line 70 of file pem_seal\&.c\&.
+.SS "\fBvoid\fP PEM_SealUpdate (\fBPEM_ENCODE_SEAL_CTX\fP * ctx, unsigned char * out, int * outl, unsigned char * in, int inl)"
+
+.PP
+Definition at line 121 of file pem_seal\&.c\&.
+.SS "int PEM_SignFinal (\fBEVP_MD_CTX\fP * ctx, unsigned char * sigret, unsigned int * siglen, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 77 of file pem_sign\&.c\&.
+.SS "\fBvoid\fP PEM_SignInit (\fBEVP_MD_CTX\fP * ctx, \fBEVP_MD\fP * type)"
+
+.PP
+Definition at line 67 of file pem_sign\&.c\&.
+.SS "\fBvoid\fP PEM_SignUpdate (\fBEVP_MD_CTX\fP * ctx, unsigned char * d, unsigned int cnt)"
+
+.PP
+Definition at line 72 of file pem_sign\&.c\&.
+.SS "int PEM_write (FILE * fp, const char * name, const char * hdr, const unsigned char * data, long len)"
+
+.PP
+Definition at line 588 of file pem_lib\&.c\&.
+.SS "int PEM_write_bio (\fBBIO\fP * bp, const char * name, const char * hdr, const unsigned char * data, long len)"
+
+.PP
+Definition at line 605 of file pem_lib\&.c\&.
+.SS "int PEM_write_bio_Parameters (\fBBIO\fP * bp, \fBEVP_PKEY\fP * x)"
+
+.PP
+Definition at line 202 of file pem_pkey\&.c\&.
+.SS "int PEM_write_bio_PKCS8PrivateKey (\fBBIO\fP *, \fBEVP_PKEY\fP *, const \fBEVP_CIPHER\fP *, char *, int, \fBpem_password_cb\fP *, \fBvoid\fP *)"
+
+.PP
+Definition at line 90 of file pem_pk8\&.c\&.
+.SS "int PEM_write_PKCS8PrivateKey (FILE * fp, \fBEVP_PKEY\fP * x, const \fBEVP_CIPHER\fP * enc, char * kstr, int klen, \fBpem_password_cb\fP * cd, \fBvoid\fP * u)"
+
+.PP
+Definition at line 217 of file pem_pk8\&.c\&.
+.SS "int PEM_write_PKCS8PrivateKey_nid (FILE * fp, \fBEVP_PKEY\fP * x, int nid, char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 210 of file pem_pk8\&.c\&.
+.SS "int PEM_X509_INFO_write_bio (\fBBIO\fP * bp, \fBX509_INFO\fP * xi, \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * cd, \fBvoid\fP * u)"
+
+.PP
+Definition at line 307 of file pem_info\&.c\&.
+.SS "STACK_OF (\fBX509_INFO\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int char int \fBpem_password_cb\fP* cb"
+
+.PP
+Definition at line 414 of file pem\&.h\&.
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int char int klen"
+
+.PP
+Definition at line 483 of file pem\&.h\&.
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int char* kstr"
+
+.PP
+Definition at line 483 of file pem\&.h\&.
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int nid"
+
+.PP
+Definition at line 483 of file pem\&.h\&.
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP int char int \fBpem_password_cb\fP \fBvoid\fP* u"
+
+.PP
+Definition at line 414 of file pem\&.h\&.
+.SS "\fBX509\fP \fBX509_REQ\fP \fBX509_CRL\fP \fBNETSCAPE_CERT_SEQUENCE\fP \fBPKCS8_PRIV_KEY_INFO\fP \fBRSA\fP \fBDSA\fP \fBDSA\fP \fBEC_KEY\fP \fBDH\fP \fBEVP_PKEY\fP \fBEVP_PKEY\fP* x"
+
+.PP
+Definition at line 483 of file pem\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

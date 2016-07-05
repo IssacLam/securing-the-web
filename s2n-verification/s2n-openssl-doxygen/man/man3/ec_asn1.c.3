@@ -1,0 +1,281 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ec_asn1.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ec_asn1.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBx9_62_pentanomial_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx9_62_characteristic_two_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx9_62_fieldid_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx9_62_curve_st\fP"
+.br
+.ti -1c
+.RI "struct \fBec_parameters_st\fP"
+.br
+.ti -1c
+.RI "struct \fBecpk_parameters_st\fP"
+.br
+.ti -1c
+.RI "struct \fBec_privatekey_st\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBx9_62_pentanomial_st\fP \fBX9_62_PENTANOMIAL\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx9_62_characteristic_two_st\fP \fBX9_62_CHARACTERISTIC_TWO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx9_62_fieldid_st\fP \fBX9_62_FIELDID\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx9_62_curve_st\fP \fBX9_62_CURVE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBec_parameters_st\fP \fBECPARAMETERS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBec_privatekey_st\fP \fBEC_PRIVATEKEY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBEC_GROUP_get_basis_type\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_trinomial_basis\fP (const \fBEC_GROUP\fP *group, unsigned int *\fBk\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_pentanomial_basis\fP (const \fBEC_GROUP\fP *group, unsigned int *k1, unsigned int *k2, unsigned int *k3)"
+.br
+.ti -1c
+.RI "\fBASN1_SEQUENCE\fP (\fBX9_62_PENTANOMIAL\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_ADB\fP (\fBX9_62_CHARACTERISTIC_TWO\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_SEQUENCE\fP (\fBX9_62_CHARACTERISTIC_TWO\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_ADB\fP (\fBX9_62_FIELDID\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_SEQUENCE\fP (\fBX9_62_FIELDID\fP)"
+.br
+.ti -1c
+.RI "\fBEC_GROUP\fP * \fBd2i_ECPKParameters\fP (\fBEC_GROUP\fP **\fBa\fP, const unsigned char **\fBin\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECPKParameters\fP (const \fBEC_GROUP\fP *\fBa\fP, unsigned char **\fBout\fP)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_ECPrivateKey\fP (\fBEC_KEY\fP **\fBa\fP, const unsigned char **\fBin\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECPrivateKey\fP (\fBEC_KEY\fP *\fBa\fP, unsigned char **\fBout\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECParameters\fP (\fBEC_KEY\fP *\fBa\fP, unsigned char **\fBout\fP)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_ECParameters\fP (\fBEC_KEY\fP **\fBa\fP, const unsigned char **\fBin\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBo2i_ECPublicKey\fP (\fBEC_KEY\fP **\fBa\fP, const unsigned char **\fBin\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBi2o_ECPublicKey\fP (\fBEC_KEY\fP *\fBa\fP, unsigned char **\fBout\fP)"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBec_privatekey_st\fP  \fBEC_PRIVATEKEY\fP"
+
+.SS "typedef struct \fBec_parameters_st\fP  \fBECPARAMETERS\fP"
+
+.SS "typedef struct \fBx9_62_characteristic_two_st\fP  \fBX9_62_CHARACTERISTIC_TWO\fP"
+
+.SS "typedef struct \fBx9_62_curve_st\fP  \fBX9_62_CURVE\fP"
+
+.SS "typedef struct \fBx9_62_fieldid_st\fP  \fBX9_62_FIELDID\fP"
+
+.SS "typedef struct \fBx9_62_pentanomial_st\fP  \fBX9_62_PENTANOMIAL\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBASN1_ADB\fP (\fBX9_62_CHARACTERISTIC_TWO\fP)"
+
+.SS "\fBASN1_ADB\fP (\fBX9_62_FIELDID\fP)"
+
+.SS "ASN1_SEQUENCE (\fBX9_62_PENTANOMIAL\fP)"
+
+.SS "ASN1_SEQUENCE (\fBX9_62_CHARACTERISTIC_TWO\fP)"
+
+.SS "ASN1_SEQUENCE (\fBX9_62_FIELDID\fP)"
+
+.SS "\fBEC_KEY\fP* d2i_ECParameters (\fBEC_KEY\fP ** key, const unsigned char ** in, long len)"
+Decodes ec parameter from a memory buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP a pointer to a EC_KEY object which should be used (or NULL) 
+.br
+\fIin\fP pointer to memory with the DER encoded ec parameters 
+.br
+\fIlen\fP length of the DER encoded ec parameters 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a EC_KEY object with the decoded parameters or NULL if an error occurred\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1233 of file ec_asn1\&.c\&.
+.SS "\fBEC_GROUP\fP* d2i_ECPKParameters (\fBEC_GROUP\fP ** a, const unsigned char ** in, long len)"
+
+.PP
+Definition at line 969 of file ec_asn1\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_ECPrivateKey (\fBEC_KEY\fP ** key, const unsigned char ** in, long len)"
+Decodes a private key from a memory buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP a pointer to a EC_KEY object which should be used (or NULL) 
+.br
+\fIin\fP pointer to memory with the DER encoded private key 
+.br
+\fIlen\fP length of the DER encoded private key 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the decoded private key or NULL if an error occurred\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1016 of file ec_asn1\&.c\&.
+.SS "int EC_GROUP_get_basis_type (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 65 of file ec_asn1\&.c\&.
+.SS "int EC_GROUP_get_pentanomial_basis (const \fBEC_GROUP\fP * group, unsigned int * k1, unsigned int * k2, unsigned int * k3)"
+
+.PP
+Definition at line 107 of file ec_asn1\&.c\&.
+.SS "int EC_GROUP_get_trinomial_basis (const \fBEC_GROUP\fP * group, unsigned int * k)"
+
+.PP
+Definition at line 87 of file ec_asn1\&.c\&.
+.SS "int i2d_ECParameters (\fBEC_KEY\fP * key, unsigned char ** out)"
+Encodes ec parameter and stores the result in a buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP the EC_KEY object with ec paramters to encode 
+.br
+\fIout\fP the buffer for the result (if NULL the function returns number of bytes needed)\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occurred\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1224 of file ec_asn1\&.c\&.
+.SS "int i2d_ECPKParameters (const \fBEC_GROUP\fP * a, unsigned char ** out)"
+
+.PP
+Definition at line 997 of file ec_asn1\&.c\&.
+.SS "int i2d_ECPrivateKey (\fBEC_KEY\fP * key, unsigned char ** out)"
+Encodes a private key object and stores the result in a buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP the EC_KEY object to encode 
+.br
+\fIout\fP the buffer for the result (if NULL the function returns number of bytes needed)\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occurred\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1117 of file ec_asn1\&.c\&.
+.SS "int i2o_ECPublicKey (\fBEC_KEY\fP * key, unsigned char ** out)"
+Encodes a ec public key in an octet string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP the EC_KEY object with the public key 
+.br
+\fIout\fP the buffer for the result (if NULL the function returns number of bytes needed)\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occurred 
+.RE
+.PP
+
+.PP
+Definition at line 1290 of file ec_asn1\&.c\&.
+.SS "\fBEC_KEY\fP* o2i_ECPublicKey (\fBEC_KEY\fP ** key, const unsigned char ** in, long len)"
+Decodes a ec public key from a octet string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP a pointer to a EC_KEY object which should be used 
+.br
+\fIin\fP memory buffer with the encoded public key 
+.br
+\fIlen\fP length of the encoded public key 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+EC_KEY object with decoded public key or NULL if an error occurred\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1263 of file ec_asn1\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

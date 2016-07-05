@@ -1,0 +1,188 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ts/ts_rsp_sign.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ts/ts_rsp_sign.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/ts\&.h>\fP
+.br
+\fC#include <openssl/pkcs7\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTS_RESP_CTX_accuracy_free\fP(\fBctx\fP)                "
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTS_RESP_CTX\fP * \fBTS_RESP_CTX_new\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTS_RESP_CTX_free\fP (\fBTS_RESP_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_signer_cert\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBX509\fP *signer)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_signer_key\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBEVP_PKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_def_policy\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBASN1_OBJECT\fP *def_policy)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_certs\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBSTACK_OF\fP(\fBX509\fP)*certs)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_add_policy\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBASN1_OBJECT\fP *policy)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_add_md\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_accuracy\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, int secs, int millis, int micros)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTS_RESP_CTX_add_flags\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTS_RESP_CTX_set_serial_cb\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBTS_serial_cb\fP \fBcb\fP, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTS_RESP_CTX_set_time_cb\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBTS_time_cb\fP \fBcb\fP, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTS_RESP_CTX_set_extension_cb\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBTS_extension_cb\fP \fBcb\fP, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_status_info\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, int status, const char *\fBtext\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_status_info_cond\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, int status, const char *\fBtext\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_add_failure_info\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, int failure)"
+.br
+.ti -1c
+.RI "\fBTS_REQ\fP * \fBTS_RESP_CTX_get_request\fP (\fBTS_RESP_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBTS_TST_INFO\fP * \fBTS_RESP_CTX_get_tst_info\fP (\fBTS_RESP_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_CTX_set_clock_precision_digits\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, unsigned precision)"
+.br
+.ti -1c
+.RI "\fBTS_RESP\fP * \fBTS_RESP_create_response\fP (\fBTS_RESP_CTX\fP *\fBctx\fP, \fBBIO\fP *req_bio)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TS_RESP_CTX_accuracy_free(\fBctx\fP)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_INTEGER_free(ctx->seconds);        \
+        ctx->seconds = NULL;                    \
+        ASN1_INTEGER_free(ctx->millis);         \
+        ctx->millis = NULL;                     \
+        ASN1_INTEGER_free(ctx->micros);         \
+        ctx->micros = NULL;
+.fi
+.PP
+Definition at line 290 of file ts_rsp_sign\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBTS_RESP\fP* TS_RESP_create_response (\fBTS_RESP_CTX\fP * ctx, \fBBIO\fP * req_bio)"
+
+.PP
+Definition at line 422 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_add_failure_info (\fBTS_RESP_CTX\fP * ctx, int failure)"
+
+.PP
+Definition at line 389 of file ts_rsp_sign\&.c\&.
+.SS "\fBvoid\fP TS_RESP_CTX_add_flags (\fBTS_RESP_CTX\fP * ctx, int flags)"
+
+.PP
+Definition at line 320 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_add_md (\fBTS_RESP_CTX\fP * ctx, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 275 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_add_policy (\fBTS_RESP_CTX\fP * ctx, \fBASN1_OBJECT\fP * policy)"
+
+.PP
+Definition at line 256 of file ts_rsp_sign\&.c\&.
+.SS "\fBvoid\fP TS_RESP_CTX_free (\fBTS_RESP_CTX\fP * ctx)"
+
+.PP
+Definition at line 186 of file ts_rsp_sign\&.c\&.
+.SS "\fBTS_REQ\fP* TS_RESP_CTX_get_request (\fBTS_RESP_CTX\fP * ctx)"
+
+.PP
+Definition at line 402 of file ts_rsp_sign\&.c\&.
+.SS "\fBTS_TST_INFO\fP* TS_RESP_CTX_get_tst_info (\fBTS_RESP_CTX\fP * ctx)"
+
+.PP
+Definition at line 407 of file ts_rsp_sign\&.c\&.
+.SS "\fBTS_RESP_CTX\fP* TS_RESP_CTX_new (\fBvoid\fP)"
+
+.PP
+Definition at line 168 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_accuracy (\fBTS_RESP_CTX\fP * ctx, int secs, int millis, int micros)"
+
+.PP
+Definition at line 298 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_certs (\fBTS_RESP_CTX\fP * ctx, \fBSTACK_OF\fP(\fBX509\fP)* certs)"
+
+.PP
+Definition at line 239 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_clock_precision_digits (\fBTS_RESP_CTX\fP * ctx, unsigned precision)"
+
+.PP
+Definition at line 412 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_def_policy (\fBTS_RESP_CTX\fP * ctx, \fBASN1_OBJECT\fP * def_policy)"
+
+.PP
+Definition at line 227 of file ts_rsp_sign\&.c\&.
+.SS "\fBvoid\fP TS_RESP_CTX_set_extension_cb (\fBTS_RESP_CTX\fP * ctx, \fBTS_extension_cb\fP cb, \fBvoid\fP * data)"
+
+.PP
+Definition at line 337 of file ts_rsp_sign\&.c\&.
+.SS "\fBvoid\fP TS_RESP_CTX_set_serial_cb (\fBTS_RESP_CTX\fP * ctx, \fBTS_serial_cb\fP cb, \fBvoid\fP * data)"
+
+.PP
+Definition at line 325 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_signer_cert (\fBTS_RESP_CTX\fP * ctx, \fBX509\fP * signer)"
+
+.PP
+Definition at line 203 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_signer_key (\fBTS_RESP_CTX\fP * ctx, \fBEVP_PKEY\fP * key)"
+
+.PP
+Definition at line 217 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_status_info (\fBTS_RESP_CTX\fP * ctx, int status, const char * text)"
+
+.PP
+Definition at line 344 of file ts_rsp_sign\&.c\&.
+.SS "int TS_RESP_CTX_set_status_info_cond (\fBTS_RESP_CTX\fP * ctx, int status, const char * text)"
+
+.PP
+Definition at line 376 of file ts_rsp_sign\&.c\&.
+.SS "\fBvoid\fP TS_RESP_CTX_set_time_cb (\fBTS_RESP_CTX\fP * ctx, \fBTS_time_cb\fP cb, \fBvoid\fP * data)"
+
+.PP
+Definition at line 331 of file ts_rsp_sign\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

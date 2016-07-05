@@ -1,0 +1,402 @@
+.TH "s2n/tls/s2n_tls_parameters.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/tls/s2n_tls_parameters.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS_NULL_WITH_NULL_NULL\fP   0x00, 0x00"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_AES_256_CBC_SHA256\fP   0x00, 0x3D"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_AES_256_CBC_SHA\fP   0x00, 0x35"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_AES_128_CBC_SHA256\fP   0x00, 0x3C"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_AES_128_CBC_SHA\fP   0x00, 0x2F"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_3DES_EDE_CBC_SHA\fP   0x00, 0x0A"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_RC4_128_MD5\fP   0x00, 0x04"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_RC4_128_SHA\fP   0x00, 0x05"
+.br
+.ti -1c
+.RI "#define \fBTLS_DHE_RSA_WITH_AES_128_CBC_SHA\fP   0x00, 0x33"
+.br
+.ti -1c
+.RI "#define \fBTLS_DHE_RSA_WITH_AES_128_CBC_SHA256\fP   0x00, 0x67"
+.br
+.ti -1c
+.RI "#define \fBTLS_DHE_RSA_WITH_AES_256_CBC_SHA\fP   0x00, 0x39"
+.br
+.ti -1c
+.RI "#define \fBTLS_DHE_RSA_WITH_AES_256_CBC_SHA256\fP   0x00, 0x6B"
+.br
+.ti -1c
+.RI "#define \fBTLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA\fP   0x00, 0x16"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_AES_128_CBC_SHA\fP   0xC0, 0x13"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256\fP   0xC0, 0x27"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_AES_256_CBC_SHA\fP   0xC0, 0x14"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384\fP   0xC0, 0x28"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA\fP   0xC0, 0x12"
+.br
+.ti -1c
+.RI "#define \fBTLS_RSA_WITH_AES_128_GCM_SHA256\fP   0x00, 0x9C"
+.br
+.ti -1c
+.RI "#define \fBTLS_DHE_RSA_WITH_AES_128_GCM_SHA256\fP   0x00, 0x9E"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256\fP   0xC0, 0x2F"
+.br
+.ti -1c
+.RI "#define \fBTLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384\fP   0xC0, 0x30"
+.br
+.ti -1c
+.RI "#define \fBTLS_FALLBACK_SCSV\fP   0x56, 0x00"
+.br
+.ti -1c
+.RI "#define \fBTLS_EXTENSION_SERVER_NAME\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLS_EXTENSION_STATUS_REQUEST\fP   5"
+.br
+.ti -1c
+.RI "#define \fBTLS_EXTENSION_ELLIPTIC_CURVES\fP   10"
+.br
+.ti -1c
+.RI "#define \fBTLS_EXTENSION_EC_POINT_FORMATS\fP   11"
+.br
+.ti -1c
+.RI "#define \fBTLS_EXTENSION_SIGNATURE_ALGORITHMS\fP   13"
+.br
+.ti -1c
+.RI "#define \fBTLS_EXTENSION_ALPN\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLS_SIGNATURE_ALGORITHM_RSA\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLS_HASH_ALGORITHM_MD5\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLS_HASH_ALGORITHM_SHA1\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLS_HASH_ALGORITHM_SHA224\fP   3"
+.br
+.ti -1c
+.RI "#define \fBTLS_HASH_ALGORITHM_SHA256\fP   4"
+.br
+.ti -1c
+.RI "#define \fBTLS_HASH_ALGORITHM_SHA384\fP   5"
+.br
+.ti -1c
+.RI "#define \fBTLS_HASH_ALGORITHM_SHA512\fP   6"
+.br
+.ti -1c
+.RI "#define \fBTLS_CHANGE_CIPHER_SPEC\fP   20"
+.br
+.ti -1c
+.RI "#define \fBTLS_ALERT\fP   21"
+.br
+.ti -1c
+.RI "#define \fBTLS_HANDSHAKE\fP   22"
+.br
+.ti -1c
+.RI "#define \fBTLS_APPLICATION_DATA\fP   23"
+.br
+.ti -1c
+.RI "#define \fBTLS_EC_CURVE_SECP_256_R1\fP   23"
+.br
+.ti -1c
+.RI "#define \fBTLS_EC_CURVE_SECP_384_R1\fP   24"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS_RECORD_HEADER_LENGTH\fP   5"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS_MAXIMUM_FRAGMENT_LENGTH\fP   16384"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS_MAXIMUM_RECORD_LENGTH\fP   (\fBS2N_TLS_MAXIMUM_FRAGMENT_LENGTH\fP + \fBS2N_TLS_RECORD_HEADER_LENGTH\fP)"
+.br
+.ti -1c
+.RI "#define \fBS2N_SSL2_RECORD_HEADER_LENGTH\fP   2"
+.br
+.ti -1c
+.RI "#define \fBS2N_SSL2_MAXIMUM_MESSAGE_LENGTH\fP   16383"
+.br
+.ti -1c
+.RI "#define \fBS2N_SSL2_MAXIMUM_RECORD_LENGTH\fP   (\fBS2N_SSL2_MAXIMUM_MESSAGE_LENGTH\fP + \fBS2N_SSL2_RECORD_HEADER_LENGTH\fP)"
+.br
+.ti -1c
+.RI "#define \fBS2N_SMALL_RECORD_LENGTH\fP   (1500 \- 20 \- 20 \- 20)"
+.br
+.ti -1c
+.RI "#define \fBS2N_SMALL_FRAGMENT_LENGTH\fP   (\fBS2N_SMALL_RECORD_LENGTH\fP \- \fBS2N_TLS_RECORD_HEADER_LENGTH\fP)"
+.br
+.ti -1c
+.RI "#define \fBS2N_LARGE_RECORD_LENGTH\fP   \fBS2N_TLS_MAXIMUM_RECORD_LENGTH\fP"
+.br
+.ti -1c
+.RI "#define \fBS2N_LARGE_FRAGMENT_LENGTH\fP   \fBS2N_TLS_MAXIMUM_FRAGMENT_LENGTH\fP"
+.br
+.ti -1c
+.RI "#define \fBS2N_MAXIMUM_HANDSHAKE_MESSAGE_LENGTH\fP   (64 * 1024)"
+.br
+.ti -1c
+.RI "#define \fBS2N_ALERT_LENGTH\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLS_HANDSHAKE_HEADER_LENGTH\fP   4"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_ALERT_LENGTH   2"
+
+.PP
+Definition at line 107 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_LARGE_FRAGMENT_LENGTH   \fBS2N_TLS_MAXIMUM_FRAGMENT_LENGTH\fP"
+
+.PP
+Definition at line 101 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_LARGE_RECORD_LENGTH   \fBS2N_TLS_MAXIMUM_RECORD_LENGTH\fP"
+
+.PP
+Definition at line 100 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_MAXIMUM_HANDSHAKE_MESSAGE_LENGTH   (64 * 1024)"
+
+.PP
+Definition at line 104 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_SMALL_FRAGMENT_LENGTH   (\fBS2N_SMALL_RECORD_LENGTH\fP \- \fBS2N_TLS_RECORD_HEADER_LENGTH\fP)"
+
+.PP
+Definition at line 99 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_SMALL_RECORD_LENGTH   (1500 \- 20 \- 20 \- 20)"
+
+.PP
+Definition at line 98 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_SSL2_MAXIMUM_MESSAGE_LENGTH   16383"
+
+.PP
+Definition at line 89 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_SSL2_MAXIMUM_RECORD_LENGTH   (\fBS2N_SSL2_MAXIMUM_MESSAGE_LENGTH\fP + \fBS2N_SSL2_RECORD_HEADER_LENGTH\fP)"
+
+.PP
+Definition at line 90 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_SSL2_RECORD_HEADER_LENGTH   2"
+
+.PP
+Definition at line 88 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_TLS_MAXIMUM_FRAGMENT_LENGTH   16384"
+
+.PP
+Definition at line 80 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_TLS_MAXIMUM_RECORD_LENGTH   (\fBS2N_TLS_MAXIMUM_FRAGMENT_LENGTH\fP + \fBS2N_TLS_RECORD_HEADER_LENGTH\fP)"
+
+.PP
+Definition at line 81 of file s2n_tls_parameters\&.h\&.
+.SS "#define S2N_TLS_RECORD_HEADER_LENGTH   5"
+
+.PP
+Definition at line 79 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ALERT   21"
+
+.PP
+Definition at line 67 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_APPLICATION_DATA   23"
+
+.PP
+Definition at line 69 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_CHANGE_CIPHER_SPEC   20"
+
+.PP
+Definition at line 66 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA   0x00, 0x16"
+
+.PP
+Definition at line 32 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_DHE_RSA_WITH_AES_128_CBC_SHA   0x00, 0x33"
+
+.PP
+Definition at line 28 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_DHE_RSA_WITH_AES_128_CBC_SHA256   0x00, 0x67"
+
+.PP
+Definition at line 29 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_DHE_RSA_WITH_AES_128_GCM_SHA256   0x00, 0x9E"
+
+.PP
+Definition at line 41 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_DHE_RSA_WITH_AES_256_CBC_SHA   0x00, 0x39"
+
+.PP
+Definition at line 30 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_DHE_RSA_WITH_AES_256_CBC_SHA256   0x00, 0x6B"
+
+.PP
+Definition at line 31 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EC_CURVE_SECP_256_R1   23"
+
+.PP
+Definition at line 72 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EC_CURVE_SECP_384_R1   24"
+
+.PP
+Definition at line 73 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA   0xC0, 0x12"
+
+.PP
+Definition at line 38 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA   0xC0, 0x13"
+
+.PP
+Definition at line 34 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256   0xC0, 0x27"
+
+.PP
+Definition at line 35 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256   0xC0, 0x2F"
+
+.PP
+Definition at line 42 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA   0xC0, 0x14"
+
+.PP
+Definition at line 36 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384   0xC0, 0x28"
+
+.PP
+Definition at line 37 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384   0xC0, 0x30"
+
+.PP
+Definition at line 43 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EXTENSION_ALPN   16"
+
+.PP
+Definition at line 54 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EXTENSION_EC_POINT_FORMATS   11"
+
+.PP
+Definition at line 52 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EXTENSION_ELLIPTIC_CURVES   10"
+
+.PP
+Definition at line 51 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EXTENSION_SERVER_NAME   0"
+
+.PP
+Definition at line 49 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EXTENSION_SIGNATURE_ALGORITHMS   13"
+
+.PP
+Definition at line 53 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_EXTENSION_STATUS_REQUEST   5"
+
+.PP
+Definition at line 50 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_FALLBACK_SCSV   0x56, 0x00"
+
+.PP
+Definition at line 46 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HANDSHAKE   22"
+
+.PP
+Definition at line 68 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HANDSHAKE_HEADER_LENGTH   4"
+
+.PP
+Definition at line 110 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HASH_ALGORITHM_MD5   1"
+
+.PP
+Definition at line 58 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HASH_ALGORITHM_SHA1   2"
+
+.PP
+Definition at line 59 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HASH_ALGORITHM_SHA224   3"
+
+.PP
+Definition at line 60 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HASH_ALGORITHM_SHA256   4"
+
+.PP
+Definition at line 61 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HASH_ALGORITHM_SHA384   5"
+
+.PP
+Definition at line 62 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_HASH_ALGORITHM_SHA512   6"
+
+.PP
+Definition at line 63 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_NULL_WITH_NULL_NULL   0x00, 0x00"
+
+.PP
+Definition at line 19 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_3DES_EDE_CBC_SHA   0x00, 0x0A"
+
+.PP
+Definition at line 24 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_AES_128_CBC_SHA   0x00, 0x2F"
+
+.PP
+Definition at line 23 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_AES_128_CBC_SHA256   0x00, 0x3C"
+
+.PP
+Definition at line 22 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_AES_128_GCM_SHA256   0x00, 0x9C"
+
+.PP
+Definition at line 40 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_AES_256_CBC_SHA   0x00, 0x35"
+
+.PP
+Definition at line 21 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_AES_256_CBC_SHA256   0x00, 0x3D"
+
+.PP
+Definition at line 20 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_RC4_128_MD5   0x00, 0x04"
+
+.PP
+Definition at line 25 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_RSA_WITH_RC4_128_SHA   0x00, 0x05"
+
+.PP
+Definition at line 26 of file s2n_tls_parameters\&.h\&.
+.SS "#define TLS_SIGNATURE_ALGORITHM_RSA   1"
+
+.PP
+Definition at line 57 of file s2n_tls_parameters\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,131 @@
+.TH "s2n/libcrypto-build/openssl/crypto/lhash/lhash.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/lhash/lhash.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMIN_NODES\fP   16"
+.br
+.ti -1c
+.RI "#define \fBUP_LOAD\fP   (2*\fBLH_LOAD_MULT\fP) /* load times 256 (default 2) */"
+.br
+.ti -1c
+.RI "#define \fBDOWN_LOAD\fP   (\fBLH_LOAD_MULT\fP) /* load times 256 (default 1) */"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB_LHASH\fP * \fBlh_new\fP (\fBLHASH_HASH_FN_TYPE\fP \fBh\fP, \fBLHASH_COMP_FN_TYPE\fP \fBc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_free\fP (\fB_LHASH\fP *lh)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlh_insert\fP (\fB_LHASH\fP *lh, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlh_delete\fP (\fB_LHASH\fP *lh, const \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlh_retrieve\fP (\fB_LHASH\fP *lh, const \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_doall\fP (\fB_LHASH\fP *lh, \fBLHASH_DOALL_FN_TYPE\fP \fBfunc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_doall_arg\fP (\fB_LHASH\fP *lh, \fBLHASH_DOALL_ARG_FN_TYPE\fP \fBfunc\fP, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBlh_strhash\fP (const char *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBlh_num_items\fP (const \fB_LHASH\fP *lh)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBlh_version\fP [] = 'lhash' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DOWN_LOAD   (\fBLH_LOAD_MULT\fP) /* load times 256 (default 1) */"
+
+.PP
+Definition at line 109 of file lhash\&.c\&.
+.SS "#define MIN_NODES   16"
+
+.PP
+Definition at line 107 of file lhash\&.c\&.
+.SS "#define UP_LOAD   (2*\fBLH_LOAD_MULT\fP) /* load times 256 (default 2) */"
+
+.PP
+Definition at line 108 of file lhash\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP* lh_delete (\fB_LHASH\fP * lh, const \fBvoid\fP * data)"
+
+.PP
+Definition at line 213 of file lhash\&.c\&.
+.SS "\fBvoid\fP lh_doall (\fB_LHASH\fP * lh, \fBLHASH_DOALL_FN_TYPE\fP func)"
+
+.PP
+Definition at line 293 of file lhash\&.c\&.
+.SS "\fBvoid\fP lh_doall_arg (\fB_LHASH\fP * lh, \fBLHASH_DOALL_ARG_FN_TYPE\fP func, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 298 of file lhash\&.c\&.
+.SS "\fBvoid\fP lh_free (\fB_LHASH\fP * lh)"
+
+.PP
+Definition at line 158 of file lhash\&.c\&.
+.SS "\fBvoid\fP* lh_insert (\fB_LHASH\fP * lh, \fBvoid\fP * data)"
+
+.PP
+Definition at line 178 of file lhash\&.c\&.
+.SS "\fB_LHASH\fP* lh_new (\fBLHASH_HASH_FN_TYPE\fP h, \fBLHASH_COMP_FN_TYPE\fP c)"
+
+.PP
+Definition at line 115 of file lhash\&.c\&.
+.SS "unsigned long lh_num_items (const \fB_LHASH\fP * lh)"
+
+.PP
+Definition at line 455 of file lhash\&.c\&.
+.SS "\fBvoid\fP* lh_retrieve (\fB_LHASH\fP * lh, const \fBvoid\fP * data)"
+
+.PP
+Definition at line 241 of file lhash\&.c\&.
+.SS "unsigned long lh_strhash (const char * c)"
+
+.PP
+Definition at line 427 of file lhash\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char lh_version[] = 'lhash' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 104 of file lhash\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,54 +1,56 @@
 s2n/error/
 s2n_errno.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n/error/s2n_errno.c --function s2n_strerror
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n/error/s2n_errno.c --function s2n_strerror
 
 s2n/utils/
 
 s2n_blob.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_blob_init_harness.c ./s2n/utils/s2n_blob.c
-cbmc -z3 -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_blob_zero_harness.c ./s2n/utils/s2n_blob.c --unwind 1000
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_blob_init_harness.c ./s2n/utils/s2n_blob.c
+cbmc -z3 -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_blob_zero_harness.c ./s2n/utils/s2n_blob.c --unwind 1000
 
 s2n_safety.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n/utils/s2n_safety.c --function s2n_actual_getpid
-cbmc -z3 -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_constant_time_equals_harness.c ./s2n/utils/s2n_safety.c --unwind 1000
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_constant_time_copy_or_dont_harness.c ./s2n/utils/s2n_safety.c --unwind 1000
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n/utils/s2n_safety.c --function s2n_actual_getpid
+cbmc -z3 -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_constant_time_equals_harness.c ./s2n/utils/s2n_safety.c --unwind 1000
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_constant_time_copy_or_dont_harness.c ./s2n/utils/s2n_safety.c --unwind 1000
 
 s2n_mem.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n/utils/s2n_mem.c --function s2n_mem_init ./s2n-lib/unistd.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_free_harness.c ./s2n/utils/s2n_mem.c ./s2n-lib/*
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n/utils/s2n_mem.c --function s2n_mem_init ./s2n-lib/unistd.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_free_harness.c ./s2n/utils/s2n_mem.c ./s2n-lib/*
 
-?? cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_alloc_harness.c ./s2n/utils/s2n_mem.c ./s2n-lib/* --unwind 1000
-?? cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_realloc_harness.c ./s2n/utils/s2n_mem.c ./s2n-lib/* --unwind 1000
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_alloc_harness.c ./s2n/utils/s2n_mem.c ./s2n-lib/* --unwind 1000
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_realloc_harness.c ./s2n/utils/s2n_mem.c ./s2n-lib/* --unwind 1000
 
 s2n_timer.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-root/openssl/include ./s2n/utils/s2n_timer.c --function s2n_timer_start ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-root/openssl/include ./s2n/utils/s2n_timer.c --function s2n_timer_elapsed ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-root/openssl/include ./s2n/utils/s2n_timer.c --function s2n_timer_reset ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-build/openssl/include ./s2n/utils/s2n_timer.c --function s2n_timer_start ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-build/openssl/include ./s2n/utils/s2n_timer.c --function s2n_timer_elapsed ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-build/openssl/include ./s2n/utils/s2n_timer.c --function s2n_timer_reset ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
 
 s2n_random.c 
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include ./s2n/utils/s2n_random.c --function s2n_on_fork
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/utils/s2n_random.c --function s2n_on_fork
 
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include ./s2n/utils/s2n_random.c --function s2n_openssl_compat_status
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include ./s2n/utils/s2n_random.c --function s2n_openssl_compat_init
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/utils/s2n_random.c --function s2n_openssl_compat_status
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/utils/s2n_random.c --function s2n_openssl_compat_init
 
 s2n/crypto/
 s2n_sequence.c
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include ./s2n-harness/s2n_increment_sequence_number_harness.c ./s2n/crypto/s2n_sequence.c --unwind 1000
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_increment_sequence_number_harness.c ./s2n/crypto/s2n_sequence.c --unwind 1000
 
 s2n/stuffer/
 s2n_stuffer.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-root/include ./s2n-harness/s2n_stuffer_init_harness.c ./s2n/stuffer/s2n_stuffer.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_stuffer_init_harness.c ./s2n/stuffer/s2n_stuffer.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_stuffer_alloc_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/utils/s2n_mem.c ./s2n-lib/* --unwind 10
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcypto-build/include ./s2n-harness/s2n_stuffer_growable_alloc_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/utils/s2n_mem.c ./s2n-lib/* --unwind 10
 
 s2n/tls
 s2n_config.c
-cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-root/openssl/include ./s2n/tls/s2n_config.c --function get_nanoseconds_since_epoch ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
+cbmc -I ./s2n -I ./s2n/api/ -I ./s2n/libcrypto-build/openssl/include ./s2n/tls/s2n_config.c --function get_nanoseconds_since_epoch ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c
 
 Working on:
-*cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include -I ./s2n/libcrypto-root/openssl/crypto ./s2n/utils/s2n_random.c --function s2n_get_urandom_data
-*cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include -I ./s2n/libcrypto-root/openssl/crypto ./s2n/crypto/s2n_drbg.c --function s2n_drbg_instantiate --unwind 10
-*cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root/openssl/include -I ./s2n/libcrypto-root/openssl/crypto ./s2n/utils/s2n_random.c --function s2n_init --unwind 1000
+*cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/openssl/crypto ./s2n/utils/s2n_random.c --function s2n_get_urandom_data
+*cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/openssl/crypto ./s2n/crypto/s2n_drbg.c --function s2n_drbg_instantiate --unwind 10
+*cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/openssl/crypto ./s2n/utils/s2n_random.c --function s2n_init --unwind 1000
 
-?? cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-root -I ./s2n/libcrypto-root/openssl/include -I ./s2n/libcrypto-root/openssl/crypto -I ./s2n/libcrypto-root/openssl/crypto/asn1 ./s2n/utils/s2n_random.c --function s2n_init ./s2n/crypto/s2n_drbg.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n/libcrypto-root/openssl/crypto/engine/eng_lib.c ./s2n/libcrypto-root/openssl/crypto/engine/eng_list.c --unwind 1
+?? cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/openssl/crypto -I ./s2n/libcrypto-build/openssl/crypto/asn1 ./s2n/utils/s2n_random.c --function s2n_init ./s2n/crypto/s2n_drbg.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n/libcrypto-build/openssl/crypto/engine/eng_lib.c ./s2n/libcrypto-build/openssl/crypto/engine/eng_list.c --unwind 1
 
 
 

@@ -1,0 +1,164 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509_req.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509_req.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBX509_to_X509_REQ\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBX509_REQ_get_pubkey\fP (\fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_check_private_key\fP (\fBX509_REQ\fP *\fBx\fP, \fBEVP_PKEY\fP *\fBk\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_extension_nid\fP (int req_nid)"
+.br
+.ti -1c
+.RI "int * \fBX509_REQ_get_extension_nids\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_REQ_set_extension_nids\fP (int *nids)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_EXTENSION\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add_extensions_nid\fP (\fBX509_REQ\fP *req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*exts, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add_extensions\fP (\fBX509_REQ\fP *req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*exts)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_get_attr_count\fP (const \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_get_attr_by_NID\fP (const \fBX509_REQ\fP *req, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_get_attr_by_OBJ\fP (const \fBX509_REQ\fP *req, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_REQ_get_attr\fP (const \fBX509_REQ\fP *req, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_REQ_delete_attr\fP (\fBX509_REQ\fP *req, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr\fP (\fBX509_REQ\fP *req, \fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr_by_OBJ\fP (\fBX509_REQ\fP *req, const \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr_by_NID\fP (\fBX509_REQ\fP *req, int \fBnid\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr_by_txt\fP (\fBX509_REQ\fP *req, const char *\fBattrname\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "STACK_OF (\fBX509_EXTENSION\fP)"
+
+.PP
+Definition at line 190 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr (\fBX509_REQ\fP * req, \fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 293 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr_by_NID (\fBX509_REQ\fP * req, int nid, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 310 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr_by_OBJ (\fBX509_REQ\fP * req, const \fBASN1_OBJECT\fP * obj, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 300 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr_by_txt (\fBX509_REQ\fP * req, const char * attrname, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 320 of file x509_req\&.c\&.
+.SS "int X509_REQ_add_extensions (\fBX509_REQ\fP * req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* exts)"
+
+.PP
+Definition at line 260 of file x509_req\&.c\&.
+.SS "int X509_REQ_add_extensions_nid (\fBX509_REQ\fP * req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* exts, int nid)"
+
+.PP
+Definition at line 223 of file x509_req\&.c\&.
+.SS "int X509_REQ_check_private_key (\fBX509_REQ\fP * x, \fBEVP_PKEY\fP * k)"
+
+.PP
+Definition at line 119 of file x509_req\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_REQ_delete_attr (\fBX509_REQ\fP * req, int loc)"
+
+.PP
+Definition at line 288 of file x509_req\&.c\&.
+.SS "int X509_REQ_extension_nid (int req_nid)"
+
+.PP
+Definition at line 168 of file x509_req\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_REQ_get_attr (const \fBX509_REQ\fP * req, int loc)"
+
+.PP
+Definition at line 283 of file x509_req\&.c\&.
+.SS "int X509_REQ_get_attr_by_NID (const \fBX509_REQ\fP * req, int nid, int lastpos)"
+
+.PP
+Definition at line 272 of file x509_req\&.c\&.
+.SS "int X509_REQ_get_attr_by_OBJ (const \fBX509_REQ\fP * req, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 277 of file x509_req\&.c\&.
+.SS "int X509_REQ_get_attr_count (const \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 267 of file x509_req\&.c\&.
+.SS "int* X509_REQ_get_extension_nids (\fBvoid\fP)"
+
+.PP
+Definition at line 180 of file x509_req\&.c\&.
+.SS "\fBEVP_PKEY\fP* X509_REQ_get_pubkey (\fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 112 of file x509_req\&.c\&.
+.SS "\fBvoid\fP X509_REQ_set_extension_nids (int * nids)"
+
+.PP
+Definition at line 185 of file x509_req\&.c\&.
+.SS "\fBX509_REQ\fP* X509_to_X509_REQ (\fBX509\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 70 of file x509_req\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

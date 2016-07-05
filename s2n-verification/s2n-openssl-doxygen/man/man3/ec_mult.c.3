@@ -1,0 +1,86 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ec_mult.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ec_mult.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBec_pre_comp_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBEC_window_bits_for_scalar_size\fP(\fBb\fP)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBec_pre_comp_st\fP \fBEC_PRE_COMP\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBec_wNAF_mul\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBBIGNUM\fP *scalar, size_t \fBnum\fP, const \fBEC_POINT\fP *points[], const \fBBIGNUM\fP *scalars[], \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_wNAF_precompute_mult\fP (\fBEC_GROUP\fP *group, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_wNAF_have_precompute_mult\fP (const \fBEC_GROUP\fP *group)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EC_window_bits_for_scalar_size(\fBb\fP)"
+\fBValue:\fP
+.PP
+.nf
+((size_t) \
+                 ((b) >= 2000 ? 6 : \
+                  (b) >=  800 ? 5 : \
+                  (b) >=  300 ? 4 : \
+                  (b) >=   70 ? 3 : \
+                  (b) >=   20 ? 2 : \
+                  1))
+.fi
+.PP
+Definition at line 314 of file ec_mult\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBec_pre_comp_st\fP  \fBEC_PRE_COMP\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int ec_wNAF_have_precompute_mult (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 905 of file ec_mult\&.c\&.
+.SS "int ec_wNAF_mul (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBBIGNUM\fP * scalar, size_t num, const \fBEC_POINT\fP * points[], const \fBBIGNUM\fP * scalars[], \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 330 of file ec_mult\&.c\&.
+.SS "int ec_wNAF_precompute_mult (\fBEC_GROUP\fP * group, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 741 of file ec_mult\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

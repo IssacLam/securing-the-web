@@ -1,0 +1,113 @@
+.TH "s2n/libcrypto-build/openssl/engines/e_chil.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/engines/e_chil.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/dso\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/ui\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include 'vendor_defns/hwcryptohook\&.h'\fP
+.br
+\fC#include 'e_chil_err\&.c'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBHWCryptoHook_MutexValue\fP"
+.br
+.ti -1c
+.RI "struct \fBHWCryptoHook_PassphraseContextValue\fP"
+.br
+.ti -1c
+.RI "struct \fBHWCryptoHook_CallerContextValue\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHWCRHK_LIB_NAME\fP   'CHIL engine'"
+.br
+.ti -1c
+.RI "#define \fBHWCRHK_CMD_SO_PATH\fP   \fBENGINE_CMD_BASE\fP"
+.br
+.ti -1c
+.RI "#define \fBHWCRHK_CMD_FORK_CHECK\fP   (\fBENGINE_CMD_BASE\fP + 1)"
+.br
+.ti -1c
+.RI "#define \fBHWCRHK_CMD_THREAD_LOCKING\fP   (\fBENGINE_CMD_BASE\fP + 2)"
+.br
+.ti -1c
+.RI "#define \fBHWCRHK_CMD_SET_USER_INTERFACE\fP   (\fBENGINE_CMD_BASE\fP + 3)"
+.br
+.ti -1c
+.RI "#define \fBHWCRHK_CMD_SET_CALLBACK_DATA\fP   (\fBENGINE_CMD_BASE\fP + 4)"
+.br
+.ti -1c
+.RI "#define \fBBN2MPI\fP(mp,  bn)   {mp\&.size = bn\->top * sizeof(BN_ULONG); mp\&.buf = (unsigned char *)bn\->d;}"
+.br
+.ti -1c
+.RI "#define \fBMPI2BN\fP(bn,  mp)   {mp\&.size = bn\->dmax * sizeof(BN_ULONG); mp\&.buf = (unsigned char *)bn\->d;}"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BN2MPI(mp, bn)   {mp\&.size = bn\->top * sizeof(BN_ULONG); mp\&.buf = (unsigned char *)bn\->d;}"
+
+.PP
+Definition at line 275 of file e_chil\&.c\&.
+.SS "#define HWCRHK_CMD_FORK_CHECK   (\fBENGINE_CMD_BASE\fP + 1)"
+
+.PP
+Definition at line 159 of file e_chil\&.c\&.
+.SS "#define HWCRHK_CMD_SET_CALLBACK_DATA   (\fBENGINE_CMD_BASE\fP + 4)"
+
+.PP
+Definition at line 162 of file e_chil\&.c\&.
+.SS "#define HWCRHK_CMD_SET_USER_INTERFACE   (\fBENGINE_CMD_BASE\fP + 3)"
+
+.PP
+Definition at line 161 of file e_chil\&.c\&.
+.SS "#define HWCRHK_CMD_SO_PATH   \fBENGINE_CMD_BASE\fP"
+
+.PP
+Definition at line 158 of file e_chil\&.c\&.
+.SS "#define HWCRHK_CMD_THREAD_LOCKING   (\fBENGINE_CMD_BASE\fP + 2)"
+
+.PP
+Definition at line 160 of file e_chil\&.c\&.
+.SS "#define HWCRHK_LIB_NAME   'CHIL engine'"
+
+.PP
+Definition at line 95 of file e_chil\&.c\&.
+.SS "#define MPI2BN(bn, mp)   {mp\&.size = bn\->dmax * sizeof(BN_ULONG); mp\&.buf = (unsigned char *)bn\->d;}"
+
+.PP
+Definition at line 277 of file e_chil\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

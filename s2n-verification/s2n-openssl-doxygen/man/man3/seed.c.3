@@ -1,0 +1,169 @@
+.TH "s2n/libcrypto-build/openssl/crypto/seed/seed.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/seed/seed.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/seed\&.h>\fP
+.br
+\fC#include 'seed_locl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBKC0\fP   0x9e3779b9"
+.br
+.ti -1c
+.RI "#define \fBKC1\fP   0x3c6ef373"
+.br
+.ti -1c
+.RI "#define \fBKC2\fP   0x78dde6e6"
+.br
+.ti -1c
+.RI "#define \fBKC3\fP   0xf1bbcdcc"
+.br
+.ti -1c
+.RI "#define \fBKC4\fP   0xe3779b99"
+.br
+.ti -1c
+.RI "#define \fBKC5\fP   0xc6ef3733"
+.br
+.ti -1c
+.RI "#define \fBKC6\fP   0x8dde6e67"
+.br
+.ti -1c
+.RI "#define \fBKC7\fP   0x1bbcdccf"
+.br
+.ti -1c
+.RI "#define \fBKC8\fP   0x3779b99e"
+.br
+.ti -1c
+.RI "#define \fBKC9\fP   0x6ef3733c"
+.br
+.ti -1c
+.RI "#define \fBKC10\fP   0xdde6e678"
+.br
+.ti -1c
+.RI "#define \fBKC11\fP   0xbbcdccf1"
+.br
+.ti -1c
+.RI "#define \fBKC12\fP   0x779b99e3"
+.br
+.ti -1c
+.RI "#define \fBKC13\fP   0xef3733c6"
+.br
+.ti -1c
+.RI "#define \fBKC14\fP   0xde6e678d"
+.br
+.ti -1c
+.RI "#define \fBKC15\fP   0xbcdccf1b"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_set_key\fP (const unsigned char rawkey[\fBSEED_KEY_LENGTH\fP], \fBSEED_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_encrypt\fP (const unsigned char s[\fBSEED_BLOCK_SIZE\fP], unsigned char d[\fBSEED_BLOCK_SIZE\fP], const \fBSEED_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_decrypt\fP (const unsigned char s[\fBSEED_BLOCK_SIZE\fP], unsigned char d[\fBSEED_BLOCK_SIZE\fP], const \fBSEED_KEY_SCHEDULE\fP *ks)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define KC0   0x9e3779b9"
+
+.PP
+Definition at line 529 of file seed\&.c\&.
+.SS "#define KC1   0x3c6ef373"
+
+.PP
+Definition at line 530 of file seed\&.c\&.
+.SS "#define KC10   0xdde6e678"
+
+.PP
+Definition at line 539 of file seed\&.c\&.
+.SS "#define KC11   0xbbcdccf1"
+
+.PP
+Definition at line 540 of file seed\&.c\&.
+.SS "#define KC12   0x779b99e3"
+
+.PP
+Definition at line 541 of file seed\&.c\&.
+.SS "#define KC13   0xef3733c6"
+
+.PP
+Definition at line 542 of file seed\&.c\&.
+.SS "#define KC14   0xde6e678d"
+
+.PP
+Definition at line 543 of file seed\&.c\&.
+.SS "#define KC15   0xbcdccf1b"
+
+.PP
+Definition at line 544 of file seed\&.c\&.
+.SS "#define KC2   0x78dde6e6"
+
+.PP
+Definition at line 531 of file seed\&.c\&.
+.SS "#define KC3   0xf1bbcdcc"
+
+.PP
+Definition at line 532 of file seed\&.c\&.
+.SS "#define KC4   0xe3779b99"
+
+.PP
+Definition at line 533 of file seed\&.c\&.
+.SS "#define KC5   0xc6ef3733"
+
+.PP
+Definition at line 534 of file seed\&.c\&.
+.SS "#define KC6   0x8dde6e67"
+
+.PP
+Definition at line 535 of file seed\&.c\&.
+.SS "#define KC7   0x1bbcdccf"
+
+.PP
+Definition at line 536 of file seed\&.c\&.
+.SS "#define KC8   0x3779b99e"
+
+.PP
+Definition at line 537 of file seed\&.c\&.
+.SS "#define KC9   0x6ef3733c"
+
+.PP
+Definition at line 538 of file seed\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP SEED_decrypt (const unsigned char s[SEED_BLOCK_SIZE], unsigned char d[SEED_BLOCK_SIZE], const \fBSEED_KEY_SCHEDULE\fP * ks)"
+
+.PP
+Definition at line 665 of file seed\&.c\&.
+.SS "\fBvoid\fP SEED_encrypt (const unsigned char s[SEED_BLOCK_SIZE], unsigned char d[SEED_BLOCK_SIZE], const \fBSEED_KEY_SCHEDULE\fP * ks)"
+
+.PP
+Definition at line 620 of file seed\&.c\&.
+.SS "\fBvoid\fP SEED_set_key (const unsigned char rawkey[SEED_KEY_LENGTH], \fBSEED_KEY_SCHEDULE\fP * ks)"
+
+.PP
+Definition at line 552 of file seed\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

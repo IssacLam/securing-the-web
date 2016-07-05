@@ -1,0 +1,207 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509_cmp.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509_cmp.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBX509_issuer_and_serial_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_issuer_and_serial_hash\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_issuer_name_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_subject_name_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_cmp\fP (const \fBX509_CRL\fP *\fBa\fP, const \fBX509_CRL\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_match\fP (const \fBX509_CRL\fP *\fBa\fP, const \fBX509_CRL\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBX509_get_issuer_name\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_issuer_name_hash\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_issuer_name_hash_old\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBX509_get_subject_name\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_INTEGER\fP * \fBX509_get_serialNumber\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_subject_name_hash\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_subject_name_hash_old\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_cmp\fP (const \fBX509_NAME\fP *\fBa\fP, const \fBX509_NAME\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_NAME_hash\fP (\fBX509_NAME\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_NAME_hash_old\fP (\fBX509_NAME\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBX509_find_by_issuer_and_serial\fP (\fBSTACK_OF\fP(\fBX509\fP)*sk, \fBX509_NAME\fP *name, \fBASN1_INTEGER\fP *serial)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBX509_find_by_subject\fP (\fBSTACK_OF\fP(\fBX509\fP)*sk, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBX509_get_pubkey\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_BIT_STRING\fP * \fBX509_get0_pubkey_bitstr\fP (const \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_check_private_key\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *\fBk\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_chain_check_suiteb\fP (int *perror_depth, \fBX509\fP *\fBx\fP, \fBSTACK_OF\fP(\fBX509\fP)*chain, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_check_suiteb\fP (\fBX509_CRL\fP *crl, \fBEVP_PKEY\fP *pk, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "STACK_OF (\fBX509\fP)"
+
+.PP
+Definition at line 488 of file x509_cmp\&.c\&.
+.SS "int X509_chain_check_suiteb (int * perror_depth, \fBX509\fP * x, \fBSTACK_OF\fP(\fBX509\fP)* chain, unsigned long flags)"
+
+.PP
+Definition at line 394 of file x509_cmp\&.c\&.
+.SS "int X509_check_private_key (\fBX509\fP * x, \fBEVP_PKEY\fP * k)"
+
+.PP
+Definition at line 324 of file x509_cmp\&.c\&.
+.SS "int X509_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 180 of file x509_cmp\&.c\&.
+.SS "int X509_CRL_check_suiteb (\fBX509_CRL\fP * crl, \fBEVP_PKEY\fP * pk, unsigned long flags)"
+
+.PP
+Definition at line 461 of file x509_cmp\&.c\&.
+.SS "int X509_CRL_cmp (const \fBX509_CRL\fP * a, const \fBX509_CRL\fP * b)"
+
+.PP
+Definition at line 120 of file x509_cmp\&.c\&.
+.SS "int X509_CRL_match (const \fBX509_CRL\fP * a, const \fBX509_CRL\fP * b)"
+
+.PP
+Definition at line 126 of file x509_cmp\&.c\&.
+.SS "\fBX509\fP* X509_find_by_issuer_and_serial (\fBSTACK_OF\fP(\fBX509\fP)* sk, \fBX509_NAME\fP * name, \fBASN1_INTEGER\fP * serial)"
+
+.PP
+Definition at line 275 of file x509_cmp\&.c\&.
+.SS "\fBX509\fP* X509_find_by_subject (\fBSTACK_OF\fP(\fBX509\fP)* sk, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 297 of file x509_cmp\&.c\&.
+.SS "\fBASN1_BIT_STRING\fP* X509_get0_pubkey_bitstr (const \fBX509\fP * x)"
+
+.PP
+Definition at line 317 of file x509_cmp\&.c\&.
+.SS "\fBX509_NAME\fP* X509_get_issuer_name (\fBX509\fP * a)"
+
+.PP
+Definition at line 132 of file x509_cmp\&.c\&.
+.SS "\fBEVP_PKEY\fP* X509_get_pubkey (\fBX509\fP * x)"
+
+.PP
+Definition at line 310 of file x509_cmp\&.c\&.
+.SS "\fBASN1_INTEGER\fP* X509_get_serialNumber (\fBX509\fP * a)"
+
+.PP
+Definition at line 154 of file x509_cmp\&.c\&.
+.SS "\fBX509_NAME\fP* X509_get_subject_name (\fBX509\fP * a)"
+
+.PP
+Definition at line 149 of file x509_cmp\&.c\&.
+.SS "int X509_issuer_and_serial_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 67 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_issuer_and_serial_hash (\fBX509\fP * a)"
+
+.PP
+Definition at line 81 of file x509_cmp\&.c\&.
+.SS "int X509_issuer_name_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 110 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_issuer_name_hash (\fBX509\fP * x)"
+
+.PP
+Definition at line 137 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_issuer_name_hash_old (\fBX509\fP * x)"
+
+.PP
+Definition at line 143 of file x509_cmp\&.c\&.
+.SS "int X509_NAME_cmp (const \fBX509_NAME\fP * a, const \fBX509_NAME\fP * b)"
+
+.PP
+Definition at line 202 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_NAME_hash (\fBX509_NAME\fP * x)"
+
+.PP
+Definition at line 229 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_NAME_hash_old (\fBX509_NAME\fP * x)"
+
+.PP
+Definition at line 252 of file x509_cmp\&.c\&.
+.SS "int X509_subject_name_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 115 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_subject_name_hash (\fBX509\fP * x)"
+
+.PP
+Definition at line 159 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_subject_name_hash_old (\fBX509\fP * x)"
+
+.PP
+Definition at line 165 of file x509_cmp\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

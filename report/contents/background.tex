@@ -1,0 +1,11 @@
+\chapter{Background}
+\section{Model Checking}
+Model Checking (MC) is an automatic verification technique for formally verifying state systems. A MC problem describes whether a given model $M$ satisfies a property $P$, such that $M \models P$. The model $M$ is usually described by a state machine while the property $P$ is specified by logic formulas over the machine state. By traversing all the reachable states of the machine exhaustively, to check whether the specification holds or not.
+
+\section{Bounded Model Checking}
+In the Bounded Model Checking (BMC), we specify the model $M$ is a finite-state machine with at most $k$ states, where $k$ is a constant. Now, a BMC problem becomes whether a counter-example exists for a given finite state machine $m$ satisfies a property $P$ with at most $k$ state transitions. M. Sagiv \cite{1_sagiv_2015} shows that the BMC problem can be formulated as a SAT problem and ,hence, it can be solved using a SAT solver.
+
+\section{C Bounded Model Checker (CBMC)}
+CBMC \cite{the_cprover_user_manual} \cite{ckl2004} is a bounded model checker developed by Daniel Kroening et al at Carnegie Mellon University. It utilizes a SAT solver in order to verify software. It first translates a program into a static single assignment form with no loops and no function calls by bounding each loop with a number of executions and unwinding the loop to the bounded. Then, all variables can be renamed with states so that each variable is fresh and will only be assigned once. As a result, the program can be viewed as a set of constraints and be solved by using a SAT solver. Moreover, CBMC can also support the verification on dynamic allocations using malloc and free, buffer overflow, pointer safety, and also user-defined assertions. It has been widely used in a variety of applications, such as error explanation, verifying embedded programs, finding security bugs in windows binaries, etc.
+
+\section{TLS/SSL}

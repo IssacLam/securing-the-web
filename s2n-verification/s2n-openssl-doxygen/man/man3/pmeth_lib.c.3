@@ -1,0 +1,302 @@
+.TH "s2n/libcrypto-build/openssl/crypto/evp/pmeth_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/evp/pmeth_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+\fC#include 'evp_locl\&.h'\fP
+.br
+
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int \fBsk_cmp_fn_type\fP(const char *const *\fBa\fP, const char *const *\fBb\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBEVP_PKEY_METHOD\fP)"
+.br
+.ti -1c
+.RI "\fBDECLARE_OBJ_BSEARCH_CMP_FN\fP (const \fBEVP_PKEY_METHOD\fP *, const \fBEVP_PKEY_METHOD\fP *, pmeth)"
+.br
+.ti -1c
+.RI "\fBIMPLEMENT_OBJ_BSEARCH_CMP_FN\fP (const \fBEVP_PKEY_METHOD\fP *, const \fBEVP_PKEY_METHOD\fP *, pmeth)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_METHOD\fP * \fBEVP_PKEY_meth_find\fP (int \fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_METHOD\fP * \fBEVP_PKEY_meth_new\fP (int id, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_get0_info\fP (int *ppkey_id, int *pflags, const \fBEVP_PKEY_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_copy\fP (\fBEVP_PKEY_METHOD\fP *dst, const \fBEVP_PKEY_METHOD\fP *src)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_free\fP (\fBEVP_PKEY_METHOD\fP *pmeth)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBEVP_PKEY_CTX_new\fP (\fBEVP_PKEY\fP *pkey, \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBEVP_PKEY_CTX_new_id\fP (int id, \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBEVP_PKEY_CTX_dup\fP (\fBEVP_PKEY_CTX\fP *pctx)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_meth_add0\fP (const \fBEVP_PKEY_METHOD\fP *pmeth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_CTX_free\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_CTX_ctrl\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP, int keytype, int optype, int cmd, int p1, \fBvoid\fP *p2)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_CTX_ctrl_str\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP, const char *name, const char *value)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_CTX_get_operation\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_CTX_set0_keygen_info\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP, int *dat, int datlen)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_CTX_set_data\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBEVP_PKEY_CTX_get_data\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBEVP_PKEY_CTX_get0_pkey\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBEVP_PKEY_CTX_get0_peerkey\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_CTX_set_app_data\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBEVP_PKEY_CTX_get_app_data\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_init\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_copy\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*copy)(\fBEVP_PKEY_CTX\fP *dst,                                                                                                                                                           \fBEVP_PKEY_CTX\fP *src))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_cleanup\fP (\fBEVP_PKEY_METHOD\fP *pmeth, \fBvoid\fP(*cleanup)(\fBEVP_PKEY_CTX\fP *\fBctx\fP))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_paramgen\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*paramgen_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*paramgen)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                           \fBEVP_PKEY\fP *pkey))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_keygen\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*keygen_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*keygen)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           \fBEVP_PKEY\fP *pkey))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_sign\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*sign_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*sign)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                           unsigned char *sig, size_t *siglen,                                                                                                                                                           const unsigned char *tbs,                                                                                                                                                           size_t tbslen))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_verify\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*verify_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*verify)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           const unsigned char *sig,                                                                                                                                                                           size_t siglen,                                                                                                                                                                           const unsigned char *tbs,                                                                                                                                                                           size_t tbslen))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_verify_recover\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*verify_recover_init)(\fBEVP_PKEY_CTX\fP                                                                                                                                                                                                                                                               *\fBctx\fP), int(*verify_recover)(\fBEVP_PKEY_CTX\fP                                                                                                                                                                                                                                           *\fBctx\fP,                                                                                                                                                                                                                                           unsigned char                                                                                                                                                                                                                                           *sig,                                                                                                                                                                                                                                           size_t *siglen,                                                                                                                                                                                                                                           const unsigned                                                                                                                                                                                                                                           char *tbs,                                                                                                                                                                                                                                           size_t tbslen))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_signctx\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*signctx_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                                       \fBEVP_MD_CTX\fP *mctx), int(*signctx)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                   unsigned char *sig,                                                                                                                                                                                   size_t *siglen,                                                                                                                                                                                   \fBEVP_MD_CTX\fP *mctx))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_verifyctx\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*verifyctx_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                                                       \fBEVP_MD_CTX\fP *mctx), int(*verifyctx)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                                   const unsigned char *sig,                                                                                                                                                                                                   int siglen,                                                                                                                                                                                                   \fBEVP_MD_CTX\fP *mctx))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_encrypt\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*encrypt_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*encryptfn)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                           unsigned char *\fBout\fP,                                                                                                                                                                                           size_t *outlen,                                                                                                                                                                                           const unsigned char *\fBin\fP,                                                                                                                                                                                           size_t inlen))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_decrypt\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*decrypt_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*decrypt)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                   unsigned char *\fBout\fP,                                                                                                                                                                                   size_t *outlen,                                                                                                                                                                                   const unsigned char *\fBin\fP,                                                                                                                                                                                   size_t inlen))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_derive\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*derive_init)(\fBEVP_PKEY_CTX\fP *\fBctx\fP), int(*derive)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           unsigned char *\fBkey\fP,                                                                                                                                                                           size_t *keylen))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_meth_set_ctrl\fP (\fBEVP_PKEY_METHOD\fP *pmeth, int(*ctrl)(\fBEVP_PKEY_CTX\fP *\fBctx\fP, int \fBtype\fP, int p1,                                                                                                                                                           \fBvoid\fP *p2), int(*ctrl_str)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           const char *\fBtype\fP,                                                                                                                                                                           const char *value))"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int sk_cmp_fn_type(const char *const *\fBa\fP, const char *const *\fBb\fP)"
+
+.PP
+Definition at line 71 of file pmeth_lib\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "DECLARE_OBJ_BSEARCH_CMP_FN (const \fBEVP_PKEY_METHOD\fP *, const \fBEVP_PKEY_METHOD\fP *, pmeth)"
+
+.SS "int EVP_PKEY_CTX_ctrl (\fBEVP_PKEY_CTX\fP * ctx, int keytype, int optype, int cmd, int p1, \fBvoid\fP * p2)"
+
+.PP
+Definition at line 383 of file pmeth_lib\&.c\&.
+.SS "int EVP_PKEY_CTX_ctrl_str (\fBEVP_PKEY_CTX\fP * ctx, const char * name, const char * value)"
+
+.PP
+Definition at line 413 of file pmeth_lib\&.c\&.
+.SS "\fBEVP_PKEY_CTX\fP* EVP_PKEY_CTX_dup (\fBEVP_PKEY_CTX\fP * pctx)"
+
+.PP
+Definition at line 306 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_CTX_free (\fBEVP_PKEY_CTX\fP * ctx)"
+
+.PP
+Definition at line 362 of file pmeth_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* EVP_PKEY_CTX_get0_peerkey (\fBEVP_PKEY_CTX\fP * ctx)"
+
+.PP
+Definition at line 457 of file pmeth_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* EVP_PKEY_CTX_get0_pkey (\fBEVP_PKEY_CTX\fP * ctx)"
+
+.PP
+Definition at line 452 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP* EVP_PKEY_CTX_get_app_data (\fBEVP_PKEY_CTX\fP * ctx)"
+
+.PP
+Definition at line 467 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP* EVP_PKEY_CTX_get_data (\fBEVP_PKEY_CTX\fP * ctx)"
+
+.PP
+Definition at line 447 of file pmeth_lib\&.c\&.
+.SS "int EVP_PKEY_CTX_get_operation (\fBEVP_PKEY_CTX\fP * ctx)"
+
+.PP
+Definition at line 431 of file pmeth_lib\&.c\&.
+.SS "\fBEVP_PKEY_CTX\fP* EVP_PKEY_CTX_new (\fBEVP_PKEY\fP * pkey, \fBENGINE\fP * e)"
+
+.PP
+Definition at line 296 of file pmeth_lib\&.c\&.
+.SS "\fBEVP_PKEY_CTX\fP* EVP_PKEY_CTX_new_id (int id, \fBENGINE\fP * e)"
+
+.PP
+Definition at line 301 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_CTX_set0_keygen_info (\fBEVP_PKEY_CTX\fP * ctx, int * dat, int datlen)"
+
+.PP
+Definition at line 436 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_CTX_set_app_data (\fBEVP_PKEY_CTX\fP * ctx, \fBvoid\fP * data)"
+
+.PP
+Definition at line 462 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_CTX_set_data (\fBEVP_PKEY_CTX\fP * ctx, \fBvoid\fP * data)"
+
+.PP
+Definition at line 442 of file pmeth_lib\&.c\&.
+.SS "int EVP_PKEY_meth_add0 (const \fBEVP_PKEY_METHOD\fP * pmeth)"
+
+.PP
+Definition at line 349 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_copy (\fBEVP_PKEY_METHOD\fP * dst, const \fBEVP_PKEY_METHOD\fP * src)"
+
+.PP
+Definition at line 249 of file pmeth_lib\&.c\&.
+.SS "const \fBEVP_PKEY_METHOD\fP* EVP_PKEY_meth_find (int type)"
+
+.PP
+Definition at line 114 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_free (\fBEVP_PKEY_METHOD\fP * pmeth)"
+
+.PP
+Definition at line 290 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_get0_info (int * ppkey_id, int * pflags, const \fBEVP_PKEY_METHOD\fP * meth)"
+
+.PP
+Definition at line 240 of file pmeth_lib\&.c\&.
+.SS "\fBEVP_PKEY_METHOD\fP* EVP_PKEY_meth_new (int id, int flags)"
+
+.PP
+Definition at line 199 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_cleanup (\fBEVP_PKEY_METHOD\fP * pmeth, \fBvoid\fP(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) cleanup)"
+
+.PP
+Definition at line 485 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_copy (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *dst,                                                                                                                                                           \fBEVP_PKEY_CTX\fP *src) copy)"
+
+.PP
+Definition at line 478 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_ctrl (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP, int \fBtype\fP, int p1,                                                                                                                                                           \fBvoid\fP *p2) ctrl, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           const char *\fBtype\fP,                                                                                                                                                                           const char *value) ctrl_str)"
+
+.PP
+Definition at line 606 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_decrypt (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) decrypt_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                   unsigned char *\fBout\fP,                                                                                                                                                                                   size_t *outlen,                                                                                                                                                                                   const unsigned char *\fBin\fP,                                                                                                                                                                                   size_t inlen) decrypt)"
+
+.PP
+Definition at line 584 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_derive (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) derive_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           unsigned char *\fBkey\fP,                                                                                                                                                                           size_t *keylen) derive)"
+
+.PP
+Definition at line 596 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_encrypt (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) encrypt_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                           unsigned char *\fBout\fP,                                                                                                                                                                                           size_t *outlen,                                                                                                                                                                                           const unsigned char *\fBin\fP,                                                                                                                                                                                           size_t inlen) encryptfn)"
+
+.PP
+Definition at line 572 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_init (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) init)"
+
+.PP
+Definition at line 472 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_keygen (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) keygen_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           \fBEVP_PKEY\fP *pkey) keygen)"
+
+.PP
+Definition at line 500 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_paramgen (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) paramgen_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                           \fBEVP_PKEY\fP *pkey) paramgen)"
+
+.PP
+Definition at line 491 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_sign (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) sign_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                           unsigned char *sig, size_t *siglen,                                                                                                                                                           const unsigned char *tbs,                                                                                                                                                           size_t tbslen) sign)"
+
+.PP
+Definition at line 509 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_signctx (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                                       \fBEVP_MD_CTX\fP *mctx) signctx_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                   unsigned char *sig,                                                                                                                                                                                   size_t *siglen,                                                                                                                                                                                   \fBEVP_MD_CTX\fP *mctx) signctx)"
+
+.PP
+Definition at line 548 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_verify (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP) verify_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                           const unsigned char *sig,                                                                                                                                                                           size_t siglen,                                                                                                                                                                           const unsigned char *tbs,                                                                                                                                                                           size_t tbslen) verify)"
+
+.PP
+Definition at line 520 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_verify_recover (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP                                                                                                                                                                                                                                                               *\fBctx\fP) verify_recover_init, int(*)(\fBEVP_PKEY_CTX\fP                                                                                                                                                                                                                                           *\fBctx\fP,                                                                                                                                                                                                                                           unsigned char                                                                                                                                                                                                                                           *sig,                                                                                                                                                                                                                                           size_t *siglen,                                                                                                                                                                                                                                           const unsigned                                                                                                                                                                                                                                           char *tbs,                                                                                                                                                                                                                                           size_t tbslen) verify_recover)"
+
+.PP
+Definition at line 532 of file pmeth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_meth_set_verifyctx (\fBEVP_PKEY_METHOD\fP * pmeth, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                                                       \fBEVP_MD_CTX\fP *mctx) verifyctx_init, int(*)(\fBEVP_PKEY_CTX\fP *\fBctx\fP,                                                                                                                                                                                                   const unsigned char *sig,                                                                                                                                                                                                   int siglen,                                                                                                                                                                                                   \fBEVP_MD_CTX\fP *mctx) verifyctx)"
+
+.PP
+Definition at line 560 of file pmeth_lib\&.c\&.
+.SS "IMPLEMENT_OBJ_BSEARCH_CMP_FN (const \fBEVP_PKEY_METHOD\fP *, const \fBEVP_PKEY_METHOD\fP *, pmeth)"
+
+.SS "STACK_OF (\fBEVP_PKEY_METHOD\fP)"
+
+.PP
+Definition at line 74 of file pmeth_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

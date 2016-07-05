@@ -1,0 +1,336 @@
+.TH "s2n/libcrypto-build/openssl/crypto/evp/e_aes.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/evp/e_aes.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'evp_locl\&.h'\fP
+.br
+\fC#include 'modes_lcl\&.h'\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBEVP_AES_KEY\fP"
+.br
+.ti -1c
+.RI "struct \fBEVP_AES_GCM_CTX\fP"
+.br
+.ti -1c
+.RI "struct \fBEVP_AES_XTS_CTX\fP"
+.br
+.ti -1c
+.RI "struct \fBEVP_AES_CCM_CTX\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBEVP_CIPH_FLAG_FIPS\fP   0"
+.br
+.ti -1c
+.RI "#define \fBMAXBITCHUNK\fP   ((size_t)1<<(sizeof(size_t)*8\-4))"
+.br
+.ti -1c
+.RI "#define \fBBLOCK_CIPHER_generic\fP(\fBnid\fP,  keylen,  blocksize,  ivlen,  nmode,  mode,  MODE,  \fBflags\fP)"
+.br
+.ti -1c
+.RI "#define \fBBLOCK_CIPHER_custom\fP(\fBnid\fP,  keylen,  blocksize,  ivlen,  mode,  MODE,  \fBflags\fP)"
+.br
+.ti -1c
+.RI "#define \fBBLOCK_CIPHER_generic_pack\fP(\fBnid\fP,  keylen,  \fBflags\fP)                      "
+.br
+.ti -1c
+.RI "#define \fBCUSTOM_FLAGS\fP"
+.br
+.ti -1c
+.RI "#define \fBaes_xts_cleanup\fP   \fBNULL\fP"
+.br
+.ti -1c
+.RI "#define \fBXTS_FLAGS\fP"
+.br
+.ti -1c
+.RI "#define \fBaes_ccm_cleanup\fP   \fBNULL\fP"
+.br
+.ti -1c
+.RI "#define \fBWRAP_FLAGS\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBLOCK_CIPHER_generic_pack\fP (BLOCK_CIPHER_generic_pack(NID_aes, 128, \fBEVP_CIPH_FLAG_FIPS\fP)"
+.br
+.ti -1c
+.RI "\fBBLOCK_CIPHER_custom\fP (NID_aes, 128, 1, 12, \fBgcm\fP, \fBGCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBEVP_CIPH_FLAG_AEAD_CIPHER\fP|\fBCUSTOM_FLAGS\fP) BLOCK_CIPHER_custom(NID_aes"
+.br
+.ti -1c
+.RI "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP \fBBLOCK_CIPHER_custom\fP (NID_aes, 256, 1, 12, \fBgcm\fP, \fBGCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBEVP_CIPH_FLAG_AEAD_CIPHER\fP|\fBCUSTOM_FLAGS\fP) static int aes_xts_ctrl(\fBEVP_CIPHER_CTX\fP *\fBc\fP"
+.br
+.ti -1c
+.RI "\fBif\fP (\fBtype\fP==\fBEVP_CTRL_COPY\fP)"
+.br
+.ti -1c
+.RI "else \fBif\fP (type!=\fBEVP_CTRL_INIT\fP)"
+.br
+.ti -1c
+.RI "\fBBLOCK_CIPHER_custom\fP (NID_aes, 128, 1, 16, \fBxts\fP, \fBXTS\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBXTS_FLAGS\fP) BLOCK_CIPHER_custom(NID_aes"
+.br
+.ti -1c
+.RI "\fBBLOCK_CIPHER_custom\fP (NID_aes, 128, 1, 12, \fBccm\fP, \fBCCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBCUSTOM_FLAGS\fP) BLOCK_CIPHER_custom(NID_aes"
+.br
+.ti -1c
+.RI "\fBEVP_CIPH_FLAG_FIPS\fP \fBCUSTOM_FLAGS\fP \fBBLOCK_CIPHER_custom\fP (NID_aes, 256, 1, 12, \fBccm\fP, \fBCCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBCUSTOM_FLAGS\fP) typedef struct"
+.br
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBEVP_aes_128_wrap\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBEVP_aes_192_wrap\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBEVP_aes_256_wrap\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBgcm\fP"
+.br
+.ti -1c
+.RI "\fBGCM\fP"
+.br
+.ti -1c
+.RI "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP int \fBtype\fP"
+.br
+.ti -1c
+.RI "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP int int \fBarg\fP"
+.br
+.ti -1c
+.RI "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP int int \fBvoid\fP * \fBptr\fP"
+.br
+.ti -1c
+.RI "\fBxts\fP"
+.br
+.ti -1c
+.RI "\fBXTS\fP"
+.br
+.ti -1c
+.RI "\fBccm\fP"
+.br
+.ti -1c
+.RI "\fBCCM\fP"
+.br
+.ti -1c
+.RI "\fBEVP_AES_WRAP_CTX\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define aes_ccm_cleanup   \fBNULL\fP"
+
+.PP
+Definition at line 1913 of file e_aes\&.c\&.
+.SS "#define aes_xts_cleanup   \fBNULL\fP"
+
+.PP
+Definition at line 1739 of file e_aes\&.c\&.
+.SS "#define BLOCK_CIPHER_custom(\fBnid\fP, keylen, blocksize, ivlen, mode, MODE, \fBflags\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const EVP_CIPHER aes_##keylen##_##mode = { \
+        nid##_##keylen##_##mode,blocksize, \
+        (EVP_CIPH_##MODE##_MODE==EVP_CIPH_XTS_MODE?2:1)*keylen/8, ivlen, \
+        flags|EVP_CIPH_##MODE##_MODE,   \
+        aes_##mode##_init_key,          \
+        aes_##mode##_cipher,            \
+        aes_##mode##_cleanup,           \
+        sizeof(EVP_AES_##MODE##_CTX),   \
+        NULL,NULL,aes_##mode##_ctrl,NULL }; \
+const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+{ return &aes_##keylen##_##mode; }
+.fi
+.PP
+Definition at line 867 of file e_aes\&.c\&.
+.SS "#define BLOCK_CIPHER_generic(\fBnid\fP, keylen, blocksize, ivlen, nmode, mode, MODE, \fBflags\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const EVP_CIPHER aes_##keylen##_##mode = { \
+        nid##_##keylen##_##nmode,blocksize,keylen/8,ivlen, \
+        flags|EVP_CIPH_##MODE##_MODE,   \
+        aes_init_key,                   \
+        aes_##mode##_cipher,            \
+        NULL,                           \
+        sizeof(EVP_AES_KEY),            \
+        NULL,NULL,NULL,NULL }; \
+const EVP_CIPHER *EVP_aes_##keylen##_##mode(void) \
+{ return &aes_##keylen##_##mode; }
+.fi
+.PP
+Definition at line 855 of file e_aes\&.c\&.
+.SS "#define BLOCK_CIPHER_generic_pack(\fBnid\fP, keylen, \fBflags\fP)"
+\fBValue:\fP
+.PP
+.nf
+BLOCK_CIPHER_generic(nid,keylen,16,16,cbc,cbc,CBC,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)     \
+        BLOCK_CIPHER_generic(nid,keylen,16,0,ecb,ecb,ECB,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)      \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,ofb128,ofb,OFB,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)   \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,cfb128,cfb,CFB,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)   \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,cfb1,cfb1,CFB,flags)       \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,cfb8,cfb8,CFB,flags)       \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,ctr,ctr,CTR,flags)
+.fi
+.PP
+Definition at line 914 of file e_aes\&.c\&.
+.SS "#define CUSTOM_FLAGS"
+\fBValue:\fP
+.PP
+.nf
+(EVP_CIPH_FLAG_DEFAULT_ASN1 \
+                | EVP_CIPH_CUSTOM_IV | EVP_CIPH_FLAG_CUSTOM_CIPHER \
+                | EVP_CIPH_ALWAYS_CALL_INIT | EVP_CIPH_CTRL_INIT \
+                | EVP_CIPH_CUSTOM_COPY)
+.fi
+.PP
+Definition at line 1597 of file e_aes\&.c\&.
+.SS "#define EVP_CIPH_FLAG_FIPS   0"
+
+.PP
+Definition at line 64 of file e_aes\&.c\&.
+.SS "#define MAXBITCHUNK   ((size_t)1<<(sizeof(size_t)*8\-4))"
+
+.PP
+Definition at line 120 of file e_aes\&.c\&.
+.SS "#define WRAP_FLAGS"
+\fBValue:\fP
+.PP
+.nf
+(EVP_CIPH_WRAP_MODE \
+                | EVP_CIPH_CUSTOM_IV | EVP_CIPH_FLAG_CUSTOM_CIPHER \
+                | EVP_CIPH_ALWAYS_CALL_INIT | EVP_CIPH_FLAG_DEFAULT_ASN1)
+.fi
+.PP
+Definition at line 1980 of file e_aes\&.c\&.
+.SS "#define XTS_FLAGS"
+\fBValue:\fP
+.PP
+.nf
+(EVP_CIPH_FLAG_DEFAULT_ASN1 | EVP_CIPH_CUSTOM_IV \
+                         | EVP_CIPH_ALWAYS_CALL_INIT | EVP_CIPH_CTRL_INIT \
+                         | EVP_CIPH_CUSTOM_COPY)
+.fi
+.PP
+Definition at line 1741 of file e_aes\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "BLOCK_CIPHER_custom (NID_aes, 128, 1, 12, \fBgcm\fP, \fBGCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBEVP_CIPH_FLAG_AEAD_CIPHER\fP| CUSTOM_FLAGS)"
+
+.SS "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP BLOCK_CIPHER_custom (NID_aes, 256, 1, 12, \fBgcm\fP, \fBGCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP|\fBEVP_CIPH_FLAG_AEAD_CIPHER\fP| CUSTOM_FLAGS)"
+
+.SS "BLOCK_CIPHER_custom (NID_aes, 128, 1, 16, \fBxts\fP, \fBXTS\fP, \fBEVP_CIPH_FLAG_FIPS\fP| XTS_FLAGS)"
+
+.SS "BLOCK_CIPHER_custom (NID_aes, 128, 1, 12, \fBccm\fP, \fBCCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP| CUSTOM_FLAGS)"
+
+.SS "\fBEVP_CIPH_FLAG_FIPS\fP \fBCUSTOM_FLAGS\fP BLOCK_CIPHER_custom (NID_aes, 256, 1, 12, \fBccm\fP, \fBCCM\fP, \fBEVP_CIPH_FLAG_FIPS\fP| CUSTOM_FLAGS)"
+
+.PP
+Definition at line 1919 of file e_aes\&.c\&.
+.SS "BLOCK_CIPHER_generic_pack (BLOCK_CIPHER_generic_pack( NID_aes, 128, \fBEVP_CIPH_FLAG_FIPS\fP)"
+
+.PP
+Definition at line 1116 of file e_aes\&.c\&.
+.SS "const \fBEVP_CIPHER\fP* EVP_aes_128_wrap (\fBvoid\fP)"
+
+.PP
+Definition at line 1993 of file e_aes\&.c\&.
+.SS "const \fBEVP_CIPHER\fP* EVP_aes_192_wrap (\fBvoid\fP)"
+
+.PP
+Definition at line 2007 of file e_aes\&.c\&.
+.SS "const \fBEVP_CIPHER\fP* EVP_aes_256_wrap (\fBvoid\fP)"
+
+.PP
+Definition at line 2021 of file e_aes\&.c\&.
+.SS "if (\fBtype\fP = \fC= \fBEVP_CTRL_COPY\fP\fP)"
+
+.PP
+Definition at line 1615 of file e_aes\&.c\&.
+.SS "else if (type! = \fC\fBEVP_CTRL_INIT\fP\fP)"
+
+.PP
+Definition at line 1629 of file e_aes\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP int int arg"
+
+.PP
+Definition at line 1612 of file e_aes\&.c\&.
+.SS "CCM"
+
+.PP
+Definition at line 1917 of file e_aes\&.c\&.
+.SS "ccm"
+
+.PP
+Definition at line 1917 of file e_aes\&.c\&.
+.SS "EVP_AES_WRAP_CTX"
+
+.PP
+Definition at line 1929 of file e_aes\&.c\&.
+.SS "GCM"
+
+.PP
+Definition at line 1605 of file e_aes\&.c\&.
+.SS "gcm"
+
+.PP
+Definition at line 1605 of file e_aes\&.c\&.
+.SS "\fBEVP_CIPH_FLAG_FIPS\fP \fBEVP_CIPH_FLAG_AEAD_CIPHER\fP \fBCUSTOM_FLAGS\fP int int \fBvoid\fP* ptr"
+\fBInitial value:\fP
+.PP
+.nf
+{
+    EVP_AES_XTS_CTX *xctx = c->cipher_data
+.fi
+.PP
+Definition at line 1613 of file e_aes\&.c\&.
+.SS "const char int type"
+
+.PP
+Definition at line 1612 of file e_aes\&.c\&.
+.SS "XTS"
+
+.PP
+Definition at line 1747 of file e_aes\&.c\&.
+.SS "xts"
+
+.PP
+Definition at line 1747 of file e_aes\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

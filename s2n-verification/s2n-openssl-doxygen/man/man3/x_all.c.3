@@ -1,0 +1,598 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x_all.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x_all.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/ocsp\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBX509_verify\fP (\fBX509\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_verify\fP (\fBX509_REQ\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "int \fBNETSCAPE_SPKI_verify\fP (\fBNETSCAPE_SPKI\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "int \fBX509_sign\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_sign_ctx\fP (\fBX509\fP *\fBx\fP, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_http_nbio\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBX509\fP **pcert)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_sign\fP (\fBX509_REQ\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_sign_ctx\fP (\fBX509_REQ\fP *\fBx\fP, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_sign\fP (\fBX509_CRL\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_sign_ctx\fP (\fBX509_CRL\fP *\fBx\fP, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_http_nbio\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBX509_CRL\fP **pcrl)"
+.br
+.ti -1c
+.RI "int \fBNETSCAPE_SPKI_sign\fP (\fBNETSCAPE_SPKI\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBd2i_X509_fp\fP (FILE *\fBfp\fP, \fBX509\fP **x509)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_fp\fP (FILE *\fBfp\fP, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBd2i_X509_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP **x509)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBd2i_X509_CRL_fp\fP (FILE *\fBfp\fP, \fBX509_CRL\fP **crl)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_CRL_fp\fP (FILE *\fBfp\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBd2i_X509_CRL_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_CRL\fP **crl)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_CRL_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBd2i_PKCS7_fp\fP (FILE *\fBfp\fP, \fBPKCS7\fP **p7)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS7_fp\fP (FILE *\fBfp\fP, \fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBd2i_PKCS7_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS7\fP **p7)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS7_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBd2i_X509_REQ_fp\fP (FILE *\fBfp\fP, \fBX509_REQ\fP **req)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_REQ_fp\fP (FILE *\fBfp\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBd2i_X509_REQ_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_REQ\fP **req)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_REQ_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPublicKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPublicKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPublicKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPublicKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_EC_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_EC_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_ECPrivateKey_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECPrivateKey_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_EC_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_EC_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP *ecdsa)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_ECPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "int \fBX509_pubkey_digest\fP (const \fBX509\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_digest\fP (const \fBX509\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_digest\fP (const \fBX509_CRL\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_digest\fP (const \fBX509_REQ\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_digest\fP (const \fBX509_NAME\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_ISSUER_AND_SERIAL_digest\fP (\fBPKCS7_ISSUER_AND_SERIAL\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_SIG\fP * \fBd2i_PKCS8_fp\fP (FILE *\fBfp\fP, \fBX509_SIG\fP **p8)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_fp\fP (FILE *\fBfp\fP, \fBX509_SIG\fP *p8)"
+.br
+.ti -1c
+.RI "\fBX509_SIG\fP * \fBd2i_PKCS8_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_SIG\fP **p8)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_SIG\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBd2i_PKCS8_PRIV_KEY_INFO_fp\fP (FILE *\fBfp\fP, \fBPKCS8_PRIV_KEY_INFO\fP **p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_PRIV_KEY_INFO_fp\fP (FILE *\fBfp\fP, \fBPKCS8_PRIV_KEY_INFO\fP *p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKeyInfo_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PrivateKey_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PrivateKey_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBd2i_PKCS8_PRIV_KEY_INFO_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS8_PRIV_KEY_INFO\fP **p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_PRIV_KEY_INFO_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS8_PRIV_KEY_INFO\fP *p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKeyInfo_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBDSA\fP* d2i_DSA_PUBKEY_bio (\fBBIO\fP * bp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 344 of file x_all\&.c\&.
+.SS "\fBDSA\fP* d2i_DSA_PUBKEY_fp (FILE * fp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 323 of file x_all\&.c\&.
+.SS "\fBDSA\fP* d2i_DSAPrivateKey_bio (\fBBIO\fP * bp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 334 of file x_all\&.c\&.
+.SS "\fBDSA\fP* d2i_DSAPrivateKey_fp (FILE * fp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 313 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_EC_PUBKEY_bio (\fBBIO\fP * bp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 378 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_EC_PUBKEY_fp (FILE * fp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 358 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_ECPrivateKey_bio (\fBBIO\fP * bp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 388 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_ECPrivateKey_fp (FILE * fp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 368 of file x_all\&.c\&.
+.SS "\fBPKCS7\fP* d2i_PKCS7_bio (\fBBIO\fP * bp, \fBPKCS7\fP ** p7)"
+
+.PP
+Definition at line 212 of file x_all\&.c\&.
+.SS "\fBPKCS7\fP* d2i_PKCS7_fp (FILE * fp, \fBPKCS7\fP ** p7)"
+
+.PP
+Definition at line 201 of file x_all\&.c\&.
+.SS "\fBX509_SIG\fP* d2i_PKCS8_bio (\fBBIO\fP * bp, \fBX509_SIG\fP ** p8)"
+
+.PP
+Definition at line 457 of file x_all\&.c\&.
+.SS "\fBX509_SIG\fP* d2i_PKCS8_fp (FILE * fp, \fBX509_SIG\fP ** p8)"
+
+.PP
+Definition at line 446 of file x_all\&.c\&.
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* d2i_PKCS8_PRIV_KEY_INFO_bio (\fBBIO\fP * bp, \fBPKCS8_PRIV_KEY_INFO\fP ** p8inf)"
+
+.PP
+Definition at line 515 of file x_all\&.c\&.
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* d2i_PKCS8_PRIV_KEY_INFO_fp (FILE * fp, \fBPKCS8_PRIV_KEY_INFO\fP ** p8inf)"
+
+.PP
+Definition at line 468 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PrivateKey_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 545 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PrivateKey_fp (FILE * fp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 498 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PUBKEY_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 555 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PUBKEY_fp (FILE * fp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 508 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSA_PUBKEY_bio (\fBBIO\fP * bp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 295 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSA_PUBKEY_fp (FILE * fp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 262 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPrivateKey_bio (\fBBIO\fP * bp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 280 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPrivateKey_fp (FILE * fp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 247 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPublicKey_bio (\fBBIO\fP * bp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 290 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPublicKey_fp (FILE * fp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 257 of file x_all\&.c\&.
+.SS "\fBX509\fP* d2i_X509_bio (\fBBIO\fP * bp, \fBX509\fP ** x509)"
+
+.PP
+Definition at line 168 of file x_all\&.c\&.
+.SS "\fBX509_CRL\fP* d2i_X509_CRL_bio (\fBBIO\fP * bp, \fBX509_CRL\fP ** crl)"
+
+.PP
+Definition at line 190 of file x_all\&.c\&.
+.SS "\fBX509_CRL\fP* d2i_X509_CRL_fp (FILE * fp, \fBX509_CRL\fP ** crl)"
+
+.PP
+Definition at line 179 of file x_all\&.c\&.
+.SS "\fBX509\fP* d2i_X509_fp (FILE * fp, \fBX509\fP ** x509)"
+
+.PP
+Definition at line 157 of file x_all\&.c\&.
+.SS "\fBX509_REQ\fP* d2i_X509_REQ_bio (\fBBIO\fP * bp, \fBX509_REQ\fP ** req)"
+
+.PP
+Definition at line 234 of file x_all\&.c\&.
+.SS "\fBX509_REQ\fP* d2i_X509_REQ_fp (FILE * fp, \fBX509_REQ\fP ** req)"
+
+.PP
+Definition at line 223 of file x_all\&.c\&.
+.SS "int i2d_DSA_PUBKEY_bio (\fBBIO\fP * bp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 349 of file x_all\&.c\&.
+.SS "int i2d_DSA_PUBKEY_fp (FILE * fp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 328 of file x_all\&.c\&.
+.SS "int i2d_DSAPrivateKey_bio (\fBBIO\fP * bp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 339 of file x_all\&.c\&.
+.SS "int i2d_DSAPrivateKey_fp (FILE * fp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 318 of file x_all\&.c\&.
+.SS "int i2d_EC_PUBKEY_bio (\fBBIO\fP * bp, \fBEC_KEY\fP * ecdsa)"
+
+.PP
+Definition at line 383 of file x_all\&.c\&.
+.SS "int i2d_EC_PUBKEY_fp (FILE * fp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 363 of file x_all\&.c\&.
+.SS "int i2d_ECPrivateKey_bio (\fBBIO\fP * bp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 393 of file x_all\&.c\&.
+.SS "int i2d_ECPrivateKey_fp (FILE * fp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 373 of file x_all\&.c\&.
+.SS "int i2d_PKCS7_bio (\fBBIO\fP * bp, \fBPKCS7\fP * p7)"
+
+.PP
+Definition at line 217 of file x_all\&.c\&.
+.SS "int i2d_PKCS7_fp (FILE * fp, \fBPKCS7\fP * p7)"
+
+.PP
+Definition at line 206 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_bio (\fBBIO\fP * bp, \fBX509_SIG\fP * p8)"
+
+.PP
+Definition at line 462 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_fp (FILE * fp, \fBX509_SIG\fP * p8)"
+
+.PP
+Definition at line 451 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_PRIV_KEY_INFO_bio (\fBBIO\fP * bp, \fBPKCS8_PRIV_KEY_INFO\fP * p8inf)"
+
+.PP
+Definition at line 522 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_PRIV_KEY_INFO_fp (FILE * fp, \fBPKCS8_PRIV_KEY_INFO\fP * p8inf)"
+
+.PP
+Definition at line 475 of file x_all\&.c\&.
+.SS "int i2d_PKCS8PrivateKeyInfo_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * key)"
+
+.PP
+Definition at line 528 of file x_all\&.c\&.
+.SS "int i2d_PKCS8PrivateKeyInfo_fp (FILE * fp, \fBEVP_PKEY\fP * key)"
+
+.PP
+Definition at line 481 of file x_all\&.c\&.
+.SS "int i2d_PrivateKey_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 540 of file x_all\&.c\&.
+.SS "int i2d_PrivateKey_fp (FILE * fp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 493 of file x_all\&.c\&.
+.SS "int i2d_PUBKEY_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 550 of file x_all\&.c\&.
+.SS "int i2d_PUBKEY_fp (FILE * fp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 503 of file x_all\&.c\&.
+.SS "int i2d_RSA_PUBKEY_bio (\fBBIO\fP * bp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 305 of file x_all\&.c\&.
+.SS "int i2d_RSA_PUBKEY_fp (FILE * fp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 274 of file x_all\&.c\&.
+.SS "int i2d_RSAPrivateKey_bio (\fBBIO\fP * bp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 285 of file x_all\&.c\&.
+.SS "int i2d_RSAPrivateKey_fp (FILE * fp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 252 of file x_all\&.c\&.
+.SS "int i2d_RSAPublicKey_bio (\fBBIO\fP * bp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 300 of file x_all\&.c\&.
+.SS "int i2d_RSAPublicKey_fp (FILE * fp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 269 of file x_all\&.c\&.
+.SS "int i2d_X509_bio (\fBBIO\fP * bp, \fBX509\fP * x509)"
+
+.PP
+Definition at line 173 of file x_all\&.c\&.
+.SS "int i2d_X509_CRL_bio (\fBBIO\fP * bp, \fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 195 of file x_all\&.c\&.
+.SS "int i2d_X509_CRL_fp (FILE * fp, \fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 184 of file x_all\&.c\&.
+.SS "int i2d_X509_fp (FILE * fp, \fBX509\fP * x509)"
+
+.PP
+Definition at line 162 of file x_all\&.c\&.
+.SS "int i2d_X509_REQ_bio (\fBBIO\fP * bp, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 239 of file x_all\&.c\&.
+.SS "int i2d_X509_REQ_fp (FILE * fp, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 228 of file x_all\&.c\&.
+.SS "int NETSCAPE_SPKI_sign (\fBNETSCAPE_SPKI\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 150 of file x_all\&.c\&.
+.SS "int NETSCAPE_SPKI_verify (\fBNETSCAPE_SPKI\fP * a, \fBEVP_PKEY\fP * r)"
+
+.PP
+Definition at line 88 of file x_all\&.c\&.
+.SS "int PKCS7_ISSUER_AND_SERIAL_digest (\fBPKCS7_ISSUER_AND_SERIAL\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 437 of file x_all\&.c\&.
+.SS "int X509_CRL_digest (const \fBX509_CRL\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 416 of file x_all\&.c\&.
+.SS "int X509_CRL_http_nbio (\fBOCSP_REQ_CTX\fP * rctx, \fBX509_CRL\fP ** pcrl)"
+
+.PP
+Definition at line 143 of file x_all\&.c\&.
+.SS "int X509_CRL_sign (\fBX509_CRL\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 128 of file x_all\&.c\&.
+.SS "int X509_CRL_sign_ctx (\fBX509_CRL\fP * x, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 135 of file x_all\&.c\&.
+.SS "int X509_digest (const \fBX509\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 409 of file x_all\&.c\&.
+.SS "int X509_http_nbio (\fBOCSP_REQ_CTX\fP * rctx, \fBX509\fP ** pcert)"
+
+.PP
+Definition at line 109 of file x_all\&.c\&.
+.SS "int X509_NAME_digest (const \fBX509_NAME\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 430 of file x_all\&.c\&.
+.SS "int X509_pubkey_digest (const \fBX509\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 399 of file x_all\&.c\&.
+.SS "int X509_REQ_digest (const \fBX509_REQ\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 423 of file x_all\&.c\&.
+.SS "int X509_REQ_sign (\fBX509_REQ\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 115 of file x_all\&.c\&.
+.SS "int X509_REQ_sign_ctx (\fBX509_REQ\fP * x, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 121 of file x_all\&.c\&.
+.SS "int X509_REQ_verify (\fBX509_REQ\fP * a, \fBEVP_PKEY\fP * r)"
+
+.PP
+Definition at line 82 of file x_all\&.c\&.
+.SS "int X509_sign (\fBX509\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 94 of file x_all\&.c\&.
+.SS "int X509_sign_ctx (\fBX509\fP * x, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 101 of file x_all\&.c\&.
+.SS "int X509_verify (\fBX509\fP * a, \fBEVP_PKEY\fP * r)"
+
+.PP
+Definition at line 74 of file x_all\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

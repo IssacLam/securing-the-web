@@ -1,0 +1,158 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509name.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509name.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBX509_NAME_get_text_by_NID\fP (\fBX509_NAME\fP *name, int \fBnid\fP, char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_text_by_OBJ\fP (\fBX509_NAME\fP *name, \fBASN1_OBJECT\fP *\fBobj\fP, char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_entry_count\fP (\fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_index_by_NID\fP (\fBX509_NAME\fP *name, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_index_by_OBJ\fP (\fBX509_NAME\fP *name, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_get_entry\fP (\fBX509_NAME\fP *name, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_delete_entry\fP (\fBX509_NAME\fP *name, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry_by_OBJ\fP (\fBX509_NAME\fP *name, \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, unsigned char *\fBbytes\fP, int \fBlen\fP, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry_by_NID\fP (\fBX509_NAME\fP *name, int \fBnid\fP, int \fBtype\fP, unsigned char *\fBbytes\fP, int \fBlen\fP, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry_by_txt\fP (\fBX509_NAME\fP *name, const char *field, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry\fP (\fBX509_NAME\fP *name, \fBX509_NAME_ENTRY\fP *ne, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_create_by_txt\fP (\fBX509_NAME_ENTRY\fP **ne, const char *field, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_create_by_NID\fP (\fBX509_NAME_ENTRY\fP **ne, int \fBnid\fP, int \fBtype\fP, unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_create_by_OBJ\fP (\fBX509_NAME_ENTRY\fP **ne, \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_ENTRY_set_object\fP (\fBX509_NAME_ENTRY\fP *ne, \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_ENTRY_set_data\fP (\fBX509_NAME_ENTRY\fP *ne, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBX509_NAME_ENTRY_get_object\fP (\fBX509_NAME_ENTRY\fP *ne)"
+.br
+.ti -1c
+.RI "\fBASN1_STRING\fP * \fBX509_NAME_ENTRY_get_data\fP (\fBX509_NAME_ENTRY\fP *ne)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int X509_NAME_add_entry (\fBX509_NAME\fP * name, \fBX509_NAME_ENTRY\fP * ne, int loc, int set)"
+
+.PP
+Definition at line 227 of file x509name\&.c\&.
+.SS "int X509_NAME_add_entry_by_NID (\fBX509_NAME\fP * name, int nid, int type, unsigned char * bytes, int len, int loc, int set)"
+
+.PP
+Definition at line 195 of file x509name\&.c\&.
+.SS "int X509_NAME_add_entry_by_OBJ (\fBX509_NAME\fP * name, \fBASN1_OBJECT\fP * obj, int type, unsigned char * bytes, int len, int loc, int set)"
+
+.PP
+Definition at line 181 of file x509name\&.c\&.
+.SS "int X509_NAME_add_entry_by_txt (\fBX509_NAME\fP * name, const char * field, int type, const unsigned char * bytes, int len, int loc, int set)"
+
+.PP
+Definition at line 209 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_delete_entry (\fBX509_NAME\fP * name, int loc)"
+
+.PP
+Definition at line 142 of file x509name\&.c\&.
+.SS "int X509_NAME_entry_count (\fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 95 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_create_by_NID (\fBX509_NAME_ENTRY\fP ** ne, int nid, int type, unsigned char * bytes, int len)"
+
+.PP
+Definition at line 304 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_create_by_OBJ (\fBX509_NAME_ENTRY\fP ** ne, \fBASN1_OBJECT\fP * obj, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 321 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_create_by_txt (\fBX509_NAME_ENTRY\fP ** ne, const char * field, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 284 of file x509name\&.c\&.
+.SS "\fBASN1_STRING\fP* X509_NAME_ENTRY_get_data (\fBX509_NAME_ENTRY\fP * ne)"
+
+.PP
+Definition at line 392 of file x509name\&.c\&.
+.SS "\fBASN1_OBJECT\fP* X509_NAME_ENTRY_get_object (\fBX509_NAME_ENTRY\fP * ne)"
+
+.PP
+Definition at line 385 of file x509name\&.c\&.
+.SS "int X509_NAME_ENTRY_set_data (\fBX509_NAME_ENTRY\fP * ne, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 360 of file x509name\&.c\&.
+.SS "int X509_NAME_ENTRY_set_object (\fBX509_NAME_ENTRY\fP * ne, \fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 348 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_get_entry (\fBX509_NAME\fP * name, int loc)"
+
+.PP
+Definition at line 133 of file x509name\&.c\&.
+.SS "int X509_NAME_get_index_by_NID (\fBX509_NAME\fP * name, int nid, int lastpos)"
+
+.PP
+Definition at line 102 of file x509name\&.c\&.
+.SS "int X509_NAME_get_index_by_OBJ (\fBX509_NAME\fP * name, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 113 of file x509name\&.c\&.
+.SS "int X509_NAME_get_text_by_NID (\fBX509_NAME\fP * name, int nid, char * buf, int len)"
+
+.PP
+Definition at line 67 of file x509name\&.c\&.
+.SS "int X509_NAME_get_text_by_OBJ (\fBX509_NAME\fP * name, \fBASN1_OBJECT\fP * obj, char * buf, int len)"
+
+.PP
+Definition at line 77 of file x509name\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

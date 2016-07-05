@@ -1,0 +1,1130 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ec_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ec_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/opensslv\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEC_GROUP\fP * \fBEC_GROUP_new\fP (const \fBEC_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_GROUP_free\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_GROUP_clear_free\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_copy\fP (\fBEC_GROUP\fP *dest, const \fBEC_GROUP\fP *src)"
+.br
+.ti -1c
+.RI "\fBEC_GROUP\fP * \fBEC_GROUP_dup\fP (const \fBEC_GROUP\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "const \fBEC_METHOD\fP * \fBEC_GROUP_method_of\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBEC_METHOD_get_field_type\fP (const \fBEC_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_set_generator\fP (\fBEC_GROUP\fP *group, const \fBEC_POINT\fP *generator, const \fBBIGNUM\fP *order, const \fBBIGNUM\fP *cofactor)"
+.br
+.ti -1c
+.RI "const \fBEC_POINT\fP * \fBEC_GROUP_get0_generator\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBBN_MONT_CTX\fP * \fBEC_GROUP_get_mont_data\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_order\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *order, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_cofactor\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *cofactor, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_GROUP_set_curve_name\fP (\fBEC_GROUP\fP *group, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_curve_name\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_GROUP_set_asn1_flag\fP (\fBEC_GROUP\fP *group, int flag)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_asn1_flag\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_GROUP_set_point_conversion_form\fP (\fBEC_GROUP\fP *group, \fBpoint_conversion_form_t\fP \fBform\fP)"
+.br
+.ti -1c
+.RI "\fBpoint_conversion_form_t\fP \fBEC_GROUP_get_point_conversion_form\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "size_t \fBEC_GROUP_set_seed\fP (\fBEC_GROUP\fP *group, const unsigned char *\fBp\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBEC_GROUP_get0_seed\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "size_t \fBEC_GROUP_get_seed_len\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_set_curve_GFp\fP (\fBEC_GROUP\fP *group, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_curve_GFp\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *\fBp\fP, \fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_set_curve_GF2m\fP (\fBEC_GROUP\fP *group, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_curve_GF2m\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *\fBp\fP, \fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_get_degree\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_check_discriminant\fP (const \fBEC_GROUP\fP *group, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_cmp\fP (const \fBEC_GROUP\fP *\fBa\fP, const \fBEC_GROUP\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_EX_DATA_set_data\fP (\fBEC_EXTRA_DATA\fP **ex_data, \fBvoid\fP *\fBdata\fP, \fBvoid\fP *(*dup_func)(\fBvoid\fP *), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *), \fBvoid\fP(*clear_free_func)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBEC_EX_DATA_get_data\fP (const \fBEC_EXTRA_DATA\fP *ex_data, \fBvoid\fP *(*dup_func)(\fBvoid\fP *), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *), \fBvoid\fP(*clear_free_func)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_EX_DATA_free_data\fP (\fBEC_EXTRA_DATA\fP **ex_data, \fBvoid\fP *(*dup_func)(\fBvoid\fP *), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *), \fBvoid\fP(*clear_free_func)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_EX_DATA_clear_free_data\fP (\fBEC_EXTRA_DATA\fP **ex_data, \fBvoid\fP *(*dup_func)(\fBvoid\fP *), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *), \fBvoid\fP(*clear_free_func)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_EX_DATA_free_all_data\fP (\fBEC_EXTRA_DATA\fP **ex_data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_EX_DATA_clear_free_all_data\fP (\fBEC_EXTRA_DATA\fP **ex_data)"
+.br
+.ti -1c
+.RI "\fBEC_POINT\fP * \fBEC_POINT_new\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_POINT_free\fP (\fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEC_POINT_clear_free\fP (\fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_copy\fP (\fBEC_POINT\fP *dest, const \fBEC_POINT\fP *src)"
+.br
+.ti -1c
+.RI "\fBEC_POINT\fP * \fBEC_POINT_dup\fP (const \fBEC_POINT\fP *\fBa\fP, const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "const \fBEC_METHOD\fP * \fBEC_POINT_method_of\fP (const \fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_set_to_infinity\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_set_Jprojective_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, const \fBBIGNUM\fP *y, const \fBBIGNUM\fP *z, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_get_Jprojective_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBIGNUM\fP *\fBx\fP, \fBBIGNUM\fP *y, \fBBIGNUM\fP *z, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_set_affine_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, const \fBBIGNUM\fP *y, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_set_affine_coordinates_GF2m\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, const \fBBIGNUM\fP *y, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_get_affine_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBIGNUM\fP *\fBx\fP, \fBBIGNUM\fP *y, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_get_affine_coordinates_GF2m\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBIGNUM\fP *\fBx\fP, \fBBIGNUM\fP *y, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_add\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBEC_POINT\fP *\fBa\fP, const \fBEC_POINT\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_dbl\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBEC_POINT\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_invert\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_is_at_infinity\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_is_on_curve\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_cmp\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *\fBa\fP, const \fBEC_POINT\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_make_affine\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINTs_make_affine\fP (const \fBEC_GROUP\fP *group, size_t \fBnum\fP, \fBEC_POINT\fP *points[], \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINTs_mul\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBBIGNUM\fP *scalar, size_t \fBnum\fP, const \fBEC_POINT\fP *points[], const \fBBIGNUM\fP *scalars[], \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_mul\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBBIGNUM\fP *g_scalar, const \fBEC_POINT\fP *point, const \fBBIGNUM\fP *p_scalar, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_precompute_mult\fP (\fBEC_GROUP\fP *group, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_GROUP_have_precompute_mult\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBec_precompute_mont_data\fP (\fBEC_GROUP\fP *group)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBEC_version\fP [] = 'EC' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP EC_EX_DATA_clear_free_all_data (\fBEC_EXTRA_DATA\fP ** ex_data)"
+
+.PP
+Definition at line 681 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_EX_DATA_clear_free_data (\fBEC_EXTRA_DATA\fP ** ex_data, \fBvoid\fP *(*)(\fBvoid\fP *) dup_func, \fBvoid\fP(*)(\fBvoid\fP *) free_func, \fBvoid\fP(*)(\fBvoid\fP *) clear_free_func)"
+
+.PP
+Definition at line 636 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_EX_DATA_free_all_data (\fBEC_EXTRA_DATA\fP ** ex_data)"
+
+.PP
+Definition at line 661 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_EX_DATA_free_data (\fBEC_EXTRA_DATA\fP ** ex_data, \fBvoid\fP *(*)(\fBvoid\fP *) dup_func, \fBvoid\fP(*)(\fBvoid\fP *) free_func, \fBvoid\fP(*)(\fBvoid\fP *) clear_free_func)"
+
+.PP
+Definition at line 611 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP* EC_EX_DATA_get_data (const \fBEC_EXTRA_DATA\fP * ex_data, \fBvoid\fP *(*)(\fBvoid\fP *) dup_func, \fBvoid\fP(*)(\fBvoid\fP *) free_func, \fBvoid\fP(*)(\fBvoid\fP *) clear_free_func)"
+
+.PP
+Definition at line 594 of file ec_lib\&.c\&.
+.SS "int EC_EX_DATA_set_data (\fBEC_EXTRA_DATA\fP ** ex_data, \fBvoid\fP * data, \fBvoid\fP *(*)(\fBvoid\fP *) dup_func, \fBvoid\fP(*)(\fBvoid\fP *) free_func, \fBvoid\fP(*)(\fBvoid\fP *) clear_free_func)"
+
+.PP
+Definition at line 556 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_check_discriminant (const \fBEC_GROUP\fP * group, \fBBN_CTX\fP * ctx)"
+Checks whether the discriminant of the elliptic curve is zero or not 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if the discriminant is not zero and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 473 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_GROUP_clear_free (\fBEC_GROUP\fP * group)"
+Clears and frees a EC_GROUP object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object to be cleared and freed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 142 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_cmp (const \fBEC_GROUP\fP * a, const \fBEC_GROUP\fP * b, \fBBN_CTX\fP * ctx)"
+Compares two EC_GROUP objects 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP first EC_GROUP object 
+.br
+\fIb\fP second EC_GROUP object 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 if both groups are equal and 1 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 483 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_copy (\fBEC_GROUP\fP * dst, const \fBEC_GROUP\fP * src)"
+Copies EC_GROUP objects\&. Note: both EC_GROUPs must use the same EC_METHOD\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdst\fP destination EC_GROUP object 
+.br
+\fIsrc\fP source EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occurred\&. 
+.RE
+.PP
+
+.PP
+Definition at line 171 of file ec_lib\&.c\&.
+.SS "\fBEC_GROUP\fP* EC_GROUP_dup (const \fBEC_GROUP\fP * src)"
+Creates a new EC_GROUP object and copies the copies the content form src to the newly created EC_KEY object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsrc\fP source EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+newly created EC_GROUP object or NULL in case of an error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 259 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_GROUP_free (\fBEC_GROUP\fP * group)"
+Frees a EC_GROUP object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object to be freed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 118 of file ec_lib\&.c\&.
+.SS "const \fBEC_POINT\fP* EC_GROUP_get0_generator (const \fBEC_GROUP\fP * group)"
+Returns the generator of a EC_GROUP object\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the currently used generator (possibly NULL)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 331 of file ec_lib\&.c\&.
+.SS "unsigned char* EC_GROUP_get0_seed (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 410 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_asn1_flag (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 374 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_cofactor (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * cofactor, \fBBN_CTX\fP * ctx)"
+Gets the cofactor of a EC_GROUP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIcofactor\fP BIGNUM to which the cofactor is copied 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 349 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_curve_GF2m (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * p, \fBBIGNUM\fP * a, \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+Gets the parameter of the ec over GF2m defined by y^2 + x*y = x^3 + a*x^2 + b 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIp\fP BIGNUM for the polynomial defining the underlying field 
+.br
+\fIa\fP BIGNUM for parameter a of the equation 
+.br
+\fIb\fP BIGNUM for parameter b of the equation 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 452 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_curve_GFp (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * p, \fBBIGNUM\fP * a, \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+Gets the parameter of the ec over GFp defined by y^2 = x^3 + a*x + b 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIp\fP BIGNUM for the prime number 
+.br
+\fIa\fP BIGNUM for parameter a of the equation 
+.br
+\fIb\fP BIGNUM for parameter b of the equation 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 430 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_curve_name (const \fBEC_GROUP\fP * group)"
+Returns the curve name of a EC_GROUP object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+NID of the curve name OID or 0 if not set\&. 
+.RE
+.PP
+
+.PP
+Definition at line 363 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_degree (const \fBEC_GROUP\fP * group)"
+Returns the number of bits needed to represent a field element 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of bits needed to represent a field element 
+.RE
+.PP
+
+.PP
+Definition at line 464 of file ec_lib\&.c\&.
+.SS "\fBBN_MONT_CTX\fP* EC_GROUP_get_mont_data (const \fBEC_GROUP\fP * group)"
+Returns the montgomery data for order(Generator) 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the currently used generator (possibly NULL)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 336 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_get_order (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * order, \fBBN_CTX\fP * ctx)"
+Gets the order of a EC_GROUP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIorder\fP BIGNUM to which the order is copied 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 341 of file ec_lib\&.c\&.
+.SS "\fBpoint_conversion_form_t\fP EC_GROUP_get_point_conversion_form (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 385 of file ec_lib\&.c\&.
+.SS "size_t EC_GROUP_get_seed_len (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 415 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_have_precompute_mult (const \fBEC_GROUP\fP * group)"
+Reports whether a precomputation has been done 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if a pre-computation has been done and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 1084 of file ec_lib\&.c\&.
+.SS "const \fBEC_METHOD\fP* EC_GROUP_method_of (const \fBEC_GROUP\fP * group)"
+Returns the EC_METHOD of the EC_GROUP object\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+EC_METHOD used in this EC_GROUP object\&. 
+.RE
+.PP
+
+.PP
+Definition at line 283 of file ec_lib\&.c\&.
+.SS "\fBEC_GROUP\fP* EC_GROUP_new (const \fBEC_METHOD\fP * meth)"
+Creates a new EC_GROUP object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImeth\fP EC_METHOD to use 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+newly created EC_GROUP object or NULL in case of an error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_precompute_mult (\fBEC_GROUP\fP * group, \fBBN_CTX\fP * ctx)"
+Stores multiples of generator for faster point multiplication 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 1072 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_GROUP_set_asn1_flag (\fBEC_GROUP\fP * group, int flag)"
+
+.PP
+Definition at line 368 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_set_curve_GF2m (\fBEC_GROUP\fP * group, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+Sets the parameter of a ec over GF2m defined by y^2 + x*y = x^3 + a*x^2 + b 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIp\fP BIGNUM with the polynomial defining the underlying field 
+.br
+\fIa\fP BIGNUM with parameter a of the equation 
+.br
+\fIb\fP BIGNUM with parameter b of the equation 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 441 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_set_curve_GFp (\fBEC_GROUP\fP * group, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+Sets the parameter of a ec over GFp defined by y^2 = x^3 + a*x + b 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIp\fP BIGNUM with the prime number 
+.br
+\fIa\fP BIGNUM with parameter a of the equation 
+.br
+\fIb\fP BIGNUM with parameter b of the equation 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 420 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_GROUP_set_curve_name (\fBEC_GROUP\fP * group, int nid)"
+Sets the name of a EC_GROUP object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fInid\fP NID of the curve name OID 
+.RE
+.PP
+
+.PP
+Definition at line 358 of file ec_lib\&.c\&.
+.SS "int EC_GROUP_set_generator (\fBEC_GROUP\fP * group, const \fBEC_POINT\fP * generator, const \fBBIGNUM\fP * order, const \fBBIGNUM\fP * cofactor)"
+Sets the generator and it's order/cofactor of a EC_GROUP object\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP object 
+.br
+\fIgenerator\fP EC_POINT object with the generator\&. 
+.br
+\fIorder\fP the order of the group generated by the generator\&. 
+.br
+\fIcofactor\fP the index of the sub-group generated by the generator in the group of all points on the elliptic curve\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 293 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_GROUP_set_point_conversion_form (\fBEC_GROUP\fP * group, \fBpoint_conversion_form_t\fP form)"
+
+.PP
+Definition at line 379 of file ec_lib\&.c\&.
+.SS "size_t EC_GROUP_set_seed (\fBEC_GROUP\fP * group, const unsigned char * p, size_t len)"
+
+.PP
+Definition at line 391 of file ec_lib\&.c\&.
+.SS "int EC_METHOD_get_field_type (const \fBEC_METHOD\fP * meth)"
+Returns the field type of the EC_METHOD\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImeth\fP EC_METHOD object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+NID of the underlying field type OID\&. 
+.RE
+.PP
+
+.PP
+Definition at line 288 of file ec_lib\&.c\&.
+.SS "int EC_POINT_add (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBEC_POINT\fP * a, const \fBEC_POINT\fP * b, \fBBN_CTX\fP * ctx)"
+Computes the sum of two EC_POINT 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIr\fP EC_POINT object for the result (r = a + b) 
+.br
+\fIa\fP EC_POINT object with the first summand 
+.br
+\fIb\fP EC_POINT object with the second summand 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 917 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_POINT_clear_free (\fBEC_POINT\fP * point)"
+Clears and frees a EC_POINT object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpoint\fP EC_POINT object to be cleared and freed 
+.RE
+.PP
+
+.PP
+Definition at line 741 of file ec_lib\&.c\&.
+.SS "int EC_POINT_cmp (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * a, const \fBEC_POINT\fP * b, \fBBN_CTX\fP * ctx)"
+Compares two EC_POINTs 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIa\fP first EC_POINT object 
+.br
+\fIb\fP second EC_POINT object 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 if both points are equal and a value != 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 994 of file ec_lib\&.c\&.
+.SS "int EC_POINT_copy (\fBEC_POINT\fP * dst, const \fBEC_POINT\fP * src)"
+Copies EC_POINT object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdst\fP destination EC_POINT object 
+.br
+\fIsrc\fP source EC_POINT object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 754 of file ec_lib\&.c\&.
+.SS "int EC_POINT_dbl (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBEC_POINT\fP * a, \fBBN_CTX\fP * ctx)"
+Computes the double of a EC_POINT 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIr\fP EC_POINT object for the result (r = 2 * a) 
+.br
+\fIa\fP EC_POINT object 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 932 of file ec_lib\&.c\&.
+.SS "\fBEC_POINT\fP* EC_POINT_dup (const \fBEC_POINT\fP * src, const \fBEC_GROUP\fP * group)"
+Creates a new EC_POINT object and copies the content of the supplied EC_POINT 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsrc\fP source EC_POINT object 
+.br
+\fIgroup\fP underlying the EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+newly created EC_POINT object or NULL if an error occurred 
+.RE
+.PP
+
+.PP
+Definition at line 769 of file ec_lib\&.c\&.
+.SS "\fBvoid\fP EC_POINT_free (\fBEC_POINT\fP * point)"
+Frees a EC_POINT object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpoint\fP EC_POINT object to be freed 
+.RE
+.PP
+
+.PP
+Definition at line 731 of file ec_lib\&.c\&.
+.SS "int EC_POINT_get_affine_coordinates_GF2m (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * p, \fBBIGNUM\fP * x, \fBBIGNUM\fP * y, \fBBN_CTX\fP * ctx)"
+Gets the affine coordinates of a EC_POINT over GF2m 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM for the x-coordinate 
+.br
+\fIy\fP BIGNUM for the y-coordinate 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 899 of file ec_lib\&.c\&.
+.SS "int EC_POINT_get_affine_coordinates_GFp (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * p, \fBBIGNUM\fP * x, \fBBIGNUM\fP * y, \fBBN_CTX\fP * ctx)"
+Gets the affine coordinates of a EC_POINT over GFp 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM for the x-coordinate 
+.br
+\fIy\fP BIGNUM for the y-coordinate 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 881 of file ec_lib\&.c\&.
+.SS "int EC_POINT_get_Jprojective_coordinates_GFp (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * p, \fBBIGNUM\fP * x, \fBBIGNUM\fP * y, \fBBIGNUM\fP * z, \fBBN_CTX\fP * ctx)"
+Gets the jacobian projective coordinates of a EC_POINT over GFp 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM for the x-coordinate 
+.br
+\fIy\fP BIGNUM for the y-coordinate 
+.br
+\fIz\fP BIGNUM for the z-coordinate 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 826 of file ec_lib\&.c\&.
+.SS "int EC_POINT_invert (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * a, \fBBN_CTX\fP * ctx)"
+Computes the inverse of a EC_POINT 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIa\fP EC_POINT object to be inverted (it's used for the result as well) 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 946 of file ec_lib\&.c\&.
+.SS "int EC_POINT_is_at_infinity (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * p)"
+Checks whether the point is the neutral element of the group 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP the underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if the point is the neutral element and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 959 of file ec_lib\&.c\&.
+.SS "int EC_POINT_is_on_curve (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * point, \fBBN_CTX\fP * ctx)"
+Checks whether the point is on the curve 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIpoint\fP EC_POINT object to check 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if point if on the curve and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 980 of file ec_lib\&.c\&.
+.SS "int EC_POINT_make_affine (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1008 of file ec_lib\&.c\&.
+.SS "const \fBEC_METHOD\fP* EC_POINT_method_of (const \fBEC_POINT\fP * point)"
+Returns the EC_METHOD used in EC_POINT object 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpoint\fP EC_POINT object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the EC_METHOD used 
+.RE
+.PP
+
+.PP
+Definition at line 788 of file ec_lib\&.c\&.
+.SS "int EC_POINT_mul (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBBIGNUM\fP * n, const \fBEC_POINT\fP * q, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx)"
+Computes r = generator * n + q * m 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIr\fP EC_POINT object for the result 
+.br
+\fIn\fP BIGNUM with the multiplier for the group generator (optional) 
+.br
+\fIq\fP EC_POINT object with the first factor of the second summand 
+.br
+\fIm\fP BIGNUM with the second factor of the second summand 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 1056 of file ec_lib\&.c\&.
+.SS "\fBEC_POINT\fP* EC_POINT_new (const \fBEC_GROUP\fP * group)"
+Creates a new EC_POINT object for the specified EC_GROUP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP EC_GROUP the underlying EC_GROUP object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+newly created EC_POINT object or NULL if an error occurred 
+.RE
+.PP
+
+.PP
+Definition at line 702 of file ec_lib\&.c\&.
+.SS "int EC_POINT_set_affine_coordinates_GF2m (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * p, const \fBBIGNUM\fP * x, const \fBBIGNUM\fP * y, \fBBN_CTX\fP * ctx)"
+Sets the affine coordinates of a EC_POINT over GF2m 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM with the x-coordinate 
+.br
+\fIy\fP BIGNUM with the y-coordinate 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 863 of file ec_lib\&.c\&.
+.SS "int EC_POINT_set_affine_coordinates_GFp (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * p, const \fBBIGNUM\fP * x, const \fBBIGNUM\fP * y, \fBBN_CTX\fP * ctx)"
+Sets the affine coordinates of a EC_POINT over GFp 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM with the x-coordinate 
+.br
+\fIy\fP BIGNUM with the y-coordinate 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 845 of file ec_lib\&.c\&.
+.SS "int EC_POINT_set_Jprojective_coordinates_GFp (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * p, const \fBBIGNUM\fP * x, const \fBBIGNUM\fP * y, const \fBBIGNUM\fP * z, \fBBN_CTX\fP * ctx)"
+Sets the jacobian projective coordinates of a EC_POINT over GFp 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM with the x-coordinate 
+.br
+\fIy\fP BIGNUM with the y-coordinate 
+.br
+\fIz\fP BIGNUM with the z-coordinate 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 807 of file ec_lib\&.c\&.
+.SS "int EC_POINT_set_to_infinity (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point)"
+Sets a point to infinity (neutral element) 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIpoint\fP EC_POINT to set to infinity 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 793 of file ec_lib\&.c\&.
+.SS "int EC_POINTs_make_affine (const \fBEC_GROUP\fP * group, size_t num, \fBEC_POINT\fP * points[], \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1021 of file ec_lib\&.c\&.
+.SS "int EC_POINTs_mul (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBBIGNUM\fP * n, size_t num, const \fBEC_POINT\fP * p[], const \fBBIGNUM\fP * m[], \fBBN_CTX\fP * ctx)"
+Computes r = generator * n sum_{i=0}^{num-1} p[i] * m[i] 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIr\fP EC_POINT object for the result 
+.br
+\fIn\fP BIGNUM with the multiplier for the group generator (optional) 
+.br
+\fInum\fP number futher summands 
+.br
+\fIp\fP array of size num of EC_POINT objects 
+.br
+\fIm\fP array of size num of BIGNUM objects 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 1045 of file ec_lib\&.c\&.
+.SS "int ec_precompute_mont_data (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 1101 of file ec_lib\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char EC_version[] = 'EC' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 71 of file ec_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

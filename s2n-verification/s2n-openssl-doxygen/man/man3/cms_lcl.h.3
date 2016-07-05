@@ -1,0 +1,636 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cms/cms_lcl.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cms/cms_lcl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBCMS_ContentInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_SignedData_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_EncapsulatedContentInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_SignerInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_SignerIdentifier_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_EnvelopedData_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OriginatorInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_EncryptedContentInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_RecipientInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_KeyTransRecipientInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_KeyAgreeRecipientInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OriginatorIdentifierOrKey_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OriginatorPublicKey_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_RecipientEncryptedKey_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_KeyAgreeRecipientIdentifier_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_RecipientKeyIdentifier_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_KEKRecipientInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_KEKIdentifier_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_PasswordRecipientInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OtherRecipientInfo_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_DigestedData_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_EncryptedData_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_AuthenticatedData_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_CompressedData_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_RevocationInfoChoice_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OtherRevocationInfoFormat_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_CertificateChoices\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OtherCertificateFormat_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_IssuerAndSerialNumber_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_OtherKeyAttribute_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCMS_Receipt_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCMS_REVCHOICE_CRL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_REVCHOICE_OTHER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_CERTCHOICE_CERT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_CERTCHOICE_EXCERT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_CERTCHOICE_V1ACERT\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCMS_CERTCHOICE_V2ACERT\fP   3"
+.br
+.ti -1c
+.RI "#define \fBCMS_CERTCHOICE_OTHER\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCMS_SIGNERINFO_ISSUER_SERIAL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_SIGNERINFO_KEYIDENTIFIER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_ISSUER_SERIAL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_KEYIDENTIFIER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_REK_ISSUER_SERIAL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_REK_KEYIDENTIFIER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_OIK_ISSUER_SERIAL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_OIK_KEYIDENTIFIER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_OIK_PUBKEY\fP   2"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBCMS_IssuerAndSerialNumber_st\fP \fBCMS_IssuerAndSerialNumber\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_EncapsulatedContentInfo_st\fP \fBCMS_EncapsulatedContentInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_SignerIdentifier_st\fP \fBCMS_SignerIdentifier\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_SignedData_st\fP \fBCMS_SignedData\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OtherRevocationInfoFormat_st\fP \fBCMS_OtherRevocationInfoFormat\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OriginatorInfo_st\fP \fBCMS_OriginatorInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_EncryptedContentInfo_st\fP \fBCMS_EncryptedContentInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_EnvelopedData_st\fP \fBCMS_EnvelopedData\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_DigestedData_st\fP \fBCMS_DigestedData\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_EncryptedData_st\fP \fBCMS_EncryptedData\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_AuthenticatedData_st\fP \fBCMS_AuthenticatedData\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_CompressedData_st\fP \fBCMS_CompressedData\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OtherCertificateFormat_st\fP \fBCMS_OtherCertificateFormat\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_KeyTransRecipientInfo_st\fP \fBCMS_KeyTransRecipientInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OriginatorPublicKey_st\fP \fBCMS_OriginatorPublicKey\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OriginatorIdentifierOrKey_st\fP \fBCMS_OriginatorIdentifierOrKey\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_KeyAgreeRecipientInfo_st\fP \fBCMS_KeyAgreeRecipientInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_RecipientKeyIdentifier_st\fP \fBCMS_RecipientKeyIdentifier\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_KeyAgreeRecipientIdentifier_st\fP \fBCMS_KeyAgreeRecipientIdentifier\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_KEKIdentifier_st\fP \fBCMS_KEKIdentifier\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_KEKRecipientInfo_st\fP \fBCMS_KEKRecipientInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_PasswordRecipientInfo_st\fP \fBCMS_PasswordRecipientInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OtherRecipientInfo_st\fP \fBCMS_OtherRecipientInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct CMS_ReceiptsFrom_st \fBCMS_ReceiptsFrom\fP"
+.br
+.ti -1c
+.RI "typedef \fBCMS_SignerIdentifier\fP \fBCMS_RecipientIdentifier\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_content_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBcms_Data_create\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBcms_DigestedData_create\fP (const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_DigestedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_DigestedData_do_final\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *chain, int verify)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_SignedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_SignedData_final\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *chain)"
+.br
+.ti -1c
+.RI "int \fBcms_set1_SignerIdentifier\fP (\fBCMS_SignerIdentifier\fP *sid, \fBX509\fP *cert, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBcms_SignerIdentifier_get0_signer_id\fP (\fBCMS_SignerIdentifier\fP *sid, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBcms_SignerIdentifier_cert_cmp\fP (\fBCMS_SignerIdentifier\fP *sid, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBcms_CompressedData_create\fP (int comp_nid)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_CompressedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBcms_DigestAlgorithm_set\fP (\fBX509_ALGOR\fP *alg, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_DigestAlgorithm_init_bio\fP (\fBX509_ALGOR\fP *digestAlgorithm)"
+.br
+.ti -1c
+.RI "int \fBcms_DigestAlgorithm_find_ctx\fP (\fBEVP_MD_CTX\fP *mctx, \fBBIO\fP *chain, \fBX509_ALGOR\fP *mdalg)"
+.br
+.ti -1c
+.RI "int \fBcms_ias_cert_cmp\fP (\fBCMS_IssuerAndSerialNumber\fP *ias, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBcms_keyid_cert_cmp\fP (\fBASN1_OCTET_STRING\fP *keyid, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBcms_set1_ias\fP (\fBCMS_IssuerAndSerialNumber\fP **pias, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBcms_set1_keyid\fP (\fBASN1_OCTET_STRING\fP **pkeyid, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_EncryptedContent_init_bio\fP (\fBCMS_EncryptedContentInfo\fP *ec)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_EncryptedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_EncryptedContent_init\fP (\fBCMS_EncryptedContentInfo\fP *ec, const \fBEVP_CIPHER\fP *cipher, const unsigned char *\fBkey\fP, size_t keylen)"
+.br
+.ti -1c
+.RI "int \fBcms_Receipt_verify\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_ContentInfo\fP *req_cms)"
+.br
+.ti -1c
+.RI "int \fBcms_msgSigDigest_add1\fP (\fBCMS_SignerInfo\fP *dest, \fBCMS_SignerInfo\fP *src)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBcms_encode_Receipt\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_EnvelopedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBCMS_EnvelopedData\fP * \fBcms_get0_enveloped\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_env_asn1_ctrl\fP (\fBCMS_RecipientInfo\fP *ri, int cmd)"
+.br
+.ti -1c
+.RI "int \fBcms_pkey_get_ri_type\fP (\fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "int \fBcms_RecipientInfo_kari_init\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509\fP *recip, \fBEVP_PKEY\fP *pk, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBcms_RecipientInfo_kari_encrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBcms_RecipientInfo_pwri_crypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri, int en_de)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CMS_CERTCHOICE_CERT   0"
+
+.PP
+Definition at line 339 of file cms_lcl\&.h\&.
+.SS "#define CMS_CERTCHOICE_EXCERT   1"
+
+.PP
+Definition at line 340 of file cms_lcl\&.h\&.
+.SS "#define CMS_CERTCHOICE_OTHER   4"
+
+.PP
+Definition at line 343 of file cms_lcl\&.h\&.
+.SS "#define CMS_CERTCHOICE_V1ACERT   2"
+
+.PP
+Definition at line 341 of file cms_lcl\&.h\&.
+.SS "#define CMS_CERTCHOICE_V2ACERT   3"
+
+.PP
+Definition at line 342 of file cms_lcl\&.h\&.
+.SS "#define CMS_OIK_ISSUER_SERIAL   0"
+
+.PP
+Definition at line 409 of file cms_lcl\&.h\&.
+.SS "#define CMS_OIK_KEYIDENTIFIER   1"
+
+.PP
+Definition at line 410 of file cms_lcl\&.h\&.
+.SS "#define CMS_OIK_PUBKEY   2"
+
+.PP
+Definition at line 411 of file cms_lcl\&.h\&.
+.SS "#define CMS_RECIPINFO_ISSUER_SERIAL   0"
+
+.PP
+Definition at line 403 of file cms_lcl\&.h\&.
+.SS "#define CMS_RECIPINFO_KEYIDENTIFIER   1"
+
+.PP
+Definition at line 404 of file cms_lcl\&.h\&.
+.SS "#define CMS_REK_ISSUER_SERIAL   0"
+
+.PP
+Definition at line 406 of file cms_lcl\&.h\&.
+.SS "#define CMS_REK_KEYIDENTIFIER   1"
+
+.PP
+Definition at line 407 of file cms_lcl\&.h\&.
+.SS "#define CMS_REVCHOICE_CRL   0"
+
+.PP
+Definition at line 320 of file cms_lcl\&.h\&.
+.SS "#define CMS_REVCHOICE_OTHER   1"
+
+.PP
+Definition at line 321 of file cms_lcl\&.h\&.
+.SS "#define CMS_SIGNERINFO_ISSUER_SERIAL   0"
+
+.PP
+Definition at line 400 of file cms_lcl\&.h\&.
+.SS "#define CMS_SIGNERINFO_KEYIDENTIFIER   1"
+
+.PP
+Definition at line 401 of file cms_lcl\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBCMS_AuthenticatedData_st\fP \fBCMS_AuthenticatedData\fP"
+
+.PP
+Definition at line 80 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_CompressedData_st\fP \fBCMS_CompressedData\fP"
+
+.PP
+Definition at line 81 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_DigestedData_st\fP \fBCMS_DigestedData\fP"
+
+.PP
+Definition at line 78 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_EncapsulatedContentInfo_st\fP \fBCMS_EncapsulatedContentInfo\fP"
+
+.PP
+Definition at line 71 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_EncryptedContentInfo_st\fP \fBCMS_EncryptedContentInfo\fP"
+
+.PP
+Definition at line 76 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_EncryptedData_st\fP \fBCMS_EncryptedData\fP"
+
+.PP
+Definition at line 79 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_EnvelopedData_st\fP \fBCMS_EnvelopedData\fP"
+
+.PP
+Definition at line 77 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_IssuerAndSerialNumber_st\fP \fBCMS_IssuerAndSerialNumber\fP"
+
+.PP
+Definition at line 70 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_KEKIdentifier_st\fP \fBCMS_KEKIdentifier\fP"
+
+.PP
+Definition at line 90 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_KEKRecipientInfo_st\fP \fBCMS_KEKRecipientInfo\fP"
+
+.PP
+Definition at line 91 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_KeyAgreeRecipientIdentifier_st\fP \fBCMS_KeyAgreeRecipientIdentifier\fP"
+
+.PP
+Definition at line 88 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_KeyAgreeRecipientInfo_st\fP \fBCMS_KeyAgreeRecipientInfo\fP"
+
+.PP
+Definition at line 86 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_KeyTransRecipientInfo_st\fP \fBCMS_KeyTransRecipientInfo\fP"
+
+.PP
+Definition at line 83 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_OriginatorIdentifierOrKey_st\fP \fBCMS_OriginatorIdentifierOrKey\fP"
+
+.PP
+Definition at line 85 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_OriginatorInfo_st\fP \fBCMS_OriginatorInfo\fP"
+
+.PP
+Definition at line 75 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_OriginatorPublicKey_st\fP \fBCMS_OriginatorPublicKey\fP"
+
+.PP
+Definition at line 84 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_OtherCertificateFormat_st\fP \fBCMS_OtherCertificateFormat\fP"
+
+.PP
+Definition at line 82 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_OtherRecipientInfo_st\fP \fBCMS_OtherRecipientInfo\fP"
+
+.PP
+Definition at line 93 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_OtherRevocationInfoFormat_st\fP \fBCMS_OtherRevocationInfoFormat\fP"
+
+.PP
+Definition at line 74 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_PasswordRecipientInfo_st\fP \fBCMS_PasswordRecipientInfo\fP"
+
+.PP
+Definition at line 92 of file cms_lcl\&.h\&.
+.SS "typedef struct CMS_ReceiptsFrom_st \fBCMS_ReceiptsFrom\fP"
+
+.PP
+Definition at line 94 of file cms_lcl\&.h\&.
+.SS "typedef \fBCMS_SignerIdentifier\fP \fBCMS_RecipientIdentifier\fP"
+
+.PP
+Definition at line 188 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_RecipientKeyIdentifier_st\fP \fBCMS_RecipientKeyIdentifier\fP"
+
+.PP
+Definition at line 87 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_SignedData_st\fP \fBCMS_SignedData\fP"
+
+.PP
+Definition at line 73 of file cms_lcl\&.h\&.
+.SS "typedef struct \fBCMS_SignerIdentifier_st\fP \fBCMS_SignerIdentifier\fP"
+
+.PP
+Definition at line 72 of file cms_lcl\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBCMS_ContentInfo\fP* cms_CompressedData_create (int comp_nid)"
+
+.SS "\fBBIO\fP* cms_CompressedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "\fBBIO\fP* cms_content_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 89 of file cms_lib\&.c\&.
+.SS "\fBCMS_ContentInfo\fP* cms_Data_create (\fBvoid\fP)"
+
+.PP
+Definition at line 77 of file cms_lib\&.c\&.
+.SS "int cms_DigestAlgorithm_find_ctx (\fBEVP_MD_CTX\fP * mctx, \fBBIO\fP * chain, \fBX509_ALGOR\fP * mdalg)"
+
+.PP
+Definition at line 379 of file cms_lib\&.c\&.
+.SS "\fBBIO\fP* cms_DigestAlgorithm_init_bio (\fBX509_ALGOR\fP * digestAlgorithm)"
+
+.PP
+Definition at line 353 of file cms_lib\&.c\&.
+.SS "\fBvoid\fP cms_DigestAlgorithm_set (\fBX509_ALGOR\fP * alg, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 338 of file cms_lib\&.c\&.
+.SS "\fBCMS_ContentInfo\fP* cms_DigestedData_create (const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 67 of file cms_dd\&.c\&.
+.SS "int cms_DigestedData_do_final (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * chain, int verify)"
+
+.PP
+Definition at line 105 of file cms_dd\&.c\&.
+.SS "\fBBIO\fP* cms_DigestedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 98 of file cms_dd\&.c\&.
+.SS "\fBASN1_OCTET_STRING\fP* cms_encode_Receipt (\fBCMS_SignerInfo\fP * si)"
+
+.PP
+Definition at line 356 of file cms_ess\&.c\&.
+.SS "int cms_EncryptedContent_init (\fBCMS_EncryptedContentInfo\fP * ec, const \fBEVP_CIPHER\fP * cipher, const unsigned char * key, size_t keylen)"
+
+.PP
+Definition at line 217 of file cms_enc\&.c\&.
+.SS "\fBBIO\fP* cms_EncryptedContent_init_bio (\fBCMS_EncryptedContentInfo\fP * ec)"
+
+.PP
+Definition at line 70 of file cms_enc\&.c\&.
+.SS "\fBBIO\fP* cms_EncryptedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 258 of file cms_enc\&.c\&.
+.SS "int cms_env_asn1_ctrl (\fBCMS_RecipientInfo\fP * ri, int cmd)"
+
+.PP
+Definition at line 103 of file cms_env\&.c\&.
+.SS "\fBBIO\fP* cms_EnvelopedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 911 of file cms_env\&.c\&.
+.SS "\fBCMS_EnvelopedData\fP* cms_get0_enveloped (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 75 of file cms_env\&.c\&.
+.SS "int cms_ias_cert_cmp (\fBCMS_IssuerAndSerialNumber\fP * ias, \fBX509\fP * cert)"
+
+.PP
+Definition at line 601 of file cms_lib\&.c\&.
+.SS "int cms_keyid_cert_cmp (\fBASN1_OCTET_STRING\fP * keyid, \fBX509\fP * cert)"
+
+.PP
+Definition at line 610 of file cms_lib\&.c\&.
+.SS "int cms_msgSigDigest_add1 (\fBCMS_SignerInfo\fP * dest, \fBCMS_SignerInfo\fP * src)"
+
+.PP
+Definition at line 205 of file cms_ess\&.c\&.
+.SS "int cms_pkey_get_ri_type (\fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 965 of file cms_env\&.c\&.
+.SS "int cms_Receipt_verify (\fBCMS_ContentInfo\fP * cms, \fBCMS_ContentInfo\fP * req_cms)"
+
+.PP
+Definition at line 223 of file cms_ess\&.c\&.
+.SS "int cms_RecipientInfo_kari_encrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 417 of file cms_kari\&.c\&.
+.SS "int cms_RecipientInfo_kari_init (\fBCMS_RecipientInfo\fP * ri, \fBX509\fP * recip, \fBEVP_PKEY\fP * pk, unsigned int flags)"
+
+.PP
+Definition at line 344 of file cms_kari\&.c\&.
+.SS "int cms_RecipientInfo_pwri_crypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri, int en_de)"
+
+.PP
+Definition at line 318 of file cms_pwri\&.c\&.
+.SS "int cms_set1_ias (\fBCMS_IssuerAndSerialNumber\fP ** pias, \fBX509\fP * cert)"
+
+.PP
+Definition at line 618 of file cms_lib\&.c\&.
+.SS "int cms_set1_keyid (\fBASN1_OCTET_STRING\fP ** pkeyid, \fBX509\fP * cert)"
+
+.PP
+Definition at line 639 of file cms_lib\&.c\&.
+.SS "int cms_set1_SignerIdentifier (\fBCMS_SignerIdentifier\fP * sid, \fBX509\fP * cert, int type)"
+
+.PP
+Definition at line 197 of file cms_sd\&.c\&.
+.SS "int cms_SignedData_final (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * chain)"
+
+.PP
+Definition at line 658 of file cms_sd\&.c\&.
+.SS "\fBBIO\fP* cms_SignedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 783 of file cms_sd\&.c\&.
+.SS "int cms_SignerIdentifier_cert_cmp (\fBCMS_SignerIdentifier\fP * sid, \fBX509\fP * cert)"
+
+.PP
+Definition at line 238 of file cms_sd\&.c\&.
+.SS "int cms_SignerIdentifier_get0_signer_id (\fBCMS_SignerIdentifier\fP * sid, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.PP
+Definition at line 220 of file cms_sd\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

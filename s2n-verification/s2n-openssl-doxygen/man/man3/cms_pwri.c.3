@@ -1,0 +1,59 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cms/cms_pwri.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cms/cms_pwri.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/cms\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'cms_lcl\&.h'\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_set0_password\fP (\fBCMS_RecipientInfo\fP *ri, unsigned char *\fBpass\fP, \fBossl_ssize_t\fP \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_RecipientInfo\fP * \fBCMS_add0_recipient_password\fP (\fBCMS_ContentInfo\fP *cms, int iter, int wrap_nid, int pbe_nid, unsigned char *\fBpass\fP, \fBossl_ssize_t\fP \fBpasslen\fP, const \fBEVP_CIPHER\fP *kekciph)"
+.br
+.ti -1c
+.RI "int \fBcms_RecipientInfo_pwri_crypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri, int en_de)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBCMS_RecipientInfo\fP* CMS_add0_recipient_password (\fBCMS_ContentInfo\fP * cms, int iter, int wrap_nid, int pbe_nid, unsigned char * pass, \fBossl_ssize_t\fP passlen, const \fBEVP_CIPHER\fP * kekciph)"
+
+.PP
+Definition at line 83 of file cms_pwri\&.c\&.
+.SS "int cms_RecipientInfo_pwri_crypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri, int en_de)"
+
+.PP
+Definition at line 318 of file cms_pwri\&.c\&.
+.SS "int CMS_RecipientInfo_set0_password (\fBCMS_RecipientInfo\fP * ri, unsigned char * pass, \fBossl_ssize_t\fP passlen)"
+
+.PP
+Definition at line 66 of file cms_pwri\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

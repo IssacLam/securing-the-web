@@ -1,0 +1,62 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509v3/v3_skey.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509v3/v3_skey.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBi2s_ASN1_OCTET_STRING\fP (\fBX509V3_EXT_METHOD\fP *method, \fBASN1_OCTET_STRING\fP *oct)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBs2i_ASN1_OCTET_STRING\fP (\fBX509V3_EXT_METHOD\fP *method, \fBX509V3_CTX\fP *\fBctx\fP, char *str)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBX509V3_EXT_METHOD\fP \fBv3_skey_id\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "char* i2s_ASN1_OCTET_STRING (\fBX509V3_EXT_METHOD\fP * method, \fBASN1_OCTET_STRING\fP * oct)"
+
+.PP
+Definition at line 75 of file v3_skey\&.c\&.
+.SS "\fBASN1_OCTET_STRING\fP* s2i_ASN1_OCTET_STRING (\fBX509V3_EXT_METHOD\fP * method, \fBX509V3_CTX\fP * ctx, char * str)"
+
+.PP
+Definition at line 80 of file v3_skey\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBX509V3_EXT_METHOD\fP v3_skey_id"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    NID_subject_key_identifier, 0, ASN1_ITEM_ref(ASN1_OCTET_STRING),
+    0, 0, 0, 0,
+    (X509V3_EXT_I2S)i2s_ASN1_OCTET_STRING,
+    (X509V3_EXT_S2I)s2i_skey_id,
+    0, 0, 0, 0,
+    NULL
+}
+.fi
+.PP
+Definition at line 66 of file v3_skey\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,91 @@
+.TH "s2n/libcrypto-build/openssl/crypto/evp/e_camellia.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/evp/e_camellia.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <openssl/camellia\&.h>\fP
+.br
+\fC#include 'evp_locl\&.h'\fP
+.br
+\fC#include 'modes_lcl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBEVP_CAMELLIA_KEY\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAXBITCHUNK\fP   ((size_t)1<<(sizeof(size_t)*8\-4))"
+.br
+.ti -1c
+.RI "#define \fBdata\fP(\fBctx\fP)             \fBEVP_C_DATA\fP(\fBEVP_CAMELLIA_KEY\fP,\fBctx\fP)"
+.br
+.ti -1c
+.RI "#define \fBBLOCK_CIPHER_generic\fP(\fBnid\fP,  keylen,  blocksize,  ivlen,  nmode,  mode,  MODE,  \fBflags\fP)"
+.br
+.ti -1c
+.RI "#define \fBBLOCK_CIPHER_generic_pack\fP(\fBnid\fP,  keylen,  \fBflags\fP)                      "
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BLOCK_CIPHER_generic(\fBnid\fP, keylen, blocksize, ivlen, nmode, mode, MODE, \fBflags\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const EVP_CIPHER camellia_##keylen##_##mode = { \
+        nid##_##keylen##_##nmode,blocksize,keylen/8,ivlen, \
+        flags|EVP_CIPH_##MODE##_MODE,   \
+        camellia_init_key,              \
+        camellia_##mode##_cipher,       \
+        NULL,                           \
+        sizeof(EVP_CAMELLIA_KEY),       \
+        NULL,NULL,NULL,NULL }; \
+const EVP_CIPHER *EVP_camellia_##keylen##_##mode(void) \
+{ return &camellia_##keylen##_##mode; }
+.fi
+.PP
+Definition at line 231 of file e_camellia\&.c\&.
+.SS "#define BLOCK_CIPHER_generic_pack(\fBnid\fP, keylen, \fBflags\fP)"
+\fBValue:\fP
+.PP
+.nf
+BLOCK_CIPHER_generic(nid,keylen,16,16,cbc,cbc,CBC,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)     \
+        BLOCK_CIPHER_generic(nid,keylen,16,0,ecb,ecb,ECB,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)      \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,ofb128,ofb,OFB,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)   \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,cfb128,cfb,CFB,flags|EVP_CIPH_FLAG_DEFAULT_ASN1)   \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,cfb1,cfb1,CFB,flags)       \
+        BLOCK_CIPHER_generic(nid,keylen,1,16,cfb8,cfb8,CFB,flags)
+.fi
+.PP
+Definition at line 245 of file e_camellia\&.c\&.
+.SS "#define data(\fBctx\fP)   \fBEVP_C_DATA\fP(\fBEVP_CAMELLIA_KEY\fP,\fBctx\fP)"
+
+.PP
+Definition at line 82 of file e_camellia\&.c\&.
+.SS "#define MAXBITCHUNK   ((size_t)1<<(sizeof(size_t)*8\-4))"
+
+.PP
+Definition at line 79 of file e_camellia\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

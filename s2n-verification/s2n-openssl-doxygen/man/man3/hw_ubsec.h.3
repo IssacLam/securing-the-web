@@ -1,0 +1,236 @@
+.TH "s2n/libcrypto-build/openssl/engines/vendor_defns/hw_ubsec.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/engines/vendor_defns/hw_ubsec.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBubsec_crypto_context_s\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_PUBLIC_KEY_BITS\fP   (1024)"
+.br
+.ti -1c
+.RI "#define \fBMAX_PUBLIC_KEY_BYTES\fP   (1024/8)"
+.br
+.ti -1c
+.RI "#define \fBSHA_BIT_SIZE\fP   (160)"
+.br
+.ti -1c
+.RI "#define \fBMAX_CRYPTO_KEY_LENGTH\fP   24"
+.br
+.ti -1c
+.RI "#define \fBMAX_MAC_KEY_LENGTH\fP   64"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_CRYPTO_DEVICE_NAME\fP   ((unsigned char *)'/dev/ubscrypt')"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_KEY_DEVICE_NAME\fP   ((unsigned char *)'/dev/ubskey')"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_MATH_MODADD\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_MATH_MODSUB\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_MATH_MODMUL\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_MATH_MODEXP\fP   0x0008"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_MATH_MODREM\fP   0x0010"
+.br
+.ti -1c
+.RI "#define \fBUBSEC_MATH_MODINV\fP   0x0020"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef long \fBubsec_MathCommand_t\fP"
+.br
+.ti -1c
+.RI "typedef long \fBubsec_RNGCommand_t\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBubsec_crypto_context_s\fP \fBubsec_crypto_context_t\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBubsec_crypto_context_s\fP * \fBubsec_crypto_context_p\fP"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_ubsec_bytes_to_bits\fP(unsigned char *n, int \fBbytes\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_ubsec_bits_to_bytes\fP(int \fBbits\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_ubsec_open\fP(unsigned char *device)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_ubsec_close\fP(int fd)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_diffie_hellman_generate_ioctl\fP(int fd, unsigned char *\fBx\fP, int *x_len, unsigned char *y, int *y_len, unsigned char *g, int g_len, unsigned char *m, int m_len, unsigned char *userX, int userX_len, int random_bits)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_diffie_hellman_agree_ioctl\fP(int fd, unsigned char *\fBx\fP, int x_len, unsigned char *y, int y_len, unsigned char *m, int m_len, unsigned char *\fBk\fP, int *k_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_rsa_mod_exp_ioctl\fP(int fd, unsigned char *\fBx\fP, int x_len, unsigned char *m, int m_len, unsigned char *\fBe\fP, int e_len, unsigned char *y, int *y_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_rsa_mod_exp_crt_ioctl\fP(int fd, unsigned char *\fBx\fP, int x_len, unsigned char *qinv, int qinv_len, unsigned char *edq, int edq_len, unsigned char *\fBq\fP, int q_len, unsigned char *edp, int edp_len, unsigned char *\fBp\fP, int p_len, unsigned char *y, int *y_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_dsa_sign_ioctl\fP(int fd, int \fBhash\fP, unsigned char *\fBdata\fP, int data_len, unsigned char *rndom, int random_len, unsigned char *\fBp\fP, int p_len, unsigned char *\fBq\fP, int q_len, unsigned char *g, int g_len, unsigned char *\fBkey\fP, int key_len, unsigned char *r, int *r_len, unsigned char *s, int *s_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_dsa_verify_ioctl\fP(int fd, int \fBhash\fP, unsigned char *\fBdata\fP, int data_len, unsigned char *\fBp\fP, int p_len, unsigned char *\fBq\fP, int q_len, unsigned char *g, int g_len, unsigned char *\fBkey\fP, int key_len, unsigned char *r, int r_len, unsigned char *s, int s_len, unsigned char *v, int *v_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_math_accelerate_ioctl\fP(int fd, \fBubsec_MathCommand_t\fP command, unsigned char *ModN, int *ModN_len, unsigned char *ExpE, int *ExpE_len, unsigned char *ParamA, int *ParamA_len, unsigned char *ParamB, int *ParamB_len, unsigned char *Result, int *Result_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_rng_ioctl\fP(int fd, \fBubsec_RNGCommand_t\fP command, unsigned char *Result, int *Result_len)"
+.br
+.ti -1c
+.RI "typedef int \fBt_UBSEC_max_key_len_ioctl\fP(int fd, int *max_key_len)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_CRYPTO_KEY_LENGTH   24"
+
+.PP
+Definition at line 25 of file hw_ubsec\&.h\&.
+.SS "#define MAX_MAC_KEY_LENGTH   64"
+
+.PP
+Definition at line 26 of file hw_ubsec\&.h\&.
+.SS "#define MAX_PUBLIC_KEY_BITS   (1024)"
+
+.PP
+Definition at line 22 of file hw_ubsec\&.h\&.
+.SS "#define MAX_PUBLIC_KEY_BYTES   (1024/8)"
+
+.PP
+Definition at line 23 of file hw_ubsec\&.h\&.
+.SS "#define SHA_BIT_SIZE   (160)"
+
+.PP
+Definition at line 24 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_CRYPTO_DEVICE_NAME   ((unsigned char *)'/dev/ubscrypt')"
+
+.PP
+Definition at line 27 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_KEY_DEVICE_NAME   ((unsigned char *)'/dev/ubskey')"
+
+.PP
+Definition at line 28 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_MATH_MODADD   0x0001"
+
+.PP
+Definition at line 31 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_MATH_MODEXP   0x0008"
+
+.PP
+Definition at line 34 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_MATH_MODINV   0x0020"
+
+.PP
+Definition at line 36 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_MATH_MODMUL   0x0004"
+
+.PP
+Definition at line 33 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_MATH_MODREM   0x0010"
+
+.PP
+Definition at line 35 of file hw_ubsec\&.h\&.
+.SS "#define UBSEC_MATH_MODSUB   0x0002"
+
+.PP
+Definition at line 32 of file hw_ubsec\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int t_UBSEC_diffie_hellman_agree_ioctl(int fd, unsigned char *\fBx\fP, int x_len, unsigned char *y, int y_len, unsigned char *m, int m_len, unsigned char *\fBk\fP, int *k_len)"
+
+.PP
+Definition at line 70 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_diffie_hellman_generate_ioctl(int fd, unsigned char *\fBx\fP, int *x_len, unsigned char *y, int *y_len, unsigned char *g, int g_len, unsigned char *m, int m_len, unsigned char *userX, int userX_len, int random_bits)"
+
+.PP
+Definition at line 59 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_dsa_sign_ioctl(int fd, int \fBhash\fP, unsigned char *\fBdata\fP, int data_len, unsigned char *rndom, int random_len, unsigned char *\fBp\fP, int p_len, unsigned char *\fBq\fP, int q_len, unsigned char *g, int g_len, unsigned char *\fBkey\fP, int key_len, unsigned char *r, int *r_len, unsigned char *s, int *s_len)"
+
+.PP
+Definition at line 91 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_dsa_verify_ioctl(int fd, int \fBhash\fP, unsigned char *\fBdata\fP, int data_len, unsigned char *\fBp\fP, int p_len, unsigned char *\fBq\fP, int q_len, unsigned char *g, int g_len, unsigned char *\fBkey\fP, int key_len, unsigned char *r, int r_len, unsigned char *s, int s_len, unsigned char *v, int *v_len)"
+
+.PP
+Definition at line 101 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_math_accelerate_ioctl(int fd, \fBubsec_MathCommand_t\fP command, unsigned char *ModN, int *ModN_len, unsigned char *ExpE, int *ExpE_len, unsigned char *ParamA, int *ParamA_len, unsigned char *ParamB, int *ParamB_len, unsigned char *Result, int *Result_len)"
+
+.PP
+Definition at line 111 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_max_key_len_ioctl(int fd, int *max_key_len)"
+
+.PP
+Definition at line 124 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_rng_ioctl(int fd, \fBubsec_RNGCommand_t\fP command, unsigned char *Result, int *Result_len)"
+
+.PP
+Definition at line 121 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_rsa_mod_exp_crt_ioctl(int fd, unsigned char *\fBx\fP, int x_len, unsigned char *qinv, int qinv_len, unsigned char *edq, int edq_len, unsigned char *\fBq\fP, int q_len, unsigned char *edp, int edp_len, unsigned char *\fBp\fP, int p_len, unsigned char *y, int *y_len)"
+
+.PP
+Definition at line 82 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_rsa_mod_exp_ioctl(int fd, unsigned char *\fBx\fP, int x_len, unsigned char *m, int m_len, unsigned char *\fBe\fP, int e_len, unsigned char *y, int *y_len)"
+
+.PP
+Definition at line 76 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_ubsec_bits_to_bytes(int \fBbits\fP)"
+
+.PP
+Definition at line 53 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_ubsec_bytes_to_bits(unsigned char *n, int \fBbytes\fP)"
+
+.PP
+Definition at line 51 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_ubsec_close(int fd)"
+
+.PP
+Definition at line 57 of file hw_ubsec\&.h\&.
+.SS "typedef int t_UBSEC_ubsec_open(unsigned char *device)"
+
+.PP
+Definition at line 55 of file hw_ubsec\&.h\&.
+.SS "typedef struct \fBubsec_crypto_context_s\fP * \fBubsec_crypto_context_p\fP"
+
+.SS "typedef struct \fBubsec_crypto_context_s\fP  \fBubsec_crypto_context_t\fP"
+
+.SS "typedef long \fBubsec_MathCommand_t\fP"
+
+.PP
+Definition at line 38 of file hw_ubsec\&.h\&.
+.SS "typedef long \fBubsec_RNGCommand_t\fP"
+
+.PP
+Definition at line 39 of file hw_ubsec\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

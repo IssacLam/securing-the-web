@@ -38,7 +38,7 @@ int main(int argc, char * const * argv)
                 if(b->size == 0)
                         __CPROVER_assert(b->data == NULL, "ERROR: s2n_realloc free");
                 else
-                        __CPROVER_assert(__CPROVER_forall { int j; (j >= 0 && j < size) ==> b0->data[j] == b->data[j] }, "ERROR: s2n_realloc data");
+                        __CPROVER_assert(b->data != NULL, "ERROR: s2n_realloc posix_memalign");
                
                __CPROVER_assert(b->size == size && b->allocated >= b->size, "ERROR: s2n_realloc"); 
 

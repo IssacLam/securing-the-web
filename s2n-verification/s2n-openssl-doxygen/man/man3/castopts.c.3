@@ -1,0 +1,238 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cast/castopts.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cast/castopts.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <signal\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/times\&.h>\fP
+.br
+\fC#include <openssl/cast\&.h>\fP
+.br
+\fC#include 'c_enc\&.c'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTIMES\fP"
+.br
+.ti -1c
+.RI "#define \fBCAST_DEFAULT_OPTIONS\fP"
+.br
+.ti -1c
+.RI "#define \fBCAST_encrypt\fP   CAST_encrypt_normal"
+.br
+.ti -1c
+.RI "#define \fBCAST_decrypt\fP   CAST_decrypt_normal"
+.br
+.ti -1c
+.RI "#define \fBCAST_cbc_encrypt\fP   CAST_cbc_encrypt_normal"
+.br
+.ti -1c
+.RI "#define \fBCAST_PTR\fP"
+.br
+.ti -1c
+.RI "#define \fBCAST_encrypt\fP   CAST_encrypt_ptr"
+.br
+.ti -1c
+.RI "#define \fBCAST_decrypt\fP   CAST_decrypt_ptr"
+.br
+.ti -1c
+.RI "#define \fBCAST_cbc_encrypt\fP   CAST_cbc_encrypt_ptr"
+.br
+.ti -1c
+.RI "#define \fBCAST_PTR2\fP"
+.br
+.ti -1c
+.RI "#define \fBCAST_encrypt\fP   CAST_encrypt_ptr2"
+.br
+.ti -1c
+.RI "#define \fBCAST_decrypt\fP   CAST_decrypt_ptr2"
+.br
+.ti -1c
+.RI "#define \fBCAST_cbc_encrypt\fP   CAST_cbc_encrypt_ptr2"
+.br
+.ti -1c
+.RI "#define \fBHZ\fP   100\&.0"
+.br
+.ti -1c
+.RI "#define \fBBUFSIZE\fP   ((long)1024)"
+.br
+.ti -1c
+.RI "#define \fBSTART\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSTOP\fP   1"
+.br
+.ti -1c
+.RI "#define \fBprint_name\fP(name)   fprintf(stderr,'Doing %s %ld times\\n',name,\fBcb\fP);"
+.br
+.ti -1c
+.RI "#define \fBtime_it\fP(\fBfunc\fP,  name,  index)"
+.br
+.ti -1c
+.RI "#define \fBprint_it\fP(name,  index)"
+.br
+.ti -1c
+.RI "#define \fBCOND\fP(d)   (count != (d))"
+.br
+.ti -1c
+.RI "#define \fBCOUNT\fP(d)   (d)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBTime_F\fP (int s)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "long \fBrun\fP = 0"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUFSIZE   ((long)1024)"
+
+.PP
+Definition at line 142 of file castopts\&.c\&.
+.SS "#define CAST_cbc_encrypt   CAST_cbc_encrypt_normal"
+
+.PP
+Definition at line 127 of file castopts\&.c\&.
+.SS "#define CAST_cbc_encrypt   CAST_cbc_encrypt_ptr"
+
+.PP
+Definition at line 127 of file castopts\&.c\&.
+.SS "#define CAST_cbc_encrypt   CAST_cbc_encrypt_ptr2"
+
+.PP
+Definition at line 127 of file castopts\&.c\&.
+.SS "#define CAST_decrypt   CAST_decrypt_normal"
+
+.PP
+Definition at line 126 of file castopts\&.c\&.
+.SS "#define CAST_decrypt   CAST_decrypt_ptr"
+
+.PP
+Definition at line 126 of file castopts\&.c\&.
+.SS "#define CAST_decrypt   CAST_decrypt_ptr2"
+
+.PP
+Definition at line 126 of file castopts\&.c\&.
+.SS "#define CAST_DEFAULT_OPTIONS"
+
+.PP
+Definition at line 101 of file castopts\&.c\&.
+.SS "#define CAST_encrypt   CAST_encrypt_normal"
+
+.PP
+Definition at line 125 of file castopts\&.c\&.
+.SS "#define CAST_encrypt   CAST_encrypt_ptr"
+
+.PP
+Definition at line 125 of file castopts\&.c\&.
+.SS "#define CAST_encrypt   CAST_encrypt_ptr2"
+
+.PP
+Definition at line 125 of file castopts\&.c\&.
+.SS "#define CAST_PTR"
+
+.PP
+Definition at line 108 of file castopts\&.c\&.
+.SS "#define CAST_PTR2"
+
+.PP
+Definition at line 120 of file castopts\&.c\&.
+.SS "#define COND(d)   (count != (d))"
+
+.SS "#define COUNT(d)   (d)"
+
+.SS "#define HZ   100\&.0"
+
+.PP
+Definition at line 134 of file castopts\&.c\&.
+.SS "#define print_it(name, index)"
+\fBValue:\fP
+.PP
+.nf
+fprintf(stderr,"%s bytes per sec = %12\&.2f (%5\&.1fuS)\n",name, \
+                tm[index]*8,1\&.0e6/tm[index]);
+.fi
+.PP
+Definition at line 218 of file castopts\&.c\&.
+.SS "#define print_name(name)   fprintf(stderr,'Doing %s %ld times\\n',name,\fBcb\fP);"
+
+.PP
+Definition at line 200 of file castopts\&.c\&.
+.SS "#define START   0"
+
+.PP
+Definition at line 164 of file castopts\&.c\&.
+.SS "#define STOP   1"
+
+.PP
+Definition at line 165 of file castopts\&.c\&.
+.SS "#define time_it(\fBfunc\fP, name, index)"
+\fBValue:\fP
+.PP
+.nf
+print_name(name); \
+        Time_F(START); \
+        for (count=0,run=1; COND(cb); count+=4) \
+                { \
+                unsigned long d[2]; \
+                func(d,&sch); \
+                func(d,&sch); \
+                func(d,&sch); \
+                func(d,&sch); \
+                } \
+        tm[index]=Time_F(STOP); \
+        fprintf(stderr,"%ld %s's in %\&.2f second\n",count,name,tm[index]); \
+        tm[index]=((double)COUNT(cb))/tm[index];
+.fi
+.PP
+Definition at line 203 of file castopts\&.c\&.
+.SS "#define TIMES"
+
+.PP
+Definition at line 65 of file castopts\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 222 of file castopts\&.c\&.
+.SS "double Time_F (int s)"
+
+.PP
+Definition at line 167 of file castopts\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "long run = 0"
+
+.PP
+Definition at line 143 of file castopts\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

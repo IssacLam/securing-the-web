@@ -1,0 +1,173 @@
+.TH "s2n/libcrypto-build/openssl/crypto/dso/dso_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/dso/dso_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/dso\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDSO\fP * \fBDSO_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDSO_set_default_method\fP (\fBDSO_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_get_method\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_set_method\fP (\fBDSO\fP *dso, \fBDSO_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBDSO\fP * \fBDSO_new_method\fP (\fBDSO_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "int \fBDSO_free\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_flags\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_up_ref\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "\fBDSO\fP * \fBDSO_load\fP (\fBDSO\fP *dso, const char *\fBfilename\fP, \fBDSO_METHOD\fP *meth, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBDSO_bind_var\fP (\fBDSO\fP *dso, const char *symname)"
+.br
+.ti -1c
+.RI "\fBDSO_FUNC_TYPE\fP \fBDSO_bind_func\fP (\fBDSO\fP *dso, const char *symname)"
+.br
+.ti -1c
+.RI "long \fBDSO_ctrl\fP (\fBDSO\fP *dso, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "int \fBDSO_set_name_converter\fP (\fBDSO\fP *dso, \fBDSO_NAME_CONVERTER_FUNC\fP \fBcb\fP, \fBDSO_NAME_CONVERTER_FUNC\fP *oldcb)"
+.br
+.ti -1c
+.RI "const char * \fBDSO_get_filename\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_set_filename\fP (\fBDSO\fP *dso, const char *\fBfilename\fP)"
+.br
+.ti -1c
+.RI "char * \fBDSO_merge\fP (\fBDSO\fP *dso, const char *filespec1, const char *filespec2)"
+.br
+.ti -1c
+.RI "char * \fBDSO_convert_filename\fP (\fBDSO\fP *dso, const char *\fBfilename\fP)"
+.br
+.ti -1c
+.RI "const char * \fBDSO_get_loaded_filename\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_pathbyaddr\fP (\fBvoid\fP *addr, char *path, int sz)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBDSO_global_lookup\fP (const char *name)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBDSO_FUNC_TYPE\fP DSO_bind_func (\fBDSO\fP * dso, const char * symname)"
+
+.PP
+Definition at line 264 of file dso_lib\&.c\&.
+.SS "\fBvoid\fP* DSO_bind_var (\fBDSO\fP * dso, const char * symname)"
+
+.PP
+Definition at line 244 of file dso_lib\&.c\&.
+.SS "char* DSO_convert_filename (\fBDSO\fP * dso, const char * filename)"
+
+.PP
+Definition at line 386 of file dso_lib\&.c\&.
+.SS "long DSO_ctrl (\fBDSO\fP * dso, int cmd, long larg, \fBvoid\fP * parg)"
+
+.PP
+Definition at line 293 of file dso_lib\&.c\&.
+.SS "int DSO_flags (\fBDSO\fP * dso)"
+
+.PP
+Definition at line 174 of file dso_lib\&.c\&.
+.SS "int DSO_free (\fBDSO\fP * dso)"
+
+.PP
+Definition at line 132 of file dso_lib\&.c\&.
+.SS "\fBDSO_METHOD\fP* DSO_get_default_method (\fBvoid\fP)"
+
+.PP
+Definition at line 77 of file dso_lib\&.c\&.
+.SS "const char* DSO_get_filename (\fBDSO\fP * dso)"
+
+.PP
+Definition at line 335 of file dso_lib\&.c\&.
+.SS "const char* DSO_get_loaded_filename (\fBDSO\fP * dso)"
+
+.PP
+Definition at line 417 of file dso_lib\&.c\&.
+.SS "\fBDSO_METHOD\fP* DSO_get_method (\fBDSO\fP * dso)"
+
+.PP
+Definition at line 82 of file dso_lib\&.c\&.
+.SS "\fBvoid\fP* DSO_global_lookup (const char * name)"
+
+.PP
+Definition at line 438 of file dso_lib\&.c\&.
+.SS "\fBDSO\fP* DSO_load (\fBDSO\fP * dso, const char * filename, \fBDSO_METHOD\fP * meth, int flags)"
+
+.PP
+Definition at line 190 of file dso_lib\&.c\&.
+.SS "char* DSO_merge (\fBDSO\fP * dso, const char * filespec1, const char * filespec2)"
+
+.PP
+Definition at line 369 of file dso_lib\&.c\&.
+.SS "\fBDSO\fP* DSO_new (\fBvoid\fP)"
+
+.PP
+Definition at line 67 of file dso_lib\&.c\&.
+.SS "\fBDSO\fP* DSO_new_method (\fBDSO_METHOD\fP * meth)"
+
+.PP
+Definition at line 95 of file dso_lib\&.c\&.
+.SS "int DSO_pathbyaddr (\fBvoid\fP * addr, char * path, int sz)"
+
+.PP
+Definition at line 426 of file dso_lib\&.c\&.
+.SS "\fBvoid\fP DSO_set_default_method (\fBDSO_METHOD\fP * meth)"
+
+.PP
+Definition at line 72 of file dso_lib\&.c\&.
+.SS "int DSO_set_filename (\fBDSO\fP * dso, const char * filename)"
+
+.PP
+Definition at line 344 of file dso_lib\&.c\&.
+.SS "\fBDSO_METHOD\fP* DSO_set_method (\fBDSO\fP * dso, \fBDSO_METHOD\fP * meth)"
+
+.PP
+Definition at line 87 of file dso_lib\&.c\&.
+.SS "int DSO_set_name_converter (\fBDSO\fP * dso, \fBDSO_NAME_CONVERTER_FUNC\fP cb, \fBDSO_NAME_CONVERTER_FUNC\fP * oldcb)"
+
+.PP
+Definition at line 322 of file dso_lib\&.c\&.
+.SS "int DSO_up_ref (\fBDSO\fP * dso)"
+
+.PP
+Definition at line 179 of file dso_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

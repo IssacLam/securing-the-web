@@ -1,0 +1,91 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ts/ts_rsp_verify.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ts/ts_rsp_verify.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/ts\&.h>\fP
+.br
+\fC#include <openssl/pkcs7\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTS_STATUS_TEXT_SIZE\fP   (sizeof(TS_status_text)/sizeof(*TS_status_text))"
+.br
+.ti -1c
+.RI "#define \fBTS_STATUS_BUF_SIZE\fP   256"
+.br
+.ti -1c
+.RI "#define \fBTS_FAILURE_INFO_SIZE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBTS_RESP_verify_signature\fP (\fBPKCS7\fP *token, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *store, \fBX509\fP **signer_out)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_verify_response\fP (\fBTS_VERIFY_CTX\fP *\fBctx\fP, \fBTS_RESP\fP *response)"
+.br
+.ti -1c
+.RI "int \fBTS_RESP_verify_token\fP (\fBTS_VERIFY_CTX\fP *\fBctx\fP, \fBPKCS7\fP *token)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TS_FAILURE_INFO_SIZE"
+\fBValue:\fP
+.PP
+.nf
+(sizeof(TS_failure_info) / \
+                                sizeof(*TS_failure_info))
+.fi
+.PP
+Definition at line 142 of file ts_rsp_verify\&.c\&.
+.SS "#define TS_STATUS_BUF_SIZE   256"
+
+.PP
+Definition at line 110 of file ts_rsp_verify\&.c\&.
+.SS "#define TS_STATUS_TEXT_SIZE   (sizeof(TS_status_text)/sizeof(*TS_status_text))"
+
+.PP
+Definition at line 104 of file ts_rsp_verify\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int TS_RESP_verify_response (\fBTS_VERIFY_CTX\fP * ctx, \fBTS_RESP\fP * response)"
+
+.PP
+Definition at line 382 of file ts_rsp_verify\&.c\&.
+.SS "int TS_RESP_verify_signature (\fBPKCS7\fP * token, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * store, \fBX509\fP ** signer_out)"
+
+.PP
+Definition at line 159 of file ts_rsp_verify\&.c\&.
+.SS "int TS_RESP_verify_token (\fBTS_VERIFY_CTX\fP * ctx, \fBPKCS7\fP * token)"
+
+.PP
+Definition at line 405 of file ts_rsp_verify\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int code"
+
+.PP
+Definition at line 113 of file ts_rsp_verify\&.c\&.
+.SS "const char* text"
+
+.PP
+Definition at line 114 of file ts_rsp_verify\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,106 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ecp_mont.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ecp_mont.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBEC_METHOD\fP * \fBEC_GFp_mont_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_group_init\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_mont_group_finish\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_mont_group_clear_finish\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_group_copy\fP (\fBEC_GROUP\fP *dest, const \fBEC_GROUP\fP *src)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_group_set_curve\fP (\fBEC_GROUP\fP *group, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_field_mul\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_field_sqr\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_field_encode\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_field_decode\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_mont_field_set_to_one\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int ec_GFp_mont_field_decode (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 286 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_field_encode (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 275 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_field_mul (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 253 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_field_set_to_one (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 297 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_field_sqr (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 264 of file ecp_mont\&.c\&.
+.SS "\fBvoid\fP ec_GFp_mont_group_clear_finish (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 145 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_group_copy (\fBEC_GROUP\fP * dest, const \fBEC_GROUP\fP * src)"
+
+.PP
+Definition at line 158 of file ecp_mont\&.c\&.
+.SS "\fBvoid\fP ec_GFp_mont_group_finish (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 132 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_group_init (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 122 of file ecp_mont\&.c\&.
+.SS "int ec_GFp_mont_group_set_curve (\fBEC_GROUP\fP * group, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 195 of file ecp_mont\&.c\&.
+.SS "const \fBEC_METHOD\fP* EC_GFp_mont_method (\fBvoid\fP)"
+Returns GFp methods using montgomery multiplication\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+EC_METHOD object 
+.RE
+.PP
+
+.PP
+Definition at line 72 of file ecp_mont\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

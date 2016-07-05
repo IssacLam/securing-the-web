@@ -1,0 +1,71 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ocsp/ocsp_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ocsp/ocsp_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <cryptlib\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/ocsp\&.h>\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBOCSP_CERTID\fP * \fBOCSP_cert_to_id\fP (const \fBEVP_MD\fP *dgst, \fBX509\fP *subject, \fBX509\fP *issuer)"
+.br
+.ti -1c
+.RI "\fBOCSP_CERTID\fP * \fBOCSP_cert_id_new\fP (const \fBEVP_MD\fP *dgst, \fBX509_NAME\fP *issuerName, \fBASN1_BIT_STRING\fP *issuerKey, \fBASN1_INTEGER\fP *serialNumber)"
+.br
+.ti -1c
+.RI "int \fBOCSP_id_issuer_cmp\fP (\fBOCSP_CERTID\fP *\fBa\fP, \fBOCSP_CERTID\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_id_cmp\fP (\fBOCSP_CERTID\fP *\fBa\fP, \fBOCSP_CERTID\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_parse_url\fP (const char *url, char **phost, char **pport, char **ppath, int *pssl)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBOCSP_CERTID\fP* OCSP_cert_id_new (const \fBEVP_MD\fP * dgst, \fBX509_NAME\fP * issuerName, \fBASN1_BIT_STRING\fP * issuerKey, \fBASN1_INTEGER\fP * serialNumber)"
+
+.PP
+Definition at line 99 of file ocsp_lib\&.c\&.
+.SS "\fBOCSP_CERTID\fP* OCSP_cert_to_id (const \fBEVP_MD\fP * dgst, \fBX509\fP * subject, \fBX509\fP * issuer)"
+
+.PP
+Definition at line 79 of file ocsp_lib\&.c\&.
+.SS "int OCSP_id_cmp (\fBOCSP_CERTID\fP * a, \fBOCSP_CERTID\fP * b)"
+
+.PP
+Definition at line 164 of file ocsp_lib\&.c\&.
+.SS "int OCSP_id_issuer_cmp (\fBOCSP_CERTID\fP * a, \fBOCSP_CERTID\fP * b)"
+
+.PP
+Definition at line 152 of file ocsp_lib\&.c\&.
+.SS "int OCSP_parse_url (const char * url, char ** phost, char ** pport, char ** ppath, int * pssl)"
+
+.PP
+Definition at line 178 of file ocsp_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

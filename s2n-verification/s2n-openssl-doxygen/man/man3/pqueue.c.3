@@ -1,0 +1,126 @@
+.TH "s2n/libcrypto-build/openssl/crypto/pqueue/pqueue.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/pqueue/pqueue.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include 'pqueue\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fB_pqueue\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_pqueue\fP \fBpqueue_s\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBpitem\fP * \fBpitem_new\fP (unsigned char *prio64be, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBpitem_free\fP (\fBpitem\fP *item)"
+.br
+.ti -1c
+.RI "\fBpqueue_s\fP * \fBpqueue_new\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBpqueue_free\fP (\fBpqueue_s\fP *pq)"
+.br
+.ti -1c
+.RI "\fBpitem\fP * \fBpqueue_insert\fP (\fBpqueue_s\fP *pq, \fBpitem\fP *item)"
+.br
+.ti -1c
+.RI "\fBpitem\fP * \fBpqueue_peek\fP (\fBpqueue_s\fP *pq)"
+.br
+.ti -1c
+.RI "\fBpitem\fP * \fBpqueue_pop\fP (\fBpqueue_s\fP *pq)"
+.br
+.ti -1c
+.RI "\fBpitem\fP * \fBpqueue_find\fP (\fBpqueue_s\fP *pq, unsigned char *prio64be)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBpqueue_print\fP (\fBpqueue_s\fP *pq)"
+.br
+.ti -1c
+.RI "\fBpitem\fP * \fBpqueue_iterator\fP (\fBpqueue_s\fP *pq)"
+.br
+.ti -1c
+.RI "\fBpitem\fP * \fBpqueue_next\fP (\fBpitem\fP **item)"
+.br
+.ti -1c
+.RI "int \fBpqueue_size\fP (\fBpqueue_s\fP *pq)"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_pqueue\fP  \fBpqueue_s\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP pitem_free (\fBpitem\fP * item)"
+
+.PP
+Definition at line 83 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pitem_new (unsigned char * prio64be, \fBvoid\fP * data)"
+
+.PP
+Definition at line 69 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pqueue_find (\fBpqueue_s\fP * pq, unsigned char * prio64be)"
+
+.PP
+Definition at line 160 of file pqueue\&.c\&.
+.SS "\fBvoid\fP pqueue_free (\fBpqueue_s\fP * pq)"
+
+.PP
+Definition at line 101 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pqueue_insert (\fBpqueue_s\fP * pq, \fBpitem\fP * item)"
+
+.PP
+Definition at line 109 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pqueue_iterator (\fBpqueue_s\fP * pq)"
+
+.PP
+Definition at line 206 of file pqueue\&.c\&.
+.SS "\fBpqueue_s\fP* pqueue_new (\fBvoid\fP)"
+
+.PP
+Definition at line 91 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pqueue_next (\fBpitem\fP ** item)"
+
+.PP
+Definition at line 211 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pqueue_peek (\fBpqueue_s\fP * pq)"
+
+.PP
+Definition at line 145 of file pqueue\&.c\&.
+.SS "\fBpitem\fP* pqueue_pop (\fBpqueue_s\fP * pq)"
+
+.PP
+Definition at line 150 of file pqueue\&.c\&.
+.SS "\fBvoid\fP pqueue_print (\fBpqueue_s\fP * pq)"
+
+.PP
+Definition at line 192 of file pqueue\&.c\&.
+.SS "int pqueue_size (\fBpqueue_s\fP * pq)"
+
+.PP
+Definition at line 225 of file pqueue\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

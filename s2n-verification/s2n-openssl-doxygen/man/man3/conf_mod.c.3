@@ -1,0 +1,174 @@
+.TH "s2n/libcrypto-build/openssl/crypto/conf/conf_mod.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/conf/conf_mod.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/dso\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBconf_module_st\fP"
+.br
+.ti -1c
+.RI "struct \fBconf_imodule_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDSO_mod_init_name\fP   'OPENSSL_init'"
+.br
+.ti -1c
+.RI "#define \fBDSO_mod_finish_name\fP   'OPENSSL_finish'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBCONF_modules_load_file\fP (const char *\fBfilename\fP, const char *appname, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_modules_unload\fP (int all)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_modules_finish\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCONF_module_add\fP (const char *name, \fBconf_init_func\fP *ifunc, \fBconf_finish_func\fP *ffunc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_modules_free\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBCONF_imodule_get_name\fP (const \fBCONF_IMODULE\fP *md)"
+.br
+.ti -1c
+.RI "const char * \fBCONF_imodule_get_value\fP (const \fBCONF_IMODULE\fP *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCONF_imodule_get_usr_data\fP (const \fBCONF_IMODULE\fP *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_imodule_set_usr_data\fP (\fBCONF_IMODULE\fP *md, \fBvoid\fP *usr_data)"
+.br
+.ti -1c
+.RI "\fBCONF_MODULE\fP * \fBCONF_imodule_get_module\fP (const \fBCONF_IMODULE\fP *md)"
+.br
+.ti -1c
+.RI "unsigned long \fBCONF_imodule_get_flags\fP (const \fBCONF_IMODULE\fP *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_imodule_set_flags\fP (\fBCONF_IMODULE\fP *md, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCONF_module_get_usr_data\fP (\fBCONF_MODULE\fP *pmod)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_module_set_usr_data\fP (\fBCONF_MODULE\fP *pmod, \fBvoid\fP *usr_data)"
+.br
+.ti -1c
+.RI "char * \fBCONF_get1_default_config_file\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCONF_parse_list\fP (const char *list_, int sep, int nospc, int(*list_cb)(const char *elem, int \fBlen\fP, \fBvoid\fP *usr), \fBvoid\fP *\fBarg\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DSO_mod_finish_name   'OPENSSL_finish'"
+
+.PP
+Definition at line 69 of file conf_mod\&.c\&.
+.SS "#define DSO_mod_init_name   'OPENSSL_init'"
+
+.PP
+Definition at line 68 of file conf_mod\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "char* CONF_get1_default_config_file (\fBvoid\fP)"
+
+.PP
+Definition at line 524 of file conf_mod\&.c\&.
+.SS "unsigned long CONF_imodule_get_flags (const \fBCONF_IMODULE\fP * md)"
+
+.PP
+Definition at line 502 of file conf_mod\&.c\&.
+.SS "\fBCONF_MODULE\fP* CONF_imodule_get_module (const \fBCONF_IMODULE\fP * md)"
+
+.PP
+Definition at line 497 of file conf_mod\&.c\&.
+.SS "const char* CONF_imodule_get_name (const \fBCONF_IMODULE\fP * md)"
+
+.PP
+Definition at line 477 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP* CONF_imodule_get_usr_data (const \fBCONF_IMODULE\fP * md)"
+
+.PP
+Definition at line 487 of file conf_mod\&.c\&.
+.SS "const char* CONF_imodule_get_value (const \fBCONF_IMODULE\fP * md)"
+
+.PP
+Definition at line 482 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP CONF_imodule_set_flags (\fBCONF_IMODULE\fP * md, unsigned long flags)"
+
+.PP
+Definition at line 507 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP CONF_imodule_set_usr_data (\fBCONF_IMODULE\fP * md, \fBvoid\fP * usr_data)"
+
+.PP
+Definition at line 492 of file conf_mod\&.c\&.
+.SS "int CONF_module_add (const char * name, \fBconf_init_func\fP * ifunc, \fBconf_finish_func\fP * ffunc)"
+
+.PP
+Definition at line 460 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP* CONF_module_get_usr_data (\fBCONF_MODULE\fP * pmod)"
+
+.PP
+Definition at line 512 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP CONF_module_set_usr_data (\fBCONF_MODULE\fP * pmod, \fBvoid\fP * usr_data)"
+
+.PP
+Definition at line 517 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP CONF_modules_finish (\fBvoid\fP)"
+
+.PP
+Definition at line 435 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP CONF_modules_free (\fBvoid\fP)"
+
+.PP
+Definition at line 469 of file conf_mod\&.c\&.
+.SS "int CONF_modules_load_file (const char * filename, const char * appname, unsigned long flags)"
+
+.PP
+Definition at line 162 of file conf_mod\&.c\&.
+.SS "\fBvoid\fP CONF_modules_unload (int all)"
+
+.PP
+Definition at line 403 of file conf_mod\&.c\&.
+.SS "int CONF_parse_list (const char * list_, int sep, int nospc, int(*)(const char *elem, int \fBlen\fP, \fBvoid\fP *usr) list_cb, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 559 of file conf_mod\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,105 @@
+.TH "s2n/libcrypto-build/openssl/crypto/pem/pem_pkey.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/pem/pem_pkey.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pkcs12\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBpem_check_suffix\fP (const char *pem_str, const char *suffix)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBPEM_read_bio_PrivateKey\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio_PrivateKey\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBPEM_read_bio_Parameters\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio_Parameters\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBPEM_read_PrivateKey\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_PrivateKey\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBPEM_read_bio_DHparams\fP (\fBBIO\fP *\fBbp\fP, \fBDH\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBPEM_read_DHparams\fP (FILE *\fBfp\fP, \fBDH\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int pem_check_suffix (const char * pem_str, const char * suffix)"
+
+.PP
+Definition at line 857 of file pem_lib\&.c\&.
+.SS "\fBDH\fP* PEM_read_bio_DHparams (\fBBIO\fP * bp, \fBDH\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 252 of file pem_pkey\&.c\&.
+.SS "\fBEVP_PKEY\fP* PEM_read_bio_Parameters (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** x)"
+
+.PP
+Definition at line 163 of file pem_pkey\&.c\&.
+.SS "\fBEVP_PKEY\fP* PEM_read_bio_PrivateKey (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 78 of file pem_pkey\&.c\&.
+.SS "\fBDH\fP* PEM_read_DHparams (FILE * fp, \fBDH\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 277 of file pem_pkey\&.c\&.
+.SS "\fBEVP_PKEY\fP* PEM_read_PrivateKey (FILE * fp, \fBEVP_PKEY\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 214 of file pem_pkey\&.c\&.
+.SS "int PEM_write_bio_Parameters (\fBBIO\fP * bp, \fBEVP_PKEY\fP * x)"
+
+.PP
+Definition at line 202 of file pem_pkey\&.c\&.
+.SS "int PEM_write_bio_PrivateKey (\fBBIO\fP * bp, \fBEVP_PKEY\fP * x, const \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 149 of file pem_pkey\&.c\&.
+.SS "int PEM_write_PrivateKey (FILE * fp, \fBEVP_PKEY\fP * x, const \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 230 of file pem_pkey\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

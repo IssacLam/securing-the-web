@@ -1,0 +1,149 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509v3/v3_conf.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509v3/v3_conf.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509V3_EXT_nconf_nid\fP (\fBCONF\fP *conf, \fBX509V3_CTX\fP *\fBctx\fP, int ext_nid, char *value)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509V3_EXT_i2d\fP (int ext_nid, int crit, \fBvoid\fP *ext_struc)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_nconf_sk\fP (\fBCONF\fP *conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)**sk)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_nconf\fP (\fBCONF\fP *conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_CRL_add_nconf\fP (\fBCONF\fP *conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_REQ_add_nconf\fP (\fBCONF\fP *conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "char * \fBX509V3_get_string\fP (\fBX509V3_CTX\fP *\fBctx\fP, char *name, char *\fBsection\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_string_free\fP (\fBX509V3_CTX\fP *\fBctx\fP, char *str)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_section_free\fP (\fBX509V3_CTX\fP *\fBctx\fP, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*\fBsection\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_set_nconf\fP (\fBX509V3_CTX\fP *\fBctx\fP, \fBCONF\fP *conf)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_set_ctx\fP (\fBX509V3_CTX\fP *\fBctx\fP, \fBX509\fP *issuer, \fBX509\fP *subj, \fBX509_REQ\fP *req, \fBX509_CRL\fP *crl, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509V3_EXT_conf\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, \fBX509V3_CTX\fP *\fBctx\fP, char *name, char *value)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509V3_EXT_conf_nid\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, \fBX509V3_CTX\fP *\fBctx\fP, int ext_nid, char *value)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_set_conf_lhash\fP (\fBX509V3_CTX\fP *\fBctx\fP, \fBLHASH_OF\fP(\fBCONF_VALUE\fP)*lhash)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_conf\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_CRL_add_conf\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_REQ_add_conf\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, \fBX509V3_CTX\fP *\fBctx\fP, char *\fBsection\fP, \fBX509_REQ\fP *req)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int X509V3_EXT_add_conf (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, \fBX509V3_CTX\fP * ctx, char * section, \fBX509\fP * cert)"
+
+.PP
+Definition at line 508 of file v3_conf\&.c\&.
+.SS "int X509V3_EXT_add_nconf (\fBCONF\fP * conf, \fBX509V3_CTX\fP * ctx, char * section, \fBX509\fP * cert)"
+
+.PP
+Definition at line 354 of file v3_conf\&.c\&.
+.SS "int X509V3_EXT_add_nconf_sk (\fBCONF\fP * conf, \fBX509V3_CTX\fP * ctx, char * section, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)** sk)"
+
+.PP
+Definition at line 330 of file v3_conf\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509V3_EXT_conf (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, \fBX509V3_CTX\fP * ctx, char * name, char * value)"
+
+.PP
+Definition at line 467 of file v3_conf\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509V3_EXT_conf_nid (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, \fBX509V3_CTX\fP * ctx, int ext_nid, char * value)"
+
+.PP
+Definition at line 477 of file v3_conf\&.c\&.
+.SS "int X509V3_EXT_CRL_add_conf (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, \fBX509V3_CTX\fP * ctx, char * section, \fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 518 of file v3_conf\&.c\&.
+.SS "int X509V3_EXT_CRL_add_nconf (\fBCONF\fP * conf, \fBX509V3_CTX\fP * ctx, char * section, \fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 365 of file v3_conf\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509V3_EXT_i2d (int ext_nid, int crit, \fBvoid\fP * ext_struc)"
+
+.PP
+Definition at line 220 of file v3_conf\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509V3_EXT_nconf_nid (\fBCONF\fP * conf, \fBX509V3_CTX\fP * ctx, int ext_nid, char * value)"
+
+.PP
+Definition at line 103 of file v3_conf\&.c\&.
+.SS "int X509V3_EXT_REQ_add_conf (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, \fBX509V3_CTX\fP * ctx, char * section, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 528 of file v3_conf\&.c\&.
+.SS "int X509V3_EXT_REQ_add_nconf (\fBCONF\fP * conf, \fBX509V3_CTX\fP * ctx, char * section, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 376 of file v3_conf\&.c\&.
+.SS "char* X509V3_get_string (\fBX509V3_CTX\fP * ctx, char * name, char * section)"
+
+.PP
+Definition at line 393 of file v3_conf\&.c\&.
+.SS "\fBvoid\fP X509V3_section_free (\fBX509V3_CTX\fP * ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)* section)"
+
+.PP
+Definition at line 424 of file v3_conf\&.c\&.
+.SS "\fBvoid\fP X509V3_set_conf_lhash (\fBX509V3_CTX\fP * ctx, \fBLHASH_OF\fP(\fBCONF_VALUE\fP)* lhash)"
+
+.PP
+Definition at line 502 of file v3_conf\&.c\&.
+.SS "\fBvoid\fP X509V3_set_ctx (\fBX509V3_CTX\fP * ctx, \fBX509\fP * issuer, \fBX509\fP * subj, \fBX509_REQ\fP * req, \fBX509_CRL\fP * crl, int flags)"
+
+.PP
+Definition at line 455 of file v3_conf\&.c\&.
+.SS "\fBvoid\fP X509V3_set_nconf (\fBX509V3_CTX\fP * ctx, \fBCONF\fP * conf)"
+
+.PP
+Definition at line 449 of file v3_conf\&.c\&.
+.SS "\fBvoid\fP X509V3_string_free (\fBX509V3_CTX\fP * ctx, char * str)"
+
+.PP
+Definition at line 416 of file v3_conf\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

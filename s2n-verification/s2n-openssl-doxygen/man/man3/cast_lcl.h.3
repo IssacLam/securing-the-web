@@ -1,0 +1,294 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cast/cast_lcl.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cast/cast_lcl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'e_os\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBc2l\fP(\fBc\fP,  l)            "
+.br
+.ti -1c
+.RI "#define \fBc2ln\fP(\fBc\fP,  l1,  l2,  n)"
+.br
+.ti -1c
+.RI "#define \fBl2c\fP(l,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBl2cn\fP(l1,  l2,  \fBc\fP,  n)"
+.br
+.ti -1c
+.RI "#define \fBn2ln\fP(\fBc\fP,  l1,  l2,  n)"
+.br
+.ti -1c
+.RI "#define \fBl2nn\fP(l1,  l2,  \fBc\fP,  n)"
+.br
+.ti -1c
+.RI "#define \fBn2l\fP(\fBc\fP,  l)            "
+.br
+.ti -1c
+.RI "#define \fBl2n\fP(l,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBROTL\fP(\fBa\fP,  n)         ((((\fBa\fP)<<(n))&0xffffffffL)|((a)>>(32\-(n))))"
+.br
+.ti -1c
+.RI "#define \fBC_M\fP   0x3fc"
+.br
+.ti -1c
+.RI "#define \fBC_0\fP   22L"
+.br
+.ti -1c
+.RI "#define \fBC_1\fP   14L"
+.br
+.ti -1c
+.RI "#define \fBC_2\fP   6L"
+.br
+.ti -1c
+.RI "#define \fBC_3\fP   2L              /* left shift */"
+.br
+.ti -1c
+.RI "#define \fBE_CAST\fP(n,  \fBkey\fP,  L,  R,  OP1,  OP2,  OP3)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table0\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table1\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table2\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table3\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table4\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table5\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table6\fP [256]"
+.br
+.ti -1c
+.RI "const \fBCAST_LONG\fP \fBCAST_S_table7\fP [256]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define c2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((unsigned long)(*((c)++)))    , \
+                         l|=((unsigned long)(*((c)++)))<< 8L, \
+                         l|=((unsigned long)(*((c)++)))<<16L, \
+                         l|=((unsigned long)(*((c)++)))<<24L)
+.fi
+.PP
+Definition at line 66 of file cast_lcl\&.h\&.
+.SS "#define c2ln(\fBc\fP, l1, l2, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        l1=l2=0; \
+                        switch (n) { \
+                        case 8: l2 =((unsigned long)(*(--(c))))<<24L; \
+                        case 7: l2|=((unsigned long)(*(--(c))))<<16L; \
+                        case 6: l2|=((unsigned long)(*(--(c))))<< 8L; \
+                        case 5: l2|=((unsigned long)(*(--(c))));     \
+                        case 4: l1 =((unsigned long)(*(--(c))))<<24L; \
+                        case 3: l1|=((unsigned long)(*(--(c))))<<16L; \
+                        case 2: l1|=((unsigned long)(*(--(c))))<< 8L; \
+                        case 1: l1|=((unsigned long)(*(--(c))));     \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 73 of file cast_lcl\&.h\&.
+.SS "#define C_0   22L"
+
+.PP
+Definition at line 162 of file cast_lcl\&.h\&.
+.SS "#define C_1   14L"
+
+.PP
+Definition at line 163 of file cast_lcl\&.h\&.
+.SS "#define C_2   6L"
+
+.PP
+Definition at line 164 of file cast_lcl\&.h\&.
+.SS "#define C_3   2L              /* left shift */"
+
+.PP
+Definition at line 165 of file cast_lcl\&.h\&.
+.SS "#define C_M   0x3fc"
+
+.PP
+Definition at line 161 of file cast_lcl\&.h\&.
+.SS "#define E_CAST(n, \fBkey\fP, L, R, OP1, OP2, OP3)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        CAST_LONG a,b,c,d; \
+        t=(key[n*2] OP1 R)&0xffffffff; \
+        t=ROTL(t,(key[n*2+1])); \
+        a=CAST_S_table0[(t>> 8)&0xff]; \
+        b=CAST_S_table1[(t    )&0xff]; \
+        c=CAST_S_table2[(t>>24)&0xff]; \
+        d=CAST_S_table3[(t>>16)&0xff]; \
+        L^=(((((a OP2 b)&0xffffffffL) OP3 c)&0xffffffffL) OP1 d)&0xffffffffL; \
+        }
+.fi
+.PP
+Definition at line 207 of file cast_lcl\&.h\&.
+.SS "#define l2c(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)     )&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>24L)&0xff))
+.fi
+.PP
+Definition at line 89 of file cast_lcl\&.h\&.
+.SS "#define l2cn(l1, l2, \fBc\fP, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        switch (n) { \
+                        case 8: *(--(c))=(unsigned char)(((l2)>>24L)&0xff); \
+                        case 7: *(--(c))=(unsigned char)(((l2)>>16L)&0xff); \
+                        case 6: *(--(c))=(unsigned char)(((l2)>> 8L)&0xff); \
+                        case 5: *(--(c))=(unsigned char)(((l2)     )&0xff); \
+                        case 4: *(--(c))=(unsigned char)(((l1)>>24L)&0xff); \
+                        case 3: *(--(c))=(unsigned char)(((l1)>>16L)&0xff); \
+                        case 2: *(--(c))=(unsigned char)(((l1)>> 8L)&0xff); \
+                        case 1: *(--(c))=(unsigned char)(((l1)     )&0xff); \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 96 of file cast_lcl\&.h\&.
+.SS "#define l2n(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)>>24L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)     )&0xff))
+.fi
+.PP
+Definition at line 148 of file cast_lcl\&.h\&.
+.SS "#define l2nn(l1, l2, \fBc\fP, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        switch (n) { \
+                        case 8: *(--(c))=(unsigned char)(((l2)    )&0xff); \
+                        case 7: *(--(c))=(unsigned char)(((l2)>> 8)&0xff); \
+                        case 6: *(--(c))=(unsigned char)(((l2)>>16)&0xff); \
+                        case 5: *(--(c))=(unsigned char)(((l2)>>24)&0xff); \
+                        case 4: *(--(c))=(unsigned char)(((l1)    )&0xff); \
+                        case 3: *(--(c))=(unsigned char)(((l1)>> 8)&0xff); \
+                        case 2: *(--(c))=(unsigned char)(((l1)>>16)&0xff); \
+                        case 1: *(--(c))=(unsigned char)(((l1)>>24)&0xff); \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 127 of file cast_lcl\&.h\&.
+.SS "#define n2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((unsigned long)(*((c)++)))<<24L, \
+                         l|=((unsigned long)(*((c)++)))<<16L, \
+                         l|=((unsigned long)(*((c)++)))<< 8L, \
+                         l|=((unsigned long)(*((c)++))))
+.fi
+.PP
+Definition at line 142 of file cast_lcl\&.h\&.
+.SS "#define n2ln(\fBc\fP, l1, l2, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        l1=l2=0; \
+                        switch (n) { \
+                        case 8: l2 =((unsigned long)(*(--(c))))    ; \
+                        case 7: l2|=((unsigned long)(*(--(c))))<< 8; \
+                        case 6: l2|=((unsigned long)(*(--(c))))<<16; \
+                        case 5: l2|=((unsigned long)(*(--(c))))<<24; \
+                        case 4: l1 =((unsigned long)(*(--(c))))    ; \
+                        case 3: l1|=((unsigned long)(*(--(c))))<< 8; \
+                        case 2: l1|=((unsigned long)(*(--(c))))<<16; \
+                        case 1: l1|=((unsigned long)(*(--(c))))<<24; \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 111 of file cast_lcl\&.h\&.
+.SS "#define ROTL(\fBa\fP, n)   ((((\fBa\fP)<<(n))&0xffffffffL)|((a)>>(32\-(n))))"
+
+.PP
+Definition at line 158 of file cast_lcl\&.h\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBCAST_LONG\fP CAST_S_table0[256]"
+
+.PP
+Definition at line 58 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table1[256]"
+
+.PP
+Definition at line 125 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table2[256]"
+
+.PP
+Definition at line 192 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table3[256]"
+
+.PP
+Definition at line 259 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table4[256]"
+
+.PP
+Definition at line 326 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table5[256]"
+
+.PP
+Definition at line 393 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table6[256]"
+
+.PP
+Definition at line 460 of file cast_s\&.h\&.
+.SS "const \fBCAST_LONG\fP CAST_S_table7[256]"
+
+.PP
+Definition at line 527 of file cast_s\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

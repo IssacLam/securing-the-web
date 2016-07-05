@@ -1,0 +1,177 @@
+.TH "s2n/libcrypto-build/openssl/crypto/aes/aes_x86core.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/aes/aes_x86core.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'aes_locl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNDEBUG\fP"
+.br
+.ti -1c
+.RI "#define \fBAES_COMPACT_IN_OUTER_ROUNDS\fP"
+.br
+.ti -1c
+.RI "#define \fBGETU32\fP(\fBp\fP)   (*((\fBu32\fP*)(\fBp\fP)))"
+.br
+.ti -1c
+.RI "#define \fBU64\fP(C)   C##ULL"
+.br
+.ti -1c
+.RI "#define \fBTe0\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+0))"
+.br
+.ti -1c
+.RI "#define \fBTe1\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+3))"
+.br
+.ti -1c
+.RI "#define \fBTe2\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+2))"
+.br
+.ti -1c
+.RI "#define \fBTe3\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+1))"
+.br
+.ti -1c
+.RI "#define \fBTd0\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+0))"
+.br
+.ti -1c
+.RI "#define \fBTd1\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+3))"
+.br
+.ti -1c
+.RI "#define \fBTd2\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+2))"
+.br
+.ti -1c
+.RI "#define \fBTd3\fP   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+1))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned long long \fBu64\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBAES_set_encrypt_key\fP (const unsigned char *userKey, const int \fBbits\fP, \fBAES_KEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBAES_set_decrypt_key\fP (const unsigned char *userKey, const int \fBbits\fP, \fBAES_KEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBAES_encrypt\fP (const unsigned char *\fBin\fP, unsigned char *\fBout\fP, const \fBAES_KEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBAES_decrypt\fP (const unsigned char *\fBin\fP, unsigned char *\fBout\fP, const \fBAES_KEY\fP *\fBkey\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define AES_COMPACT_IN_OUTER_ROUNDS"
+
+.PP
+Definition at line 53 of file aes_x86core\&.c\&.
+.SS "#define GETU32(\fBp\fP)   (*((\fBu32\fP*)(\fBp\fP)))"
+
+.PP
+Definition at line 78 of file aes_x86core\&.c\&.
+.SS "#define NDEBUG"
+rijndael-alg-fst\&.c
+.PP
+\fBVersion:\fP
+.RS 4
+3\&.0 (December 2000)
+.RE
+.PP
+Optimised ANSI C code for the Rijndael cipher (now AES)
+.PP
+\fBAuthor:\fP
+.RS 4
+Vincent Rijmen vincent.rijmen@esat.kuleuven.ac.be 
+.PP
+Antoon Bosselaers antoon.bosselaers@esat.kuleuven.ac.be 
+.PP
+Paulo Barreto paulo.barreto@terra.com.br
+.RE
+.PP
+This code is hereby placed in the public domain\&.
+.PP
+THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED\&. IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE\&. 
+.PP
+Definition at line 40 of file aes_x86core\&.c\&.
+.SS "#define Td0   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+0))"
+
+.PP
+Definition at line 127 of file aes_x86core\&.c\&.
+.SS "#define Td1   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+3))"
+
+.PP
+Definition at line 128 of file aes_x86core\&.c\&.
+.SS "#define Td2   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+2))"
+
+.PP
+Definition at line 129 of file aes_x86core\&.c\&.
+.SS "#define Td3   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Td+1))"
+
+.PP
+Definition at line 130 of file aes_x86core\&.c\&.
+.SS "#define Te0   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+0))"
+
+.PP
+Definition at line 115 of file aes_x86core\&.c\&.
+.SS "#define Te1   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+3))"
+
+.PP
+Definition at line 116 of file aes_x86core\&.c\&.
+.SS "#define Te2   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+2))"
+
+.PP
+Definition at line 117 of file aes_x86core\&.c\&.
+.SS "#define Te3   (\fBu32\fP)((\fBu64\fP*)((\fBu8\fP*)Te+1))"
+
+.PP
+Definition at line 118 of file aes_x86core\&.c\&.
+.SS "#define U64(C)   C##ULL"
+
+.PP
+Definition at line 88 of file aes_x86core\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned long long \fBu64\fP"
+
+.PP
+Definition at line 87 of file aes_x86core\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP AES_decrypt (const unsigned char * in, unsigned char * out, const \fBAES_KEY\fP * key)"
+
+.PP
+Definition at line 870 of file aes_x86core\&.c\&.
+.SS "\fBvoid\fP AES_encrypt (const unsigned char * in, unsigned char * out, const \fBAES_KEY\fP * key)"
+
+.PP
+Definition at line 656 of file aes_x86core\&.c\&.
+.SS "int AES_set_decrypt_key (const unsigned char * userKey, const int bits, \fBAES_KEY\fP * key)"
+Expand the cipher key into the decryption key schedule\&. 
+.PP
+Definition at line 574 of file aes_x86core\&.c\&.
+.SS "int AES_set_encrypt_key (const unsigned char * userKey, const int bits, \fBAES_KEY\fP * key)"
+Expand the cipher key into the encryption key schedule\&. 
+.PP
+Definition at line 472 of file aes_x86core\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

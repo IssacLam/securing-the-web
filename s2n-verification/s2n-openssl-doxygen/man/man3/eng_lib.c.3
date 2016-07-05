@@ -1,0 +1,211 @@
+.TH "s2n/libcrypto-build/openssl/crypto/engine/eng_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/engine/eng_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'eng_int\&.h'\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_set_all_null\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBengine_free_util\fP (\fBENGINE\fP *\fBe\fP, int locked)"
+.br
+.ti -1c
+.RI "int \fBENGINE_free\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_cleanup_add_first\fP (\fBENGINE_CLEANUP_CB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_cleanup_add_last\fP (\fBENGINE_CLEANUP_CB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ex_data\fP (\fBENGINE\fP *\fBe\fP, int idx, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBENGINE_get_ex_data\fP (const \fBENGINE\fP *\fBe\fP, int idx)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_id\fP (\fBENGINE\fP *\fBe\fP, const char *id)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_name\fP (\fBENGINE\fP *\fBe\fP, const char *name)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_destroy_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_GEN_INT_FUNC_PTR\fP destroy_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_init_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_GEN_INT_FUNC_PTR\fP init_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_finish_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_GEN_INT_FUNC_PTR\fP finish_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ctrl_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_CTRL_FUNC_PTR\fP ctrl_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_flags\fP (\fBENGINE\fP *\fBe\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_cmd_defns\fP (\fBENGINE\fP *\fBe\fP, const \fBENGINE_CMD_DEFN\fP *defns)"
+.br
+.ti -1c
+.RI "const char * \fBENGINE_get_id\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const char * \fBENGINE_get_name\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_GEN_INT_FUNC_PTR\fP \fBENGINE_get_destroy_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_GEN_INT_FUNC_PTR\fP \fBENGINE_get_init_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_GEN_INT_FUNC_PTR\fP \fBENGINE_get_finish_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_CTRL_FUNC_PTR\fP \fBENGINE_get_ctrl_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_get_flags\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBENGINE_CMD_DEFN\fP * \fBENGINE_get_cmd_defns\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBENGINE_get_static_state\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ENGINE_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 202 of file eng_lib\&.c\&.
+.SS "\fBvoid\fP engine_cleanup_add_first (\fBENGINE_CLEANUP_CB\fP * cb)"
+
+.PP
+Definition at line 175 of file eng_lib\&.c\&.
+.SS "\fBvoid\fP engine_cleanup_add_last (\fBENGINE_CLEANUP_CB\fP * cb)"
+
+.PP
+Definition at line 185 of file eng_lib\&.c\&.
+.SS "int ENGINE_free (\fBENGINE\fP * e)"
+
+.PP
+Definition at line 142 of file eng_lib\&.c\&.
+.SS "int engine_free_util (\fBENGINE\fP * e, int locked)"
+
+.PP
+Definition at line 107 of file eng_lib\&.c\&.
+.SS "const \fBENGINE_CMD_DEFN\fP* ENGINE_get_cmd_defns (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 332 of file eng_lib\&.c\&.
+.SS "\fBENGINE_CTRL_FUNC_PTR\fP ENGINE_get_ctrl_function (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 322 of file eng_lib\&.c\&.
+.SS "\fBENGINE_GEN_INT_FUNC_PTR\fP ENGINE_get_destroy_function (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 307 of file eng_lib\&.c\&.
+.SS "\fBvoid\fP* ENGINE_get_ex_data (const \fBENGINE\fP * e, int idx)"
+
+.PP
+Definition at line 231 of file eng_lib\&.c\&.
+.SS "int ENGINE_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.PP
+Definition at line 218 of file eng_lib\&.c\&.
+.SS "\fBENGINE_GEN_INT_FUNC_PTR\fP ENGINE_get_finish_function (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 317 of file eng_lib\&.c\&.
+.SS "int ENGINE_get_flags (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 327 of file eng_lib\&.c\&.
+.SS "const char* ENGINE_get_id (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 297 of file eng_lib\&.c\&.
+.SS "\fBENGINE_GEN_INT_FUNC_PTR\fP ENGINE_get_init_function (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 312 of file eng_lib\&.c\&.
+.SS "const char* ENGINE_get_name (const \fBENGINE\fP * e)"
+
+.PP
+Definition at line 302 of file eng_lib\&.c\&.
+.SS "\fBvoid\fP* ENGINE_get_static_state (\fBvoid\fP)"
+
+.PP
+Definition at line 344 of file eng_lib\&.c\&.
+.SS "\fBENGINE\fP* ENGINE_new (\fBvoid\fP)"
+
+.PP
+Definition at line 65 of file eng_lib\&.c\&.
+.SS "\fBvoid\fP engine_set_all_null (\fBENGINE\fP * e)"
+
+.PP
+Definition at line 86 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_cmd_defns (\fBENGINE\fP * e, const \fBENGINE_CMD_DEFN\fP * defns)"
+
+.PP
+Definition at line 291 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_ctrl_function (\fBENGINE\fP * e, \fBENGINE_CTRL_FUNC_PTR\fP ctrl_f)"
+
+.PP
+Definition at line 279 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_destroy_function (\fBENGINE\fP * e, \fBENGINE_GEN_INT_FUNC_PTR\fP destroy_f)"
+
+.PP
+Definition at line 261 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_ex_data (\fBENGINE\fP * e, int idx, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 226 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_finish_function (\fBENGINE\fP * e, \fBENGINE_GEN_INT_FUNC_PTR\fP finish_f)"
+
+.PP
+Definition at line 273 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_flags (\fBENGINE\fP * e, int flags)"
+
+.PP
+Definition at line 285 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_id (\fBENGINE\fP * e, const char * id)"
+
+.PP
+Definition at line 241 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_init_function (\fBENGINE\fP * e, \fBENGINE_GEN_INT_FUNC_PTR\fP init_f)"
+
+.PP
+Definition at line 267 of file eng_lib\&.c\&.
+.SS "int ENGINE_set_name (\fBENGINE\fP * e, const char * name)"
+
+.PP
+Definition at line 251 of file eng_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,128 @@
+.TH "s2n/libcrypto-build/openssl/crypto/idea/idea.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/idea/idea.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBidea_key_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBIDEA_ENCRYPT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBIDEA_DECRYPT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBIDEA_BLOCK\fP   8"
+.br
+.ti -1c
+.RI "#define \fBIDEA_KEY_LENGTH\fP   16"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBidea_key_st\fP \fBIDEA_KEY_SCHEDULE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBidea_options\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_ecb_encrypt\fP (const unsigned char *\fBin\fP, unsigned char *\fBout\fP, \fBIDEA_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_set_encrypt_key\fP (const unsigned char *\fBkey\fP, \fBIDEA_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_set_decrypt_key\fP (\fBIDEA_KEY_SCHEDULE\fP *ek, \fBIDEA_KEY_SCHEDULE\fP *dk)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_cbc_encrypt\fP (const unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBIDEA_KEY_SCHEDULE\fP *ks, unsigned char *iv, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_cfb64_encrypt\fP (const unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBIDEA_KEY_SCHEDULE\fP *ks, unsigned char *iv, int *\fBnum\fP, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_ofb64_encrypt\fP (const unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBIDEA_KEY_SCHEDULE\fP *ks, unsigned char *iv, int *\fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBidea_encrypt\fP (unsigned long *\fBin\fP, \fBIDEA_KEY_SCHEDULE\fP *ks)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define IDEA_BLOCK   8"
+
+.PP
+Definition at line 71 of file idea\&.h\&.
+.SS "#define IDEA_DECRYPT   0"
+
+.PP
+Definition at line 69 of file idea\&.h\&.
+.SS "#define IDEA_ENCRYPT   1"
+
+.PP
+Definition at line 68 of file idea\&.h\&.
+.SS "#define IDEA_KEY_LENGTH   16"
+
+.PP
+Definition at line 72 of file idea\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBidea_key_st\fP  \fBIDEA_KEY_SCHEDULE\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP idea_cbc_encrypt (const unsigned char * in, unsigned char * out, long length, \fBIDEA_KEY_SCHEDULE\fP * ks, unsigned char * iv, int enc)"
+
+.PP
+Definition at line 62 of file i_cbc\&.c\&.
+.SS "\fBvoid\fP idea_cfb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBIDEA_KEY_SCHEDULE\fP * ks, unsigned char * iv, int * num, int enc)"
+
+.PP
+Definition at line 68 of file i_cfb64\&.c\&.
+.SS "\fBvoid\fP idea_ecb_encrypt (const unsigned char * in, unsigned char * out, \fBIDEA_KEY_SCHEDULE\fP * ks)"
+
+.PP
+Definition at line 73 of file i_ecb\&.c\&.
+.SS "\fBvoid\fP idea_encrypt (unsigned long * in, \fBIDEA_KEY_SCHEDULE\fP * ks)"
+
+.PP
+Definition at line 138 of file i_cbc\&.c\&.
+.SS "\fBvoid\fP idea_ofb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBIDEA_KEY_SCHEDULE\fP * ks, unsigned char * iv, int * num)"
+
+.PP
+Definition at line 67 of file i_ofb64\&.c\&.
+.SS "const char* idea_options (\fBvoid\fP)"
+
+.PP
+Definition at line 65 of file i_ecb\&.c\&.
+.SS "\fBvoid\fP idea_set_decrypt_key (\fBIDEA_KEY_SCHEDULE\fP * ek, \fBIDEA_KEY_SCHEDULE\fP * dk)"
+
+.PP
+Definition at line 113 of file i_skey\&.c\&.
+.SS "\fBvoid\fP idea_set_encrypt_key (const unsigned char * key, \fBIDEA_KEY_SCHEDULE\fP * ks)"
+
+.PP
+Definition at line 64 of file i_skey\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,165 @@
+.TH "s2n/libcrypto-build/openssl/crypto/evp/encode.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/evp/encode.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBconv_bin2ascii\fP(\fBa\fP)             (data_bin2ascii[(\fBa\fP)&0x3f])"
+.br
+.ti -1c
+.RI "#define \fBBIN_PER_LINE\fP   (64/4*3)"
+.br
+.ti -1c
+.RI "#define \fBCHUNKS_PER_LINE\fP   (64/4)"
+.br
+.ti -1c
+.RI "#define \fBCHAR_PER_LINE\fP   (64+1)"
+.br
+.ti -1c
+.RI "#define \fBB64_EOLN\fP   0xF0"
+.br
+.ti -1c
+.RI "#define \fBB64_CR\fP   0xF1"
+.br
+.ti -1c
+.RI "#define \fBB64_EOF\fP   0xF2"
+.br
+.ti -1c
+.RI "#define \fBB64_WS\fP   0xE0"
+.br
+.ti -1c
+.RI "#define \fBB64_ERROR\fP   0xFF"
+.br
+.ti -1c
+.RI "#define \fBB64_NOT_BASE64\fP(\fBa\fP)             (((\fBa\fP)|0x13) == 0xF3)"
+.br
+.ti -1c
+.RI "#define \fBB64_BASE64\fP(\fBa\fP)                     !\fBB64_NOT_BASE64\fP(\fBa\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_EncodeInit\fP (\fBEVP_ENCODE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_EncodeUpdate\fP (\fBEVP_ENCODE_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int *outl, const unsigned char *\fBin\fP, int inl)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_EncodeFinal\fP (\fBEVP_ENCODE_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int *outl)"
+.br
+.ti -1c
+.RI "int \fBEVP_EncodeBlock\fP (unsigned char *\fBt\fP, const unsigned char *\fBf\fP, int dlen)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_DecodeInit\fP (\fBEVP_ENCODE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_DecodeUpdate\fP (\fBEVP_ENCODE_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int *outl, const unsigned char *\fBin\fP, int inl)"
+.br
+.ti -1c
+.RI "int \fBEVP_DecodeBlock\fP (unsigned char *\fBt\fP, const unsigned char *\fBf\fP, int n)"
+.br
+.ti -1c
+.RI "int \fBEVP_DecodeFinal\fP (\fBEVP_ENCODE_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int *outl)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define B64_BASE64(\fBa\fP)   !\fBB64_NOT_BASE64\fP(\fBa\fP)"
+
+.PP
+Definition at line 106 of file encode\&.c\&.
+.SS "#define B64_CR   0xF1"
+
+.PP
+Definition at line 101 of file encode\&.c\&.
+.SS "#define B64_EOF   0xF2"
+
+.PP
+Definition at line 102 of file encode\&.c\&.
+.SS "#define B64_EOLN   0xF0"
+
+.PP
+Definition at line 100 of file encode\&.c\&.
+.SS "#define B64_ERROR   0xFF"
+
+.PP
+Definition at line 104 of file encode\&.c\&.
+.SS "#define B64_NOT_BASE64(\fBa\fP)   (((\fBa\fP)|0x13) == 0xF3)"
+
+.PP
+Definition at line 105 of file encode\&.c\&.
+.SS "#define B64_WS   0xE0"
+
+.PP
+Definition at line 103 of file encode\&.c\&.
+.SS "#define BIN_PER_LINE   (64/4*3)"
+
+.PP
+Definition at line 85 of file encode\&.c\&.
+.SS "#define CHAR_PER_LINE   (64+1)"
+
+.PP
+Definition at line 87 of file encode\&.c\&.
+.SS "#define CHUNKS_PER_LINE   (64/4)"
+
+.PP
+Definition at line 86 of file encode\&.c\&.
+.SS "#define conv_bin2ascii(\fBa\fP)   (data_bin2ascii[(\fBa\fP)&0x3f])"
+
+.PP
+Definition at line 66 of file encode\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int EVP_DecodeBlock (unsigned char * t, const unsigned char * f, int n)"
+
+.PP
+Definition at line 375 of file encode\&.c\&.
+.SS "int EVP_DecodeFinal (\fBEVP_ENCODE_CTX\fP * ctx, unsigned char * out, int * outl)"
+
+.PP
+Definition at line 414 of file encode\&.c\&.
+.SS "\fBvoid\fP EVP_DecodeInit (\fBEVP_ENCODE_CTX\fP * ctx)"
+
+.PP
+Definition at line 242 of file encode\&.c\&.
+.SS "int EVP_DecodeUpdate (\fBEVP_ENCODE_CTX\fP * ctx, unsigned char * out, int * outl, const unsigned char * in, int inl)"
+
+.PP
+Definition at line 271 of file encode\&.c\&.
+.SS "int EVP_EncodeBlock (unsigned char * t, const unsigned char * f, int dlen)"
+
+.PP
+Definition at line 211 of file encode\&.c\&.
+.SS "\fBvoid\fP EVP_EncodeFinal (\fBEVP_ENCODE_CTX\fP * ctx, unsigned char * out, int * outl)"
+
+.PP
+Definition at line 198 of file encode\&.c\&.
+.SS "\fBvoid\fP EVP_EncodeInit (\fBEVP_ENCODE_CTX\fP * ctx)"
+
+.PP
+Definition at line 144 of file encode\&.c\&.
+.SS "\fBvoid\fP EVP_EncodeUpdate (\fBEVP_ENCODE_CTX\fP * ctx, unsigned char * out, int * outl, const unsigned char * in, int inl)"
+
+.PP
+Definition at line 151 of file encode\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

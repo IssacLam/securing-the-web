@@ -1,0 +1,250 @@
+.TH "s2n/libcrypto-build/openssl/crypto/sha/sha256.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/sha/sha256.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include <openssl/opensslv\&.h>\fP
+.br
+\fC#include 'md32_common\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDATA_ORDER_IS_BIG_ENDIAN\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_LONG\fP   \fBSHA_LONG\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_CTX\fP   \fBSHA256_CTX\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_CBLOCK\fP   \fBSHA_CBLOCK\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_MAKE_STRING\fP(\fBc\fP,  s)  "
+.br
+.ti -1c
+.RI "#define \fBHASH_UPDATE\fP   \fBSHA256_Update\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_TRANSFORM\fP   \fBSHA256_Transform\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_FINAL\fP   \fBSHA256_Final\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_BLOCK_DATA_ORDER\fP   \fBsha256_block_data_order\fP"
+.br
+.ti -1c
+.RI "#define \fBSigma0\fP(\fBx\fP)             (\fBROTATE\fP((\fBx\fP),30) ^ \fBROTATE\fP((\fBx\fP),19) ^ \fBROTATE\fP((\fBx\fP),10))"
+.br
+.ti -1c
+.RI "#define \fBSigma1\fP(\fBx\fP)             (\fBROTATE\fP((\fBx\fP),26) ^ \fBROTATE\fP((\fBx\fP),21) ^ \fBROTATE\fP((\fBx\fP),7))"
+.br
+.ti -1c
+.RI "#define \fBsigma0\fP(\fBx\fP)             (\fBROTATE\fP((\fBx\fP),25) ^ \fBROTATE\fP((\fBx\fP),14) ^ ((\fBx\fP)>>3))"
+.br
+.ti -1c
+.RI "#define \fBsigma1\fP(\fBx\fP)             (\fBROTATE\fP((\fBx\fP),15) ^ \fBROTATE\fP((\fBx\fP),13) ^ ((\fBx\fP)>>10))"
+.br
+.ti -1c
+.RI "#define \fBCh\fP(\fBx\fP,  y,  z)             (((\fBx\fP) & (y)) ^ ((~(\fBx\fP)) & (z)))"
+.br
+.ti -1c
+.RI "#define \fBMaj\fP(\fBx\fP,  y,  z)           (((\fBx\fP) & (y)) ^ ((\fBx\fP) & (z)) ^ ((y) & (z)))"
+.br
+.ti -1c
+.RI "#define \fBROUND_00_15\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  g,  \fBh\fP)                "
+.br
+.ti -1c
+.RI "#define \fBROUND_16_63\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  g,  \fBh\fP,  \fBX\fP)            "
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBfips_md_init_ctx\fP (\fBSHA224\fP, \fBSHA256\fP)"
+.br
+.ti -1c
+.RI "\fBfips_md_init\fP (\fBSHA256\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA224\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA256\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "int \fBSHA224_Update\fP (\fBSHA256_CTX\fP *\fBc\fP, const \fBvoid\fP *\fBdata\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA224_Final\fP (unsigned char *md, \fBSHA256_CTX\fP *\fBc\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBSHA256_version\fP [] = 'SHA\-256' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define Ch(\fBx\fP, y, z)   (((\fBx\fP) & (y)) ^ ((~(\fBx\fP)) & (z)))"
+
+.PP
+Definition at line 162 of file sha256\&.c\&.
+.SS "#define DATA_ORDER_IS_BIG_ENDIAN"
+
+.PP
+Definition at line 87 of file sha256\&.c\&.
+.SS "#define HASH_BLOCK_DATA_ORDER   \fBsha256_block_data_order\fP"
+
+.PP
+Definition at line 124 of file sha256\&.c\&.
+.SS "#define HASH_CBLOCK   \fBSHA_CBLOCK\fP"
+
+.PP
+Definition at line 91 of file sha256\&.c\&.
+.SS "#define HASH_CTX   \fBSHA256_CTX\fP"
+
+.PP
+Definition at line 90 of file sha256\&.c\&.
+.SS "#define HASH_FINAL   \fBSHA256_Final\fP"
+
+.PP
+Definition at line 123 of file sha256\&.c\&.
+.SS "#define HASH_LONG   \fBSHA_LONG\fP"
+
+.PP
+Definition at line 89 of file sha256\&.c\&.
+.SS "#define HASH_MAKE_STRING(\fBc\fP, s)"
+\fBValue:\fP
+.PP
+.nf
+do {    \
+        unsigned long ll;               \
+        unsigned int  nn;               \
+        switch ((c)->md_len)            \
+        {   case SHA224_DIGEST_LENGTH:  \
+                for (nn=0;nn<SHA224_DIGEST_LENGTH/4;nn++)       \
+                {   ll=(c)->h[nn]; (void)HOST_l2c(ll,(s));   }  \
+                break;                  \
+            case SHA256_DIGEST_LENGTH:  \
+                for (nn=0;nn<SHA256_DIGEST_LENGTH/4;nn++)       \
+                {   ll=(c)->h[nn]; (void)HOST_l2c(ll,(s));   }  \
+                break;                  \
+            default:                    \
+                if ((c)->md_len > SHA256_DIGEST_LENGTH) \
+                    return 0;                           \
+                for (nn=0;nn<(c)->md_len/4;nn++)                \
+                {   ll=(c)->h[nn]; (void)HOST_l2c(ll,(s));   }  \
+                break;                  \
+        }                               \
+        } while (0)
+.fi
+.PP
+Definition at line 100 of file sha256\&.c\&.
+.SS "#define HASH_TRANSFORM   \fBSHA256_Transform\fP"
+
+.PP
+Definition at line 122 of file sha256\&.c\&.
+.SS "#define HASH_UPDATE   \fBSHA256_Update\fP"
+
+.PP
+Definition at line 121 of file sha256\&.c\&.
+.SS "#define Maj(\fBx\fP, y, z)   (((\fBx\fP) & (y)) ^ ((\fBx\fP) & (z)) ^ ((y) & (z)))"
+
+.PP
+Definition at line 163 of file sha256\&.c\&.
+.SS "#define ROUND_00_15(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, g, \fBh\fP)"
+\fBValue:\fP
+.PP
+.nf
+do {    \
+        T1 += h + Sigma1(e) + Ch(e,f,g) + K256[i];      \
+        h = Sigma0(a) + Maj(a,b,c);                     \
+        d += T1;        h += T1;                } while (0)
+.fi
+.PP
+Definition at line 234 of file sha256\&.c\&.
+.SS "#define ROUND_16_63(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, g, \fBh\fP, \fBX\fP)"
+\fBValue:\fP
+.PP
+.nf
+do {    \
+        s0 = X[(i+1)&0x0f];     s0 = sigma0(s0);        \
+        s1 = X[(i+14)&0x0f];    s1 = sigma1(s1);        \
+        T1 = X[(i)&0x0f] += s0 + s1 + X[(i+9)&0x0f];    \
+        ROUND_00_15(i,a,b,c,d,e,f,g,h);         } while (0)
+.fi
+.PP
+Definition at line 239 of file sha256\&.c\&.
+.SS "#define Sigma0(\fBx\fP)   (\fBROTATE\fP((\fBx\fP),30) ^ \fBROTATE\fP((\fBx\fP),19) ^ \fBROTATE\fP((\fBx\fP),10))"
+
+.PP
+Definition at line 157 of file sha256\&.c\&.
+.SS "#define sigma0(\fBx\fP)   (\fBROTATE\fP((\fBx\fP),25) ^ \fBROTATE\fP((\fBx\fP),14) ^ ((\fBx\fP)>>3))"
+
+.PP
+Definition at line 159 of file sha256\&.c\&.
+.SS "#define Sigma1(\fBx\fP)   (\fBROTATE\fP((\fBx\fP),26) ^ \fBROTATE\fP((\fBx\fP),21) ^ \fBROTATE\fP((\fBx\fP),7))"
+
+.PP
+Definition at line 158 of file sha256\&.c\&.
+.SS "#define sigma1(\fBx\fP)   (\fBROTATE\fP((\fBx\fP),15) ^ \fBROTATE\fP((\fBx\fP),13) ^ ((\fBx\fP)>>10))"
+
+.PP
+Definition at line 160 of file sha256\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "fips_md_init (\fBSHA256\fP)"
+
+.PP
+Definition at line 34 of file sha256\&.c\&.
+.SS "fips_md_init_ctx (\fBSHA224\fP, \fBSHA256\fP)"
+
+.PP
+Definition at line 19 of file sha256\&.c\&.
+.SS "unsigned char* SHA224 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.PP
+Definition at line 49 of file sha256\&.c\&.
+.SS "int SHA224_Final (unsigned char * md, \fBSHA256_CTX\fP * c)"
+
+.PP
+Definition at line 82 of file sha256\&.c\&.
+.SS "int SHA224_Update (\fBSHA256_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.PP
+Definition at line 77 of file sha256\&.c\&.
+.SS "unsigned char* SHA256 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.PP
+Definition at line 63 of file sha256\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char SHA256_version[] = 'SHA\-256' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 17 of file sha256\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

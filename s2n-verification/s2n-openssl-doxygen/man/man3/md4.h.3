@@ -1,0 +1,101 @@
+.TH "s2n/libcrypto-root/include/openssl/md4.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/md4.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBMD4state_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMD4_LONG\fP   unsigned int"
+.br
+.ti -1c
+.RI "#define \fBMD4_CBLOCK\fP   64"
+.br
+.ti -1c
+.RI "#define \fBMD4_LBLOCK\fP   (\fBMD4_CBLOCK\fP/4)"
+.br
+.ti -1c
+.RI "#define \fBMD4_DIGEST_LENGTH\fP   16"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBMD4state_st\fP \fBMD4_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBMD4_Init\fP (\fBMD4_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBMD4_Update\fP (\fBMD4_CTX\fP *\fBc\fP, const \fBvoid\fP *\fBdata\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBMD4_Final\fP (unsigned char *md, \fBMD4_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBMD4\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBMD4_Transform\fP (\fBMD4_CTX\fP *\fBc\fP, const unsigned char *\fBb\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MD4_CBLOCK   64"
+
+.PP
+Definition at line 96 of file md4\&.h\&.
+.SS "#define MD4_DIGEST_LENGTH   16"
+
+.PP
+Definition at line 98 of file md4\&.h\&.
+.SS "#define MD4_LBLOCK   (\fBMD4_CBLOCK\fP/4)"
+
+.PP
+Definition at line 97 of file md4\&.h\&.
+.SS "#define MD4_LONG   unsigned int"
+
+.PP
+Definition at line 93 of file md4\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBMD4state_st\fP  \fBMD4_CTX\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "unsigned char* MD4 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.PP
+Definition at line 68 of file md4_one\&.c\&.
+.SS "int MD4_Final (unsigned char * md, \fBMD4_CTX\fP * c)"
+
+.SS "int MD4_Init (\fBMD4_CTX\fP * c)"
+
+.SS "\fBvoid\fP MD4_Transform (\fBMD4_CTX\fP * c, const unsigned char * b)"
+
+.SS "int MD4_Update (\fBMD4_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

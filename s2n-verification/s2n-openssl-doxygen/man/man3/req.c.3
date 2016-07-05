@@ -1,0 +1,177 @@
+.TH "s2n/libcrypto-build/openssl/apps/req.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/apps/req.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'apps\&.h'\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSECTION\fP   'req'"
+.br
+.ti -1c
+.RI "#define \fBBITS\fP   'default_bits'"
+.br
+.ti -1c
+.RI "#define \fBKEYFILE\fP   'default_keyfile'"
+.br
+.ti -1c
+.RI "#define \fBPROMPT\fP   'prompt'"
+.br
+.ti -1c
+.RI "#define \fBDISTINGUISHED_NAME\fP   'distinguished_name'"
+.br
+.ti -1c
+.RI "#define \fBATTRIBUTES\fP   'attributes'"
+.br
+.ti -1c
+.RI "#define \fBV3_EXTENSIONS\fP   'x509_extensions'"
+.br
+.ti -1c
+.RI "#define \fBREQ_EXTENSIONS\fP   'req_extensions'"
+.br
+.ti -1c
+.RI "#define \fBSTRING_MASK\fP   'string_mask'"
+.br
+.ti -1c
+.RI "#define \fBUTF8_IN\fP   'utf8'"
+.br
+.ti -1c
+.RI "#define \fBDEFAULT_KEY_LENGTH\fP   2048"
+.br
+.ti -1c
+.RI "#define \fBMIN_KEY_LENGTH\fP   512"
+.br
+.ti -1c
+.RI "#define \fBPROG\fP   \fBreq_main\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBMAIN\fP (int, char **)"
+.br
+.ti -1c
+.RI "int \fBdo_X509_sign\fP (\fBBIO\fP *err, \fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md, \fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)*sigopts)"
+.br
+.ti -1c
+.RI "int \fBdo_X509_REQ_sign\fP (\fBBIO\fP *err, \fBX509_REQ\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md, \fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)*sigopts)"
+.br
+.ti -1c
+.RI "int \fBdo_X509_CRL_sign\fP (\fBBIO\fP *err, \fBX509_CRL\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md, \fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)*sigopts)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ATTRIBUTES   'attributes'"
+
+.PP
+Definition at line 98 of file req\&.c\&.
+.SS "#define BITS   'default_bits'"
+
+.PP
+Definition at line 94 of file req\&.c\&.
+.SS "#define DEFAULT_KEY_LENGTH   2048"
+
+.PP
+Definition at line 104 of file req\&.c\&.
+.SS "#define DISTINGUISHED_NAME   'distinguished_name'"
+
+.PP
+Definition at line 97 of file req\&.c\&.
+.SS "#define KEYFILE   'default_keyfile'"
+
+.PP
+Definition at line 95 of file req\&.c\&.
+.SS "#define MIN_KEY_LENGTH   512"
+
+.PP
+Definition at line 105 of file req\&.c\&.
+.SS "#define PROG   \fBreq_main\fP"
+
+.PP
+Definition at line 108 of file req\&.c\&.
+.SS "#define PROMPT   'prompt'"
+
+.PP
+Definition at line 96 of file req\&.c\&.
+.SS "#define REQ_EXTENSIONS   'req_extensions'"
+
+.PP
+Definition at line 100 of file req\&.c\&.
+.SS "#define SECTION   'req'"
+
+.PP
+Definition at line 92 of file req\&.c\&.
+.SS "#define STRING_MASK   'string_mask'"
+
+.PP
+Definition at line 101 of file req\&.c\&.
+.SS "#define UTF8_IN   'utf8'"
+
+.PP
+Definition at line 102 of file req\&.c\&.
+.SS "#define V3_EXTENSIONS   'x509_extensions'"
+
+.PP
+Definition at line 99 of file req\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int do_X509_CRL_sign (\fBBIO\fP * err, \fBX509_CRL\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md, \fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)* sigopts)"
+
+.PP
+Definition at line 1720 of file req\&.c\&.
+.SS "int do_X509_REQ_sign (\fBBIO\fP * err, \fBX509_REQ\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md, \fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)* sigopts)"
+
+.PP
+Definition at line 1707 of file req\&.c\&.
+.SS "int do_X509_sign (\fBBIO\fP * err, \fBX509\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md, \fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)* sigopts)"
+
+.PP
+Definition at line 1694 of file req\&.c\&.
+.SS "int MAIN (int argc, char ** argv)"
+
+.PP
+Definition at line 162 of file req\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

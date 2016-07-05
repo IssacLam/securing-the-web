@@ -1,0 +1,307 @@
+.TH "x509_store_ctx_st" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+x509_store_ctx_st \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <x509_vfy\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*untrusted"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*crls"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*(*lookup_certs)(\fBX509_STORE_CTX\fP *\fBctx\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*(*lookup_crls)(\fBX509_STORE_CTX\fP *\fBctx\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*chain"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*untrusted"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*crls"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*(*lookup_certs)(\fBX509_STORE_CTX\fP *\fBctx\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*(*lookup_crls)(\fBX509_STORE_CTX\fP *\fBctx\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*chain"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*untrusted"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*crls"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*(*lookup_certs)(\fBX509_STORE_CTX\fP *\fBctx\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*(*lookup_crls)(\fBX509_STORE_CTX\fP *\fBctx\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*chain"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBX509_STORE\fP * \fBctx\fP"
+.br
+.ti -1c
+.RI "int \fBcurrent_method\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBcert\fP"
+.br
+.ti -1c
+.RI "\fBX509_VERIFY_PARAM\fP * \fBparam\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBother_ctx\fP"
+.br
+.ti -1c
+.RI "int(* \fBverify\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int(* \fBverify_cb\fP )(int ok, \fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int(* \fBget_issuer\fP )(\fBX509\fP **issuer, \fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int(* \fBcheck_issued\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509\fP *\fBx\fP, \fBX509\fP *issuer)"
+.br
+.ti -1c
+.RI "int(* \fBcheck_revocation\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int(* \fBget_crl\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509_CRL\fP **crl, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int(* \fBcheck_crl\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "int(* \fBcert_crl\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509_CRL\fP *crl, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int(* \fBcheck_policy\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBnm\fP"
+.br
+.ti -1c
+.RI "int(* \fBcleanup\fP )(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBvalid\fP"
+.br
+.ti -1c
+.RI "int \fBlast_untrusted\fP"
+.br
+.ti -1c
+.RI "\fBX509_POLICY_TREE\fP * \fBtree\fP"
+.br
+.ti -1c
+.RI "int \fBexplicit_policy\fP"
+.br
+.ti -1c
+.RI "int \fBerror_depth\fP"
+.br
+.ti -1c
+.RI "int \fBerror\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBcurrent_cert\fP"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBcurrent_issuer\fP"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBcurrent_crl\fP"
+.br
+.ti -1c
+.RI "int \fBcurrent_crl_score\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBcurrent_reasons\fP"
+.br
+.ti -1c
+.RI "\fBX509_STORE_CTX\fP * \fBparent\fP"
+.br
+.ti -1c
+.RI "\fBCRYPTO_EX_DATA\fP \fBex_data\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 236 of file x509_vfy\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SH "Field Documentation"
+.PP 
+.SS "\fBX509\fP * cert"
+
+.PP
+Definition at line 242 of file x509_vfy\&.h\&.
+.SS "int(* cert_crl)(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509_CRL\fP *crl, \fBX509\fP *\fBx\fP)"
+
+.PP
+Definition at line 266 of file x509_vfy\&.h\&.
+.SS "int(* check_crl)(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509_CRL\fP *crl)"
+
+.PP
+Definition at line 264 of file x509_vfy\&.h\&.
+.SS "int(* check_issued)(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509\fP *\fBx\fP, \fBX509\fP *issuer)"
+
+.PP
+Definition at line 258 of file x509_vfy\&.h\&.
+.SS "int(* check_policy)(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+
+.PP
+Definition at line 267 of file x509_vfy\&.h\&.
+.SS "int(* check_revocation)(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+
+.PP
+Definition at line 260 of file x509_vfy\&.h\&.
+.SS "int(* cleanup)(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+
+.PP
+Definition at line 270 of file x509_vfy\&.h\&.
+.SS "\fBX509_STORE\fP * ctx"
+
+.PP
+Definition at line 237 of file x509_vfy\&.h\&.
+.SS "\fBX509\fP * current_cert"
+
+.PP
+Definition at line 285 of file x509_vfy\&.h\&.
+.SS "\fBX509_CRL\fP * current_crl"
+
+.PP
+Definition at line 289 of file x509_vfy\&.h\&.
+.SS "int current_crl_score"
+
+.PP
+Definition at line 291 of file x509_vfy\&.h\&.
+.SS "\fBX509\fP * current_issuer"
+
+.PP
+Definition at line 287 of file x509_vfy\&.h\&.
+.SS "int current_method"
+
+.PP
+Definition at line 239 of file x509_vfy\&.h\&.
+.SS "unsigned int current_reasons"
+
+.PP
+Definition at line 293 of file x509_vfy\&.h\&.
+.SS "int error"
+
+.PP
+Definition at line 284 of file x509_vfy\&.h\&.
+.SS "int error_depth"
+
+.PP
+Definition at line 283 of file x509_vfy\&.h\&.
+.SS "\fBCRYPTO_EX_DATA\fP ex_data"
+
+.PP
+Definition at line 296 of file x509_vfy\&.h\&.
+.SS "int explicit_policy"
+
+.PP
+Definition at line 281 of file x509_vfy\&.h\&.
+.SS "int(* get_crl)(\fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509_CRL\fP **crl, \fBX509\fP *\fBx\fP)"
+
+.PP
+Definition at line 262 of file x509_vfy\&.h\&.
+.SS "int(* get_issuer)(\fBX509\fP **issuer, \fBX509_STORE_CTX\fP *\fBctx\fP, \fBX509\fP *\fBx\fP)"
+
+.PP
+Definition at line 256 of file x509_vfy\&.h\&.
+.SS "int last_untrusted"
+
+.PP
+Definition at line 275 of file x509_vfy\&.h\&.
+.SS "\fBX509_NAME\fP * nm"
+
+.PP
+Definition at line 268 of file x509_vfy\&.h\&.
+.SS "\fBvoid\fP * other_ctx"
+
+.PP
+Definition at line 249 of file x509_vfy\&.h\&.
+.SS "\fBX509_VERIFY_PARAM\fP * param"
+
+.PP
+Definition at line 247 of file x509_vfy\&.h\&.
+.SS "\fBX509_STORE_CTX\fP * parent"
+
+.PP
+Definition at line 295 of file x509_vfy\&.h\&.
+.SS "\fBX509_POLICY_TREE\fP * tree"
+
+.PP
+Definition at line 279 of file x509_vfy\&.h\&.
+.SS "int valid"
+
+.PP
+Definition at line 273 of file x509_vfy\&.h\&.
+.SS "int(* verify)(\fBX509_STORE_CTX\fP *\fBctx\fP)"
+
+.PP
+Definition at line 252 of file x509_vfy\&.h\&.
+.SS "int(* verify_cb)(int ok, \fBX509_STORE_CTX\fP *\fBctx\fP)"
+
+.PP
+Definition at line 254 of file x509_vfy\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,101 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ripemd/ripemd.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ripemd/ripemd.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBRIPEMD160state_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBRIPEMD160_LONG\fP   unsigned int"
+.br
+.ti -1c
+.RI "#define \fBRIPEMD160_CBLOCK\fP   64"
+.br
+.ti -1c
+.RI "#define \fBRIPEMD160_LBLOCK\fP   (\fBRIPEMD160_CBLOCK\fP/4)"
+.br
+.ti -1c
+.RI "#define \fBRIPEMD160_DIGEST_LENGTH\fP   20"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBRIPEMD160state_st\fP \fBRIPEMD160_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBRIPEMD160_Init\fP (\fBRIPEMD160_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBRIPEMD160_Update\fP (\fBRIPEMD160_CTX\fP *\fBc\fP, const \fBvoid\fP *\fBdata\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBRIPEMD160_Final\fP (unsigned char *md, \fBRIPEMD160_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBRIPEMD160\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRIPEMD160_Transform\fP (\fBRIPEMD160_CTX\fP *\fBc\fP, const unsigned char *\fBb\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define RIPEMD160_CBLOCK   64"
+
+.PP
+Definition at line 82 of file ripemd\&.h\&.
+.SS "#define RIPEMD160_DIGEST_LENGTH   20"
+
+.PP
+Definition at line 84 of file ripemd\&.h\&.
+.SS "#define RIPEMD160_LBLOCK   (\fBRIPEMD160_CBLOCK\fP/4)"
+
+.PP
+Definition at line 83 of file ripemd\&.h\&.
+.SS "#define RIPEMD160_LONG   unsigned int"
+
+.PP
+Definition at line 79 of file ripemd\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBRIPEMD160state_st\fP  \fBRIPEMD160_CTX\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "unsigned char* RIPEMD160 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.PP
+Definition at line 64 of file rmd_one\&.c\&.
+.SS "int RIPEMD160_Final (unsigned char * md, \fBRIPEMD160_CTX\fP * c)"
+
+.SS "int RIPEMD160_Init (\fBRIPEMD160_CTX\fP * c)"
+
+.SS "\fBvoid\fP RIPEMD160_Transform (\fBRIPEMD160_CTX\fP * c, const unsigned char * b)"
+
+.SS "int RIPEMD160_Update (\fBRIPEMD160_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

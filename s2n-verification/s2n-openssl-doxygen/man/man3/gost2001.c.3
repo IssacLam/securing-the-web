@@ -1,0 +1,87 @@
+.TH "s2n/libcrypto-build/openssl/engines/ccgost/gost2001.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/engines/ccgost/gost2001.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'gost_lcl\&.h'\fP
+.br
+\fC#include 'gost_params\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/ecdsa\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include 'e_gost_err\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBdump_signature\fP(\fBa\fP,  \fBb\fP,  \fBc\fP)"
+.br
+.ti -1c
+.RI "#define \fBdump_dsa_sig\fP(\fBa\fP,  \fBb\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfill_GOST2001_params\fP (\fBEC_KEY\fP *eckey, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBDSA_SIG\fP * \fBgost2001_do_sign\fP (const unsigned char *dgst, int dlen, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "int \fBgost2001_do_verify\fP (const unsigned char *dgst, int dgst_len, \fBDSA_SIG\fP *sig, \fBEC_KEY\fP *ec)"
+.br
+.ti -1c
+.RI "int \fBgost2001_compute_public\fP (\fBEC_KEY\fP *ec)"
+.br
+.ti -1c
+.RI "int \fBgost2001_keygen\fP (\fBEC_KEY\fP *ec)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define dump_dsa_sig(\fBa\fP, \fBb\fP)"
+
+.PP
+Definition at line 24 of file gost2001\&.c\&.
+.SS "#define dump_signature(\fBa\fP, \fBb\fP, \fBc\fP)"
+
+.PP
+Definition at line 23 of file gost2001\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int fill_GOST2001_params (\fBEC_KEY\fP * eckey, int nid)"
+
+.PP
+Definition at line 35 of file gost2001\&.c\&.
+.SS "int gost2001_compute_public (\fBEC_KEY\fP * ec)"
+
+.PP
+Definition at line 381 of file gost2001\&.c\&.
+.SS "\fBDSA_SIG\fP* gost2001_do_sign (const unsigned char * dgst, int dlen, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 126 of file gost2001\&.c\&.
+.SS "int gost2001_do_verify (const unsigned char * dgst, int dgst_len, \fBDSA_SIG\fP * sig, \fBEC_KEY\fP * ec)"
+
+.PP
+Definition at line 260 of file gost2001\&.c\&.
+.SS "int gost2001_keygen (\fBEC_KEY\fP * ec)"
+
+.PP
+Definition at line 434 of file gost2001\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

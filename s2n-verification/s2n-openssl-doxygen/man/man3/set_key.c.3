@@ -1,0 +1,96 @@
+.TH "s2n/libcrypto-build/openssl/crypto/des/set_key.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/des/set_key.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include 'des_locl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNUM_WEAK_KEY\fP   16"
+.br
+.ti -1c
+.RI "#define \fBHPERM_OP\fP(\fBa\fP,  \fBt\fP,  n,  m)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBDES_set_odd_parity\fP (\fBDES_cblock\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBDES_check_key_parity\fP (\fBconst_DES_cblock\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBDES_is_weak_key\fP (\fBconst_DES_cblock\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBDES_set_key\fP (\fBconst_DES_cblock\fP *\fBkey\fP, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "int \fBDES_set_key_checked\fP (\fBconst_DES_cblock\fP *\fBkey\fP, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_set_key_unchecked\fP (\fBconst_DES_cblock\fP *\fBkey\fP, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "int \fBDES_key_sched\fP (\fBconst_DES_cblock\fP *\fBkey\fP, \fBDES_key_schedule\fP *schedule)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define HPERM_OP(\fBa\fP, \fBt\fP, n, m)"
+\fBValue:\fP
+.PP
+.nf
+((t)=((((a)<<(16-(n)))^(a))&(m)),\
+        (a)=(a)^(t)^(t>>(16-(n))))
+.fi
+.PP
+Definition at line 178 of file set_key\&.c\&.
+.SS "#define NUM_WEAK_KEY   16"
+
+.PP
+Definition at line 132 of file set_key\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int DES_check_key_parity (\fBconst_DES_cblock\fP * key)"
+
+.PP
+Definition at line 111 of file set_key\&.c\&.
+.SS "int DES_is_weak_key (\fBconst_DES_cblock\fP * key)"
+
+.PP
+Definition at line 154 of file set_key\&.c\&.
+.SS "int DES_key_sched (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.PP
+Definition at line 436 of file set_key\&.c\&.
+.SS "int DES_set_key (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.PP
+Definition at line 336 of file set_key\&.c\&.
+.SS "int DES_set_key_checked (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.PP
+Definition at line 351 of file set_key\&.c\&.
+.SS "\fBvoid\fP DES_set_key_unchecked (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.PP
+Definition at line 361 of file set_key\&.c\&.
+.SS "\fBvoid\fP DES_set_odd_parity (\fBDES_cblock\fP * key)"
+
+.PP
+Definition at line 103 of file set_key\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

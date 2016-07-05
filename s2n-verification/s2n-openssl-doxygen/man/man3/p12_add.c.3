@@ -1,0 +1,87 @@
+.TH "s2n/libcrypto-build/openssl/crypto/pkcs12/p12_add.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/pkcs12/p12_add.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/pkcs12\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_item_pack_safebag\fP (\fBvoid\fP *\fBobj\fP, const \fBASN1_ITEM\fP *it, int nid1, int nid2)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_MAKE_KEYBAG\fP (\fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_MAKE_SHKEYBAG\fP (int pbe_nid, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int iter, \fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS12_pack_p7data\fP (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)*sk)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBPKCS12_SAFEBAG\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS12_pack_p7encdata\fP (int pbe_nid, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int iter, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)*bags)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBPKCS12_decrypt_skey\fP (\fBPKCS12_SAFEBAG\fP *bag, const char *\fBpass\fP, int \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_pack_authsafes\fP (\fBPKCS12\fP *p12, \fBSTACK_OF\fP(\fBPKCS7\fP)*safes)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBPKCS7\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* PKCS12_decrypt_skey (\fBPKCS12_SAFEBAG\fP * bag, const char * pass, int passlen)"
+
+.PP
+Definition at line 235 of file p12_add\&.c\&.
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_item_pack_safebag (\fBvoid\fP * obj, const \fBASN1_ITEM\fP * it, int nid1, int nid2)"
+
+.PP
+Definition at line 66 of file p12_add\&.c\&.
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_MAKE_KEYBAG (\fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.PP
+Definition at line 95 of file p12_add\&.c\&.
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_MAKE_SHKEYBAG (int pbe_nid, const char * pass, int passlen, unsigned char * salt, int saltlen, int iter, \fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.PP
+Definition at line 109 of file p12_add\&.c\&.
+.SS "int PKCS12_pack_authsafes (\fBPKCS12\fP * p12, \fBSTACK_OF\fP(\fBPKCS7\fP)* safes)"
+
+.PP
+Definition at line 241 of file p12_add\&.c\&.
+.SS "\fBPKCS7\fP* PKCS12_pack_p7data (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)* sk)"
+
+.PP
+Definition at line 142 of file p12_add\&.c\&.
+.SS "\fBPKCS7\fP* PKCS12_pack_p7encdata (int pbe_nid, const char * pass, int passlen, unsigned char * salt, int saltlen, int iter, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)* bags)"
+
+.PP
+Definition at line 179 of file p12_add\&.c\&.
+.SS "STACK_OF (\fBPKCS12_SAFEBAG\fP)"
+
+.PP
+Definition at line 167 of file p12_add\&.c\&.
+.SS "STACK_OF (\fBPKCS7\fP)"
+
+.PP
+Definition at line 249 of file p12_add\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,291 @@
+.TH "s2n/libcrypto-build/openssl/demos/engines/zencod/hw_zencod.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/demos/engines/zencod/hw_zencod.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBzencod_number_s\fP"
+.br
+.ti -1c
+.RI "struct \fBZEN_data_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBZENBRIDGE_MAX_KEYSIZE_RSA\fP   2048"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_MAX_KEYSIZE_RSA_CRT\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_MAX_KEYSIZE_DSA_SIGN\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_MAX_KEYSIZE_DSA_VRFY\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_VERSION_MAJOR\fP(\fBx\fP)           (((\fBx\fP) >> 16) | 0xff)"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_VERSION_MINOR\fP(\fBx\fP)           (((\fBx\fP) >>  8) | 0xff)"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_VERSION_PATCH\fP(\fBx\fP)           (((\fBx\fP) >>  0) | 0xff)"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_VERSION\fP(\fBx\fP,  y,  z)                           ((\fBx\fP) << 16 | (y) << 8 | (z))"
+.br
+.ti -1c
+.RI "#define \fBKEY\fP   \fBzen_nb_t\fP"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_RNG_DIRECT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBZENBRIDGE_RNG_SHA1\fP   1"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBzencod_number_s\fP \fBzen_nb_t\fP"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_lib_version\fP(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_hw_version\fP(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_test\fP(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_dump_key\fP(FILE *stream, char *msg, \fBKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "typedef \fBKEY\fP * \fBt_zencod_new_number\fP(unsigned long \fBlen\fP, unsigned char *\fBdata\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_init_number\fP(\fBKEY\fP *n, unsigned long \fBlen\fP, unsigned char *\fBdata\fP)"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBt_zencod_bytes2bits\fP(unsigned char *n, unsigned long \fBbytes\fP)"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBt_zencod_bits2bytes\fP(unsigned long \fBbits\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_rsa_mod_exp\fP(\fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *n, \fBKEY\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_rsa_mod_exp_crt\fP(\fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *\fBp\fP, \fBKEY\fP *\fBq\fP, \fBKEY\fP *edp, \fBKEY\fP *edq, \fBKEY\fP *qinv)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_dsa_do_sign\fP(unsigned int \fBhash\fP, \fBKEY\fP *\fBdata\fP, \fBKEY\fP *random, \fBKEY\fP *\fBp\fP, \fBKEY\fP *\fBq\fP, \fBKEY\fP *g, \fBKEY\fP *\fBx\fP, \fBKEY\fP *r, \fBKEY\fP *s)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_dsa_do_verify\fP(unsigned int \fBhash\fP, \fBKEY\fP *\fBdata\fP, \fBKEY\fP *\fBp\fP, \fBKEY\fP *\fBq\fP, \fBKEY\fP *g, \fBKEY\fP *y, \fBKEY\fP *r, \fBKEY\fP *s, \fBKEY\fP *v)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_dh_generate_key\fP(\fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *g, \fBKEY\fP *n, int gen_x)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_dh_compute_key\fP(\fBKEY\fP *\fBk\fP, \fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *n)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_rand_bytes\fP(\fBKEY\fP *rand, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_math_mod_exp\fP(\fBKEY\fP *r, \fBKEY\fP *\fBa\fP, \fBKEY\fP *\fBe\fP, \fBKEY\fP *n)"
+.br
+.ti -1c
+.RI "typedef struct \fBZEN_data_st\fP \fBZEN_MD_DATA\fP"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_md5_init\fP(\fBZEN_MD_DATA\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_md5_update\fP(\fBZEN_MD_DATA\fP *\fBdata\fP, const \fBKEY\fP *input)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_md5_do_final\fP(\fBZEN_MD_DATA\fP *\fBdata\fP, \fBKEY\fP *output)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_sha1_init\fP(\fBZEN_MD_DATA\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_sha1_update\fP(\fBZEN_MD_DATA\fP *\fBdata\fP, const \fBKEY\fP *input)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_sha1_do_final\fP(\fBZEN_MD_DATA\fP *\fBdata\fP, \fBKEY\fP *output)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_rc4_cipher\fP(\fBKEY\fP *output, const \fBKEY\fP *input, const \fBKEY\fP *\fBkey\fP, unsigned char *index_1, unsigned char *index_2, int mode)"
+.br
+.ti -1c
+.RI "typedef int \fBt_zencod_xdes_cipher\fP(\fBKEY\fP *output, const \fBKEY\fP *input, const \fBKEY\fP *key_1, const \fBKEY\fP *key_2, const \fBKEY\fP *key_3, const \fBKEY\fP *iv, int mode)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define KEY   \fBzen_nb_t\fP"
+
+.PP
+Definition at line 35 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_MAX_KEYSIZE_DSA_SIGN   1024"
+
+.PP
+Definition at line 18 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_MAX_KEYSIZE_DSA_VRFY   1024"
+
+.PP
+Definition at line 19 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_MAX_KEYSIZE_RSA   2048"
+
+.PP
+Definition at line 16 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_MAX_KEYSIZE_RSA_CRT   1024"
+
+.PP
+Definition at line 17 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_RNG_DIRECT   0"
+
+.PP
+Definition at line 88 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_RNG_SHA1   1"
+
+.PP
+Definition at line 89 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_VERSION(\fBx\fP, y, z)   ((\fBx\fP) << 16 | (y) << 8 | (z))"
+
+.PP
+Definition at line 25 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_VERSION_MAJOR(\fBx\fP)   (((\fBx\fP) >> 16) | 0xff)"
+
+.PP
+Definition at line 22 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_VERSION_MINOR(\fBx\fP)   (((\fBx\fP) >>  8) | 0xff)"
+
+.PP
+Definition at line 23 of file hw_zencod\&.h\&.
+.SS "#define ZENBRIDGE_VERSION_PATCH(\fBx\fP)   (((\fBx\fP) >>  0) | 0xff)"
+
+.PP
+Definition at line 24 of file hw_zencod\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned long t_zencod_bits2bytes(unsigned long \fBbits\fP)"
+
+.PP
+Definition at line 53 of file hw_zencod\&.h\&.
+.SS "typedef unsigned long t_zencod_bytes2bits(unsigned char *n, unsigned long \fBbytes\fP)"
+
+.PP
+Definition at line 51 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_dh_compute_key(\fBKEY\fP *\fBk\fP, \fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *n)"
+
+.PP
+Definition at line 83 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_dh_generate_key(\fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *g, \fBKEY\fP *n, int gen_x)"
+
+.PP
+Definition at line 81 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_dsa_do_sign(unsigned int \fBhash\fP, \fBKEY\fP *\fBdata\fP, \fBKEY\fP *random, \fBKEY\fP *\fBp\fP, \fBKEY\fP *\fBq\fP, \fBKEY\fP *g, \fBKEY\fP *\fBx\fP, \fBKEY\fP *r, \fBKEY\fP *s)"
+
+.PP
+Definition at line 70 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_dsa_do_verify(unsigned int \fBhash\fP, \fBKEY\fP *\fBdata\fP, \fBKEY\fP *\fBp\fP, \fBKEY\fP *\fBq\fP, \fBKEY\fP *g, \fBKEY\fP *y, \fBKEY\fP *r, \fBKEY\fP *s, \fBKEY\fP *v)"
+
+.PP
+Definition at line 73 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_dump_key(FILE *stream, char *msg, \fBKEY\fP *\fBkey\fP)"
+
+.PP
+Definition at line 43 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_hw_version(\fBvoid\fP)"
+
+.PP
+Definition at line 41 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_init_number(\fBKEY\fP *n, unsigned long \fBlen\fP, unsigned char *\fBdata\fP)"
+
+.PP
+Definition at line 49 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_lib_version(\fBvoid\fP)"
+
+.PP
+Definition at line 40 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_math_mod_exp(\fBKEY\fP *r, \fBKEY\fP *\fBa\fP, \fBKEY\fP *\fBe\fP, \fBKEY\fP *n)"
+
+.PP
+Definition at line 95 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_md5_do_final(\fBZEN_MD_DATA\fP *\fBdata\fP, \fBKEY\fP *output)"
+
+.PP
+Definition at line 119 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_md5_init(\fBZEN_MD_DATA\fP *\fBdata\fP)"
+
+.PP
+Definition at line 117 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_md5_update(\fBZEN_MD_DATA\fP *\fBdata\fP, const \fBKEY\fP *input)"
+
+.PP
+Definition at line 118 of file hw_zencod\&.h\&.
+.SS "typedef \fBKEY\fP* t_zencod_new_number(unsigned long \fBlen\fP, unsigned char *\fBdata\fP)"
+
+.PP
+Definition at line 48 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_rand_bytes(\fBKEY\fP *rand, unsigned int \fBflags\fP)"
+
+.PP
+Definition at line 90 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_rc4_cipher(\fBKEY\fP *output, const \fBKEY\fP *input, const \fBKEY\fP *\fBkey\fP, unsigned char *index_1, unsigned char *index_2, int mode)"
+
+.PP
+Definition at line 137 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_rsa_mod_exp(\fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *n, \fBKEY\fP *\fBe\fP)"
+
+.PP
+Definition at line 59 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_rsa_mod_exp_crt(\fBKEY\fP *y, \fBKEY\fP *\fBx\fP, \fBKEY\fP *\fBp\fP, \fBKEY\fP *\fBq\fP, \fBKEY\fP *edp, \fBKEY\fP *edq, \fBKEY\fP *qinv)"
+
+.PP
+Definition at line 64 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_sha1_do_final(\fBZEN_MD_DATA\fP *\fBdata\fP, \fBKEY\fP *output)"
+
+.PP
+Definition at line 123 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_sha1_init(\fBZEN_MD_DATA\fP *\fBdata\fP)"
+
+.PP
+Definition at line 121 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_sha1_update(\fBZEN_MD_DATA\fP *\fBdata\fP, const \fBKEY\fP *input)"
+
+.PP
+Definition at line 122 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_test(\fBvoid\fP)"
+
+.PP
+Definition at line 42 of file hw_zencod\&.h\&.
+.SS "typedef int t_zencod_xdes_cipher(\fBKEY\fP *output, const \fBKEY\fP *input, const \fBKEY\fP *key_1, const \fBKEY\fP *key_2, const \fBKEY\fP *key_3, const \fBKEY\fP *iv, int mode)"
+
+.PP
+Definition at line 149 of file hw_zencod\&.h\&.
+.SS "typedef struct \fBZEN_data_st\fP  \fBZEN_MD_DATA\fP"
+
+.SS "typedef struct \fBzencod_number_s\fP  \fBzen_nb_t\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

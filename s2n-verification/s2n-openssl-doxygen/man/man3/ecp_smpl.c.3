@@ -1,0 +1,227 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ecp_smpl.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ecp_smpl.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBEC_METHOD\fP * \fBEC_GFp_simple_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_group_init\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_simple_group_finish\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_simple_group_clear_finish\fP (\fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_group_copy\fP (\fBEC_GROUP\fP *dest, const \fBEC_GROUP\fP *src)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_group_set_curve\fP (\fBEC_GROUP\fP *group, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_group_get_curve\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *\fBp\fP, \fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_group_get_degree\fP (const \fBEC_GROUP\fP *group)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_group_check_discriminant\fP (const \fBEC_GROUP\fP *group, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_point_init\fP (\fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_simple_point_finish\fP (\fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_simple_point_clear_finish\fP (\fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_point_copy\fP (\fBEC_POINT\fP *dest, const \fBEC_POINT\fP *src)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_point_set_to_infinity\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_set_Jprojective_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, const \fBBIGNUM\fP *y, const \fBBIGNUM\fP *z, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_get_Jprojective_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBIGNUM\fP *\fBx\fP, \fBBIGNUM\fP *y, \fBBIGNUM\fP *z, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_point_set_affine_coordinates\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, const \fBBIGNUM\fP *y, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_point_get_affine_coordinates\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBIGNUM\fP *\fBx\fP, \fBBIGNUM\fP *y, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_add\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBEC_POINT\fP *\fBa\fP, const \fBEC_POINT\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_dbl\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *r, const \fBEC_POINT\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_invert\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_is_at_infinity\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_is_on_curve\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_cmp\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *\fBa\fP, const \fBEC_POINT\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_make_affine\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_points_make_affine\fP (const \fBEC_GROUP\fP *group, size_t \fBnum\fP, \fBEC_POINT\fP *points[], \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_field_mul\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBec_GFp_simple_field_sqr\fP (const \fBEC_GROUP\fP *group, \fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int ec_GFp_simple_add (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBEC_POINT\fP * a, const \fBEC_POINT\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 651 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_cmp (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * a, const \fBEC_POINT\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1099 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_dbl (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * r, const \fBEC_POINT\fP * a, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 838 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_field_mul (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1408 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_field_sqr (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1414 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_get_Jprojective_coordinates_GFp (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * point, \fBBIGNUM\fP * x, \fBBIGNUM\fP * y, \fBBIGNUM\fP * z, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 468 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_group_check_discriminant (const \fBEC_GROUP\fP * group, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 287 of file ecp_smpl\&.c\&.
+.SS "\fBvoid\fP ec_GFp_simple_group_clear_finish (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 155 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_group_copy (\fBEC_GROUP\fP * dest, const \fBEC_GROUP\fP * src)"
+
+.PP
+Definition at line 162 of file ecp_smpl\&.c\&.
+.SS "\fBvoid\fP ec_GFp_simple_group_finish (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 148 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_group_get_curve (const \fBEC_GROUP\fP * group, \fBBIGNUM\fP * p, \fBBIGNUM\fP * a, \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 236 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_group_get_degree (const \fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 282 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_group_init (\fBEC_GROUP\fP * group)"
+
+.PP
+Definition at line 139 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_group_set_curve (\fBEC_GROUP\fP * group, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 176 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_invert (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 981 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_is_at_infinity (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * point)"
+
+.PP
+Definition at line 990 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_is_on_curve (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * point, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 995 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_make_affine (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1209 of file ecp_smpl\&.c\&.
+.SS "const \fBEC_METHOD\fP* EC_GFp_simple_method (\fBvoid\fP)"
+Returns the basic GFp ec methods which provides the basis for the optimized methods\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+EC_METHOD object 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file ecp_smpl\&.c\&.
+.SS "\fBvoid\fP ec_GFp_simple_point_clear_finish (\fBEC_POINT\fP * point)"
+
+.PP
+Definition at line 378 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_point_copy (\fBEC_POINT\fP * dest, const \fBEC_POINT\fP * src)"
+
+.PP
+Definition at line 386 of file ecp_smpl\&.c\&.
+.SS "\fBvoid\fP ec_GFp_simple_point_finish (\fBEC_POINT\fP * point)"
+
+.PP
+Definition at line 371 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_point_get_affine_coordinates (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * point, \fBBIGNUM\fP * x, \fBBIGNUM\fP * y, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 536 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_point_init (\fBEC_POINT\fP * point)"
+
+.PP
+Definition at line 361 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_point_set_affine_coordinates (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point, const \fBBIGNUM\fP * x, const \fBBIGNUM\fP * y, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 518 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_point_set_to_infinity (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point)"
+
+.PP
+Definition at line 399 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_points_make_affine (const \fBEC_GROUP\fP * group, size_t num, \fBEC_POINT\fP * points[], \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1249 of file ecp_smpl\&.c\&.
+.SS "int ec_GFp_simple_set_Jprojective_coordinates_GFp (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * point, const \fBBIGNUM\fP * x, const \fBBIGNUM\fP * y, const \fBBIGNUM\fP * z, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 407 of file ecp_smpl\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

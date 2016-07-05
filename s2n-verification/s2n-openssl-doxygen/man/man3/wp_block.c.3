@@ -1,0 +1,176 @@
+.TH "s2n/libcrypto-build/openssl/crypto/whrlpool/wp_block.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/whrlpool/wp_block.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'wp_locl\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBROUNDS\fP   10"
+.br
+.ti -1c
+.RI "#define \fBSTRICT_ALIGNMENT\fP"
+.br
+.ti -1c
+.RI "#define \fBN\fP   8"
+.br
+.ti -1c
+.RI "#define \fBLL\fP(c0,  c1,  c2,  c3,  c4,  c5,  c6,  c7)"
+.br
+.ti -1c
+.RI "#define \fBC0\fP(K,  i)         (\fBCx\&.q\fP[0+8*\fBK\&.c\fP[(i)*8+0]])"
+.br
+.ti -1c
+.RI "#define \fBC1\fP(K,  i)         (\fBCx\&.q\fP[1+8*\fBK\&.c\fP[(i)*8+1]])"
+.br
+.ti -1c
+.RI "#define \fBC2\fP(K,  i)         (\fBCx\&.q\fP[2+8*\fBK\&.c\fP[(i)*8+2]])"
+.br
+.ti -1c
+.RI "#define \fBC3\fP(K,  i)         (\fBCx\&.q\fP[3+8*\fBK\&.c\fP[(i)*8+3]])"
+.br
+.ti -1c
+.RI "#define \fBC4\fP(K,  i)         (\fBCx\&.q\fP[4+8*\fBK\&.c\fP[(i)*8+4]])"
+.br
+.ti -1c
+.RI "#define \fBC5\fP(K,  i)         (\fBCx\&.q\fP[5+8*\fBK\&.c\fP[(i)*8+5]])"
+.br
+.ti -1c
+.RI "#define \fBC6\fP(K,  i)         (\fBCx\&.q\fP[6+8*\fBK\&.c\fP[(i)*8+6]])"
+.br
+.ti -1c
+.RI "#define \fBC7\fP(K,  i)         (\fBCx\&.q\fP[7+8*\fBK\&.c\fP[(i)*8+7]])"
+.br
+.ti -1c
+.RI "#define \fBRC\fP   (&(\fBCx\&.q\fP[256*\fBN\fP]))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned char \fBu8\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long long \fBu64\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBwhirlpool_block\fP (\fBWHIRLPOOL_CTX\fP *\fBctx\fP, const \fBvoid\fP *inp, size_t n)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define C0(K, i)   (\fBCx\&.q\fP[0+8*\fBK\&.c\fP[(i)*8+0]])"
+
+.PP
+Definition at line 175 of file wp_block\&.c\&.
+.SS "#define C1(K, i)   (\fBCx\&.q\fP[1+8*\fBK\&.c\fP[(i)*8+1]])"
+
+.PP
+Definition at line 176 of file wp_block\&.c\&.
+.SS "#define C2(K, i)   (\fBCx\&.q\fP[2+8*\fBK\&.c\fP[(i)*8+2]])"
+
+.PP
+Definition at line 177 of file wp_block\&.c\&.
+.SS "#define C3(K, i)   (\fBCx\&.q\fP[3+8*\fBK\&.c\fP[(i)*8+3]])"
+
+.PP
+Definition at line 178 of file wp_block\&.c\&.
+.SS "#define C4(K, i)   (\fBCx\&.q\fP[4+8*\fBK\&.c\fP[(i)*8+4]])"
+
+.PP
+Definition at line 179 of file wp_block\&.c\&.
+.SS "#define C5(K, i)   (\fBCx\&.q\fP[5+8*\fBK\&.c\fP[(i)*8+5]])"
+
+.PP
+Definition at line 180 of file wp_block\&.c\&.
+.SS "#define C6(K, i)   (\fBCx\&.q\fP[6+8*\fBK\&.c\fP[(i)*8+6]])"
+
+.PP
+Definition at line 181 of file wp_block\&.c\&.
+.SS "#define C7(K, i)   (\fBCx\&.q\fP[7+8*\fBK\&.c\fP[(i)*8+7]])"
+
+.PP
+Definition at line 182 of file wp_block\&.c\&.
+.SS "#define LL(c0, c1, c2, c3, c4, c5, c6, c7)"
+\fBValue:\fP
+.PP
+.nf
+c0,c1,c2,c3,c4,c5,c6,c7, \
+                                        c7,c0,c1,c2,c3,c4,c5,c6, \
+                                        c6,c7,c0,c1,c2,c3,c4,c5, \
+                                        c5,c6,c7,c0,c1,c2,c3,c4, \
+                                        c4,c5,c6,c7,c0,c1,c2,c3, \
+                                        c3,c4,c5,c6,c7,c0,c1,c2, \
+                                        c2,c3,c4,c5,c6,c7,c0,c1, \
+                                        c1,c2,c3,c4,c5,c6,c7,c0
+.fi
+.PP
+Definition at line 167 of file wp_block\&.c\&.
+.SS "#define N   8"
+
+.PP
+Definition at line 166 of file wp_block\&.c\&.
+.SS "#define RC   (&(\fBCx\&.q\fP[256*\fBN\fP]))"
+
+.SS "#define ROUNDS   10"
+
+.PP
+Definition at line 50 of file wp_block\&.c\&.
+.SS "#define STRICT_ALIGNMENT"
+
+.PP
+Definition at line 52 of file wp_block\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned long long \fBu64\fP"
+
+.PP
+Definition at line 47 of file wp_block\&.c\&.
+.SS "typedef unsigned char \fBu8\fP"
+The Whirlpool hashing function\&.
+.PP
+\fBReferences\fP
+.PP
+The Whirlpool algorithm was developed by \fCPaulo S\&. L\&. M\&. Barreto\fP and \fCVincent Rijmen\fP\&.
+.PP
+See P\&.S\&.L\&.M\&. Barreto, V\&. Rijmen, ``The Whirlpool hashing function,'' NESSIE submission, 2000 (tweaked version, 2001), https://www.cosic.esat.kuleuven.ac.be/nessie/workshop/submissions/whirlpool.zip
+.PP
+Based on '@version 3\&.0 (2003\&.03\&.12)' by Paulo S\&.L\&.M\&. Barreto and Vincent Rijmen\&. Lookup 'reference implementations' on http://planeta.terra.com.br/informatica/paulobarreto/ 
+.PP
+.PP
+THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED\&. IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE\&. 
+.PP
+Definition at line 41 of file wp_block\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP whirlpool_block (\fBWHIRLPOOL_CTX\fP * ctx, const \fBvoid\fP * inp, size_t n)"
+
+.PP
+Definition at line 474 of file wp_block\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBu8\fP c[(256 *\fBN\fP+\fBROUNDS\fP)*sizeof(\fBu64\fP)]"
+
+.PP
+Definition at line 200 of file wp_block\&.c\&.
+.SS "\fBu64\fP q[(256 *\fBN\fP+\fBROUNDS\fP)]"
+
+.PP
+Definition at line 201 of file wp_block\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

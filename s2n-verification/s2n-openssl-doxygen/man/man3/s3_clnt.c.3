@@ -1,0 +1,158 @@
+.TH "s2n/libcrypto-build/openssl/ssl/s3_clnt.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/s3_clnt.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+\fC#include 'kssl_lcl\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/md5\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBhas_bits\fP(i,  m)     (((i)&(m)) == (m))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIMPLEMENT_ssl3_meth_func\fP (\fBSSLv3_client_method\fP, \fBssl_undefined_function\fP, \fBssl3_connect\fP, ssl3_get_client_method)"
+.br
+.ti -1c
+.RI "int \fBssl3_client_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_server_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_server_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_certificate_request\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_new_session_ticket\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_cert_status\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_server_done\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_client_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_client_verify\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_client_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_check_cert_and_algorithm\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_next_proto\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_do_client_cert_cb\fP (\fBSSL\fP *s, \fBX509\fP **px509, \fBEVP_PKEY\fP **ppkey)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define has_bits(i, m)   (((i)&(m)) == (m))"
+
+.PP
+Definition at line 3483 of file s3_clnt\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "IMPLEMENT_ssl3_meth_func (\fBSSLv3_client_method\fP, \fBssl_undefined_function\fP, \fBssl3_connect\fP, ssl3_get_client_method)"
+
+.PP
+Definition at line 184 of file s3_clnt\&.c\&.
+.SS "int ssl3_check_cert_and_algorithm (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3485 of file s3_clnt\&.c\&.
+.SS "int ssl3_client_hello (\fBSSL\fP * s)"
+
+.PP
+Definition at line 672 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_cert_status (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2346 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_certificate_request (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2049 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_key_exchange (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1364 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_new_session_ticket (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2238 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_server_certificate (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1172 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_server_done (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2415 of file s3_clnt\&.c\&.
+.SS "int ssl3_get_server_hello (\fBSSL\fP * s)"
+
+.PP
+Definition at line 893 of file s3_clnt\&.c\&.
+.SS "int ssl3_send_client_certificate (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3399 of file s3_clnt\&.c\&.
+.SS "int ssl3_send_client_key_exchange (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2458 of file s3_clnt\&.c\&.
+.SS "int ssl3_send_client_verify (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3223 of file s3_clnt\&.c\&.
+.SS "int ssl3_send_next_proto (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3723 of file s3_clnt\&.c\&.
+.SS "int ssl_do_client_cert_cb (\fBSSL\fP * s, \fBX509\fP ** px509, \fBEVP_PKEY\fP ** ppkey)"
+
+.PP
+Definition at line 3748 of file s3_clnt\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

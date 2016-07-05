@@ -1,0 +1,129 @@
+.TH "s2n/libcrypto-build/openssl/ssl/s3_pkt.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/s3_pkt.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fBEVP_CIPH_FLAG_TLS1_1_MULTIBLOCK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBEVP_CIPH_FLAG_TLS1_1_MULTIBLOCK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBMAX_EMPTY_RECORDS\fP   32"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBssl3_read_n\fP (\fBSSL\fP *s, int n, int \fBmax\fP, int extend)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_uncompress\fP (\fBSSL\fP *\fBssl\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_compress\fP (\fBSSL\fP *\fBssl\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_write_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf_, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_write_pending\fP (\fBSSL\fP *s, int \fBtype\fP, const unsigned char *buf, unsigned int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_read_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, unsigned char *buf, int \fBlen\fP, int peek)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_change_cipher_spec\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_alert\fP (\fBSSL\fP *s, int level, int desc)"
+.br
+.ti -1c
+.RI "int \fBssl3_dispatch_alert\fP (\fBSSL\fP *s)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK   0"
+
+.PP
+Definition at line 132 of file s3_pkt\&.c\&.
+.SS "#define EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK   0"
+
+.PP
+Definition at line 132 of file s3_pkt\&.c\&.
+.SS "#define MAX_EMPTY_RECORDS   32"
+
+.PP
+Definition at line 294 of file s3_pkt\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 115 of file s3_pkt\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ssl3_dispatch_alert (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1715 of file s3_pkt\&.c\&.
+.SS "int ssl3_do_change_cipher_spec (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1639 of file s3_pkt\&.c\&.
+.SS "int ssl3_do_compress (\fBSSL\fP * ssl)"
+
+.PP
+Definition at line 611 of file s3_pkt\&.c\&.
+.SS "int ssl3_do_uncompress (\fBSSL\fP * ssl)"
+
+.PP
+Definition at line 592 of file s3_pkt\&.c\&.
+.SS "int ssl3_read_bytes (\fBSSL\fP * s, int type, unsigned char * buf, int len, int peek)"
+
+.PP
+Definition at line 1160 of file s3_pkt\&.c\&.
+.SS "int ssl3_read_n (\fBSSL\fP * s, int n, int max, int extend)"
+
+.PP
+Definition at line 139 of file s3_pkt\&.c\&.
+.SS "int ssl3_send_alert (\fBSSL\fP * s, int level, int desc)"
+
+.PP
+Definition at line 1690 of file s3_pkt\&.c\&.
+.SS "int ssl3_write_bytes (\fBSSL\fP * s, int type, const \fBvoid\fP * buf_, int len)"
+
+.PP
+Definition at line 635 of file s3_pkt\&.c\&.
+.SS "int ssl3_write_pending (\fBSSL\fP * s, int type, const unsigned char * buf, unsigned int len)"
+
+.PP
+Definition at line 1086 of file s3_pkt\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

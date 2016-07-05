@@ -1,0 +1,171 @@
+.TH "s2n/libcrypto-build/openssl/ssl/s3_srvr.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/s3_srvr.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+\fC#include 'kssl_lcl\&.h'\fP
+.br
+\fC#include '\&.\&./crypto/constant_time_locl\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/hmac\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/krb5_asn\&.h>\fP
+.br
+\fC#include <openssl/md5\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBREUSE_CIPHER_BUG\fP"
+.br
+.ti -1c
+.RI "#define \fBNETSCAPE_HANG_BUG\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIMPLEMENT_ssl3_meth_func\fP (\fBSSLv3_server_method\fP, \fBssl3_accept\fP, \fBssl_undefined_function\fP, ssl3_get_server_method)"
+.br
+.ti -1c
+.RI "int \fBssl3_accept\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_hello_request\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_client_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_done\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_certificate_request\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_client_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_cert_verify\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_client_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_newsession_ticket\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_cert_status\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_next_proto\fP (\fBSSL\fP *s)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define NETSCAPE_HANG_BUG"
+
+.PP
+Definition at line 152 of file s3_srvr\&.c\&.
+.SS "#define REUSE_CIPHER_BUG"
+
+.PP
+Definition at line 151 of file s3_srvr\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "IMPLEMENT_ssl3_meth_func (\fBSSLv3_server_method\fP, \fBssl3_accept\fP, \fBssl_undefined_function\fP, ssl3_get_server_method)"
+
+.PP
+Definition at line 184 of file s3_srvr\&.c\&.
+.SS "int ssl3_accept (\fBSSL\fP * s)"
+
+.PP
+Definition at line 212 of file s3_srvr\&.c\&.
+.SS "int ssl3_get_cert_verify (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2951 of file s3_srvr\&.c\&.
+.SS "int ssl3_get_client_certificate (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3159 of file s3_srvr\&.c\&.
+.SS "int ssl3_get_client_hello (\fBSSL\fP * s)"
+
+.PP
+Definition at line 902 of file s3_srvr\&.c\&.
+.SS "int ssl3_get_client_key_exchange (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2126 of file s3_srvr\&.c\&.
+.SS "int ssl3_get_next_proto (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3538 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_cert_status (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3496 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_certificate_request (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2032 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_hello_request (\fBSSL\fP * s)"
+
+.PP
+Definition at line 890 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_newsession_ticket (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3347 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_server_certificate (\fBSSL\fP * s)"
+
+.PP
+Definition at line 3316 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_server_done (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1581 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_server_hello (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1486 of file s3_srvr\&.c\&.
+.SS "int ssl3_send_server_key_exchange (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1593 of file s3_srvr\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

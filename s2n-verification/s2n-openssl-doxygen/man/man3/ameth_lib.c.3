@@ -1,0 +1,222 @@
+.TH "s2n/libcrypto-build/openssl/crypto/asn1/ameth_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/asn1/ameth_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int \fBsk_cmp_fn_type\fP(const char *const *\fBa\fP, const char *const *\fBb\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIMPLEMENT_OBJ_BSEARCH_CMP_FN\fP (const \fBEVP_PKEY_ASN1_METHOD\fP *, const \fBEVP_PKEY_ASN1_METHOD\fP *, ameth)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_asn1_get_count\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBEVP_PKEY_asn1_get0\fP (int idx)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBEVP_PKEY_asn1_find\fP (\fBENGINE\fP **pe, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBEVP_PKEY_asn1_find_str\fP (\fBENGINE\fP **pe, const char *str, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_asn1_add0\fP (const \fBEVP_PKEY_ASN1_METHOD\fP *ameth)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_asn1_add_alias\fP (int to, int from)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_asn1_get0_info\fP (int *ppkey_id, int *ppkey_base_id, int *ppkey_flags, const char **pinfo, const char **ppem_str, const \fBEVP_PKEY_ASN1_METHOD\fP *ameth)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBEVP_PKEY_get0_asn1\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_ASN1_METHOD\fP * \fBEVP_PKEY_asn1_new\fP (int id, int \fBflags\fP, const char *pem_str, const char *info)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_copy\fP (\fBEVP_PKEY_ASN1_METHOD\fP *dst, const \fBEVP_PKEY_ASN1_METHOD\fP *src)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_free\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_set_public\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth, int(*pub_decode)(\fBEVP_PKEY\fP *pk,                                                                                                                                                                                           \fBX509_PUBKEY\fP *pub), int(*pub_encode)(\fBX509_PUBKEY\fP *pub,                                                                                                                                                                                           const \fBEVP_PKEY\fP *pk), int(*pub_cmp)(const \fBEVP_PKEY\fP *\fBa\fP,                                                                                                                                                                               const \fBEVP_PKEY\fP *\fBb\fP), int(*pub_print)(\fBBIO\fP *\fBout\fP,                                                                                                                                                                                       const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                       int indent, \fBASN1_PCTX\fP *pctx), int(*pkey_size)(const \fBEVP_PKEY\fP *pk), int(*pkey_bits)(const \fBEVP_PKEY\fP *pk))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_set_private\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth, int(*priv_decode)(\fBEVP_PKEY\fP *pk,                                                                                                                                                                                                   \fBPKCS8_PRIV_KEY_INFO\fP                                                                                                                                                                                                   *p8inf), int(*priv_encode)(\fBPKCS8_PRIV_KEY_INFO\fP *p8,                                                                                                                                                                                                   const \fBEVP_PKEY\fP *pk), int(*priv_print)(\fBBIO\fP *\fBout\fP,                                                                                                                                                                                               const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                               int indent,                                                                                                                                                                                               \fBASN1_PCTX\fP *pctx))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_set_param\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth, int(*param_decode)(\fBEVP_PKEY\fP *pkey,                                                                                                                                                                                               const unsigned char **pder,                                                                                                                                                                                               int derlen), int(*param_encode)(const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                               unsigned char **pder), int(*param_missing)(const \fBEVP_PKEY\fP *pk), int(*param_copy)(\fBEVP_PKEY\fP *to,                                                                                                                                                                                       const \fBEVP_PKEY\fP *from), int(*param_cmp)(const \fBEVP_PKEY\fP *\fBa\fP,                                                                                                                                                                                   const \fBEVP_PKEY\fP *\fBb\fP), int(*param_print)(\fBBIO\fP *\fBout\fP,                                                                                                                                                                                           const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                           int indent, \fBASN1_PCTX\fP *pctx))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_set_free\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth, \fBvoid\fP(*pkey_free)(\fBEVP_PKEY\fP *pkey))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_set_ctrl\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth, int(*pkey_ctrl)(\fBEVP_PKEY\fP *pkey, int op,                                                                                                                                                                               long arg1, \fBvoid\fP *arg2))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_asn1_set_item\fP (\fBEVP_PKEY_ASN1_METHOD\fP *ameth, int(*item_verify)(\fBEVP_MD_CTX\fP *\fBctx\fP,                                                                                                                                                                                       const \fBASN1_ITEM\fP *it,                                                                                                                                                                                       \fBvoid\fP *asn,                                                                                                                                                                                       \fBX509_ALGOR\fP *\fBa\fP,                                                                                                                                                                                       \fBASN1_BIT_STRING\fP *sig,                                                                                                                                                                                       \fBEVP_PKEY\fP *pkey), int(*item_sign)(\fBEVP_MD_CTX\fP *\fBctx\fP,                                                                                                                                                                               const \fBASN1_ITEM\fP *it,                                                                                                                                                                               \fBvoid\fP *asn,                                                                                                                                                                               \fBX509_ALGOR\fP *alg1,                                                                                                                                                                               \fBX509_ALGOR\fP *alg2,                                                                                                                                                                               \fBASN1_BIT_STRING\fP *sig))"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBrsa_asn1_meths\fP []"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBdsa_asn1_meths\fP []"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBdh_asn1_meth\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBdhx_asn1_meth\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBeckey_asn1_meth\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBhmac_asn1_meth\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP \fBcmac_asn1_meth\fP"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int sk_cmp_fn_type(const char *const *\fBa\fP, const char *const *\fBb\fP)"
+
+.PP
+Definition at line 104 of file ameth_lib\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int EVP_PKEY_asn1_add0 (const \fBEVP_PKEY_ASN1_METHOD\fP * ameth)"
+
+.PP
+Definition at line 235 of file ameth_lib\&.c\&.
+.SS "int EVP_PKEY_asn1_add_alias (int to, int from)"
+
+.PP
+Definition at line 248 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_copy (\fBEVP_PKEY_ASN1_METHOD\fP * dst, const \fBEVP_PKEY_ASN1_METHOD\fP * src)"
+
+.PP
+Definition at line 352 of file ameth_lib\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* EVP_PKEY_asn1_find (\fBENGINE\fP ** pe, int type)"
+
+.PP
+Definition at line 175 of file ameth_lib\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* EVP_PKEY_asn1_find_str (\fBENGINE\fP ** pe, const char * str, int len)"
+
+.PP
+Definition at line 200 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_free (\fBEVP_PKEY_ASN1_METHOD\fP * ameth)"
+
+.PP
+Definition at line 386 of file ameth_lib\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* EVP_PKEY_asn1_get0 (int idx)"
+
+.PP
+Definition at line 140 of file ameth_lib\&.c\&.
+.SS "int EVP_PKEY_asn1_get0_info (int * ppkey_id, int * ppkey_base_id, int * ppkey_flags, const char ** pinfo, const char ** ppem_str, const \fBEVP_PKEY_ASN1_METHOD\fP * ameth)"
+
+.PP
+Definition at line 262 of file ameth_lib\&.c\&.
+.SS "int EVP_PKEY_asn1_get_count (\fBvoid\fP)"
+
+.PP
+Definition at line 132 of file ameth_lib\&.c\&.
+.SS "\fBEVP_PKEY_ASN1_METHOD\fP* EVP_PKEY_asn1_new (int id, int flags, const char * pem_str, const char * info)"
+
+.PP
+Definition at line 287 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_set_ctrl (\fBEVP_PKEY_ASN1_METHOD\fP * ameth, int(*)(\fBEVP_PKEY\fP *pkey, int op,                                                                                                                                                                               long arg1, \fBvoid\fP *arg2) pkey_ctrl)"
+
+.PP
+Definition at line 463 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_set_free (\fBEVP_PKEY_ASN1_METHOD\fP * ameth, \fBvoid\fP(*)(\fBEVP_PKEY\fP *pkey) pkey_free)"
+
+.PP
+Definition at line 457 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_set_item (\fBEVP_PKEY_ASN1_METHOD\fP * ameth, int(*)(\fBEVP_MD_CTX\fP *\fBctx\fP,                                                                                                                                                                                       const \fBASN1_ITEM\fP *it,                                                                                                                                                                                       \fBvoid\fP *asn,                                                                                                                                                                                       \fBX509_ALGOR\fP *\fBa\fP,                                                                                                                                                                                       \fBASN1_BIT_STRING\fP *sig,                                                                                                                                                                                       \fBEVP_PKEY\fP *pkey) item_verify, int(*)(\fBEVP_MD_CTX\fP *\fBctx\fP,                                                                                                                                                                               const \fBASN1_ITEM\fP *it,                                                                                                                                                                               \fBvoid\fP *asn,                                                                                                                                                                               \fBX509_ALGOR\fP *alg1,                                                                                                                                                                               \fBX509_ALGOR\fP *alg2,                                                                                                                                                                               \fBASN1_BIT_STRING\fP *sig) item_sign)"
+
+.PP
+Definition at line 470 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_set_param (\fBEVP_PKEY_ASN1_METHOD\fP * ameth, int(*)(\fBEVP_PKEY\fP *pkey,                                                                                                                                                                                               const unsigned char **pder,                                                                                                                                                                                               int derlen) param_decode, int(*)(const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                               unsigned char **pder) param_encode, int(*)(const \fBEVP_PKEY\fP *pk) param_missing, int(*)(\fBEVP_PKEY\fP *to,                                                                                                                                                                                       const \fBEVP_PKEY\fP *from) param_copy, int(*)(const \fBEVP_PKEY\fP *\fBa\fP,                                                                                                                                                                                   const \fBEVP_PKEY\fP *\fBb\fP) param_cmp, int(*)(\fBBIO\fP *\fBout\fP,                                                                                                                                                                                           const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                           int indent, \fBASN1_PCTX\fP *pctx) param_print)"
+
+.PP
+Definition at line 434 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_set_private (\fBEVP_PKEY_ASN1_METHOD\fP * ameth, int(*)(\fBEVP_PKEY\fP *pk,                                                                                                                                                                                                   \fBPKCS8_PRIV_KEY_INFO\fP                                                                                                                                                                                                   *p8inf) priv_decode, int(*)(\fBPKCS8_PRIV_KEY_INFO\fP *p8,                                                                                                                                                                                                   const \fBEVP_PKEY\fP *pk) priv_encode, int(*)(\fBBIO\fP *\fBout\fP,                                                                                                                                                                                               const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                               int indent,                                                                                                                                                                                               \fBASN1_PCTX\fP *pctx) priv_print)"
+
+.PP
+Definition at line 418 of file ameth_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_asn1_set_public (\fBEVP_PKEY_ASN1_METHOD\fP * ameth, int(*)(\fBEVP_PKEY\fP *pk,                                                                                                                                                                                           \fBX509_PUBKEY\fP *pub) pub_decode, int(*)(\fBX509_PUBKEY\fP *pub,                                                                                                                                                                                           const \fBEVP_PKEY\fP *pk) pub_encode, int(*)(const \fBEVP_PKEY\fP *\fBa\fP,                                                                                                                                                                               const \fBEVP_PKEY\fP *\fBb\fP) pub_cmp, int(*)(\fBBIO\fP *\fBout\fP,                                                                                                                                                                                       const \fBEVP_PKEY\fP *pkey,                                                                                                                                                                                       int indent, \fBASN1_PCTX\fP *pctx) pub_print, int(*)(const \fBEVP_PKEY\fP *pk) pkey_size, int(*)(const \fBEVP_PKEY\fP *pk) pkey_bits)"
+
+.PP
+Definition at line 397 of file ameth_lib\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* EVP_PKEY_get0_asn1 (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 282 of file ameth_lib\&.c\&.
+.SS "IMPLEMENT_OBJ_BSEARCH_CMP_FN (const \fBEVP_PKEY_ASN1_METHOD\fP *, const \fBEVP_PKEY_ASN1_METHOD\fP *, ameth)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP cmac_asn1_meth"
+
+.PP
+Definition at line 77 of file cm_ameth\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP dh_asn1_meth"
+
+.PP
+Definition at line 587 of file dh_ameth\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP dhx_asn1_meth"
+
+.PP
+Definition at line 619 of file dh_ameth\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP dsa_asn1_meths[]"
+
+.PP
+Definition at line 624 of file dsa_ameth\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP eckey_asn1_meth"
+
+.PP
+Definition at line 611 of file ec_ameth\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP hmac_asn1_meth"
+
+.PP
+Definition at line 143 of file hm_ameth\&.c\&.
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP rsa_asn1_meths[]"
+
+.PP
+Definition at line 924 of file rsa_ameth\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

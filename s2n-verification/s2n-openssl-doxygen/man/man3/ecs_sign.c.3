@@ -1,0 +1,161 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ecdsa/ecs_sign.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ecdsa/ecs_sign.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ecs_locl\&.h'\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBECDSA_SIG\fP * \fBECDSA_do_sign\fP (const unsigned char *dgst, int dlen, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBECDSA_SIG\fP * \fBECDSA_do_sign_ex\fP (const unsigned char *dgst, int dlen, const \fBBIGNUM\fP *kinv, const \fBBIGNUM\fP *rp, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "int \fBECDSA_sign\fP (int \fBtype\fP, const unsigned char *dgst, int dlen, unsigned char *sig, unsigned int *siglen, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "int \fBECDSA_sign_ex\fP (int \fBtype\fP, const unsigned char *dgst, int dlen, unsigned char *sig, unsigned int *siglen, const \fBBIGNUM\fP *kinv, const \fBBIGNUM\fP *r, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "int \fBECDSA_sign_setup\fP (\fBEC_KEY\fP *eckey, \fBBN_CTX\fP *ctx_in, \fBBIGNUM\fP **kinvp, \fBBIGNUM\fP **rp)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBECDSA_SIG\fP* ECDSA_do_sign (const unsigned char * dgst, int dgst_len, \fBEC_KEY\fP * eckey)"
+Computes the ECDSA signature of the given hash value using the supplied private key and returns the created signature\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdgst\fP pointer to the hash value 
+.br
+\fIdgst_len\fP length of the hash value 
+.br
+\fIeckey\fP EC_KEY object containing a private EC key 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to a ECDSA_SIG structure or NULL if an error occurred 
+.RE
+.PP
+
+.PP
+Definition at line 62 of file ecs_sign\&.c\&.
+.SS "\fBECDSA_SIG\fP* ECDSA_do_sign_ex (const unsigned char * dgst, int dgstlen, const \fBBIGNUM\fP * kinv, const \fBBIGNUM\fP * rp, \fBEC_KEY\fP * eckey)"
+Computes ECDSA signature of a given hash value using the supplied private key (note: sig must point to ECDSA_size(eckey) bytes of memory)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdgst\fP pointer to the hash value to sign 
+.br
+\fIdgstlen\fP length of the hash value 
+.br
+\fIkinv\fP BIGNUM with a pre-computed inverse k (optional) 
+.br
+\fIrp\fP BIGNUM with a pre-computed rp value (optioanl), see ECDSA_sign_setup 
+.br
+\fIeckey\fP EC_KEY object containing a private EC key 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to a ECDSA_SIG structure or NULL if an error occurred 
+.RE
+.PP
+
+.PP
+Definition at line 67 of file ecs_sign\&.c\&.
+.SS "int ECDSA_sign (int type, const unsigned char * dgst, int dgstlen, unsigned char * sig, unsigned int * siglen, \fBEC_KEY\fP * eckey)"
+Computes ECDSA signature of a given hash value using the supplied private key (note: sig must point to ECDSA_size(eckey) bytes of memory)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP this parameter is ignored 
+.br
+\fIdgst\fP pointer to the hash value to sign 
+.br
+\fIdgstlen\fP length of the hash value 
+.br
+\fIsig\fP memory for the DER encoded created signature 
+.br
+\fIsiglen\fP pointer to the length of the returned signature 
+.br
+\fIeckey\fP EC_KEY object containing a private EC key 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 77 of file ecs_sign\&.c\&.
+.SS "int ECDSA_sign_ex (int type, const unsigned char * dgst, int dgstlen, unsigned char * sig, unsigned int * siglen, const \fBBIGNUM\fP * kinv, const \fBBIGNUM\fP * rp, \fBEC_KEY\fP * eckey)"
+Computes ECDSA signature of a given hash value using the supplied private key (note: sig must point to ECDSA_size(eckey) bytes of memory)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP this parameter is ignored 
+.br
+\fIdgst\fP pointer to the hash value to sign 
+.br
+\fIdgstlen\fP length of the hash value 
+.br
+\fIsig\fP buffer to hold the DER encoded signature 
+.br
+\fIsiglen\fP pointer to the length of the returned signature 
+.br
+\fIkinv\fP BIGNUM with a pre-computed inverse k (optional) 
+.br
+\fIrp\fP BIGNUM with a pre-computed rp value (optioanl), see ECDSA_sign_setup 
+.br
+\fIeckey\fP EC_KEY object containing a private EC key 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 83 of file ecs_sign\&.c\&.
+.SS "int ECDSA_sign_setup (\fBEC_KEY\fP * eckey, \fBBN_CTX\fP * ctx, \fBBIGNUM\fP ** kinv, \fBBIGNUM\fP ** rp)"
+Precompute parts of the signing operation 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeckey\fP EC_KEY object containing a private EC key 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.br
+\fIkinv\fP BIGNUM pointer for the inverse of k 
+.br
+\fIrp\fP BIGNUM pointer for x coordinate of k * generator 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file ecs_sign\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

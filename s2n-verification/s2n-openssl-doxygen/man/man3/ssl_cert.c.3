@@ -1,0 +1,276 @@
+.TH "s2n/libcrypto-build/openssl/ssl/ssl_cert.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/ssl_cert.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'e_os\&.h'\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include 'o_dir\&.h'\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBSSL_get_ex_data_X509_STORE_CTX_idx\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_set_default_md\fP (\fBCERT\fP *cert)"
+.br
+.ti -1c
+.RI "\fBCERT\fP * \fBssl_cert_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBCERT\fP * \fBssl_cert_dup\fP (\fBCERT\fP *cert)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_clear_certs\fP (\fBCERT\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_free\fP (\fBCERT\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_inst\fP (\fBCERT\fP **o)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set0_chain\fP (\fBCERT\fP *\fBc\fP, \fBSTACK_OF\fP(\fBX509\fP)*chain)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set1_chain\fP (\fBCERT\fP *\fBc\fP, \fBSTACK_OF\fP(\fBX509\fP)*chain)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_add0_chain_cert\fP (\fBCERT\fP *\fBc\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_add1_chain_cert\fP (\fBCERT\fP *\fBc\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_select_current\fP (\fBCERT\fP *\fBc\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set_current\fP (\fBCERT\fP *\fBc\fP, long op)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_set_cert_cb\fP (\fBCERT\fP *\fBc\fP, int(*\fBcb\fP)(\fBSSL\fP *\fBssl\fP, \fBvoid\fP *\fBarg\fP), \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBSESS_CERT\fP * \fBssl_sess_cert_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_sess_cert_free\fP (\fBSESS_CERT\fP *sc)"
+.br
+.ti -1c
+.RI "int \fBssl_set_peer_cert_type\fP (\fBSESS_CERT\fP *sc, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_verify_cert_chain\fP (\fBSSL\fP *s, \fBSTACK_OF\fP(\fBX509\fP)*sk)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_NAME\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_set_client_CA_list\fP (\fBSSL\fP *s, \fBSTACK_OF\fP(\fBX509_NAME\fP)*name_list)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_CTX_set_client_CA_list\fP (\fBSSL_CTX\fP *\fBctx\fP, \fBSTACK_OF\fP(\fBX509_NAME\fP)*name_list)"
+.br
+.ti -1c
+.RI "int \fBSSL_add_client_CA\fP (\fBSSL\fP *\fBssl\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_add_client_CA\fP (\fBSSL_CTX\fP *\fBctx\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_add_file_cert_subjects_to_stack\fP (\fBSTACK_OF\fP(\fBX509_NAME\fP)*stack, const char *\fBfile\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_add_dir_cert_subjects_to_stack\fP (\fBSTACK_OF\fP(\fBX509_NAME\fP)*stack, const char *dir)"
+.br
+.ti -1c
+.RI "int \fBssl_add_cert_chain\fP (\fBSSL\fP *s, \fBCERT_PKEY\fP *cpk, unsigned long *l)"
+.br
+.ti -1c
+.RI "int \fBssl_build_cert_chain\fP (\fBCERT\fP *\fBc\fP, \fBX509_STORE\fP *chain_store, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set_cert_store\fP (\fBCERT\fP *\fBc\fP, \fBX509_STORE\fP *store, int chain, int ref)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int ssl_add_cert_chain (\fBSSL\fP * s, \fBCERT_PKEY\fP * cpk, unsigned long * l)"
+
+.PP
+Definition at line 1080 of file ssl_cert\&.c\&.
+.SS "int SSL_add_client_CA (\fBSSL\fP * ssl, \fBX509\fP * x)"
+
+.PP
+Definition at line 850 of file ssl_cert\&.c\&.
+.SS "int SSL_add_dir_cert_subjects_to_stack (\fBSTACK_OF\fP(\fBX509_NAME\fP)* stack, const char * dir)"
+Add a directory of certs to a stack\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstack\fP the stack to append to\&. 
+.br
+\fIdir\fP the directory to append from\&. All files in this directory will be examined as potential certs\&. Any that are acceptable to \fBSSL_add_dir_cert_subjects_to_stack()\fP that are not already in the stack will be included\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 for success, 0 for failure\&. Note that in the case of failure some certs may have been added to \fCstack\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1007 of file ssl_cert\&.c\&.
+.SS "int SSL_add_file_cert_subjects_to_stack (\fBSTACK_OF\fP(\fBX509_NAME\fP)* stack, const char * file)"
+Add a file of certs to a stack\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstack\fP the stack to add to\&. 
+.br
+\fIfile\fP the file to add from\&. All certs in this file that are not already in the stack will be added\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 for success, 0 for failure\&. Note that in the case of failure some certs may have been added to \fCstack\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 944 of file ssl_cert\&.c\&.
+.SS "int ssl_build_cert_chain (\fBCERT\fP * c, \fBX509_STORE\fP * chain_store, int flags)"
+
+.PP
+Definition at line 1153 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_add0_chain_cert (\fBCERT\fP * c, \fBX509\fP * x)"
+
+.PP
+Definition at line 564 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_add1_chain_cert (\fBCERT\fP * c, \fBX509\fP * x)"
+
+.PP
+Definition at line 576 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP ssl_cert_clear_certs (\fBCERT\fP * c)"
+
+.PP
+Definition at line 423 of file ssl_cert\&.c\&.
+.SS "\fBCERT\fP* ssl_cert_dup (\fBCERT\fP * cert)"
+
+.PP
+Definition at line 217 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP ssl_cert_free (\fBCERT\fP * c)"
+
+.PP
+Definition at line 454 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_inst (\fBCERT\fP ** o)"
+
+.PP
+Definition at line 513 of file ssl_cert\&.c\&.
+.SS "\fBCERT\fP* ssl_cert_new (\fBvoid\fP)"
+
+.PP
+Definition at line 200 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_select_current (\fBCERT\fP * c, \fBX509\fP * x)"
+
+.PP
+Definition at line 584 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_set0_chain (\fBCERT\fP * c, \fBSTACK_OF\fP(\fBX509\fP)* chain)"
+
+.PP
+Definition at line 538 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_set1_chain (\fBCERT\fP * c, \fBSTACK_OF\fP(\fBX509\fP)* chain)"
+
+.PP
+Definition at line 549 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP ssl_cert_set_cert_cb (\fBCERT\fP * c, int(*)(\fBSSL\fP *\fBssl\fP, \fBvoid\fP *\fBarg\fP) cb, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 630 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_set_cert_store (\fBCERT\fP * c, \fBX509_STORE\fP * store, int chain, int ref)"
+
+.PP
+Definition at line 1251 of file ssl_cert\&.c\&.
+.SS "int ssl_cert_set_current (\fBCERT\fP * c, long op)"
+
+.PP
+Definition at line 607 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP ssl_cert_set_default_md (\fBCERT\fP * cert)"
+
+.PP
+Definition at line 185 of file ssl_cert\&.c\&.
+.SS "int SSL_CTX_add_client_CA (\fBSSL_CTX\fP * ctx, \fBX509\fP * x)"
+
+.PP
+Definition at line 855 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP SSL_CTX_set_client_CA_list (\fBSSL_CTX\fP * ctx, \fBSTACK_OF\fP(\fBX509_NAME\fP)* name_list)"
+
+.PP
+Definition at line 806 of file ssl_cert\&.c\&.
+.SS "int SSL_get_ex_data_X509_STORE_CTX_idx (\fBvoid\fP)"
+
+.PP
+Definition at line 137 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP ssl_sess_cert_free (\fBSESS_CERT\fP * sc)"
+
+.PP
+Definition at line 653 of file ssl_cert\&.c\&.
+.SS "\fBSESS_CERT\fP* ssl_sess_cert_new (\fBvoid\fP)"
+
+.PP
+Definition at line 636 of file ssl_cert\&.c\&.
+.SS "\fBvoid\fP SSL_set_client_CA_list (\fBSSL\fP * s, \fBSTACK_OF\fP(\fBX509_NAME\fP)* name_list)"
+
+.PP
+Definition at line 801 of file ssl_cert\&.c\&.
+.SS "int ssl_set_peer_cert_type (\fBSESS_CERT\fP * sc, int type)"
+
+.PP
+Definition at line 704 of file ssl_cert\&.c\&.
+.SS "int ssl_verify_cert_chain (\fBSSL\fP * s, \fBSTACK_OF\fP(\fBX509\fP)* sk)"
+
+.PP
+Definition at line 710 of file ssl_cert\&.c\&.
+.SS "STACK_OF (\fBX509_NAME\fP)"
+Load CA certs from a file into a ::STACK\&. Note that it is somewhat misnamed; it doesn't really have anything to do with clients (except that a common use for a stack of CAs is to send it to the client)\&. Actually, it doesn't have much to do with CAs, either, since it will load any old cert\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP the file containing one or more certs\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a ::STACK containing the certs\&. 
+.RE
+.PP
+
+.PP
+Definition at line 784 of file ssl_cert\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

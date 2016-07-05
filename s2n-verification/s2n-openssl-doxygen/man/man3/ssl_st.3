@@ -1,0 +1,748 @@
+.TH "ssl_st" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl_st \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ssl\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list_by_id"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_NAME\fP)*client_CA"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBOCSP_RESPID\fP)*tlsext_ocsp_ids"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSRTP_PROTECTION_PROFILE\fP)*\fBsrtp_profiles\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list_by_id"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_NAME\fP)*client_CA"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBOCSP_RESPID\fP)*tlsext_ocsp_ids"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSRTP_PROTECTION_PROFILE\fP)*\fBsrtp_profiles\fP"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list_by_id"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_NAME\fP)*client_CA"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBOCSP_RESPID\fP)*tlsext_ocsp_ids"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSRTP_PROTECTION_PROFILE\fP)*\fBsrtp_profiles\fP"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBversion\fP"
+.br
+.ti -1c
+.RI "int \fBtype\fP"
+.br
+.ti -1c
+.RI "const \fBSSL_METHOD\fP * \fBmethod\fP"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBrbio\fP"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBwbio\fP"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBbbio\fP"
+.br
+.ti -1c
+.RI "int \fBrwstate\fP"
+.br
+.ti -1c
+.RI "int \fBin_handshake\fP"
+.br
+.ti -1c
+.RI "int(* \fBhandshake_func\fP )(\fBSSL\fP *)"
+.br
+.ti -1c
+.RI "int \fBserver\fP"
+.br
+.ti -1c
+.RI "int \fBnew_session\fP"
+.br
+.ti -1c
+.RI "int \fBquiet_shutdown\fP"
+.br
+.ti -1c
+.RI "int \fBshutdown\fP"
+.br
+.ti -1c
+.RI "int \fBstate\fP"
+.br
+.ti -1c
+.RI "int \fBrstate\fP"
+.br
+.ti -1c
+.RI "\fBBUF_MEM\fP * \fBinit_buf\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBinit_msg\fP"
+.br
+.ti -1c
+.RI "int \fBinit_num\fP"
+.br
+.ti -1c
+.RI "int \fBinit_off\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBpacket\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBpacket_length\fP"
+.br
+.ti -1c
+.RI "struct \fBssl2_state_st\fP * \fBs2\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_state_st\fP * \fBs3\fP"
+.br
+.ti -1c
+.RI "struct \fBdtls1_state_st\fP * \fBd1\fP"
+.br
+.ti -1c
+.RI "int \fBread_ahead\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBmsg_callback\fP )(int write_p, int \fBversion\fP, int content_type, const \fBvoid\fP *buf, size_t \fBlen\fP, \fBSSL\fP *\fBssl\fP, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBmsg_callback_arg\fP"
+.br
+.ti -1c
+.RI "int \fBhit\fP"
+.br
+.ti -1c
+.RI "\fBX509_VERIFY_PARAM\fP * \fBparam\fP"
+.br
+.ti -1c
+.RI "int \fBmac_flags\fP"
+.br
+.ti -1c
+.RI "\fBEVP_CIPHER_CTX\fP * \fBenc_read_ctx\fP"
+.br
+.ti -1c
+.RI "\fBEVP_MD_CTX\fP * \fBread_hash\fP"
+.br
+.ti -1c
+.RI "\fBCOMP_CTX\fP * \fBexpand\fP"
+.br
+.ti -1c
+.RI "\fBEVP_CIPHER_CTX\fP * \fBenc_write_ctx\fP"
+.br
+.ti -1c
+.RI "\fBEVP_MD_CTX\fP * \fBwrite_hash\fP"
+.br
+.ti -1c
+.RI "\fBCOMP_CTX\fP * \fBcompress\fP"
+.br
+.ti -1c
+.RI "struct \fBcert_st\fP * \fBcert\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBsid_ctx_length\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBsid_ctx\fP [\fBSSL_MAX_SID_CTX_LENGTH\fP]"
+.br
+.ti -1c
+.RI "\fBSSL_SESSION\fP * \fBsession\fP"
+.br
+.ti -1c
+.RI "\fBGEN_SESSION_CB\fP \fBgenerate_session_id\fP"
+.br
+.ti -1c
+.RI "int \fBverify_mode\fP"
+.br
+.ti -1c
+.RI "int(* \fBverify_callback\fP )(int ok, \fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBinfo_callback\fP )(const \fBSSL\fP *\fBssl\fP, int \fBtype\fP, int val)"
+.br
+.ti -1c
+.RI "int \fBerror\fP"
+.br
+.ti -1c
+.RI "int \fBerror_code\fP"
+.br
+.ti -1c
+.RI "\fBKSSL_CTX\fP * \fBkssl_ctx\fP"
+.br
+.ti -1c
+.RI "unsigned int(* \fBpsk_client_callback\fP )(\fBSSL\fP *\fBssl\fP, const char *hint, char *identity, unsigned int max_identity_len, unsigned char *psk, unsigned int max_psk_len)"
+.br
+.ti -1c
+.RI "unsigned int(* \fBpsk_server_callback\fP )(\fBSSL\fP *\fBssl\fP, const char *identity, unsigned char *psk, unsigned int max_psk_len)"
+.br
+.ti -1c
+.RI "\fBSSL_CTX\fP * \fBctx\fP"
+.br
+.ti -1c
+.RI "int \fBdebug\fP"
+.br
+.ti -1c
+.RI "long \fBverify_result\fP"
+.br
+.ti -1c
+.RI "\fBCRYPTO_EX_DATA\fP \fBex_data\fP"
+.br
+.ti -1c
+.RI "int \fBreferences\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBoptions\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBmode\fP"
+.br
+.ti -1c
+.RI "long \fBmax_cert_list\fP"
+.br
+.ti -1c
+.RI "int \fBfirst_packet\fP"
+.br
+.ti -1c
+.RI "int \fBclient_version\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBmax_send_fragment\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBtlsext_debug_cb\fP )(\fBSSL\fP *s, int client_server, int \fBtype\fP, unsigned char *\fBdata\fP, int \fBlen\fP, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtlsext_debug_arg\fP"
+.br
+.ti -1c
+.RI "char * \fBtlsext_hostname\fP"
+.br
+.ti -1c
+.RI "int \fBservername_done\fP"
+.br
+.ti -1c
+.RI "int \fBtlsext_status_type\fP"
+.br
+.ti -1c
+.RI "int \fBtlsext_status_expected\fP"
+.br
+.ti -1c
+.RI "X509_EXTENSIONS * \fBtlsext_ocsp_exts\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBtlsext_ocsp_resp\fP"
+.br
+.ti -1c
+.RI "int \fBtlsext_ocsp_resplen\fP"
+.br
+.ti -1c
+.RI "int \fBtlsext_ticket_expected\fP"
+.br
+.ti -1c
+.RI "size_t \fBtlsext_ecpointformatlist_length\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBtlsext_ecpointformatlist\fP"
+.br
+.ti -1c
+.RI "size_t \fBtlsext_ellipticcurvelist_length\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBtlsext_ellipticcurvelist\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtlsext_opaque_prf_input\fP"
+.br
+.ti -1c
+.RI "size_t \fBtlsext_opaque_prf_input_len\fP"
+.br
+.ti -1c
+.RI "\fBTLS_SESSION_TICKET_EXT\fP * \fBtlsext_session_ticket\fP"
+.br
+.ti -1c
+.RI "\fBtls_session_ticket_ext_cb_fn\fP \fBtls_session_ticket_ext_cb\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtls_session_ticket_ext_cb_arg\fP"
+.br
+.ti -1c
+.RI "\fBtls_session_secret_cb_fn\fP \fBtls_session_secret_cb\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtls_session_secret_cb_arg\fP"
+.br
+.ti -1c
+.RI "\fBSSL_CTX\fP * \fBinitial_ctx\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBnext_proto_negotiated\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBnext_proto_negotiated_len\fP"
+.br
+.ti -1c
+.RI "\fBSRTP_PROTECTION_PROFILE\fP * \fBsrtp_profile\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBtlsext_heartbeat\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBtlsext_hb_pending\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBtlsext_hb_seq\fP"
+.br
+.ti -1c
+.RI "int \fBrenegotiate\fP"
+.br
+.ti -1c
+.RI "\fBSRP_CTX\fP \fBsrp_ctx\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBalpn_client_proto_list\fP"
+.br
+.ti -1c
+.RI "unsigned \fBalpn_client_proto_list_len\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 1422 of file ssl\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBX509_NAME\fP)"
+
+.SS "STACK_OF (\fBX509_NAME\fP)"
+
+.SS "STACK_OF (\fBX509_NAME\fP)"
+
+.SS "STACK_OF (\fBOCSP_RESPID\fP)"
+
+.SS "STACK_OF (\fBOCSP_RESPID\fP)"
+
+.SS "STACK_OF (\fBOCSP_RESPID\fP)"
+
+.SS "STACK_OF (\fBSRTP_PROTECTION_PROFILE\fP)"
+
+.SS "STACK_OF (\fBSRTP_PROTECTION_PROFILE\fP)"
+
+.SS "STACK_OF (\fBSRTP_PROTECTION_PROFILE\fP)"
+
+.SH "Field Documentation"
+.PP 
+.SS "unsigned char * alpn_client_proto_list"
+
+.PP
+Definition at line 1685 of file ssl\&.h\&.
+.SS "unsigned alpn_client_proto_list_len"
+
+.PP
+Definition at line 1686 of file ssl\&.h\&.
+.SS "\fBBIO\fP * bbio"
+
+.PP
+Definition at line 1442 of file ssl\&.h\&.
+.SS "struct \fBcert_st\fP * cert"
+
+.PP
+Definition at line 1531 of file ssl\&.h\&.
+.SS "int client_version"
+
+.PP
+Definition at line 1589 of file ssl\&.h\&.
+.SS "\fBCOMP_CTX\fP * compress"
+
+.PP
+Definition at line 1524 of file ssl\&.h\&.
+.SS "\fBSSL_CTX\fP * ctx"
+
+.PP
+Definition at line 1570 of file ssl\&.h\&.
+.SS "struct \fBdtls1_state_st\fP * d1"
+
+.PP
+Definition at line 1493 of file ssl\&.h\&.
+.SS "int debug"
+
+.PP
+Definition at line 1575 of file ssl\&.h\&.
+.SS "\fBEVP_CIPHER_CTX\fP * enc_read_ctx"
+
+.PP
+Definition at line 1514 of file ssl\&.h\&.
+.SS "\fBEVP_CIPHER_CTX\fP * enc_write_ctx"
+
+.PP
+Definition at line 1521 of file ssl\&.h\&.
+.SS "int error"
+
+.PP
+Definition at line 1553 of file ssl\&.h\&.
+.SS "int error_code"
+
+.PP
+Definition at line 1555 of file ssl\&.h\&.
+.SS "\fBCRYPTO_EX_DATA\fP ex_data"
+
+.PP
+Definition at line 1578 of file ssl\&.h\&.
+.SS "\fBCOMP_CTX\fP * expand"
+
+.PP
+Definition at line 1517 of file ssl\&.h\&.
+.SS "int first_packet"
+
+.PP
+Definition at line 1587 of file ssl\&.h\&.
+.SS "\fBGEN_SESSION_CB\fP generate_session_id"
+
+.PP
+Definition at line 1541 of file ssl\&.h\&.
+.SS "int(* handshake_func)(\fBSSL\fP *)"
+
+.PP
+Definition at line 1458 of file ssl\&.h\&.
+.SS "int hit"
+
+.PP
+Definition at line 1500 of file ssl\&.h\&.
+.SS "int in_handshake"
+
+.PP
+Definition at line 1457 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* info_callback)(const \fBSSL\fP *\fBssl\fP, int \fBtype\fP, int val)"
+
+.PP
+Definition at line 1551 of file ssl\&.h\&.
+.SS "\fBBUF_MEM\fP * init_buf"
+
+.PP
+Definition at line 1483 of file ssl\&.h\&.
+.SS "\fBvoid\fP * init_msg"
+
+.PP
+Definition at line 1484 of file ssl\&.h\&.
+.SS "int init_num"
+
+.PP
+Definition at line 1486 of file ssl\&.h\&.
+.SS "int init_off"
+
+.PP
+Definition at line 1487 of file ssl\&.h\&.
+.SS "\fBSSL_CTX\fP * initial_ctx"
+
+.PP
+Definition at line 1639 of file ssl\&.h\&.
+.SS "\fBKSSL_CTX\fP * kssl_ctx"
+
+.PP
+Definition at line 1558 of file ssl\&.h\&.
+.SS "int mac_flags"
+
+.PP
+Definition at line 1513 of file ssl\&.h\&.
+.SS "long max_cert_list"
+
+.PP
+Definition at line 1586 of file ssl\&.h\&.
+.SS "unsigned int max_send_fragment"
+
+.PP
+Definition at line 1590 of file ssl\&.h\&.
+.SS "const \fBSSL_METHOD\fP * method"
+
+.PP
+Definition at line 1431 of file ssl\&.h\&.
+.SS "unsigned long mode"
+
+.PP
+Definition at line 1585 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* msg_callback)(int write_p, int \fBversion\fP, int content_type, const \fBvoid\fP *buf, size_t \fBlen\fP, \fBSSL\fP *\fBssl\fP, \fBvoid\fP *\fBarg\fP)"
+
+.PP
+Definition at line 1497 of file ssl\&.h\&.
+.SS "\fBvoid\fP * msg_callback_arg"
+
+.PP
+Definition at line 1499 of file ssl\&.h\&.
+.SS "int new_session"
+
+.PP
+Definition at line 1474 of file ssl\&.h\&.
+.SS "unsigned char * next_proto_negotiated"
+
+.PP
+Definition at line 1648 of file ssl\&.h\&.
+.SS "unsigned char next_proto_negotiated_len"
+
+.PP
+Definition at line 1649 of file ssl\&.h\&.
+.SS "unsigned long options"
+
+.PP
+Definition at line 1583 of file ssl\&.h\&.
+.SS "unsigned char * packet"
+
+.PP
+Definition at line 1489 of file ssl\&.h\&.
+.SS "unsigned int packet_length"
+
+.PP
+Definition at line 1490 of file ssl\&.h\&.
+.SS "\fBX509_VERIFY_PARAM\fP * param"
+
+.PP
+Definition at line 1501 of file ssl\&.h\&.
+.SS "unsigned int(* psk_client_callback)(\fBSSL\fP *\fBssl\fP, const char *hint, char *identity, unsigned int max_identity_len, unsigned char *psk, unsigned int max_psk_len)"
+
+.PP
+Definition at line 1561 of file ssl\&.h\&.
+.SS "unsigned int(* psk_server_callback)(\fBSSL\fP *\fBssl\fP, const char *identity, unsigned char *psk, unsigned int max_psk_len)"
+
+.PP
+Definition at line 1566 of file ssl\&.h\&.
+.SS "int quiet_shutdown"
+
+.PP
+Definition at line 1476 of file ssl\&.h\&.
+.SS "\fBBIO\fP * rbio"
+
+.PP
+Definition at line 1438 of file ssl\&.h\&.
+.SS "int read_ahead"
+
+.PP
+Definition at line 1494 of file ssl\&.h\&.
+.SS "\fBEVP_MD_CTX\fP * read_hash"
+
+.PP
+Definition at line 1515 of file ssl\&.h\&.
+.SS "int references"
+
+.PP
+Definition at line 1581 of file ssl\&.h\&.
+.SS "int renegotiate"
+
+.PP
+Definition at line 1675 of file ssl\&.h\&.
+.SS "int rstate"
+
+.PP
+Definition at line 1482 of file ssl\&.h\&.
+.SS "int rwstate"
+
+.PP
+Definition at line 1455 of file ssl\&.h\&.
+.SS "struct \fBssl2_state_st\fP * s2"
+
+.PP
+Definition at line 1491 of file ssl\&.h\&.
+.SS "struct \fBssl3_state_st\fP * s3"
+
+.PP
+Definition at line 1492 of file ssl\&.h\&.
+.SS "int server"
+
+.PP
+Definition at line 1467 of file ssl\&.h\&.
+.SS "int servername_done"
+
+.PP
+Definition at line 1603 of file ssl\&.h\&.
+.SS "\fBSSL_SESSION\fP * session"
+
+.PP
+Definition at line 1539 of file ssl\&.h\&.
+.SS "int shutdown"
+
+.PP
+Definition at line 1478 of file ssl\&.h\&.
+.SS "unsigned char sid_ctx"
+
+.PP
+Definition at line 1537 of file ssl\&.h\&.
+.SS "unsigned int sid_ctx_length"
+
+.PP
+Definition at line 1536 of file ssl\&.h\&.
+.SS "\fBSRP_CTX\fP srp_ctx"
+
+.PP
+Definition at line 1678 of file ssl\&.h\&.
+.SS "\fBSRTP_PROTECTION_PROFILE\fP * srtp_profile"
+
+.PP
+Definition at line 1655 of file ssl\&.h\&.
+.SS "int state"
+
+.PP
+Definition at line 1480 of file ssl\&.h\&.
+.SS "\fBtls_session_secret_cb_fn\fP tls_session_secret_cb"
+
+.PP
+Definition at line 1637 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tls_session_secret_cb_arg"
+
+.PP
+Definition at line 1638 of file ssl\&.h\&.
+.SS "\fBtls_session_ticket_ext_cb_fn\fP tls_session_ticket_ext_cb"
+
+.PP
+Definition at line 1634 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tls_session_ticket_ext_cb_arg"
+
+.PP
+Definition at line 1635 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tlsext_debug_arg"
+
+.PP
+Definition at line 1595 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* tlsext_debug_cb)(\fBSSL\fP *s, int client_server, int \fBtype\fP, unsigned char *\fBdata\fP, int \fBlen\fP, \fBvoid\fP *\fBarg\fP)"
+
+.PP
+Definition at line 1593 of file ssl\&.h\&.
+.SS "unsigned char * tlsext_ecpointformatlist"
+
+.PP
+Definition at line 1620 of file ssl\&.h\&.
+.SS "size_t tlsext_ecpointformatlist_length"
+
+.PP
+Definition at line 1618 of file ssl\&.h\&.
+.SS "unsigned char * tlsext_ellipticcurvelist"
+
+.PP
+Definition at line 1623 of file ssl\&.h\&.
+.SS "size_t tlsext_ellipticcurvelist_length"
+
+.PP
+Definition at line 1621 of file ssl\&.h\&.
+.SS "unsigned int tlsext_hb_pending"
+
+.PP
+Definition at line 1664 of file ssl\&.h\&.
+.SS "unsigned int tlsext_hb_seq"
+
+.PP
+Definition at line 1666 of file ssl\&.h\&.
+.SS "unsigned int tlsext_heartbeat"
+
+.PP
+Definition at line 1662 of file ssl\&.h\&.
+.SS "char * tlsext_hostname"
+
+.PP
+Definition at line 1596 of file ssl\&.h\&.
+.SS "X509_EXTENSIONS * tlsext_ocsp_exts"
+
+.PP
+Definition at line 1611 of file ssl\&.h\&.
+.SS "unsigned char * tlsext_ocsp_resp"
+
+.PP
+Definition at line 1613 of file ssl\&.h\&.
+.SS "int tlsext_ocsp_resplen"
+
+.PP
+Definition at line 1614 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tlsext_opaque_prf_input"
+
+.PP
+Definition at line 1629 of file ssl\&.h\&.
+.SS "size_t tlsext_opaque_prf_input_len"
+
+.PP
+Definition at line 1630 of file ssl\&.h\&.
+.SS "\fBTLS_SESSION_TICKET_EXT\fP * tlsext_session_ticket"
+
+.PP
+Definition at line 1632 of file ssl\&.h\&.
+.SS "int tlsext_status_expected"
+
+.PP
+Definition at line 1608 of file ssl\&.h\&.
+.SS "int tlsext_status_type"
+
+.PP
+Definition at line 1606 of file ssl\&.h\&.
+.SS "int tlsext_ticket_expected"
+
+.PP
+Definition at line 1616 of file ssl\&.h\&.
+.SS "int type"
+
+.PP
+Definition at line 1429 of file ssl\&.h\&.
+.SS "int(* verify_callback)(int ok, \fBX509_STORE_CTX\fP *\fBctx\fP)"
+
+.PP
+Definition at line 1549 of file ssl\&.h\&.
+.SS "int verify_mode"
+
+.PP
+Definition at line 1547 of file ssl\&.h\&.
+.SS "long verify_result"
+
+.PP
+Definition at line 1577 of file ssl\&.h\&.
+.SS "int version"
+
+.PP
+Definition at line 1427 of file ssl\&.h\&.
+.SS "\fBBIO\fP * wbio"
+
+.PP
+Definition at line 1440 of file ssl\&.h\&.
+.SS "\fBEVP_MD_CTX\fP * write_hash"
+
+.PP
+Definition at line 1522 of file ssl\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

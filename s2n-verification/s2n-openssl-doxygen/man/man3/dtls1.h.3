@@ -1,0 +1,212 @@
+.TH "s2n/libcrypto-root/include/openssl/dtls1.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/dtls1.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/pqueue\&.h>\fP
+.br
+\fC#include <sys/time\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBdtls1_bitmap_st\fP"
+.br
+.ti -1c
+.RI "struct \fBdtls1_retransmit_state\fP"
+.br
+.ti -1c
+.RI "struct \fBhm_header_st\fP"
+.br
+.ti -1c
+.RI "struct \fBccs_header_st\fP"
+.br
+.ti -1c
+.RI "struct \fBdtls1_timeout_st\fP"
+.br
+.ti -1c
+.RI "struct \fBrecord_pqueue_st\fP"
+.br
+.ti -1c
+.RI "struct \fBhm_fragment_st\fP"
+.br
+.ti -1c
+.RI "struct \fBdtls1_state_st\fP"
+.br
+.ti -1c
+.RI "struct \fBdtls1_record_data_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDTLS1_VERSION\fP   0xFEFF"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_2_VERSION\fP   0xFEFD"
+.br
+.ti -1c
+.RI "#define \fBDTLS_MAX_VERSION\fP   \fBDTLS1_2_VERSION\fP"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_VERSION_MAJOR\fP   0xFE"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_BAD_VER\fP   0x0100"
+.br
+.ti -1c
+.RI "#define \fBDTLS_ANY_VERSION\fP   0x1FFFF"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_COOKIE_LENGTH\fP   256"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_RT_HEADER_LENGTH\fP   13"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_HM_HEADER_LENGTH\fP   12"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_HM_BAD_FRAGMENT\fP   \-2"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_HM_FRAGMENT_RETRY\fP   \-3"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_CCS_HEADER_LENGTH\fP   1"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_AL_HEADER_LENGTH\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_SCTP_AUTH_LABEL\fP   'EXPORTER_DTLS_OVER_SCTP'"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_MAX_MTU_OVERHEAD\fP   48"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_TMO_READ_COUNT\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_TMO_WRITE_COUNT\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_TMO_ALERT_COUNT\fP   12"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBdtls1_bitmap_st\fP \fBDTLS1_BITMAP\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBrecord_pqueue_st\fP \fBrecord_pqueue\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBhm_fragment_st\fP \fBhm_fragment\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBdtls1_state_st\fP \fBDTLS1_STATE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBdtls1_record_data_st\fP \fBDTLS1_RECORD_DATA\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DTLS1_2_VERSION   0xFEFD"
+
+.PP
+Definition at line 87 of file dtls1\&.h\&.
+.SS "#define DTLS1_AL_HEADER_LENGTH   2"
+
+.PP
+Definition at line 116 of file dtls1\&.h\&.
+.SS "#define DTLS1_BAD_VER   0x0100"
+
+.PP
+Definition at line 91 of file dtls1\&.h\&.
+.SS "#define DTLS1_CCS_HEADER_LENGTH   1"
+
+.PP
+Definition at line 111 of file dtls1\&.h\&.
+.SS "#define DTLS1_COOKIE_LENGTH   256"
+
+.PP
+Definition at line 102 of file dtls1\&.h\&.
+.SS "#define DTLS1_HM_BAD_FRAGMENT   \-2"
+
+.PP
+Definition at line 108 of file dtls1\&.h\&.
+.SS "#define DTLS1_HM_FRAGMENT_RETRY   \-3"
+
+.PP
+Definition at line 109 of file dtls1\&.h\&.
+.SS "#define DTLS1_HM_HEADER_LENGTH   12"
+
+.PP
+Definition at line 106 of file dtls1\&.h\&.
+.SS "#define DTLS1_MAX_MTU_OVERHEAD   48"
+
+.PP
+Definition at line 126 of file dtls1\&.h\&.
+.SS "#define DTLS1_RT_HEADER_LENGTH   13"
+
+.PP
+Definition at line 104 of file dtls1\&.h\&.
+.SS "#define DTLS1_SCTP_AUTH_LABEL   'EXPORTER_DTLS_OVER_SCTP'"
+
+.PP
+Definition at line 122 of file dtls1\&.h\&.
+.SS "#define DTLS1_TMO_ALERT_COUNT   12"
+
+.PP
+Definition at line 267 of file dtls1\&.h\&.
+.SS "#define DTLS1_TMO_READ_COUNT   2"
+
+.PP
+Definition at line 264 of file dtls1\&.h\&.
+.SS "#define DTLS1_TMO_WRITE_COUNT   2"
+
+.PP
+Definition at line 265 of file dtls1\&.h\&.
+.SS "#define DTLS1_VERSION   0xFEFF"
+
+.PP
+Definition at line 86 of file dtls1\&.h\&.
+.SS "#define DTLS1_VERSION_MAJOR   0xFE"
+
+.PP
+Definition at line 89 of file dtls1\&.h\&.
+.SS "#define DTLS_ANY_VERSION   0x1FFFF"
+
+.PP
+Definition at line 94 of file dtls1\&.h\&.
+.SS "#define DTLS_MAX_VERSION   \fBDTLS1_2_VERSION\fP"
+
+.PP
+Definition at line 88 of file dtls1\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBdtls1_bitmap_st\fP  \fBDTLS1_BITMAP\fP"
+
+.SS "typedef struct \fBdtls1_record_data_st\fP  \fBDTLS1_RECORD_DATA\fP"
+
+.SS "typedef struct \fBdtls1_state_st\fP  \fBDTLS1_STATE\fP"
+
+.SS "typedef struct \fBhm_fragment_st\fP  \fBhm_fragment\fP"
+
+.SS "typedef struct \fBrecord_pqueue_st\fP  \fBrecord_pqueue\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

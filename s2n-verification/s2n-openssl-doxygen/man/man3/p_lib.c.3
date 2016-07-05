@@ -1,0 +1,240 @@
+.TH "s2n/libcrypto-build/openssl/crypto/evp/p_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/evp/p_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/asn1_mac\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBEVP_PKEY_bits\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_size\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_save_parameters\fP (\fBEVP_PKEY\fP *pkey, int mode)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_copy_parameters\fP (\fBEVP_PKEY\fP *to, const \fBEVP_PKEY\fP *from)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_missing_parameters\fP (const \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_cmp_parameters\fP (const \fBEVP_PKEY\fP *\fBa\fP, const \fBEVP_PKEY\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_cmp\fP (const \fBEVP_PKEY\fP *\fBa\fP, const \fBEVP_PKEY\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBEVP_PKEY_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_set_type\fP (\fBEVP_PKEY\fP *pkey, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_set_type_str\fP (\fBEVP_PKEY\fP *pkey, const char *str, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_assign\fP (\fBEVP_PKEY\fP *pkey, int \fBtype\fP, \fBvoid\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBEVP_PKEY_get0\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_set1_RSA\fP (\fBEVP_PKEY\fP *pkey, \fBRSA\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBEVP_PKEY_get1_RSA\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_set1_DSA\fP (\fBEVP_PKEY\fP *pkey, \fBDSA\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBEVP_PKEY_get1_DSA\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_set1_EC_KEY\fP (\fBEVP_PKEY\fP *pkey, \fBEC_KEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBEVP_PKEY_get1_EC_KEY\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_set1_DH\fP (\fBEVP_PKEY\fP *pkey, \fBDH\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBEVP_PKEY_get1_DH\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_type\fP (int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_id\fP (const \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_base_id\fP (const \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBEVP_PKEY_free\fP (\fBEVP_PKEY\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_print_public\fP (\fBBIO\fP *\fBout\fP, const \fBEVP_PKEY\fP *pkey, int indent, \fBASN1_PCTX\fP *pctx)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_print_private\fP (\fBBIO\fP *\fBout\fP, const \fBEVP_PKEY\fP *pkey, int indent, \fBASN1_PCTX\fP *pctx)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_print_params\fP (\fBBIO\fP *\fBout\fP, const \fBEVP_PKEY\fP *pkey, int indent, \fBASN1_PCTX\fP *pctx)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_get_default_digest_nid\fP (\fBEVP_PKEY\fP *pkey, int *pnid)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int EVP_PKEY_assign (\fBEVP_PKEY\fP * pkey, int type, \fBvoid\fP * key)"
+
+.PP
+Definition at line 262 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_base_id (const \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 379 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_bits (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 85 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_cmp (const \fBEVP_PKEY\fP * a, const \fBEVP_PKEY\fP * b)"
+
+.PP
+Definition at line 163 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_cmp_parameters (const \fBEVP_PKEY\fP * a, const \fBEVP_PKEY\fP * b)"
+
+.PP
+Definition at line 154 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_copy_parameters (\fBEVP_PKEY\fP * to, const \fBEVP_PKEY\fP * from)"
+
+.PP
+Definition at line 122 of file p_lib\&.c\&.
+.SS "\fBvoid\fP EVP_PKEY_free (\fBEVP_PKEY\fP * x)"
+
+.PP
+Definition at line 384 of file p_lib\&.c\&.
+.SS "\fBvoid\fP* EVP_PKEY_get0 (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 270 of file p_lib\&.c\&.
+.SS "\fBDH\fP* EVP_PKEY_get1_DH (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 346 of file p_lib\&.c\&.
+.SS "\fBDSA\fP* EVP_PKEY_get1_DSA (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 304 of file p_lib\&.c\&.
+.SS "\fBEC_KEY\fP* EVP_PKEY_get1_EC_KEY (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 325 of file p_lib\&.c\&.
+.SS "\fBRSA\fP* EVP_PKEY_get1_RSA (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 284 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_get_default_digest_nid (\fBEVP_PKEY\fP * pkey, int * pnid)"
+
+.PP
+Definition at line 458 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_id (const \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 374 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_missing_parameters (const \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 147 of file p_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* EVP_PKEY_new (\fBvoid\fP)"
+
+.PP
+Definition at line 184 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_print_params (\fBBIO\fP * out, const \fBEVP_PKEY\fP * pkey, int indent, \fBASN1_PCTX\fP * pctx)"
+
+.PP
+Definition at line 450 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_print_private (\fBBIO\fP * out, const \fBEVP_PKEY\fP * pkey, int indent, \fBASN1_PCTX\fP * pctx)"
+
+.PP
+Definition at line 441 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_print_public (\fBBIO\fP * out, const \fBEVP_PKEY\fP * pkey, int indent, \fBASN1_PCTX\fP * pctx)"
+
+.PP
+Definition at line 432 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_save_parameters (\fBEVP_PKEY\fP * pkey, int mode)"
+
+.PP
+Definition at line 99 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_set1_DH (\fBEVP_PKEY\fP * pkey, \fBDH\fP * key)"
+
+.PP
+Definition at line 338 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_set1_DSA (\fBEVP_PKEY\fP * pkey, \fBDSA\fP * key)"
+
+.PP
+Definition at line 296 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_set1_EC_KEY (\fBEVP_PKEY\fP * pkey, \fBEC_KEY\fP * key)"
+
+.PP
+Definition at line 317 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_set1_RSA (\fBEVP_PKEY\fP * pkey, \fBRSA\fP * key)"
+
+.PP
+Definition at line 276 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_set_type (\fBEVP_PKEY\fP * pkey, int type)"
+
+.PP
+Definition at line 252 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_set_type_str (\fBEVP_PKEY\fP * pkey, const char * str, int len)"
+
+.PP
+Definition at line 257 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_size (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 92 of file p_lib\&.c\&.
+.SS "int EVP_PKEY_type (int type)"
+
+.PP
+Definition at line 357 of file p_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

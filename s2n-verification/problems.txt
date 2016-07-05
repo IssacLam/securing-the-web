@@ -1,73 +1,151 @@
-function: s2n_blob_init 
-failed at pointer check: s2n_blob_init(null, data, n);
+// This function seems never be used
+function: int s2n_blob_init(struct s2n_blob *b, uint8_t *data, uint32_t size);
+failed at pointer check: b == NULL
 
-function: s2n_blob_zero
+Enviornment: b != NULL & data != NULL;
+
+Properties check: b->data == data && b->size == size;
+-----
+
+function: int s2n_blob_zero(struct s2n_blob *b);
 failed at pointer check: s2n_blob_zero(null);
 
-function: s2n_constant_time_equals
-failed at pointer check: s2n_constant_time_equals(null, null, n);
-a or b is null
+Environment: b != NULL;
 
-function: s2n_constant_time_copy_or_dont
-failed at pointer check: s2n_constant_time_copy_or_dont(null, null, n, m);
-a or b is null
+Properties check: forall uint32_t i; i < b->size ==> b->data[i] == 0;
+-----
 
-alarm at unsigned overflow check: s2n_constant_time_copy_or_dont(null, null, n, 0);
-expected overflow behaviour.
+function: int s2n_constant_time_equals(const uint8_t *a, const uint8_t *b, uint32_t len);
+failed at pointer check: a == NULL || b == NULL;
 
-function: s2n_free
-failed at pointer check: s2n_free(null);
-b is null / free invalid pointer
+Environment: a != NULL && b != NULL && a != b &&
+				len > 0 && len <= 1000 &&
+				forall uint32_t i; i < len ==> a[i] = nondet_uint8(); b[i]  = nondet_uint8();
 
-function: s2n_alloc
+Properties check: (result == 0 && exists { int j; (j >= 0 && j < len) ==> a[j] != b[j]}) ||
+                        (result > 0 && forall { int j; (j >= 0 && j < len) ==> a[j] == b[j] });
+----
+
+function: int s2n_constant_time_copy_or_dont(uint8_t *a, const uint8_t *b, uint32_t len, uint8_t dont);
+failed at pointer check: a == NULL || b == NULL;
+alarm at unsigned overflow check: the overflow behaviour is expected.
+
+Environment: a != NULL && b != NULL && a != b &&
+				len > 0 && len <= 1000 &&
+				forall uint32_t i; i < len ==> a[i] = nondet_uint8(); b[i]  = nondet_uint8();
+
+Properties check: (dont == 0 && exists { int j; (j >= 0 && j < len) ==> a[j] == b[j]}) ||
+                        (dont > 0 && forall { int j; (j >= 0 && j < len) ==> a[j] == a0[j] });
+----
+
+function: int s2n_free(struct s2n_blob *b);
+failed at pointer check: b == NULL;
+
+Environment: b != NULL && b->size >= 0;
+
+Properties check: result == -1 || 
+					(result == 0 && b->data == NULL &&
+                        b->size == 0 && b->allocated == 0 && b->mlocked == 0);
+
+Problems: b->data == NULL leads to double free error.
+
+----
+
+function: int s2n_alloc(struct s2n_blob *b, uint32_t size);
+failed at pointer check: b == NULL;
+
+Envirnoment: b != NULL && size > 0 && size <= 1000;
+
+Properties check: result == -1 || 
+					(result == 0 &&
+                        b->size == size && b->allocated >= b->size);
+
+Problems: same problem as s2n_realloc(); below.
+
+----
+
+function: int s2n_realloc(struct s2n_blob *b, uint32_t size);
+failed at pointer check: b == NULL;
+
+Envirnoment: b != NULL
+
+Properties check: result == -1 || result == 0,
+        if(result == 0) {
+                if(b->size == 0)
+                        __CPROVER_assert(b->data == NULL, "ERROR: s2n_realloc free");
+                else
+                        __CPROVER_assert(b->data != NULL, "ERROR: s2n_realloc posix_memalign");
+               
+               __CPROVER_assert(b->size == size && b->allocated >= b->size, "ERROR: s2n_realloc"); 
+		}
+	
+Problems:
 case 1: b != NULL, for any size
-if mlock in s2n_free fail leads to double free b->data;
+if mlock() in s2n_free() fail leads to double free b->data;
 
 case 2: b != NULL, MAX_uint32_t
-uint32_t allocate = page_size * ((size + (page_size - 1)) / page_size);
-leads to buffer overflow;
+uint32_t allocate = page_size * ((size + (page_size - 1)) / page_size) leads to unsigned overflow;
 
-function: s2n_realloc
-case 1: b != NULL, for any size
-if mlock in s2n_free fail leads to double free b->data;
+----
 
-function: s2n_increment_sequence_number
-case 1: sequence != NULL, sequence->size == 0 
-the function failed to increment the sequence number by 1 as the data size is 0;
+function: int s2n_increment_sequence_number(struct s2n_blob *sequence_number);
+case 1: failed at pointer check: sequence_number == NULL;
 
-case 2: failed at pointer check: s2n_increment_sequence_number(null);
-sequence_number is null / free invalid pointer
+case 2: failed at unsigned overflow check: sequence_number->data[i] == MAX_uint32_t
+sequence_number->data[i] += 1 leads to an overflow;
 
-case 3: failed at unsigned overflow check: s2n_increment_sequence_number(any sequence number);
-sequence_number->data[i] += 1;
-Overflow when MAX_uint32_t + 1;
-
-case 4: failed at signed overflow check: s2n_increment_sequence_number(any sequence number);
+case 3: failed at signed overflow check: sequence_number->size > MAX_int;
 int i = sequence_number->size - 1; 
 Overflow when converting unsigned int to signed int;
 
-function: get_nanoseconds_since_epoch
-case 1: failed at pointer check: get_nanoseconds_since_epoch(null);
-nanoseconds is null / free invalid pointer
+Environment: sequence_number != NULL && 
+				sequence_number->size >= 0 && sequence_number->size <= 1000;
+
+Properties check: difference between sequence_number and sequence_number0 == 1;
+
+Problems:
+case 1: sequence != NULL, sequence->size == 0 
+the function failed to increment the sequence number by 1 as the data size is 0;
+
+----
+
+function: int get_nanoseconds_since_epoch(void *data, uint64_t *nanoseconds);
+case 1: failed at pointer check: nanosecond == NULL;
 
 case 2: failed at divided by zero check
 conversion_factor.denom == 0;
-but it is no sense for denom == 0 according to offical doc, unless it hasn't be initiated by mach_timebase_info();
+but it is no sense for denom == 0 according to offical doc, unless it has not be initiated by mach_timebase_info();
 
 case 3: failed at unsigned overflow check
 *nanoseconds *= conversion_factor.numer can leads to an overflow while mach_absolute_time > 18446744073.7
 
 This function returns its result in terms of the Mach absolute time unit, which is CPU dependent.
-mach_absolute_time return ticks since last reboot (uptime).
+mach_absolute_time return ticks since last reboot, uptime.
 
-http://stackoverflow.com/questions/23378063/how-can-i-use-mach-absolute-time-without-overflowing
+//http://stackoverflow.com/questions/23378063/how-can-i-use-mach-absolute-time-without-overflowing
+	
+* No harness is need as it just assigns a nondeterministic value.
+	
+----
+	
+function: int s2n_timer_start(struct s2n_config *config, struct s2n_timer *timer);
+function: int s2n_timer_elapsed(struct s2n_config *config, struct s2n_timer *timer, uint64_t *nanoseconds);
+function: int s2n_timer_reset(struct s2n_config *config, struct s2n_timer *timer, uint64_t *nanoseconds);
 
-function: s2n_timer_start
-function: s2n_timer_elapsed
-function: s2n_timer_reset
-
-case 1: failed at pointer check:  int s2n_timer_*(null, null [, nanoseconds])
-pointer invalid in config->nanoseconds_since_epoch
+case 1: failed at pointer check: config == NULL || timer == NULL;
+pointer invalid in config->nanoseconds_since_epoch.
 
 case 2: failed at unsigned overflow check: 
-overflow because of get_nanoseconds_since_epoch *nanoseconds *= conversion_factor.numer
+overflow because of get_nanoseconds_since_epoch() *nanoseconds *= conversion_factor.numer.
+	
+* No harness is need as get_nanoseconds_since_epoch().
+
+----
+	
+Other passed functions: 
+pid_t s2n_actual_getpid();
+char *s2n_strerror(int error, const char *lang);
+int s2n_stuffer_init(struct s2n_stuffer *stuffer, struct s2n_blob *in); // just assigns value
+void s2n_on_fork(void); // setting default value
+int s2n_openssl_compat_status(void); // always return true
+int s2n_openssl_compat_init(ENGINE *unused); // always return true

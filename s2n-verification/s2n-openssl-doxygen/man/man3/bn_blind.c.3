@@ -1,0 +1,135 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bn/bn_blind.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bn/bn_blind.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include 'bn_lcl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbn_blinding_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBN_BLINDING_COUNTER\fP   32"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBN_BLINDING\fP * \fBBN_BLINDING_new\fP (const \fBBIGNUM\fP *A, const \fBBIGNUM\fP *Ai, \fBBIGNUM\fP *mod)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_BLINDING_free\fP (\fBBN_BLINDING\fP *r)"
+.br
+.ti -1c
+.RI "int \fBBN_BLINDING_update\fP (\fBBN_BLINDING\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_BLINDING_convert\fP (\fBBIGNUM\fP *n, \fBBN_BLINDING\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_BLINDING_convert_ex\fP (\fBBIGNUM\fP *n, \fBBIGNUM\fP *r, \fBBN_BLINDING\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_BLINDING_invert\fP (\fBBIGNUM\fP *n, \fBBN_BLINDING\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_BLINDING_invert_ex\fP (\fBBIGNUM\fP *n, const \fBBIGNUM\fP *r, \fBBN_BLINDING\fP *\fBb\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBBN_BLINDING_get_thread_id\fP (const \fBBN_BLINDING\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_BLINDING_set_thread_id\fP (\fBBN_BLINDING\fP *\fBb\fP, unsigned long n)"
+.br
+.ti -1c
+.RI "\fBCRYPTO_THREADID\fP * \fBBN_BLINDING_thread_id\fP (\fBBN_BLINDING\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBBN_BLINDING_get_flags\fP (const \fBBN_BLINDING\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_BLINDING_set_flags\fP (\fBBN_BLINDING\fP *\fBb\fP, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBBN_BLINDING\fP * \fBBN_BLINDING_create_param\fP (\fBBN_BLINDING\fP *\fBb\fP, const \fBBIGNUM\fP *\fBe\fP, \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, int(*bn_mod_exp)(\fBBIGNUM\fP *r,                                                                                                                                                                                                                           const \fBBIGNUM\fP *\fBa\fP,                                                                                                                                                                                                                           const \fBBIGNUM\fP *\fBp\fP,                                                                                                                                                                                                                           const \fBBIGNUM\fP *m,                                                                                                                                                                                                                           \fBBN_CTX\fP *\fBctx\fP,                                                                                                                                                                                                                           \fBBN_MONT_CTX\fP *m_ctx), \fBBN_MONT_CTX\fP *m_ctx)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BN_BLINDING_COUNTER   32"
+
+.PP
+Definition at line 116 of file bn_blind\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int BN_BLINDING_convert (\fBBIGNUM\fP * n, \fBBN_BLINDING\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 222 of file bn_blind\&.c\&.
+.SS "int BN_BLINDING_convert_ex (\fBBIGNUM\fP * n, \fBBIGNUM\fP * r, \fBBN_BLINDING\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 227 of file bn_blind\&.c\&.
+.SS "\fBBN_BLINDING\fP* BN_BLINDING_create_param (\fBBN_BLINDING\fP * b, const \fBBIGNUM\fP * e, \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx, int(*)(\fBBIGNUM\fP *r,                                                                                                                                                                                                                           const \fBBIGNUM\fP *\fBa\fP,                                                                                                                                                                                                                           const \fBBIGNUM\fP *\fBp\fP,                                                                                                                                                                                                                           const \fBBIGNUM\fP *m,                                                                                                                                                                                                                           \fBBN_CTX\fP *\fBctx\fP,                                                                                                                                                                                                                           \fBBN_MONT_CTX\fP *m_ctx) bn_mod_exp, \fBBN_MONT_CTX\fP * m_ctx)"
+
+.PP
+Definition at line 308 of file bn_blind\&.c\&.
+.SS "\fBvoid\fP BN_BLINDING_free (\fBBN_BLINDING\fP * r)"
+
+.PP
+Definition at line 175 of file bn_blind\&.c\&.
+.SS "unsigned long BN_BLINDING_get_flags (const \fBBN_BLINDING\fP * b)"
+
+.PP
+Definition at line 298 of file bn_blind\&.c\&.
+.SS "unsigned long BN_BLINDING_get_thread_id (const \fBBN_BLINDING\fP * b)"
+
+.PP
+Definition at line 282 of file bn_blind\&.c\&.
+.SS "int BN_BLINDING_invert (\fBBIGNUM\fP * n, \fBBN_BLINDING\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 255 of file bn_blind\&.c\&.
+.SS "int BN_BLINDING_invert_ex (\fBBIGNUM\fP * n, const \fBBIGNUM\fP * r, \fBBN_BLINDING\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 260 of file bn_blind\&.c\&.
+.SS "\fBBN_BLINDING\fP* BN_BLINDING_new (const \fBBIGNUM\fP * A, const \fBBIGNUM\fP * Ai, \fBBIGNUM\fP * mod)"
+
+.PP
+Definition at line 135 of file bn_blind\&.c\&.
+.SS "\fBvoid\fP BN_BLINDING_set_flags (\fBBN_BLINDING\fP * b, unsigned long flags)"
+
+.PP
+Definition at line 303 of file bn_blind\&.c\&.
+.SS "\fBvoid\fP BN_BLINDING_set_thread_id (\fBBN_BLINDING\fP * b, unsigned long n)"
+
+.PP
+Definition at line 287 of file bn_blind\&.c\&.
+.SS "\fBCRYPTO_THREADID\fP* BN_BLINDING_thread_id (\fBBN_BLINDING\fP * b)"
+
+.PP
+Definition at line 293 of file bn_blind\&.c\&.
+.SS "int BN_BLINDING_update (\fBBN_BLINDING\fP * b, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 191 of file bn_blind\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

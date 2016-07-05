@@ -1,0 +1,146 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bio/b_sock.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bio/b_sock.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/dso\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fBSOCKET_PROTOCOL\fP   IPPROTO_TCP"
+.br
+.ti -1c
+.RI "#define \fBMAX_LISTEN\fP   32"
+.br
+.ti -1c
+.RI "#define \fBWSAAPI\fP"
+.br
+.ti -1c
+.RI "#define \fBARG\fP   \fBarg\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBBIO_get_host_ip\fP (const char *str, unsigned char *ip)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_port\fP (const char *str, unsigned short *port_ptr)"
+.br
+.ti -1c
+.RI "int \fBBIO_sock_error\fP (int sock)"
+.br
+.ti -1c
+.RI "struct hostent * \fBBIO_gethostbyname\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBBIO_sock_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_sock_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_socket_ioctl\fP (int fd, long \fBtype\fP, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_accept_socket\fP (char *host, int bind_mode)"
+.br
+.ti -1c
+.RI "int \fBBIO_accept\fP (int sock, char **addr)"
+.br
+.ti -1c
+.RI "int \fBBIO_set_tcp_ndelay\fP (int s, int on)"
+.br
+.ti -1c
+.RI "int \fBBIO_socket_nbio\fP (int s, int mode)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ARG   \fBarg\fP"
+
+.SS "#define MAX_LISTEN   32"
+
+.PP
+Definition at line 80 of file b_sock\&.c\&.
+.SS "#define SOCKET_PROTOCOL   IPPROTO_TCP"
+
+.PP
+Definition at line 74 of file b_sock\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 62 of file b_sock\&.c\&.
+.SS "#define WSAAPI"
+
+.PP
+Definition at line 94 of file b_sock\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int BIO_accept (int sock, char ** addr)"
+
+.PP
+Definition at line 805 of file b_sock\&.c\&.
+.SS "int BIO_get_accept_socket (char * host, int bind_mode)"
+
+.PP
+Definition at line 605 of file b_sock\&.c\&.
+.SS "int BIO_get_host_ip (const char * str, unsigned char * ip)"
+
+.PP
+Definition at line 114 of file b_sock\&.c\&.
+.SS "int BIO_get_port (const char * str, unsigned short * port_ptr)"
+
+.PP
+Definition at line 170 of file b_sock\&.c\&.
+.SS "struct hostent* BIO_gethostbyname (const char * name)"
+
+.PP
+Definition at line 367 of file b_sock\&.c\&.
+.SS "int BIO_set_tcp_ndelay (int s, int on)"
+
+.PP
+Definition at line 932 of file b_sock\&.c\&.
+.SS "\fBvoid\fP BIO_sock_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 508 of file b_sock\&.c\&.
+.SS "int BIO_sock_error (int sock)"
+
+.PP
+Definition at line 225 of file b_sock\&.c\&.
+.SS "int BIO_sock_init (\fBvoid\fP)"
+
+.PP
+Definition at line 457 of file b_sock\&.c\&.
+.SS "int BIO_socket_ioctl (int fd, long type, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 529 of file b_sock\&.c\&.
+.SS "int BIO_socket_nbio (int s, int mode)"
+
+.PP
+Definition at line 951 of file b_sock\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,279 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bn/bn_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bn/bn_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include 'bn_lcl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNDEBUG\fP"
+.br
+.ti -1c
+.RI "#define \fBBN_CONSTTIME_SWAP\fP(ind)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBBN_set_params\fP (int mult, int high, int low, int mont)"
+.br
+.ti -1c
+.RI "int \fBBN_get_params\fP (int which)"
+.br
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBBN_value_one\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_num_bits_word\fP (BN_ULONG l)"
+.br
+.ti -1c
+.RI "int \fBBN_num_bits\fP (const \fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_clear_free\fP (\fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_free\fP (\fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_init\fP (\fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBBN_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBbn_dup_expand\fP (const \fBBIGNUM\fP *\fBb\fP, int words)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBbn_expand2\fP (\fBBIGNUM\fP *\fBb\fP, int words)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBBN_dup\fP (const \fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBBN_copy\fP (\fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_swap\fP (\fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_clear\fP (\fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "BN_ULONG \fBBN_get_word\fP (const \fBBIGNUM\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_set_word\fP (\fBBIGNUM\fP *\fBa\fP, BN_ULONG w)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBBN_bin2bn\fP (const unsigned char *s, int \fBlen\fP, \fBBIGNUM\fP *ret)"
+.br
+.ti -1c
+.RI "int \fBBN_bn2bin\fP (const \fBBIGNUM\fP *\fBa\fP, unsigned char *to)"
+.br
+.ti -1c
+.RI "int \fBBN_ucmp\fP (const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_cmp\fP (const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_set_bit\fP (\fBBIGNUM\fP *\fBa\fP, int n)"
+.br
+.ti -1c
+.RI "int \fBBN_clear_bit\fP (\fBBIGNUM\fP *\fBa\fP, int n)"
+.br
+.ti -1c
+.RI "int \fBBN_is_bit_set\fP (const \fBBIGNUM\fP *\fBa\fP, int n)"
+.br
+.ti -1c
+.RI "int \fBBN_mask_bits\fP (\fBBIGNUM\fP *\fBa\fP, int n)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_set_negative\fP (\fBBIGNUM\fP *\fBa\fP, int \fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBbn_cmp_words\fP (const BN_ULONG *\fBa\fP, const BN_ULONG *\fBb\fP, int n)"
+.br
+.ti -1c
+.RI "int \fBbn_cmp_part_words\fP (const BN_ULONG *\fBa\fP, const BN_ULONG *\fBb\fP, int cl, int dl)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_consttime_swap\fP (BN_ULONG condition, \fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *\fBb\fP, int nwords)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBBN_version\fP [] = 'Big Number' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BN_CONSTTIME_SWAP(ind)"
+\fBValue:\fP
+.PP
+.nf
+do { \
+                t = (a->d[ind] ^ b->d[ind]) & condition; \
+                a->d[ind] ^= t; \
+                b->d[ind] ^= t; \
+        } while (0)
+.fi
+.SS "#define NDEBUG"
+
+.PP
+Definition at line 61 of file bn_lib\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBIGNUM\fP* BN_bin2bn (const unsigned char * s, int len, \fBBIGNUM\fP * ret)"
+
+.PP
+Definition at line 599 of file bn_lib\&.c\&.
+.SS "int BN_bn2bin (const \fBBIGNUM\fP * a, unsigned char * to)"
+
+.PP
+Definition at line 643 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_clear (\fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 568 of file bn_lib\&.c\&.
+.SS "int BN_clear_bit (\fBBIGNUM\fP * a, int n)"
+
+.PP
+Definition at line 748 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_clear_free (\fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 227 of file bn_lib\&.c\&.
+.SS "int BN_cmp (const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b)"
+
+.PP
+Definition at line 679 of file bn_lib\&.c\&.
+.SS "int bn_cmp_part_words (const BN_ULONG * a, const BN_ULONG * b, int cl, int dl)"
+
+.PP
+Definition at line 837 of file bn_lib\&.c\&.
+.SS "int bn_cmp_words (const BN_ULONG * a, const BN_ULONG * b, int n)"
+
+.PP
+Definition at line 810 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_consttime_swap (BN_ULONG condition, \fBBIGNUM\fP * a, \fBBIGNUM\fP * b, int nwords)"
+
+.PP
+Definition at line 864 of file bn_lib\&.c\&.
+.SS "\fBBIGNUM\fP* BN_copy (\fBBIGNUM\fP * a, const \fBBIGNUM\fP * b)"
+
+.PP
+Definition at line 486 of file bn_lib\&.c\&.
+.SS "\fBBIGNUM\fP* BN_dup (const \fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 467 of file bn_lib\&.c\&.
+.SS "\fBBIGNUM\fP* bn_dup_expand (const \fBBIGNUM\fP * b, int words)"
+
+.PP
+Definition at line 378 of file bn_lib\&.c\&.
+.SS "\fBBIGNUM\fP* bn_expand2 (\fBBIGNUM\fP * b, int words)"
+
+.PP
+Definition at line 426 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_free (\fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 245 of file bn_lib\&.c\&.
+.SS "int BN_get_params (int which)"
+
+.PP
+Definition at line 121 of file bn_lib\&.c\&.
+.SS "BN_ULONG BN_get_word (const \fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 577 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_init (\fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 262 of file bn_lib\&.c\&.
+.SS "int BN_is_bit_set (const \fBBIGNUM\fP * a, int n)"
+
+.PP
+Definition at line 766 of file bn_lib\&.c\&.
+.SS "int BN_mask_bits (\fBBIGNUM\fP * a, int n)"
+
+.PP
+Definition at line 780 of file bn_lib\&.c\&.
+.SS "\fBBIGNUM\fP* BN_new (\fBvoid\fP)"
+
+.PP
+Definition at line 268 of file bn_lib\&.c\&.
+.SS "int BN_num_bits (const \fBBIGNUM\fP * a)"
+
+.PP
+Definition at line 217 of file bn_lib\&.c\&.
+.SS "int BN_num_bits_word (BN_ULONG l)"
+
+.PP
+Definition at line 145 of file bn_lib\&.c\&.
+.SS "int BN_set_bit (\fBBIGNUM\fP * a, int n)"
+
+.PP
+Definition at line 726 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_set_negative (\fBBIGNUM\fP * b, int n)"
+BN_set_negative sets sign of a BIGNUM 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIb\fP pointer to the BIGNUM object 
+.br
+\fIn\fP 0 if the BIGNUM b should be positive and a value != 0 otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 802 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_set_params (int mult, int high, int low, int mont)"
+
+.PP
+Definition at line 93 of file bn_lib\&.c\&.
+.SS "int BN_set_word (\fBBIGNUM\fP * a, BN_ULONG w)"
+
+.PP
+Definition at line 587 of file bn_lib\&.c\&.
+.SS "\fBvoid\fP BN_swap (\fBBIGNUM\fP * a, \fBBIGNUM\fP * b)"
+
+.PP
+Definition at line 533 of file bn_lib\&.c\&.
+.SS "int BN_ucmp (const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b)"
+
+.PP
+Definition at line 657 of file bn_lib\&.c\&.
+.SS "const \fBBIGNUM\fP* BN_value_one (\fBvoid\fP)"
+
+.PP
+Definition at line 136 of file bn_lib\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char BN_version[] = 'Big Number' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 70 of file bn_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

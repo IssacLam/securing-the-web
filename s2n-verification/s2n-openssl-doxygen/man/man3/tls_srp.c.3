@@ -1,0 +1,200 @@
+.TH "s2n/libcrypto-build/openssl/ssl/tls_srp.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/tls_srp.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ssl_locl\&.h'\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/srp\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBtls1_ctx_ctrl\fP   \fBssl3_ctx_ctrl\fP"
+.br
+.ti -1c
+.RI "#define \fBtls1_ctx_callback_ctrl\fP   \fBssl3_ctx_callback_ctrl\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBSSL_CTX_SRP_CTX_free\fP (struct \fBssl_ctx_st\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_SRP_CTX_free\fP (struct \fBssl_st\fP *s)"
+.br
+.ti -1c
+.RI "int \fBSSL_SRP_CTX_init\fP (struct \fBssl_st\fP *s)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_SRP_CTX_init\fP (struct \fBssl_ctx_st\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_srp_server_param_with_username\fP (\fBSSL\fP *s, int *ad)"
+.br
+.ti -1c
+.RI "int \fBSSL_set_srp_server_param_pw\fP (\fBSSL\fP *s, const char *user, const char *\fBpass\fP, const char *grp)"
+.br
+.ti -1c
+.RI "int \fBSSL_set_srp_server_param\fP (\fBSSL\fP *s, const \fBBIGNUM\fP *\fBN\fP, const \fBBIGNUM\fP *g, \fBBIGNUM\fP *sa, \fBBIGNUM\fP *v, char *info)"
+.br
+.ti -1c
+.RI "int \fBSRP_generate_server_master_secret\fP (\fBSSL\fP *s, unsigned char *master_key)"
+.br
+.ti -1c
+.RI "int \fBSRP_generate_client_master_secret\fP (\fBSSL\fP *s, unsigned char *master_key)"
+.br
+.ti -1c
+.RI "int \fBsrp_verify_server_param\fP (\fBSSL\fP *s, int *al)"
+.br
+.ti -1c
+.RI "int \fBSRP_Calc_A_param\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSSL_get_srp_g\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSSL_get_srp_N\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "char * \fBSSL_get_srp_username\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "char * \fBSSL_get_srp_userinfo\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_username\fP (\fBSSL_CTX\fP *\fBctx\fP, char *name)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_password\fP (\fBSSL_CTX\fP *\fBctx\fP, char *password)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_strength\fP (\fBSSL_CTX\fP *\fBctx\fP, int strength)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_verify_param_callback\fP (\fBSSL_CTX\fP *\fBctx\fP, int(*\fBcb\fP)(\fBSSL\fP *, \fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_cb_arg\fP (\fBSSL_CTX\fP *\fBctx\fP, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_username_callback\fP (\fBSSL_CTX\fP *\fBctx\fP, int(*\fBcb\fP)(\fBSSL\fP *, int *, \fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_set_srp_client_pwd_callback\fP (\fBSSL_CTX\fP *\fBctx\fP, char *(*\fBcb\fP)(\fBSSL\fP *, \fBvoid\fP *))"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define tls1_ctx_callback_ctrl   \fBssl3_ctx_callback_ctrl\fP"
+
+.PP
+Definition at line 498 of file tls_srp\&.c\&.
+.SS "#define tls1_ctx_ctrl   \fBssl3_ctx_ctrl\fP"
+
+.PP
+Definition at line 497 of file tls_srp\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int SRP_Calc_A_param (\fBSSL\fP * s)"
+
+.PP
+Definition at line 453 of file tls_srp\&.c\&.
+.SS "int SRP_generate_client_master_secret (\fBSSL\fP * s, unsigned char * master_key)"
+
+.PP
+Definition at line 371 of file tls_srp\&.c\&.
+.SS "int SRP_generate_server_master_secret (\fBSSL\fP * s, unsigned char * master_key)"
+
+.PP
+Definition at line 337 of file tls_srp\&.c\&.
+.SS "int srp_verify_server_param (\fBSSL\fP * s, int * al)"
+
+.PP
+Definition at line 422 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_cb_arg (\fBSSL_CTX\fP * ctx, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 523 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_client_pwd_callback (\fBSSL_CTX\fP * ctx, char *(*)(\fBSSL\fP *, \fBvoid\fP *) cb)"
+
+.PP
+Definition at line 535 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_password (\fBSSL_CTX\fP * ctx, char * password)"
+
+.PP
+Definition at line 505 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_strength (\fBSSL_CTX\fP * ctx, int strength)"
+
+.PP
+Definition at line 510 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_username (\fBSSL_CTX\fP * ctx, char * name)"
+
+.PP
+Definition at line 500 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_username_callback (\fBSSL_CTX\fP * ctx, int(*)(\fBSSL\fP *, int *, \fBvoid\fP *) cb)"
+
+.PP
+Definition at line 528 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_set_srp_verify_param_callback (\fBSSL_CTX\fP * ctx, int(*)(\fBSSL\fP *, \fBvoid\fP *) cb)"
+
+.PP
+Definition at line 516 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_SRP_CTX_free (struct \fBssl_ctx_st\fP * ctx)"
+
+.PP
+Definition at line 67 of file tls_srp\&.c\&.
+.SS "int SSL_CTX_SRP_CTX_init (struct \fBssl_ctx_st\fP * ctx)"
+
+.PP
+Definition at line 200 of file tls_srp\&.c\&.
+.SS "\fBBIGNUM\fP* SSL_get_srp_g (\fBSSL\fP * s)"
+
+.PP
+Definition at line 469 of file tls_srp\&.c\&.
+.SS "\fBBIGNUM\fP* SSL_get_srp_N (\fBSSL\fP * s)"
+
+.PP
+Definition at line 476 of file tls_srp\&.c\&.
+.SS "char* SSL_get_srp_userinfo (\fBSSL\fP * s)"
+
+.PP
+Definition at line 490 of file tls_srp\&.c\&.
+.SS "char* SSL_get_srp_username (\fBSSL\fP * s)"
+
+.PP
+Definition at line 483 of file tls_srp\&.c\&.
+.SS "int SSL_set_srp_server_param (\fBSSL\fP * s, const \fBBIGNUM\fP * N, const \fBBIGNUM\fP * g, \fBBIGNUM\fP * sa, \fBBIGNUM\fP * v, char * info)"
+
+.PP
+Definition at line 289 of file tls_srp\&.c\&.
+.SS "int SSL_set_srp_server_param_pw (\fBSSL\fP * s, const char * user, const char * pass, const char * grp)"
+
+.PP
+Definition at line 266 of file tls_srp\&.c\&.
+.SS "int SSL_SRP_CTX_free (struct \fBssl_st\fP * s)"
+
+.PP
+Definition at line 99 of file tls_srp\&.c\&.
+.SS "int SSL_SRP_CTX_init (struct \fBssl_st\fP * s)"
+
+.PP
+Definition at line 131 of file tls_srp\&.c\&.
+.SS "int SSL_srp_server_param_with_username (\fBSSL\fP * s, int * ad)"
+
+.PP
+Definition at line 230 of file tls_srp\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

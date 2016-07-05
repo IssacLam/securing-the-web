@@ -1,0 +1,336 @@
+.TH "s2n/libcrypto-build/openssl/test/ssltest.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/test/ssltest.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'e_os\&.h'\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/srp\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBapp_verify_arg\fP"
+.br
+.ti -1c
+.RI "struct \fBsrp_client_arg_st\fP"
+.br
+.ti -1c
+.RI "struct \fBsrp_server_arg_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_BSD_SOURCE\fP   1"
+.br
+.ti -1c
+.RI "#define \fB_DEFAULT_SOURCE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fB_XOPEN_SOURCE_EXTENDED\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTEST_SERVER_CERT\fP   '\&.\&./apps/server\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBTEST_CLIENT_CERT\fP   '\&.\&./apps/client\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBCOMP_RLE\fP   255"
+.br
+.ti -1c
+.RI "#define \fBCOMP_ZLIB\fP   1"
+.br
+.ti -1c
+.RI "#define \fBAPP_CALLBACK_STRING\fP   'Test Callback Argument'"
+.br
+.ti -1c
+.RI "#define \fBPWD_STRLEN\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBSCT_EXT_TYPE\fP   18"
+.br
+.ti -1c
+.RI "#define \fBTACK_EXT_TYPE\fP   62208"
+.br
+.ti -1c
+.RI "#define \fBCUSTOM_EXT_TYPE_0\fP   1000"
+.br
+.ti -1c
+.RI "#define \fBCUSTOM_EXT_TYPE_1\fP   1001"
+.br
+.ti -1c
+.RI "#define \fBCUSTOM_EXT_TYPE_2\fP   1002"
+.br
+.ti -1c
+.RI "#define \fBCUSTOM_EXT_TYPE_3\fP   1003"
+.br
+.ti -1c
+.RI "#define \fBW_READ\fP   1"
+.br
+.ti -1c
+.RI "#define \fBW_WRITE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBC_DONE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBS_DONE\fP   2"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBsrp_client_arg_st\fP \fBSRP_CLIENT_ARG\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBsrp_server_arg_st\fP \fBSRP_SERVER_ARG\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBdoit_biopair\fP (\fBSSL\fP *s_ssl, \fBSSL\fP *c_ssl, long \fBbytes\fP, clock_t *s_time, clock_t *c_time)"
+.br
+.ti -1c
+.RI "int \fBdoit\fP (\fBSSL\fP *s_ssl, \fBSSL\fP *c_ssl, long \fBbytes\fP)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBcustom_ext_cli_string\fP [] = 'abc'"
+.br
+.ti -1c
+.RI "const char \fBcustom_ext_srv_string\fP [] = 'defg'"
+.br
+.ti -1c
+.RI "char * \fBserverinfo_file\fP = \fBNULL\fP"
+.br
+.ti -1c
+.RI "int \fBserverinfo_sct\fP = 0"
+.br
+.ti -1c
+.RI "int \fBserverinfo_tack\fP = 0"
+.br
+.ti -1c
+.RI "int \fBserverinfo_sct_seen\fP = 0"
+.br
+.ti -1c
+.RI "int \fBserverinfo_tack_seen\fP = 0"
+.br
+.ti -1c
+.RI "int \fBserverinfo_other_seen\fP = 0"
+.br
+.ti -1c
+.RI "int \fBcustom_ext\fP = 0"
+.br
+.ti -1c
+.RI "int \fBcustom_ext_error\fP = 0"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _BSD_SOURCE   1"
+
+.PP
+Definition at line 144 of file ssltest\&.c\&.
+.SS "#define _DEFAULT_SOURCE   1"
+
+.PP
+Definition at line 145 of file ssltest\&.c\&.
+.SS "#define _XOPEN_SOURCE_EXTENDED   1"
+
+.PP
+Definition at line 198 of file ssltest\&.c\&.
+.SS "#define APP_CALLBACK_STRING   'Test Callback Argument'"
+
+.PP
+Definition at line 236 of file ssltest\&.c\&.
+.SS "#define C_DONE   1"
+
+.PP
+Definition at line 2151 of file ssltest\&.c\&.
+.SS "#define COMP_RLE   255"
+
+.PP
+Definition at line 227 of file ssltest\&.c\&.
+.SS "#define COMP_ZLIB   1"
+
+.PP
+Definition at line 228 of file ssltest\&.c\&.
+.SS "#define CUSTOM_EXT_TYPE_0   1000"
+
+.PP
+Definition at line 488 of file ssltest\&.c\&.
+.SS "#define CUSTOM_EXT_TYPE_1   1001"
+
+.PP
+Definition at line 489 of file ssltest\&.c\&.
+.SS "#define CUSTOM_EXT_TYPE_2   1002"
+
+.PP
+Definition at line 490 of file ssltest\&.c\&.
+.SS "#define CUSTOM_EXT_TYPE_3   1003"
+
+.PP
+Definition at line 491 of file ssltest\&.c\&.
+.SS "#define PWD_STRLEN   1024"
+
+.PP
+Definition at line 271 of file ssltest\&.c\&.
+.SS "#define S_DONE   2"
+
+.PP
+Definition at line 2152 of file ssltest\&.c\&.
+.SS "#define SCT_EXT_TYPE   18"
+
+.PP
+Definition at line 480 of file ssltest\&.c\&.
+.SS "#define TACK_EXT_TYPE   62208"
+
+.PP
+Definition at line 487 of file ssltest\&.c\&.
+.SS "#define TEST_CLIENT_CERT   '\&.\&./apps/client\&.pem'"
+
+.PP
+Definition at line 217 of file ssltest\&.c\&.
+.SS "#define TEST_SERVER_CERT   '\&.\&./apps/server\&.pem'"
+
+.PP
+Definition at line 216 of file ssltest\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 155 of file ssltest\&.c\&.
+.SS "#define W_READ   1"
+
+.PP
+Definition at line 2149 of file ssltest\&.c\&.
+.SS "#define W_WRITE   2"
+
+.PP
+Definition at line 2150 of file ssltest\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBsrp_client_arg_st\fP  \fBSRP_CLIENT_ARG\fP"
+
+.SS "typedef struct \fBsrp_server_arg_st\fP  \fBSRP_SERVER_ARG\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int doit (\fBSSL\fP * s_ssl, \fBSSL\fP * c_ssl, long bytes)"
+
+.PP
+Definition at line 2154 of file ssltest\&.c\&.
+.SS "int doit_biopair (\fBSSL\fP * s_ssl, \fBSSL\fP * c_ssl, long bytes, clock_t * s_time, clock_t * c_time)"
+
+.PP
+Definition at line 1777 of file ssltest\&.c\&.
+.SS "int main (int argc, char * argv[])"
+
+.PP
+Definition at line 943 of file ssltest\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int custom_ext = 0"
+
+.PP
+Definition at line 507 of file ssltest\&.c\&.
+.SS "const char custom_ext_cli_string[] = 'abc'"
+
+.PP
+Definition at line 493 of file ssltest\&.c\&.
+.SS "int custom_ext_error = 0"
+
+.PP
+Definition at line 510 of file ssltest\&.c\&.
+.SS "const char custom_ext_srv_string[] = 'defg'"
+
+.PP
+Definition at line 494 of file ssltest\&.c\&.
+.SS "char* serverinfo_file = \fBNULL\fP"
+
+.PP
+Definition at line 497 of file ssltest\&.c\&.
+.SS "int serverinfo_other_seen = 0"
+
+.PP
+Definition at line 504 of file ssltest\&.c\&.
+.SS "int serverinfo_sct = 0"
+
+.PP
+Definition at line 498 of file ssltest\&.c\&.
+.SS "int serverinfo_sct_seen = 0"
+
+.PP
+Definition at line 502 of file ssltest\&.c\&.
+.SS "int serverinfo_tack = 0"
+
+.PP
+Definition at line 499 of file ssltest\&.c\&.
+.SS "int serverinfo_tack_seen = 0"
+
+.PP
+Definition at line 503 of file ssltest\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

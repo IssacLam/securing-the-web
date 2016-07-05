@@ -1,0 +1,367 @@
+.TH "s2n/libcrypto-build/openssl/ssl/ssl_ciph.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/ssl_ciph.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/comp\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcipher_order_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSSL_ENC_DES_IDX\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_3DES_IDX\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_RC4_IDX\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_RC2_IDX\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_IDEA_IDX\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_NULL_IDX\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_AES128_IDX\fP   6"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_AES256_IDX\fP   7"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_CAMELLIA128_IDX\fP   8"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_CAMELLIA256_IDX\fP   9"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_GOST89_IDX\fP   10"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_SEED_IDX\fP   11"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_AES128GCM_IDX\fP   12"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_AES256GCM_IDX\fP   13"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_NUM_IDX\fP   14"
+.br
+.ti -1c
+.RI "#define \fBSSL_COMP_NULL_IDX\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL_COMP_ZLIB_IDX\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL_COMP_NUM_IDX\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_MD5_IDX\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_SHA1_IDX\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_GOST94_IDX\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_GOST89MAC_IDX\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_SHA256_IDX\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_SHA384_IDX\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD_NUM_IDX\fP   \fBSSL_MAX_DIGEST\fP"
+.br
+.ti -1c
+.RI "#define \fBCIPHER_ADD\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCIPHER_KILL\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCIPHER_DEL\fP   3"
+.br
+.ti -1c
+.RI "#define \fBCIPHER_ORD\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCIPHER_SPECIAL\fP   5"
+.br
+.ti -1c
+.RI "#define \fBITEM_SEP\fP(\fBa\fP)   (((\fBa\fP) == ':') || ((\fBa\fP) == ' ') || ((\fBa\fP) == ';') || ((\fBa\fP) == ','))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBcipher_order_st\fP \fBCIPHER_ORDER\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBssl_load_ciphers\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_get_evp\fP (const \fBSSL_SESSION\fP *s, const \fBEVP_CIPHER\fP **\fBenc\fP, const \fBEVP_MD\fP **md, int *mac_pkey_type, int *mac_secret_size, \fBSSL_COMP\fP **comp)"
+.br
+.ti -1c
+.RI "int \fBssl_get_handshake_digest\fP (int idx, long *mask, const \fBEVP_MD\fP **md)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)"
+.br
+.ti -1c
+.RI "char * \fBSSL_CIPHER_description\fP (const \fBSSL_CIPHER\fP *cipher, char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "char * \fBSSL_CIPHER_get_version\fP (const \fBSSL_CIPHER\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "const char * \fBSSL_CIPHER_get_name\fP (const \fBSSL_CIPHER\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_CIPHER_get_bits\fP (const \fBSSL_CIPHER\fP *\fBc\fP, int *alg_bits)"
+.br
+.ti -1c
+.RI "unsigned long \fBSSL_CIPHER_get_id\fP (const \fBSSL_CIPHER\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "\fBSSL_COMP\fP * \fBssl3_comp_find\fP (\fBSTACK_OF\fP(\fBSSL_COMP\fP)*sk, int n)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_COMP_free_compression_methods\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_COMP_add_compression_method\fP (int id, \fBCOMP_METHOD\fP *cm)"
+.br
+.ti -1c
+.RI "const char * \fBSSL_COMP_get_name\fP (const \fBCOMP_METHOD\fP *comp)"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_get_cert_index\fP (const \fBSSL_CIPHER\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl_get_cipher_by_char\fP (\fBSSL\fP *\fBssl\fP, const unsigned char *\fBptr\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBSSL_CIPHER_find\fP (\fBSSL\fP *\fBssl\fP, const unsigned char *\fBptr\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CIPHER_ADD   1"
+
+.PP
+Definition at line 215 of file ssl_ciph\&.c\&.
+.SS "#define CIPHER_DEL   3"
+
+.PP
+Definition at line 217 of file ssl_ciph\&.c\&.
+.SS "#define CIPHER_KILL   2"
+
+.PP
+Definition at line 216 of file ssl_ciph\&.c\&.
+.SS "#define CIPHER_ORD   4"
+
+.PP
+Definition at line 218 of file ssl_ciph\&.c\&.
+.SS "#define CIPHER_SPECIAL   5"
+
+.PP
+Definition at line 219 of file ssl_ciph\&.c\&.
+.SS "#define ITEM_SEP(\fBa\fP)   (((\fBa\fP) == ':') || ((\fBa\fP) == ' ') || ((\fBa\fP) == ';') || ((\fBa\fP) == ','))"
+
+.PP
+Definition at line 689 of file ssl_ciph\&.c\&.
+.SS "#define SSL_COMP_NULL_IDX   0"
+
+.PP
+Definition at line 174 of file ssl_ciph\&.c\&.
+.SS "#define SSL_COMP_NUM_IDX   2"
+
+.PP
+Definition at line 176 of file ssl_ciph\&.c\&.
+.SS "#define SSL_COMP_ZLIB_IDX   1"
+
+.PP
+Definition at line 175 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_3DES_IDX   1"
+
+.PP
+Definition at line 154 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_AES128_IDX   6"
+
+.PP
+Definition at line 159 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_AES128GCM_IDX   12"
+
+.PP
+Definition at line 165 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_AES256_IDX   7"
+
+.PP
+Definition at line 160 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_AES256GCM_IDX   13"
+
+.PP
+Definition at line 166 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_CAMELLIA128_IDX   8"
+
+.PP
+Definition at line 161 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_CAMELLIA256_IDX   9"
+
+.PP
+Definition at line 162 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_DES_IDX   0"
+
+.PP
+Definition at line 153 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_GOST89_IDX   10"
+
+.PP
+Definition at line 163 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_IDEA_IDX   4"
+
+.PP
+Definition at line 157 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_NULL_IDX   5"
+
+.PP
+Definition at line 158 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_NUM_IDX   14"
+
+.PP
+Definition at line 167 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_RC2_IDX   3"
+
+.PP
+Definition at line 156 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_RC4_IDX   2"
+
+.PP
+Definition at line 155 of file ssl_ciph\&.c\&.
+.SS "#define SSL_ENC_SEED_IDX   11"
+
+.PP
+Definition at line 164 of file ssl_ciph\&.c\&.
+.SS "#define SSL_MD_GOST89MAC_IDX   3"
+
+.SS "#define SSL_MD_GOST94_IDX   2"
+
+.SS "#define SSL_MD_MD5_IDX   0"
+
+.SS "#define SSL_MD_NUM_IDX   \fBSSL_MAX_DIGEST\fP"
+
+.SS "#define SSL_MD_SHA1_IDX   1"
+
+.SS "#define SSL_MD_SHA256_IDX   4"
+
+.SS "#define SSL_MD_SHA384_IDX   5"
+
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBcipher_order_st\fP  \fBCIPHER_ORDER\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBSSL_COMP\fP* ssl3_comp_find (\fBSTACK_OF\fP(\fBSSL_COMP\fP)* sk, int n)"
+
+.PP
+Definition at line 1918 of file ssl_ciph\&.c\&.
+.SS "char* SSL_CIPHER_description (const \fBSSL_CIPHER\fP * cipher, char * buf, int len)"
+
+.PP
+Definition at line 1670 of file ssl_ciph\&.c\&.
+.SS "const \fBSSL_CIPHER\fP* SSL_CIPHER_find (\fBSSL\fP * ssl, const unsigned char * ptr)"
+
+.PP
+Definition at line 2084 of file ssl_ciph\&.c\&.
+.SS "int SSL_CIPHER_get_bits (const \fBSSL_CIPHER\fP * c, int * alg_bits)"
+
+.PP
+Definition at line 1901 of file ssl_ciph\&.c\&.
+.SS "int ssl_cipher_get_cert_index (const \fBSSL_CIPHER\fP * c)"
+
+.PP
+Definition at line 2038 of file ssl_ciph\&.c\&.
+.SS "int ssl_cipher_get_evp (const \fBSSL_SESSION\fP * s, const \fBEVP_CIPHER\fP ** enc, const \fBEVP_MD\fP ** md, int * mac_pkey_type, int * mac_secret_size, \fBSSL_COMP\fP ** comp)"
+
+.PP
+Definition at line 511 of file ssl_ciph\&.c\&.
+.SS "unsigned long SSL_CIPHER_get_id (const \fBSSL_CIPHER\fP * c)"
+
+.PP
+Definition at line 1913 of file ssl_ciph\&.c\&.
+.SS "const char* SSL_CIPHER_get_name (const \fBSSL_CIPHER\fP * c)"
+
+.PP
+Definition at line 1893 of file ssl_ciph\&.c\&.
+.SS "char* SSL_CIPHER_get_version (const \fBSSL_CIPHER\fP * c)"
+
+.PP
+Definition at line 1877 of file ssl_ciph\&.c\&.
+.SS "int SSL_COMP_add_compression_method (int id, \fBCOMP_METHOD\fP * cm)"
+
+.PP
+Definition at line 1986 of file ssl_ciph\&.c\&.
+.SS "\fBvoid\fP SSL_COMP_free_compression_methods (\fBvoid\fP)"
+
+.PP
+Definition at line 1979 of file ssl_ciph\&.c\&.
+.SS "const char* SSL_COMP_get_name (const \fBCOMP_METHOD\fP * comp)"
+
+.PP
+Definition at line 2030 of file ssl_ciph\&.c\&.
+.SS "const \fBSSL_CIPHER\fP* ssl_get_cipher_by_char (\fBSSL\fP * ssl, const unsigned char * ptr)"
+
+.PP
+Definition at line 2075 of file ssl_ciph\&.c\&.
+.SS "int ssl_get_handshake_digest (int idx, long * mask, const \fBEVP_MD\fP ** md)"
+
+.PP
+Definition at line 676 of file ssl_ciph\&.c\&.
+.SS "\fBvoid\fP ssl_load_ciphers (\fBvoid\fP)"
+
+.PP
+Definition at line 405 of file ssl_ciph\&.c\&.
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.PP
+Definition at line 1467 of file ssl_ciph\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

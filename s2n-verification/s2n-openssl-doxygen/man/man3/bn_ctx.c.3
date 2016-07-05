@@ -1,0 +1,153 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bn/bn_ctx.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bn/bn_ctx.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include 'bn_lcl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbignum_pool_item\fP"
+.br
+.ti -1c
+.RI "struct \fBbignum_pool\fP"
+.br
+.ti -1c
+.RI "struct \fBbignum_ctx_stack\fP"
+.br
+.ti -1c
+.RI "struct \fBbignum_ctx\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNDEBUG\fP"
+.br
+.ti -1c
+.RI "#define \fBBN_CTX_POOL_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBBN_CTX_START_FRAMES\fP   32"
+.br
+.ti -1c
+.RI "#define \fBCTXDBG_ENTRY\fP(str,  \fBctx\fP)"
+.br
+.ti -1c
+.RI "#define \fBCTXDBG_EXIT\fP(\fBctx\fP)"
+.br
+.ti -1c
+.RI "#define \fBCTXDBG_RET\fP(\fBctx\fP,  ret)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBbignum_pool_item\fP \fBBN_POOL_ITEM\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBbignum_pool\fP \fBBN_POOL\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBbignum_ctx_stack\fP \fBBN_STACK\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBBN_CTX_init\fP (\fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBBN_CTX\fP * \fBBN_CTX_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_CTX_free\fP (\fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_CTX_start\fP (\fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_CTX_end\fP (\fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBBN_CTX_get\fP (\fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BN_CTX_POOL_SIZE   16"
+
+.PP
+Definition at line 83 of file bn_ctx\&.c\&.
+.SS "#define BN_CTX_START_FRAMES   32"
+
+.PP
+Definition at line 85 of file bn_ctx\&.c\&.
+.SS "#define CTXDBG_ENTRY(str, \fBctx\fP)"
+
+.PP
+Definition at line 188 of file bn_ctx\&.c\&.
+.SS "#define CTXDBG_EXIT(\fBctx\fP)"
+
+.PP
+Definition at line 189 of file bn_ctx\&.c\&.
+.SS "#define CTXDBG_RET(\fBctx\fP, ret)"
+
+.PP
+Definition at line 190 of file bn_ctx\&.c\&.
+.SS "#define NDEBUG"
+
+.PP
+Definition at line 59 of file bn_ctx\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBbignum_pool\fP  \fBBN_POOL\fP"
+
+.SS "typedef struct \fBbignum_pool_item\fP  \fBBN_POOL_ITEM\fP"
+
+.SS "typedef struct \fBbignum_ctx_stack\fP  \fBBN_STACK\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP BN_CTX_end (\fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 268 of file bn_ctx\&.c\&.
+.SS "\fBvoid\fP BN_CTX_free (\fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 230 of file bn_ctx\&.c\&.
+.SS "\fBBIGNUM\fP* BN_CTX_get (\fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 285 of file bn_ctx\&.c\&.
+.SS "\fBvoid\fP BN_CTX_init (\fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 198 of file bn_ctx\&.c\&.
+.SS "\fBBN_CTX\fP* BN_CTX_new (\fBvoid\fP)"
+
+.PP
+Definition at line 214 of file bn_ctx\&.c\&.
+.SS "\fBvoid\fP BN_CTX_start (\fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 254 of file bn_ctx\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,262 @@
+.TH "s2n/libcrypto-build/openssl/crypto/sha/sha_locl.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/sha/sha_locl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include 'md32_common\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDATA_ORDER_IS_BIG_ENDIAN\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_LONG\fP   \fBSHA_LONG\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_CTX\fP   \fBSHA_CTX\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_CBLOCK\fP   \fBSHA_CBLOCK\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_MAKE_STRING\fP(\fBc\fP,  s)  "
+.br
+.ti -1c
+.RI "#define \fBINIT_DATA_h0\fP   0x67452301UL"
+.br
+.ti -1c
+.RI "#define \fBINIT_DATA_h1\fP   0xefcdab89UL"
+.br
+.ti -1c
+.RI "#define \fBINIT_DATA_h2\fP   0x98badcfeUL"
+.br
+.ti -1c
+.RI "#define \fBINIT_DATA_h3\fP   0x10325476UL"
+.br
+.ti -1c
+.RI "#define \fBINIT_DATA_h4\fP   0xc3d2e1f0UL"
+.br
+.ti -1c
+.RI "#define \fBK_00_19\fP   0x5a827999UL"
+.br
+.ti -1c
+.RI "#define \fBK_20_39\fP   0x6ed9eba1UL"
+.br
+.ti -1c
+.RI "#define \fBK_40_59\fP   0x8f1bbcdcUL"
+.br
+.ti -1c
+.RI "#define \fBK_60_79\fP   0xca62c1d6UL"
+.br
+.ti -1c
+.RI "#define \fBF_00_19\fP(\fBb\fP,  \fBc\fP,  d)   ((((\fBc\fP) ^ (d)) & (\fBb\fP)) ^ (d))"
+.br
+.ti -1c
+.RI "#define \fBF_20_39\fP(\fBb\fP,  \fBc\fP,  d)   ((\fBb\fP) ^ (\fBc\fP) ^ (d))"
+.br
+.ti -1c
+.RI "#define \fBF_40_59\fP(\fBb\fP,  \fBc\fP,  d)   (((\fBb\fP) & (\fBc\fP)) | (((\fBb\fP)|(\fBc\fP)) & (d)))"
+.br
+.ti -1c
+.RI "#define \fBF_60_79\fP(\fBb\fP,  \fBc\fP,  d)   \fBF_20_39\fP(\fBb\fP,\fBc\fP,d)"
+.br
+.ti -1c
+.RI "#define \fBBODY_00_15\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  xi)"
+.br
+.ti -1c
+.RI "#define \fBBODY_16_19\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  xi,  xa,  xb,  xc,  xd)"
+.br
+.ti -1c
+.RI "#define \fBBODY_20_31\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  xi,  xa,  xb,  xc,  xd)"
+.br
+.ti -1c
+.RI "#define \fBBODY_32_39\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  xa,  xb,  xc,  xd)"
+.br
+.ti -1c
+.RI "#define \fBBODY_40_59\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  xa,  xb,  xc,  xd)"
+.br
+.ti -1c
+.RI "#define \fBBODY_60_79\fP(i,  \fBa\fP,  \fBb\fP,  \fBc\fP,  d,  \fBe\fP,  \fBf\fP,  xa,  xb,  xc,  xd)"
+.br
+.ti -1c
+.RI "#define \fBX\fP(i)     XX##i"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBfips_md_init_ctx\fP (\fBSHA1\fP, \fBSHA\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BODY_00_15(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, xi)"
+\fBValue:\fP
+.PP
+.nf
+(f)=xi+(e)+K_00_19+ROTATE((a),5)+F_00_19((b),(c),(d)); \
+        (b)=ROTATE((b),30);
+.fi
+.PP
+Definition at line 159 of file sha_locl\&.h\&.
+.SS "#define BODY_16_19(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, xi, xa, xb, xc, xd)"
+\fBValue:\fP
+.PP
+.nf
+Xupdate(f,xi,xa,xb,xc,xd); \
+        (f)+=(e)+K_00_19+ROTATE((a),5)+F_00_19((b),(c),(d)); \
+        (b)=ROTATE((b),30);
+.fi
+.PP
+Definition at line 163 of file sha_locl\&.h\&.
+.SS "#define BODY_20_31(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, xi, xa, xb, xc, xd)"
+\fBValue:\fP
+.PP
+.nf
+Xupdate(f,xi,xa,xb,xc,xd); \
+        (f)+=(e)+K_20_39+ROTATE((a),5)+F_20_39((b),(c),(d)); \
+        (b)=ROTATE((b),30);
+.fi
+.PP
+Definition at line 168 of file sha_locl\&.h\&.
+.SS "#define BODY_32_39(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, xa, xb, xc, xd)"
+\fBValue:\fP
+.PP
+.nf
+Xupdate(f,xa,xa,xb,xc,xd); \
+        (f)+=(e)+K_20_39+ROTATE((a),5)+F_20_39((b),(c),(d)); \
+        (b)=ROTATE((b),30);
+.fi
+.PP
+Definition at line 173 of file sha_locl\&.h\&.
+.SS "#define BODY_40_59(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, xa, xb, xc, xd)"
+\fBValue:\fP
+.PP
+.nf
+Xupdate(f,xa,xa,xb,xc,xd); \
+        (f)+=(e)+K_40_59+ROTATE((a),5)+F_40_59((b),(c),(d)); \
+        (b)=ROTATE((b),30);
+.fi
+.PP
+Definition at line 178 of file sha_locl\&.h\&.
+.SS "#define BODY_60_79(i, \fBa\fP, \fBb\fP, \fBc\fP, d, \fBe\fP, \fBf\fP, xa, xb, xc, xd)"
+\fBValue:\fP
+.PP
+.nf
+Xupdate(f,xa,xa,xb,xc,xd); \
+        (f)=xa+(e)+K_60_79+ROTATE((a),5)+F_60_79((b),(c),(d)); \
+        (b)=ROTATE((b),30);
+.fi
+.PP
+Definition at line 183 of file sha_locl\&.h\&.
+.SS "#define DATA_ORDER_IS_BIG_ENDIAN"
+
+.PP
+Definition at line 65 of file sha_locl\&.h\&.
+.SS "#define F_00_19(\fBb\fP, \fBc\fP, d)   ((((\fBc\fP) ^ (d)) & (\fBb\fP)) ^ (d))"
+
+.PP
+Definition at line 152 of file sha_locl\&.h\&.
+.SS "#define F_20_39(\fBb\fP, \fBc\fP, d)   ((\fBb\fP) ^ (\fBc\fP) ^ (d))"
+
+.PP
+Definition at line 153 of file sha_locl\&.h\&.
+.SS "#define F_40_59(\fBb\fP, \fBc\fP, d)   (((\fBb\fP) & (\fBc\fP)) | (((\fBb\fP)|(\fBc\fP)) & (d)))"
+
+.PP
+Definition at line 154 of file sha_locl\&.h\&.
+.SS "#define F_60_79(\fBb\fP, \fBc\fP, d)   \fBF_20_39\fP(\fBb\fP,\fBc\fP,d)"
+
+.PP
+Definition at line 155 of file sha_locl\&.h\&.
+.SS "#define HASH_CBLOCK   \fBSHA_CBLOCK\fP"
+
+.PP
+Definition at line 69 of file sha_locl\&.h\&.
+.SS "#define HASH_CTX   \fBSHA_CTX\fP"
+
+.PP
+Definition at line 68 of file sha_locl\&.h\&.
+.SS "#define HASH_LONG   \fBSHA_LONG\fP"
+
+.PP
+Definition at line 67 of file sha_locl\&.h\&.
+.SS "#define HASH_MAKE_STRING(\fBc\fP, s)"
+\fBValue:\fP
+.PP
+.nf
+do {    \
+        unsigned long ll;               \
+        ll=(c)->h0; (void)HOST_l2c(ll,(s));     \
+        ll=(c)->h1; (void)HOST_l2c(ll,(s));     \
+        ll=(c)->h2; (void)HOST_l2c(ll,(s));     \
+        ll=(c)->h3; (void)HOST_l2c(ll,(s));     \
+        ll=(c)->h4; (void)HOST_l2c(ll,(s));     \
+        } while (0)
+.fi
+.PP
+Definition at line 70 of file sha_locl\&.h\&.
+.SS "#define INIT_DATA_h0   0x67452301UL"
+
+.PP
+Definition at line 119 of file sha_locl\&.h\&.
+.SS "#define INIT_DATA_h1   0xefcdab89UL"
+
+.PP
+Definition at line 120 of file sha_locl\&.h\&.
+.SS "#define INIT_DATA_h2   0x98badcfeUL"
+
+.PP
+Definition at line 121 of file sha_locl\&.h\&.
+.SS "#define INIT_DATA_h3   0x10325476UL"
+
+.PP
+Definition at line 122 of file sha_locl\&.h\&.
+.SS "#define INIT_DATA_h4   0xc3d2e1f0UL"
+
+.PP
+Definition at line 123 of file sha_locl\&.h\&.
+.SS "#define K_00_19   0x5a827999UL"
+
+.PP
+Definition at line 140 of file sha_locl\&.h\&.
+.SS "#define K_20_39   0x6ed9eba1UL"
+
+.PP
+Definition at line 141 of file sha_locl\&.h\&.
+.SS "#define K_40_59   0x8f1bbcdcUL"
+
+.PP
+Definition at line 142 of file sha_locl\&.h\&.
+.SS "#define K_60_79   0xca62c1d6UL"
+
+.PP
+Definition at line 143 of file sha_locl\&.h\&.
+.SS "#define \fBX\fP(i)   XX##i"
+
+.PP
+Definition at line 201 of file sha_locl\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "fips_md_init_ctx (\fBSHA1\fP, \fBSHA\fP)"
+
+.PP
+Definition at line 128 of file sha_locl\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

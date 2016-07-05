@@ -1,0 +1,177 @@
+.TH "s2n/libcrypto-build/openssl/crypto/mem_dbg.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/mem_dbg.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBmem_leak_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBUF_REMAIN\fP   (sizeof buf \- (size_t)(bufp \- buf))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBmem_leak_st\fP \fBMEM_LEAK\fP"
+.br
+.ti -1c
+.RI "typedef \fBCRYPTO_MEM_LEAK_CB\fP * \fBPCRYPTO_MEM_LEAK_CB\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBMEM\fP)"
+.br
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBAPP_INFO\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_mem_ctrl\fP (int mode)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_is_mem_check_on\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_set_options\fP (long \fBbits\fP)"
+.br
+.ti -1c
+.RI "long \fBCRYPTO_dbg_get_options\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_push_info_\fP (const char *info, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_pop_info\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_remove_all_info\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_malloc\fP (\fBvoid\fP *addr, int \fBnum\fP, const char *\fBfile\fP, int line, int before_p)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_free\fP (\fBvoid\fP *addr, int before_p)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_realloc\fP (\fBvoid\fP *addr1, \fBvoid\fP *addr2, int \fBnum\fP, const char *\fBfile\fP, int line, int before_p)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_mem_leaks_fp\fP (FILE *\fBfp\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBAPP_INFO\fP"
+.br
+.ti -1c
+.RI "\fBMEM\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUF_REMAIN   (sizeof buf \- (size_t)(bufp \- buf))"
+
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBmem_leak_st\fP  \fBMEM_LEAK\fP"
+
+.SS "typedef \fBCRYPTO_MEM_LEAK_CB\fP* \fBPCRYPTO_MEM_LEAK_CB\fP"
+
+.PP
+Definition at line 813 of file mem_dbg\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP CRYPTO_dbg_free (\fBvoid\fP * addr, int before_p)"
+
+.PP
+Definition at line 543 of file mem_dbg\&.c\&.
+.SS "long CRYPTO_dbg_get_options (\fBvoid\fP)"
+
+.PP
+Definition at line 300 of file mem_dbg\&.c\&.
+.SS "\fBvoid\fP CRYPTO_dbg_malloc (\fBvoid\fP * addr, int num, const char * file, int line, int before_p)"
+
+.PP
+Definition at line 466 of file mem_dbg\&.c\&.
+.SS "\fBvoid\fP CRYPTO_dbg_realloc (\fBvoid\fP * addr1, \fBvoid\fP * addr2, int num, const char * file, int line, int before_p)"
+
+.PP
+Definition at line 576 of file mem_dbg\&.c\&.
+.SS "\fBvoid\fP CRYPTO_dbg_set_options (long bits)"
+
+.PP
+Definition at line 295 of file mem_dbg\&.c\&.
+.SS "int CRYPTO_is_mem_check_on (\fBvoid\fP)"
+
+.PP
+Definition at line 278 of file mem_dbg\&.c\&.
+.SS "int CRYPTO_mem_ctrl (int mode)"
+
+.PP
+Definition at line 208 of file mem_dbg\&.c\&.
+.SS "\fBvoid\fP CRYPTO_mem_leaks_fp (FILE * fp)"
+
+.PP
+Definition at line 774 of file mem_dbg\&.c\&.
+.SS "int CRYPTO_pop_info (\fBvoid\fP)"
+
+.PP
+Definition at line 435 of file mem_dbg\&.c\&.
+.SS "int CRYPTO_push_info_ (const char * info, const char * file, int line)"
+
+.PP
+Definition at line 389 of file mem_dbg\&.c\&.
+.SS "int CRYPTO_remove_all_info (\fBvoid\fP)"
+
+.PP
+Definition at line 450 of file mem_dbg\&.c\&.
+.SS "DECLARE_LHASH_OF (\fBMEM\fP)"
+
+.SS "DECLARE_LHASH_OF (\fBAPP_INFO\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "APP_INFO"
+
+.PP
+Definition at line 156 of file mem_dbg\&.c\&.
+.SS "MEM"
+
+.PP
+Definition at line 178 of file mem_dbg\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

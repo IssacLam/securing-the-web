@@ -1,0 +1,280 @@
+.TH "s2n/libcrypto-build/openssl/crypto/des/des_old.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/des/des_old.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/des\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOPENSSL_DES_LIBDES_COMPATIBILITY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fB_ossl_old_des_options\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ecb3_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, \fBdes_key_schedule\fP \fBks1\fP, \fBdes_key_schedule\fP \fBks2\fP, \fBdes_key_schedule\fP \fBks3\fP, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "DES_LONG \fB_ossl_old_des_cbc_cksum\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_cbc_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ncbc_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_xcbc_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, \fB_ossl_old_des_cblock\fP *inw, \fB_ossl_old_des_cblock\fP *outw, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_cfb_encrypt\fP (unsigned char *\fBin\fP, unsigned char *\fBout\fP, int numbits, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ecb_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, \fBdes_key_schedule\fP ks, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_encrypt\fP (DES_LONG *\fBdata\fP, \fBdes_key_schedule\fP ks, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_encrypt2\fP (DES_LONG *\fBdata\fP, \fBdes_key_schedule\fP ks, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_encrypt3\fP (DES_LONG *\fBdata\fP, \fBdes_key_schedule\fP \fBks1\fP, \fBdes_key_schedule\fP \fBks2\fP, \fBdes_key_schedule\fP \fBks3\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_decrypt3\fP (DES_LONG *\fBdata\fP, \fBdes_key_schedule\fP \fBks1\fP, \fBdes_key_schedule\fP \fBks2\fP, \fBdes_key_schedule\fP \fBks3\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ede3_cbc_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, \fBdes_key_schedule\fP \fBks1\fP, \fBdes_key_schedule\fP \fBks2\fP, \fBdes_key_schedule\fP \fBks3\fP, \fB_ossl_old_des_cblock\fP *ivec, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ede3_cfb64_encrypt\fP (unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBdes_key_schedule\fP \fBks1\fP, \fBdes_key_schedule\fP \fBks2\fP, \fBdes_key_schedule\fP \fBks3\fP, \fB_ossl_old_des_cblock\fP *ivec, int *\fBnum\fP, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ede3_ofb64_encrypt\fP (unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBdes_key_schedule\fP \fBks1\fP, \fBdes_key_schedule\fP \fBks2\fP, \fBdes_key_schedule\fP \fBks3\fP, \fB_ossl_old_des_cblock\fP *ivec, int *\fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_enc_read\fP (int fd, char *buf, int \fBlen\fP, \fBdes_key_schedule\fP sched, \fB_ossl_old_des_cblock\fP *iv)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_enc_write\fP (int fd, char *buf, int \fBlen\fP, \fBdes_key_schedule\fP sched, \fB_ossl_old_des_cblock\fP *iv)"
+.br
+.ti -1c
+.RI "char * \fB_ossl_old_des_fcrypt\fP (const char *buf, const char *salt, char *ret)"
+.br
+.ti -1c
+.RI "char * \fB_ossl_old_des_crypt\fP (const char *buf, const char *salt)"
+.br
+.ti -1c
+.RI "char * \fB_ossl_old_crypt\fP (const char *buf, const char *salt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ofb_encrypt\fP (unsigned char *\fBin\fP, unsigned char *\fBout\fP, int numbits, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_pcbc_encrypt\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "DES_LONG \fB_ossl_old_des_quad_cksum\fP (\fB_ossl_old_des_cblock\fP *input, \fB_ossl_old_des_cblock\fP *output, long \fBlength\fP, int out_count, \fB_ossl_old_des_cblock\fP *\fBseed\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_random_seed\fP (\fB_ossl_old_des_cblock\fP \fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_random_key\fP (\fB_ossl_old_des_cblock\fP ret)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_read_password\fP (\fB_ossl_old_des_cblock\fP *\fBkey\fP, const char *prompt, int verify)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_read_2passwords\fP (\fB_ossl_old_des_cblock\fP *key1, \fB_ossl_old_des_cblock\fP *key2, const char *prompt, int verify)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_set_odd_parity\fP (\fB_ossl_old_des_cblock\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_is_weak_key\fP (\fB_ossl_old_des_cblock\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_set_key\fP (\fB_ossl_old_des_cblock\fP *\fBkey\fP, \fBdes_key_schedule\fP schedule)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_key_sched\fP (\fB_ossl_old_des_cblock\fP *\fBkey\fP, \fBdes_key_schedule\fP schedule)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_string_to_key\fP (char *str, \fB_ossl_old_des_cblock\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_string_to_2keys\fP (char *str, \fB_ossl_old_des_cblock\fP *key1, \fB_ossl_old_des_cblock\fP *key2)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_cfb64_encrypt\fP (unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, int *\fBnum\fP, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fB_ossl_old_des_ofb64_encrypt\fP (unsigned char *\fBin\fP, unsigned char *\fBout\fP, long \fBlength\fP, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP *ivec, int *\fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define OPENSSL_DES_LIBDES_COMPATIBILITY"
+
+.PP
+Definition at line 77 of file des_old\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "char* _ossl_old_crypt (const char * buf, const char * salt)"
+
+.PP
+Definition at line 243 of file des_old\&.c\&.
+.SS "DES_LONG _ossl_old_des_cbc_cksum (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec)"
+
+.PP
+Definition at line 96 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_cbc_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, int enc)"
+
+.PP
+Definition at line 105 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_cfb64_encrypt (unsigned char * in, unsigned char * out, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, int * num, int enc)"
+
+.PP
+Definition at line 330 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_cfb_encrypt (unsigned char * in, unsigned char * out, int numbits, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, int enc)"
+
+.PP
+Definition at line 135 of file des_old\&.c\&.
+.SS "char* _ossl_old_des_crypt (const char * buf, const char * salt)"
+
+.PP
+Definition at line 238 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_decrypt3 (DES_LONG * data, \fBdes_key_schedule\fP ks1, \fBdes_key_schedule\fP ks2, \fBdes_key_schedule\fP ks3)"
+
+.PP
+Definition at line 168 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ecb3_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, \fBdes_key_schedule\fP ks1, \fBdes_key_schedule\fP ks2, \fBdes_key_schedule\fP ks3, int enc)"
+
+.PP
+Definition at line 86 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ecb_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, \fBdes_key_schedule\fP ks, int enc)"
+
+.PP
+Definition at line 144 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ede3_cbc_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, \fBdes_key_schedule\fP ks1, \fBdes_key_schedule\fP ks2, \fBdes_key_schedule\fP ks3, \fB_ossl_old_des_cblock\fP * ivec, int enc)"
+
+.PP
+Definition at line 175 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ede3_cfb64_encrypt (unsigned char * in, unsigned char * out, long length, \fBdes_key_schedule\fP ks1, \fBdes_key_schedule\fP ks2, \fBdes_key_schedule\fP ks3, \fB_ossl_old_des_cblock\fP * ivec, int * num, int enc)"
+
+.PP
+Definition at line 188 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ede3_ofb64_encrypt (unsigned char * in, unsigned char * out, long length, \fBdes_key_schedule\fP ks1, \fBdes_key_schedule\fP ks2, \fBdes_key_schedule\fP ks3, \fB_ossl_old_des_cblock\fP * ivec, int * num)"
+
+.PP
+Definition at line 200 of file des_old\&.c\&.
+.SS "int _ossl_old_des_enc_read (int fd, char * buf, int len, \fBdes_key_schedule\fP sched, \fB_ossl_old_des_cblock\fP * iv)"
+
+.PP
+Definition at line 221 of file des_old\&.c\&.
+.SS "int _ossl_old_des_enc_write (int fd, char * buf, int len, \fBdes_key_schedule\fP sched, \fB_ossl_old_des_cblock\fP * iv)"
+
+.PP
+Definition at line 227 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_encrypt (DES_LONG * data, \fBdes_key_schedule\fP ks, int enc)"
+
+.PP
+Definition at line 151 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_encrypt2 (DES_LONG * data, \fBdes_key_schedule\fP ks, int enc)"
+
+.PP
+Definition at line 156 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_encrypt3 (DES_LONG * data, \fBdes_key_schedule\fP ks1, \fBdes_key_schedule\fP ks2, \fBdes_key_schedule\fP ks3)"
+
+.PP
+Definition at line 161 of file des_old\&.c\&.
+.SS "char* _ossl_old_des_fcrypt (const char * buf, const char * salt, char * ret)"
+
+.PP
+Definition at line 233 of file des_old\&.c\&.
+.SS "int _ossl_old_des_is_weak_key (\fB_ossl_old_des_cblock\fP * key)"
+
+.PP
+Definition at line 302 of file des_old\&.c\&.
+.SS "int _ossl_old_des_key_sched (\fB_ossl_old_des_cblock\fP * key, \fBdes_key_schedule\fP schedule)"
+
+.PP
+Definition at line 313 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ncbc_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, int enc)"
+
+.PP
+Definition at line 114 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ofb64_encrypt (unsigned char * in, unsigned char * out, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, int * num)"
+
+.PP
+Definition at line 339 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_ofb_encrypt (unsigned char * in, unsigned char * out, int numbits, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec)"
+
+.PP
+Definition at line 248 of file des_old\&.c\&.
+.SS "const char* _ossl_old_des_options (\fBvoid\fP)"
+
+.PP
+Definition at line 81 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_pcbc_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, int enc)"
+
+.PP
+Definition at line 257 of file des_old\&.c\&.
+.SS "DES_LONG _ossl_old_des_quad_cksum (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, int out_count, \fB_ossl_old_des_cblock\fP * seed)"
+
+.PP
+Definition at line 266 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_random_key (\fB_ossl_old_des_cblock\fP ret)"
+
+.PP
+Definition at line 279 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_random_seed (\fB_ossl_old_des_cblock\fP key)"
+
+.PP
+Definition at line 274 of file des_old\&.c\&.
+.SS "int _ossl_old_des_read_2passwords (\fB_ossl_old_des_cblock\fP * key1, \fB_ossl_old_des_cblock\fP * key2, const char * prompt, int verify)"
+
+.PP
+Definition at line 290 of file des_old\&.c\&.
+.SS "int _ossl_old_des_read_password (\fB_ossl_old_des_cblock\fP * key, const char * prompt, int verify)"
+
+.PP
+Definition at line 284 of file des_old\&.c\&.
+.SS "int _ossl_old_des_set_key (\fB_ossl_old_des_cblock\fP * key, \fBdes_key_schedule\fP schedule)"
+
+.PP
+Definition at line 307 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_set_odd_parity (\fB_ossl_old_des_cblock\fP * key)"
+
+.PP
+Definition at line 297 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_string_to_2keys (char * str, \fB_ossl_old_des_cblock\fP * key1, \fB_ossl_old_des_cblock\fP * key2)"
+
+.PP
+Definition at line 324 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_string_to_key (char * str, \fB_ossl_old_des_cblock\fP * key)"
+
+.PP
+Definition at line 319 of file des_old\&.c\&.
+.SS "\fBvoid\fP _ossl_old_des_xcbc_encrypt (\fB_ossl_old_des_cblock\fP * input, \fB_ossl_old_des_cblock\fP * output, long length, \fBdes_key_schedule\fP schedule, \fB_ossl_old_des_cblock\fP * ivec, \fB_ossl_old_des_cblock\fP * inw, \fB_ossl_old_des_cblock\fP * outw, int enc)"
+
+.PP
+Definition at line 123 of file des_old\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

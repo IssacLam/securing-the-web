@@ -1,0 +1,98 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bn/bn_mont.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bn/bn_mont.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include 'bn_lcl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMONT_WORD\fP   /* use the faster word\-based algorithm */"
+.br
+.ti -1c
+.RI "#define \fBBRANCH_FREE\fP   1"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBBN_mod_mul_montgomery\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBb\fP, \fBBN_MONT_CTX\fP *mont, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_from_montgomery\fP (\fBBIGNUM\fP *ret, const \fBBIGNUM\fP *\fBa\fP, \fBBN_MONT_CTX\fP *mont, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBBN_MONT_CTX\fP * \fBBN_MONT_CTX_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_MONT_CTX_init\fP (\fBBN_MONT_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBN_MONT_CTX_free\fP (\fBBN_MONT_CTX\fP *mont)"
+.br
+.ti -1c
+.RI "int \fBBN_MONT_CTX_set\fP (\fBBN_MONT_CTX\fP *mont, const \fBBIGNUM\fP *mod, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBBN_MONT_CTX\fP * \fBBN_MONT_CTX_copy\fP (\fBBN_MONT_CTX\fP *to, \fBBN_MONT_CTX\fP *from)"
+.br
+.ti -1c
+.RI "\fBBN_MONT_CTX\fP * \fBBN_MONT_CTX_set_locked\fP (\fBBN_MONT_CTX\fP **pmont, int lock, const \fBBIGNUM\fP *mod, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BRANCH_FREE   1"
+
+.SS "#define MONT_WORD   /* use the faster word\-based algorithm */"
+
+.PP
+Definition at line 123 of file bn_mont\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int BN_from_montgomery (\fBBIGNUM\fP * ret, const \fBBIGNUM\fP * a, \fBBN_MONT_CTX\fP * mont, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 290 of file bn_mont\&.c\&.
+.SS "int BN_mod_mul_montgomery (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * b, \fBBN_MONT_CTX\fP * mont, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 129 of file bn_mont\&.c\&.
+.SS "\fBBN_MONT_CTX\fP* BN_MONT_CTX_copy (\fBBN_MONT_CTX\fP * to, \fBBN_MONT_CTX\fP * from)"
+
+.PP
+Definition at line 505 of file bn_mont\&.c\&.
+.SS "\fBvoid\fP BN_MONT_CTX_free (\fBBN_MONT_CTX\fP * mont)"
+
+.PP
+Definition at line 359 of file bn_mont\&.c\&.
+.SS "\fBvoid\fP BN_MONT_CTX_init (\fBBN_MONT_CTX\fP * ctx)"
+
+.PP
+Definition at line 349 of file bn_mont\&.c\&.
+.SS "\fBBN_MONT_CTX\fP* BN_MONT_CTX_new (\fBvoid\fP)"
+
+.PP
+Definition at line 337 of file bn_mont\&.c\&.
+.SS "int BN_MONT_CTX_set (\fBBN_MONT_CTX\fP * mont, const \fBBIGNUM\fP * mod, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 371 of file bn_mont\&.c\&.
+.SS "\fBBN_MONT_CTX\fP* BN_MONT_CTX_set_locked (\fBBN_MONT_CTX\fP ** pmont, int lock, const \fBBIGNUM\fP * mod, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 522 of file bn_mont\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

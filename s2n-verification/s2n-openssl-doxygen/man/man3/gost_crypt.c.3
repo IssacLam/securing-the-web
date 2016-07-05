@@ -1,0 +1,160 @@
+.TH "s2n/libcrypto-build/openssl/engines/ccgost/gost_crypt.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/engines/ccgost/gost_crypt.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'gost89\&.h'\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include 'e_gost_err\&.h'\fP
+.br
+\fC#include 'gost_lcl\&.h'\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNDEBUG\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const struct \fBgost_cipher_info\fP * \fBget_encryption_params\fP (\fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBEVP_CIPHER\fP \fBcipher_gost\fP"
+.br
+.ti -1c
+.RI "\fBEVP_CIPHER\fP \fBcipher_gost_cpacnt\fP"
+.br
+.ti -1c
+.RI "\fBEVP_MD\fP \fBimit_gost_cpa\fP"
+.br
+.ti -1c
+.RI "struct \fBgost_cipher_info\fP \fBgost_cipher_list\fP []"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define NDEBUG"
+
+.PP
+Definition at line 17 of file gost_crypt\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "const struct \fBgost_cipher_info\fP* get_encryption_params (\fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 139 of file gost_crypt\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBEVP_CIPHER\fP cipher_gost"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    NID_id_Gost28147_89,
+    1,                          
+    32,                         
+    8,                          
+    EVP_CIPH_CFB_MODE | EVP_CIPH_NO_PADDING |
+        EVP_CIPH_CUSTOM_IV | EVP_CIPH_RAND_KEY | EVP_CIPH_ALWAYS_CALL_INIT,
+    gost_cipher_init,
+    gost_cipher_do_cfb,
+    gost_cipher_cleanup,
+    sizeof(struct ossl_gost_cipher_ctx), 
+    gost89_set_asn1_parameters,
+    gost89_get_asn1_parameters,
+    gost_cipher_ctl,
+    NULL,
+}
+.fi
+.PP
+Definition at line 40 of file gost_crypt\&.c\&.
+.SS "\fBEVP_CIPHER\fP cipher_gost_cpacnt"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    NID_gost89_cnt,
+    1,                          
+    32,                         
+    8,                          
+    EVP_CIPH_OFB_MODE | EVP_CIPH_NO_PADDING |
+        EVP_CIPH_CUSTOM_IV | EVP_CIPH_RAND_KEY | EVP_CIPH_ALWAYS_CALL_INIT,
+    gost_cipher_init_cpa,
+    gost_cipher_do_cnt,
+    gost_cipher_cleanup,
+    sizeof(struct ossl_gost_cipher_ctx), 
+    gost89_set_asn1_parameters,
+    gost89_get_asn1_parameters,
+    gost_cipher_ctl,
+    NULL,
+}
+.fi
+.PP
+Definition at line 57 of file gost_crypt\&.c\&.
+.SS "struct \fBgost_cipher_info\fP gost_cipher_list[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    
+    
+    {NID_id_Gost28147_89_cc, &GostR3411_94_CryptoProParamSet, 0},
+    {NID_id_Gost28147_89_CryptoPro_A_ParamSet, &Gost28147_CryptoProParamSetA,
+     1},
+    {NID_id_Gost28147_89_CryptoPro_B_ParamSet, &Gost28147_CryptoProParamSetB,
+     1},
+    {NID_id_Gost28147_89_CryptoPro_C_ParamSet, &Gost28147_CryptoProParamSetC,
+     1},
+    {NID_id_Gost28147_89_CryptoPro_D_ParamSet, &Gost28147_CryptoProParamSetD,
+     1},
+    {NID_id_Gost28147_89_TestParamSet, &Gost28147_TestParamSet, 1},
+    {NID_undef, NULL, 0}
+}
+.fi
+.PP
+Definition at line 111 of file gost_crypt\&.c\&.
+.SS "\fBEVP_MD\fP imit_gost_cpa"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    NID_id_Gost28147_89_MAC,
+    NID_undef,
+    4,
+    0,
+    gost_imit_init_cpa,
+    gost_imit_update,
+    gost_imit_final,
+    gost_imit_copy,
+    gost_imit_cleanup,
+    NULL,
+    NULL,
+    {0, 0, 0, 0, 0},
+    8,
+    sizeof(struct ossl_gost_imit_ctx),
+    gost_imit_ctrl
+}
+.fi
+.PP
+Definition at line 87 of file gost_crypt\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

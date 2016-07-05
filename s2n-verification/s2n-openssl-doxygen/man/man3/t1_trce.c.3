@@ -1,0 +1,66 @@
+.TH "s2n/libcrypto-build/openssl/ssl/t1_trce.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/t1_trce.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ssl_locl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBssl_trace_tbl\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBssl_trace_str\fP(val,  tbl)   do_ssl_trace_str(val, tbl, sizeof(tbl)/sizeof(\fBssl_trace_tbl\fP))"
+.br
+.ti -1c
+.RI "#define \fBssl_trace_list\fP(bio,  indent,  msg,  msglen,  value,  table)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBSSL_CIPHER_standard_name\fP (const \fBSSL_CIPHER\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_trace\fP (int write_p, int \fBversion\fP, int content_type, const \fBvoid\fP *buf, size_t msglen, \fBSSL\fP *\fBssl\fP, \fBvoid\fP *\fBarg\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ssl_trace_list(bio, indent, msg, msglen, value, table)"
+\fBValue:\fP
+.PP
+.nf
+do_ssl_trace_list(bio, indent, msg, msglen, value, \
+         table, sizeof(table)/sizeof(ssl_trace_tbl))
+.fi
+.PP
+Definition at line 70 of file t1_trce\&.c\&.
+.SS "#define ssl_trace_str(val, tbl)   do_ssl_trace_str(val, tbl, sizeof(tbl)/sizeof(\fBssl_trace_tbl\fP))"
+
+.PP
+Definition at line 67 of file t1_trce\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "const char* SSL_CIPHER_standard_name (const \fBSSL_CIPHER\fP * c)"
+
+.PP
+Definition at line 1189 of file t1_trce\&.c\&.
+.SS "\fBvoid\fP SSL_trace (int write_p, int version, int content_type, const \fBvoid\fP * buf, size_t msglen, \fBSSL\fP * ssl, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 1196 of file t1_trce\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

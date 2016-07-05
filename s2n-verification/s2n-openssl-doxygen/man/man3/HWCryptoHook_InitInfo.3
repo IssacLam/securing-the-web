@@ -1,0 +1,170 @@
+.TH "HWCryptoHook_InitInfo" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HWCryptoHook_InitInfo \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hwcryptohook\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "unsigned long \fBflags\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlogstream\fP"
+.br
+.ti -1c
+.RI "size_t \fBlimbsize\fP"
+.br
+.ti -1c
+.RI "int \fBmslimbfirst\fP"
+.br
+.ti -1c
+.RI "int \fBmsbytefirst\fP"
+.br
+.ti -1c
+.RI "int \fBmaxmutexes\fP"
+.br
+.ti -1c
+.RI "int \fBmaxsimultaneous\fP"
+.br
+.ti -1c
+.RI "size_t \fBmutexsize\fP"
+.br
+.ti -1c
+.RI "int(* \fBmutex_init\fP )(\fBHWCryptoHook_Mutex\fP *, \fBHWCryptoHook_CallerContext\fP *cactx)"
+.br
+.ti -1c
+.RI "int(* \fBmutex_acquire\fP )(\fBHWCryptoHook_Mutex\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBmutex_release\fP )(\fBHWCryptoHook_Mutex\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBmutex_destroy\fP )(\fBHWCryptoHook_Mutex\fP *)"
+.br
+.ti -1c
+.RI "size_t \fBcondvarsize\fP"
+.br
+.ti -1c
+.RI "int(* \fBcondvar_init\fP )(\fBHWCryptoHook_CondVar\fP *, \fBHWCryptoHook_CallerContext\fP *cactx)"
+.br
+.ti -1c
+.RI "int(* \fBcondvar_wait\fP )(\fBHWCryptoHook_CondVar\fP *, \fBHWCryptoHook_Mutex\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBcondvar_signal\fP )(\fBHWCryptoHook_CondVar\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBcondvar_broadcast\fP )(\fBHWCryptoHook_CondVar\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBcondvar_destroy\fP )(\fBHWCryptoHook_CondVar\fP *)"
+.br
+.ti -1c
+.RI "int(* \fBgetpassphrase\fP )(const char *prompt_info, int *len_io, char *buf, \fBHWCryptoHook_PassphraseContext\fP *ppctx, \fBHWCryptoHook_CallerContext\fP *cactx)"
+.br
+.ti -1c
+.RI "int(* \fBgetphystoken\fP )(const char *prompt_info, const char *wrong_info, \fBHWCryptoHook_PassphraseContext\fP *ppctx, \fBHWCryptoHook_CallerContext\fP *cactx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBlogmessage\fP )(\fBvoid\fP *\fBlogstream\fP, const char *message)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 176 of file hwcryptohook\&.h\&.
+.SH "Field Documentation"
+.PP 
+.SS "\fBvoid\fP(* condvar_broadcast) (\fBHWCryptoHook_CondVar\fP *)"
+
+.PP
+Definition at line 228 of file hwcryptohook\&.h\&.
+.SS "\fBvoid\fP(* condvar_destroy) (\fBHWCryptoHook_CondVar\fP *)"
+
+.PP
+Definition at line 229 of file hwcryptohook\&.h\&.
+.SS "int(* condvar_init) (\fBHWCryptoHook_CondVar\fP *, \fBHWCryptoHook_CallerContext\fP *cactx)"
+
+.PP
+Definition at line 224 of file hwcryptohook\&.h\&.
+.SS "\fBvoid\fP(* condvar_signal) (\fBHWCryptoHook_CondVar\fP *)"
+
+.PP
+Definition at line 227 of file hwcryptohook\&.h\&.
+.SS "int(* condvar_wait) (\fBHWCryptoHook_CondVar\fP *, \fBHWCryptoHook_Mutex\fP *)"
+
+.PP
+Definition at line 226 of file hwcryptohook\&.h\&.
+.SS "size_t condvarsize"
+
+.PP
+Definition at line 223 of file hwcryptohook\&.h\&.
+.SS "unsigned long flags"
+
+.PP
+Definition at line 177 of file hwcryptohook\&.h\&.
+.SS "int(* getpassphrase) (const char *prompt_info, int *len_io, char *buf, \fBHWCryptoHook_PassphraseContext\fP *ppctx, \fBHWCryptoHook_CallerContext\fP *cactx)"
+
+.PP
+Definition at line 241 of file hwcryptohook\&.h\&.
+.SS "int(* getphystoken) (const char *prompt_info, const char *wrong_info, \fBHWCryptoHook_PassphraseContext\fP *ppctx, \fBHWCryptoHook_CallerContext\fP *cactx)"
+
+.PP
+Definition at line 258 of file hwcryptohook\&.h\&.
+.SS "size_t limbsize"
+
+.PP
+Definition at line 179 of file hwcryptohook\&.h\&.
+.SS "\fBvoid\fP(* logmessage) (\fBvoid\fP *\fBlogstream\fP, const char *message)"
+
+.PP
+Definition at line 295 of file hwcryptohook\&.h\&.
+.SS "\fBvoid\fP* logstream"
+
+.PP
+Definition at line 178 of file hwcryptohook\&.h\&.
+.SS "int maxmutexes"
+
+.PP
+Definition at line 209 of file hwcryptohook\&.h\&.
+.SS "int maxsimultaneous"
+
+.PP
+Definition at line 210 of file hwcryptohook\&.h\&.
+.SS "int msbytefirst"
+
+.PP
+Definition at line 182 of file hwcryptohook\&.h\&.
+.SS "int mslimbfirst"
+
+.PP
+Definition at line 181 of file hwcryptohook\&.h\&.
+.SS "int(* mutex_acquire) (\fBHWCryptoHook_Mutex\fP *)"
+
+.PP
+Definition at line 214 of file hwcryptohook\&.h\&.
+.SS "\fBvoid\fP(* mutex_destroy) (\fBHWCryptoHook_Mutex\fP *)"
+
+.PP
+Definition at line 216 of file hwcryptohook\&.h\&.
+.SS "int(* mutex_init) (\fBHWCryptoHook_Mutex\fP *, \fBHWCryptoHook_CallerContext\fP *cactx)"
+
+.PP
+Definition at line 212 of file hwcryptohook\&.h\&.
+.SS "\fBvoid\fP(* mutex_release) (\fBHWCryptoHook_Mutex\fP *)"
+
+.PP
+Definition at line 215 of file hwcryptohook\&.h\&.
+.SS "size_t mutexsize"
+
+.PP
+Definition at line 211 of file hwcryptohook\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

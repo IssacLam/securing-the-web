@@ -1,0 +1,396 @@
+.TH "s2n/libcrypto-build/openssl/engines/vendor_defns/aep.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/engines/vendor_defns/aep.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBAEP_U64\fP"
+.br
+.ti -1c
+.RI "struct \fBAEP_CONNECTION_ENTRY\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBAEP_R_OK\fP   0x00000000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_GENERAL_ERROR\fP   0x10000001"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_HOST_MEMORY\fP   0x10000002"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_FUNCTION_FAILED\fP   0x10000006"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_ARGUMENTS_BAD\fP   0x10020000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_NO_TARGET_RESOURCES\fP   0x10030000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_SOCKERROR\fP   0x10000010"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_SOCKEOF\fP   0x10000011"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_CONNECTION_HANDLE_INVALID\fP   0x100000B3"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_TRANSACTION_HANDLE_INVALID\fP   0x10040000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_TRANSACTION_NOT_READY\fP   0x00010000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_TRANSACTION_CLAIMED\fP   0x10050000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_TIMED_OUT\fP   0x10060000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_FXN_NOT_IMPLEMENTED\fP   0x10070000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_TARGET_ERROR\fP   0x10080000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_DAEMON_ERROR\fP   0x10090000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_INVALID_CTX_ID\fP   0x10009000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_NO_KEY_MANAGER\fP   0x1000a000"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_MUTEX_BAD\fP   0x000001A0"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_AEPAPI_NOT_INITIALIZED\fP   0x10000190"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_AEPAPI_ALREADY_INITIALIZED\fP   0x10000191"
+.br
+.ti -1c
+.RI "#define \fBAEP_R_NO_MORE_CONNECTION_HNDLS\fP   0x10000200"
+.br
+.ti -1c
+.RI "#define \fBMAX_PROCESS_CONNECTIONS\fP   256"
+.br
+.ti -1c
+.RI "#define \fBRAND_BLK_SIZE\fP   1024"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned char \fBAEP_U8\fP"
+.br
+.ti -1c
+.RI "typedef char \fBAEP_CHAR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U8\fP \fBAEP_BBOOL\fP"
+.br
+.ti -1c
+.RI "typedef unsigned short \fBAEP_U16\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBAEP_U32\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U32\fP \fBAEP_FLAGS\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U8\fP * \fBAEP_U8_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_CHAR\fP * \fBAEP_CHAR_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U32\fP * \fBAEP_U32_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U64\fP * \fBAEP_U64_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP * \fBAEP_VOID_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_VOID_PTR\fP * \fBAEP_VOID_PTR_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U32\fP \fBAEP_CONNECTION_HNDL\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_CONNECTION_HNDL\fP * \fBAEP_CONNECTION_HNDL_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U32\fP \fBAEP_TRANSACTION_ID\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_TRANSACTION_ID\fP * \fBAEP_TRANSACTION_ID_PTR\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_U32\fP \fBAEP_RV\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBAEP_CONNECTION_ENTRY\fP \fBAEP_CONNECTION_ENTRY\fP"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_OpenConnection\fP(\fBAEP_CONNECTION_HNDL_PTR\fP phConnection)"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_CloseConnection\fP(\fBAEP_CONNECTION_HNDL\fP hConnection)"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_ModExp\fP(\fBAEP_CONNECTION_HNDL\fP hConnection, \fBAEP_VOID_PTR\fP pA, \fBAEP_VOID_PTR\fP pP, \fBAEP_VOID_PTR\fP pN, \fBAEP_VOID_PTR\fP pResult, \fBAEP_TRANSACTION_ID\fP *pidTransID)"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_ModExpCrt\fP(\fBAEP_CONNECTION_HNDL\fP hConnection, \fBAEP_VOID_PTR\fP pA, \fBAEP_VOID_PTR\fP pP, \fBAEP_VOID_PTR\fP pQ, \fBAEP_VOID_PTR\fP pDmp1, \fBAEP_VOID_PTR\fP pDmq1, \fBAEP_VOID_PTR\fP pIqmp, \fBAEP_VOID_PTR\fP pResult, \fBAEP_TRANSACTION_ID\fP *pidTransID)"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_Initialize\fP(\fBAEP_VOID_PTR\fP pInitArgs)"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_Finalize\fP(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef \fBAEP_RV\fP \fBt_AEP_SetBNCallBacks\fP(\fBAEP_RV\fP(*GetBigNumSizeFunc) (\fBAEP_VOID_PTR\fP ArbBigNum,                                                                                                                                               \fBAEP_U32\fP *BigNumSize), \fBAEP_RV\fP(*MakeAEPBigNumFunc) (\fBAEP_VOID_PTR\fP                                                                                                                                                                                                                                                           ArbBigNum,                                                                                                                                                                                                                                                           \fBAEP_U32\fP                                                                                                                                                                                                                                                           BigNumSize,                                                                                                                                                                                                                                                           unsigned char                                                                                                                                                                                                                                                           *AEP_BigNum), \fBAEP_RV\fP(*ConverAEPBigNumFunc) (\fBvoid\fP                                                                                                                                                                                                                                                                   *ArbBigNum,                                                                                                                                                                                                                                                                   \fBAEP_U32\fP                                                                                                                                                                                                                                                                   BigNumSize,                                                                                                                                                                                                                                                                   unsigned                                                                                                                                                                                                                                                                   char                                                                                                                                                                                                                                                                   *AEP_BigNum))"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBAEP_CONNECTION_STATE\fP { \fBNotConnected\fP = 0, \fBConnected\fP = 1, \fBInUse\fP = 2 }"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define AEP_R_AEPAPI_ALREADY_INITIALIZED   0x10000191"
+
+.PP
+Definition at line 98 of file aep\&.h\&.
+.SS "#define AEP_R_AEPAPI_NOT_INITIALIZED   0x10000190"
+
+.PP
+Definition at line 93 of file aep\&.h\&.
+.SS "#define AEP_R_ARGUMENTS_BAD   0x10020000"
+
+.PP
+Definition at line 33 of file aep\&.h\&.
+.SS "#define AEP_R_CONNECTION_HANDLE_INVALID   0x100000B3"
+
+.PP
+Definition at line 50 of file aep\&.h\&.
+.SS "#define AEP_R_DAEMON_ERROR   0x10090000"
+
+.PP
+Definition at line 76 of file aep\&.h\&.
+.SS "#define AEP_R_FUNCTION_FAILED   0x10000006"
+
+.PP
+Definition at line 28 of file aep\&.h\&.
+.SS "#define AEP_R_FXN_NOT_IMPLEMENTED   0x10070000"
+
+.PP
+Definition at line 69 of file aep\&.h\&.
+.SS "#define AEP_R_GENERAL_ERROR   0x10000001"
+
+.PP
+Definition at line 21 of file aep\&.h\&.
+.SS "#define AEP_R_HOST_MEMORY   0x10000002"
+
+.PP
+Definition at line 26 of file aep\&.h\&.
+.SS "#define AEP_R_INVALID_CTX_ID   0x10009000"
+
+.PP
+Definition at line 81 of file aep\&.h\&.
+.SS "#define AEP_R_MUTEX_BAD   0x000001A0"
+
+.PP
+Definition at line 88 of file aep\&.h\&.
+.SS "#define AEP_R_NO_KEY_MANAGER   0x1000a000"
+
+.PP
+Definition at line 83 of file aep\&.h\&.
+.SS "#define AEP_R_NO_MORE_CONNECTION_HNDLS   0x10000200"
+
+.PP
+Definition at line 103 of file aep\&.h\&.
+.SS "#define AEP_R_NO_TARGET_RESOURCES   0x10030000"
+
+.PP
+Definition at line 35 of file aep\&.h\&.
+.SS "#define AEP_R_OK   0x00000000"
+
+.PP
+Definition at line 16 of file aep\&.h\&.
+.SS "#define AEP_R_SOCKEOF   0x10000011"
+
+.PP
+Definition at line 45 of file aep\&.h\&.
+.SS "#define AEP_R_SOCKERROR   0x10000010"
+
+.PP
+Definition at line 40 of file aep\&.h\&.
+.SS "#define AEP_R_TARGET_ERROR   0x10080000"
+
+.PP
+Definition at line 71 of file aep\&.h\&.
+.SS "#define AEP_R_TIMED_OUT   0x10060000"
+
+.PP
+Definition at line 67 of file aep\&.h\&.
+.SS "#define AEP_R_TRANSACTION_CLAIMED   0x10050000"
+
+.PP
+Definition at line 62 of file aep\&.h\&.
+.SS "#define AEP_R_TRANSACTION_HANDLE_INVALID   0x10040000"
+
+.PP
+Definition at line 52 of file aep\&.h\&.
+.SS "#define AEP_R_TRANSACTION_NOT_READY   0x00010000"
+
+.PP
+Definition at line 57 of file aep\&.h\&.
+.SS "#define MAX_PROCESS_CONNECTIONS   256"
+
+.PP
+Definition at line 178 of file aep\&.h\&.
+.SS "#define RAND_BLK_SIZE   1024"
+
+.PP
+Definition at line 180 of file aep\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef \fBAEP_U8\fP \fBAEP_BBOOL\fP"
+
+.PP
+Definition at line 118 of file aep\&.h\&.
+.SS "typedef char \fBAEP_CHAR\fP"
+
+.PP
+Definition at line 115 of file aep\&.h\&.
+.SS "typedef \fBAEP_CHAR\fP* \fBAEP_CHAR_PTR\fP"
+
+.PP
+Definition at line 144 of file aep\&.h\&.
+.SS "typedef struct \fBAEP_CONNECTION_ENTRY\fP  \fBAEP_CONNECTION_ENTRY\fP"
+
+.SS "typedef \fBAEP_U32\fP \fBAEP_CONNECTION_HNDL\fP"
+
+.PP
+Definition at line 155 of file aep\&.h\&.
+.SS "typedef \fBAEP_CONNECTION_HNDL\fP* \fBAEP_CONNECTION_HNDL_PTR\fP"
+
+.PP
+Definition at line 160 of file aep\&.h\&.
+.SS "typedef \fBAEP_U32\fP \fBAEP_FLAGS\fP"
+
+.PP
+Definition at line 141 of file aep\&.h\&.
+.SS "typedef \fBAEP_U32\fP \fBAEP_RV\fP"
+
+.PP
+Definition at line 176 of file aep\&.h\&.
+.SS "typedef \fBAEP_U32\fP \fBAEP_TRANSACTION_ID\fP"
+
+.PP
+Definition at line 166 of file aep\&.h\&.
+.SS "typedef \fBAEP_TRANSACTION_ID\fP* \fBAEP_TRANSACTION_ID_PTR\fP"
+
+.PP
+Definition at line 171 of file aep\&.h\&.
+.SS "typedef unsigned short \fBAEP_U16\fP"
+
+.PP
+Definition at line 123 of file aep\&.h\&.
+.SS "typedef unsigned long \fBAEP_U32\fP"
+
+.PP
+Definition at line 129 of file aep\&.h\&.
+.SS "typedef \fBAEP_U32\fP* \fBAEP_U32_PTR\fP"
+
+.PP
+Definition at line 145 of file aep\&.h\&.
+.SS "typedef \fBAEP_U64\fP* \fBAEP_U64_PTR\fP"
+
+.PP
+Definition at line 146 of file aep\&.h\&.
+.SS "typedef unsigned char \fBAEP_U8\fP"
+
+.PP
+Definition at line 112 of file aep\&.h\&.
+.SS "typedef \fBAEP_U8\fP* \fBAEP_U8_PTR\fP"
+
+.PP
+Definition at line 143 of file aep\&.h\&.
+.SS "typedef \fBvoid\fP* \fBAEP_VOID_PTR\fP"
+
+.PP
+Definition at line 147 of file aep\&.h\&.
+.SS "typedef \fBAEP_VOID_PTR\fP* \fBAEP_VOID_PTR_PTR\fP"
+
+.PP
+Definition at line 150 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_CloseConnection(\fBAEP_CONNECTION_HNDL\fP hConnection)"
+
+.PP
+Definition at line 194 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_Finalize(\fBvoid\fP)"
+
+.PP
+Definition at line 219 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_Initialize(\fBAEP_VOID_PTR\fP pInitArgs)"
+
+.PP
+Definition at line 218 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_ModExp(\fBAEP_CONNECTION_HNDL\fP hConnection, \fBAEP_VOID_PTR\fP pA, \fBAEP_VOID_PTR\fP pP, \fBAEP_VOID_PTR\fP pN, \fBAEP_VOID_PTR\fP pResult, \fBAEP_TRANSACTION_ID\fP *pidTransID)"
+
+.PP
+Definition at line 196 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_ModExpCrt(\fBAEP_CONNECTION_HNDL\fP hConnection, \fBAEP_VOID_PTR\fP pA, \fBAEP_VOID_PTR\fP pP, \fBAEP_VOID_PTR\fP pQ, \fBAEP_VOID_PTR\fP pDmp1, \fBAEP_VOID_PTR\fP pDmq1, \fBAEP_VOID_PTR\fP pIqmp, \fBAEP_VOID_PTR\fP pResult, \fBAEP_TRANSACTION_ID\fP *pidTransID)"
+
+.PP
+Definition at line 202 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_OpenConnection(\fBAEP_CONNECTION_HNDL_PTR\fP phConnection)"
+
+.PP
+Definition at line 193 of file aep\&.h\&.
+.SS "typedef \fBAEP_RV\fP t_AEP_SetBNCallBacks(\fBAEP_RV\fP(*GetBigNumSizeFunc)(\fBAEP_VOID_PTR\fP ArbBigNum,                                                                         \fBAEP_U32\fP *BigNumSize), \fBAEP_RV\fP(*MakeAEPBigNumFunc)(\fBAEP_VOID_PTR\fP                                                                                                                               ArbBigNum,                                                                                                                               \fBAEP_U32\fP                                                                                                                               BigNumSize,                                                                                                                               unsigned char                                                                                                                               *AEP_BigNum), \fBAEP_RV\fP(*ConverAEPBigNumFunc)(\fBvoid\fP                                                                                                                                   *ArbBigNum,                                                                                                                                   \fBAEP_U32\fP                                                                                                                                   BigNumSize,                                                                                                                                   unsigned                                                                                                                                   char                                                                                                                                   *AEP_BigNum))"
+
+.PP
+Definition at line 220 of file aep\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBAEP_CONNECTION_STATE\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINotConnected \fP\fP
+.TP
+\fB\fIConnected \fP\fP
+.TP
+\fB\fIInUse \fP\fP
+.PP
+Definition at line 182 of file aep\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

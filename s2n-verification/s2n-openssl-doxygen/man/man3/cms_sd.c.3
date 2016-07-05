@@ -1,0 +1,197 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cms/cms_sd.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cms/cms_sd.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/cms\&.h>\fP
+.br
+\fC#include 'cms_lcl\&.h'\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBCMS_SignedData_init\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_set1_SignerIdentifier\fP (\fBCMS_SignerIdentifier\fP *sid, \fBX509\fP *cert, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBcms_SignerIdentifier_get0_signer_id\fP (\fBCMS_SignerIdentifier\fP *sid, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBcms_SignerIdentifier_cert_cmp\fP (\fBCMS_SignerIdentifier\fP *sid, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "\fBCMS_SignerInfo\fP * \fBCMS_add1_signer\fP (\fBCMS_ContentInfo\fP *cms, \fBX509\fP *signer, \fBEVP_PKEY\fP *pk, const \fBEVP_MD\fP *md, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBCMS_SignerInfo_get0_pkey_ctx\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "\fBEVP_MD_CTX\fP * \fBCMS_SignerInfo_get0_md_ctx\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBCMS_SignerInfo\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCMS_SignerInfo_set1_signer_cert\fP (\fBCMS_SignerInfo\fP *si, \fBX509\fP *signer)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_get0_signer_id\fP (\fBCMS_SignerInfo\fP *si, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_cert_cmp\fP (\fBCMS_SignerInfo\fP *si, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_set1_signers_certs\fP (\fBCMS_ContentInfo\fP *cms, \fBSTACK_OF\fP(\fBX509\fP)*scerts, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCMS_SignerInfo_get0_algs\fP (\fBCMS_SignerInfo\fP *si, \fBEVP_PKEY\fP **pk, \fBX509\fP **signer, \fBX509_ALGOR\fP **pdig, \fBX509_ALGOR\fP **psig)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBCMS_SignerInfo_get0_signature\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBcms_SignedData_final\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *chain)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_sign\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_verify\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_SignedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_verify_content\fP (\fBCMS_SignerInfo\fP *si, \fBBIO\fP *chain)"
+.br
+.ti -1c
+.RI "int \fBCMS_add_smimecap\fP (\fBCMS_SignerInfo\fP *si, \fBSTACK_OF\fP(\fBX509_ALGOR\fP)*algs)"
+.br
+.ti -1c
+.RI "int \fBCMS_add_simple_smimecap\fP (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)**algs, int algnid, int keysize)"
+.br
+.ti -1c
+.RI "int \fBCMS_add_standard_smimecap\fP (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)**smcap)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBCMS_SignerInfo\fP* CMS_add1_signer (\fBCMS_ContentInfo\fP * cms, \fBX509\fP * signer, \fBEVP_PKEY\fP * pk, const \fBEVP_MD\fP * md, unsigned int flags)"
+
+.PP
+Definition at line 266 of file cms_sd\&.c\&.
+.SS "int CMS_add_simple_smimecap (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)** algs, int algnid, int keysize)"
+
+.PP
+Definition at line 899 of file cms_sd\&.c\&.
+.SS "int CMS_add_smimecap (\fBCMS_SignerInfo\fP * si, \fBSTACK_OF\fP(\fBX509_ALGOR\fP)* algs)"
+
+.PP
+Definition at line 886 of file cms_sd\&.c\&.
+.SS "int CMS_add_standard_smimecap (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)** smcap)"
+
+.PP
+Definition at line 943 of file cms_sd\&.c\&.
+.SS "int cms_set1_SignerIdentifier (\fBCMS_SignerIdentifier\fP * sid, \fBX509\fP * cert, int type)"
+
+.PP
+Definition at line 197 of file cms_sd\&.c\&.
+.SS "int CMS_set1_signers_certs (\fBCMS_ContentInfo\fP * cms, \fBSTACK_OF\fP(\fBX509\fP)* scerts, unsigned int flags)"
+
+.PP
+Definition at line 511 of file cms_sd\&.c\&.
+.SS "int cms_SignedData_final (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * chain)"
+
+.PP
+Definition at line 658 of file cms_sd\&.c\&.
+.SS "int CMS_SignedData_init (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 99 of file cms_sd\&.c\&.
+.SS "\fBBIO\fP* cms_SignedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 783 of file cms_sd\&.c\&.
+.SS "int cms_SignerIdentifier_cert_cmp (\fBCMS_SignerIdentifier\fP * sid, \fBX509\fP * cert)"
+
+.PP
+Definition at line 238 of file cms_sd\&.c\&.
+.SS "int cms_SignerIdentifier_get0_signer_id (\fBCMS_SignerIdentifier\fP * sid, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.PP
+Definition at line 220 of file cms_sd\&.c\&.
+.SS "int CMS_SignerInfo_cert_cmp (\fBCMS_SignerInfo\fP * si, \fBX509\fP * cert)"
+
+.PP
+Definition at line 506 of file cms_sd\&.c\&.
+.SS "\fBvoid\fP CMS_SignerInfo_get0_algs (\fBCMS_SignerInfo\fP * si, \fBEVP_PKEY\fP ** pk, \fBX509\fP ** signer, \fBX509_ALGOR\fP ** pdig, \fBX509_ALGOR\fP ** psig)"
+
+.PP
+Definition at line 557 of file cms_sd\&.c\&.
+.SS "\fBEVP_MD_CTX\fP* CMS_SignerInfo_get0_md_ctx (\fBCMS_SignerInfo\fP * si)"
+
+.PP
+Definition at line 448 of file cms_sd\&.c\&.
+.SS "\fBEVP_PKEY_CTX\fP* CMS_SignerInfo_get0_pkey_ctx (\fBCMS_SignerInfo\fP * si)"
+
+.PP
+Definition at line 443 of file cms_sd\&.c\&.
+.SS "\fBASN1_OCTET_STRING\fP* CMS_SignerInfo_get0_signature (\fBCMS_SignerInfo\fP * si)"
+
+.PP
+Definition at line 571 of file cms_sd\&.c\&.
+.SS "int CMS_SignerInfo_get0_signer_id (\fBCMS_SignerInfo\fP * si, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.PP
+Definition at line 499 of file cms_sd\&.c\&.
+.SS "\fBvoid\fP CMS_SignerInfo_set1_signer_cert (\fBCMS_SignerInfo\fP * si, \fBX509\fP * signer)"
+
+.PP
+Definition at line 486 of file cms_sd\&.c\&.
+.SS "int CMS_SignerInfo_sign (\fBCMS_SignerInfo\fP * si)"
+
+.PP
+Definition at line 673 of file cms_sd\&.c\&.
+.SS "int CMS_SignerInfo_verify (\fBCMS_SignerInfo\fP * si)"
+
+.PP
+Definition at line 740 of file cms_sd\&.c\&.
+.SS "int CMS_SignerInfo_verify_content (\fBCMS_SignerInfo\fP * si, \fBBIO\fP * chain)"
+
+.PP
+Definition at line 812 of file cms_sd\&.c\&.
+.SS "STACK_OF (\fBCMS_SignerInfo\fP)"
+
+.PP
+Definition at line 453 of file cms_sd\&.c\&.
+.SS "STACK_OF (\fBX509\fP)"
+
+.PP
+Definition at line 462 of file cms_sd\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

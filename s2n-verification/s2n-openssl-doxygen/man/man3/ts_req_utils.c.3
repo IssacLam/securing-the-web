@@ -1,0 +1,196 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ts/ts_req_utils.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ts/ts_req_utils.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/ts\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBTS_REQ_set_version\fP (\fBTS_REQ\fP *\fBa\fP, long \fBversion\fP)"
+.br
+.ti -1c
+.RI "long \fBTS_REQ_get_version\fP (const \fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_set_msg_imprint\fP (\fBTS_REQ\fP *\fBa\fP, \fBTS_MSG_IMPRINT\fP *msg_imprint)"
+.br
+.ti -1c
+.RI "\fBTS_MSG_IMPRINT\fP * \fBTS_REQ_get_msg_imprint\fP (\fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_MSG_IMPRINT_set_algo\fP (\fBTS_MSG_IMPRINT\fP *\fBa\fP, \fBX509_ALGOR\fP *alg)"
+.br
+.ti -1c
+.RI "\fBX509_ALGOR\fP * \fBTS_MSG_IMPRINT_get_algo\fP (\fBTS_MSG_IMPRINT\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_MSG_IMPRINT_set_msg\fP (\fBTS_MSG_IMPRINT\fP *\fBa\fP, unsigned char *d, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBTS_MSG_IMPRINT_get_msg\fP (\fBTS_MSG_IMPRINT\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_set_policy_id\fP (\fBTS_REQ\fP *\fBa\fP, \fBASN1_OBJECT\fP *policy)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBTS_REQ_get_policy_id\fP (\fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_set_nonce\fP (\fBTS_REQ\fP *\fBa\fP, const \fBASN1_INTEGER\fP *nonce)"
+.br
+.ti -1c
+.RI "const \fBASN1_INTEGER\fP * \fBTS_REQ_get_nonce\fP (const \fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_set_cert_req\fP (\fBTS_REQ\fP *\fBa\fP, int cert_req)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_get_cert_req\fP (const \fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_EXTENSION\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTS_REQ_ext_free\fP (\fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_get_ext_count\fP (\fBTS_REQ\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_get_ext_by_NID\fP (\fBTS_REQ\fP *\fBa\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_get_ext_by_OBJ\fP (\fBTS_REQ\fP *\fBa\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_get_ext_by_critical\fP (\fBTS_REQ\fP *\fBa\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBTS_REQ_get_ext\fP (\fBTS_REQ\fP *\fBa\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBTS_REQ_delete_ext\fP (\fBTS_REQ\fP *\fBa\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBTS_REQ_add_ext\fP (\fBTS_REQ\fP *\fBa\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBTS_REQ_get_ext_d2i\fP (\fBTS_REQ\fP *\fBa\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "STACK_OF (\fBX509_EXTENSION\fP)"
+
+.PP
+Definition at line 181 of file ts_req_utils\&.c\&.
+.SS "\fBX509_ALGOR\fP* TS_MSG_IMPRINT_get_algo (\fBTS_MSG_IMPRINT\fP * a)"
+
+.PP
+Definition at line 113 of file ts_req_utils\&.c\&.
+.SS "\fBASN1_OCTET_STRING\fP* TS_MSG_IMPRINT_get_msg (\fBTS_MSG_IMPRINT\fP * a)"
+
+.PP
+Definition at line 123 of file ts_req_utils\&.c\&.
+.SS "int TS_MSG_IMPRINT_set_algo (\fBTS_MSG_IMPRINT\fP * a, \fBX509_ALGOR\fP * alg)"
+
+.PP
+Definition at line 97 of file ts_req_utils\&.c\&.
+.SS "int TS_MSG_IMPRINT_set_msg (\fBTS_MSG_IMPRINT\fP * a, unsigned char * d, int len)"
+
+.PP
+Definition at line 118 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_add_ext (\fBTS_REQ\fP * a, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 224 of file ts_req_utils\&.c\&.
+.SS "\fBX509_EXTENSION\fP* TS_REQ_delete_ext (\fBTS_REQ\fP * a, int loc)"
+
+.PP
+Definition at line 219 of file ts_req_utils\&.c\&.
+.SS "\fBvoid\fP TS_REQ_ext_free (\fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 186 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_get_cert_req (const \fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 176 of file ts_req_utils\&.c\&.
+.SS "\fBX509_EXTENSION\fP* TS_REQ_get_ext (\fBTS_REQ\fP * a, int loc)"
+
+.PP
+Definition at line 214 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_get_ext_by_critical (\fBTS_REQ\fP * a, int crit, int lastpos)"
+
+.PP
+Definition at line 209 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_get_ext_by_NID (\fBTS_REQ\fP * a, int nid, int lastpos)"
+
+.PP
+Definition at line 199 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_get_ext_by_OBJ (\fBTS_REQ\fP * a, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 204 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_get_ext_count (\fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 194 of file ts_req_utils\&.c\&.
+.SS "\fBvoid\fP* TS_REQ_get_ext_d2i (\fBTS_REQ\fP * a, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 229 of file ts_req_utils\&.c\&.
+.SS "\fBTS_MSG_IMPRINT\fP* TS_REQ_get_msg_imprint (\fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 92 of file ts_req_utils\&.c\&.
+.SS "const \fBASN1_INTEGER\fP* TS_REQ_get_nonce (const \fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 165 of file ts_req_utils\&.c\&.
+.SS "\fBASN1_OBJECT\fP* TS_REQ_get_policy_id (\fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 144 of file ts_req_utils\&.c\&.
+.SS "long TS_REQ_get_version (const \fBTS_REQ\fP * a)"
+
+.PP
+Definition at line 71 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_set_cert_req (\fBTS_REQ\fP * a, int cert_req)"
+
+.PP
+Definition at line 170 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_set_msg_imprint (\fBTS_REQ\fP * a, \fBTS_MSG_IMPRINT\fP * msg_imprint)"
+
+.PP
+Definition at line 76 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_set_nonce (\fBTS_REQ\fP * a, const \fBASN1_INTEGER\fP * nonce)"
+
+.PP
+Definition at line 149 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_set_policy_id (\fBTS_REQ\fP * a, \fBASN1_OBJECT\fP * policy)"
+
+.PP
+Definition at line 128 of file ts_req_utils\&.c\&.
+.SS "int TS_REQ_set_version (\fBTS_REQ\fP * a, long version)"
+
+.PP
+Definition at line 66 of file ts_req_utils\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

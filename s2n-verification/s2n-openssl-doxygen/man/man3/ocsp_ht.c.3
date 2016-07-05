@@ -1,0 +1,231 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ocsp/ocsp_ht.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ocsp/ocsp_ht.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'e_os\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/ocsp\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBocsp_req_ctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOCSP_MAX_RESP_LENGTH\fP   (100 * 1024)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_MAX_LINE_LEN\fP   4096;"
+.br
+.ti -1c
+.RI "#define \fBOHS_NOREAD\fP   0x1000"
+.br
+.ti -1c
+.RI "#define \fBOHS_ERROR\fP   (0 | \fBOHS_NOREAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBOHS_FIRSTLINE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBOHS_HEADERS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBOHS_ASN1_HEADER\fP   3"
+.br
+.ti -1c
+.RI "#define \fBOHS_ASN1_CONTENT\fP   4"
+.br
+.ti -1c
+.RI "#define \fBOHS_ASN1_WRITE_INIT\fP   (5 | \fBOHS_NOREAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBOHS_ASN1_WRITE\fP   (6 | \fBOHS_NOREAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBOHS_ASN1_FLUSH\fP   (7 | \fBOHS_NOREAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBOHS_DONE\fP   (8 | \fBOHS_NOREAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBOHS_HTTP_HEADER\fP   (9 | \fBOHS_NOREAD\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBOCSP_REQ_CTX\fP * \fBOCSP_REQ_CTX_new\fP (\fBBIO\fP *io, int maxline)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOCSP_REQ_CTX_free\fP (\fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBOCSP_REQ_CTX_get0_mem_bio\fP (\fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOCSP_set_max_response_length\fP (\fBOCSP_REQ_CTX\fP *rctx, unsigned long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_i2d\fP (\fBOCSP_REQ_CTX\fP *rctx, const \fBASN1_ITEM\fP *it, \fBASN1_VALUE\fP *val)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_nbio_d2i\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_http\fP (\fBOCSP_REQ_CTX\fP *rctx, const char *op, const char *path)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_set1_req\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBOCSP_REQUEST\fP *req)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_add1_header\fP (\fBOCSP_REQ_CTX\fP *rctx, const char *name, const char *value)"
+.br
+.ti -1c
+.RI "\fBOCSP_REQ_CTX\fP * \fBOCSP_sendreq_new\fP (\fBBIO\fP *io, const char *path, \fBOCSP_REQUEST\fP *req, int maxline)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_nbio\fP (\fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_sendreq_nbio\fP (\fBOCSP_RESPONSE\fP **presp, \fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "\fBOCSP_RESPONSE\fP * \fBOCSP_sendreq_bio\fP (\fBBIO\fP *\fBb\fP, const char *path, \fBOCSP_REQUEST\fP *req)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define OCSP_MAX_LINE_LEN   4096;"
+
+.PP
+Definition at line 88 of file ocsp_ht\&.c\&.
+.SS "#define OCSP_MAX_RESP_LENGTH   (100 * 1024)"
+
+.PP
+Definition at line 87 of file ocsp_ht\&.c\&.
+.SS "#define OHS_ASN1_CONTENT   4"
+
+.PP
+Definition at line 103 of file ocsp_ht\&.c\&.
+.SS "#define OHS_ASN1_FLUSH   (7 | \fBOHS_NOREAD\fP)"
+
+.PP
+Definition at line 109 of file ocsp_ht\&.c\&.
+.SS "#define OHS_ASN1_HEADER   3"
+
+.PP
+Definition at line 101 of file ocsp_ht\&.c\&.
+.SS "#define OHS_ASN1_WRITE   (6 | \fBOHS_NOREAD\fP)"
+
+.PP
+Definition at line 107 of file ocsp_ht\&.c\&.
+.SS "#define OHS_ASN1_WRITE_INIT   (5 | \fBOHS_NOREAD\fP)"
+
+.PP
+Definition at line 105 of file ocsp_ht\&.c\&.
+.SS "#define OHS_DONE   (8 | \fBOHS_NOREAD\fP)"
+
+.PP
+Definition at line 111 of file ocsp_ht\&.c\&.
+.SS "#define OHS_ERROR   (0 | \fBOHS_NOREAD\fP)"
+
+.PP
+Definition at line 95 of file ocsp_ht\&.c\&.
+.SS "#define OHS_FIRSTLINE   1"
+
+.PP
+Definition at line 97 of file ocsp_ht\&.c\&.
+.SS "#define OHS_HEADERS   2"
+
+.PP
+Definition at line 99 of file ocsp_ht\&.c\&.
+.SS "#define OHS_HTTP_HEADER   (9 | \fBOHS_NOREAD\fP)"
+
+.PP
+Definition at line 113 of file ocsp_ht\&.c\&.
+.SS "#define OHS_NOREAD   0x1000"
+
+.PP
+Definition at line 93 of file ocsp_ht\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int OCSP_REQ_CTX_add1_header (\fBOCSP_REQ_CTX\fP * rctx, const char * name, const char * value)"
+
+.PP
+Definition at line 214 of file ocsp_ht\&.c\&.
+.SS "\fBvoid\fP OCSP_REQ_CTX_free (\fBOCSP_REQ_CTX\fP * rctx)"
+
+.PP
+Definition at line 140 of file ocsp_ht\&.c\&.
+.SS "\fBBIO\fP* OCSP_REQ_CTX_get0_mem_bio (\fBOCSP_REQ_CTX\fP * rctx)"
+
+.PP
+Definition at line 149 of file ocsp_ht\&.c\&.
+.SS "int OCSP_REQ_CTX_http (\fBOCSP_REQ_CTX\fP * rctx, const char * op, const char * path)"
+
+.PP
+Definition at line 195 of file ocsp_ht\&.c\&.
+.SS "int OCSP_REQ_CTX_i2d (\fBOCSP_REQ_CTX\fP * rctx, const \fBASN1_ITEM\fP * it, \fBASN1_VALUE\fP * val)"
+
+.PP
+Definition at line 162 of file ocsp_ht\&.c\&.
+.SS "int OCSP_REQ_CTX_nbio (\fBOCSP_REQ_CTX\fP * rctx)"
+
+.PP
+Definition at line 326 of file ocsp_ht\&.c\&.
+.SS "int OCSP_REQ_CTX_nbio_d2i (\fBOCSP_REQ_CTX\fP * rctx, \fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.PP
+Definition at line 176 of file ocsp_ht\&.c\&.
+.SS "\fBOCSP_REQ_CTX\fP* OCSP_REQ_CTX_new (\fBBIO\fP * io, int maxline)"
+
+.PP
+Definition at line 117 of file ocsp_ht\&.c\&.
+.SS "int OCSP_REQ_CTX_set1_req (\fBOCSP_REQ_CTX\fP * rctx, \fBOCSP_REQUEST\fP * req)"
+
+.PP
+Definition at line 208 of file ocsp_ht\&.c\&.
+.SS "\fBOCSP_RESPONSE\fP* OCSP_sendreq_bio (\fBBIO\fP * b, const char * path, \fBOCSP_REQUEST\fP * req)"
+
+.PP
+Definition at line 534 of file ocsp_ht\&.c\&.
+.SS "int OCSP_sendreq_nbio (\fBOCSP_RESPONSE\fP ** presp, \fBOCSP_REQ_CTX\fP * rctx)"
+
+.PP
+Definition at line 525 of file ocsp_ht\&.c\&.
+.SS "\fBOCSP_REQ_CTX\fP* OCSP_sendreq_new (\fBBIO\fP * io, const char * path, \fBOCSP_REQUEST\fP * req, int maxline)"
+
+.PP
+Definition at line 233 of file ocsp_ht\&.c\&.
+.SS "\fBvoid\fP OCSP_set_max_response_length (\fBOCSP_REQ_CTX\fP * rctx, unsigned long len)"
+
+.PP
+Definition at line 154 of file ocsp_ht\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

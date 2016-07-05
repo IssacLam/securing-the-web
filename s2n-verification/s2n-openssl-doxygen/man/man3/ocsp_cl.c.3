@@ -1,0 +1,120 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ocsp/ocsp_cl.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ocsp/ocsp_cl.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <cryptlib\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/ocsp\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBOCSP_ONEREQ\fP * \fBOCSP_request_add0_id\fP (\fBOCSP_REQUEST\fP *req, \fBOCSP_CERTID\fP *cid)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_set1_name\fP (\fBOCSP_REQUEST\fP *req, \fBX509_NAME\fP *\fBnm\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_add1_cert\fP (\fBOCSP_REQUEST\fP *req, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_sign\fP (\fBOCSP_REQUEST\fP *req, \fBX509\fP *signer, \fBEVP_PKEY\fP *\fBkey\fP, const \fBEVP_MD\fP *dgst, \fBSTACK_OF\fP(\fBX509\fP)*certs, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_response_status\fP (\fBOCSP_RESPONSE\fP *resp)"
+.br
+.ti -1c
+.RI "\fBOCSP_BASICRESP\fP * \fBOCSP_response_get1_basic\fP (\fBOCSP_RESPONSE\fP *resp)"
+.br
+.ti -1c
+.RI "int \fBOCSP_resp_count\fP (\fBOCSP_BASICRESP\fP *bs)"
+.br
+.ti -1c
+.RI "\fBOCSP_SINGLERESP\fP * \fBOCSP_resp_get0\fP (\fBOCSP_BASICRESP\fP *bs, int idx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_resp_find\fP (\fBOCSP_BASICRESP\fP *bs, \fBOCSP_CERTID\fP *id, int last)"
+.br
+.ti -1c
+.RI "int \fBOCSP_single_get0_status\fP (\fBOCSP_SINGLERESP\fP *single, int *reason, \fBASN1_GENERALIZEDTIME\fP **revtime, \fBASN1_GENERALIZEDTIME\fP **thisupd, \fBASN1_GENERALIZEDTIME\fP **nextupd)"
+.br
+.ti -1c
+.RI "int \fBOCSP_resp_find_status\fP (\fBOCSP_BASICRESP\fP *bs, \fBOCSP_CERTID\fP *id, int *status, int *reason, \fBASN1_GENERALIZEDTIME\fP **revtime, \fBASN1_GENERALIZEDTIME\fP **thisupd, \fBASN1_GENERALIZEDTIME\fP **nextupd)"
+.br
+.ti -1c
+.RI "int \fBOCSP_check_validity\fP (\fBASN1_GENERALIZEDTIME\fP *thisupd, \fBASN1_GENERALIZEDTIME\fP *nextupd, long nsec, long maxsec)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int OCSP_check_validity (\fBASN1_GENERALIZEDTIME\fP * thisupd, \fBASN1_GENERALIZEDTIME\fP * nextupd, long nsec, long maxsec)"
+
+.PP
+Definition at line 330 of file ocsp_cl\&.c\&.
+.SS "\fBOCSP_ONEREQ\fP* OCSP_request_add0_id (\fBOCSP_REQUEST\fP * req, \fBOCSP_CERTID\fP * cid)"
+
+.PP
+Definition at line 87 of file ocsp_cl\&.c\&.
+.SS "int OCSP_request_add1_cert (\fBOCSP_REQUEST\fP * req, \fBX509\fP * cert)"
+
+.PP
+Definition at line 125 of file ocsp_cl\&.c\&.
+.SS "int OCSP_request_set1_name (\fBOCSP_REQUEST\fP * req, \fBX509_NAME\fP * nm)"
+
+.PP
+Definition at line 106 of file ocsp_cl\&.c\&.
+.SS "int OCSP_request_sign (\fBOCSP_REQUEST\fP * req, \fBX509\fP * signer, \fBEVP_PKEY\fP * key, const \fBEVP_MD\fP * dgst, \fBSTACK_OF\fP(\fBX509\fP)* certs, unsigned long flags)"
+
+.PP
+Definition at line 150 of file ocsp_cl\&.c\&.
+.SS "int OCSP_resp_count (\fBOCSP_BASICRESP\fP * bs)"
+
+.PP
+Definition at line 224 of file ocsp_cl\&.c\&.
+.SS "int OCSP_resp_find (\fBOCSP_BASICRESP\fP * bs, \fBOCSP_CERTID\fP * id, int last)"
+
+.PP
+Definition at line 242 of file ocsp_cl\&.c\&.
+.SS "int OCSP_resp_find_status (\fBOCSP_BASICRESP\fP * bs, \fBOCSP_CERTID\fP * id, int * status, int * reason, \fBASN1_GENERALIZEDTIME\fP ** revtime, \fBASN1_GENERALIZEDTIME\fP ** thisupd, \fBASN1_GENERALIZEDTIME\fP ** nextupd)"
+
+.PP
+Definition at line 302 of file ocsp_cl\&.c\&.
+.SS "\fBOCSP_SINGLERESP\fP* OCSP_resp_get0 (\fBOCSP_BASICRESP\fP * bs, int idx)"
+
+.PP
+Definition at line 233 of file ocsp_cl\&.c\&.
+.SS "\fBOCSP_BASICRESP\fP* OCSP_response_get1_basic (\fBOCSP_RESPONSE\fP * resp)"
+
+.PP
+Definition at line 204 of file ocsp_cl\&.c\&.
+.SS "int OCSP_response_status (\fBOCSP_RESPONSE\fP * resp)"
+
+.PP
+Definition at line 194 of file ocsp_cl\&.c\&.
+.SS "int OCSP_single_get0_status (\fBOCSP_SINGLERESP\fP * single, int * reason, \fBASN1_GENERALIZEDTIME\fP ** revtime, \fBASN1_GENERALIZEDTIME\fP ** thisupd, \fBASN1_GENERALIZEDTIME\fP ** nextupd)"
+
+.PP
+Definition at line 268 of file ocsp_cl\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

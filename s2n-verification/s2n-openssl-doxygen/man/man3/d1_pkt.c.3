@@ -1,0 +1,118 @@
+.TH "s2n/libcrypto-build/openssl/ssl/d1_pkt.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/d1_pkt.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/pqueue\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fBdtls1_get_unprocessed_record\fP(s)"
+.br
+.ti -1c
+.RI "#define \fBdtls1_get_processed_record\fP(s)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBdtls1_get_record\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_read_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, unsigned char *buf, int \fBlen\fP, int peek)"
+.br
+.ti -1c
+.RI "int \fBdtls1_write_app_data_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf_, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBdtls1_write_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBdo_dtls1_write\fP (\fBSSL\fP *s, int \fBtype\fP, const unsigned char *buf, unsigned int \fBlen\fP, int create_empty_fragment)"
+.br
+.ti -1c
+.RI "int \fBdtls1_dispatch_alert\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_reset_seq_numbers\fP (\fBSSL\fP *s, int rw)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define dtls1_get_processed_record(s)"
+\fBValue:\fP
+.PP
+.nf
+dtls1_retrieve_buffered_record((s), \
+                   &((s)->d1->processed_rcds))
+.fi
+.PP
+Definition at line 315 of file d1_pkt\&.c\&.
+.SS "#define dtls1_get_unprocessed_record(s)"
+\fBValue:\fP
+.PP
+.nf
+dtls1_retrieve_buffered_record((s), \
+                   &((s)->d1->unprocessed_rcds))
+.fi
+.PP
+Definition at line 307 of file d1_pkt\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 118 of file d1_pkt\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int do_dtls1_write (\fBSSL\fP * s, int type, const unsigned char * buf, unsigned int len, int create_empty_fragment)"
+
+.PP
+Definition at line 1489 of file d1_pkt\&.c\&.
+.SS "int dtls1_dispatch_alert (\fBSSL\fP * s)"
+
+.PP
+Definition at line 1760 of file d1_pkt\&.c\&.
+.SS "int dtls1_get_record (\fBSSL\fP * s)"
+
+.PP
+Definition at line 572 of file d1_pkt\&.c\&.
+.SS "int dtls1_read_bytes (\fBSSL\fP * s, int type, unsigned char * buf, int len, int peek)"
+
+.PP
+Definition at line 771 of file d1_pkt\&.c\&.
+.SS "\fBvoid\fP dtls1_reset_seq_numbers (\fBSSL\fP * s, int rw)"
+
+.PP
+Definition at line 1903 of file d1_pkt\&.c\&.
+.SS "int dtls1_write_app_data_bytes (\fBSSL\fP * s, int type, const \fBvoid\fP * buf_, int len)"
+
+.PP
+Definition at line 1406 of file d1_pkt\&.c\&.
+.SS "int dtls1_write_bytes (\fBSSL\fP * s, int type, const \fBvoid\fP * buf, int len)"
+
+.PP
+Definition at line 1479 of file d1_pkt\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,269 @@
+.TH "s2n/libcrypto-build/openssl/crypto/rc5/rc5_locl.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/rc5/rc5_locl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBc2l\fP(\fBc\fP,  l)            "
+.br
+.ti -1c
+.RI "#define \fBc2ln\fP(\fBc\fP,  l1,  l2,  n)"
+.br
+.ti -1c
+.RI "#define \fBl2c\fP(l,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBl2cn\fP(l1,  l2,  \fBc\fP,  n)"
+.br
+.ti -1c
+.RI "#define \fBn2ln\fP(\fBc\fP,  l1,  l2,  n)"
+.br
+.ti -1c
+.RI "#define \fBl2nn\fP(l1,  l2,  \fBc\fP,  n)"
+.br
+.ti -1c
+.RI "#define \fBn2l\fP(\fBc\fP,  l)            "
+.br
+.ti -1c
+.RI "#define \fBl2n\fP(l,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBROTATE_l32\fP(\fBa\fP,  n)         (((\fBa\fP)<<(n&0x1f))|(((a)&0xffffffff)>>(32\-(n&0x1f))))"
+.br
+.ti -1c
+.RI "#define \fBROTATE_r32\fP(\fBa\fP,  n)         (((\fBa\fP)<<(32\-(n&0x1f)))|(((a)&0xffffffff)>>(n&0x1f)))"
+.br
+.ti -1c
+.RI "#define \fBRC5_32_MASK\fP   0xffffffffL"
+.br
+.ti -1c
+.RI "#define \fBRC5_16_P\fP   0xB7E1"
+.br
+.ti -1c
+.RI "#define \fBRC5_16_Q\fP   0x9E37"
+.br
+.ti -1c
+.RI "#define \fBRC5_32_P\fP   0xB7E15163L"
+.br
+.ti -1c
+.RI "#define \fBRC5_32_Q\fP   0x9E3779B9L"
+.br
+.ti -1c
+.RI "#define \fBRC5_64_P\fP   0xB7E151628AED2A6BLL"
+.br
+.ti -1c
+.RI "#define \fBRC5_64_Q\fP   0x9E3779B97F4A7C15LL"
+.br
+.ti -1c
+.RI "#define \fBE_RC5_32\fP(\fBa\fP,  \fBb\fP,  s,  n)"
+.br
+.ti -1c
+.RI "#define \fBD_RC5_32\fP(\fBa\fP,  \fBb\fP,  s,  n)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define c2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((unsigned long)(*((c)++)))    , \
+                         l|=((unsigned long)(*((c)++)))<< 8L, \
+                         l|=((unsigned long)(*((c)++)))<<16L, \
+                         l|=((unsigned long)(*((c)++)))<<24L)
+.fi
+.PP
+Definition at line 62 of file rc5_locl\&.h\&.
+.SS "#define c2ln(\fBc\fP, l1, l2, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        l1=l2=0; \
+                        switch (n) { \
+                        case 8: l2 =((unsigned long)(*(--(c))))<<24L; \
+                        case 7: l2|=((unsigned long)(*(--(c))))<<16L; \
+                        case 6: l2|=((unsigned long)(*(--(c))))<< 8L; \
+                        case 5: l2|=((unsigned long)(*(--(c))));     \
+                        case 4: l1 =((unsigned long)(*(--(c))))<<24L; \
+                        case 3: l1|=((unsigned long)(*(--(c))))<<16L; \
+                        case 2: l1|=((unsigned long)(*(--(c))))<< 8L; \
+                        case 1: l1|=((unsigned long)(*(--(c))));     \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 69 of file rc5_locl\&.h\&.
+.SS "#define D_RC5_32(\fBa\fP, \fBb\fP, s, n)"
+\fBValue:\fP
+.PP
+.nf
+b-=s[n+1]; \
+        b&=RC5_32_MASK; \
+        b=ROTATE_r32(b,a); \
+        b^=a; \
+        a-=s[n]; \
+        a&=RC5_32_MASK; \
+        a=ROTATE_r32(a,b); \
+        a^=b;
+.fi
+.PP
+Definition at line 199 of file rc5_locl\&.h\&.
+.SS "#define E_RC5_32(\fBa\fP, \fBb\fP, s, n)"
+\fBValue:\fP
+.PP
+.nf
+a^=b; \
+        a=ROTATE_l32(a,b); \
+        a+=s[n]; \
+        a&=RC5_32_MASK; \
+        b^=a; \
+        b=ROTATE_l32(b,a); \
+        b+=s[n+1]; \
+        b&=RC5_32_MASK;
+.fi
+.PP
+Definition at line 189 of file rc5_locl\&.h\&.
+.SS "#define l2c(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)     )&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>24L)&0xff))
+.fi
+.PP
+Definition at line 85 of file rc5_locl\&.h\&.
+.SS "#define l2cn(l1, l2, \fBc\fP, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        switch (n) { \
+                        case 8: *(--(c))=(unsigned char)(((l2)>>24L)&0xff); \
+                        case 7: *(--(c))=(unsigned char)(((l2)>>16L)&0xff); \
+                        case 6: *(--(c))=(unsigned char)(((l2)>> 8L)&0xff); \
+                        case 5: *(--(c))=(unsigned char)(((l2)     )&0xff); \
+                        case 4: *(--(c))=(unsigned char)(((l1)>>24L)&0xff); \
+                        case 3: *(--(c))=(unsigned char)(((l1)>>16L)&0xff); \
+                        case 2: *(--(c))=(unsigned char)(((l1)>> 8L)&0xff); \
+                        case 1: *(--(c))=(unsigned char)(((l1)     )&0xff); \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 92 of file rc5_locl\&.h\&.
+.SS "#define l2n(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)>>24L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8L)&0xff), \
+                         *((c)++)=(unsigned char)(((l)     )&0xff))
+.fi
+.PP
+Definition at line 144 of file rc5_locl\&.h\&.
+.SS "#define l2nn(l1, l2, \fBc\fP, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        switch (n) { \
+                        case 8: *(--(c))=(unsigned char)(((l2)    )&0xff); \
+                        case 7: *(--(c))=(unsigned char)(((l2)>> 8)&0xff); \
+                        case 6: *(--(c))=(unsigned char)(((l2)>>16)&0xff); \
+                        case 5: *(--(c))=(unsigned char)(((l2)>>24)&0xff); \
+                        case 4: *(--(c))=(unsigned char)(((l1)    )&0xff); \
+                        case 3: *(--(c))=(unsigned char)(((l1)>> 8)&0xff); \
+                        case 2: *(--(c))=(unsigned char)(((l1)>>16)&0xff); \
+                        case 1: *(--(c))=(unsigned char)(((l1)>>24)&0xff); \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 123 of file rc5_locl\&.h\&.
+.SS "#define n2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((unsigned long)(*((c)++)))<<24L, \
+                         l|=((unsigned long)(*((c)++)))<<16L, \
+                         l|=((unsigned long)(*((c)++)))<< 8L, \
+                         l|=((unsigned long)(*((c)++))))
+.fi
+.PP
+Definition at line 138 of file rc5_locl\&.h\&.
+.SS "#define n2ln(\fBc\fP, l1, l2, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        l1=l2=0; \
+                        switch (n) { \
+                        case 8: l2 =((unsigned long)(*(--(c))))    ; \
+                        case 7: l2|=((unsigned long)(*(--(c))))<< 8; \
+                        case 6: l2|=((unsigned long)(*(--(c))))<<16; \
+                        case 5: l2|=((unsigned long)(*(--(c))))<<24; \
+                        case 4: l1 =((unsigned long)(*(--(c))))    ; \
+                        case 3: l1|=((unsigned long)(*(--(c))))<< 8; \
+                        case 2: l1|=((unsigned long)(*(--(c))))<<16; \
+                        case 1: l1|=((unsigned long)(*(--(c))))<<24; \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 107 of file rc5_locl\&.h\&.
+.SS "#define RC5_16_P   0xB7E1"
+
+.PP
+Definition at line 182 of file rc5_locl\&.h\&.
+.SS "#define RC5_16_Q   0x9E37"
+
+.PP
+Definition at line 183 of file rc5_locl\&.h\&.
+.SS "#define RC5_32_MASK   0xffffffffL"
+
+.PP
+Definition at line 180 of file rc5_locl\&.h\&.
+.SS "#define RC5_32_P   0xB7E15163L"
+
+.PP
+Definition at line 184 of file rc5_locl\&.h\&.
+.SS "#define RC5_32_Q   0x9E3779B9L"
+
+.PP
+Definition at line 185 of file rc5_locl\&.h\&.
+.SS "#define RC5_64_P   0xB7E151628AED2A6BLL"
+
+.PP
+Definition at line 186 of file rc5_locl\&.h\&.
+.SS "#define RC5_64_Q   0x9E3779B97F4A7C15LL"
+
+.PP
+Definition at line 187 of file rc5_locl\&.h\&.
+.SS "#define ROTATE_l32(\fBa\fP, n)   (((\fBa\fP)<<(n&0x1f))|(((a)&0xffffffff)>>(32\-(n&0x1f))))"
+
+.PP
+Definition at line 174 of file rc5_locl\&.h\&.
+.SS "#define ROTATE_r32(\fBa\fP, n)   (((\fBa\fP)<<(32\-(n&0x1f)))|(((a)&0xffffffff)>>(n&0x1f)))"
+
+.PP
+Definition at line 177 of file rc5_locl\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,107 @@
+.TH "dsa_method" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+dsa_method \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <dsa\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBname\fP"
+.br
+.ti -1c
+.RI "\fBDSA_SIG\fP *(* \fBdsa_do_sign\fP )(const unsigned char *dgst, int dlen, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int(* \fBdsa_sign_setup\fP )(\fBDSA\fP *dsa, \fBBN_CTX\fP *ctx_in, \fBBIGNUM\fP **kinvp, \fBBIGNUM\fP **rp)"
+.br
+.ti -1c
+.RI "int(* \fBdsa_do_verify\fP )(const unsigned char *dgst, int dgst_len, \fBDSA_SIG\fP *sig, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int(* \fBdsa_mod_exp\fP )(\fBDSA\fP *dsa, \fBBIGNUM\fP *rr, \fBBIGNUM\fP *a1, \fBBIGNUM\fP *p1, \fBBIGNUM\fP *a2, \fBBIGNUM\fP *p2, \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *in_mont)"
+.br
+.ti -1c
+.RI "int(* \fBbn_mod_exp\fP )(\fBDSA\fP *dsa, \fBBIGNUM\fP *r, \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *m_ctx)"
+.br
+.ti -1c
+.RI "int(* \fBinit\fP )(\fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int(* \fBfinish\fP )(\fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBflags\fP"
+.br
+.ti -1c
+.RI "char * \fBapp_data\fP"
+.br
+.ti -1c
+.RI "int(* \fBdsa_paramgen\fP )(\fBDSA\fP *dsa, int \fBbits\fP, const unsigned char *\fBseed\fP, int seed_len, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int(* \fBdsa_keygen\fP )(\fBDSA\fP *dsa)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 129 of file dsa\&.h\&.
+.SH "Field Documentation"
+.PP 
+.SS "char* app_data"
+
+.PP
+Definition at line 145 of file dsa\&.h\&.
+.SS "int(* bn_mod_exp) (\fBDSA\fP *dsa, \fBBIGNUM\fP *r, \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *m_ctx)"
+
+.PP
+Definition at line 140 of file dsa\&.h\&.
+.SS "\fBDSA_SIG\fP*(* dsa_do_sign) (const unsigned char *dgst, int dlen, \fBDSA\fP *dsa)"
+
+.PP
+Definition at line 131 of file dsa\&.h\&.
+.SS "int(* dsa_do_verify) (const unsigned char *dgst, int dgst_len, \fBDSA_SIG\fP *sig, \fBDSA\fP *dsa)"
+
+.PP
+Definition at line 134 of file dsa\&.h\&.
+.SS "int(* dsa_keygen) (\fBDSA\fP *dsa)"
+
+.PP
+Definition at line 152 of file dsa\&.h\&.
+.SS "int(* dsa_mod_exp) (\fBDSA\fP *dsa, \fBBIGNUM\fP *rr, \fBBIGNUM\fP *a1, \fBBIGNUM\fP *p1, \fBBIGNUM\fP *a2, \fBBIGNUM\fP *p2, \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *in_mont)"
+
+.PP
+Definition at line 136 of file dsa\&.h\&.
+.SS "int(* dsa_paramgen) (\fBDSA\fP *dsa, int \fBbits\fP, const unsigned char *\fBseed\fP, int seed_len, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+
+.PP
+Definition at line 147 of file dsa\&.h\&.
+.SS "int(* dsa_sign_setup) (\fBDSA\fP *dsa, \fBBN_CTX\fP *ctx_in, \fBBIGNUM\fP **kinvp, \fBBIGNUM\fP **rp)"
+
+.PP
+Definition at line 132 of file dsa\&.h\&.
+.SS "int(* finish) (\fBDSA\fP *dsa)"
+
+.PP
+Definition at line 143 of file dsa\&.h\&.
+.SS "int flags"
+
+.PP
+Definition at line 144 of file dsa\&.h\&.
+.SS "int(* init) (\fBDSA\fP *dsa)"
+
+.PP
+Definition at line 142 of file dsa\&.h\&.
+.SS "const char* name"
+
+.PP
+Definition at line 130 of file dsa\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

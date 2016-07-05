@@ -1,0 +1,710 @@
+.TH "s2n/libcrypto-build/openssl/crypto/store/str_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/store/str_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include 'str_locl\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSTORE_attr_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_list_ctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBcheck_store\fP(s,  fncode,  fnname,  fnerrcode)"
+.br
+.ti -1c
+.RI "#define \fBATTR_IS_SET\fP(\fBa\fP,  i)            "
+.br
+.ti -1c
+.RI "#define \fBSET_ATTRBIT\fP(\fBa\fP,  i)               ((\fBa\fP)\->set[(i) / 8] |= (1 << ((i) % 8)))"
+.br
+.ti -1c
+.RI "#define \fBCLEAR_ATTRBIT\fP(\fBa\fP,  i)           ((\fBa\fP)\->set[(i) / 8] &= ~(1 << ((i) % 8)))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTORE\fP * \fBSTORE_new_method\fP (const \fBSTORE_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "\fBSTORE\fP * \fBSTORE_new_engine\fP (\fBENGINE\fP *engine)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSTORE_free\fP (\fBSTORE\fP *store)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ctrl\fP (\fBSTORE\fP *store, int cmd, long i, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*\fBf\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBSTORE_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_set_ex_data\fP (\fBSTORE\fP *r, int idx, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_get_ex_data\fP (\fBSTORE\fP *r, int idx)"
+.br
+.ti -1c
+.RI "const \fBSTORE_METHOD\fP * \fBSTORE_get_method\fP (\fBSTORE\fP *store)"
+.br
+.ti -1c
+.RI "const \fBSTORE_METHOD\fP * \fBSTORE_set_method\fP (\fBSTORE\fP *store, const \fBSTORE_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBSTORE_get_certificate\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_certificate\fP (\fBSTORE\fP *s, \fBX509\fP *\fBdata\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_certificate\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_revoke_certificate\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_certificate\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_certificate_start\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBSTORE_list_certificate_next\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_certificate_end\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_certificate_endp\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_generate_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_get_private_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_private_key\fP (\fBSTORE\fP *s, \fBEVP_PKEY\fP *\fBdata\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_private_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_revoke_private_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_private_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_private_key_start\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_list_private_key_next\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_private_key_end\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_private_key_endp\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_get_public_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_public_key\fP (\fBSTORE\fP *s, \fBEVP_PKEY\fP *\fBdata\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_public_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_revoke_public_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_public_key\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_public_key_start\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_list_public_key_next\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_public_key_end\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_public_key_endp\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBSTORE_generate_crl\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBSTORE_get_crl\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_crl\fP (\fBSTORE\fP *s, \fBX509_CRL\fP *\fBdata\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_crl\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_crl\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_crl_start\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBSTORE_list_crl_next\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_crl_end\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_crl_endp\fP (\fBSTORE\fP *s, \fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_number\fP (\fBSTORE\fP *s, \fBBIGNUM\fP *\fBdata\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_number\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSTORE_get_number\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_number\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_arbitrary\fP (\fBSTORE\fP *s, \fBBUF_MEM\fP *\fBdata\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_arbitrary\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBBUF_MEM\fP * \fBSTORE_get_arbitrary\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_arbitrary\fP (\fBSTORE\fP *s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBSTORE_OBJECT\fP * \fBSTORE_OBJECT_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSTORE_OBJECT_free\fP (\fBSTORE_OBJECT\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBSTORE_ATTR_INFO\fP * \fBSTORE_ATTR_INFO_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_free\fP (\fBSTORE_ATTR_INFO\fP *attrs)"
+.br
+.ti -1c
+.RI "char * \fBSTORE_ATTR_INFO_get0_cstr\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSTORE_ATTR_INFO_get0_sha1str\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBSTORE_ATTR_INFO_get0_dn\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSTORE_ATTR_INFO_get0_number\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_cstr\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, char *cstr, size_t cstr_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_sha1str\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, unsigned char *sha1str, size_t sha1str_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_dn\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, \fBX509_NAME\fP *dn)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_number\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, \fBBIGNUM\fP *number)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_cstr\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, char *cstr, size_t cstr_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_sha1str\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, unsigned char *sha1str, size_t sha1str_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_dn\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, \fBX509_NAME\fP *dn)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_number\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP \fBcode\fP, \fBBIGNUM\fP *number)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_parse_attrs_start\fP (\fBOPENSSL_ITEM\fP *attributes)"
+.br
+.ti -1c
+.RI "\fBSTORE_ATTR_INFO\fP * \fBSTORE_parse_attrs_next\fP (\fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_parse_attrs_end\fP (\fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_parse_attrs_endp\fP (\fBvoid\fP *\fBhandle\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_compare\fP (const \fBSTORE_ATTR_INFO\fP *const *\fBa\fP, const \fBSTORE_ATTR_INFO\fP *const *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_in_range\fP (\fBSTORE_ATTR_INFO\fP *\fBa\fP, \fBSTORE_ATTR_INFO\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_in\fP (\fBSTORE_ATTR_INFO\fP *\fBa\fP, \fBSTORE_ATTR_INFO\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_in_ex\fP (\fBSTORE_ATTR_INFO\fP *\fBa\fP, \fBSTORE_ATTR_INFO\fP *\fBb\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char *const \fBSTORE_object_type_string\fP [\fBSTORE_OBJECT_TYPE_NUM\fP+1]"
+.br
+.ti -1c
+.RI "const int \fBSTORE_param_sizes\fP [\fBSTORE_PARAM_TYPE_NUM\fP+1]"
+.br
+.ti -1c
+.RI "const int \fBSTORE_attr_sizes\fP [\fBSTORE_ATTR_TYPE_NUM\fP+1]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ATTR_IS_SET(\fBa\fP, i)"
+\fBValue:\fP
+.PP
+.nf
+((i) > 0 && (i) < STORE_ATTR_TYPE_NUM \
+                                && ((a)->set[(i) / 8] & (1 << ((i) % 8))))
+.fi
+.PP
+Definition at line 1204 of file str_lib\&.c\&.
+.SS "#define check_store(s, fncode, fnname, fnerrcode)"
+\fBValue:\fP
+.PP
+.nf
+do \
+                { \
+                if ((s) == NULL || (s)->meth == NULL) \
+                        { \
+                        STOREerr((fncode), ERR_R_PASSED_NULL_PARAMETER); \
+                        return 0; \
+                        } \
+                if ((s)->meth->fnname == NULL) \
+                        { \
+                        STOREerr((fncode), (fnerrcode)); \
+                        return 0; \
+                        } \
+                } \
+        while(0)
+.fi
+.PP
+Definition at line 220 of file str_lib\&.c\&.
+.SS "#define CLEAR_ATTRBIT(\fBa\fP, i)   ((\fBa\fP)\->set[(i) / 8] &= ~(1 << ((i) % 8)))"
+
+.PP
+Definition at line 1207 of file str_lib\&.c\&.
+.SS "#define SET_ATTRBIT(\fBa\fP, i)   ((\fBa\fP)\->set[(i) / 8] |= (1 << ((i) % 8)))"
+
+.PP
+Definition at line 1206 of file str_lib\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int STORE_ATTR_INFO_compare (const \fBSTORE_ATTR_INFO\fP *const * a, const \fBSTORE_ATTR_INFO\fP *const * b)"
+
+.PP
+Definition at line 1682 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_free (\fBSTORE_ATTR_INFO\fP * attrs)"
+
+.PP
+Definition at line 1244 of file str_lib\&.c\&.
+.SS "char* STORE_ATTR_INFO_get0_cstr (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.PP
+Definition at line 1255 of file str_lib\&.c\&.
+.SS "\fBX509_NAME\fP* STORE_ATTR_INFO_get0_dn (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.PP
+Definition at line 1282 of file str_lib\&.c\&.
+.SS "\fBBIGNUM\fP* STORE_ATTR_INFO_get0_number (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.PP
+Definition at line 1296 of file str_lib\&.c\&.
+.SS "unsigned char* STORE_ATTR_INFO_get0_sha1str (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.PP
+Definition at line 1268 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_in (\fBSTORE_ATTR_INFO\fP * a, \fBSTORE_ATTR_INFO\fP * b)"
+
+.PP
+Definition at line 1711 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_in_ex (\fBSTORE_ATTR_INFO\fP * a, \fBSTORE_ATTR_INFO\fP * b)"
+
+.PP
+Definition at line 1731 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_in_range (\fBSTORE_ATTR_INFO\fP * a, \fBSTORE_ATTR_INFO\fP * b)"
+
+.PP
+Definition at line 1694 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_modify_cstr (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, char * cstr, size_t cstr_size)"
+
+.PP
+Definition at line 1383 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_modify_dn (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBX509_NAME\fP * dn)"
+
+.PP
+Definition at line 1417 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_modify_number (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBBIGNUM\fP * number)"
+
+.PP
+Definition at line 1433 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_modify_sha1str (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, unsigned char * sha1str, size_t sha1str_size)"
+
+.PP
+Definition at line 1399 of file str_lib\&.c\&.
+.SS "\fBSTORE_ATTR_INFO\fP* STORE_ATTR_INFO_new (\fBvoid\fP)"
+
+.PP
+Definition at line 1209 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_set_cstr (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, char * cstr, size_t cstr_size)"
+
+.PP
+Definition at line 1310 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_set_dn (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBX509_NAME\fP * dn)"
+
+.PP
+Definition at line 1348 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_set_number (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBBIGNUM\fP * number)"
+
+.PP
+Definition at line 1365 of file str_lib\&.c\&.
+.SS "int STORE_ATTR_INFO_set_sha1str (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, unsigned char * sha1str, size_t sha1str_size)"
+
+.PP
+Definition at line 1328 of file str_lib\&.c\&.
+.SS "int STORE_ctrl (\fBSTORE\fP * store, int cmd, long i, \fBvoid\fP * p, \fBvoid\fP(*)(\fBvoid\fP) f)"
+
+.PP
+Definition at line 178 of file str_lib\&.c\&.
+.SS "int STORE_delete_arbitrary (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1142 of file str_lib\&.c\&.
+.SS "int STORE_delete_certificate (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 333 of file str_lib\&.c\&.
+.SS "int STORE_delete_crl (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 909 of file str_lib\&.c\&.
+.SS "int STORE_delete_number (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1056 of file str_lib\&.c\&.
+.SS "int STORE_delete_private_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 543 of file str_lib\&.c\&.
+.SS "int STORE_delete_public_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 727 of file str_lib\&.c\&.
+.SS "\fBvoid\fP STORE_free (\fBSTORE\fP * store)"
+
+.PP
+Definition at line 168 of file str_lib\&.c\&.
+.SS "\fBX509_CRL\fP* STORE_generate_crl (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 809 of file str_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* STORE_generate_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 417 of file str_lib\&.c\&.
+.SS "\fBBUF_MEM\fP* STORE_get_arbitrary (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1120 of file str_lib\&.c\&.
+.SS "\fBX509\fP* STORE_get_certificate (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 238 of file str_lib\&.c\&.
+.SS "\fBX509_CRL\fP* STORE_get_crl (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 833 of file str_lib\&.c\&.
+.SS "\fBvoid\fP* STORE_get_ex_data (\fBSTORE\fP * r, int idx)"
+
+.PP
+Definition at line 202 of file str_lib\&.c\&.
+.SS "int STORE_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.PP
+Definition at line 190 of file str_lib\&.c\&.
+.SS "const \fBSTORE_METHOD\fP* STORE_get_method (\fBSTORE\fP * store)"
+
+.PP
+Definition at line 207 of file str_lib\&.c\&.
+.SS "\fBBIGNUM\fP* STORE_get_number (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1035 of file str_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* STORE_get_private_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 441 of file str_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* STORE_get_public_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 625 of file str_lib\&.c\&.
+.SS "int STORE_list_certificate_end (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 391 of file str_lib\&.c\&.
+.SS "int STORE_list_certificate_endp (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 404 of file str_lib\&.c\&.
+.SS "\fBX509\fP* STORE_list_certificate_next (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 367 of file str_lib\&.c\&.
+.SS "\fBvoid\fP* STORE_list_certificate_start (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 348 of file str_lib\&.c\&.
+.SS "int STORE_list_crl_end (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 962 of file str_lib\&.c\&.
+.SS "int STORE_list_crl_endp (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 974 of file str_lib\&.c\&.
+.SS "\fBX509_CRL\fP* STORE_list_crl_next (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 940 of file str_lib\&.c\&.
+.SS "\fBvoid\fP* STORE_list_crl_start (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 923 of file str_lib\&.c\&.
+.SS "int STORE_list_private_key_end (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 599 of file str_lib\&.c\&.
+.SS "int STORE_list_private_key_endp (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 612 of file str_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* STORE_list_private_key_next (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 576 of file str_lib\&.c\&.
+.SS "\fBvoid\fP* STORE_list_private_key_start (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 558 of file str_lib\&.c\&.
+.SS "int STORE_list_public_key_end (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 783 of file str_lib\&.c\&.
+.SS "int STORE_list_public_key_endp (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 796 of file str_lib\&.c\&.
+.SS "\fBEVP_PKEY\fP* STORE_list_public_key_next (\fBSTORE\fP * s, \fBvoid\fP * handle)"
+
+.PP
+Definition at line 760 of file str_lib\&.c\&.
+.SS "\fBvoid\fP* STORE_list_public_key_start (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 742 of file str_lib\&.c\&.
+.SS "int STORE_modify_arbitrary (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1100 of file str_lib\&.c\&.
+.SS "int STORE_modify_certificate (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 298 of file str_lib\&.c\&.
+.SS "int STORE_modify_crl (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 890 of file str_lib\&.c\&.
+.SS "int STORE_modify_number (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1015 of file str_lib\&.c\&.
+.SS "int STORE_modify_private_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 504 of file str_lib\&.c\&.
+.SS "int STORE_modify_public_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 688 of file str_lib\&.c\&.
+.SS "\fBSTORE\fP* STORE_new_engine (\fBENGINE\fP * engine)"
+
+.PP
+Definition at line 128 of file str_lib\&.c\&.
+.SS "\fBSTORE\fP* STORE_new_method (const \fBSTORE_METHOD\fP * method)"
+
+.PP
+Definition at line 103 of file str_lib\&.c\&.
+.SS "\fBvoid\fP STORE_OBJECT_free (\fBSTORE_OBJECT\fP * data)"
+
+.PP
+Definition at line 1165 of file str_lib\&.c\&.
+.SS "\fBSTORE_OBJECT\fP* STORE_OBJECT_new (\fBvoid\fP)"
+
+.PP
+Definition at line 1157 of file str_lib\&.c\&.
+.SS "int STORE_parse_attrs_end (\fBvoid\fP * handle)"
+
+.PP
+Definition at line 1554 of file str_lib\&.c\&.
+.SS "int STORE_parse_attrs_endp (\fBvoid\fP * handle)"
+
+.PP
+Definition at line 1569 of file str_lib\&.c\&.
+.SS "\fBSTORE_ATTR_INFO\fP* STORE_parse_attrs_next (\fBvoid\fP * handle)"
+
+.PP
+Definition at line 1467 of file str_lib\&.c\&.
+.SS "\fBvoid\fP* STORE_parse_attrs_start (\fBOPENSSL_ITEM\fP * attributes)"
+
+.PP
+Definition at line 1452 of file str_lib\&.c\&.
+.SS "int STORE_revoke_certificate (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 318 of file str_lib\&.c\&.
+.SS "int STORE_revoke_private_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 524 of file str_lib\&.c\&.
+.SS "int STORE_revoke_public_key (\fBSTORE\fP * s, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 708 of file str_lib\&.c\&.
+.SS "int STORE_set_ex_data (\fBSTORE\fP * r, int idx, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 197 of file str_lib\&.c\&.
+.SS "const \fBSTORE_METHOD\fP* STORE_set_method (\fBSTORE\fP * store, const \fBSTORE_METHOD\fP * meth)"
+
+.PP
+Definition at line 212 of file str_lib\&.c\&.
+.SS "int STORE_store_arbitrary (\fBSTORE\fP * s, \fBBUF_MEM\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 1070 of file str_lib\&.c\&.
+.SS "int STORE_store_certificate (\fBSTORE\fP * s, \fBX509\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 264 of file str_lib\&.c\&.
+.SS "int STORE_store_crl (\fBSTORE\fP * s, \fBX509_CRL\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 857 of file str_lib\&.c\&.
+.SS "int STORE_store_number (\fBSTORE\fP * s, \fBBIGNUM\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 986 of file str_lib\&.c\&.
+.SS "int STORE_store_private_key (\fBSTORE\fP * s, \fBEVP_PKEY\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 465 of file str_lib\&.c\&.
+.SS "int STORE_store_public_key (\fBSTORE\fP * s, \fBEVP_PKEY\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 649 of file str_lib\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const int STORE_attr_sizes[\fBSTORE_ATTR_TYPE_NUM\fP+1]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    0,
+    -1,                         
+    SHA_DIGEST_LENGTH,          
+    SHA_DIGEST_LENGTH,          
+    SHA_DIGEST_LENGTH,          
+    SHA_DIGEST_LENGTH,          
+    sizeof(X509_NAME *),        
+    sizeof(BIGNUM *),           
+    sizeof(X509_NAME *),        
+    SHA_DIGEST_LENGTH,          
+    -1,                         
+    -1,                         
+}
+.fi
+.PP
+Definition at line 88 of file str_lib\&.c\&.
+.SS "const char* const STORE_object_type_string[\fBSTORE_OBJECT_TYPE_NUM\fP+1]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    0,
+    "X\&.509 Certificate",
+    "X\&.509 CRL",
+    "Private Key",
+    "Public Key",
+    "Number",
+    "Arbitrary Data"
+}
+.fi
+.PP
+Definition at line 70 of file str_lib\&.c\&.
+.SS "const int STORE_param_sizes[\fBSTORE_PARAM_TYPE_NUM\fP+1]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    0,
+    sizeof(int),                
+    sizeof(size_t),             
+    -1,                         
+    0                           
+}
+.fi
+.PP
+Definition at line 80 of file str_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

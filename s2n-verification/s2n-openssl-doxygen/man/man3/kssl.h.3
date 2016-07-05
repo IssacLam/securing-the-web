@@ -1,0 +1,275 @@
+.TH "s2n/libcrypto-root/include/openssl/kssl.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/kssl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <krb5\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBkssl_err_st\fP"
+.br
+.ti -1c
+.RI "struct \fBkssl_ctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBFAR\fP"
+.br
+.ti -1c
+.RI "#define \fBKRB5SVC\fP   'host'"
+.br
+.ti -1c
+.RI "#define \fBKRB5KEYTAB\fP   '/etc/krb5\&.keytab'"
+.br
+.ti -1c
+.RI "#define \fBKRB5SENDAUTH\fP   1"
+.br
+.ti -1c
+.RI "#define \fBKRB5CHECKAUTH\fP   1"
+.br
+.ti -1c
+.RI "#define \fBKSSL_CLOCKSKEW\fP   300;"
+.br
+.ti -1c
+.RI "#define \fBKSSL_ERR_MAX\fP   255"
+.br
+.ti -1c
+.RI "#define \fBKSSL_CLIENT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBKSSL_SERVER\fP   2"
+.br
+.ti -1c
+.RI "#define \fBKSSL_SERVICE\fP   3"
+.br
+.ti -1c
+.RI "#define \fBKSSL_KEYTAB\fP   4"
+.br
+.ti -1c
+.RI "#define \fBKSSL_CTX_OK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBKSSL_CTX_ERR\fP   1"
+.br
+.ti -1c
+.RI "#define \fBKSSL_NOMEM\fP   2"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBkssl_err_st\fP \fBKSSL_ERR\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBkssl_ctx_st\fP \fBKSSL_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "krb5_error_code \fBkssl_ctx_setstring\fP (\fBKSSL_CTX\fP *kssl_ctx, int which, char *\fBtext\fP)"
+.br
+.ti -1c
+.RI "\fBKSSL_CTX\fP * \fBkssl_ctx_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBKSSL_CTX\fP * \fBkssl_ctx_free\fP (\fBKSSL_CTX\fP *kssl_ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBkssl_ctx_show\fP (\fBKSSL_CTX\fP *kssl_ctx)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_ctx_setprinc\fP (\fBKSSL_CTX\fP *kssl_ctx, int which, krb5_data *realm, krb5_data *entity, int nentities)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_cget_tkt\fP (\fBKSSL_CTX\fP *kssl_ctx, krb5_data **enc_tktp, krb5_data *authenp, \fBKSSL_ERR\fP *kssl_err)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_sget_tkt\fP (\fBKSSL_CTX\fP *kssl_ctx, krb5_data *indata, krb5_ticket_times *ttimes, \fBKSSL_ERR\fP *kssl_err)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_ctx_setkey\fP (\fBKSSL_CTX\fP *kssl_ctx, krb5_keyblock *session)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBkssl_err_set\fP (\fBKSSL_ERR\fP *kssl_err, int reason, char *\fBtext\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBkssl_krb5_free_data_contents\fP (krb5_context context, krb5_data *\fBdata\fP)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_build_principal_2\fP (krb5_context context, krb5_principal *princ, int rlen, const char *realm, int slen, const char *svc, int hlen, const char *host)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_validate_times\fP (krb5_timestamp atime, krb5_ticket_times *ttimes)"
+.br
+.ti -1c
+.RI "krb5_error_code \fBkssl_check_authent\fP (\fBKSSL_CTX\fP *kssl_ctx, krb5_data *authentp, krb5_timestamp *atimep, \fBKSSL_ERR\fP *kssl_err)"
+.br
+.ti -1c
+.RI "unsigned char * \fBkssl_skip_confound\fP (krb5_enctype enctype, unsigned char *authn)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_set0_kssl_ctx\fP (\fBSSL\fP *s, \fBKSSL_CTX\fP *kctx)"
+.br
+.ti -1c
+.RI "\fBKSSL_CTX\fP * \fBSSL_get0_kssl_ctx\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "char * \fBkssl_ctx_get0_client_princ\fP (\fBKSSL_CTX\fP *kctx)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define FAR"
+
+.PP
+Definition at line 99 of file kssl\&.h\&.
+.SS "#define KRB5CHECKAUTH   1"
+
+.PP
+Definition at line 124 of file kssl\&.h\&.
+.SS "#define KRB5KEYTAB   '/etc/krb5\&.keytab'"
+
+.PP
+Definition at line 116 of file kssl\&.h\&.
+.SS "#define KRB5SENDAUTH   1"
+
+.PP
+Definition at line 120 of file kssl\&.h\&.
+.SS "#define KRB5SVC   'host'"
+
+.PP
+Definition at line 112 of file kssl\&.h\&.
+.SS "#define KSSL_CLIENT   1"
+
+.PP
+Definition at line 153 of file kssl\&.h\&.
+.SS "#define KSSL_CLOCKSKEW   300;"
+
+.PP
+Definition at line 128 of file kssl\&.h\&.
+.SS "#define KSSL_CTX_ERR   1"
+
+.PP
+Definition at line 159 of file kssl\&.h\&.
+.SS "#define KSSL_CTX_OK   0"
+
+.PP
+Definition at line 158 of file kssl\&.h\&.
+.SS "#define KSSL_ERR_MAX   255"
+
+.PP
+Definition at line 131 of file kssl\&.h\&.
+.SS "#define KSSL_KEYTAB   4"
+
+.PP
+Definition at line 156 of file kssl\&.h\&.
+.SS "#define KSSL_NOMEM   2"
+
+.PP
+Definition at line 160 of file kssl\&.h\&.
+.SS "#define KSSL_SERVER   2"
+
+.PP
+Definition at line 154 of file kssl\&.h\&.
+.SS "#define KSSL_SERVICE   3"
+
+.PP
+Definition at line 155 of file kssl\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBkssl_ctx_st\fP  \fBKSSL_CTX\fP"
+
+.SS "typedef struct \fBkssl_err_st\fP  \fBKSSL_ERR\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "krb5_error_code kssl_build_principal_2 (krb5_context context, krb5_principal * princ, int rlen, const char * realm, int slen, const char * svc, int hlen, const char * host)"
+
+.PP
+Definition at line 2177 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_cget_tkt (\fBKSSL_CTX\fP * kssl_ctx, krb5_data ** enc_tktp, krb5_data * authenp, \fBKSSL_ERR\fP * kssl_err)"
+
+.PP
+Definition at line 1042 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_check_authent (\fBKSSL_CTX\fP * kssl_ctx, krb5_data * authentp, krb5_timestamp * atimep, \fBKSSL_ERR\fP * kssl_err)"
+
+.PP
+Definition at line 2003 of file kssl\&.c\&.
+.SS "\fBKSSL_CTX\fP* kssl_ctx_free (\fBKSSL_CTX\fP * kssl_ctx)"
+
+.PP
+Definition at line 1541 of file kssl\&.c\&.
+.SS "char* kssl_ctx_get0_client_princ (\fBKSSL_CTX\fP * kctx)"
+
+.PP
+Definition at line 2247 of file kssl\&.c\&.
+.SS "\fBKSSL_CTX\fP* kssl_ctx_new (\fBvoid\fP)"
+
+.PP
+Definition at line 1533 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_ctx_setkey (\fBKSSL_CTX\fP * kssl_ctx, krb5_keyblock * session)"
+
+.PP
+Definition at line 1669 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_ctx_setprinc (\fBKSSL_CTX\fP * kssl_ctx, int which, krb5_data * realm, krb5_data * entity, int nentities)"
+
+.PP
+Definition at line 1568 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_ctx_setstring (\fBKSSL_CTX\fP * kssl_ctx, int which, char * text)"
+
+.PP
+Definition at line 1625 of file kssl\&.c\&.
+.SS "\fBvoid\fP kssl_ctx_show (\fBKSSL_CTX\fP * kssl_ctx)"
+
+.PP
+Definition at line 1715 of file kssl\&.c\&.
+.SS "\fBvoid\fP kssl_err_set (\fBKSSL_ERR\fP * kssl_err, int reason, char * text)"
+
+.PP
+Definition at line 928 of file kssl\&.c\&.
+.SS "\fBvoid\fP kssl_krb5_free_data_contents (krb5_context context, krb5_data * data)"
+
+.PP
+Definition at line 1857 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_sget_tkt (\fBKSSL_CTX\fP * kssl_ctx, krb5_data * indata, krb5_ticket_times * ttimes, \fBKSSL_ERR\fP * kssl_err)"
+
+.PP
+Definition at line 1286 of file kssl\&.c\&.
+.SS "unsigned char* kssl_skip_confound (krb5_enctype enctype, unsigned char * authn)"
+
+.PP
+Definition at line 904 of file kssl\&.c\&.
+.SS "krb5_error_code kssl_validate_times (krb5_timestamp atime, krb5_ticket_times * ttimes)"
+
+.PP
+Definition at line 1960 of file kssl\&.c\&.
+.SS "\fBKSSL_CTX\fP* SSL_get0_kssl_ctx (\fBSSL\fP * s)"
+
+.PP
+Definition at line 2242 of file kssl\&.c\&.
+.SS "\fBvoid\fP SSL_set0_kssl_ctx (\fBSSL\fP * s, \fBKSSL_CTX\fP * kctx)"
+
+.PP
+Definition at line 2237 of file kssl\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

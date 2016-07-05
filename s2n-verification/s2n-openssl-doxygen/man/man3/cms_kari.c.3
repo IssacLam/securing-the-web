@@ -1,0 +1,115 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cms/cms_kari.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cms/cms_kari.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/cms\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'cms_lcl\&.h'\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_get0_alg\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509_ALGOR\fP **palg, \fBASN1_OCTET_STRING\fP **pukm)"
+.br
+.ti -1c
+.RI "* \fBCMS_RecipientInfo_kari_get0_reks\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_get0_orig_id\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509_ALGOR\fP **pubalg, \fBASN1_BIT_STRING\fP **pubkey, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_orig_id_cmp\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientEncryptedKey_get0_id\fP (\fBCMS_RecipientEncryptedKey\fP *rek, \fBASN1_OCTET_STRING\fP **keyid, \fBASN1_GENERALIZEDTIME\fP **tm, \fBCMS_OtherKeyAttribute\fP **other, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientEncryptedKey_cert_cmp\fP (\fBCMS_RecipientEncryptedKey\fP *rek, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_set0_pkey\fP (\fBCMS_RecipientInfo\fP *ri, \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "\fBEVP_CIPHER_CTX\fP * \fBCMS_RecipientInfo_kari_get0_ctx\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_decrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri, \fBCMS_RecipientEncryptedKey\fP *rek)"
+.br
+.ti -1c
+.RI "int \fBcms_RecipientInfo_kari_init\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509\fP *recip, \fBEVP_PKEY\fP *pk, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBcms_RecipientInfo_kari_encrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int CMS_RecipientEncryptedKey_cert_cmp (\fBCMS_RecipientEncryptedKey\fP * rek, \fBX509\fP * cert)"
+
+.PP
+Definition at line 194 of file cms_kari\&.c\&.
+.SS "int CMS_RecipientEncryptedKey_get0_id (\fBCMS_RecipientEncryptedKey\fP * rek, \fBASN1_OCTET_STRING\fP ** keyid, \fBASN1_GENERALIZEDTIME\fP ** tm, \fBCMS_OtherKeyAttribute\fP ** other, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.PP
+Definition at line 160 of file cms_kari\&.c\&.
+.SS "int CMS_RecipientInfo_kari_decrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri, \fBCMS_RecipientEncryptedKey\fP * rek)"
+
+.PP
+Definition at line 280 of file cms_kari\&.c\&.
+.SS "int cms_RecipientInfo_kari_encrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 417 of file cms_kari\&.c\&.
+.SS "int CMS_RecipientInfo_kari_get0_alg (\fBCMS_RecipientInfo\fP * ri, \fBX509_ALGOR\fP ** palg, \fBASN1_OCTET_STRING\fP ** pukm)"
+
+.PP
+Definition at line 73 of file cms_kari\&.c\&.
+.SS "\fBEVP_CIPHER_CTX\fP* CMS_RecipientInfo_kari_get0_ctx (\fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 227 of file cms_kari\&.c\&.
+.SS "int CMS_RecipientInfo_kari_get0_orig_id (\fBCMS_RecipientInfo\fP * ri, \fBX509_ALGOR\fP ** pubalg, \fBASN1_BIT_STRING\fP ** pubkey, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.PP
+Definition at line 102 of file cms_kari\&.c\&.
+.SS "* CMS_RecipientInfo_kari_get0_reks (\fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 92 of file cms_kari\&.c\&.
+.SS "int cms_RecipientInfo_kari_init (\fBCMS_RecipientInfo\fP * ri, \fBX509\fP * recip, \fBEVP_PKEY\fP * pk, unsigned int flags)"
+
+.PP
+Definition at line 344 of file cms_kari\&.c\&.
+.SS "int CMS_RecipientInfo_kari_orig_id_cmp (\fBCMS_RecipientInfo\fP * ri, \fBX509\fP * cert)"
+
+.PP
+Definition at line 144 of file cms_kari\&.c\&.
+.SS "int CMS_RecipientInfo_kari_set0_pkey (\fBCMS_RecipientInfo\fP * ri, \fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 206 of file cms_kari\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

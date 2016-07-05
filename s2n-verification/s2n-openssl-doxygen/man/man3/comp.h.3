@@ -1,0 +1,154 @@
+.TH "s2n/libcrypto-root/include/openssl/comp.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/comp.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/crypto\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcomp_method_st\fP"
+.br
+.ti -1c
+.RI "struct \fBcomp_ctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCOMP_F_BIO_ZLIB_FLUSH\fP   99"
+.br
+.ti -1c
+.RI "#define \fBCOMP_F_BIO_ZLIB_NEW\fP   100"
+.br
+.ti -1c
+.RI "#define \fBCOMP_F_BIO_ZLIB_READ\fP   101"
+.br
+.ti -1c
+.RI "#define \fBCOMP_F_BIO_ZLIB_WRITE\fP   102"
+.br
+.ti -1c
+.RI "#define \fBCOMP_R_ZLIB_DEFLATE_ERROR\fP   99"
+.br
+.ti -1c
+.RI "#define \fBCOMP_R_ZLIB_INFLATE_ERROR\fP   100"
+.br
+.ti -1c
+.RI "#define \fBCOMP_R_ZLIB_NOT_SUPPORTED\fP   101"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBcomp_ctx_st\fP \fBCOMP_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCOMP_CTX\fP * \fBCOMP_CTX_new\fP (\fBCOMP_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCOMP_CTX_free\fP (\fBCOMP_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBCOMP_compress_block\fP (\fBCOMP_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int olen, unsigned char *\fBin\fP, int ilen)"
+.br
+.ti -1c
+.RI "int \fBCOMP_expand_block\fP (\fBCOMP_CTX\fP *\fBctx\fP, unsigned char *\fBout\fP, int olen, unsigned char *\fBin\fP, int ilen)"
+.br
+.ti -1c
+.RI "\fBCOMP_METHOD\fP * \fBCOMP_rle\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBCOMP_METHOD\fP * \fBCOMP_zlib\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCOMP_zlib_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_COMP_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define COMP_F_BIO_ZLIB_FLUSH   99"
+
+.PP
+Definition at line 70 of file comp\&.h\&.
+.SS "#define COMP_F_BIO_ZLIB_NEW   100"
+
+.PP
+Definition at line 71 of file comp\&.h\&.
+.SS "#define COMP_F_BIO_ZLIB_READ   101"
+
+.PP
+Definition at line 72 of file comp\&.h\&.
+.SS "#define COMP_F_BIO_ZLIB_WRITE   102"
+
+.PP
+Definition at line 73 of file comp\&.h\&.
+.SS "#define COMP_R_ZLIB_DEFLATE_ERROR   99"
+
+.PP
+Definition at line 76 of file comp\&.h\&.
+.SS "#define COMP_R_ZLIB_INFLATE_ERROR   100"
+
+.PP
+Definition at line 77 of file comp\&.h\&.
+.SS "#define COMP_R_ZLIB_NOT_SUPPORTED   101"
+
+.PP
+Definition at line 78 of file comp\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBcomp_ctx_st\fP \fBCOMP_CTX\fP"
+
+.PP
+Definition at line 15 of file comp\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int COMP_compress_block (\fBCOMP_CTX\fP * ctx, unsigned char * out, int olen, unsigned char * in, int ilen)"
+
+.PP
+Definition at line 35 of file comp_lib\&.c\&.
+.SS "\fBvoid\fP COMP_CTX_free (\fBCOMP_CTX\fP * ctx)"
+
+.PP
+Definition at line 24 of file comp_lib\&.c\&.
+.SS "\fBCOMP_CTX\fP* COMP_CTX_new (\fBCOMP_METHOD\fP * meth)"
+
+.PP
+Definition at line 7 of file comp_lib\&.c\&.
+.SS "int COMP_expand_block (\fBCOMP_CTX\fP * ctx, unsigned char * out, int olen, unsigned char * in, int ilen)"
+
+.PP
+Definition at line 51 of file comp_lib\&.c\&.
+.SS "\fBCOMP_METHOD\fP* COMP_rle (\fBvoid\fP)"
+
+.PP
+Definition at line 25 of file c_rle\&.c\&.
+.SS "\fBCOMP_METHOD\fP* COMP_zlib (\fBvoid\fP)"
+
+.PP
+Definition at line 343 of file c_zlib\&.c\&.
+.SS "\fBvoid\fP COMP_zlib_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 404 of file c_zlib\&.c\&.
+.SS "\fBvoid\fP ERR_load_COMP_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 89 of file comp_err\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

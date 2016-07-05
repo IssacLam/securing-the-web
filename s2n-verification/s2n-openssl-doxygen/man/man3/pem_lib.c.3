@@ -1,0 +1,168 @@
+.TH "s2n/libcrypto-build/openssl/crypto/pem/pem_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/pem/pem_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/pkcs12\&.h>\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+\fC#include <openssl/des\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMIN_LENGTH\fP   4"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBpem_check_suffix\fP (const char *pem_str, const char *suffix)"
+.br
+.ti -1c
+.RI "int \fBPEM_def_callback\fP (char *buf, int \fBnum\fP, int w, \fBvoid\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_proc_type\fP (char *buf, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPEM_dek_info\fP (char *buf, const char *\fBtype\fP, int \fBlen\fP, char *str)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBPEM_ASN1_read\fP (d2i_of_void *\fBd2i\fP, const char *name, FILE *\fBfp\fP, \fBvoid\fP **\fBx\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_bytes_read_bio\fP (unsigned char **pdata, long *plen, char **pnm, const char *name, \fBBIO\fP *\fBbp\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_ASN1_write\fP (i2d_of_void *i2d, const char *name, FILE *\fBfp\fP, \fBvoid\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcallback\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_ASN1_write_bio\fP (i2d_of_void *i2d, const char *name, \fBBIO\fP *\fBbp\fP, \fBvoid\fP *\fBx\fP, const \fBEVP_CIPHER\fP *\fBenc\fP, unsigned char *\fBkstr\fP, int \fBklen\fP, \fBpem_password_cb\fP *\fBcallback\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_do_header\fP (\fBEVP_CIPHER_INFO\fP *cipher, unsigned char *\fBdata\fP, long *plen, \fBpem_password_cb\fP *\fBcallback\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_get_EVP_CIPHER_INFO\fP (char *header, \fBEVP_CIPHER_INFO\fP *cipher)"
+.br
+.ti -1c
+.RI "int \fBPEM_write\fP (FILE *\fBfp\fP, const char *name, const char *header, const unsigned char *\fBdata\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio\fP (\fBBIO\fP *\fBbp\fP, const char *name, const char *header, const unsigned char *\fBdata\fP, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_read\fP (FILE *\fBfp\fP, char **name, char **header, unsigned char **\fBdata\fP, long *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_read_bio\fP (\fBBIO\fP *\fBbp\fP, char **name, char **header, unsigned char **\fBdata\fP, long *\fBlen\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBPEM_version\fP [] = 'PEM' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MIN_LENGTH   4"
+
+.PP
+Definition at line 79 of file pem_lib\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP* PEM_ASN1_read (d2i_of_void * d2i, const char * name, FILE * fp, \fBvoid\fP ** x, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 171 of file pem_lib\&.c\&.
+.SS "int PEM_ASN1_write (i2d_of_void * i2d, const char * name, FILE * fp, \fBvoid\fP * x, const \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * callback, \fBvoid\fP * u)"
+
+.PP
+Definition at line 325 of file pem_lib\&.c\&.
+.SS "int PEM_ASN1_write_bio (i2d_of_void * i2d, const char * name, \fBBIO\fP * bp, \fBvoid\fP * x, const \fBEVP_CIPHER\fP * enc, unsigned char * kstr, int klen, \fBpem_password_cb\fP * callback, \fBvoid\fP * u)"
+
+.PP
+Definition at line 343 of file pem_lib\&.c\&.
+.SS "int PEM_bytes_read_bio (unsigned char ** pdata, long * plen, char ** pnm, const char * name, \fBBIO\fP * bp, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 280 of file pem_lib\&.c\&.
+.SS "int pem_check_suffix (const char * pem_str, const char * suffix)"
+
+.PP
+Definition at line 857 of file pem_lib\&.c\&.
+.SS "int PEM_def_callback (char * buf, int num, int w, \fBvoid\fP * key)"
+
+.PP
+Definition at line 85 of file pem_lib\&.c\&.
+.SS "\fBvoid\fP PEM_dek_info (char * buf, const char * type, int len, char * str)"
+
+.PP
+Definition at line 150 of file pem_lib\&.c\&.
+.SS "int PEM_do_header (\fBEVP_CIPHER_INFO\fP * cipher, unsigned char * data, long * plen, \fBpem_password_cb\fP * callback, \fBvoid\fP * u)"
+
+.PP
+Definition at line 445 of file pem_lib\&.c\&.
+.SS "int PEM_get_EVP_CIPHER_INFO (char * header, \fBEVP_CIPHER_INFO\fP * cipher)"
+
+.PP
+Definition at line 495 of file pem_lib\&.c\&.
+.SS "\fBvoid\fP PEM_proc_type (char * buf, int type)"
+
+.PP
+Definition at line 132 of file pem_lib\&.c\&.
+.SS "int PEM_read (FILE * fp, char ** name, char ** header, unsigned char ** data, long * len)"
+
+.PP
+Definition at line 664 of file pem_lib\&.c\&.
+.SS "int PEM_read_bio (\fBBIO\fP * bp, char ** name, char ** header, unsigned char ** data, long * len)"
+
+.PP
+Definition at line 681 of file pem_lib\&.c\&.
+.SS "int PEM_write (FILE * fp, const char * name, const char * header, const unsigned char * data, long len)"
+
+.PP
+Definition at line 588 of file pem_lib\&.c\&.
+.SS "int PEM_write_bio (\fBBIO\fP * bp, const char * name, const char * header, const unsigned char * data, long len)"
+
+.PP
+Definition at line 605 of file pem_lib\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char PEM_version[] = 'PEM' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 77 of file pem_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

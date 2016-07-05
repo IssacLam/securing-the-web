@@ -1,0 +1,149 @@
+.TH "s2n/libcrypto-build/openssl/crypto/asn1/a_strnid.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/asn1/a_strnid.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBub_name\fP   32768"
+.br
+.ti -1c
+.RI "#define \fBub_common_name\fP   64"
+.br
+.ti -1c
+.RI "#define \fBub_locality_name\fP   128"
+.br
+.ti -1c
+.RI "#define \fBub_state_name\fP   128"
+.br
+.ti -1c
+.RI "#define \fBub_organization_name\fP   64"
+.br
+.ti -1c
+.RI "#define \fBub_organization_unit_name\fP   64"
+.br
+.ti -1c
+.RI "#define \fBub_title\fP   64"
+.br
+.ti -1c
+.RI "#define \fBub_email_address\fP   128"
+.br
+.ti -1c
+.RI "#define \fBub_serial_number\fP   64"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "unsigned long \fBASN1_STRING_get_default_mask\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBASN1_STRING_set_default_mask_asc\fP (const char *\fBp\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_STRING\fP * \fBASN1_STRING_set_by_NID\fP (\fBASN1_STRING\fP **\fBout\fP, const unsigned char *\fBin\fP, int inlen, int inform, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBDECLARE_OBJ_BSEARCH_CMP_FN\fP (\fBASN1_STRING_TABLE\fP, \fBASN1_STRING_TABLE\fP, table)"
+.br
+.ti -1c
+.RI "\fBIMPLEMENT_OBJ_BSEARCH_CMP_FN\fP (\fBASN1_STRING_TABLE\fP, \fBASN1_STRING_TABLE\fP, table)"
+.br
+.ti -1c
+.RI "\fBASN1_STRING_TABLE\fP * \fBASN1_STRING_TABLE_get\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBASN1_STRING_TABLE_add\fP (int \fBnid\fP, long minsize, long maxsize, unsigned long mask, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBASN1_STRING_TABLE_cleanup\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ub_common_name   64"
+
+.PP
+Definition at line 162 of file a_strnid\&.c\&.
+.SS "#define ub_email_address   128"
+
+.PP
+Definition at line 168 of file a_strnid\&.c\&.
+.SS "#define ub_locality_name   128"
+
+.PP
+Definition at line 163 of file a_strnid\&.c\&.
+.SS "#define ub_name   32768"
+
+.PP
+Definition at line 161 of file a_strnid\&.c\&.
+.SS "#define ub_organization_name   64"
+
+.PP
+Definition at line 165 of file a_strnid\&.c\&.
+.SS "#define ub_organization_unit_name   64"
+
+.PP
+Definition at line 166 of file a_strnid\&.c\&.
+.SS "#define ub_serial_number   64"
+
+.PP
+Definition at line 169 of file a_strnid\&.c\&.
+.SS "#define ub_state_name   128"
+
+.PP
+Definition at line 164 of file a_strnid\&.c\&.
+.SS "#define ub_title   64"
+
+.PP
+Definition at line 167 of file a_strnid\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "unsigned long ASN1_STRING_get_default_mask (\fBvoid\fP)"
+
+.PP
+Definition at line 84 of file a_strnid\&.c\&.
+.SS "\fBASN1_STRING\fP* ASN1_STRING_set_by_NID (\fBASN1_STRING\fP ** out, const unsigned char * in, int inlen, int inform, int nid)"
+
+.PP
+Definition at line 129 of file a_strnid\&.c\&.
+.SS "int ASN1_STRING_set_default_mask_asc (const char * p)"
+
+.PP
+Definition at line 99 of file a_strnid\&.c\&.
+.SS "int ASN1_STRING_TABLE_add (int nid, long minsize, long maxsize, unsigned long mask, unsigned long flags)"
+
+.PP
+Definition at line 232 of file a_strnid\&.c\&.
+.SS "\fBvoid\fP ASN1_STRING_TABLE_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 267 of file a_strnid\&.c\&.
+.SS "\fBASN1_STRING_TABLE\fP* ASN1_STRING_TABLE_get (int nid)"
+
+.PP
+Definition at line 213 of file a_strnid\&.c\&.
+.SS "DECLARE_OBJ_BSEARCH_CMP_FN (\fBASN1_STRING_TABLE\fP, \fBASN1_STRING_TABLE\fP, table)"
+
+.SS "IMPLEMENT_OBJ_BSEARCH_CMP_FN (\fBASN1_STRING_TABLE\fP, \fBASN1_STRING_TABLE\fP, table)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,145 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ex_data.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ex_data.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBst_CRYPTO_EX_DATA_IMPL\fP"
+.br
+.ti -1c
+.RI "struct \fBst_ex_class_item\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBEX_IMPL\fP(\fBa\fP)   impl\->cb_##\fBa\fP"
+.br
+.ti -1c
+.RI "#define \fBIMPL_CHECK\fP   \fBif\fP(!impl) impl_check();"
+.br
+.ti -1c
+.RI "#define \fBEX_DATA_CHECK\fP(iffail)   \fBif\fP(!ex_data && !ex_data_check()) {iffail}"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBst_ex_class_item\fP \fBEX_CLASS_ITEM\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBCRYPTO_EX_DATA_IMPL\fP * \fBCRYPTO_get_ex_data_implementation\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_ex_data_implementation\fP (const \fBCRYPTO_EX_DATA_IMPL\fP *i)"
+.br
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBEX_CLASS_ITEM\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ex_data_new_class\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cleanup_all_ex_data\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_get_ex_new_index\fP (int class_index, long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_new_ex_data\fP (int class_index, \fBvoid\fP *\fBobj\fP, \fBCRYPTO_EX_DATA\fP *ad)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_dup_ex_data\fP (int class_index, \fBCRYPTO_EX_DATA\fP *to, \fBCRYPTO_EX_DATA\fP *from)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_free_ex_data\fP (int class_index, \fBvoid\fP *\fBobj\fP, \fBCRYPTO_EX_DATA\fP *ad)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_ex_data\fP (\fBCRYPTO_EX_DATA\fP *ad, int idx, \fBvoid\fP *val)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_get_ex_data\fP (const \fBCRYPTO_EX_DATA\fP *ad, int idx)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EX_DATA_CHECK(iffail)   \fBif\fP(!ex_data && !ex_data_check()) {iffail}"
+
+.PP
+Definition at line 289 of file ex_data\&.c\&.
+.SS "#define EX_IMPL(\fBa\fP)   impl\->cb_##\fBa\fP"
+
+.PP
+Definition at line 174 of file ex_data\&.c\&.
+.SS "#define IMPL_CHECK   \fBif\fP(!impl) impl_check();"
+
+.PP
+Definition at line 211 of file ex_data\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBst_ex_class_item\fP  \fBEX_CLASS_ITEM\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP CRYPTO_cleanup_all_ex_data (\fBvoid\fP)"
+
+.PP
+Definition at line 558 of file ex_data\&.c\&.
+.SS "int CRYPTO_dup_ex_data (int class_index, \fBCRYPTO_EX_DATA\fP * to, \fBCRYPTO_EX_DATA\fP * from)"
+
+.PP
+Definition at line 590 of file ex_data\&.c\&.
+.SS "int CRYPTO_ex_data_new_class (\fBvoid\fP)"
+
+.PP
+Definition at line 547 of file ex_data\&.c\&.
+.SS "\fBvoid\fP CRYPTO_free_ex_data (int class_index, \fBvoid\fP * obj, \fBCRYPTO_EX_DATA\fP * ad)"
+
+.PP
+Definition at line 600 of file ex_data\&.c\&.
+.SS "\fBvoid\fP* CRYPTO_get_ex_data (const \fBCRYPTO_EX_DATA\fP * ad, int idx)"
+
+.PP
+Definition at line 636 of file ex_data\&.c\&.
+.SS "const \fBCRYPTO_EX_DATA_IMPL\fP* CRYPTO_get_ex_data_implementation (\fBvoid\fP)"
+
+.PP
+Definition at line 214 of file ex_data\&.c\&.
+.SS "int CRYPTO_get_ex_new_index (int class_index, long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.PP
+Definition at line 564 of file ex_data\&.c\&.
+.SS "int CRYPTO_new_ex_data (int class_index, \fBvoid\fP * obj, \fBCRYPTO_EX_DATA\fP * ad)"
+
+.PP
+Definition at line 581 of file ex_data\&.c\&.
+.SS "int CRYPTO_set_ex_data (\fBCRYPTO_EX_DATA\fP * ad, int idx, \fBvoid\fP * val)"
+
+.PP
+Definition at line 609 of file ex_data\&.c\&.
+.SS "int CRYPTO_set_ex_data_implementation (const \fBCRYPTO_EX_DATA_IMPL\fP * i)"
+
+.PP
+Definition at line 219 of file ex_data\&.c\&.
+.SS "DECLARE_LHASH_OF (\fBEX_CLASS_ITEM\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,220 @@
+.TH "s2n/libcrypto-build/openssl/apps/s_client.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/apps/s_client.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include 'apps\&.h'\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/ocsp\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/srp\&.h>\fP
+.br
+\fC#include 's_apps\&.h'\fP
+.br
+\fC#include 'timeouts\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBtlsextctx_st\fP"
+.br
+.ti -1c
+.RI "struct \fBsrp_arg_st\fP"
+.br
+.ti -1c
+.RI "struct \fBtlsextnextprotoctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fBPROG\fP   \fBs_client_main\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL_HOST_NAME\fP   'localhost'"
+.br
+.ti -1c
+.RI "#define \fBBUFSIZZ\fP   1024*8"
+.br
+.ti -1c
+.RI "#define \fBSRP_NUMBER_ITERATIONS_FOR_PRIME\fP   64"
+.br
+.ti -1c
+.RI "#define \fBPWD_STRLEN\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBMAX_SI_TYPES\fP   100"
+.br
+.ti -1c
+.RI "#define \fBno_jpake\fP   !jpake_secret"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBtlsextctx_st\fP \fBtlsextctx\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBsrp_arg_st\fP \fBSRP_ARG\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBtlsextnextprotoctx_st\fP \fBtlsextnextprotoctx\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBPROTO_OFF\fP = 0, \fBPROTO_SMTP\fP, \fBPROTO_POP3\fP, \fBPROTO_IMAP\fP, \fBPROTO_FTP\fP, \fBPROTO_XMPP\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBMAIN\fP (int, char **)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverify_depth\fP"
+.br
+.ti -1c
+.RI "int \fBverify_error\fP"
+.br
+.ti -1c
+.RI "int \fBverify_return_error\fP"
+.br
+.ti -1c
+.RI "int \fBverify_quiet\fP"
+.br
+.ti -1c
+.RI "char * \fBsrtp_profiles\fP = \fBNULL\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUFSIZZ   1024*8"
+
+.PP
+Definition at line 200 of file s_client\&.c\&.
+.SS "#define MAX_SI_TYPES   100"
+
+.SS "#define no_jpake   !jpake_secret"
+
+.SS "#define PROG   \fBs_client_main\fP"
+
+.PP
+Definition at line 184 of file s_client\&.c\&.
+.SS "#define PWD_STRLEN   1024"
+
+.PP
+Definition at line 559 of file s_client\&.c\&.
+.SS "#define SRP_NUMBER_ITERATIONS_FOR_PRIME   64"
+
+.PP
+Definition at line 481 of file s_client\&.c\&.
+.SS "#define SSL_HOST_NAME   'localhost'"
+
+.PP
+Definition at line 192 of file s_client\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 159 of file s_client\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBsrp_arg_st\fP  \fBSRP_ARG\fP"
+
+.SS "typedef struct \fBtlsextctx_st\fP  \fBtlsextctx\fP"
+
+.SS "typedef struct \fBtlsextnextprotoctx_st\fP  \fBtlsextnextprotoctx\fP"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIPROTO_OFF \fP\fP
+.TP
+\fB\fIPROTO_SMTP \fP\fP
+.TP
+\fB\fIPROTO_POP3 \fP\fP
+.TP
+\fB\fIPROTO_IMAP \fP\fP
+.TP
+\fB\fIPROTO_FTP \fP\fP
+.TP
+\fB\fIPROTO_XMPP \fP\fP
+.PP
+Definition at line 647 of file s_client\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int MAIN (int argc, char ** argv)"
+
+.PP
+Definition at line 658 of file s_client\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "char* srtp_profiles = \fBNULL\fP"
+
+.PP
+Definition at line 587 of file s_client\&.c\&.
+.SS "int verify_depth"
+
+.PP
+Definition at line 128 of file s_cb\&.c\&.
+.SS "int verify_error"
+
+.PP
+Definition at line 130 of file s_cb\&.c\&.
+.SS "int verify_quiet"
+
+.PP
+Definition at line 129 of file s_cb\&.c\&.
+.SS "int verify_return_error"
+
+.PP
+Definition at line 131 of file s_cb\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

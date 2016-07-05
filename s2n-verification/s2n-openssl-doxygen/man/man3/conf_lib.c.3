@@ -1,0 +1,176 @@
+.TH "s2n/libcrypto-build/openssl/crypto/conf/conf_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/conf/conf_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/conf_api\&.h>\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_set_nconf\fP (\fBCONF\fP *conf, \fBLHASH_OF\fP(\fBCONF_VALUE\fP)*\fBhash\fP)"
+.br
+.ti -1c
+.RI "int \fBCONF_set_default_method\fP (\fBCONF_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBLHASH_OF\fP (\fBCONF_VALUE\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBCONF_VALUE\fP)"
+.br
+.ti -1c
+.RI "char * \fBCONF_get_string\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, const char *group, const char *name)"
+.br
+.ti -1c
+.RI "long \fBCONF_get_number\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, const char *group, const char *name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCONF_free\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf)"
+.br
+.ti -1c
+.RI "int \fBCONF_dump_fp\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, FILE *\fBout\fP)"
+.br
+.ti -1c
+.RI "int \fBCONF_dump_bio\fP (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)*conf, \fBBIO\fP *\fBout\fP)"
+.br
+.ti -1c
+.RI "\fBCONF\fP * \fBNCONF_new\fP (\fBCONF_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBNCONF_free\fP (\fBCONF\fP *conf)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBNCONF_free_data\fP (\fBCONF\fP *conf)"
+.br
+.ti -1c
+.RI "int \fBNCONF_load\fP (\fBCONF\fP *conf, const char *\fBfile\fP, long *\fBeline\fP)"
+.br
+.ti -1c
+.RI "int \fBNCONF_load_fp\fP (\fBCONF\fP *conf, FILE *\fBfp\fP, long *\fBeline\fP)"
+.br
+.ti -1c
+.RI "int \fBNCONF_load_bio\fP (\fBCONF\fP *conf, \fBBIO\fP *\fBbp\fP, long *\fBeline\fP)"
+.br
+.ti -1c
+.RI "char * \fBNCONF_get_string\fP (const \fBCONF\fP *conf, const char *group, const char *name)"
+.br
+.ti -1c
+.RI "int \fBNCONF_get_number_e\fP (const \fBCONF\fP *conf, const char *group, const char *name, long *result)"
+.br
+.ti -1c
+.RI "int \fBNCONF_dump_fp\fP (const \fBCONF\fP *conf, FILE *\fBout\fP)"
+.br
+.ti -1c
+.RI "int \fBNCONF_dump_bio\fP (const \fBCONF\fP *conf, \fBBIO\fP *\fBout\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBCONF_version\fP [] = 'CONF' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int CONF_dump_bio (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, \fBBIO\fP * out)"
+
+.PP
+Definition at line 213 of file conf_lib\&.c\&.
+.SS "int CONF_dump_fp (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, FILE * out)"
+
+.PP
+Definition at line 198 of file conf_lib\&.c\&.
+.SS "\fBvoid\fP CONF_free (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf)"
+
+.PP
+Definition at line 190 of file conf_lib\&.c\&.
+.SS "long CONF_get_number (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, const char * group, const char * name)"
+
+.PP
+Definition at line 169 of file conf_lib\&.c\&.
+.SS "char* CONF_get_string (\fBLHASH_OF\fP(\fBCONF_VALUE\fP)* conf, const char * group, const char * name)"
+
+.PP
+Definition at line 157 of file conf_lib\&.c\&.
+.SS "int CONF_set_default_method (\fBCONF_METHOD\fP * meth)"
+
+.PP
+Definition at line 87 of file conf_lib\&.c\&.
+.SS "\fBvoid\fP CONF_set_nconf (\fBCONF\fP * conf, \fBLHASH_OF\fP(\fBCONF_VALUE\fP)* hash)"
+
+.PP
+Definition at line 73 of file conf_lib\&.c\&.
+.SS "LHASH_OF (\fBCONF_VALUE\fP)"
+
+.PP
+Definition at line 93 of file conf_lib\&.c\&.
+.SS "int NCONF_dump_bio (const \fBCONF\fP * conf, \fBBIO\fP * out)"
+
+.PP
+Definition at line 367 of file conf_lib\&.c\&.
+.SS "int NCONF_dump_fp (const \fBCONF\fP * conf, FILE * out)"
+
+.PP
+Definition at line 353 of file conf_lib\&.c\&.
+.SS "\fBvoid\fP NCONF_free (\fBCONF\fP * conf)"
+
+.PP
+Definition at line 244 of file conf_lib\&.c\&.
+.SS "\fBvoid\fP NCONF_free_data (\fBCONF\fP * conf)"
+
+.PP
+Definition at line 251 of file conf_lib\&.c\&.
+.SS "int NCONF_get_number_e (const \fBCONF\fP * conf, const char * group, const char * name, long * result)"
+
+.PP
+Definition at line 329 of file conf_lib\&.c\&.
+.SS "char* NCONF_get_string (const \fBCONF\fP * conf, const char * group, const char * name)"
+
+.PP
+Definition at line 308 of file conf_lib\&.c\&.
+.SS "int NCONF_load (\fBCONF\fP * conf, const char * file, long * eline)"
+
+.PP
+Definition at line 258 of file conf_lib\&.c\&.
+.SS "int NCONF_load_bio (\fBCONF\fP * conf, \fBBIO\fP * bp, long * eline)"
+
+.PP
+Definition at line 283 of file conf_lib\&.c\&.
+.SS "int NCONF_load_fp (\fBCONF\fP * conf, FILE * fp, long * eline)"
+
+.PP
+Definition at line 269 of file conf_lib\&.c\&.
+.SS "\fBCONF\fP* NCONF_new (\fBCONF_METHOD\fP * meth)"
+
+.PP
+Definition at line 228 of file conf_lib\&.c\&.
+.SS "STACK_OF (\fBCONF_VALUE\fP)"
+
+.PP
+Definition at line 145 of file conf_lib\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char CONF_version[] = 'CONF' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 67 of file conf_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,173 @@
+.TH "s2n/libcrypto-build/openssl/crypto/modes/gcm128.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/modes/gcm128.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include 'modes_lcl\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOPENSSL_FIPSAPI\fP"
+.br
+.ti -1c
+.RI "#define \fBNDEBUG\fP"
+.br
+.ti -1c
+.RI "#define \fBPACK\fP(s)                 ((size_t)(s)<<(sizeof(size_t)*8\-16))"
+.br
+.ti -1c
+.RI "#define \fBREDUCE1BIT\fP(V)  "
+.br
+.ti -1c
+.RI "#define \fBGCM_MUL\fP(\fBctx\fP,  Xi)     gcm_gmult_4bit(\fBctx\fP\->\fBXi\&.u\fP,\fBctx\fP\->Htable)"
+.br
+.ti -1c
+.RI "#define \fBGHASH\fP(\fBctx\fP,  \fBin\fP,  \fBlen\fP)   gcm_ghash_4bit((\fBctx\fP)\->\fBXi\&.u\fP,(\fBctx\fP)\->Htable,\fBin\fP,\fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBGHASH_CHUNK\fP   (3*1024)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_init\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, \fBvoid\fP *\fBkey\fP, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_setiv\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *iv, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_aad\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *aad, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_encrypt\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *\fBin\fP, unsigned char *\fBout\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_decrypt\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *\fBin\fP, unsigned char *\fBout\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_encrypt_ctr32\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *\fBin\fP, unsigned char *\fBout\fP, size_t \fBlen\fP, \fBctr128_f\fP stream)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_decrypt_ctr32\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *\fBin\fP, unsigned char *\fBout\fP, size_t \fBlen\fP, \fBctr128_f\fP stream)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_finish\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, const unsigned char *tag, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_tag\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP, unsigned char *tag, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBGCM128_CONTEXT\fP * \fBCRYPTO_gcm128_new\fP (\fBvoid\fP *\fBkey\fP, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_release\fP (\fBGCM128_CONTEXT\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define GCM_MUL(\fBctx\fP, Xi)   gcm_gmult_4bit(\fBctx\fP\->\fBXi\&.u\fP,\fBctx\fP\->Htable)"
+
+.PP
+Definition at line 610 of file gcm128\&.c\&.
+.SS "#define GHASH(\fBctx\fP, \fBin\fP, \fBlen\fP)   gcm_ghash_4bit((\fBctx\fP)\->\fBXi\&.u\fP,(\fBctx\fP)\->Htable,\fBin\fP,\fBlen\fP)"
+
+.PP
+Definition at line 612 of file gcm128\&.c\&.
+.SS "#define GHASH_CHUNK   (3*1024)"
+
+.PP
+Definition at line 618 of file gcm128\&.c\&.
+.SS "#define NDEBUG"
+
+.PP
+Definition at line 58 of file gcm128\&.c\&.
+.SS "#define OPENSSL_FIPSAPI"
+
+.PP
+Definition at line 50 of file gcm128\&.c\&.
+.SS "#define PACK(s)   ((size_t)(s)<<(sizeof(size_t)*8\-16))"
+
+.PP
+Definition at line 71 of file gcm128\&.c\&.
+.SS "#define REDUCE1BIT(V)"
+\fBValue:\fP
+.PP
+.nf
+do { \
+        if (sizeof(size_t)==8) { \
+                u64 T = U64(0xe100000000000000) & (0-(V\&.lo&1)); \
+                V\&.lo  = (V\&.hi<<63)|(V\&.lo>>1); \
+                V\&.hi  = (V\&.hi>>1 )^T; \
+        } \
+        else { \
+                u32 T = 0xe1000000U & (0-(u32)(V\&.lo&1)); \
+                V\&.lo  = (V\&.hi<<63)|(V\&.lo>>1); \
+                V\&.hi  = (V\&.hi>>1 )^((u64)T<<32); \
+        } \
+} while(0)
+.fi
+.PP
+Definition at line 72 of file gcm128\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int CRYPTO_gcm128_aad (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * aad, size_t len)"
+
+.PP
+Definition at line 975 of file gcm128\&.c\&.
+.SS "int CRYPTO_gcm128_decrypt (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len)"
+
+.PP
+Definition at line 1223 of file gcm128\&.c\&.
+.SS "int CRYPTO_gcm128_decrypt_ctr32 (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len, \fBctr128_f\fP stream)"
+
+.PP
+Definition at line 1537 of file gcm128\&.c\&.
+.SS "int CRYPTO_gcm128_encrypt (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len)"
+
+.PP
+Definition at line 1036 of file gcm128\&.c\&.
+.SS "int CRYPTO_gcm128_encrypt_ctr32 (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len, \fBctr128_f\fP stream)"
+
+.PP
+Definition at line 1415 of file gcm128\&.c\&.
+.SS "int CRYPTO_gcm128_finish (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * tag, size_t len)"
+
+.PP
+Definition at line 1666 of file gcm128\&.c\&.
+.SS "\fBvoid\fP CRYPTO_gcm128_init (\fBGCM128_CONTEXT\fP * ctx, \fBvoid\fP * key, \fBblock128_f\fP block)"
+
+.PP
+Definition at line 772 of file gcm128\&.c\&.
+.SS "\fBGCM128_CONTEXT\fP* CRYPTO_gcm128_new (\fBvoid\fP * key, \fBblock128_f\fP block)"
+
+.PP
+Definition at line 1719 of file gcm128\&.c\&.
+.SS "\fBvoid\fP CRYPTO_gcm128_release (\fBGCM128_CONTEXT\fP * ctx)"
+
+.PP
+Definition at line 1729 of file gcm128\&.c\&.
+.SS "\fBvoid\fP CRYPTO_gcm128_setiv (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * iv, size_t len)"
+
+.PP
+Definition at line 891 of file gcm128\&.c\&.
+.SS "\fBvoid\fP CRYPTO_gcm128_tag (\fBGCM128_CONTEXT\fP * ctx, unsigned char * tag, size_t len)"
+
+.PP
+Definition at line 1712 of file gcm128\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,365 @@
+.TH "s2n/libcrypto-build/openssl/crypto/des/des.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/des/des.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'des_ver\&.h'\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <openssl/des\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/ui_compat\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBEXIT\fP(\fBa\fP)   \fBexit\fP(\fBa\fP)"
+.br
+.ti -1c
+.RI "#define \fBBUFSIZE\fP   (8*1024)"
+.br
+.ti -1c
+.RI "#define \fBVERIFY\fP   1"
+.br
+.ti -1c
+.RI "#define \fBKEYSIZ\fP   8"
+.br
+.ti -1c
+.RI "#define \fBKEYSIZB\fP   1024            /* should hit tty line limit first :\-) */"
+.br
+.ti -1c
+.RI "#define \fBINUUBUFN\fP   (45*100)"
+.br
+.ti -1c
+.RI "#define \fBOUTUUBUF\fP   (65*100)"
+.br
+.ti -1c
+.RI "#define \fBccc2l\fP(\fBc\fP,  l)        "
+.br
+.ti -1c
+.RI "#define \fBl2ccc\fP(l,  \fBc\fP)        "
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBusage\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdoencryption\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBuufwrite\fP (unsigned char *\fBdata\fP, int size, unsigned int \fBnum\fP, FILE *\fBfp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBuufwriteEnd\fP (FILE *\fBfp\fP)"
+.br
+.ti -1c
+.RI "int \fBuufread\fP (unsigned char *\fBout\fP, int size, unsigned int \fBnum\fP, FILE *\fBfp\fP)"
+.br
+.ti -1c
+.RI "int \fBuuencode\fP (unsigned char *\fBin\fP, int \fBnum\fP, unsigned char *\fBout\fP)"
+.br
+.ti -1c
+.RI "int \fBuudecode\fP (unsigned char *\fBin\fP, int \fBnum\fP, unsigned char *\fBout\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_3cbc_encrypt\fP (\fBDES_cblock\fP *input, \fBDES_cblock\fP *output, long \fBlength\fP, \fBDES_key_schedule\fP sk1, \fBDES_key_schedule\fP sk2, \fBDES_cblock\fP *ivec1, \fBDES_cblock\fP *ivec2, int \fBenc\fP)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "char \fBkey\fP [\fBKEYSIZB\fP+1]"
+.br
+.ti -1c
+.RI "int \fBdo_encrypt\fP"
+.br
+.ti -1c
+.RI "int \fBlongk\fP = 0"
+.br
+.ti -1c
+.RI "FILE * \fBDES_IN\fP"
+.br
+.ti -1c
+.RI "FILE * \fBDES_OUT\fP"
+.br
+.ti -1c
+.RI "FILE * \fBCKSUM_OUT\fP"
+.br
+.ti -1c
+.RI "char \fBuuname\fP [200]"
+.br
+.ti -1c
+.RI "unsigned char \fBuubuf\fP [50]"
+.br
+.ti -1c
+.RI "int \fBuubufnum\fP = 0"
+.br
+.ti -1c
+.RI "unsigned char \fBb\fP [\fBOUTUUBUF\fP]"
+.br
+.ti -1c
+.RI "unsigned char \fBbb\fP [300]"
+.br
+.ti -1c
+.RI "\fBDES_cblock\fP \fBcksum\fP = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }"
+.br
+.ti -1c
+.RI "char \fBcksumname\fP [200] = ''"
+.br
+.ti -1c
+.RI "int \fBvflag\fP"
+.br
+.ti -1c
+.RI "int \fBcflag\fP"
+.br
+.ti -1c
+.RI "int \fBeflag\fP"
+.br
+.ti -1c
+.RI "int \fBdflag\fP"
+.br
+.ti -1c
+.RI "int \fBkflag\fP"
+.br
+.ti -1c
+.RI "int \fBbflag\fP"
+.br
+.ti -1c
+.RI "int \fBfflag\fP"
+.br
+.ti -1c
+.RI "int \fBsflag\fP"
+.br
+.ti -1c
+.RI "int \fBuflag\fP"
+.br
+.ti -1c
+.RI "int \fBflag3\fP"
+.br
+.ti -1c
+.RI "int \fBhflag\fP"
+.br
+.ti -1c
+.RI "int \fBerror\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUFSIZE   (8*1024)"
+
+.PP
+Definition at line 109 of file des\&.c\&.
+.SS "#define ccc2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((DES_LONG)(*((c)++)))<<16, \
+                         l|=((DES_LONG)(*((c)++)))<< 8, \
+                         l|=((DES_LONG)(*((c)++))))
+.fi
+.PP
+Definition at line 752 of file des\&.c\&.
+.SS "#define EXIT(\fBa\fP)   \fBexit\fP(\fBa\fP)"
+
+.PP
+Definition at line 106 of file des\&.c\&.
+.SS "#define INUUBUFN   (45*100)"
+
+.PP
+Definition at line 119 of file des\&.c\&.
+.SS "#define KEYSIZ   8"
+
+.PP
+Definition at line 111 of file des\&.c\&.
+.SS "#define KEYSIZB   1024            /* should hit tty line limit first :\-) */"
+
+.PP
+Definition at line 112 of file des\&.c\&.
+.SS "#define l2ccc(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)>>16)&0xff), \
+                    *((c)++)=(unsigned char)(((l)>> 8)&0xff), \
+                    *((c)++)=(unsigned char)(((l)    )&0xff))
+.fi
+.PP
+Definition at line 756 of file des\&.c\&.
+.SS "#define OUTUUBUF   (65*100)"
+
+.PP
+Definition at line 120 of file des\&.c\&.
+.SS "#define VERIFY   1"
+
+.PP
+Definition at line 110 of file des\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP DES_3cbc_encrypt (\fBDES_cblock\fP * input, \fBDES_cblock\fP * output, long length, \fBDES_key_schedule\fP sk1, \fBDES_key_schedule\fP sk2, \fBDES_cblock\fP * ivec1, \fBDES_cblock\fP * ivec2, int enc)"
+
+.PP
+Definition at line 62 of file cbc3_enc\&.c\&.
+.SS "\fBvoid\fP doencryption (\fBvoid\fP)"
+
+.PP
+Definition at line 347 of file des\&.c\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 130 of file des\&.c\&.
+.SS "\fBvoid\fP usage (\fBvoid\fP)"
+
+.PP
+Definition at line 310 of file des\&.c\&.
+.SS "int uudecode (unsigned char * in, int num, unsigned char * out)"
+
+.PP
+Definition at line 789 of file des\&.c\&.
+.SS "int uuencode (unsigned char * in, int num, unsigned char * out)"
+
+.PP
+Definition at line 760 of file des\&.c\&.
+.SS "int uufread (unsigned char * out, int size, unsigned int num, FILE * fp)"
+
+.PP
+Definition at line 693 of file des\&.c\&.
+.SS "int uufwrite (unsigned char * data, int size, unsigned int num, FILE * fp)"
+
+.PP
+Definition at line 630 of file des\&.c\&.
+.SS "\fBvoid\fP uufwriteEnd (FILE * fp)"
+
+.PP
+Definition at line 675 of file des\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "unsigned char b[\fBOUTUUBUF\fP]"
+
+.PP
+Definition at line 121 of file des\&.c\&.
+.SS "unsigned char bb[300]"
+
+.PP
+Definition at line 122 of file des\&.c\&.
+.SS "int bflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int cflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "\fBDES_cblock\fP cksum = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }"
+
+.PP
+Definition at line 123 of file des\&.c\&.
+.SS "FILE * CKSUM_OUT"
+
+.PP
+Definition at line 115 of file des\&.c\&.
+.SS "char cksumname[200] = ''"
+
+.PP
+Definition at line 125 of file des\&.c\&.
+.SS "FILE* DES_IN"
+
+.PP
+Definition at line 115 of file des\&.c\&.
+.SS "FILE * DES_OUT"
+
+.PP
+Definition at line 115 of file des\&.c\&.
+.SS "int dflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int do_encrypt"
+
+.PP
+Definition at line 114 of file des\&.c\&.
+.SS "int eflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int error"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int fflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int flag3"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int hflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "char key[\fBKEYSIZB\fP+1]"
+
+.PP
+Definition at line 113 of file des\&.c\&.
+.SS "int kflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int longk = 0"
+
+.PP
+Definition at line 114 of file des\&.c\&.
+.SS "int sflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "int uflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SS "unsigned char uubuf[50]"
+
+.PP
+Definition at line 117 of file des\&.c\&.
+.SS "int uubufnum = 0"
+
+.PP
+Definition at line 118 of file des\&.c\&.
+.SS "char uuname[200]"
+
+.PP
+Definition at line 116 of file des\&.c\&.
+.SS "int vflag"
+
+.PP
+Definition at line 127 of file des\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

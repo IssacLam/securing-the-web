@@ -1,0 +1,287 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bn/bn_nist.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bn/bn_nist.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'bn_lcl\&.h'\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBN_NIST_192_TOP\fP   (192+BN_BITS2\-1)/BN_BITS2"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_224_TOP\fP   (224+BN_BITS2\-1)/BN_BITS2"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_256_TOP\fP   (256+BN_BITS2\-1)/BN_BITS2"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_384_TOP\fP   (384+BN_BITS2\-1)/BN_BITS2"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_521_TOP\fP   (521+BN_BITS2\-1)/BN_BITS2"
+.br
+.ti -1c
+.RI "#define \fBbn_cp_64\fP(to,  n,  from,  m)"
+.br
+.ti -1c
+.RI "#define \fBbn_64_set_0\fP(to,  n)"
+.br
+.ti -1c
+.RI "#define \fBbn_cp_32\fP(to,  n,  from,  m)               (to)[n] = (m>=0)?((from)[m]):0;"
+.br
+.ti -1c
+.RI "#define \fBbn_32_set_0\fP(to,  n)                           (to)[n] = (BN_ULONG)0;"
+.br
+.ti -1c
+.RI "#define \fBnist_set_192\fP(to,  from,  a1,  a2,  a3)"
+.br
+.ti -1c
+.RI "#define \fBnist_set_224\fP(to,  from,  a1,  a2,  a3,  a4,  a5,  a6,  a7)"
+.br
+.ti -1c
+.RI "#define \fBnist_set_256\fP(to,  from,  a1,  a2,  a3,  a4,  a5,  a6,  a7,  a8)"
+.br
+.ti -1c
+.RI "#define \fBnist_set_384\fP(to,  from,  a1,  a2,  a3,  a4,  a5,  a6,  a7,  a8,  a9,  a10,  a11,  a12)"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_521_RSHIFT\fP   (521%BN_BITS2)"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_521_LSHIFT\fP   (BN_BITS2\-\fBBN_NIST_521_RSHIFT\fP)"
+.br
+.ti -1c
+.RI "#define \fBBN_NIST_521_TOP_MASK\fP   ((BN_ULONG)BN_MASK2>>\fBBN_NIST_521_LSHIFT\fP)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef BN_ULONG(* \fBbn_addsub_f\fP) (BN_ULONG *, const BN_ULONG *, const BN_ULONG *, int)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBBN_get0_nist_prime_192\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBBN_get0_nist_prime_224\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBBN_get0_nist_prime_256\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBBN_get0_nist_prime_384\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBBN_get0_nist_prime_521\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_nist_mod_192\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *field, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_nist_mod_224\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *field, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_nist_mod_256\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *field, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_nist_mod_384\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *field, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_nist_mod_521\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *field, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define bn_32_set_0(to, n)   (to)[n] = (BN_ULONG)0;"
+
+.PP
+Definition at line 352 of file bn_nist\&.c\&.
+.SS "#define bn_64_set_0(to, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        bn_32_set_0(to, (n)*2); \
+        bn_32_set_0(to, (n)*2+1); \
+        }
+.fi
+.PP
+Definition at line 346 of file bn_nist\&.c\&.
+.SS "#define bn_cp_32(to, n, from, m)   (to)[n] = (m>=0)?((from)[m]):0;"
+
+.PP
+Definition at line 351 of file bn_nist\&.c\&.
+.SS "#define bn_cp_64(to, n, from, m)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        bn_cp_32(to, (n)*2, from, (m)*2); \
+        bn_cp_32(to, (n)*2+1, from, (m)*2+1); \
+        }
+.fi
+.PP
+Definition at line 341 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_192_TOP   (192+BN_BITS2\-1)/BN_BITS2"
+
+.PP
+Definition at line 62 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_224_TOP   (224+BN_BITS2\-1)/BN_BITS2"
+
+.PP
+Definition at line 63 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_256_TOP   (256+BN_BITS2\-1)/BN_BITS2"
+
+.PP
+Definition at line 64 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_384_TOP   (384+BN_BITS2\-1)/BN_BITS2"
+
+.PP
+Definition at line 65 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_521_LSHIFT   (BN_BITS2\-\fBBN_NIST_521_RSHIFT\fP)"
+
+.PP
+Definition at line 1201 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_521_RSHIFT   (521%BN_BITS2)"
+
+.PP
+Definition at line 1200 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_521_TOP   (521+BN_BITS2\-1)/BN_BITS2"
+
+.PP
+Definition at line 66 of file bn_nist\&.c\&.
+.SS "#define BN_NIST_521_TOP_MASK   ((BN_ULONG)BN_MASK2>>\fBBN_NIST_521_LSHIFT\fP)"
+
+.PP
+Definition at line 1202 of file bn_nist\&.c\&.
+.SS "#define nist_set_192(to, from, a1, a2, a3)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        bn_cp_64(to, 0, from, (a3) - 3) \
+        bn_cp_64(to, 1, from, (a2) - 3) \
+        bn_cp_64(to, 2, from, (a1) - 3) \
+        }
+.fi
+.PP
+Definition at line 360 of file bn_nist\&.c\&.
+.SS "#define nist_set_224(to, from, a1, a2, a3, a4, a5, a6, a7)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        bn_cp_32(to, 0, from, (a7) - 7) \
+        bn_cp_32(to, 1, from, (a6) - 7) \
+        bn_cp_32(to, 2, from, (a5) - 7) \
+        bn_cp_32(to, 3, from, (a4) - 7) \
+        bn_cp_32(to, 4, from, (a3) - 7) \
+        bn_cp_32(to, 5, from, (a2) - 7) \
+        bn_cp_32(to, 6, from, (a1) - 7) \
+        }
+.fi
+.PP
+Definition at line 497 of file bn_nist\&.c\&.
+.SS "#define nist_set_256(to, from, a1, a2, a3, a4, a5, a6, a7, a8)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        bn_cp_32(to, 0, from, (a8) - 8) \
+        bn_cp_32(to, 1, from, (a7) - 8) \
+        bn_cp_32(to, 2, from, (a6) - 8) \
+        bn_cp_32(to, 3, from, (a5) - 8) \
+        bn_cp_32(to, 4, from, (a4) - 8) \
+        bn_cp_32(to, 5, from, (a3) - 8) \
+        bn_cp_32(to, 6, from, (a2) - 8) \
+        bn_cp_32(to, 7, from, (a1) - 8) \
+        }
+.fi
+.PP
+Definition at line 677 of file bn_nist\&.c\&.
+.SS "#define nist_set_384(to, from, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        bn_cp_32(to, 0, from,  (a12) - 12) \
+        bn_cp_32(to, 1, from,  (a11) - 12) \
+        bn_cp_32(to, 2, from,  (a10) - 12) \
+        bn_cp_32(to, 3, from,  (a9) - 12)  \
+        bn_cp_32(to, 4, from,  (a8) - 12)  \
+        bn_cp_32(to, 5, from,  (a7) - 12)  \
+        bn_cp_32(to, 6, from,  (a6) - 12)  \
+        bn_cp_32(to, 7, from,  (a5) - 12)  \
+        bn_cp_32(to, 8, from,  (a4) - 12)  \
+        bn_cp_32(to, 9, from,  (a3) - 12)  \
+        bn_cp_32(to, 10, from, (a2) - 12)  \
+        bn_cp_32(to, 11, from, (a1) - 12)  \
+        }
+.fi
+.PP
+Definition at line 919 of file bn_nist\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef BN_ULONG(* bn_addsub_f) (BN_ULONG *, const BN_ULONG *, const BN_ULONG *, int)"
+
+.PP
+Definition at line 494 of file bn_nist\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "const \fBBIGNUM\fP* BN_get0_nist_prime_192 (\fBvoid\fP)"
+
+.PP
+Definition at line 276 of file bn_nist\&.c\&.
+.SS "const \fBBIGNUM\fP* BN_get0_nist_prime_224 (\fBvoid\fP)"
+
+.PP
+Definition at line 281 of file bn_nist\&.c\&.
+.SS "const \fBBIGNUM\fP* BN_get0_nist_prime_256 (\fBvoid\fP)"
+
+.PP
+Definition at line 286 of file bn_nist\&.c\&.
+.SS "const \fBBIGNUM\fP* BN_get0_nist_prime_384 (\fBvoid\fP)"
+
+.PP
+Definition at line 291 of file bn_nist\&.c\&.
+.SS "const \fBBIGNUM\fP* BN_get0_nist_prime_521 (\fBvoid\fP)"
+
+.PP
+Definition at line 296 of file bn_nist\&.c\&.
+.SS "int BN_nist_mod_192 (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * field, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 367 of file bn_nist\&.c\&.
+.SS "int BN_nist_mod_224 (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * field, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 508 of file bn_nist\&.c\&.
+.SS "int BN_nist_mod_256 (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * field, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 689 of file bn_nist\&.c\&.
+.SS "int BN_nist_mod_384 (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * field, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 935 of file bn_nist\&.c\&.
+.SS "int BN_nist_mod_521 (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * field, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1204 of file bn_nist\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

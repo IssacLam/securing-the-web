@@ -1,0 +1,124 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bio/bss_bio.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bio/bss_bio.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include 'e_os\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbio_bio_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNDEBUG\fP"
+.br
+.ti -1c
+.RI "#define \fBSSIZE_MAX\fP   INT_MAX"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_bio\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_new_bio_pair\fP (\fBBIO\fP **bio1_p, size_t writebuf1, \fBBIO\fP **bio2_p, size_t writebuf2)"
+.br
+.ti -1c
+.RI "size_t \fBBIO_ctrl_get_write_guarantee\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "size_t \fBBIO_ctrl_get_read_request\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "int \fBBIO_ctrl_reset_read_request\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "int \fBBIO_nread0\fP (\fBBIO\fP *bio, char **buf)"
+.br
+.ti -1c
+.RI "int \fBBIO_nread\fP (\fBBIO\fP *bio, char **buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_nwrite0\fP (\fBBIO\fP *bio, char **buf)"
+.br
+.ti -1c
+.RI "int \fBBIO_nwrite\fP (\fBBIO\fP *bio, char **buf, int \fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define NDEBUG"
+
+.PP
+Definition at line 74 of file bss_bio\&.c\&.
+.SS "#define SSIZE_MAX   INT_MAX"
+
+.PP
+Definition at line 94 of file bss_bio\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "size_t BIO_ctrl_get_read_request (\fBBIO\fP * bio)"
+
+.PP
+Definition at line 814 of file bss_bio\&.c\&.
+.SS "size_t BIO_ctrl_get_write_guarantee (\fBBIO\fP * bio)"
+
+.PP
+Definition at line 809 of file bss_bio\&.c\&.
+.SS "int BIO_ctrl_reset_read_request (\fBBIO\fP * bio)"
+
+.PP
+Definition at line 819 of file bss_bio\&.c\&.
+.SS "int BIO_new_bio_pair (\fBBIO\fP ** bio1_p, size_t writebuf1, \fBBIO\fP ** bio2_p, size_t writebuf2)"
+
+.PP
+Definition at line 762 of file bss_bio\&.c\&.
+.SS "int BIO_nread (\fBBIO\fP * bio, char ** buf, int num)"
+
+.PP
+Definition at line 845 of file bss_bio\&.c\&.
+.SS "int BIO_nread0 (\fBBIO\fP * bio, char ** buf)"
+
+.PP
+Definition at line 829 of file bss_bio\&.c\&.
+.SS "int BIO_nwrite (\fBBIO\fP * bio, char ** buf, int num)"
+
+.PP
+Definition at line 876 of file bss_bio\&.c\&.
+.SS "int BIO_nwrite0 (\fBBIO\fP * bio, char ** buf)"
+
+.PP
+Definition at line 860 of file bss_bio\&.c\&.
+.SS "\fBBIO_METHOD\fP* BIO_s_bio (\fBvoid\fP)"
+
+.PP
+Definition at line 120 of file bss_bio\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,308 @@
+.TH "s2n/libcrypto-build/openssl/MacOS/GetHTTPS.src/ErrorHandling.hpp" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/MacOS/GetHTTPS.src/ErrorHandling.hpp \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBkGenericError\fP   \-1"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndBailIfNil\fP(theArg,  theMessage)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndBail\fP(theMessage)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndLongIntAndBail\fP(theMessage,  theLongInt)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndLongIntAndBailIfError\fP(theErrCode,  theMessage,  theLongInt)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageCStrLongIntAndBailIfError\fP(theErrCode,  theMessage,  theCStr,  theLongInt)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndCStrAndBail\fP(theMessage,  theCStr)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndBailIfError\fP(theErrCode,  theMessage)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorMessageAndLongIntAndBailIfNil\fP(theArg,  theMessage,  theLongInt)"
+.br
+.ti -1c
+.RI "#define \fBBailIfError\fP(theErrCode)"
+.br
+.ti -1c
+.RI "#define \fBSetErrCodeAndBail\fP(theErrCode)"
+.br
+.ti -1c
+.RI "#define \fBSetErrorCodeAndMessageAndBail\fP(theErrCode,  theMessage)"
+.br
+.ti -1c
+.RI "#define \fBBailNow\fP()"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessage\fP (const char *theErrorMessage)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessageAndAppendLongInt\fP (const char *theErrorMessage, const long theLongInt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessageAndCStrAndLongInt\fP (const char *theErrorMessage, const char *theCStr, const long theLongInt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessageAndCStr\fP (const char *theErrorMessage, const char *theCStr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBAppendCStrToErrorMessage\fP (const char *theErrorMessage)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBAppendLongIntToErrorMessage\fP (const long theLongInt)"
+.br
+.ti -1c
+.RI "char * \fBGetErrorMessage\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "OSErr \fBGetErrorMessageInNewHandle\fP (Handle *inoutHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBGetErrorMessageInExistingHandle\fP (Handle inoutHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendErrorMessageToHandle\fP (Handle inoutHandle)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "char * \fBgErrorMessage\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BailIfError(theErrCode)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                 \\
+	if ((theErrCode) != noErr)                                                     \
+    {                                                                               \
+        goto EXITPOINT;                                                             \
+    }                                                                               \
+}
+.fi
+.PP
+Definition at line 113 of file ErrorHandling\&.hpp\&.
+.SS "#define BailNow()"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                   \
+    errCode = kGenericError;                                                        \
+    goto EXITPOINT;                                                                 \
+}
+.fi
+.PP
+Definition at line 138 of file ErrorHandling\&.hpp\&.
+.SS "#define kGenericError   \-1"
+
+.PP
+Definition at line 6 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrCodeAndBail(theErrCode)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                    \
+    errCode = theErrCode;                                                           \
+                                                                                    \
+    goto EXITPOINT;                                                                 \
+}
+.fi
+.PP
+Definition at line 122 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorCodeAndMessageAndBail(theErrCode, theMessage)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                   \\
+	SetErrorMessage(theMessage);                                                   \
+    errCode = theErrCode;                                                           \
+    goto EXITPOINT;                                                                 \
+}
+.fi
+.PP
+Definition at line 130 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndBail(theMessage)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                  \\
+		SetErrorMessage(theMessage);                                              \
+        errCode = kGenericError;                                                    \
+        goto EXITPOINT;                                                             \
+}
+.fi
+.PP
+Definition at line 45 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndBailIfError(theErrCode, theMessage)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                    \\
+	if (theErrCode != noErr)                                                       \
+    {                                                                               \\
+		SetErrorMessage(theMessage);                                              \
+        errCode = theErrCode;                                                       \
+        goto EXITPOINT;                                                             \
+    }                                                                               \
+}
+.fi
+.PP
+Definition at line 91 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndBailIfNil(theArg, theMessage)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                  \\
+	if (theArg == nil)                                                             \
+    {                                                                               \\
+		SetErrorMessage(theMessage);                                              \
+        errCode = kGenericError;                                                    \
+        goto EXITPOINT;                                                             \
+    }                                                                               \
+}
+.fi
+.PP
+Definition at line 34 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndCStrAndBail(theMessage, theCStr)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                   \\
+	SetErrorMessageAndCStr(theMessage,theCStr);                                        \
+    errCode = kGenericError;                                                        \
+    goto EXITPOINT;                                                                 \
+}
+.fi
+.PP
+Definition at line 83 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndLongIntAndBail(theMessage, theLongInt)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                 \\
+		SetErrorMessageAndAppendLongInt(theMessage,theLongInt);                       \
+        errCode = kGenericError;                                                    \
+        goto EXITPOINT;                                                             \
+}
+.fi
+.PP
+Definition at line 53 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndLongIntAndBailIfError(theErrCode, theMessage, theLongInt)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                  \\
+	if (theErrCode != noErr)                                                       \
+    {                                                                               \\
+		SetErrorMessageAndAppendLongInt(theMessage,theLongInt);                       \
+        errCode = theErrCode;                                                       \
+        goto EXITPOINT;                                                             \
+    }                                                                               \
+}
+.fi
+.PP
+Definition at line 61 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageAndLongIntAndBailIfNil(theArg, theMessage, theLongInt)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                    \\
+	if (theArg == nil)                                                             \
+    {                                                                               \\
+		SetErrorMessageAndAppendLongInt(theMessage,theLongInt);                       \
+        errCode = kGenericError;                                                    \
+        goto EXITPOINT;                                                             \
+    }                                                                               \
+}
+.fi
+.PP
+Definition at line 102 of file ErrorHandling\&.hpp\&.
+.SS "#define SetErrorMessageCStrLongIntAndBailIfError(theErrCode, theMessage, theCStr, theLongInt)"
+\fBValue:\fP
+.PP
+.nf
+{                                                                                   \\
+	if (theErrCode != noErr)                                                       \
+    {                                                                               \\
+		SetErrorMessageAndCStrAndLongInt(theMessage,theCStr,theLongInt);          \
+        errCode = theErrCode;                                                       \
+        goto EXITPOINT;                                                             \
+    }                                                                               \
+}
+.fi
+.PP
+Definition at line 72 of file ErrorHandling\&.hpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP AppendCStrToErrorMessage (const char * theErrorMessage)"
+
+.PP
+Definition at line 107 of file ErrorHandling\&.cpp\&.
+.SS "OSErr AppendErrorMessageToHandle (Handle inoutHandle)"
+
+.PP
+Definition at line 152 of file ErrorHandling\&.cpp\&.
+.SS "\fBvoid\fP AppendLongIntToErrorMessage (const long theLongInt)"
+
+.PP
+Definition at line 116 of file ErrorHandling\&.cpp\&.
+.SS "char* GetErrorMessage (\fBvoid\fP)"
+
+.PP
+Definition at line 123 of file ErrorHandling\&.cpp\&.
+.SS "OSErr GetErrorMessageInExistingHandle (Handle inoutHandle)"
+
+.PP
+Definition at line 140 of file ErrorHandling\&.cpp\&.
+.SS "OSErr GetErrorMessageInNewHandle (Handle * inoutHandle)"
+
+.PP
+Definition at line 129 of file ErrorHandling\&.cpp\&.
+.SS "\fBvoid\fP SetErrorMessage (const char * theErrorMessage)"
+
+.PP
+Definition at line 72 of file ErrorHandling\&.cpp\&.
+.SS "\fBvoid\fP SetErrorMessageAndAppendLongInt (const char * theErrorMessage, const long theLongInt)"
+
+.PP
+Definition at line 81 of file ErrorHandling\&.cpp\&.
+.SS "\fBvoid\fP SetErrorMessageAndCStr (const char * theErrorMessage, const char * theCStr)"
+
+.PP
+Definition at line 98 of file ErrorHandling\&.cpp\&.
+.SS "\fBvoid\fP SetErrorMessageAndCStrAndLongInt (const char * theErrorMessage, const char * theCStr, const long theLongInt)"
+
+.PP
+Definition at line 89 of file ErrorHandling\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "char* gErrorMessage"
+
+.PP
+Definition at line 67 of file ErrorHandling\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

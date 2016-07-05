@@ -1,0 +1,248 @@
+.TH "s2n/libcrypto-build/openssl/crypto/store/str_meth.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/store/str_meth.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include 'str_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTORE_METHOD\fP * \fBSTORE_create_method\fP (char *name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSTORE_destroy_method\fP (\fBSTORE_METHOD\fP *store_method)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_initialise_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_INITIALISE_FUNC_PTR\fP init_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_cleanup_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_CLEANUP_FUNC_PTR\fP clean_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_generate_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP generate_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_get_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GET_OBJECT_FUNC_PTR\fP get_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_STORE_OBJECT_FUNC_PTR\fP store_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_modify_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP modify_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_revoke_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP revoke_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_delete_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP delete_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_list_start_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_START_OBJECT_FUNC_PTR\fP list_start_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_list_next_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_NEXT_OBJECT_FUNC_PTR\fP list_next_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_list_end_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_END_OBJECT_FUNC_PTR\fP list_end_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_update_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERIC_FUNC_PTR\fP update_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_lock_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERIC_FUNC_PTR\fP lock_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_unlock_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERIC_FUNC_PTR\fP unlock_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_ctrl_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_CTRL_FUNC_PTR\fP ctrl_f)"
+.br
+.ti -1c
+.RI "\fBSTORE_INITIALISE_FUNC_PTR\fP \fBSTORE_method_get_initialise_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_CLEANUP_FUNC_PTR\fP \fBSTORE_method_get_cleanup_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_generate_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GET_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_get_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_STORE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_modify_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_revoke_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_delete_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_START_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_list_start_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_NEXT_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_list_next_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_END_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_list_end_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERIC_FUNC_PTR\fP \fBSTORE_method_get_update_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERIC_FUNC_PTR\fP \fBSTORE_method_get_lock_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERIC_FUNC_PTR\fP \fBSTORE_method_get_unlock_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_CTRL_FUNC_PTR\fP \fBSTORE_method_get_ctrl_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBSTORE_METHOD\fP* STORE_create_method (char * name)"
+
+.PP
+Definition at line 64 of file str_meth\&.c\&.
+.SS "\fBvoid\fP STORE_destroy_method (\fBSTORE_METHOD\fP * store_method)"
+
+.PP
+Definition at line 81 of file str_meth\&.c\&.
+.SS "\fBSTORE_CLEANUP_FUNC_PTR\fP STORE_method_get_cleanup_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 204 of file str_meth\&.c\&.
+.SS "\fBSTORE_CTRL_FUNC_PTR\fP STORE_method_get_ctrl_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 277 of file str_meth\&.c\&.
+.SS "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP STORE_method_get_delete_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 237 of file str_meth\&.c\&.
+.SS "\fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP STORE_method_get_generate_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 209 of file str_meth\&.c\&.
+.SS "\fBSTORE_GET_OBJECT_FUNC_PTR\fP STORE_method_get_get_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 215 of file str_meth\&.c\&.
+.SS "\fBSTORE_INITIALISE_FUNC_PTR\fP STORE_method_get_initialise_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 198 of file str_meth\&.c\&.
+.SS "\fBSTORE_END_OBJECT_FUNC_PTR\fP STORE_method_get_list_end_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 255 of file str_meth\&.c\&.
+.SS "\fBSTORE_NEXT_OBJECT_FUNC_PTR\fP STORE_method_get_list_next_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 249 of file str_meth\&.c\&.
+.SS "\fBSTORE_START_OBJECT_FUNC_PTR\fP STORE_method_get_list_start_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 243 of file str_meth\&.c\&.
+.SS "\fBSTORE_GENERIC_FUNC_PTR\fP STORE_method_get_lock_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 266 of file str_meth\&.c\&.
+.SS "\fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP STORE_method_get_modify_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 225 of file str_meth\&.c\&.
+.SS "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP STORE_method_get_revoke_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 231 of file str_meth\&.c\&.
+.SS "\fBSTORE_STORE_OBJECT_FUNC_PTR\fP STORE_method_get_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 220 of file str_meth\&.c\&.
+.SS "\fBSTORE_GENERIC_FUNC_PTR\fP STORE_method_get_unlock_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 271 of file str_meth\&.c\&.
+.SS "\fBSTORE_GENERIC_FUNC_PTR\fP STORE_method_get_update_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.PP
+Definition at line 260 of file str_meth\&.c\&.
+.SS "int STORE_method_set_cleanup_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_CLEANUP_FUNC_PTR\fP clean_f)"
+
+.PP
+Definition at line 97 of file str_meth\&.c\&.
+.SS "int STORE_method_set_ctrl_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_CTRL_FUNC_PTR\fP ctrl_f)"
+
+.PP
+Definition at line 191 of file str_meth\&.c\&.
+.SS "int STORE_method_set_delete_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP delete_f)"
+
+.PP
+Definition at line 140 of file str_meth\&.c\&.
+.SS "int STORE_method_set_generate_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP generate_f)"
+
+.PP
+Definition at line 104 of file str_meth\&.c\&.
+.SS "int STORE_method_set_get_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GET_OBJECT_FUNC_PTR\fP get_f)"
+
+.PP
+Definition at line 112 of file str_meth\&.c\&.
+.SS "int STORE_method_set_initialise_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_INITIALISE_FUNC_PTR\fP init_f)"
+
+.PP
+Definition at line 90 of file str_meth\&.c\&.
+.SS "int STORE_method_set_list_end_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_END_OBJECT_FUNC_PTR\fP list_end_f)"
+
+.PP
+Definition at line 163 of file str_meth\&.c\&.
+.SS "int STORE_method_set_list_next_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_NEXT_OBJECT_FUNC_PTR\fP list_next_f)"
+
+.PP
+Definition at line 155 of file str_meth\&.c\&.
+.SS "int STORE_method_set_list_start_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_START_OBJECT_FUNC_PTR\fP list_start_f)"
+
+.PP
+Definition at line 147 of file str_meth\&.c\&.
+.SS "int STORE_method_set_lock_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERIC_FUNC_PTR\fP lock_f)"
+
+.PP
+Definition at line 177 of file str_meth\&.c\&.
+.SS "int STORE_method_set_modify_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP modify_f)"
+
+.PP
+Definition at line 126 of file str_meth\&.c\&.
+.SS "int STORE_method_set_revoke_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP revoke_f)"
+
+.PP
+Definition at line 133 of file str_meth\&.c\&.
+.SS "int STORE_method_set_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_STORE_OBJECT_FUNC_PTR\fP store_f)"
+
+.PP
+Definition at line 119 of file str_meth\&.c\&.
+.SS "int STORE_method_set_unlock_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERIC_FUNC_PTR\fP unlock_f)"
+
+.PP
+Definition at line 184 of file str_meth\&.c\&.
+.SS "int STORE_method_set_update_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERIC_FUNC_PTR\fP update_f)"
+
+.PP
+Definition at line 170 of file str_meth\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,98 @@
+.TH "s2n/libcrypto-build/openssl/crypto/txt_db/txt_db.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/txt_db/txt_db.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/txt_db\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBUFSIZE\fP   512"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTXT_DB\fP * \fBTXT_DB_read\fP (\fBBIO\fP *\fBin\fP, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBOPENSSL_STRING\fP * \fBTXT_DB_get_by_index\fP (\fBTXT_DB\fP *db, int idx, \fBOPENSSL_STRING\fP *value)"
+.br
+.ti -1c
+.RI "int \fBTXT_DB_create_index\fP (\fBTXT_DB\fP *db, int field, int(*qual)(\fBOPENSSL_STRING\fP *), \fBLHASH_HASH_FN_TYPE\fP \fBhash\fP, \fBLHASH_COMP_FN_TYPE\fP cmp)"
+.br
+.ti -1c
+.RI "long \fBTXT_DB_write\fP (\fBBIO\fP *\fBout\fP, \fBTXT_DB\fP *db)"
+.br
+.ti -1c
+.RI "int \fBTXT_DB_insert\fP (\fBTXT_DB\fP *db, \fBOPENSSL_STRING\fP *row)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBTXT_DB_free\fP (\fBTXT_DB\fP *db)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBTXT_DB_version\fP [] = 'TXT_DB' OPENSSL_VERSION_PTEXT"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BUFSIZE   512"
+
+.PP
+Definition at line 67 of file txt_db\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int TXT_DB_create_index (\fBTXT_DB\fP * db, int field, int(*)(\fBOPENSSL_STRING\fP *) qual, \fBLHASH_HASH_FN_TYPE\fP hash, \fBLHASH_COMP_FN_TYPE\fP cmp)"
+
+.PP
+Definition at line 221 of file txt_db\&.c\&.
+.SS "\fBvoid\fP TXT_DB_free (\fBTXT_DB\fP * db)"
+
+.PP
+Definition at line 341 of file txt_db\&.c\&.
+.SS "\fBOPENSSL_STRING\fP* TXT_DB_get_by_index (\fBTXT_DB\fP * db, int idx, \fBOPENSSL_STRING\fP * value)"
+
+.PP
+Definition at line 201 of file txt_db\&.c\&.
+.SS "int TXT_DB_insert (\fBTXT_DB\fP * db, \fBOPENSSL_STRING\fP * row)"
+
+.PP
+Definition at line 305 of file txt_db\&.c\&.
+.SS "\fBTXT_DB\fP* TXT_DB_read (\fBBIO\fP * in, int num)"
+
+.PP
+Definition at line 71 of file txt_db\&.c\&.
+.SS "long TXT_DB_write (\fBBIO\fP * out, \fBTXT_DB\fP * db)"
+
+.PP
+Definition at line 257 of file txt_db\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char TXT_DB_version[] = 'TXT_DB' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 69 of file txt_db\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

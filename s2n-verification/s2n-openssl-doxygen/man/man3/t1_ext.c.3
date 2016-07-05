@@ -1,0 +1,76 @@
+.TH "s2n/libcrypto-build/openssl/ssl/t1_ext.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/t1_ext.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ssl_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBcustom_ext_init\fP (\fBcustom_ext_methods\fP *exts)"
+.br
+.ti -1c
+.RI "int \fBcustom_ext_parse\fP (\fBSSL\fP *s, int server, unsigned int ext_type, const unsigned char *ext_data, size_t ext_size, int *al)"
+.br
+.ti -1c
+.RI "int \fBcustom_ext_add\fP (\fBSSL\fP *s, int server, unsigned char **pret, unsigned char *limit, int *al)"
+.br
+.ti -1c
+.RI "int \fBcustom_exts_copy\fP (\fBcustom_ext_methods\fP *dst, const \fBcustom_ext_methods\fP *src)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBcustom_exts_free\fP (\fBcustom_ext_methods\fP *exts)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_add_client_custom_ext\fP (\fBSSL_CTX\fP *\fBctx\fP, unsigned int ext_type, \fBcustom_ext_add_cb\fP add_cb, \fBcustom_ext_free_cb\fP free_cb, \fBvoid\fP *add_arg, \fBcustom_ext_parse_cb\fP parse_cb, \fBvoid\fP *parse_arg)"
+.br
+.ti -1c
+.RI "int \fBSSL_CTX_add_server_custom_ext\fP (\fBSSL_CTX\fP *\fBctx\fP, unsigned int ext_type, \fBcustom_ext_add_cb\fP add_cb, \fBcustom_ext_free_cb\fP free_cb, \fBvoid\fP *add_arg, \fBcustom_ext_parse_cb\fP parse_cb, \fBvoid\fP *parse_arg)"
+.br
+.ti -1c
+.RI "int \fBSSL_extension_supported\fP (unsigned int ext_type)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int custom_ext_add (\fBSSL\fP * s, int server, unsigned char ** pret, unsigned char * limit, int * al)"
+
+.PP
+Definition at line 125 of file t1_ext\&.c\&.
+.SS "\fBvoid\fP custom_ext_init (\fBcustom_ext_methods\fP * exts)"
+
+.PP
+Definition at line 78 of file t1_ext\&.c\&.
+.SS "int custom_ext_parse (\fBSSL\fP * s, int server, unsigned int ext_type, const unsigned char * ext_data, size_t ext_size, int * al)"
+
+.PP
+Definition at line 87 of file t1_ext\&.c\&.
+.SS "int custom_exts_copy (\fBcustom_ext_methods\fP * dst, const \fBcustom_ext_methods\fP * src)"
+
+.PP
+Definition at line 183 of file t1_ext\&.c\&.
+.SS "\fBvoid\fP custom_exts_free (\fBcustom_ext_methods\fP * exts)"
+
+.PP
+Definition at line 196 of file t1_ext\&.c\&.
+.SS "int SSL_CTX_add_client_custom_ext (\fBSSL_CTX\fP * ctx, unsigned int ext_type, \fBcustom_ext_add_cb\fP add_cb, \fBcustom_ext_free_cb\fP free_cb, \fBvoid\fP * add_arg, \fBcustom_ext_parse_cb\fP parse_cb, \fBvoid\fP * parse_arg)"
+
+.PP
+Definition at line 248 of file t1_ext\&.c\&.
+.SS "int SSL_CTX_add_server_custom_ext (\fBSSL_CTX\fP * ctx, unsigned int ext_type, \fBcustom_ext_add_cb\fP add_cb, \fBcustom_ext_free_cb\fP free_cb, \fBvoid\fP * add_arg, \fBcustom_ext_parse_cb\fP parse_cb, \fBvoid\fP * parse_arg)"
+
+.PP
+Definition at line 259 of file t1_ext\&.c\&.
+.SS "int SSL_extension_supported (unsigned int ext_type)"
+
+.PP
+Definition at line 270 of file t1_ext\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

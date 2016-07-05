@@ -1,0 +1,133 @@
+.TH "s2n/libcrypto-build/openssl/engines/ccgost/gost_sign.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/engines/ccgost/gost_sign.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include 'gost_params\&.h'\fP
+.br
+\fC#include 'gost_lcl\&.h'\fP
+.br
+\fC#include 'e_gost_err\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBdump_signature\fP(\fBa\fP,  \fBb\fP,  \fBc\fP)"
+.br
+.ti -1c
+.RI "#define \fBdump_dsa_sig\fP(\fBa\fP,  \fBb\fP)"
+.br
+.ti -1c
+.RI "#define \fBdump_signature\fP(\fBa\fP,  \fBb\fP,  \fBc\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDSA_SIG\fP * \fBgost_do_sign\fP (const unsigned char *dgst, int dlen, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBpack_sign_cp\fP (\fBDSA_SIG\fP *s, int order, unsigned char *sig, size_t *siglen)"
+.br
+.ti -1c
+.RI "int \fBgost_do_verify\fP (const unsigned char *dgst, int dgst_len, \fBDSA_SIG\fP *sig, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBgost94_compute_public\fP (\fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBfill_GOST94_params\fP (\fBDSA\fP *dsa, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBgost_sign_keygen\fP (\fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBDSA_SIG\fP * \fBunpack_cp_signature\fP (const unsigned char *sig, size_t siglen)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBhashsum2bn\fP (const unsigned char *dgst)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBgetbnfrombuf\fP (const unsigned char *buf, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBstore_bignum\fP (\fBBIGNUM\fP *bn, unsigned char *buf, int \fBlen\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define dump_dsa_sig(\fBa\fP, \fBb\fP)"
+
+.PP
+Definition at line 47 of file gost_sign\&.c\&.
+.SS "#define dump_signature(\fBa\fP, \fBb\fP, \fBc\fP)"
+
+.PP
+Definition at line 46 of file gost_sign\&.c\&.
+.SS "#define dump_signature(\fBa\fP, \fBb\fP, \fBc\fP)"
+
+.PP
+Definition at line 46 of file gost_sign\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int fill_GOST94_params (\fBDSA\fP * dsa, int nid)"
+
+.PP
+Definition at line 259 of file gost_sign\&.c\&.
+.SS "\fBBIGNUM\fP* getbnfrombuf (const unsigned char * buf, size_t len)"
+
+.PP
+Definition at line 346 of file gost_sign\&.c\&.
+.SS "int gost94_compute_public (\fBDSA\fP * dsa)"
+
+.PP
+Definition at line 228 of file gost_sign\&.c\&.
+.SS "\fBDSA_SIG\fP* gost_do_sign (const unsigned char * dgst, int dlen, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 53 of file gost_sign\&.c\&.
+.SS "int gost_do_verify (const unsigned char * dgst, int dgst_len, \fBDSA_SIG\fP * sig, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 162 of file gost_sign\&.c\&.
+.SS "int gost_sign_keygen (\fBDSA\fP * dsa)"
+
+.PP
+Definition at line 292 of file gost_sign\&.c\&.
+.SS "\fBBIGNUM\fP* hashsum2bn (const unsigned char * dgst)"
+
+.PP
+Definition at line 335 of file gost_sign\&.c\&.
+.SS "int pack_sign_cp (\fBDSA_SIG\fP * s, int order, unsigned char * sig, size_t * siglen)"
+
+.PP
+Definition at line 146 of file gost_sign\&.c\&.
+.SS "int store_bignum (\fBBIGNUM\fP * bn, unsigned char * buf, int len)"
+
+.PP
+Definition at line 365 of file gost_sign\&.c\&.
+.SS "\fBDSA_SIG\fP* unpack_cp_signature (const unsigned char * sig, size_t siglen)"
+
+.PP
+Definition at line 320 of file gost_sign\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

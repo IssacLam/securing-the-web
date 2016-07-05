@@ -1,0 +1,64 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ecp_nistputil.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ecp_nistputil.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBtmp_felem\fP(\fBI\fP)   (&((char *)tmp_felems)[(\fBI\fP) * felem_size])"
+.br
+.ti -1c
+.RI "#define \fBX\fP(\fBI\fP)   (&((char *)point_array)[3*(\fBI\fP) * felem_size])"
+.br
+.ti -1c
+.RI "#define \fBY\fP(\fBI\fP)   (&((char *)point_array)[(3*(\fBI\fP) + 1) * felem_size])"
+.br
+.ti -1c
+.RI "#define \fBZ\fP(\fBI\fP)   (&((char *)point_array)[(3*(\fBI\fP) + 2) * felem_size])"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_nistp_points_make_affine_internal\fP (size_t \fBnum\fP, \fBvoid\fP *point_array, size_t felem_size, \fBvoid\fP *tmp_felems, \fBvoid\fP(*felem_one)(\fBvoid\fP *\fBout\fP), int(*felem_is_zero)(const \fBvoid\fP                                                                                                                                                                                                                                                                       *\fBin\fP), \fBvoid\fP(*felem_assign)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                                       const \fBvoid\fP                                                                                                                                                                                                                                                                       *\fBin\fP), \fBvoid\fP(*felem_square)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                                       const \fBvoid\fP                                                                                                                                                                                                                                                                       *\fBin\fP), \fBvoid\fP(*felem_mul)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                           const \fBvoid\fP                                                                                                                                                                                                                                                           *in1,                                                                                                                                                                                                                                                           const \fBvoid\fP                                                                                                                                                                                                                                                           *in2), \fBvoid\fP(*felem_inv)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                           const \fBvoid\fP                                                                                                                                                                                                                                                           *\fBin\fP), \fBvoid\fP(*felem_contract)(\fBvoid\fP                                                                                                                                                                                                                                                                               *\fBout\fP,                                                                                                                                                                                                                                                                               const                                                                                                                                                                                                                                                                                  \fBvoid\fP                                                                                                                                                                                                                                                                               *\fBin\fP))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBec_GFp_nistp_recode_scalar_bits\fP (unsigned char *sign, unsigned char *digit, unsigned char \fBin\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define tmp_felem(\fBI\fP)   (&((char *)tmp_felems)[(\fBI\fP) * felem_size])"
+
+.SS "#define \fBX\fP(\fBI\fP)   (&((char *)point_array)[3*(\fBI\fP) * felem_size])"
+
+.SS "#define Y(\fBI\fP)   (&((char *)point_array)[(3*(\fBI\fP) + 1) * felem_size])"
+
+.SS "#define Z(\fBI\fP)   (&((char *)point_array)[(3*(\fBI\fP) + 2) * felem_size])"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ec_GFp_nistp_points_make_affine_internal (size_t num, \fBvoid\fP * point_array, size_t felem_size, \fBvoid\fP * tmp_felems, \fBvoid\fP(*)(\fBvoid\fP *\fBout\fP) felem_one, int(*)(const \fBvoid\fP                                                                                                                                                                                                                                                                       *\fBin\fP) felem_is_zero, \fBvoid\fP(*)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                                       const \fBvoid\fP                                                                                                                                                                                                                                                                       *\fBin\fP) felem_assign, \fBvoid\fP(*)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                                       const \fBvoid\fP                                                                                                                                                                                                                                                                       *\fBin\fP) felem_square, \fBvoid\fP(*)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                           const \fBvoid\fP                                                                                                                                                                                                                                                           *in1,                                                                                                                                                                                                                                                           const \fBvoid\fP                                                                                                                                                                                                                                                           *in2) felem_mul, \fBvoid\fP(*)(\fBvoid\fP *\fBout\fP,                                                                                                                                                                                                                                                           const \fBvoid\fP                                                                                                                                                                                                                                                           *\fBin\fP) felem_inv, \fBvoid\fP(*)(\fBvoid\fP                                                                                                                                                                                                                                                                               *\fBout\fP,                                                                                                                                                                                                                                                                               const                                                                                                                                                                                                                                                                                  \fBvoid\fP                                                                                                                                                                                                                                                                               *\fBin\fP) felem_contract)"
+
+.PP
+Definition at line 42 of file ecp_nistputil\&.c\&.
+.SS "\fBvoid\fP ec_GFp_nistp_recode_scalar_bits (unsigned char * sign, unsigned char * digit, unsigned char in)"
+
+.PP
+Definition at line 202 of file ecp_nistputil\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

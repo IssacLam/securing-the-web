@@ -1,0 +1,12 @@
+\chapter{Proposed Approach} % and System Implementation}
+
+\section{Methodology}
+% Proposed method.
+In this project, we will verify the above software packages with the help of CBMC. The verification process can be separated into two stages. We will first conduct a low-level verification on them to ensure the memory safety with those generic checks provided by CMBC: 1) array bounds checks, 2) division by zero checks, 3) pointer checks, 4) memory leak checks, and 5) arithmetic over- and underflow checks.
+% There are two different versions in order to support both signed types (e.g, int, long) and unsigned types (e.g, unsigned int, unsigned long). It will check whether there are any arithmetic over- and underflow on addition, subtraction, multiplication, division and negation operations. 
+
+Then, we will go though the implementation and perform an application-level verification to ensure the correctness of the implementation. According to the approaches that the packages based on, we study the behaviour of each function, and then extract the specifications of them. Each specification consists of a pre-condition and a post-condition. A pre-condition stating the property required of the input is the responsibility of the environment. Hence, it is modelled by an assumption to assume the property holds before function has been executed. A post-condition describes the property of the output established by the function which is modelled by an assertion. Then, we inject these assumptions and assertions into each functions in order to capture the functional properties of the two applications. If all the properties pass the verification, then we can conclude that they are implemented correctly and memory safe.
+
+\subsection{Automated Checks - Safety}
+
+\subsection{Capturing Functional Properties - Correctness}

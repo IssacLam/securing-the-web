@@ -1,0 +1,128 @@
+.TH "s2n/libcrypto-build/openssl/crypto/asn1/bio_asn1.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/asn1/bio_asn1.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBIO_ASN1_EX_FUNCS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBBIO_ASN1_BUF_CTX_t\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDEFAULT_ASN1_BUF_SIZE\fP   20"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBBIO_ASN1_EX_FUNCS_st\fP \fBBIO_ASN1_EX_FUNCS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBBIO_ASN1_BUF_CTX_t\fP \fBBIO_ASN1_BUF_CTX\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBasn1_bio_state_t\fP { \fBASN1_STATE_START\fP, \fBASN1_STATE_PRE_COPY\fP, \fBASN1_STATE_HEADER\fP, \fBASN1_STATE_HEADER_COPY\fP, \fBASN1_STATE_DATA_COPY\fP, \fBASN1_STATE_POST_COPY\fP, \fBASN1_STATE_DONE\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_f_asn1\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_set_prefix\fP (\fBBIO\fP *\fBb\fP, \fBasn1_ps_func\fP *prefix, \fBasn1_ps_func\fP *prefix_free)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_get_prefix\fP (\fBBIO\fP *\fBb\fP, \fBasn1_ps_func\fP **pprefix, \fBasn1_ps_func\fP **pprefix_free)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_set_suffix\fP (\fBBIO\fP *\fBb\fP, \fBasn1_ps_func\fP *suffix, \fBasn1_ps_func\fP *suffix_free)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_get_suffix\fP (\fBBIO\fP *\fBb\fP, \fBasn1_ps_func\fP **psuffix, \fBasn1_ps_func\fP **psuffix_free)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DEFAULT_ASN1_BUF_SIZE   20"
+
+.PP
+Definition at line 71 of file bio_asn1\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBBIO_ASN1_BUF_CTX_t\fP  \fBBIO_ASN1_BUF_CTX\fP"
+
+.SS "typedef struct \fBBIO_ASN1_EX_FUNCS_st\fP  \fBBIO_ASN1_EX_FUNCS\fP"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBasn1_bio_state_t\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIASN1_STATE_START \fP\fP
+.TP
+\fB\fIASN1_STATE_PRE_COPY \fP\fP
+.TP
+\fB\fIASN1_STATE_HEADER \fP\fP
+.TP
+\fB\fIASN1_STATE_HEADER_COPY \fP\fP
+.TP
+\fB\fIASN1_STATE_DATA_COPY \fP\fP
+.TP
+\fB\fIASN1_STATE_POST_COPY \fP\fP
+.TP
+\fB\fIASN1_STATE_DONE \fP\fP
+.PP
+Definition at line 73 of file bio_asn1\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int BIO_asn1_get_prefix (\fBBIO\fP * b, \fBasn1_ps_func\fP ** pprefix, \fBasn1_ps_func\fP ** pprefix_free)"
+
+.PP
+Definition at line 468 of file bio_asn1\&.c\&.
+.SS "int BIO_asn1_get_suffix (\fBBIO\fP * b, \fBasn1_ps_func\fP ** psuffix, \fBasn1_ps_func\fP ** psuffix_free)"
+
+.PP
+Definition at line 480 of file bio_asn1\&.c\&.
+.SS "int BIO_asn1_set_prefix (\fBBIO\fP * b, \fBasn1_ps_func\fP * prefix, \fBasn1_ps_func\fP * prefix_free)"
+
+.PP
+Definition at line 462 of file bio_asn1\&.c\&.
+.SS "int BIO_asn1_set_suffix (\fBBIO\fP * b, \fBasn1_ps_func\fP * suffix, \fBasn1_ps_func\fP * suffix_free)"
+
+.PP
+Definition at line 474 of file bio_asn1\&.c\&.
+.SS "\fBBIO_METHOD\fP* BIO_f_asn1 (\fBvoid\fP)"
+
+.PP
+Definition at line 141 of file bio_asn1\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

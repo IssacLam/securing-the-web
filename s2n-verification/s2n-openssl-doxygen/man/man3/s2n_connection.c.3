@@ -1,0 +1,264 @@
+.TH "s2n/tls/s2n_connection.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/tls/s2n_connection.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_alerts\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'tls/s2n_prf\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_timer\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBGCC_VERSION\fP"
+.br
+.ti -1c
+.RI "#define \fBONE_S\fP   INT64_C(1000000000)"
+.br
+.ti -1c
+.RI "#define \fBTEN_S\fP   INT64_C(10000000000)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_connection\fP * \fBs2n_connection_new\fP (\fBs2n_mode\fP mode)"
+.br
+.ti -1c
+.RI "int \fBs2n_shutdown\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *more)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_free\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_config\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_wipe\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_read_fd\fP (struct \fBs2n_connection\fP *conn, int rfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_write_fd\fP (struct \fBs2n_connection\fP *conn, int wfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_fd\fP (struct \fBs2n_connection\fP *conn, int fd)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_in\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_out\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_connection_get_cipher\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_server_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_actual_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_hello_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_alert\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_set_server_name\fP (struct \fBs2n_connection\fP *conn, const char *server_name)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_server_name\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_application_protocol\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_blinding\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blinding\fP blinding)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_connection_get_delay\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_kill\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const uint8_t * \fBs2n_connection_get_ocsp_response\fP (struct \fBs2n_connection\fP *conn, uint32_t *\fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_throughput\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_low_latency\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define GCC_VERSION"
+\fBValue:\fP
+.PP
+.nf
+(__GNUC__ * 10000 \
+                     + __GNUC_MINOR__ * 100 \
+                     + __GNUC_PATCHLEVEL__)
+.fi
+.PP
+Definition at line 41 of file s2n_connection\&.c\&.
+.SS "#define ONE_S   INT64_C(1000000000)"
+
+.PP
+Definition at line 369 of file s2n_connection\&.c\&.
+.SS "#define TEN_S   INT64_C(10000000000)"
+
+.PP
+Definition at line 370 of file s2n_connection\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_connection_free (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 152 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_actual_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 306 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_alert (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 316 of file s2n_connection\&.c\&.
+.SS "const char* s2n_connection_get_cipher (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 291 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_client_hello_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 311 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_client_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 296 of file s2n_connection\&.c\&.
+.SS "int64_t s2n_connection_get_delay (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 372 of file s2n_connection\&.c\&.
+.SS "const uint8_t* s2n_connection_get_ocsp_response (struct \fBs2n_connection\fP * conn, uint32_t * length)"
+
+.PP
+Definition at line 414 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_get_server_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 301 of file s2n_connection\&.c\&.
+.SS "uint64_t s2n_connection_get_wire_bytes_in (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 281 of file s2n_connection\&.c\&.
+.SS "uint64_t s2n_connection_get_wire_bytes_out (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 286 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_kill (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 388 of file s2n_connection\&.c\&.
+.SS "struct \fBs2n_connection\fP* s2n_connection_new (\fBs2n_mode\fP mode)"
+
+.PP
+Definition at line 45 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_prefer_low_latency (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 431 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_prefer_throughput (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 424 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_blinding (struct \fBs2n_connection\fP * conn, \fBs2n_blinding\fP blinding)"
+
+.PP
+Definition at line 363 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_config (struct \fBs2n_connection\fP * conn, struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 169 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_fd (struct \fBs2n_connection\fP * conn, int fd)"
+
+.PP
+Definition at line 274 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_read_fd (struct \fBs2n_connection\fP * conn, int rfd)"
+
+.PP
+Definition at line 262 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_set_write_fd (struct \fBs2n_connection\fP * conn, int wfd)"
+
+.PP
+Definition at line 268 of file s2n_connection\&.c\&.
+.SS "int s2n_connection_wipe (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 175 of file s2n_connection\&.c\&.
+.SS "const char* s2n_get_application_protocol (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 354 of file s2n_connection\&.c\&.
+.SS "const char* s2n_get_server_name (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 345 of file s2n_connection\&.c\&.
+.SS "int s2n_set_server_name (struct \fBs2n_connection\fP * conn, const char * server_name)"
+
+.PP
+Definition at line 329 of file s2n_connection\&.c\&.
+.SS "int s2n_shutdown (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * more)"
+
+.PP
+Definition at line 129 of file s2n_connection\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

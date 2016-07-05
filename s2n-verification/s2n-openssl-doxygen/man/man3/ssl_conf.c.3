@@ -1,0 +1,215 @@
+.TH "s2n/libcrypto-build/openssl/ssl/ssl_conf.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/ssl/ssl_conf.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'ssl_locl\&.h'\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBssl_flag_tbl\fP"
+.br
+.ti -1c
+.RI "struct \fBssl_conf_ctx_st\fP"
+.br
+.ti -1c
+.RI "struct \fBssl_conf_cmd_tbl\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSSL_TFLAG_INV\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBSSL_TFLAG_CERT\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBSSL_TFLAG_CLIENT\fP   \fBSSL_CONF_FLAG_CLIENT\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL_TFLAG_SERVER\fP   \fBSSL_CONF_FLAG_SERVER\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL_TFLAG_BOTH\fP   (\fBSSL_TFLAG_CLIENT\fP|\fBSSL_TFLAG_SERVER\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_FLAG_TBL\fP(str,  flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_BOTH\fP, flag}"
+.br
+.ti -1c
+.RI "#define \fBSSL_FLAG_TBL_SRV\fP(str,  flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_SERVER\fP, flag}"
+.br
+.ti -1c
+.RI "#define \fBSSL_FLAG_TBL_CLI\fP(str,  flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_CLIENT\fP, flag}"
+.br
+.ti -1c
+.RI "#define \fBSSL_FLAG_TBL_INV\fP(str,  flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_INV\fP|\fBSSL_TFLAG_BOTH\fP, flag}"
+.br
+.ti -1c
+.RI "#define \fBSSL_FLAG_TBL_SRV_INV\fP(str,  flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_INV\fP|\fBSSL_TFLAG_SERVER\fP, flag}"
+.br
+.ti -1c
+.RI "#define \fBSSL_FLAG_TBL_CERT\fP(str,  flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_CERT\fP|\fBSSL_TFLAG_BOTH\fP, flag}"
+.br
+.ti -1c
+.RI "#define \fBSSL_CONF_CMD\fP(name,  cmdopt,  \fBtype\fP)   {cmd_##name, #name, cmdopt, \fBtype\fP}"
+.br
+.ti -1c
+.RI "#define \fBSSL_CONF_CMD_STRING\fP(name,  cmdopt)   \fBSSL_CONF_CMD\fP(name, cmdopt, \fBSSL_CONF_TYPE_STRING\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBSSL_CONF_cmd\fP (\fBSSL_CONF_CTX\fP *cctx, const char *cmd, const char *value)"
+.br
+.ti -1c
+.RI "int \fBSSL_CONF_cmd_argv\fP (\fBSSL_CONF_CTX\fP *cctx, int *pargc, char ***pargv)"
+.br
+.ti -1c
+.RI "int \fBSSL_CONF_cmd_value_type\fP (\fBSSL_CONF_CTX\fP *cctx, const char *cmd)"
+.br
+.ti -1c
+.RI "\fBSSL_CONF_CTX\fP * \fBSSL_CONF_CTX_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_CONF_CTX_finish\fP (\fBSSL_CONF_CTX\fP *cctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_CONF_CTX_free\fP (\fBSSL_CONF_CTX\fP *cctx)"
+.br
+.ti -1c
+.RI "unsigned int \fBSSL_CONF_CTX_set_flags\fP (\fBSSL_CONF_CTX\fP *cctx, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned int \fBSSL_CONF_CTX_clear_flags\fP (\fBSSL_CONF_CTX\fP *cctx, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_CONF_CTX_set1_prefix\fP (\fBSSL_CONF_CTX\fP *cctx, const char *pre)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_CONF_CTX_set_ssl\fP (\fBSSL_CONF_CTX\fP *cctx, \fBSSL\fP *\fBssl\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSSL_CONF_CTX_set_ssl_ctx\fP (\fBSSL_CONF_CTX\fP *cctx, \fBSSL_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SSL_CONF_CMD(name, cmdopt, \fBtype\fP)   {cmd_##name, #name, cmdopt, \fBtype\fP}"
+
+.PP
+Definition at line 449 of file ssl_conf\&.c\&.
+.SS "#define SSL_CONF_CMD_STRING(name, cmdopt)   \fBSSL_CONF_CMD\fP(name, cmdopt, \fBSSL_CONF_TYPE_STRING\fP)"
+
+.PP
+Definition at line 452 of file ssl_conf\&.c\&.
+.SS "#define SSL_FLAG_TBL(str, flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_BOTH\fP, flag}"
+
+.PP
+Definition at line 91 of file ssl_conf\&.c\&.
+.SS "#define SSL_FLAG_TBL_CERT(str, flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_CERT\fP|\fBSSL_TFLAG_BOTH\fP, flag}"
+
+.PP
+Definition at line 101 of file ssl_conf\&.c\&.
+.SS "#define SSL_FLAG_TBL_CLI(str, flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_CLIENT\fP, flag}"
+
+.PP
+Definition at line 95 of file ssl_conf\&.c\&.
+.SS "#define SSL_FLAG_TBL_INV(str, flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_INV\fP|\fBSSL_TFLAG_BOTH\fP, flag}"
+
+.PP
+Definition at line 97 of file ssl_conf\&.c\&.
+.SS "#define SSL_FLAG_TBL_SRV(str, flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_SERVER\fP, flag}"
+
+.PP
+Definition at line 93 of file ssl_conf\&.c\&.
+.SS "#define SSL_FLAG_TBL_SRV_INV(str, flag)   {str, (int)(sizeof(str) \- 1), \fBSSL_TFLAG_INV\fP|\fBSSL_TFLAG_SERVER\fP, flag}"
+
+.PP
+Definition at line 99 of file ssl_conf\&.c\&.
+.SS "#define SSL_TFLAG_BOTH   (\fBSSL_TFLAG_CLIENT\fP|\fBSSL_TFLAG_SERVER\fP)"
+
+.PP
+Definition at line 89 of file ssl_conf\&.c\&.
+.SS "#define SSL_TFLAG_CERT   0x2"
+
+.PP
+Definition at line 84 of file ssl_conf\&.c\&.
+.SS "#define SSL_TFLAG_CLIENT   \fBSSL_CONF_FLAG_CLIENT\fP"
+
+.PP
+Definition at line 86 of file ssl_conf\&.c\&.
+.SS "#define SSL_TFLAG_INV   0x1"
+
+.PP
+Definition at line 82 of file ssl_conf\&.c\&.
+.SS "#define SSL_TFLAG_SERVER   \fBSSL_CONF_FLAG_SERVER\fP"
+
+.PP
+Definition at line 88 of file ssl_conf\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int SSL_CONF_cmd (\fBSSL_CONF_CTX\fP * cctx, const char * cmd, const char * value)"
+
+.PP
+Definition at line 519 of file ssl_conf\&.c\&.
+.SS "int SSL_CONF_cmd_argv (\fBSSL_CONF_CTX\fP * cctx, int * pargc, char *** pargv)"
+
+.PP
+Definition at line 561 of file ssl_conf\&.c\&.
+.SS "int SSL_CONF_cmd_value_type (\fBSSL_CONF_CTX\fP * cctx, const char * cmd)"
+
+.PP
+Definition at line 594 of file ssl_conf\&.c\&.
+.SS "unsigned int SSL_CONF_CTX_clear_flags (\fBSSL_CONF_CTX\fP * cctx, unsigned int flags)"
+
+.PP
+Definition at line 643 of file ssl_conf\&.c\&.
+.SS "int SSL_CONF_CTX_finish (\fBSSL_CONF_CTX\fP * cctx)"
+
+.PP
+Definition at line 623 of file ssl_conf\&.c\&.
+.SS "\fBvoid\fP SSL_CONF_CTX_free (\fBSSL_CONF_CTX\fP * cctx)"
+
+.PP
+Definition at line 628 of file ssl_conf\&.c\&.
+.SS "\fBSSL_CONF_CTX\fP* SSL_CONF_CTX_new (\fBvoid\fP)"
+
+.PP
+Definition at line 605 of file ssl_conf\&.c\&.
+.SS "int SSL_CONF_CTX_set1_prefix (\fBSSL_CONF_CTX\fP * cctx, const char * pre)"
+
+.PP
+Definition at line 649 of file ssl_conf\&.c\&.
+.SS "unsigned int SSL_CONF_CTX_set_flags (\fBSSL_CONF_CTX\fP * cctx, unsigned int flags)"
+
+.PP
+Definition at line 637 of file ssl_conf\&.c\&.
+.SS "\fBvoid\fP SSL_CONF_CTX_set_ssl (\fBSSL_CONF_CTX\fP * cctx, \fBSSL\fP * ssl)"
+
+.PP
+Definition at line 667 of file ssl_conf\&.c\&.
+.SS "\fBvoid\fP SSL_CONF_CTX_set_ssl_ctx (\fBSSL_CONF_CTX\fP * cctx, \fBSSL_CTX\fP * ctx)"
+
+.PP
+Definition at line 680 of file ssl_conf\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

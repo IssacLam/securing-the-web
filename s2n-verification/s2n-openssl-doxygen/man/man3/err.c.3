@@ -1,0 +1,352 @@
+.TH "s2n/libcrypto-build/openssl/crypto/err/err.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/err/err.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdarg\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBst_ERR_FNS\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBERRFN\fP(\fBa\fP)   err_fns\->cb_##\fBa\fP"
+.br
+.ti -1c
+.RI "#define \fBNUM_SYS_STR_REASONS\fP   127"
+.br
+.ti -1c
+.RI "#define \fBLEN_SYS_STR_REASON\fP   32"
+.br
+.ti -1c
+.RI "#define \fBerr_clear_data\fP(\fBp\fP,  i)"
+.br
+.ti -1c
+.RI "#define \fBerr_clear\fP(\fBp\fP,  i)"
+.br
+.ti -1c
+.RI "#define \fBNUM_COLONS\fP   4"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBERR_STRING_DATA\fP)"
+.br
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBERR_STATE\fP)"
+.br
+.ti -1c
+.RI "const \fBERR_FNS\fP * \fBERR_get_implementation\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_set_implementation\fP (const \fBERR_FNS\fP *fns)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_ERR_strings\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_strings\fP (int lib, \fBERR_STRING_DATA\fP *str)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_unload_strings\fP (int lib, \fBERR_STRING_DATA\fP *str)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_free_strings\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_put_error\fP (int lib, int \fBfunc\fP, int reason, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_clear_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_get_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_get_error_line\fP (const char **\fBfile\fP, int *line)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_get_error_line_data\fP (const char **\fBfile\fP, int *line, const char **\fBdata\fP, int *\fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_error_line\fP (const char **\fBfile\fP, int *line)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_error_line_data\fP (const char **\fBfile\fP, int *line, const char **\fBdata\fP, int *\fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_last_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_last_error_line\fP (const char **\fBfile\fP, int *line)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_last_error_line_data\fP (const char **\fBfile\fP, int *line, const char **\fBdata\fP, int *\fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_error_string_n\fP (unsigned long \fBe\fP, char *buf, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "char * \fBERR_error_string\fP (unsigned long \fBe\fP, char *ret)"
+.br
+.ti -1c
+.RI "\fBLHASH_OF\fP (\fBERR_STATE\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_release_err_state_table\fP (\fBLHASH_OF\fP(\fBERR_STATE\fP)**\fBhash\fP)"
+.br
+.ti -1c
+.RI "const char * \fBERR_lib_error_string\fP (unsigned long \fBe\fP)"
+.br
+.ti -1c
+.RI "const char * \fBERR_func_error_string\fP (unsigned long \fBe\fP)"
+.br
+.ti -1c
+.RI "const char * \fBERR_reason_error_string\fP (unsigned long \fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_remove_thread_state\fP (const \fBCRYPTO_THREADID\fP *id)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_remove_state\fP (unsigned long pid)"
+.br
+.ti -1c
+.RI "\fBERR_STATE\fP * \fBERR_get_state\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_get_next_error_library\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_set_error_data\fP (char *\fBdata\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_add_error_data\fP (int \fBnum\fP,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_add_error_vdata\fP (int \fBnum\fP, va_list args)"
+.br
+.ti -1c
+.RI "int \fBERR_set_mark\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_pop_to_mark\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define err_clear(\fBp\fP, i)"
+\fBValue:\fP
+.PP
+.nf
+do { \
+        (p)->err_flags[i]=0; \
+        (p)->err_buffer[i]=0; \
+        err_clear_data(p,i); \
+        (p)->err_file[i]=NULL; \
+        (p)->err_line[i]= -1; \
+        } while(0)
+.fi
+.PP
+Definition at line 635 of file err\&.c\&.
+.SS "#define err_clear_data(\fBp\fP, i)"
+\fBValue:\fP
+.PP
+.nf
+do { \
+        if (((p)->err_data[i] != NULL) && \
+                (p)->err_data_flags[i] & ERR_TXT_MALLOCED) \
+                {  \
+                OPENSSL_free((p)->err_data[i]); \
+                (p)->err_data[i]=NULL; \
+                } \
+        (p)->err_data_flags[i]=0; \
+        } while(0)
+.fi
+.PP
+Definition at line 624 of file err\&.c\&.
+.SS "#define ERRFN(\fBa\fP)   err_fns\->cb_##\fBa\fP"
+
+.PP
+Definition at line 272 of file err\&.c\&.
+.SS "#define LEN_SYS_STR_REASON   32"
+
+.PP
+Definition at line 563 of file err\&.c\&.
+.SS "#define NUM_COLONS   4"
+
+.SS "#define NUM_SYS_STR_REASONS   127"
+
+.PP
+Definition at line 562 of file err\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "DECLARE_LHASH_OF (\fBERR_STRING_DATA\fP)"
+
+.SS "DECLARE_LHASH_OF (\fBERR_STATE\fP)"
+
+.SS "\fBvoid\fP ERR_add_error_data (int num,  \&.\&.\&.)"
+
+.PP
+Definition at line 1075 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_add_error_vdata (int num, va_list args)"
+
+.PP
+Definition at line 1083 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_clear_error (\fBvoid\fP)"
+
+.PP
+Definition at line 738 of file err\&.c\&.
+.SS "char* ERR_error_string (unsigned long e, char * ret)"
+
+.PP
+Definition at line 919 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_error_string_n (unsigned long e, char * buf, size_t len)"
+
+.PP
+Definition at line 865 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_free_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 695 of file err\&.c\&.
+.SS "const char* ERR_func_error_string (unsigned long e)"
+
+.PP
+Definition at line 960 of file err\&.c\&.
+.SS "unsigned long ERR_get_error (\fBvoid\fP)"
+
+.PP
+Definition at line 751 of file err\&.c\&.
+.SS "unsigned long ERR_get_error_line (const char ** file, int * line)"
+
+.PP
+Definition at line 756 of file err\&.c\&.
+.SS "unsigned long ERR_get_error_line_data (const char ** file, int * line, const char ** data, int * flags)"
+
+.PP
+Definition at line 761 of file err\&.c\&.
+.SS "const \fBERR_FNS\fP* ERR_get_implementation (\fBvoid\fP)"
+
+.PP
+Definition at line 303 of file err\&.c\&.
+.SS "int ERR_get_next_error_library (\fBvoid\fP)"
+
+.PP
+Definition at line 1053 of file err\&.c\&.
+.SS "\fBERR_STATE\fP* ERR_get_state (\fBvoid\fP)"
+
+.PP
+Definition at line 1013 of file err\&.c\&.
+.SS "const char* ERR_lib_error_string (unsigned long e)"
+
+.PP
+Definition at line 948 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_load_ERR_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 657 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_load_strings (int lib, \fBERR_STRING_DATA\fP * str)"
+
+.PP
+Definition at line 679 of file err\&.c\&.
+.SS "unsigned long ERR_peek_error (\fBvoid\fP)"
+
+.PP
+Definition at line 767 of file err\&.c\&.
+.SS "unsigned long ERR_peek_error_line (const char ** file, int * line)"
+
+.PP
+Definition at line 772 of file err\&.c\&.
+.SS "unsigned long ERR_peek_error_line_data (const char ** file, int * line, const char ** data, int * flags)"
+
+.PP
+Definition at line 777 of file err\&.c\&.
+.SS "unsigned long ERR_peek_last_error (\fBvoid\fP)"
+
+.PP
+Definition at line 783 of file err\&.c\&.
+.SS "unsigned long ERR_peek_last_error_line (const char ** file, int * line)"
+
+.PP
+Definition at line 788 of file err\&.c\&.
+.SS "unsigned long ERR_peek_last_error_line_data (const char ** file, int * line, const char ** data, int * flags)"
+
+.PP
+Definition at line 793 of file err\&.c\&.
+.SS "int ERR_pop_to_mark (\fBvoid\fP)"
+
+.PP
+Definition at line 1127 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_put_error (int lib, int func, int reason, const char * file, int line)"
+
+.PP
+Definition at line 703 of file err\&.c\&.
+.SS "const char* ERR_reason_error_string (unsigned long e)"
+
+.PP
+Definition at line 973 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_release_err_state_table (\fBLHASH_OF\fP(\fBERR_STATE\fP)** hash)"
+
+.PP
+Definition at line 942 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_remove_state (unsigned long pid)"
+
+.PP
+Definition at line 1007 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_remove_thread_state (const \fBCRYPTO_THREADID\fP * id)"
+
+.PP
+Definition at line 990 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_set_error_data (char * data, int flags)"
+
+.PP
+Definition at line 1059 of file err\&.c\&.
+.SS "int ERR_set_implementation (const \fBERR_FNS\fP * fns)"
+
+.PP
+Definition at line 309 of file err\&.c\&.
+.SS "int ERR_set_mark (\fBvoid\fP)"
+
+.PP
+Definition at line 1115 of file err\&.c\&.
+.SS "\fBvoid\fP ERR_unload_strings (int lib, \fBERR_STRING_DATA\fP * str)"
+
+.PP
+Definition at line 685 of file err\&.c\&.
+.SS "LHASH_OF (\fBERR_STATE\fP)"
+
+.PP
+Definition at line 936 of file err\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

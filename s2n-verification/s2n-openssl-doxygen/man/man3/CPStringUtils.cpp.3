@@ -1,0 +1,476 @@
+.TH "s2n/libcrypto-build/openssl/MacOS/GetHTTPS.src/CPStringUtils.cpp" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/MacOS/GetHTTPS.src/CPStringUtils.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'CPStringUtils\&.hpp'\fP
+.br
+\fC#include 'ErrorHandling\&.hpp'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBkNumberFormatString\fP   '\\p########0\&.00#######;\-########0\&.00#######'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBCopyPStrToCStr\fP (const unsigned char *thePStr, char *theCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyPStrToPStr\fP (const unsigned char *theSrcPStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrToCStr\fP (const char *theSrcCStr, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCSubstrToCStr\fP (const char *theSrcCStr, const int maxCharsToCopy, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCSubstrToPStr\fP (const char *theSrcCStr, const int maxCharsToCopy, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrToPStr\fP (const char *theSrcCStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatPStrToCStr\fP (const unsigned char *thePStr, char *theCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatPStrToPStr\fP (const unsigned char *theSrcPStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCStrToPStr\fP (const char *theSrcCStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCStrToCStr\fP (const char *theSrcCStr, char *theDstCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCharToCStr\fP (const char theChar, char *theDstCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCharToPStr\fP (const char theChar, unsigned char *theDstPStr, const int maxPStrLength)"
+.br
+.ti -1c
+.RI "int \fBCompareCStrs\fP (const char *theFirstCStr, const char *theSecondCStr, const Boolean ignoreCase)"
+.br
+.ti -1c
+.RI "Boolean \fBCStrsAreEqual\fP (const char *theFirstCStr, const char *theSecondCStr, const Boolean ignoreCase)"
+.br
+.ti -1c
+.RI "Boolean \fBPStrsAreEqual\fP (const unsigned char *theFirstPStr, const unsigned char *theSecondPStr, const Boolean ignoreCase)"
+.br
+.ti -1c
+.RI "int \fBComparePStrs\fP (const unsigned char *theFirstPStr, const unsigned char *theSecondPStr, const Boolean ignoreCase)"
+.br
+.ti -1c
+.RI "int \fBCompareCStrToPStr\fP (const char *theCStr, const unsigned char *thePStr, const Boolean ignoreCase)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatLongIntToCStr\fP (const long theNum, char *theCStr, const int maxCStrLength, const int numDigits)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatLongIntToPStr\fP (const long theNum, unsigned char *thePStr, const int maxPStrLength, const int numDigits)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndConcatLongIntToCStr\fP (const char *theSrcCStr, const long theNum, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyLongIntToCStr\fP (const long theNum, char *theCStr, const int maxCStrLength, const int numDigits)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyUnsignedLongIntToCStr\fP (const unsigned long theNum, char *theCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyLongIntToPStr\fP (const long theNum, unsigned char *thePStr, const int maxPStrLength, const int numDigits)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyLongIntToNewHandle\fP (const long inTheLongInt, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyLongIntToExistingHandle\fP (const long inTheLongInt, Handle theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyCStrToExistingHandle\fP (const char *theCString, Handle theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyCStrToNewHandle\fP (const char *theCString, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyPStrToNewHandle\fP (const unsigned char *thePString, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendPStrToHandle\fP (const unsigned char *thePString, Handle theHandle, long *currentLength)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendCStrToHandle\fP (const char *theCString, Handle theHandle, long *currentLength, long *maxLength)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendCharsToHandle\fP (const char *theChars, const int numChars, Handle theHandle, long *currentLength, long *maxLength)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendLongIntToHandle\fP (const long inTheLongInt, Handle theHandle, long *currentLength)"
+.br
+.ti -1c
+.RI "long \fBCStrLength\fP (const char *theCString)"
+.br
+.ti -1c
+.RI "long \fBPStrLength\fP (const unsigned char *thePString)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBZeroMem\fP (\fBvoid\fP *theMemPtr, const unsigned long numBytes)"
+.br
+.ti -1c
+.RI "char * \fBFindCharInCStr\fP (const char theChar, const char *theCString)"
+.br
+.ti -1c
+.RI "long \fBFindCharOffsetInCStr\fP (const char theChar, const char *theCString, const Boolean inIgnoreCase)"
+.br
+.ti -1c
+.RI "long \fBFindCStrOffsetInCStr\fP (const char *theCSubstring, const char *theCString, const Boolean inIgnoreCase)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBInsertCStrIntoCStr\fP (const char *theSrcCStr, const int theInsertionOffset, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBInsertPStrIntoCStr\fP (const unsigned char *theSrcPStr, const int theInsertionOffset, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBInsertCStrIntoHandle\fP (const char *theCString, Handle theHandle, const long inInsertOffset)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsert1LongIntIntoCStr\fP (const char *theSrcCStr, const long theNum, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsert2LongIntsIntoCStr\fP (const char *theSrcCStr, const long long1, const long long2, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsert3LongIntsIntoCStr\fP (const char *theSrcCStr, const long long1, const long long2, const long long3, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsertCStrIntoCStr\fP (const char *theSrcCStr, const char *theInsertCStr, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsertCStrLongIntIntoCStr\fP (const char *theSrcCStr, const char *theInsertCStr, const long theNum, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsertCStrsLongIntsIntoCStr\fP (const char *theSrcCStr, const char **theInsertCStrs, const long *theLongInts, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyCStrAndInsertCStrLongIntIntoHandle\fP (const char *theSrcCStr, const char *theInsertCStr, const long theNum, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedWordToCStr\fP (char *theSrcCStr, int whichWord, char *theDstCStr, int maxDstCStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedWordToNewHandle\fP (char *theSrcCStr, int whichWord, Handle *outTheHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedLineToCStr\fP (const char *theSrcCStr, int inWhichLine, int *lineEndIndex, Boolean *gotLastLine, char *theDstCStr, const int maxDstCStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedLineToNewHandle\fP (const char *theSrcCStr, int inWhichLine, Handle *outNewHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCountDigits\fP (const char *inCStr, int *outNumIntegerDigits, int *outNumFractDigits)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractIntFromCStr\fP (const char *theSrcCStr, int *outInt, Boolean skipLeadingSpaces)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractIntFromPStr\fP (const unsigned char *theSrcPStr, int *outInt, Boolean skipLeadingSpaces)"
+.br
+.ti -1c
+.RI "int \fBCountOccurencesOfCharInCStr\fP (const char inChar, const char *inSrcCStr)"
+.br
+.ti -1c
+.RI "int \fBCountWordsInCStr\fP (const char *inSrcCStr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConvertCStrToUpperCase\fP (char *theSrcCStr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBExtractCStrItemFromCStr\fP (const char *inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean *foundItem, char *outDstCharPtr, const int inDstCharPtrMaxLength, const Boolean inTreatMultipleDelimsAsSingleDelim)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractCStrItemFromCStrIntoNewHandle\fP (const char *inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean *foundItem, Handle *outNewHandle, const Boolean inTreatMultipleDelimsAsSingleDelim)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractFloatFromCStr\fP (const char *inCString, extended80 *outFloat)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyFloatToCStr\fP (const extended80 *theFloat, char *theCStr, const int maxCStrLength, const int inMaxNumIntDigits, const int inMaxNumFractDigits)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSkipWhiteSpace\fP (char **ioSrcCharPtr, const Boolean inStopAtEOL)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define kNumberFormatString   '\\p########0\&.00#######;\-########0\&.00#######'"
+
+.PP
+Definition at line 62 of file CPStringUtils\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "OSErr AppendCharsToHandle (const char * theChars, const int numChars, Handle theHandle, long * currentLength, long * maxLength)"
+
+.PP
+Definition at line 1075 of file CPStringUtils\&.cpp\&.
+.SS "OSErr AppendCStrToHandle (const char * theCString, Handle theHandle, long * currentLength, long * maxLength)"
+
+.PP
+Definition at line 990 of file CPStringUtils\&.cpp\&.
+.SS "OSErr AppendLongIntToHandle (const long inTheLongInt, Handle theHandle, long * currentLength)"
+
+.PP
+Definition at line 1159 of file CPStringUtils\&.cpp\&.
+.SS "OSErr AppendPStrToHandle (const unsigned char * thePString, Handle theHandle, long * currentLength)"
+
+.PP
+Definition at line 972 of file CPStringUtils\&.cpp\&.
+.SS "int CompareCStrs (const char * theFirstCStr, const char * theSecondCStr, const Boolean ignoreCase)"
+
+.PP
+Definition at line 426 of file CPStringUtils\&.cpp\&.
+.SS "int CompareCStrToPStr (const char * theCStr, const unsigned char * thePStr, const Boolean ignoreCase)"
+
+.PP
+Definition at line 604 of file CPStringUtils\&.cpp\&.
+.SS "int ComparePStrs (const unsigned char * theFirstPStr, const unsigned char * theSecondPStr, const Boolean ignoreCase)"
+
+.PP
+Definition at line 531 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatCharToCStr (const char theChar, char * theDstCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 387 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatCharToPStr (const char theChar, unsigned char * theDstPStr, const int maxPStrLength)"
+
+.PP
+Definition at line 406 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatCStrToCStr (const char * theSrcCStr, char * theDstCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 355 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatCStrToPStr (const char * theSrcCStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 316 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatLongIntToCStr (const long theNum, char * theCStr, const int maxCStrLength, const int numDigits)"
+
+.PP
+Definition at line 625 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatLongIntToPStr (const long theNum, unsigned char * thePStr, const int maxPStrLength, const int numDigits)"
+
+.PP
+Definition at line 664 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatPStrToCStr (const unsigned char * thePStr, char * theCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 248 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConcatPStrToPStr (const unsigned char * theSrcPStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 283 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ConvertCStrToUpperCase (char * theSrcCStr)"
+
+.PP
+Definition at line 2293 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndConcatLongIntToCStr (const char * theSrcCStr, const long theNum, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 702 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndInsert1LongIntIntoCStr (const char * theSrcCStr, const long theNum, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1558 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndInsert2LongIntsIntoCStr (const char * theSrcCStr, const long long1, const long long2, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1564 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndInsert3LongIntsIntoCStr (const char * theSrcCStr, const long long1, const long long2, const long long3, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1572 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndInsertCStrIntoCStr (const char * theSrcCStr, const char * theInsertCStr, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1580 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndInsertCStrLongIntIntoCStr (const char * theSrcCStr, const char * theInsertCStr, const long theNum, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1589 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyCStrAndInsertCStrLongIntIntoHandle (const char * theSrcCStr, const char * theInsertCStr, const long theNum, Handle * theHandle)"
+
+.PP
+Definition at line 1698 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrAndInsertCStrsLongIntsIntoCStr (const char * theSrcCStr, const char ** theInsertCStrs, const long * theLongInts, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1599 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrToCStr (const char * theSrcCStr, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 127 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyCStrToExistingHandle (const char * theCString, Handle theHandle)"
+
+.PP
+Definition at line 847 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyCStrToNewHandle (const char * theCString, Handle * theHandle)"
+
+.PP
+Definition at line 892 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCStrToPStr (const char * theSrcCStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 214 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCSubstrToCStr (const char * theSrcCStr, const int maxCharsToCopy, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 153 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyCSubstrToPStr (const char * theSrcCStr, const int maxCharsToCopy, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 179 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyFloatToCStr (const extended80 * theFloat, char * theCStr, const int maxCStrLength, const int inMaxNumIntDigits, const int inMaxNumFractDigits)"
+
+.PP
+Definition at line 2591 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyIndexedLineToCStr (const char * theSrcCStr, int inWhichLine, int * lineEndIndex, Boolean * gotLastLine, char * theDstCStr, const int maxDstCStrLength)"
+
+.PP
+Definition at line 1922 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyIndexedLineToNewHandle (const char * theSrcCStr, int inWhichLine, Handle * outNewHandle)"
+
+.PP
+Definition at line 2031 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyIndexedWordToCStr (char * theSrcCStr, int whichWord, char * theDstCStr, int maxDstCStrLength)"
+
+.PP
+Definition at line 1735 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyIndexedWordToNewHandle (char * theSrcCStr, int whichWord, Handle * outTheHandle)"
+
+.PP
+Definition at line 1832 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyLongIntToCStr (const long theNum, char * theCStr, const int maxCStrLength, const int numDigits)"
+
+.PP
+Definition at line 711 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyLongIntToExistingHandle (const long inTheLongInt, Handle theHandle)"
+
+.PP
+Definition at line 831 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyLongIntToNewHandle (const long inTheLongInt, Handle * theHandle)"
+
+.PP
+Definition at line 817 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyLongIntToPStr (const long theNum, unsigned char * thePStr, const int maxPStrLength, const int numDigits)"
+
+.PP
+Definition at line 805 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyPStrToCStr (const unsigned char * thePStr, char * theCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 69 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CopyPStrToNewHandle (const unsigned char * thePString, Handle * theHandle)"
+
+.PP
+Definition at line 930 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyPStrToPStr (const unsigned char * theSrcPStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 96 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP CopyUnsignedLongIntToCStr (const unsigned long theNum, char * theCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 751 of file CPStringUtils\&.cpp\&.
+.SS "OSErr CountDigits (const char * inCStr, int * outNumIntegerDigits, int * outNumFractDigits)"
+
+.PP
+Definition at line 2105 of file CPStringUtils\&.cpp\&.
+.SS "int CountOccurencesOfCharInCStr (const char inChar, const char * inSrcCStr)"
+
+.PP
+Definition at line 2232 of file CPStringUtils\&.cpp\&.
+.SS "int CountWordsInCStr (const char * inSrcCStr)"
+
+.PP
+Definition at line 2255 of file CPStringUtils\&.cpp\&.
+.SS "long CStrLength (const char * theCString)"
+
+.PP
+Definition at line 1175 of file CPStringUtils\&.cpp\&.
+.SS "Boolean CStrsAreEqual (const char * theFirstCStr, const char * theSecondCStr, const Boolean ignoreCase)"
+
+.PP
+Definition at line 502 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ExtractCStrItemFromCStr (const char * inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean * foundItem, char * outDstCharPtr, const int inDstCharPtrMaxLength, const Boolean inTreatMultipleDelimsAsSingleDelim)"
+
+.PP
+Definition at line 2320 of file CPStringUtils\&.cpp\&.
+.SS "OSErr ExtractCStrItemFromCStrIntoNewHandle (const char * inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean * foundItem, Handle * outNewHandle, const Boolean inTreatMultipleDelimsAsSingleDelim)"
+
+.PP
+Definition at line 2397 of file CPStringUtils\&.cpp\&.
+.SS "OSErr ExtractFloatFromCStr (const char * inCString, extended80 * outFloat)"
+
+.PP
+Definition at line 2512 of file CPStringUtils\&.cpp\&.
+.SS "OSErr ExtractIntFromCStr (const char * theSrcCStr, int * outInt, Boolean skipLeadingSpaces)"
+
+.PP
+Definition at line 2149 of file CPStringUtils\&.cpp\&.
+.SS "OSErr ExtractIntFromPStr (const unsigned char * theSrcPStr, int * outInt, Boolean skipLeadingSpaces)"
+
+.PP
+Definition at line 2202 of file CPStringUtils\&.cpp\&.
+.SS "char* FindCharInCStr (const char theChar, const char * theCString)"
+
+.PP
+Definition at line 1261 of file CPStringUtils\&.cpp\&.
+.SS "long FindCharOffsetInCStr (const char theChar, const char * theCString, const Boolean inIgnoreCase)"
+
+.PP
+Definition at line 1286 of file CPStringUtils\&.cpp\&.
+.SS "long FindCStrOffsetInCStr (const char * theCSubstring, const char * theCString, const Boolean inIgnoreCase)"
+
+.PP
+Definition at line 1344 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP InsertCStrIntoCStr (const char * theSrcCStr, const int theInsertionOffset, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1404 of file CPStringUtils\&.cpp\&.
+.SS "OSErr InsertCStrIntoHandle (const char * theCString, Handle theHandle, const long inInsertOffset)"
+
+.PP
+Definition at line 1510 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP InsertPStrIntoCStr (const unsigned char * theSrcPStr, const int theInsertionOffset, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1457 of file CPStringUtils\&.cpp\&.
+.SS "long PStrLength (const unsigned char * thePString)"
+
+.PP
+Definition at line 1194 of file CPStringUtils\&.cpp\&.
+.SS "Boolean PStrsAreEqual (const unsigned char * theFirstPStr, const unsigned char * theSecondPStr, const Boolean ignoreCase)"
+
+.PP
+Definition at line 516 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP SkipWhiteSpace (char ** ioSrcCharPtr, const Boolean inStopAtEOL)"
+
+.PP
+Definition at line 2733 of file CPStringUtils\&.cpp\&.
+.SS "\fBvoid\fP ZeroMem (\fBvoid\fP * theMemPtr, const unsigned long numBytes)"
+
+.PP
+Definition at line 1212 of file CPStringUtils\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

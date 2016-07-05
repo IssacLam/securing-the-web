@@ -1,0 +1,223 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509_ext.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509_ext.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_count\fP (\fBX509_CRL\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_by_NID\fP (\fBX509_CRL\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_by_OBJ\fP (\fBX509_CRL\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_by_critical\fP (\fBX509_CRL\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_CRL_get_ext\fP (\fBX509_CRL\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_CRL_delete_ext\fP (\fBX509_CRL\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_CRL_get_ext_d2i\fP (\fBX509_CRL\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_add1_ext_i2d\fP (\fBX509_CRL\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_add_ext\fP (\fBX509_CRL\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_count\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_by_NID\fP (\fBX509\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_by_OBJ\fP (\fBX509\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_by_critical\fP (\fBX509\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_get_ext\fP (\fBX509\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_delete_ext\fP (\fBX509\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_add_ext\fP (\fBX509\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_get_ext_d2i\fP (\fBX509\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509_add1_ext_i2d\fP (\fBX509\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_count\fP (\fBX509_REVOKED\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_by_NID\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_by_OBJ\fP (\fBX509_REVOKED\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_by_critical\fP (\fBX509_REVOKED\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_REVOKED_get_ext\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_REVOKED_delete_ext\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_add_ext\fP (\fBX509_REVOKED\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_REVOKED_get_ext_d2i\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_add1_ext_i2d\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int X509_add1_ext_i2d (\fBX509\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 155 of file x509_ext\&.c\&.
+.SS "int X509_add_ext (\fBX509\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 145 of file x509_ext\&.c\&.
+.SS "int X509_CRL_add1_ext_i2d (\fBX509_CRL\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 103 of file x509_ext\&.c\&.
+.SS "int X509_CRL_add_ext (\fBX509_CRL\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 109 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_CRL_delete_ext (\fBX509_CRL\fP * x, int loc)"
+
+.PP
+Definition at line 93 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_CRL_get_ext (\fBX509_CRL\fP * x, int loc)"
+
+.PP
+Definition at line 88 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_by_critical (\fBX509_CRL\fP * x, int crit, int lastpos)"
+
+.PP
+Definition at line 83 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_by_NID (\fBX509_CRL\fP * x, int nid, int lastpos)"
+
+.PP
+Definition at line 73 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_by_OBJ (\fBX509_CRL\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 78 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_count (\fBX509_CRL\fP * x)"
+
+.PP
+Definition at line 68 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_CRL_get_ext_d2i (\fBX509_CRL\fP * x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 98 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_delete_ext (\fBX509\fP * x, int loc)"
+
+.PP
+Definition at line 140 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_get_ext (\fBX509\fP * x, int loc)"
+
+.PP
+Definition at line 135 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_by_critical (\fBX509\fP * x, int crit, int lastpos)"
+
+.PP
+Definition at line 129 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_by_NID (\fBX509\fP * x, int nid, int lastpos)"
+
+.PP
+Definition at line 119 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_by_OBJ (\fBX509\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 124 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_count (\fBX509\fP * x)"
+
+.PP
+Definition at line 114 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_get_ext_d2i (\fBX509\fP * x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 150 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_add1_ext_i2d (\fBX509_REVOKED\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 203 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_add_ext (\fBX509_REVOKED\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 193 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_REVOKED_delete_ext (\fBX509_REVOKED\fP * x, int loc)"
+
+.PP
+Definition at line 188 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_REVOKED_get_ext (\fBX509_REVOKED\fP * x, int loc)"
+
+.PP
+Definition at line 183 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_by_critical (\fBX509_REVOKED\fP * x, int crit, int lastpos)"
+
+.PP
+Definition at line 178 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_by_NID (\fBX509_REVOKED\fP * x, int nid, int lastpos)"
+
+.PP
+Definition at line 167 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_by_OBJ (\fBX509_REVOKED\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 172 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_count (\fBX509_REVOKED\fP * x)"
+
+.PP
+Definition at line 162 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_REVOKED_get_ext_d2i (\fBX509_REVOKED\fP * x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 198 of file x509_ext\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

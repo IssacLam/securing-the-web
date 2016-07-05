@@ -1,0 +1,3829 @@
+.TH "s2n/libcrypto-root/include/openssl/x509.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/x509.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/safestack\&.h>\fP
+.br
+\fC#include <openssl/ec\&.h>\fP
+.br
+\fC#include <openssl/ecdsa\&.h>\fP
+.br
+\fC#include <openssl/ecdh\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/x509_vfy\&.h>\fP
+.br
+\fC#include <openssl/pkcs7\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBX509_objects_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_algor_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_val_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_pubkey_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_sig_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_name_entry_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_name_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_extension_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_attributes_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_req_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_req_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_cinf_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_cert_aux_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_trust_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_cert_pair_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_revoked_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_crl_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_crl_st\fP"
+.br
+.ti -1c
+.RI "struct \fBprivate_key_st\fP"
+.br
+.ti -1c
+.RI "struct \fBX509_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBNetscape_spkac_st\fP"
+.br
+.ti -1c
+.RI "struct \fBNetscape_spki_st\fP"
+.br
+.ti -1c
+.RI "struct \fBNetscape_certificate_sequence\fP"
+.br
+.ti -1c
+.RI "struct \fBPBEPARAM_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPBE2PARAM_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPBKDF2PARAM_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs8_priv_key_info_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBX509_FILETYPE_PEM\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_FILETYPE_ASN1\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509_FILETYPE_DEFAULT\fP   3"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_DIGITAL_SIGNATURE\fP   0x0080"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_NON_REPUDIATION\fP   0x0040"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_KEY_ENCIPHERMENT\fP   0x0020"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_DATA_ENCIPHERMENT\fP   0x0010"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_KEY_AGREEMENT\fP   0x0008"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_KEY_CERT_SIGN\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_CRL_SIGN\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_ENCIPHER_ONLY\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_DECIPHER_ONLY\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBX509v3_KU_UNDEF\fP   0xffff"
+.br
+.ti -1c
+.RI "#define \fBX509_EX_V_NETSCAPE_HACK\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBX509_EX_V_INIT\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_DEFAULT\fP   \-1/* Only valid \fBin\fP purpose settings */"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_COMPAT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_SSL_CLIENT\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_SSL_SERVER\fP   3"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_EMAIL\fP   4"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_OBJECT_SIGN\fP   5"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_OCSP_SIGN\fP   6"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_OCSP_REQUEST\fP   7"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_TSA\fP   8"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_MIN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_MAX\fP   8"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_DYNAMIC\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_DYNAMIC_NAME\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_TRUSTED\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_REJECTED\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509_TRUST_UNTRUSTED\fP   3"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_COMPAT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_HEADER\fP   1L"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_VERSION\fP   (1L << 1)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_SERIAL\fP   (1L << 2)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_SIGNAME\fP   (1L << 3)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_ISSUER\fP   (1L << 4)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_VALIDITY\fP   (1L << 5)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_SUBJECT\fP   (1L << 6)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_PUBKEY\fP   (1L << 7)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_EXTENSIONS\fP   (1L << 8)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_SIGDUMP\fP   (1L << 9)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_AUX\fP   (1L << 10)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_ATTRIBUTES\fP   (1L << 11)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_NO_IDS\fP   (1L << 12)"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_SEP_MASK\fP   (0xf << 16)"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_COMPAT\fP"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_SEP_COMMA_PLUS\fP   (1 << 16)/* RFC2253 ,+ */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_SEP_CPLUS_SPC\fP   (2 << 16)/* ,+ spaced: more readable */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_SEP_SPLUS_SPC\fP   (3 << 16)/* ;+ spaced */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_SEP_MULTILINE\fP   (4 << 16)/* One line per field */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_DN_REV\fP   (1 << 20)/* Reverse DN order */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_FN_MASK\fP   (0x3 << 21)"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_FN_SN\fP   0/* Object short name */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_FN_LN\fP   (1 << 21)/* Object long name */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_FN_OID\fP   (2 << 21)/* Always use OIDs */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_FN_NONE\fP   (3 << 21)/* No field names */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_SPC_EQ\fP   (1 << 23)/* Put spaces round '=' */"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_DUMP_UNKNOWN_FIELDS\fP   (1 << 24)"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_FN_ALIGN\fP"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_RFC2253\fP"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_ONELINE\fP"
+.br
+.ti -1c
+.RI "#define \fBXN_FLAG_MULTILINE\fP"
+.br
+.ti -1c
+.RI "#define \fBPKCS8_OK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBPKCS8_NO_OCTET\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPKCS8_EMBEDDED_PARAM\fP   2"
+.br
+.ti -1c
+.RI "#define \fBPKCS8_NS_DB\fP   3"
+.br
+.ti -1c
+.RI "#define \fBPKCS8_NEG_PRIVKEY\fP   4"
+.br
+.ti -1c
+.RI "#define \fBX509_EXT_PACK_UNKNOWN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_EXT_PACK_STRING\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509_get_version\fP(\fBx\fP)   \fBASN1_INTEGER_get\fP((\fBx\fP)\->cert_info\->\fBversion\fP)"
+.br
+.ti -1c
+.RI "#define \fBX509_get_notBefore\fP(\fBx\fP)   ((\fBx\fP)\->cert_info\->validity\->notBefore)"
+.br
+.ti -1c
+.RI "#define \fBX509_get_notAfter\fP(\fBx\fP)   ((\fBx\fP)\->cert_info\->validity\->notAfter)"
+.br
+.ti -1c
+.RI "#define \fBX509_extract_key\fP(\fBx\fP)         \fBX509_get_pubkey\fP(\fBx\fP)/*****/"
+.br
+.ti -1c
+.RI "#define \fBX509_REQ_get_version\fP(\fBx\fP)   \fBASN1_INTEGER_get\fP((\fBx\fP)\->req_info\->\fBversion\fP)"
+.br
+.ti -1c
+.RI "#define \fBX509_REQ_get_subject_name\fP(\fBx\fP)   ((\fBx\fP)\->req_info\->subject)"
+.br
+.ti -1c
+.RI "#define \fBX509_REQ_extract_key\fP(\fBa\fP)   \fBX509_REQ_get_pubkey\fP(\fBa\fP)"
+.br
+.ti -1c
+.RI "#define \fBX509_name_cmp\fP(\fBa\fP,  \fBb\fP)           \fBX509_NAME_cmp\fP((\fBa\fP),(\fBb\fP))"
+.br
+.ti -1c
+.RI "#define \fBX509_get_signature_type\fP(\fBx\fP)   \fBEVP_PKEY_type\fP(\fBOBJ_obj2nid\fP((\fBx\fP)\->sig_alg\->algorithm))"
+.br
+.ti -1c
+.RI "#define \fBX509_CRL_get_version\fP(\fBx\fP)   \fBASN1_INTEGER_get\fP((\fBx\fP)\->crl\->\fBversion\fP)"
+.br
+.ti -1c
+.RI "#define \fBX509_CRL_get_lastUpdate\fP(\fBx\fP)   ((\fBx\fP)\->crl\->lastUpdate)"
+.br
+.ti -1c
+.RI "#define \fBX509_CRL_get_nextUpdate\fP(\fBx\fP)   ((\fBx\fP)\->crl\->nextUpdate)"
+.br
+.ti -1c
+.RI "#define \fBX509_CRL_get_issuer\fP(\fBx\fP)   ((\fBx\fP)\->crl\->issuer)"
+.br
+.ti -1c
+.RI "#define \fBX509_CRL_get_REVOKED\fP(\fBx\fP)   ((\fBx\fP)\->crl\->revoked)"
+.br
+.ti -1c
+.RI "#define \fBX509_get_X509_PUBKEY\fP(\fBx\fP)   ((\fBx\fP)\->cert_info\->\fBkey\fP)"
+.br
+.ti -1c
+.RI "#define \fBX509_F_ADD_CERT_DIR\fP   100"
+.br
+.ti -1c
+.RI "#define \fBX509_F_BY_FILE_CTRL\fP   101"
+.br
+.ti -1c
+.RI "#define \fBX509_F_CHECK_POLICY\fP   145"
+.br
+.ti -1c
+.RI "#define \fBX509_F_DIR_CTRL\fP   102"
+.br
+.ti -1c
+.RI "#define \fBX509_F_GET_CERT_BY_SUBJECT\fP   103"
+.br
+.ti -1c
+.RI "#define \fBX509_F_NETSCAPE_SPKI_B64_DECODE\fP   129"
+.br
+.ti -1c
+.RI "#define \fBX509_F_NETSCAPE_SPKI_B64_ENCODE\fP   130"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509AT_ADD1_ATTR\fP   135"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509V3_ADD_EXT\fP   104"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_ATTRIBUTE_CREATE_BY_NID\fP   136"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_ATTRIBUTE_CREATE_BY_OBJ\fP   137"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_ATTRIBUTE_CREATE_BY_TXT\fP   140"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_ATTRIBUTE_GET0_DATA\fP   139"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_ATTRIBUTE_SET1_DATA\fP   138"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_CHECK_PRIVATE_KEY\fP   128"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_CRL_DIFF\fP   105"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_CRL_PRINT_FP\fP   147"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_EXTENSION_CREATE_BY_NID\fP   108"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_EXTENSION_CREATE_BY_OBJ\fP   109"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_GET_PUBKEY_PARAMETERS\fP   110"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_LOAD_CERT_CRL_FILE\fP   132"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_LOAD_CERT_FILE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_LOAD_CRL_FILE\fP   112"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_NAME_ADD_ENTRY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_NAME_ENTRY_CREATE_BY_NID\fP   114"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_NAME_ENTRY_CREATE_BY_TXT\fP   131"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_NAME_ENTRY_SET_OBJECT\fP   115"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_NAME_ONELINE\fP   116"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_NAME_PRINT\fP   117"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_PRINT_EX_FP\fP   118"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_PUBKEY_GET\fP   119"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_PUBKEY_SET\fP   120"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_REQ_CHECK_PRIVATE_KEY\fP   144"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_REQ_PRINT_EX\fP   121"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_REQ_PRINT_FP\fP   122"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_REQ_TO_X509\fP   123"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_STORE_ADD_CERT\fP   124"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_STORE_ADD_CRL\fP   125"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_STORE_CTX_GET1_ISSUER\fP   146"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_STORE_CTX_INIT\fP   143"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_STORE_CTX_NEW\fP   142"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_STORE_CTX_PURPOSE_INHERIT\fP   134"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_TO_X509_REQ\fP   126"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_TRUST_ADD\fP   133"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_TRUST_SET\fP   141"
+.br
+.ti -1c
+.RI "#define \fBX509_F_X509_VERIFY_CERT\fP   127"
+.br
+.ti -1c
+.RI "#define \fBX509_R_AKID_MISMATCH\fP   110"
+.br
+.ti -1c
+.RI "#define \fBX509_R_BAD_X509_FILETYPE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBX509_R_BASE64_DECODE_ERROR\fP   118"
+.br
+.ti -1c
+.RI "#define \fBX509_R_CANT_CHECK_DH_KEY\fP   114"
+.br
+.ti -1c
+.RI "#define \fBX509_R_CERT_ALREADY_IN_HASH_TABLE\fP   101"
+.br
+.ti -1c
+.RI "#define \fBX509_R_CRL_ALREADY_DELTA\fP   127"
+.br
+.ti -1c
+.RI "#define \fBX509_R_CRL_VERIFY_FAILURE\fP   131"
+.br
+.ti -1c
+.RI "#define \fBX509_R_ERR_ASN1_LIB\fP   102"
+.br
+.ti -1c
+.RI "#define \fBX509_R_IDP_MISMATCH\fP   128"
+.br
+.ti -1c
+.RI "#define \fBX509_R_INVALID_DIRECTORY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBX509_R_INVALID_FIELD_NAME\fP   119"
+.br
+.ti -1c
+.RI "#define \fBX509_R_INVALID_TRUST\fP   123"
+.br
+.ti -1c
+.RI "#define \fBX509_R_ISSUER_MISMATCH\fP   129"
+.br
+.ti -1c
+.RI "#define \fBX509_R_KEY_TYPE_MISMATCH\fP   115"
+.br
+.ti -1c
+.RI "#define \fBX509_R_KEY_VALUES_MISMATCH\fP   116"
+.br
+.ti -1c
+.RI "#define \fBX509_R_LOADING_CERT_DIR\fP   103"
+.br
+.ti -1c
+.RI "#define \fBX509_R_LOADING_DEFAULTS\fP   104"
+.br
+.ti -1c
+.RI "#define \fBX509_R_METHOD_NOT_SUPPORTED\fP   124"
+.br
+.ti -1c
+.RI "#define \fBX509_R_NAME_TOO_LONG\fP   134"
+.br
+.ti -1c
+.RI "#define \fBX509_R_NEWER_CRL_NOT_NEWER\fP   132"
+.br
+.ti -1c
+.RI "#define \fBX509_R_NO_CERT_SET_FOR_US_TO_VERIFY\fP   105"
+.br
+.ti -1c
+.RI "#define \fBX509_R_NO_CRL_NUMBER\fP   130"
+.br
+.ti -1c
+.RI "#define \fBX509_R_PUBLIC_KEY_DECODE_ERROR\fP   125"
+.br
+.ti -1c
+.RI "#define \fBX509_R_PUBLIC_KEY_ENCODE_ERROR\fP   126"
+.br
+.ti -1c
+.RI "#define \fBX509_R_SHOULD_RETRY\fP   106"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNABLE_TO_FIND_PARAMETERS_IN_CHAIN\fP   107"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNABLE_TO_GET_CERTS_PUBLIC_KEY\fP   108"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNKNOWN_KEY_TYPE\fP   117"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNKNOWN_NID\fP   109"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNKNOWN_PURPOSE_ID\fP   121"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNKNOWN_TRUST_ID\fP   120"
+.br
+.ti -1c
+.RI "#define \fBX509_R_UNSUPPORTED_ALGORITHM\fP   111"
+.br
+.ti -1c
+.RI "#define \fBX509_R_WRONG_LOOKUP_TYPE\fP   112"
+.br
+.ti -1c
+.RI "#define \fBX509_R_WRONG_TYPE\fP   122"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBX509_objects_st\fP \fBX509_OBJECTS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_val_st\fP \fBX509_VAL\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_sig_st\fP \fBX509_SIG\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_name_entry_st\fP \fBX509_NAME_ENTRY\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_extension_st\fP \fBX509_EXTENSION\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx509_attributes_st\fP \fBX509_ATTRIBUTE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_req_info_st\fP \fBX509_REQ_INFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_req_st\fP \fBX509_REQ\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx509_cinf_st\fP \fBX509_CINF\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx509_cert_aux_st\fP \fBX509_CERT_AUX\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx509_trust_st\fP \fBX509_TRUST\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx509_cert_pair_st\fP \fBX509_CERT_PAIR\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_crl_info_st\fP \fBX509_CRL_INFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBprivate_key_st\fP \fBX509_PKEY\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBX509_info_st\fP \fBX509_INFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBNetscape_spkac_st\fP \fBNETSCAPE_SPKAC\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBNetscape_spki_st\fP \fBNETSCAPE_SPKI\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBNetscape_certificate_sequence\fP \fBNETSCAPE_CERT_SEQUENCE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPBEPARAM_st\fP \fBPBEPARAM\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPBE2PARAM_st\fP \fBPBE2PARAM\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPBKDF2PARAM_st\fP \fBPBKDF2PARAM\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBX509_ALGOR\fP) X509_ALGORS"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBX509_EXTENSION\fP) X509_EXTENSIONS"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_CRL_set_default_method\fP (const \fBX509_CRL_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBX509_CRL_METHOD\fP * \fBX509_CRL_METHOD_new\fP (int(*crl_init)(\fBX509_CRL\fP *crl), int(*crl_free)(\fBX509_CRL\fP *crl), int(*crl_lookup)(\fBX509_CRL\fP *crl,                                                                                                                                                                                                                       \fBX509_REVOKED\fP **ret,                                                                                                                                                                                                                       \fBASN1_INTEGER\fP *ser,                                                                                                                                                                                                                       \fBX509_NAME\fP *issuer), int(*crl_verify)(\fBX509_CRL\fP *crl,                                                                                                                                                                                                                       \fBEVP_PKEY\fP *pk))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_CRL_METHOD_free\fP (\fBX509_CRL_METHOD\fP *m)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_CRL_set_meth_data\fP (\fBX509_CRL\fP *crl, \fBvoid\fP *dat)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_CRL_get_meth_data\fP (\fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "const char * \fBX509_verify_cert_error_string\fP (long n)"
+.br
+.ti -1c
+.RI "int \fBX509_verify\fP (\fBX509\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_verify\fP (\fBX509_REQ\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_verify\fP (\fBX509_CRL\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "int \fBNETSCAPE_SPKI_verify\fP (\fBNETSCAPE_SPKI\fP *\fBa\fP, \fBEVP_PKEY\fP *r)"
+.br
+.ti -1c
+.RI "\fBNETSCAPE_SPKI\fP * \fBNETSCAPE_SPKI_b64_decode\fP (const char *str, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "char * \fBNETSCAPE_SPKI_b64_encode\fP (\fBNETSCAPE_SPKI\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBNETSCAPE_SPKI_get_pubkey\fP (\fBNETSCAPE_SPKI\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBNETSCAPE_SPKI_set_pubkey\fP (\fBNETSCAPE_SPKI\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBNETSCAPE_SPKI_print\fP (\fBBIO\fP *\fBout\fP, \fBNETSCAPE_SPKI\fP *spki)"
+.br
+.ti -1c
+.RI "int \fBX509_signature_dump\fP (\fBBIO\fP *\fBbp\fP, const \fBASN1_STRING\fP *sig, int indent)"
+.br
+.ti -1c
+.RI "int \fBX509_signature_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509_ALGOR\fP *alg, \fBASN1_STRING\fP *sig)"
+.br
+.ti -1c
+.RI "int \fBX509_sign\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_sign_ctx\fP (\fBX509\fP *\fBx\fP, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_http_nbio\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBX509\fP **pcert)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_sign\fP (\fBX509_REQ\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_sign_ctx\fP (\fBX509_REQ\fP *\fBx\fP, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_sign\fP (\fBX509_CRL\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_sign_ctx\fP (\fBX509_CRL\fP *\fBx\fP, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_http_nbio\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBX509_CRL\fP **pcrl)"
+.br
+.ti -1c
+.RI "int \fBNETSCAPE_SPKI_sign\fP (\fBNETSCAPE_SPKI\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_pubkey_digest\fP (const \fBX509\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_digest\fP (const \fBX509\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_digest\fP (const \fBX509_CRL\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_digest\fP (const \fBX509_REQ\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_digest\fP (const \fBX509_NAME\fP *\fBdata\fP, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBd2i_X509_fp\fP (FILE *\fBfp\fP, \fBX509\fP **x509)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_fp\fP (FILE *\fBfp\fP, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBd2i_X509_CRL_fp\fP (FILE *\fBfp\fP, \fBX509_CRL\fP **crl)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_CRL_fp\fP (FILE *\fBfp\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBd2i_X509_REQ_fp\fP (FILE *\fBfp\fP, \fBX509_REQ\fP **req)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_REQ_fp\fP (FILE *\fBfp\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPublicKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPublicKey_fp\fP (FILE *\fBfp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSA_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAPrivateKey_fp\fP (FILE *\fBfp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_EC_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_EC_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_ECPrivateKey_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECPrivateKey_fp\fP (FILE *\fBfp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBX509_SIG\fP * \fBd2i_PKCS8_fp\fP (FILE *\fBfp\fP, \fBX509_SIG\fP **p8)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_fp\fP (FILE *\fBfp\fP, \fBX509_SIG\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBd2i_PKCS8_PRIV_KEY_INFO_fp\fP (FILE *\fBfp\fP, \fBPKCS8_PRIV_KEY_INFO\fP **p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_PRIV_KEY_INFO_fp\fP (FILE *\fBfp\fP, \fBPKCS8_PRIV_KEY_INFO\fP *p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKeyInfo_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PrivateKey_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PrivateKey_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PUBKEY_fp\fP (FILE *\fBfp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBd2i_X509_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP **x509)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBd2i_X509_CRL_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_CRL\fP **crl)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_CRL_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBd2i_X509_REQ_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_REQ\fP **req)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_REQ_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSAPublicKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSAPublicKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP **rsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSA_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP **dsa)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_EC_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_EC_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_ECPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP **eckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_ECPrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEC_KEY\fP *eckey)"
+.br
+.ti -1c
+.RI "\fBX509_SIG\fP * \fBd2i_PKCS8_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_SIG\fP **p8)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_bio\fP (\fBBIO\fP *\fBbp\fP, \fBX509_SIG\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBd2i_PKCS8_PRIV_KEY_INFO_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS8_PRIV_KEY_INFO\fP **p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8_PRIV_KEY_INFO_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS8_PRIV_KEY_INFO\fP *p8inf)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS8PrivateKeyInfo_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PrivateKey_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PUBKEY_bio\fP (\fBBIO\fP *\fBbp\fP, \fBEVP_PKEY\fP **\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBX509_dup\fP (\fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_dup\fP (\fBX509_ATTRIBUTE\fP *xa)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_EXTENSION_dup\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBX509_CRL_dup\fP (\fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBX509_REVOKED\fP * \fBX509_REVOKED_dup\fP (\fBX509_REVOKED\fP *rev)"
+.br
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBX509_REQ_dup\fP (\fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "\fBX509_ALGOR\fP * \fBX509_ALGOR_dup\fP (\fBX509_ALGOR\fP *xn)"
+.br
+.ti -1c
+.RI "int \fBX509_ALGOR_set0\fP (\fBX509_ALGOR\fP *alg, \fBASN1_OBJECT\fP *aobj, int ptype, \fBvoid\fP *pval)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_ALGOR_get0\fP (\fBASN1_OBJECT\fP **paobj, int *pptype, \fBvoid\fP **ppval, \fBX509_ALGOR\fP *algor)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_ALGOR_set_md\fP (\fBX509_ALGOR\fP *alg, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBX509_ALGOR_cmp\fP (const \fBX509_ALGOR\fP *\fBa\fP, const \fBX509_ALGOR\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBX509_NAME_dup\fP (\fBX509_NAME\fP *xn)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_dup\fP (\fBX509_NAME_ENTRY\fP *ne)"
+.br
+.ti -1c
+.RI "int \fBX509_cmp_time\fP (const \fBASN1_TIME\fP *s, time_t *\fBt\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_cmp_current_time\fP (const \fBASN1_TIME\fP *s)"
+.br
+.ti -1c
+.RI "\fBASN1_TIME\fP * \fBX509_time_adj\fP (\fBASN1_TIME\fP *s, long adj, time_t *\fBt\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_TIME\fP * \fBX509_time_adj_ex\fP (\fBASN1_TIME\fP *s, int offset_day, long offset_sec, time_t *\fBt\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_TIME\fP * \fBX509_gmtime_adj\fP (\fBASN1_TIME\fP *s, long adj)"
+.br
+.ti -1c
+.RI "const char * \fBX509_get_default_cert_area\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBX509_get_default_cert_dir\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBX509_get_default_cert_file\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBX509_get_default_cert_dir_env\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBX509_get_default_cert_file_env\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBX509_get_default_private_dir\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBX509_REQ\fP * \fBX509_to_X509_REQ\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBX509_REQ_to_X509\fP (\fBX509_REQ\fP *r, int days, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBX509_PUBKEY_set\fP (\fBX509_PUBKEY\fP **\fBx\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBX509_PUBKEY_get\fP (\fBX509_PUBKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_get_pubkey_parameters\fP (\fBEVP_PKEY\fP *pkey, \fBSTACK_OF\fP(\fBX509\fP)*chain)"
+.br
+.ti -1c
+.RI "int \fBi2d_PUBKEY\fP (\fBEVP_PKEY\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBd2i_PUBKEY\fP (\fBEVP_PKEY\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSA_PUBKEY\fP (\fBRSA\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSA_PUBKEY\fP (\fBRSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSA_PUBKEY\fP (\fBDSA\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSA_PUBKEY\fP (\fBDSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_EC_PUBKEY\fP (\fBEC_KEY\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBEC_KEY\fP * \fBd2i_EC_PUBKEY\fP (\fBEC_KEY\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create\fP (int \fBnid\fP, int atrtype, \fBvoid\fP *value)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_set\fP (\fBX509_NAME\fP **xn, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_set_ex_data\fP (\fBX509\fP *r, int idx, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_get_ex_data\fP (\fBX509\fP *r, int idx)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_AUX\fP (\fBX509\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBd2i_X509_AUX\fP (\fBX509\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_re_X509_tbs\fP (\fBX509\fP *\fBx\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_get0_signature\fP (\fBASN1_BIT_STRING\fP **psig, \fBX509_ALGOR\fP **palg, const \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_get_signature_nid\fP (const \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_alias_set1\fP (\fBX509\fP *\fBx\fP, unsigned char *name, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_keyid_set1\fP (\fBX509\fP *\fBx\fP, unsigned char *id, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBX509_alias_get0\fP (\fBX509\fP *\fBx\fP, int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBX509_keyid_get0\fP (\fBX509\fP *\fBx\fP, int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_TRUST_set\fP (int *\fBt\fP, int trust)"
+.br
+.ti -1c
+.RI "int \fBX509_add1_trust_object\fP (\fBX509\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_add1_reject_object\fP (\fBX509\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_trust_clear\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_reject_clear\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_add0_revoked\fP (\fBX509_CRL\fP *crl, \fBX509_REVOKED\fP *rev)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get0_by_serial\fP (\fBX509_CRL\fP *crl, \fBX509_REVOKED\fP **ret, \fBASN1_INTEGER\fP *serial)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get0_by_cert\fP (\fBX509_CRL\fP *crl, \fBX509_REVOKED\fP **ret, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBX509_PKEY\fP * \fBX509_PKEY_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_PKEY_free\fP (\fBX509_PKEY\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_X509_PKEY\fP (\fBX509_PKEY\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBX509_PKEY\fP * \fBd2i_X509_PKEY\fP (\fBX509_PKEY\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBX509_INFO\fP * \fBX509_INFO_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_INFO_free\fP (\fBX509_INFO\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "char * \fBX509_NAME_oneline\fP (\fBX509_NAME\fP *\fBa\fP, char *buf, int size)"
+.br
+.ti -1c
+.RI "int \fBASN1_verify\fP (i2d_of_void *i2d, \fBX509_ALGOR\fP *algor1, \fBASN1_BIT_STRING\fP *signature, char *\fBdata\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBASN1_digest\fP (i2d_of_void *i2d, const \fBEVP_MD\fP *\fBtype\fP, char *\fBdata\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBASN1_sign\fP (i2d_of_void *i2d, \fBX509_ALGOR\fP *algor1, \fBX509_ALGOR\fP *algor2, \fBASN1_BIT_STRING\fP *signature, char *\fBdata\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *\fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBASN1_item_digest\fP (const \fBASN1_ITEM\fP *it, const \fBEVP_MD\fP *\fBtype\fP, \fBvoid\fP *\fBdata\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBASN1_item_verify\fP (const \fBASN1_ITEM\fP *it, \fBX509_ALGOR\fP *algor1, \fBASN1_BIT_STRING\fP *signature, \fBvoid\fP *\fBdata\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBASN1_item_sign\fP (const \fBASN1_ITEM\fP *it, \fBX509_ALGOR\fP *algor1, \fBX509_ALGOR\fP *algor2, \fBASN1_BIT_STRING\fP *signature, \fBvoid\fP *\fBdata\fP, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *\fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBASN1_item_sign_ctx\fP (const \fBASN1_ITEM\fP *it, \fBX509_ALGOR\fP *algor1, \fBX509_ALGOR\fP *algor2, \fBASN1_BIT_STRING\fP *signature, \fBvoid\fP *asn, \fBEVP_MD_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_set_version\fP (\fBX509\fP *\fBx\fP, long \fBversion\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_set_serialNumber\fP (\fBX509\fP *\fBx\fP, \fBASN1_INTEGER\fP *serial)"
+.br
+.ti -1c
+.RI "\fBASN1_INTEGER\fP * \fBX509_get_serialNumber\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_set_issuer_name\fP (\fBX509\fP *\fBx\fP, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBX509_get_issuer_name\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_set_subject_name\fP (\fBX509\fP *\fBx\fP, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBX509_get_subject_name\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_set_notBefore\fP (\fBX509\fP *\fBx\fP, const \fBASN1_TIME\fP *tm)"
+.br
+.ti -1c
+.RI "int \fBX509_set_notAfter\fP (\fBX509\fP *\fBx\fP, const \fBASN1_TIME\fP *tm)"
+.br
+.ti -1c
+.RI "int \fBX509_set_pubkey\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBX509_get_pubkey\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_BIT_STRING\fP * \fBX509_get0_pubkey_bitstr\fP (const \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_certificate_type\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pubkey)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_set_version\fP (\fBX509_REQ\fP *\fBx\fP, long \fBversion\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_set_subject_name\fP (\fBX509_REQ\fP *req, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_set_pubkey\fP (\fBX509_REQ\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBX509_REQ_get_pubkey\fP (\fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_extension_nid\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int * \fBX509_REQ_get_extension_nids\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_REQ_set_extension_nids\fP (int *nids)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add_extensions_nid\fP (\fBX509_REQ\fP *req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*exts, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add_extensions\fP (\fBX509_REQ\fP *req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*exts)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_get_attr_count\fP (const \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_get_attr_by_NID\fP (const \fBX509_REQ\fP *req, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_get_attr_by_OBJ\fP (const \fBX509_REQ\fP *req, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_REQ_get_attr\fP (const \fBX509_REQ\fP *req, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_REQ_delete_attr\fP (\fBX509_REQ\fP *req, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr\fP (\fBX509_REQ\fP *req, \fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr_by_OBJ\fP (\fBX509_REQ\fP *req, const \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr_by_NID\fP (\fBX509_REQ\fP *req, int \fBnid\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_add1_attr_by_txt\fP (\fBX509_REQ\fP *req, const char *\fBattrname\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_set_version\fP (\fBX509_CRL\fP *\fBx\fP, long \fBversion\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_set_issuer_name\fP (\fBX509_CRL\fP *\fBx\fP, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_set_lastUpdate\fP (\fBX509_CRL\fP *\fBx\fP, const \fBASN1_TIME\fP *tm)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_set_nextUpdate\fP (\fBX509_CRL\fP *\fBx\fP, const \fBASN1_TIME\fP *tm)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_sort\fP (\fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_set_serialNumber\fP (\fBX509_REVOKED\fP *\fBx\fP, \fBASN1_INTEGER\fP *serial)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_set_revocationDate\fP (\fBX509_REVOKED\fP *r, \fBASN1_TIME\fP *tm)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBX509_CRL_diff\fP (\fBX509_CRL\fP *base, \fBX509_CRL\fP *newer, \fBEVP_PKEY\fP *skey, const \fBEVP_MD\fP *md, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_check_private_key\fP (\fBX509_REQ\fP *x509, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBX509_check_private_key\fP (\fBX509\fP *x509, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBX509_chain_check_suiteb\fP (int *perror_depth, \fBX509\fP *\fBx\fP, \fBSTACK_OF\fP(\fBX509\fP)*chain, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_check_suiteb\fP (\fBX509_CRL\fP *crl, \fBEVP_PKEY\fP *pk, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*X509_chain_up_ref(STACK_OF(\fBX509\fP)*chain)"
+.br
+.ti -1c
+.RI "int \fBX509_issuer_and_serial_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_issuer_and_serial_hash\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_issuer_name_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_issuer_name_hash\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_subject_name_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_subject_name_hash\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_issuer_name_hash_old\fP (\fBX509\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_subject_name_hash_old\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_cmp\fP (const \fBX509\fP *\fBa\fP, const \fBX509\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_cmp\fP (const \fBX509_NAME\fP *\fBa\fP, const \fBX509_NAME\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_NAME_hash\fP (\fBX509_NAME\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_NAME_hash_old\fP (\fBX509_NAME\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_cmp\fP (const \fBX509_CRL\fP *\fBa\fP, const \fBX509_CRL\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_match\fP (const \fBX509_CRL\fP *\fBa\fP, const \fBX509_CRL\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_print_ex_fp\fP (FILE *\fBbp\fP, \fBX509\fP *\fBx\fP, unsigned long nmflag, unsigned long \fBcflag\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_print_fp\fP (FILE *\fBbp\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_print_fp\fP (FILE *\fBbp\fP, \fBX509_CRL\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_print_fp\fP (FILE *\fBbp\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_print_ex_fp\fP (FILE *\fBfp\fP, \fBX509_NAME\fP *\fBnm\fP, int indent, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509_NAME\fP *name, int obase)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_print_ex\fP (\fBBIO\fP *\fBout\fP, \fBX509_NAME\fP *\fBnm\fP, int indent, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_print_ex\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP *\fBx\fP, unsigned long nmflag, unsigned long \fBcflag\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ocspid_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CERT_AUX_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509_CERT_AUX\fP *\fBx\fP, int indent)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509_CRL\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_print_ex\fP (\fBBIO\fP *\fBbp\fP, \fBX509_REQ\fP *\fBx\fP, unsigned long nmflag, unsigned long \fBcflag\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REQ_print\fP (\fBBIO\fP *\fBbp\fP, \fBX509_REQ\fP *req)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_entry_count\fP (\fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_text_by_NID\fP (\fBX509_NAME\fP *name, int \fBnid\fP, char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_text_by_OBJ\fP (\fBX509_NAME\fP *name, \fBASN1_OBJECT\fP *\fBobj\fP, char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_index_by_NID\fP (\fBX509_NAME\fP *name, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_get_index_by_OBJ\fP (\fBX509_NAME\fP *name, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_get_entry\fP (\fBX509_NAME\fP *name, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_delete_entry\fP (\fBX509_NAME\fP *name, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry\fP (\fBX509_NAME\fP *name, \fBX509_NAME_ENTRY\fP *ne, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry_by_OBJ\fP (\fBX509_NAME\fP *name, \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, unsigned char *\fBbytes\fP, int \fBlen\fP, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry_by_NID\fP (\fBX509_NAME\fP *name, int \fBnid\fP, int \fBtype\fP, unsigned char *\fBbytes\fP, int \fBlen\fP, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_create_by_txt\fP (\fBX509_NAME_ENTRY\fP **ne, const char *field, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_create_by_NID\fP (\fBX509_NAME_ENTRY\fP **ne, int \fBnid\fP, int \fBtype\fP, unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_add_entry_by_txt\fP (\fBX509_NAME\fP *name, const char *field, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP, int \fBloc\fP, int set)"
+.br
+.ti -1c
+.RI "\fBX509_NAME_ENTRY\fP * \fBX509_NAME_ENTRY_create_by_OBJ\fP (\fBX509_NAME_ENTRY\fP **ne, \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_ENTRY_set_object\fP (\fBX509_NAME_ENTRY\fP *ne, \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_NAME_ENTRY_set_data\fP (\fBX509_NAME_ENTRY\fP *ne, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBX509_NAME_ENTRY_get_object\fP (\fBX509_NAME_ENTRY\fP *ne)"
+.br
+.ti -1c
+.RI "\fBASN1_STRING\fP * \fBX509_NAME_ENTRY_get_data\fP (\fBX509_NAME_ENTRY\fP *ne)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_count\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_by_NID\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_by_OBJ\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_by_critical\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509v3_get_ext\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509v3_delete_ext\fP (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_count\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_by_NID\fP (\fBX509\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_by_OBJ\fP (\fBX509\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_get_ext_by_critical\fP (\fBX509\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_get_ext\fP (\fBX509\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_delete_ext\fP (\fBX509\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_add_ext\fP (\fBX509\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_get_ext_d2i\fP (\fBX509\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509_add1_ext_i2d\fP (\fBX509\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_count\fP (\fBX509_CRL\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_by_NID\fP (\fBX509_CRL\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_by_OBJ\fP (\fBX509_CRL\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_get_ext_by_critical\fP (\fBX509_CRL\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_CRL_get_ext\fP (\fBX509_CRL\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_CRL_delete_ext\fP (\fBX509_CRL\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_add_ext\fP (\fBX509_CRL\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_CRL_get_ext_d2i\fP (\fBX509_CRL\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509_CRL_add1_ext_i2d\fP (\fBX509_CRL\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_count\fP (\fBX509_REVOKED\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_by_NID\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_by_OBJ\fP (\fBX509_REVOKED\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_get_ext_by_critical\fP (\fBX509_REVOKED\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_REVOKED_get_ext\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_REVOKED_delete_ext\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_add_ext\fP (\fBX509_REVOKED\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_REVOKED_get_ext_d2i\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509_REVOKED_add1_ext_i2d\fP (\fBX509_REVOKED\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_EXTENSION_create_by_NID\fP (\fBX509_EXTENSION\fP **\fBex\fP, int \fBnid\fP, int crit, \fBASN1_OCTET_STRING\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_EXTENSION_create_by_OBJ\fP (\fBX509_EXTENSION\fP **\fBex\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int crit, \fBASN1_OCTET_STRING\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_set_object\fP (\fBX509_EXTENSION\fP *\fBex\fP, \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_set_critical\fP (\fBX509_EXTENSION\fP *\fBex\fP, int crit)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_set_data\fP (\fBX509_EXTENSION\fP *\fBex\fP, \fBASN1_OCTET_STRING\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBX509_EXTENSION_get_object\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBX509_EXTENSION_get_data\fP (\fBX509_EXTENSION\fP *ne)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_get_critical\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.ti -1c
+.RI "int \fBX509at_get_attr_count\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509at_get_attr_by_NID\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509at_get_attr_by_OBJ\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*sk, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509at_get_attr\fP (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509at_delete_attr\fP (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_ATTRIBUTE\fP)*X509at_add1_attr(STACK_OF(\fBX509_ATTRIBUTE\fP)**\fBx\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509at_get0_data_by_OBJ\fP (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create_by_NID\fP (\fBX509_ATTRIBUTE\fP **\fBattr\fP, int \fBnid\fP, int atrtype, const \fBvoid\fP *\fBdata\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create_by_OBJ\fP (\fBX509_ATTRIBUTE\fP **\fBattr\fP, const \fBASN1_OBJECT\fP *\fBobj\fP, int atrtype, const \fBvoid\fP *\fBdata\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBX509_ATTRIBUTE_create_by_txt\fP (\fBX509_ATTRIBUTE\fP **\fBattr\fP, const char *atrname, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ATTRIBUTE_set1_object\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, const \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ATTRIBUTE_set1_data\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, int attrtype, const \fBvoid\fP *\fBdata\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509_ATTRIBUTE_get0_data\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, int idx, int atrtype, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_ATTRIBUTE_count\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBX509_ATTRIBUTE_get0_object\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_TYPE\fP * \fBX509_ATTRIBUTE_get0_type\fP (\fBX509_ATTRIBUTE\fP *\fBattr\fP, int idx)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_get_attr_count\fP (const \fBEVP_PKEY\fP *\fBkey\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_get_attr_by_NID\fP (const \fBEVP_PKEY\fP *\fBkey\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_get_attr_by_OBJ\fP (const \fBEVP_PKEY\fP *\fBkey\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBEVP_PKEY_get_attr\fP (const \fBEVP_PKEY\fP *\fBkey\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBEVP_PKEY_delete_attr\fP (\fBEVP_PKEY\fP *\fBkey\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_add1_attr\fP (\fBEVP_PKEY\fP *\fBkey\fP, \fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_add1_attr_by_OBJ\fP (\fBEVP_PKEY\fP *\fBkey\fP, const \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_add1_attr_by_NID\fP (\fBEVP_PKEY\fP *\fBkey\fP, int \fBnid\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBEVP_PKEY_add1_attr_by_txt\fP (\fBEVP_PKEY\fP *\fBkey\fP, const char *\fBattrname\fP, int \fBtype\fP, const unsigned char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_verify_cert\fP (\fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBX509_find_by_issuer_and_serial\fP (\fBSTACK_OF\fP(\fBX509\fP)*sk, \fBX509_NAME\fP *name, \fBASN1_INTEGER\fP *serial)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBX509_find_by_subject\fP (\fBSTACK_OF\fP(\fBX509\fP)*sk, \fBX509_NAME\fP *name)"
+.br
+.ti -1c
+.RI "int \fBPKCS5_pbe_set0_algor\fP (\fBX509_ALGOR\fP *algor, int alg, int iter, const unsigned char *salt, int saltlen)"
+.br
+.ti -1c
+.RI "\fBX509_ALGOR\fP * \fBPKCS5_pbe_set\fP (int alg, int iter, const unsigned char *salt, int saltlen)"
+.br
+.ti -1c
+.RI "\fBX509_ALGOR\fP * \fBPKCS5_pbe2_set\fP (const \fBEVP_CIPHER\fP *cipher, int iter, unsigned char *salt, int saltlen)"
+.br
+.ti -1c
+.RI "\fBX509_ALGOR\fP * \fBPKCS5_pbe2_set_iv\fP (const \fBEVP_CIPHER\fP *cipher, int iter, unsigned char *salt, int saltlen, unsigned char *aiv, int prf_nid)"
+.br
+.ti -1c
+.RI "\fBX509_ALGOR\fP * \fBPKCS5_pbkdf2_set\fP (int iter, unsigned char *salt, int saltlen, int prf_nid, int keylen)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBEVP_PKCS82PKEY\fP (\fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBEVP_PKEY2PKCS8\fP (\fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBEVP_PKEY2PKCS8_broken\fP (\fBEVP_PKEY\fP *pkey, int broken)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBPKCS8_set_broken\fP (\fBPKCS8_PRIV_KEY_INFO\fP *p8, int broken)"
+.br
+.ti -1c
+.RI "int \fBPKCS8_pkey_set0\fP (\fBPKCS8_PRIV_KEY_INFO\fP *priv, \fBASN1_OBJECT\fP *aobj, int \fBversion\fP, int ptype, \fBvoid\fP *pval, unsigned char *penc, int penclen)"
+.br
+.ti -1c
+.RI "int \fBPKCS8_pkey_get0\fP (\fBASN1_OBJECT\fP **ppkalg, const unsigned char **pk, int *ppklen, \fBX509_ALGOR\fP **pa, \fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "int \fBX509_PUBKEY_set0_param\fP (\fBX509_PUBKEY\fP *pub, \fBASN1_OBJECT\fP *aobj, int ptype, \fBvoid\fP *pval, unsigned char *penc, int penclen)"
+.br
+.ti -1c
+.RI "int \fBX509_PUBKEY_get0_param\fP (\fBASN1_OBJECT\fP **ppkalg, const unsigned char **pk, int *ppklen, \fBX509_ALGOR\fP **pa, \fBX509_PUBKEY\fP *pub)"
+.br
+.ti -1c
+.RI "int \fBX509_check_trust\fP (\fBX509\fP *\fBx\fP, int id, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_TRUST_get_count\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBX509_TRUST\fP * \fBX509_TRUST_get0\fP (int idx)"
+.br
+.ti -1c
+.RI "int \fBX509_TRUST_get_by_id\fP (int id)"
+.br
+.ti -1c
+.RI "int \fBX509_TRUST_add\fP (int id, int \fBflags\fP, int(*ck)(\fBX509_TRUST\fP *, \fBX509\fP *, int), char *name, int arg1, \fBvoid\fP *arg2)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_TRUST_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_TRUST_get_flags\fP (\fBX509_TRUST\fP *xp)"
+.br
+.ti -1c
+.RI "char * \fBX509_TRUST_get0_name\fP (\fBX509_TRUST\fP *xp)"
+.br
+.ti -1c
+.RI "int \fBX509_TRUST_get_trust\fP (\fBX509_TRUST\fP *xp)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_X509_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int(*)(int, \fBX509\fP *, int) \fBX509_TRUST_set_default\fP (int(*trust)(int, \fBX509\fP *, int))"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBex\fP"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP int \fBloc\fP"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBattr\fP"
+.br
+.ti -1c
+.RI "const \fBASN1_OBJECT\fP * \fBobj\fP"
+.br
+.ti -1c
+.RI "const \fBASN1_OBJECT\fP int \fBtype\fP"
+.br
+.ti -1c
+.RI "const \fBASN1_OBJECT\fP int const unsigned char * \fBbytes\fP"
+.br
+.ti -1c
+.RI "const \fBASN1_OBJECT\fP int const unsigned char int \fBlen\fP"
+.br
+.ti -1c
+.RI "int \fBnid\fP"
+.br
+.ti -1c
+.RI "const char * \fBattrname\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define PKCS8_EMBEDDED_PARAM   2"
+
+.PP
+Definition at line 567 of file x509\&.h\&.
+.SS "#define PKCS8_NEG_PRIVKEY   4"
+
+.PP
+Definition at line 569 of file x509\&.h\&.
+.SS "#define PKCS8_NO_OCTET   1"
+
+.PP
+Definition at line 566 of file x509\&.h\&.
+.SS "#define PKCS8_NS_DB   3"
+
+.PP
+Definition at line 568 of file x509\&.h\&.
+.SS "#define PKCS8_OK   0"
+
+.PP
+Definition at line 565 of file x509\&.h\&.
+.SS "#define X509_CRL_get_issuer(\fBx\fP)   ((\fBx\fP)\->crl\->issuer)"
+
+.PP
+Definition at line 605 of file x509\&.h\&.
+.SS "#define X509_CRL_get_lastUpdate(\fBx\fP)   ((\fBx\fP)\->crl\->lastUpdate)"
+
+.PP
+Definition at line 603 of file x509\&.h\&.
+.SS "#define X509_CRL_get_nextUpdate(\fBx\fP)   ((\fBx\fP)\->crl\->nextUpdate)"
+
+.PP
+Definition at line 604 of file x509\&.h\&.
+.SS "#define X509_CRL_get_REVOKED(\fBx\fP)   ((\fBx\fP)\->crl\->revoked)"
+
+.PP
+Definition at line 606 of file x509\&.h\&.
+.SS "#define X509_CRL_get_version(\fBx\fP)   \fBASN1_INTEGER_get\fP((\fBx\fP)\->crl\->\fBversion\fP)"
+
+.PP
+Definition at line 602 of file x509\&.h\&.
+.SS "#define X509_EX_V_INIT   0x0001"
+
+.PP
+Definition at line 195 of file x509\&.h\&.
+.SS "#define X509_EX_V_NETSCAPE_HACK   0x8000"
+
+.PP
+Definition at line 194 of file x509\&.h\&.
+.SS "#define X509_EXT_PACK_STRING   2"
+
+.PP
+Definition at line 589 of file x509\&.h\&.
+.SS "#define X509_EXT_PACK_UNKNOWN   1"
+
+.PP
+Definition at line 588 of file x509\&.h\&.
+.SS "#define X509_extract_key(\fBx\fP)   \fBX509_get_pubkey\fP(\fBx\fP)/*****/"
+
+.PP
+Definition at line 595 of file x509\&.h\&.
+.SS "#define X509_F_ADD_CERT_DIR   100"
+
+.PP
+Definition at line 1242 of file x509\&.h\&.
+.SS "#define X509_F_BY_FILE_CTRL   101"
+
+.PP
+Definition at line 1243 of file x509\&.h\&.
+.SS "#define X509_F_CHECK_POLICY   145"
+
+.PP
+Definition at line 1244 of file x509\&.h\&.
+.SS "#define X509_F_DIR_CTRL   102"
+
+.PP
+Definition at line 1245 of file x509\&.h\&.
+.SS "#define X509_F_GET_CERT_BY_SUBJECT   103"
+
+.PP
+Definition at line 1246 of file x509\&.h\&.
+.SS "#define X509_F_NETSCAPE_SPKI_B64_DECODE   129"
+
+.PP
+Definition at line 1247 of file x509\&.h\&.
+.SS "#define X509_F_NETSCAPE_SPKI_B64_ENCODE   130"
+
+.PP
+Definition at line 1248 of file x509\&.h\&.
+.SS "#define X509_F_X509_ATTRIBUTE_CREATE_BY_NID   136"
+
+.PP
+Definition at line 1251 of file x509\&.h\&.
+.SS "#define X509_F_X509_ATTRIBUTE_CREATE_BY_OBJ   137"
+
+.PP
+Definition at line 1252 of file x509\&.h\&.
+.SS "#define X509_F_X509_ATTRIBUTE_CREATE_BY_TXT   140"
+
+.PP
+Definition at line 1253 of file x509\&.h\&.
+.SS "#define X509_F_X509_ATTRIBUTE_GET0_DATA   139"
+
+.PP
+Definition at line 1254 of file x509\&.h\&.
+.SS "#define X509_F_X509_ATTRIBUTE_SET1_DATA   138"
+
+.PP
+Definition at line 1255 of file x509\&.h\&.
+.SS "#define X509_F_X509_CHECK_PRIVATE_KEY   128"
+
+.PP
+Definition at line 1256 of file x509\&.h\&.
+.SS "#define X509_F_X509_CRL_DIFF   105"
+
+.PP
+Definition at line 1257 of file x509\&.h\&.
+.SS "#define X509_F_X509_CRL_PRINT_FP   147"
+
+.PP
+Definition at line 1258 of file x509\&.h\&.
+.SS "#define X509_F_X509_EXTENSION_CREATE_BY_NID   108"
+
+.PP
+Definition at line 1259 of file x509\&.h\&.
+.SS "#define X509_F_X509_EXTENSION_CREATE_BY_OBJ   109"
+
+.PP
+Definition at line 1260 of file x509\&.h\&.
+.SS "#define X509_F_X509_GET_PUBKEY_PARAMETERS   110"
+
+.PP
+Definition at line 1261 of file x509\&.h\&.
+.SS "#define X509_F_X509_LOAD_CERT_CRL_FILE   132"
+
+.PP
+Definition at line 1262 of file x509\&.h\&.
+.SS "#define X509_F_X509_LOAD_CERT_FILE   111"
+
+.PP
+Definition at line 1263 of file x509\&.h\&.
+.SS "#define X509_F_X509_LOAD_CRL_FILE   112"
+
+.PP
+Definition at line 1264 of file x509\&.h\&.
+.SS "#define X509_F_X509_NAME_ADD_ENTRY   113"
+
+.PP
+Definition at line 1265 of file x509\&.h\&.
+.SS "#define X509_F_X509_NAME_ENTRY_CREATE_BY_NID   114"
+
+.PP
+Definition at line 1266 of file x509\&.h\&.
+.SS "#define X509_F_X509_NAME_ENTRY_CREATE_BY_TXT   131"
+
+.PP
+Definition at line 1267 of file x509\&.h\&.
+.SS "#define X509_F_X509_NAME_ENTRY_SET_OBJECT   115"
+
+.PP
+Definition at line 1268 of file x509\&.h\&.
+.SS "#define X509_F_X509_NAME_ONELINE   116"
+
+.PP
+Definition at line 1269 of file x509\&.h\&.
+.SS "#define X509_F_X509_NAME_PRINT   117"
+
+.PP
+Definition at line 1270 of file x509\&.h\&.
+.SS "#define X509_F_X509_PRINT_EX_FP   118"
+
+.PP
+Definition at line 1271 of file x509\&.h\&.
+.SS "#define X509_F_X509_PUBKEY_GET   119"
+
+.PP
+Definition at line 1272 of file x509\&.h\&.
+.SS "#define X509_F_X509_PUBKEY_SET   120"
+
+.PP
+Definition at line 1273 of file x509\&.h\&.
+.SS "#define X509_F_X509_REQ_CHECK_PRIVATE_KEY   144"
+
+.PP
+Definition at line 1274 of file x509\&.h\&.
+.SS "#define X509_F_X509_REQ_PRINT_EX   121"
+
+.PP
+Definition at line 1275 of file x509\&.h\&.
+.SS "#define X509_F_X509_REQ_PRINT_FP   122"
+
+.PP
+Definition at line 1276 of file x509\&.h\&.
+.SS "#define X509_F_X509_REQ_TO_X509   123"
+
+.PP
+Definition at line 1277 of file x509\&.h\&.
+.SS "#define X509_F_X509_STORE_ADD_CERT   124"
+
+.PP
+Definition at line 1278 of file x509\&.h\&.
+.SS "#define X509_F_X509_STORE_ADD_CRL   125"
+
+.PP
+Definition at line 1279 of file x509\&.h\&.
+.SS "#define X509_F_X509_STORE_CTX_GET1_ISSUER   146"
+
+.PP
+Definition at line 1280 of file x509\&.h\&.
+.SS "#define X509_F_X509_STORE_CTX_INIT   143"
+
+.PP
+Definition at line 1281 of file x509\&.h\&.
+.SS "#define X509_F_X509_STORE_CTX_NEW   142"
+
+.PP
+Definition at line 1282 of file x509\&.h\&.
+.SS "#define X509_F_X509_STORE_CTX_PURPOSE_INHERIT   134"
+
+.PP
+Definition at line 1283 of file x509\&.h\&.
+.SS "#define X509_F_X509_TO_X509_REQ   126"
+
+.PP
+Definition at line 1284 of file x509\&.h\&.
+.SS "#define X509_F_X509_TRUST_ADD   133"
+
+.PP
+Definition at line 1285 of file x509\&.h\&.
+.SS "#define X509_F_X509_TRUST_SET   141"
+
+.PP
+Definition at line 1286 of file x509\&.h\&.
+.SS "#define X509_F_X509_VERIFY_CERT   127"
+
+.PP
+Definition at line 1287 of file x509\&.h\&.
+.SS "#define X509_F_X509AT_ADD1_ATTR   135"
+
+.PP
+Definition at line 1249 of file x509\&.h\&.
+.SS "#define X509_F_X509V3_ADD_EXT   104"
+
+.PP
+Definition at line 1250 of file x509\&.h\&.
+.SS "#define X509_FILETYPE_ASN1   2"
+
+.PP
+Definition at line 123 of file x509\&.h\&.
+.SS "#define X509_FILETYPE_DEFAULT   3"
+
+.PP
+Definition at line 124 of file x509\&.h\&.
+.SS "#define X509_FILETYPE_PEM   1"
+
+.PP
+Definition at line 122 of file x509\&.h\&.
+.SS "#define X509_FLAG_COMPAT   0"
+
+.PP
+Definition at line 351 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_ATTRIBUTES   (1L << 11)"
+
+.PP
+Definition at line 363 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_AUX   (1L << 10)"
+
+.PP
+Definition at line 362 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_EXTENSIONS   (1L << 8)"
+
+.PP
+Definition at line 360 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_HEADER   1L"
+
+.PP
+Definition at line 352 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_IDS   (1L << 12)"
+
+.PP
+Definition at line 364 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_ISSUER   (1L << 4)"
+
+.PP
+Definition at line 356 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_PUBKEY   (1L << 7)"
+
+.PP
+Definition at line 359 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_SERIAL   (1L << 2)"
+
+.PP
+Definition at line 354 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_SIGDUMP   (1L << 9)"
+
+.PP
+Definition at line 361 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_SIGNAME   (1L << 3)"
+
+.PP
+Definition at line 355 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_SUBJECT   (1L << 6)"
+
+.PP
+Definition at line 358 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_VALIDITY   (1L << 5)"
+
+.PP
+Definition at line 357 of file x509\&.h\&.
+.SS "#define X509_FLAG_NO_VERSION   (1L << 1)"
+
+.PP
+Definition at line 353 of file x509\&.h\&.
+.SS "#define X509_get_notAfter(\fBx\fP)   ((\fBx\fP)\->cert_info\->validity\->notAfter)"
+
+.PP
+Definition at line 594 of file x509\&.h\&.
+.SS "#define X509_get_notBefore(\fBx\fP)   ((\fBx\fP)\->cert_info\->validity\->notBefore)"
+
+.PP
+Definition at line 593 of file x509\&.h\&.
+.SS "#define X509_get_signature_type(\fBx\fP)   \fBEVP_PKEY_type\fP(\fBOBJ_obj2nid\fP((\fBx\fP)\->sig_alg\->algorithm))"
+
+.PP
+Definition at line 600 of file x509\&.h\&.
+.SS "#define X509_get_version(\fBx\fP)   \fBASN1_INTEGER_get\fP((\fBx\fP)\->cert_info\->\fBversion\fP)"
+
+.PP
+Definition at line 591 of file x509\&.h\&.
+.SS "#define X509_get_X509_PUBKEY(\fBx\fP)   ((\fBx\fP)\->cert_info\->\fBkey\fP)"
+
+.PP
+Definition at line 626 of file x509\&.h\&.
+.SS "#define X509_name_cmp(\fBa\fP, \fBb\fP)   \fBX509_NAME_cmp\fP((\fBa\fP),(\fBb\fP))"
+
+.PP
+Definition at line 599 of file x509\&.h\&.
+.SS "#define X509_R_AKID_MISMATCH   110"
+
+.PP
+Definition at line 1290 of file x509\&.h\&.
+.SS "#define X509_R_BAD_X509_FILETYPE   100"
+
+.PP
+Definition at line 1291 of file x509\&.h\&.
+.SS "#define X509_R_BASE64_DECODE_ERROR   118"
+
+.PP
+Definition at line 1292 of file x509\&.h\&.
+.SS "#define X509_R_CANT_CHECK_DH_KEY   114"
+
+.PP
+Definition at line 1293 of file x509\&.h\&.
+.SS "#define X509_R_CERT_ALREADY_IN_HASH_TABLE   101"
+
+.PP
+Definition at line 1294 of file x509\&.h\&.
+.SS "#define X509_R_CRL_ALREADY_DELTA   127"
+
+.PP
+Definition at line 1295 of file x509\&.h\&.
+.SS "#define X509_R_CRL_VERIFY_FAILURE   131"
+
+.PP
+Definition at line 1296 of file x509\&.h\&.
+.SS "#define X509_R_ERR_ASN1_LIB   102"
+
+.PP
+Definition at line 1297 of file x509\&.h\&.
+.SS "#define X509_R_IDP_MISMATCH   128"
+
+.PP
+Definition at line 1298 of file x509\&.h\&.
+.SS "#define X509_R_INVALID_DIRECTORY   113"
+
+.PP
+Definition at line 1299 of file x509\&.h\&.
+.SS "#define X509_R_INVALID_FIELD_NAME   119"
+
+.PP
+Definition at line 1300 of file x509\&.h\&.
+.SS "#define X509_R_INVALID_TRUST   123"
+
+.PP
+Definition at line 1301 of file x509\&.h\&.
+.SS "#define X509_R_ISSUER_MISMATCH   129"
+
+.PP
+Definition at line 1302 of file x509\&.h\&.
+.SS "#define X509_R_KEY_TYPE_MISMATCH   115"
+
+.PP
+Definition at line 1303 of file x509\&.h\&.
+.SS "#define X509_R_KEY_VALUES_MISMATCH   116"
+
+.PP
+Definition at line 1304 of file x509\&.h\&.
+.SS "#define X509_R_LOADING_CERT_DIR   103"
+
+.PP
+Definition at line 1305 of file x509\&.h\&.
+.SS "#define X509_R_LOADING_DEFAULTS   104"
+
+.PP
+Definition at line 1306 of file x509\&.h\&.
+.SS "#define X509_R_METHOD_NOT_SUPPORTED   124"
+
+.PP
+Definition at line 1307 of file x509\&.h\&.
+.SS "#define X509_R_NAME_TOO_LONG   134"
+
+.PP
+Definition at line 1308 of file x509\&.h\&.
+.SS "#define X509_R_NEWER_CRL_NOT_NEWER   132"
+
+.PP
+Definition at line 1309 of file x509\&.h\&.
+.SS "#define X509_R_NO_CERT_SET_FOR_US_TO_VERIFY   105"
+
+.PP
+Definition at line 1310 of file x509\&.h\&.
+.SS "#define X509_R_NO_CRL_NUMBER   130"
+
+.PP
+Definition at line 1311 of file x509\&.h\&.
+.SS "#define X509_R_PUBLIC_KEY_DECODE_ERROR   125"
+
+.PP
+Definition at line 1312 of file x509\&.h\&.
+.SS "#define X509_R_PUBLIC_KEY_ENCODE_ERROR   126"
+
+.PP
+Definition at line 1313 of file x509\&.h\&.
+.SS "#define X509_R_SHOULD_RETRY   106"
+
+.PP
+Definition at line 1314 of file x509\&.h\&.
+.SS "#define X509_R_UNABLE_TO_FIND_PARAMETERS_IN_CHAIN   107"
+
+.PP
+Definition at line 1315 of file x509\&.h\&.
+.SS "#define X509_R_UNABLE_TO_GET_CERTS_PUBLIC_KEY   108"
+
+.PP
+Definition at line 1316 of file x509\&.h\&.
+.SS "#define X509_R_UNKNOWN_KEY_TYPE   117"
+
+.PP
+Definition at line 1317 of file x509\&.h\&.
+.SS "#define X509_R_UNKNOWN_NID   109"
+
+.PP
+Definition at line 1318 of file x509\&.h\&.
+.SS "#define X509_R_UNKNOWN_PURPOSE_ID   121"
+
+.PP
+Definition at line 1319 of file x509\&.h\&.
+.SS "#define X509_R_UNKNOWN_TRUST_ID   120"
+
+.PP
+Definition at line 1320 of file x509\&.h\&.
+.SS "#define X509_R_UNSUPPORTED_ALGORITHM   111"
+
+.PP
+Definition at line 1321 of file x509\&.h\&.
+.SS "#define X509_R_WRONG_LOOKUP_TYPE   112"
+
+.PP
+Definition at line 1322 of file x509\&.h\&.
+.SS "#define X509_R_WRONG_TYPE   122"
+
+.PP
+Definition at line 1323 of file x509\&.h\&.
+.SS "#define X509_REQ_extract_key(\fBa\fP)   \fBX509_REQ_get_pubkey\fP(\fBa\fP)"
+
+.PP
+Definition at line 598 of file x509\&.h\&.
+.SS "#define X509_REQ_get_subject_name(\fBx\fP)   ((\fBx\fP)\->req_info\->subject)"
+
+.PP
+Definition at line 597 of file x509\&.h\&.
+.SS "#define X509_REQ_get_version(\fBx\fP)   \fBASN1_INTEGER_get\fP((\fBx\fP)\->req_info\->\fBversion\fP)"
+
+.PP
+Definition at line 596 of file x509\&.h\&.
+.SS "#define X509_TRUST_COMPAT   1"
+
+.PP
+Definition at line 326 of file x509\&.h\&.
+.SS "#define X509_TRUST_DEFAULT   \-1/* Only valid \fBin\fP purpose settings */"
+
+.PP
+Definition at line 324 of file x509\&.h\&.
+.SS "#define X509_TRUST_DYNAMIC   1"
+
+.PP
+Definition at line 340 of file x509\&.h\&.
+.SS "#define X509_TRUST_DYNAMIC_NAME   2"
+
+.PP
+Definition at line 341 of file x509\&.h\&.
+.SS "#define X509_TRUST_EMAIL   4"
+
+.PP
+Definition at line 329 of file x509\&.h\&.
+.SS "#define X509_TRUST_MAX   8"
+
+.PP
+Definition at line 337 of file x509\&.h\&.
+.SS "#define X509_TRUST_MIN   1"
+
+.PP
+Definition at line 336 of file x509\&.h\&.
+.SS "#define X509_TRUST_OBJECT_SIGN   5"
+
+.PP
+Definition at line 330 of file x509\&.h\&.
+.SS "#define X509_TRUST_OCSP_REQUEST   7"
+
+.PP
+Definition at line 332 of file x509\&.h\&.
+.SS "#define X509_TRUST_OCSP_SIGN   6"
+
+.PP
+Definition at line 331 of file x509\&.h\&.
+.SS "#define X509_TRUST_REJECTED   2"
+
+.PP
+Definition at line 346 of file x509\&.h\&.
+.SS "#define X509_TRUST_SSL_CLIENT   2"
+
+.PP
+Definition at line 327 of file x509\&.h\&.
+.SS "#define X509_TRUST_SSL_SERVER   3"
+
+.PP
+Definition at line 328 of file x509\&.h\&.
+.SS "#define X509_TRUST_TRUSTED   1"
+
+.PP
+Definition at line 345 of file x509\&.h\&.
+.SS "#define X509_TRUST_TSA   8"
+
+.PP
+Definition at line 333 of file x509\&.h\&.
+.SS "#define X509_TRUST_UNTRUSTED   3"
+
+.PP
+Definition at line 347 of file x509\&.h\&.
+.SS "#define X509v3_KU_CRL_SIGN   0x0002"
+
+.PP
+Definition at line 132 of file x509\&.h\&.
+.SS "#define X509v3_KU_DATA_ENCIPHERMENT   0x0010"
+
+.PP
+Definition at line 129 of file x509\&.h\&.
+.SS "#define X509v3_KU_DECIPHER_ONLY   0x8000"
+
+.PP
+Definition at line 134 of file x509\&.h\&.
+.SS "#define X509v3_KU_DIGITAL_SIGNATURE   0x0080"
+
+.PP
+Definition at line 126 of file x509\&.h\&.
+.SS "#define X509v3_KU_ENCIPHER_ONLY   0x0001"
+
+.PP
+Definition at line 133 of file x509\&.h\&.
+.SS "#define X509v3_KU_KEY_AGREEMENT   0x0008"
+
+.PP
+Definition at line 130 of file x509\&.h\&.
+.SS "#define X509v3_KU_KEY_CERT_SIGN   0x0004"
+
+.PP
+Definition at line 131 of file x509\&.h\&.
+.SS "#define X509v3_KU_KEY_ENCIPHERMENT   0x0020"
+
+.PP
+Definition at line 128 of file x509\&.h\&.
+.SS "#define X509v3_KU_NON_REPUDIATION   0x0040"
+
+.PP
+Definition at line 127 of file x509\&.h\&.
+.SS "#define X509v3_KU_UNDEF   0xffff"
+
+.PP
+Definition at line 135 of file x509\&.h\&.
+.SS "#define XN_FLAG_COMPAT"
+\fBValue:\fP
+.PP
+.nf
+0/* Traditional SSLeay: use old
+                                   * X509_NAME_print */
+.fi
+.PP
+Definition at line 372 of file x509\&.h\&.
+.SS "#define XN_FLAG_DN_REV   (1 << 20)/* Reverse DN order */"
+
+.PP
+Definition at line 379 of file x509\&.h\&.
+.SS "#define XN_FLAG_DUMP_UNKNOWN_FIELDS   (1 << 24)"
+
+.PP
+Definition at line 397 of file x509\&.h\&.
+.SS "#define XN_FLAG_FN_ALIGN"
+\fBValue:\fP
+.PP
+.nf
+(1 << 25)/* Align field names to 20
+                                           * characters */
+.fi
+.PP
+Definition at line 399 of file x509\&.h\&.
+.SS "#define XN_FLAG_FN_LN   (1 << 21)/* Object long name */"
+
+.PP
+Definition at line 386 of file x509\&.h\&.
+.SS "#define XN_FLAG_FN_MASK   (0x3 << 21)"
+
+.PP
+Definition at line 383 of file x509\&.h\&.
+.SS "#define XN_FLAG_FN_NONE   (3 << 21)/* No field names */"
+
+.PP
+Definition at line 388 of file x509\&.h\&.
+.SS "#define XN_FLAG_FN_OID   (2 << 21)/* Always use OIDs */"
+
+.PP
+Definition at line 387 of file x509\&.h\&.
+.SS "#define XN_FLAG_FN_SN   0/* Object short name */"
+
+.PP
+Definition at line 385 of file x509\&.h\&.
+.SS "#define XN_FLAG_MULTILINE"
+\fBValue:\fP
+.PP
+.nf
+(ASN1_STRFLGS_ESC_CTRL | \
+                        ASN1_STRFLGS_ESC_MSB | \
+                        XN_FLAG_SEP_MULTILINE | \
+                        XN_FLAG_SPC_EQ | \
+                        XN_FLAG_FN_LN | \
+                        XN_FLAG_FN_ALIGN)
+.fi
+.PP
+Definition at line 420 of file x509\&.h\&.
+.SS "#define XN_FLAG_ONELINE"
+\fBValue:\fP
+.PP
+.nf
+(ASN1_STRFLGS_RFC2253 | \
+                        ASN1_STRFLGS_ESC_QUOTE | \
+                        XN_FLAG_SEP_CPLUS_SPC | \
+                        XN_FLAG_SPC_EQ | \
+                        XN_FLAG_FN_SN)
+.fi
+.PP
+Definition at line 412 of file x509\&.h\&.
+.SS "#define XN_FLAG_RFC2253"
+\fBValue:\fP
+.PP
+.nf
+(ASN1_STRFLGS_RFC2253 | \
+                        XN_FLAG_SEP_COMMA_PLUS | \
+                        XN_FLAG_DN_REV | \
+                        XN_FLAG_FN_SN | \
+                        XN_FLAG_DUMP_UNKNOWN_FIELDS)
+.fi
+.PP
+Definition at line 404 of file x509\&.h\&.
+.SS "#define XN_FLAG_SEP_COMMA_PLUS   (1 << 16)/* RFC2253 ,+ */"
+
+.PP
+Definition at line 374 of file x509\&.h\&.
+.SS "#define XN_FLAG_SEP_CPLUS_SPC   (2 << 16)/* ,+ spaced: more readable */"
+
+.PP
+Definition at line 375 of file x509\&.h\&.
+.SS "#define XN_FLAG_SEP_MASK   (0xf << 16)"
+
+.PP
+Definition at line 370 of file x509\&.h\&.
+.SS "#define XN_FLAG_SEP_MULTILINE   (4 << 16)/* One line per field */"
+
+.PP
+Definition at line 377 of file x509\&.h\&.
+.SS "#define XN_FLAG_SEP_SPLUS_SPC   (3 << 16)/* ;+ spaced */"
+
+.PP
+Definition at line 376 of file x509\&.h\&.
+.SS "#define XN_FLAG_SPC_EQ   (1 << 23)/* Put spaces round '=' */"
+
+.PP
+Definition at line 390 of file x509\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBNetscape_certificate_sequence\fP  \fBNETSCAPE_CERT_SEQUENCE\fP"
+
+.SS "typedef struct \fBNetscape_spkac_st\fP  \fBNETSCAPE_SPKAC\fP"
+
+.SS "typedef struct \fBNetscape_spki_st\fP  \fBNETSCAPE_SPKI\fP"
+
+.SS "typedef struct \fBPBE2PARAM_st\fP  \fBPBE2PARAM\fP"
+
+.SS "typedef struct \fBPBEPARAM_st\fP  \fBPBEPARAM\fP"
+
+.SS "typedef struct \fBPBKDF2PARAM_st\fP  \fBPBKDF2PARAM\fP"
+
+.SS "typedef struct \fBx509_attributes_st\fP  \fBX509_ATTRIBUTE\fP"
+
+.SS "typedef struct \fBx509_cert_aux_st\fP  \fBX509_CERT_AUX\fP"
+
+.SS "typedef struct \fBx509_cert_pair_st\fP  \fBX509_CERT_PAIR\fP"
+
+.SS "typedef struct \fBx509_cinf_st\fP  \fBX509_CINF\fP"
+
+.SS "typedef struct \fBX509_crl_info_st\fP  \fBX509_CRL_INFO\fP"
+
+.SS "typedef struct \fBX509_extension_st\fP  \fBX509_EXTENSION\fP"
+
+.SS "typedef struct \fBX509_info_st\fP  \fBX509_INFO\fP"
+
+.SS "typedef struct \fBX509_name_entry_st\fP  \fBX509_NAME_ENTRY\fP"
+
+.SS "typedef struct \fBX509_objects_st\fP  \fBX509_OBJECTS\fP"
+
+.SS "typedef struct \fBprivate_key_st\fP  \fBX509_PKEY\fP"
+
+.SS "typedef struct \fBX509_req_st\fP  \fBX509_REQ\fP"
+
+.SS "typedef struct \fBX509_req_info_st\fP  \fBX509_REQ_INFO\fP"
+
+.SS "typedef struct \fBX509_sig_st\fP  \fBX509_SIG\fP"
+
+.SS "typedef struct \fBx509_trust_st\fP  \fBX509_TRUST\fP"
+
+.SS "typedef struct \fBX509_val_st\fP  \fBX509_VAL\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int ASN1_digest (i2d_of_void * i2d, const \fBEVP_MD\fP * type, char * data, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 75 of file a_digest\&.c\&.
+.SS "int ASN1_item_digest (const \fBASN1_ITEM\fP * it, const \fBEVP_MD\fP * type, \fBvoid\fP * data, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 97 of file a_digest\&.c\&.
+.SS "int ASN1_item_sign (const \fBASN1_ITEM\fP * it, \fBX509_ALGOR\fP * algor1, \fBX509_ALGOR\fP * algor2, \fBASN1_BIT_STRING\fP * signature, \fBvoid\fP * data, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * type)"
+
+.PP
+Definition at line 219 of file a_sign\&.c\&.
+.SS "int ASN1_item_sign_ctx (const \fBASN1_ITEM\fP * it, \fBX509_ALGOR\fP * algor1, \fBX509_ALGOR\fP * algor2, \fBASN1_BIT_STRING\fP * signature, \fBvoid\fP * asn, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 232 of file a_sign\&.c\&.
+.SS "int ASN1_item_verify (const \fBASN1_ITEM\fP * it, \fBX509_ALGOR\fP * algor1, \fBASN1_BIT_STRING\fP * signature, \fBvoid\fP * data, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 136 of file a_verify\&.c\&.
+.SS "int ASN1_sign (i2d_of_void * i2d, \fBX509_ALGOR\fP * algor1, \fBX509_ALGOR\fP * algor2, \fBASN1_BIT_STRING\fP * signature, char * data, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * type)"
+
+.PP
+Definition at line 130 of file a_sign\&.c\&.
+.SS "int ASN1_verify (i2d_of_void * i2d, \fBX509_ALGOR\fP * algor1, \fBASN1_BIT_STRING\fP * signature, char * data, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 77 of file a_verify\&.c\&.
+.SS "\fBDSA\fP* d2i_DSA_PUBKEY (\fBDSA\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBDSA\fP* d2i_DSA_PUBKEY_bio (\fBBIO\fP * bp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 344 of file x_all\&.c\&.
+.SS "\fBDSA\fP* d2i_DSA_PUBKEY_fp (FILE * fp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 323 of file x_all\&.c\&.
+.SS "\fBDSA\fP* d2i_DSAPrivateKey_bio (\fBBIO\fP * bp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 334 of file x_all\&.c\&.
+.SS "\fBDSA\fP* d2i_DSAPrivateKey_fp (FILE * fp, \fBDSA\fP ** dsa)"
+
+.PP
+Definition at line 313 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_EC_PUBKEY (\fBEC_KEY\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBEC_KEY\fP* d2i_EC_PUBKEY_bio (\fBBIO\fP * bp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 378 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_EC_PUBKEY_fp (FILE * fp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 358 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_ECPrivateKey_bio (\fBBIO\fP * bp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 388 of file x_all\&.c\&.
+.SS "\fBEC_KEY\fP* d2i_ECPrivateKey_fp (FILE * fp, \fBEC_KEY\fP ** eckey)"
+
+.PP
+Definition at line 368 of file x_all\&.c\&.
+.SS "\fBX509_SIG\fP* d2i_PKCS8_bio (\fBBIO\fP * bp, \fBX509_SIG\fP ** p8)"
+
+.PP
+Definition at line 457 of file x_all\&.c\&.
+.SS "\fBX509_SIG\fP* d2i_PKCS8_fp (FILE * fp, \fBX509_SIG\fP ** p8)"
+
+.PP
+Definition at line 446 of file x_all\&.c\&.
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* d2i_PKCS8_PRIV_KEY_INFO_bio (\fBBIO\fP * bp, \fBPKCS8_PRIV_KEY_INFO\fP ** p8inf)"
+
+.PP
+Definition at line 515 of file x_all\&.c\&.
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* d2i_PKCS8_PRIV_KEY_INFO_fp (FILE * fp, \fBPKCS8_PRIV_KEY_INFO\fP ** p8inf)"
+
+.PP
+Definition at line 468 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PrivateKey_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 545 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PrivateKey_fp (FILE * fp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 498 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PUBKEY (\fBEVP_PKEY\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBEVP_PKEY\fP* d2i_PUBKEY_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 555 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* d2i_PUBKEY_fp (FILE * fp, \fBEVP_PKEY\fP ** a)"
+
+.PP
+Definition at line 508 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSA_PUBKEY (\fBRSA\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBRSA\fP* d2i_RSA_PUBKEY_bio (\fBBIO\fP * bp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 295 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSA_PUBKEY_fp (FILE * fp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 262 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPrivateKey_bio (\fBBIO\fP * bp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 280 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPrivateKey_fp (FILE * fp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 247 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPublicKey_bio (\fBBIO\fP * bp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 290 of file x_all\&.c\&.
+.SS "\fBRSA\fP* d2i_RSAPublicKey_fp (FILE * fp, \fBRSA\fP ** rsa)"
+
+.PP
+Definition at line 257 of file x_all\&.c\&.
+.SS "\fBX509\fP* d2i_X509_AUX (\fBX509\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBX509\fP* d2i_X509_bio (\fBBIO\fP * bp, \fBX509\fP ** x509)"
+
+.PP
+Definition at line 168 of file x_all\&.c\&.
+.SS "\fBX509_CRL\fP* d2i_X509_CRL_bio (\fBBIO\fP * bp, \fBX509_CRL\fP ** crl)"
+
+.PP
+Definition at line 190 of file x_all\&.c\&.
+.SS "\fBX509_CRL\fP* d2i_X509_CRL_fp (FILE * fp, \fBX509_CRL\fP ** crl)"
+
+.PP
+Definition at line 179 of file x_all\&.c\&.
+.SS "\fBX509\fP* d2i_X509_fp (FILE * fp, \fBX509\fP ** x509)"
+
+.PP
+Definition at line 157 of file x_all\&.c\&.
+.SS "\fBX509_PKEY\fP* d2i_X509_PKEY (\fBX509_PKEY\fP ** a, const unsigned char ** pp, long length)"
+
+.PP
+Definition at line 72 of file x_pkey\&.c\&.
+.SS "\fBX509_REQ\fP* d2i_X509_REQ_bio (\fBBIO\fP * bp, \fBX509_REQ\fP ** req)"
+
+.PP
+Definition at line 234 of file x_all\&.c\&.
+.SS "\fBX509_REQ\fP* d2i_X509_REQ_fp (FILE * fp, \fBX509_REQ\fP ** req)"
+
+.PP
+Definition at line 223 of file x_all\&.c\&.
+.SS "\fBvoid\fP ERR_load_X509_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 178 of file x509_err\&.c\&.
+.SS "\fBEVP_PKEY\fP* EVP_PKCS82PKEY (\fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.PP
+Definition at line 69 of file evp_pkey\&.c\&.
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* EVP_PKEY2PKCS8 (\fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 107 of file evp_pkey\&.c\&.
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* EVP_PKEY2PKCS8_broken (\fBEVP_PKEY\fP * pkey, int broken)"
+
+.PP
+Definition at line 114 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_add1_attr (\fBEVP_PKEY\fP * key, \fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 197 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_add1_attr_by_NID (\fBEVP_PKEY\fP * key, int nid, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 213 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_add1_attr_by_OBJ (\fBEVP_PKEY\fP * key, const \fBASN1_OBJECT\fP * obj, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 204 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_add1_attr_by_txt (\fBEVP_PKEY\fP * key, const char * attrname, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 222 of file evp_pkey\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* EVP_PKEY_delete_attr (\fBEVP_PKEY\fP * key, int loc)"
+
+.PP
+Definition at line 192 of file evp_pkey\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* EVP_PKEY_get_attr (const \fBEVP_PKEY\fP * key, int loc)"
+
+.PP
+Definition at line 187 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_get_attr_by_NID (const \fBEVP_PKEY\fP * key, int nid, int lastpos)"
+
+.PP
+Definition at line 176 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_get_attr_by_OBJ (const \fBEVP_PKEY\fP * key, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 181 of file evp_pkey\&.c\&.
+.SS "int EVP_PKEY_get_attr_count (const \fBEVP_PKEY\fP * key)"
+
+.PP
+Definition at line 171 of file evp_pkey\&.c\&.
+.SS "int i2d_DSA_PUBKEY (\fBDSA\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_DSA_PUBKEY_bio (\fBBIO\fP * bp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 349 of file x_all\&.c\&.
+.SS "int i2d_DSA_PUBKEY_fp (FILE * fp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 328 of file x_all\&.c\&.
+.SS "int i2d_DSAPrivateKey_bio (\fBBIO\fP * bp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 339 of file x_all\&.c\&.
+.SS "int i2d_DSAPrivateKey_fp (FILE * fp, \fBDSA\fP * dsa)"
+
+.PP
+Definition at line 318 of file x_all\&.c\&.
+.SS "int i2d_EC_PUBKEY (\fBEC_KEY\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_EC_PUBKEY_bio (\fBBIO\fP * bp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 383 of file x_all\&.c\&.
+.SS "int i2d_EC_PUBKEY_fp (FILE * fp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 363 of file x_all\&.c\&.
+.SS "int i2d_ECPrivateKey_bio (\fBBIO\fP * bp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 393 of file x_all\&.c\&.
+.SS "int i2d_ECPrivateKey_fp (FILE * fp, \fBEC_KEY\fP * eckey)"
+
+.PP
+Definition at line 373 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_bio (\fBBIO\fP * bp, \fBX509_SIG\fP * p8)"
+
+.PP
+Definition at line 462 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_fp (FILE * fp, \fBX509_SIG\fP * p8)"
+
+.PP
+Definition at line 451 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_PRIV_KEY_INFO_bio (\fBBIO\fP * bp, \fBPKCS8_PRIV_KEY_INFO\fP * p8inf)"
+
+.PP
+Definition at line 522 of file x_all\&.c\&.
+.SS "int i2d_PKCS8_PRIV_KEY_INFO_fp (FILE * fp, \fBPKCS8_PRIV_KEY_INFO\fP * p8inf)"
+
+.PP
+Definition at line 475 of file x_all\&.c\&.
+.SS "int i2d_PKCS8PrivateKeyInfo_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * key)"
+
+.PP
+Definition at line 528 of file x_all\&.c\&.
+.SS "int i2d_PKCS8PrivateKeyInfo_fp (FILE * fp, \fBEVP_PKEY\fP * key)"
+
+.PP
+Definition at line 481 of file x_all\&.c\&.
+.SS "int i2d_PrivateKey_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 540 of file x_all\&.c\&.
+.SS "int i2d_PrivateKey_fp (FILE * fp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 493 of file x_all\&.c\&.
+.SS "int i2d_PUBKEY (\fBEVP_PKEY\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_PUBKEY_bio (\fBBIO\fP * bp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 550 of file x_all\&.c\&.
+.SS "int i2d_PUBKEY_fp (FILE * fp, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 503 of file x_all\&.c\&.
+.SS "int i2d_re_X509_tbs (\fBX509\fP * x, unsigned char ** pp)"
+
+.SS "int i2d_RSA_PUBKEY (\fBRSA\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_RSA_PUBKEY_bio (\fBBIO\fP * bp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 305 of file x_all\&.c\&.
+.SS "int i2d_RSA_PUBKEY_fp (FILE * fp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 274 of file x_all\&.c\&.
+.SS "int i2d_RSAPrivateKey_bio (\fBBIO\fP * bp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 285 of file x_all\&.c\&.
+.SS "int i2d_RSAPrivateKey_fp (FILE * fp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 252 of file x_all\&.c\&.
+.SS "int i2d_RSAPublicKey_bio (\fBBIO\fP * bp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 300 of file x_all\&.c\&.
+.SS "int i2d_RSAPublicKey_fp (FILE * fp, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 269 of file x_all\&.c\&.
+.SS "int i2d_X509_AUX (\fBX509\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_X509_bio (\fBBIO\fP * bp, \fBX509\fP * x509)"
+
+.PP
+Definition at line 173 of file x_all\&.c\&.
+.SS "int i2d_X509_CRL_bio (\fBBIO\fP * bp, \fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 195 of file x_all\&.c\&.
+.SS "int i2d_X509_CRL_fp (FILE * fp, \fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 184 of file x_all\&.c\&.
+.SS "int i2d_X509_fp (FILE * fp, \fBX509\fP * x509)"
+
+.PP
+Definition at line 162 of file x_all\&.c\&.
+.SS "int i2d_X509_PKEY (\fBX509_PKEY\fP * a, unsigned char ** pp)"
+
+.PP
+Definition at line 67 of file x_pkey\&.c\&.
+.SS "int i2d_X509_REQ_bio (\fBBIO\fP * bp, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 239 of file x_all\&.c\&.
+.SS "int i2d_X509_REQ_fp (FILE * fp, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 228 of file x_all\&.c\&.
+.SS "\fBNETSCAPE_SPKI\fP* NETSCAPE_SPKI_b64_decode (const char * str, int len)"
+
+.PP
+Definition at line 80 of file x509spki\&.c\&.
+.SS "char* NETSCAPE_SPKI_b64_encode (\fBNETSCAPE_SPKI\fP * x)"
+
+.PP
+Definition at line 106 of file x509spki\&.c\&.
+.SS "\fBEVP_PKEY\fP* NETSCAPE_SPKI_get_pubkey (\fBNETSCAPE_SPKI\fP * x)"
+
+.PP
+Definition at line 71 of file x509spki\&.c\&.
+.SS "int NETSCAPE_SPKI_print (\fBBIO\fP * out, \fBNETSCAPE_SPKI\fP * spki)"
+
+.PP
+Definition at line 74 of file t_spki\&.c\&.
+.SS "int NETSCAPE_SPKI_set_pubkey (\fBNETSCAPE_SPKI\fP * x, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 64 of file x509spki\&.c\&.
+.SS "int NETSCAPE_SPKI_sign (\fBNETSCAPE_SPKI\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 150 of file x_all\&.c\&.
+.SS "int NETSCAPE_SPKI_verify (\fBNETSCAPE_SPKI\fP * a, \fBEVP_PKEY\fP * r)"
+
+.PP
+Definition at line 88 of file x_all\&.c\&.
+.SS "\fBX509_ALGOR\fP* PKCS5_pbe2_set (const \fBEVP_CIPHER\fP * cipher, int iter, unsigned char * salt, int saltlen)"
+
+.SS "\fBX509_ALGOR\fP* PKCS5_pbe2_set_iv (const \fBEVP_CIPHER\fP * cipher, int iter, unsigned char * salt, int saltlen, unsigned char * aiv, int prf_nid)"
+
+.SS "\fBX509_ALGOR\fP* PKCS5_pbe_set (int alg, int iter, const unsigned char * salt, int saltlen)"
+
+.SS "int PKCS5_pbe_set0_algor (\fBX509_ALGOR\fP * algor, int alg, int iter, const unsigned char * salt, int saltlen)"
+
+.SS "\fBX509_ALGOR\fP* PKCS5_pbkdf2_set (int iter, unsigned char * salt, int saltlen, int prf_nid, int keylen)"
+
+.SS "int PKCS8_pkey_get0 (\fBASN1_OBJECT\fP ** ppkalg, const unsigned char ** pk, int * ppklen, \fBX509_ALGOR\fP ** pa, \fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.SS "int PKCS8_pkey_set0 (\fBPKCS8_PRIV_KEY_INFO\fP * priv, \fBASN1_OBJECT\fP * aobj, int version, int ptype, \fBvoid\fP * pval, unsigned char * penc, int penclen)"
+
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* PKCS8_set_broken (\fBPKCS8_PRIV_KEY_INFO\fP * p8, int broken)"
+
+.PP
+Definition at line 148 of file evp_pkey\&.c\&.
+.SS "typedef STACK_OF (\fBX509_ALGOR\fP)"
+
+.PP
+Definition at line 84 of file pk7_attr\&.c\&.
+.SS "typedef STACK_OF (\fBX509_EXTENSION\fP)"
+
+.PP
+Definition at line 181 of file ts_req_utils\&.c\&.
+.SS "STACK_OF (\fBX509\fP)"
+
+.PP
+Definition at line 1263 of file apps\&.c\&.
+.SS "STACK_OF (\fBX509_ATTRIBUTE\fP)"
+
+.SS "int X509_add1_ext_i2d (\fBX509\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 155 of file x509_ext\&.c\&.
+.SS "int X509_add1_reject_object (\fBX509\fP * x, \fBASN1_OBJECT\fP * obj)"
+
+.SS "int X509_add1_trust_object (\fBX509\fP * x, \fBASN1_OBJECT\fP * obj)"
+
+.SS "int X509_add_ext (\fBX509\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 145 of file x509_ext\&.c\&.
+.SS "int X509_ALGOR_cmp (const \fBX509_ALGOR\fP * a, const \fBX509_ALGOR\fP * b)"
+
+.SS "\fBX509_ALGOR\fP* X509_ALGOR_dup (\fBX509_ALGOR\fP * xn)"
+
+.SS "\fBvoid\fP X509_ALGOR_get0 (\fBASN1_OBJECT\fP ** paobj, int * pptype, \fBvoid\fP ** ppval, \fBX509_ALGOR\fP * algor)"
+
+.SS "int X509_ALGOR_set0 (\fBX509_ALGOR\fP * alg, \fBASN1_OBJECT\fP * aobj, int ptype, \fBvoid\fP * pval)"
+
+.SS "\fBvoid\fP X509_ALGOR_set_md (\fBX509_ALGOR\fP * alg, const \fBEVP_MD\fP * md)"
+
+.SS "unsigned char* X509_alias_get0 (\fBX509\fP * x, int * len)"
+
+.SS "int X509_alias_set1 (\fBX509\fP * x, unsigned char * name, int len)"
+
+.SS "int X509_ATTRIBUTE_count (\fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 350 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create (int nid, int atrtype, \fBvoid\fP * value)"
+
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create_by_NID (\fBX509_ATTRIBUTE\fP ** attr, int nid, int atrtype, const \fBvoid\fP * data, int len)"
+
+.PP
+Definition at line 219 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create_by_OBJ (\fBX509_ATTRIBUTE\fP ** attr, const \fBASN1_OBJECT\fP * obj, int atrtype, const \fBvoid\fP * data, int len)"
+
+.PP
+Definition at line 237 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_create_by_txt (\fBX509_ATTRIBUTE\fP ** attr, const char * atrname, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 267 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_ATTRIBUTE_dup (\fBX509_ATTRIBUTE\fP * xa)"
+
+.SS "\fBvoid\fP* X509_ATTRIBUTE_get0_data (\fBX509_ATTRIBUTE\fP * attr, int idx, int atrtype, \fBvoid\fP * data)"
+
+.PP
+Definition at line 366 of file x509_att\&.c\&.
+.SS "\fBASN1_OBJECT\fP* X509_ATTRIBUTE_get0_object (\fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 359 of file x509_att\&.c\&.
+.SS "\fBASN1_TYPE\fP* X509_ATTRIBUTE_get0_type (\fBX509_ATTRIBUTE\fP * attr, int idx)"
+
+.PP
+Definition at line 380 of file x509_att\&.c\&.
+.SS "int X509_ATTRIBUTE_set1_data (\fBX509_ATTRIBUTE\fP * attr, int attrtype, const \fBvoid\fP * data, int len)"
+
+.PP
+Definition at line 296 of file x509_att\&.c\&.
+.SS "int X509_ATTRIBUTE_set1_object (\fBX509_ATTRIBUTE\fP * attr, const \fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 287 of file x509_att\&.c\&.
+.SS "int X509_CERT_AUX_print (\fBBIO\fP * bp, \fBX509_CERT_AUX\fP * x, int indent)"
+
+.PP
+Definition at line 70 of file t_x509a\&.c\&.
+.SS "int X509_certificate_type (\fBX509\fP * x, \fBEVP_PKEY\fP * pubkey)"
+
+.PP
+Definition at line 65 of file x509type\&.c\&.
+.SS "int X509_chain_check_suiteb (int * perror_depth, \fBX509\fP * x, \fBSTACK_OF\fP(\fBX509\fP)* chain, unsigned long flags)"
+
+.PP
+Definition at line 394 of file x509_cmp\&.c\&.
+.SS "int X509_check_private_key (\fBX509\fP * x509, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 324 of file x509_cmp\&.c\&.
+.SS "int X509_check_trust (\fBX509\fP * x, int id, int flags)"
+
+.PP
+Definition at line 116 of file x509_trs\&.c\&.
+.SS "int X509_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 180 of file x509_cmp\&.c\&.
+.SS "int X509_cmp_current_time (const \fBASN1_TIME\fP * s)"
+
+.PP
+Definition at line 1830 of file x509_vfy\&.c\&.
+.SS "int X509_cmp_time (const \fBASN1_TIME\fP * s, time_t * t)"
+
+.PP
+Definition at line 1835 of file x509_vfy\&.c\&.
+.SS "int X509_CRL_add0_revoked (\fBX509_CRL\fP * crl, \fBX509_REVOKED\fP * rev)"
+
+.SS "int X509_CRL_add1_ext_i2d (\fBX509_CRL\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 103 of file x509_ext\&.c\&.
+.SS "int X509_CRL_add_ext (\fBX509_CRL\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 109 of file x509_ext\&.c\&.
+.SS "int X509_CRL_check_suiteb (\fBX509_CRL\fP * crl, \fBEVP_PKEY\fP * pk, unsigned long flags)"
+
+.PP
+Definition at line 461 of file x509_cmp\&.c\&.
+.SS "int X509_CRL_cmp (const \fBX509_CRL\fP * a, const \fBX509_CRL\fP * b)"
+
+.PP
+Definition at line 120 of file x509_cmp\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_CRL_delete_ext (\fBX509_CRL\fP * x, int loc)"
+
+.PP
+Definition at line 93 of file x509_ext\&.c\&.
+.SS "\fBX509_CRL\fP* X509_CRL_diff (\fBX509_CRL\fP * base, \fBX509_CRL\fP * newer, \fBEVP_PKEY\fP * skey, const \fBEVP_MD\fP * md, unsigned int flags)"
+
+.PP
+Definition at line 2024 of file x509_vfy\&.c\&.
+.SS "int X509_CRL_digest (const \fBX509_CRL\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 416 of file x_all\&.c\&.
+.SS "\fBX509_CRL\fP* X509_CRL_dup (\fBX509_CRL\fP * crl)"
+
+.SS "int X509_CRL_get0_by_cert (\fBX509_CRL\fP * crl, \fBX509_REVOKED\fP ** ret, \fBX509\fP * x)"
+
+.SS "int X509_CRL_get0_by_serial (\fBX509_CRL\fP * crl, \fBX509_REVOKED\fP ** ret, \fBASN1_INTEGER\fP * serial)"
+
+.SS "\fBX509_EXTENSION\fP* X509_CRL_get_ext (\fBX509_CRL\fP * x, int loc)"
+
+.PP
+Definition at line 88 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_by_critical (\fBX509_CRL\fP * x, int crit, int lastpos)"
+
+.PP
+Definition at line 83 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_by_NID (\fBX509_CRL\fP * x, int nid, int lastpos)"
+
+.PP
+Definition at line 73 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_by_OBJ (\fBX509_CRL\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 78 of file x509_ext\&.c\&.
+.SS "int X509_CRL_get_ext_count (\fBX509_CRL\fP * x)"
+
+.PP
+Definition at line 68 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_CRL_get_ext_d2i (\fBX509_CRL\fP * x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 98 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_CRL_get_meth_data (\fBX509_CRL\fP * crl)"
+
+.SS "int X509_CRL_http_nbio (\fBOCSP_REQ_CTX\fP * rctx, \fBX509_CRL\fP ** pcrl)"
+
+.PP
+Definition at line 143 of file x_all\&.c\&.
+.SS "int X509_CRL_match (const \fBX509_CRL\fP * a, const \fBX509_CRL\fP * b)"
+
+.PP
+Definition at line 126 of file x509_cmp\&.c\&.
+.SS "\fBvoid\fP X509_CRL_METHOD_free (\fBX509_CRL_METHOD\fP * m)"
+
+.SS "\fBX509_CRL_METHOD\fP* X509_CRL_METHOD_new (int(*)(\fBX509_CRL\fP *crl) crl_init, int(*)(\fBX509_CRL\fP *crl) crl_free, int(*)(\fBX509_CRL\fP *crl,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBX509_REVOKED\fP **ret,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBASN1_INTEGER\fP *ser,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBX509_NAME\fP *issuer) crl_lookup, int(*)(\fBX509_CRL\fP *crl,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBEVP_PKEY\fP *pk) crl_verify)"
+
+.SS "int X509_CRL_print (\fBBIO\fP * bp, \fBX509_CRL\fP * x)"
+
+.PP
+Definition at line 85 of file t_crl\&.c\&.
+.SS "int X509_CRL_print_fp (FILE * bp, \fBX509_CRL\fP * x)"
+
+.PP
+Definition at line 69 of file t_crl\&.c\&.
+.SS "\fBvoid\fP X509_CRL_set_default_method (const \fBX509_CRL_METHOD\fP * meth)"
+
+.SS "int X509_CRL_set_issuer_name (\fBX509_CRL\fP * x, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 78 of file x509cset\&.c\&.
+.SS "int X509_CRL_set_lastUpdate (\fBX509_CRL\fP * x, const \fBASN1_TIME\fP * tm)"
+
+.PP
+Definition at line 85 of file x509cset\&.c\&.
+.SS "\fBvoid\fP X509_CRL_set_meth_data (\fBX509_CRL\fP * crl, \fBvoid\fP * dat)"
+
+.SS "int X509_CRL_set_nextUpdate (\fBX509_CRL\fP * x, const \fBASN1_TIME\fP * tm)"
+
+.PP
+Definition at line 102 of file x509cset\&.c\&.
+.SS "int X509_CRL_set_version (\fBX509_CRL\fP * x, long version)"
+
+.PP
+Definition at line 67 of file x509cset\&.c\&.
+.SS "int X509_CRL_sign (\fBX509_CRL\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 128 of file x_all\&.c\&.
+.SS "int X509_CRL_sign_ctx (\fBX509_CRL\fP * x, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 135 of file x_all\&.c\&.
+.SS "int X509_CRL_sort (\fBX509_CRL\fP * crl)"
+
+.PP
+Definition at line 119 of file x509cset\&.c\&.
+.SS "int X509_CRL_verify (\fBX509_CRL\fP * a, \fBEVP_PKEY\fP * r)"
+
+.SS "\fBX509_EXTENSION\fP* X509_delete_ext (\fBX509\fP * x, int loc)"
+
+.PP
+Definition at line 140 of file x509_ext\&.c\&.
+.SS "int X509_digest (const \fBX509\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 409 of file x_all\&.c\&.
+.SS "\fBX509\fP* X509_dup (\fBX509\fP * x509)"
+
+.SS "\fBX509_EXTENSION\fP* X509_EXTENSION_create_by_NID (\fBX509_EXTENSION\fP ** ex, int nid, int crit, \fBASN1_OCTET_STRING\fP * data)"
+
+.PP
+Definition at line 185 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_EXTENSION_create_by_OBJ (\fBX509_EXTENSION\fP ** ex, \fBASN1_OBJECT\fP * obj, int crit, \fBASN1_OCTET_STRING\fP * data)"
+
+.PP
+Definition at line 203 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_EXTENSION_dup (\fBX509_EXTENSION\fP * ex)"
+
+.SS "int X509_EXTENSION_get_critical (\fBX509_EXTENSION\fP * ex)"
+
+.PP
+Definition at line 277 of file x509_v3\&.c\&.
+.SS "\fBASN1_OCTET_STRING\fP* X509_EXTENSION_get_data (\fBX509_EXTENSION\fP * ne)"
+
+.PP
+Definition at line 270 of file x509_v3\&.c\&.
+.SS "\fBASN1_OBJECT\fP* X509_EXTENSION_get_object (\fBX509_EXTENSION\fP * ex)"
+
+.PP
+Definition at line 263 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_set_critical (\fBX509_EXTENSION\fP * ex, int crit)"
+
+.PP
+Definition at line 243 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_set_data (\fBX509_EXTENSION\fP * ex, \fBASN1_OCTET_STRING\fP * data)"
+
+.PP
+Definition at line 251 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_set_object (\fBX509_EXTENSION\fP * ex, \fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 234 of file x509_v3\&.c\&.
+.SS "\fBX509\fP* X509_find_by_issuer_and_serial (\fBSTACK_OF\fP(\fBX509\fP)* sk, \fBX509_NAME\fP * name, \fBASN1_INTEGER\fP * serial)"
+
+.PP
+Definition at line 275 of file x509_cmp\&.c\&.
+.SS "\fBX509\fP* X509_find_by_subject (\fBSTACK_OF\fP(\fBX509\fP)* sk, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 297 of file x509_cmp\&.c\&.
+.SS "\fBASN1_BIT_STRING\fP* X509_get0_pubkey_bitstr (const \fBX509\fP * x)"
+
+.PP
+Definition at line 317 of file x509_cmp\&.c\&.
+.SS "\fBvoid\fP X509_get0_signature (\fBASN1_BIT_STRING\fP ** psig, \fBX509_ALGOR\fP ** palg, const \fBX509\fP * x)"
+
+.SS "const char* X509_get_default_cert_area (\fBvoid\fP)"
+
+.PP
+Definition at line 69 of file x509_def\&.c\&.
+.SS "const char* X509_get_default_cert_dir (\fBvoid\fP)"
+
+.PP
+Definition at line 74 of file x509_def\&.c\&.
+.SS "const char* X509_get_default_cert_dir_env (\fBvoid\fP)"
+
+.PP
+Definition at line 84 of file x509_def\&.c\&.
+.SS "const char* X509_get_default_cert_file (\fBvoid\fP)"
+
+.PP
+Definition at line 79 of file x509_def\&.c\&.
+.SS "const char* X509_get_default_cert_file_env (\fBvoid\fP)"
+
+.PP
+Definition at line 89 of file x509_def\&.c\&.
+.SS "const char* X509_get_default_private_dir (\fBvoid\fP)"
+
+.PP
+Definition at line 64 of file x509_def\&.c\&.
+.SS "\fBvoid\fP* X509_get_ex_data (\fBX509\fP * r, int idx)"
+
+.SS "int X509_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "\fBX509_EXTENSION\fP* X509_get_ext (\fBX509\fP * x, int loc)"
+
+.PP
+Definition at line 135 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_by_critical (\fBX509\fP * x, int crit, int lastpos)"
+
+.PP
+Definition at line 129 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_by_NID (\fBX509\fP * x, int nid, int lastpos)"
+
+.PP
+Definition at line 119 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_by_OBJ (\fBX509\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 124 of file x509_ext\&.c\&.
+.SS "int X509_get_ext_count (\fBX509\fP * x)"
+
+.PP
+Definition at line 114 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_get_ext_d2i (\fBX509\fP * x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 150 of file x509_ext\&.c\&.
+.SS "\fBX509_NAME\fP* X509_get_issuer_name (\fBX509\fP * a)"
+
+.PP
+Definition at line 132 of file x509_cmp\&.c\&.
+.SS "\fBEVP_PKEY\fP* X509_get_pubkey (\fBX509\fP * x)"
+
+.PP
+Definition at line 310 of file x509_cmp\&.c\&.
+.SS "int X509_get_pubkey_parameters (\fBEVP_PKEY\fP * pkey, \fBSTACK_OF\fP(\fBX509\fP)* chain)"
+
+.PP
+Definition at line 1981 of file x509_vfy\&.c\&.
+.SS "\fBASN1_INTEGER\fP* X509_get_serialNumber (\fBX509\fP * x)"
+
+.PP
+Definition at line 154 of file x509_cmp\&.c\&.
+.SS "int X509_get_signature_nid (const \fBX509\fP * x)"
+
+.SS "\fBX509_NAME\fP* X509_get_subject_name (\fBX509\fP * a)"
+
+.PP
+Definition at line 149 of file x509_cmp\&.c\&.
+.SS "\fBASN1_TIME\fP* X509_gmtime_adj (\fBASN1_TIME\fP * s, long adj)"
+
+.PP
+Definition at line 1952 of file x509_vfy\&.c\&.
+.SS "int X509_http_nbio (\fBOCSP_REQ_CTX\fP * rctx, \fBX509\fP ** pcert)"
+
+.PP
+Definition at line 109 of file x_all\&.c\&.
+.SS "\fBvoid\fP X509_INFO_free (\fBX509_INFO\fP * a)"
+
+.PP
+Definition at line 86 of file x_info\&.c\&.
+.SS "\fBX509_INFO\fP* X509_INFO_new (\fBvoid\fP)"
+
+.PP
+Definition at line 65 of file x_info\&.c\&.
+.SS "int X509_issuer_and_serial_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 67 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_issuer_and_serial_hash (\fBX509\fP * a)"
+
+.PP
+Definition at line 81 of file x509_cmp\&.c\&.
+.SS "int X509_issuer_name_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 110 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_issuer_name_hash (\fBX509\fP * a)"
+
+.PP
+Definition at line 137 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_issuer_name_hash_old (\fBX509\fP * a)"
+
+.PP
+Definition at line 143 of file x509_cmp\&.c\&.
+.SS "unsigned char* X509_keyid_get0 (\fBX509\fP * x, int * len)"
+
+.SS "int X509_keyid_set1 (\fBX509\fP * x, unsigned char * id, int len)"
+
+.SS "int X509_NAME_add_entry (\fBX509_NAME\fP * name, \fBX509_NAME_ENTRY\fP * ne, int loc, int set)"
+
+.PP
+Definition at line 227 of file x509name\&.c\&.
+.SS "int X509_NAME_add_entry_by_NID (\fBX509_NAME\fP * name, int nid, int type, unsigned char * bytes, int len, int loc, int set)"
+
+.PP
+Definition at line 195 of file x509name\&.c\&.
+.SS "int X509_NAME_add_entry_by_OBJ (\fBX509_NAME\fP * name, \fBASN1_OBJECT\fP * obj, int type, unsigned char * bytes, int len, int loc, int set)"
+
+.PP
+Definition at line 181 of file x509name\&.c\&.
+.SS "int X509_NAME_add_entry_by_txt (\fBX509_NAME\fP * name, const char * field, int type, const unsigned char * bytes, int len, int loc, int set)"
+
+.PP
+Definition at line 209 of file x509name\&.c\&.
+.SS "int X509_NAME_cmp (const \fBX509_NAME\fP * a, const \fBX509_NAME\fP * b)"
+
+.PP
+Definition at line 202 of file x509_cmp\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_delete_entry (\fBX509_NAME\fP * name, int loc)"
+
+.PP
+Definition at line 142 of file x509name\&.c\&.
+.SS "int X509_NAME_digest (const \fBX509_NAME\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 430 of file x_all\&.c\&.
+.SS "\fBX509_NAME\fP* X509_NAME_dup (\fBX509_NAME\fP * xn)"
+
+.SS "int X509_NAME_entry_count (\fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 95 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_create_by_NID (\fBX509_NAME_ENTRY\fP ** ne, int nid, int type, unsigned char * bytes, int len)"
+
+.PP
+Definition at line 304 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_create_by_OBJ (\fBX509_NAME_ENTRY\fP ** ne, \fBASN1_OBJECT\fP * obj, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 321 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_create_by_txt (\fBX509_NAME_ENTRY\fP ** ne, const char * field, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 284 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_ENTRY_dup (\fBX509_NAME_ENTRY\fP * ne)"
+
+.SS "\fBASN1_STRING\fP* X509_NAME_ENTRY_get_data (\fBX509_NAME_ENTRY\fP * ne)"
+
+.PP
+Definition at line 392 of file x509name\&.c\&.
+.SS "\fBASN1_OBJECT\fP* X509_NAME_ENTRY_get_object (\fBX509_NAME_ENTRY\fP * ne)"
+
+.PP
+Definition at line 385 of file x509name\&.c\&.
+.SS "int X509_NAME_ENTRY_set_data (\fBX509_NAME_ENTRY\fP * ne, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 360 of file x509name\&.c\&.
+.SS "int X509_NAME_ENTRY_set_object (\fBX509_NAME_ENTRY\fP * ne, \fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 348 of file x509name\&.c\&.
+.SS "\fBX509_NAME_ENTRY\fP* X509_NAME_get_entry (\fBX509_NAME\fP * name, int loc)"
+
+.PP
+Definition at line 133 of file x509name\&.c\&.
+.SS "int X509_NAME_get_index_by_NID (\fBX509_NAME\fP * name, int nid, int lastpos)"
+
+.PP
+Definition at line 102 of file x509name\&.c\&.
+.SS "int X509_NAME_get_index_by_OBJ (\fBX509_NAME\fP * name, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 113 of file x509name\&.c\&.
+.SS "int X509_NAME_get_text_by_NID (\fBX509_NAME\fP * name, int nid, char * buf, int len)"
+
+.PP
+Definition at line 67 of file x509name\&.c\&.
+.SS "int X509_NAME_get_text_by_OBJ (\fBX509_NAME\fP * name, \fBASN1_OBJECT\fP * obj, char * buf, int len)"
+
+.PP
+Definition at line 77 of file x509name\&.c\&.
+.SS "unsigned long X509_NAME_hash (\fBX509_NAME\fP * x)"
+
+.PP
+Definition at line 229 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_NAME_hash_old (\fBX509_NAME\fP * x)"
+
+.PP
+Definition at line 252 of file x509_cmp\&.c\&.
+.SS "char* X509_NAME_oneline (\fBX509_NAME\fP * a, char * buf, int size)"
+
+.PP
+Definition at line 73 of file x509_obj\&.c\&.
+.SS "int X509_NAME_print (\fBBIO\fP * bp, \fBX509_NAME\fP * name, int obase)"
+
+.PP
+Definition at line 501 of file t_x509\&.c\&.
+.SS "int X509_NAME_print_ex (\fBBIO\fP * out, \fBX509_NAME\fP * nm, int indent, unsigned long flags)"
+
+.PP
+Definition at line 583 of file a_strex\&.c\&.
+.SS "int X509_NAME_print_ex_fp (FILE * fp, \fBX509_NAME\fP * nm, int indent, unsigned long flags)"
+
+.PP
+Definition at line 592 of file a_strex\&.c\&.
+.SS "int X509_NAME_set (\fBX509_NAME\fP ** xn, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 517 of file x_name\&.c\&.
+.SS "int X509_ocspid_print (\fBBIO\fP * bp, \fBX509\fP * x)"
+
+.PP
+Definition at line 266 of file t_x509\&.c\&.
+.SS "\fBvoid\fP X509_PKEY_free (\fBX509_PKEY\fP * a)"
+
+.PP
+Definition at line 124 of file x_pkey\&.c\&.
+.SS "\fBX509_PKEY\fP* X509_PKEY_new (\fBvoid\fP)"
+
+.PP
+Definition at line 104 of file x_pkey\&.c\&.
+.SS "int X509_print (\fBBIO\fP * bp, \fBX509\fP * x)"
+
+.PP
+Definition at line 100 of file t_x509\&.c\&.
+.SS "int X509_print_ex (\fBBIO\fP * bp, \fBX509\fP * x, unsigned long nmflag, unsigned long cflag)"
+
+.PP
+Definition at line 105 of file t_x509\&.c\&.
+.SS "int X509_print_ex_fp (FILE * bp, \fBX509\fP * x, unsigned long nmflag, unsigned long cflag)"
+
+.PP
+Definition at line 83 of file t_x509\&.c\&.
+.SS "int X509_print_fp (FILE * bp, \fBX509\fP * x)"
+
+.PP
+Definition at line 78 of file t_x509\&.c\&.
+.SS "int X509_pubkey_digest (const \fBX509\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 399 of file x_all\&.c\&.
+.SS "\fBEVP_PKEY\fP* X509_PUBKEY_get (\fBX509_PUBKEY\fP * key)"
+
+.SS "int X509_PUBKEY_get0_param (\fBASN1_OBJECT\fP ** ppkalg, const unsigned char ** pk, int * ppklen, \fBX509_ALGOR\fP ** pa, \fBX509_PUBKEY\fP * pub)"
+
+.SS "int X509_PUBKEY_set (\fBX509_PUBKEY\fP ** x, \fBEVP_PKEY\fP * pkey)"
+
+.SS "int X509_PUBKEY_set0_param (\fBX509_PUBKEY\fP * pub, \fBASN1_OBJECT\fP * aobj, int ptype, \fBvoid\fP * pval, unsigned char * penc, int penclen)"
+
+.SS "\fBvoid\fP X509_reject_clear (\fBX509\fP * x)"
+
+.SS "int X509_REQ_add1_attr (\fBX509_REQ\fP * req, \fBX509_ATTRIBUTE\fP * attr)"
+
+.PP
+Definition at line 293 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr_by_NID (\fBX509_REQ\fP * req, int nid, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 310 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr_by_OBJ (\fBX509_REQ\fP * req, const \fBASN1_OBJECT\fP * obj, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 300 of file x509_req\&.c\&.
+.SS "int X509_REQ_add1_attr_by_txt (\fBX509_REQ\fP * req, const char * attrname, int type, const unsigned char * bytes, int len)"
+
+.PP
+Definition at line 320 of file x509_req\&.c\&.
+.SS "int X509_REQ_add_extensions (\fBX509_REQ\fP * req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* exts)"
+
+.PP
+Definition at line 260 of file x509_req\&.c\&.
+.SS "int X509_REQ_add_extensions_nid (\fBX509_REQ\fP * req, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* exts, int nid)"
+
+.PP
+Definition at line 223 of file x509_req\&.c\&.
+.SS "int X509_REQ_check_private_key (\fBX509_REQ\fP * x509, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 119 of file x509_req\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_REQ_delete_attr (\fBX509_REQ\fP * req, int loc)"
+
+.PP
+Definition at line 288 of file x509_req\&.c\&.
+.SS "int X509_REQ_digest (const \fBX509_REQ\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.PP
+Definition at line 423 of file x_all\&.c\&.
+.SS "\fBX509_REQ\fP* X509_REQ_dup (\fBX509_REQ\fP * req)"
+
+.SS "int X509_REQ_extension_nid (int nid)"
+
+.PP
+Definition at line 168 of file x509_req\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509_REQ_get_attr (const \fBX509_REQ\fP * req, int loc)"
+
+.PP
+Definition at line 283 of file x509_req\&.c\&.
+.SS "int X509_REQ_get_attr_by_NID (const \fBX509_REQ\fP * req, int nid, int lastpos)"
+
+.PP
+Definition at line 272 of file x509_req\&.c\&.
+.SS "int X509_REQ_get_attr_by_OBJ (const \fBX509_REQ\fP * req, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 277 of file x509_req\&.c\&.
+.SS "int X509_REQ_get_attr_count (const \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 267 of file x509_req\&.c\&.
+.SS "int* X509_REQ_get_extension_nids (\fBvoid\fP)"
+
+.PP
+Definition at line 180 of file x509_req\&.c\&.
+.SS "\fBEVP_PKEY\fP* X509_REQ_get_pubkey (\fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 112 of file x509_req\&.c\&.
+.SS "int X509_REQ_print (\fBBIO\fP * bp, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 252 of file t_req\&.c\&.
+.SS "int X509_REQ_print_ex (\fBBIO\fP * bp, \fBX509_REQ\fP * x, unsigned long nmflag, unsigned long cflag)"
+
+.PP
+Definition at line 90 of file t_req\&.c\&.
+.SS "int X509_REQ_print_fp (FILE * bp, \fBX509_REQ\fP * req)"
+
+.PP
+Definition at line 74 of file t_req\&.c\&.
+.SS "\fBvoid\fP X509_REQ_set_extension_nids (int * nids)"
+
+.PP
+Definition at line 185 of file x509_req\&.c\&.
+.SS "int X509_REQ_set_pubkey (\fBX509_REQ\fP * x, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 80 of file x509rset\&.c\&.
+.SS "int X509_REQ_set_subject_name (\fBX509_REQ\fP * req, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 73 of file x509rset\&.c\&.
+.SS "int X509_REQ_set_version (\fBX509_REQ\fP * x, long version)"
+
+.PP
+Definition at line 66 of file x509rset\&.c\&.
+.SS "int X509_REQ_sign (\fBX509_REQ\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 115 of file x_all\&.c\&.
+.SS "int X509_REQ_sign_ctx (\fBX509_REQ\fP * x, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 121 of file x_all\&.c\&.
+.SS "\fBX509\fP* X509_REQ_to_X509 (\fBX509_REQ\fP * r, int days, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 68 of file x509_r2x\&.c\&.
+.SS "int X509_REQ_verify (\fBX509_REQ\fP * a, \fBEVP_PKEY\fP * r)"
+
+.PP
+Definition at line 82 of file x_all\&.c\&.
+.SS "int X509_REVOKED_add1_ext_i2d (\fBX509_REVOKED\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 203 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_add_ext (\fBX509_REVOKED\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.PP
+Definition at line 193 of file x509_ext\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_REVOKED_delete_ext (\fBX509_REVOKED\fP * x, int loc)"
+
+.PP
+Definition at line 188 of file x509_ext\&.c\&.
+.SS "\fBX509_REVOKED\fP* X509_REVOKED_dup (\fBX509_REVOKED\fP * rev)"
+
+.SS "\fBX509_EXTENSION\fP* X509_REVOKED_get_ext (\fBX509_REVOKED\fP * x, int loc)"
+
+.PP
+Definition at line 183 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_by_critical (\fBX509_REVOKED\fP * x, int crit, int lastpos)"
+
+.PP
+Definition at line 178 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_by_NID (\fBX509_REVOKED\fP * x, int nid, int lastpos)"
+
+.PP
+Definition at line 167 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_by_OBJ (\fBX509_REVOKED\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 172 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_get_ext_count (\fBX509_REVOKED\fP * x)"
+
+.PP
+Definition at line 162 of file x509_ext\&.c\&.
+.SS "\fBvoid\fP* X509_REVOKED_get_ext_d2i (\fBX509_REVOKED\fP * x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 198 of file x509_ext\&.c\&.
+.SS "int X509_REVOKED_set_revocationDate (\fBX509_REVOKED\fP * r, \fBASN1_TIME\fP * tm)"
+
+.PP
+Definition at line 135 of file x509cset\&.c\&.
+.SS "int X509_REVOKED_set_serialNumber (\fBX509_REVOKED\fP * x, \fBASN1_INTEGER\fP * serial)"
+
+.PP
+Definition at line 152 of file x509cset\&.c\&.
+.SS "int X509_set_ex_data (\fBX509\fP * r, int idx, \fBvoid\fP * arg)"
+
+.SS "int X509_set_issuer_name (\fBX509\fP * x, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 99 of file x509_set\&.c\&.
+.SS "int X509_set_notAfter (\fBX509\fP * x, const \fBASN1_TIME\fP * tm)"
+
+.PP
+Definition at line 130 of file x509_set\&.c\&.
+.SS "int X509_set_notBefore (\fBX509\fP * x, const \fBASN1_TIME\fP * tm)"
+
+.PP
+Definition at line 113 of file x509_set\&.c\&.
+.SS "int X509_set_pubkey (\fBX509\fP * x, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 147 of file x509_set\&.c\&.
+.SS "int X509_set_serialNumber (\fBX509\fP * x, \fBASN1_INTEGER\fP * serial)"
+
+.PP
+Definition at line 82 of file x509_set\&.c\&.
+.SS "int X509_set_subject_name (\fBX509\fP * x, \fBX509_NAME\fP * name)"
+
+.PP
+Definition at line 106 of file x509_set\&.c\&.
+.SS "int X509_set_version (\fBX509\fP * x, long version)"
+
+.PP
+Definition at line 66 of file x509_set\&.c\&.
+.SS "int X509_sign (\fBX509\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 94 of file x_all\&.c\&.
+.SS "int X509_sign_ctx (\fBX509\fP * x, \fBEVP_MD_CTX\fP * ctx)"
+
+.PP
+Definition at line 101 of file x_all\&.c\&.
+.SS "int X509_signature_dump (\fBBIO\fP * bp, const \fBASN1_STRING\fP * sig, int indent)"
+
+.PP
+Definition at line 316 of file t_x509\&.c\&.
+.SS "int X509_signature_print (\fBBIO\fP * bp, \fBX509_ALGOR\fP * alg, \fBASN1_STRING\fP * sig)"
+
+.PP
+Definition at line 339 of file t_x509\&.c\&.
+.SS "int X509_subject_name_cmp (const \fBX509\fP * a, const \fBX509\fP * b)"
+
+.PP
+Definition at line 115 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_subject_name_hash (\fBX509\fP * x)"
+
+.PP
+Definition at line 159 of file x509_cmp\&.c\&.
+.SS "unsigned long X509_subject_name_hash_old (\fBX509\fP * x)"
+
+.PP
+Definition at line 165 of file x509_cmp\&.c\&.
+.SS "\fBASN1_TIME\fP* X509_time_adj (\fBASN1_TIME\fP * s, long adj, time_t * t)"
+
+.PP
+Definition at line 1957 of file x509_vfy\&.c\&.
+.SS "\fBASN1_TIME\fP* X509_time_adj_ex (\fBASN1_TIME\fP * s, int offset_day, long offset_sec, time_t * t)"
+
+.PP
+Definition at line 1962 of file x509_vfy\&.c\&.
+.SS "\fBX509_REQ\fP* X509_to_X509_REQ (\fBX509\fP * x, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 70 of file x509_req\&.c\&.
+.SS "int X509_TRUST_add (int id, int flags, int(*)(\fBX509_TRUST\fP *, \fBX509\fP *, int) ck, char * name, int arg1, \fBvoid\fP * arg2)"
+
+.PP
+Definition at line 178 of file x509_trs\&.c\&.
+.SS "\fBvoid\fP X509_TRUST_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 244 of file x509_trs\&.c\&.
+.SS "\fBvoid\fP X509_trust_clear (\fBX509\fP * x)"
+
+.SS "\fBX509_TRUST\fP* X509_TRUST_get0 (int idx)"
+
+.PP
+Definition at line 144 of file x509_trs\&.c\&.
+.SS "char* X509_TRUST_get0_name (\fBX509_TRUST\fP * xp)"
+
+.PP
+Definition at line 258 of file x509_trs\&.c\&.
+.SS "int X509_TRUST_get_by_id (int id)"
+
+.PP
+Definition at line 153 of file x509_trs\&.c\&.
+.SS "int X509_TRUST_get_count (\fBvoid\fP)"
+
+.PP
+Definition at line 137 of file x509_trs\&.c\&.
+.SS "int X509_TRUST_get_flags (\fBX509_TRUST\fP * xp)"
+
+.PP
+Definition at line 253 of file x509_trs\&.c\&.
+.SS "int X509_TRUST_get_trust (\fBX509_TRUST\fP * xp)"
+
+.PP
+Definition at line 263 of file x509_trs\&.c\&.
+.SS "int X509_TRUST_set (int * t, int trust)"
+
+.PP
+Definition at line 168 of file x509_trs\&.c\&.
+.SS "int X509_verify (\fBX509\fP * a, \fBEVP_PKEY\fP * r)"
+
+.PP
+Definition at line 74 of file x_all\&.c\&.
+.SS "int X509_verify_cert (\fBX509_STORE_CTX\fP * ctx)"
+
+.PP
+Definition at line 188 of file x509_vfy\&.c\&.
+.SS "const char* X509_verify_cert_error_string (long n)"
+
+.PP
+Definition at line 71 of file x509_txt\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509at_delete_attr (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, int loc)"
+
+.PP
+Definition at line 112 of file x509_att\&.c\&.
+.SS "\fBvoid\fP* X509at_get0_data_by_OBJ (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, \fBASN1_OBJECT\fP * obj, int lastpos, int type)"
+
+.PP
+Definition at line 203 of file x509_att\&.c\&.
+.SS "\fBX509_ATTRIBUTE\fP* X509at_get_attr (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, int loc)"
+
+.PP
+Definition at line 104 of file x509_att\&.c\&.
+.SS "int X509at_get_attr_by_NID (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x, int nid, int lastpos)"
+
+.PP
+Definition at line 73 of file x509_att\&.c\&.
+.SS "int X509at_get_attr_by_OBJ (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* sk, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 84 of file x509_att\&.c\&.
+.SS "int X509at_get_attr_count (const \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* x)"
+
+.PP
+Definition at line 68 of file x509_att\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509v3_delete_ext (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int loc)"
+
+.PP
+Definition at line 134 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509v3_get_ext (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int loc)"
+
+.PP
+Definition at line 126 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_by_critical (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int crit, int lastpos)"
+
+.PP
+Definition at line 106 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_by_NID (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int nid, int lastpos)"
+
+.PP
+Definition at line 75 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_by_OBJ (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 86 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_count (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x)"
+
+.PP
+Definition at line 68 of file x509_v3\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBX509_ATTRIBUTE\fP* attr"
+
+.PP
+Definition at line 1119 of file x509\&.h\&.
+.SS "const char* attrname"
+
+.PP
+Definition at line 1130 of file x509\&.h\&.
+.SS "const char int const unsigned char* bytes"
+
+.PP
+Definition at line 1121 of file x509\&.h\&.
+.SS "\fBX509_EXTENSION\fP* ex"
+
+.PP
+Definition at line 1062 of file x509\&.h\&.
+.SS "const char int const unsigned char int len"
+
+.PP
+Definition at line 1121 of file x509\&.h\&.
+.SS "\fBX509_EXTENSION\fP int loc"
+
+.PP
+Definition at line 1062 of file x509\&.h\&.
+.SS "int nid"
+
+.PP
+Definition at line 1126 of file x509\&.h\&.
+.SS "const \fBASN1_OBJECT\fP* obj"
+
+.PP
+Definition at line 1121 of file x509\&.h\&.
+.SS "const char int type"
+
+.PP
+Definition at line 1121 of file x509\&.h\&.
+.SS "int(*)(int, \fBX509\fP *, int) X509_TRUST_set_default(int(*trust)(int, \fBX509\fP *, int))"
+
+.PP
+Definition at line 845 of file x509\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

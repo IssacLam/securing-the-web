@@ -1,0 +1,208 @@
+.TH "s2n/libcrypto-build/openssl/crypto/stack/stack.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/stack/stack.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMIN_NODES\fP   4"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_dup\fP (\fB_STACK\fP *sk)"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_deep_copy\fP (\fB_STACK\fP *sk, \fBvoid\fP *(*copy_func)(\fBvoid\fP *), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_new_null\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_new\fP (int(*\fBc\fP)(const \fBvoid\fP *, const \fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBsk_insert\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBdata\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_delete_ptr\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_delete\fP (\fB_STACK\fP *st, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBsk_find\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBsk_find_ex\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBsk_push\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBsk_unshift\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_shift\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_pop\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_zero\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_pop_free\fP (\fB_STACK\fP *st, \fBvoid\fP(*\fBfunc\fP)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_free\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "int \fBsk_num\fP (const \fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_value\fP (const \fB_STACK\fP *st, int i)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_set\fP (\fB_STACK\fP *st, int i, \fBvoid\fP *value)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_sort\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "int \fBsk_is_sorted\fP (const \fB_STACK\fP *st)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char \fBSTACK_version\fP [] = 'Stack' OPENSSL_VERSION_PTEXT"
+.br
+.ti -1c
+.RI "int(*)(const \fBvoid\fP *, const \fBvoid\fP *) \fBsk_set_cmp_func\fP (\fB_STACK\fP *sk, int(*\fBc\fP)(const \fBvoid\fP *, const \fBvoid\fP *))"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MIN_NODES   4"
+
+.PP
+Definition at line 75 of file stack\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fB_STACK\fP* sk_deep_copy (\fB_STACK\fP * sk, \fBvoid\fP *(*)(\fBvoid\fP *) copy_func, \fBvoid\fP(*)(\fBvoid\fP *) free_func)"
+
+.PP
+Definition at line 118 of file stack\&.c\&.
+.SS "\fBvoid\fP* sk_delete (\fB_STACK\fP * st, int loc)"
+
+.PP
+Definition at line 225 of file stack\&.c\&.
+.SS "\fBvoid\fP* sk_delete_ptr (\fB_STACK\fP * st, \fBvoid\fP * p)"
+
+.PP
+Definition at line 215 of file stack\&.c\&.
+.SS "\fB_STACK\fP* sk_dup (\fB_STACK\fP * sk)"
+
+.PP
+Definition at line 92 of file stack\&.c\&.
+.SS "int sk_find (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.PP
+Definition at line 271 of file stack\&.c\&.
+.SS "int sk_find_ex (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.PP
+Definition at line 276 of file stack\&.c\&.
+.SS "\fBvoid\fP sk_free (\fB_STACK\fP * st)"
+
+.PP
+Definition at line 331 of file stack\&.c\&.
+.SS "int sk_insert (\fB_STACK\fP * st, \fBvoid\fP * data, int loc)"
+
+.PP
+Definition at line 179 of file stack\&.c\&.
+.SS "int sk_is_sorted (const \fB_STACK\fP * st)"
+
+.PP
+Definition at line 379 of file stack\&.c\&.
+.SS "\fB_STACK\fP* sk_new (int(*)(const \fBvoid\fP *, const \fBvoid\fP *) c)"
+
+.PP
+Definition at line 157 of file stack\&.c\&.
+.SS "\fB_STACK\fP* sk_new_null (\fBvoid\fP)"
+
+.PP
+Definition at line 152 of file stack\&.c\&.
+.SS "int sk_num (const \fB_STACK\fP * st)"
+
+.PP
+Definition at line 340 of file stack\&.c\&.
+.SS "\fBvoid\fP* sk_pop (\fB_STACK\fP * st)"
+
+.PP
+Definition at line 300 of file stack\&.c\&.
+.SS "\fBvoid\fP sk_pop_free (\fB_STACK\fP * st, \fBvoid\fP(*)(\fBvoid\fP *) func)"
+
+.PP
+Definition at line 319 of file stack\&.c\&.
+.SS "int sk_push (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.PP
+Definition at line 281 of file stack\&.c\&.
+.SS "\fBvoid\fP* sk_set (\fB_STACK\fP * st, int i, \fBvoid\fP * value)"
+
+.PP
+Definition at line 354 of file stack\&.c\&.
+.SS "\fBvoid\fP* sk_shift (\fB_STACK\fP * st)"
+
+.PP
+Definition at line 291 of file stack\&.c\&.
+.SS "\fBvoid\fP sk_sort (\fB_STACK\fP * st)"
+
+.PP
+Definition at line 361 of file stack\&.c\&.
+.SS "int sk_unshift (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.PP
+Definition at line 286 of file stack\&.c\&.
+.SS "\fBvoid\fP* sk_value (const \fB_STACK\fP * st, int i)"
+
+.PP
+Definition at line 347 of file stack\&.c\&.
+.SS "\fBvoid\fP sk_zero (\fB_STACK\fP * st)"
+
+.PP
+Definition at line 309 of file stack\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int(*)(const \fBvoid\fP *, const \fBvoid\fP *) sk_set_cmp_func(\fB_STACK\fP *sk, int(*\fBc\fP)(const \fBvoid\fP *, const \fBvoid\fP *))"
+
+.PP
+Definition at line 81 of file stack\&.c\&.
+.SS "const char STACK_version[] = 'Stack' OPENSSL_VERSION_PTEXT"
+
+.PP
+Definition at line 77 of file stack\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

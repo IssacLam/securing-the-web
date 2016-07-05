@@ -1,0 +1,156 @@
+.TH "s2n/libcrypto-root/include/openssl/ecdh.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/ecdh.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/ec\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBEC_FLAG_COFACTOR_ECDH\fP   0x1000"
+.br
+.ti -1c
+.RI "#define \fBECDH_F_ECDH_CHECK\fP   102"
+.br
+.ti -1c
+.RI "#define \fBECDH_F_ECDH_COMPUTE_KEY\fP   100"
+.br
+.ti -1c
+.RI "#define \fBECDH_F_ECDH_DATA_NEW_METHOD\fP   101"
+.br
+.ti -1c
+.RI "#define \fBECDH_R_KDF_FAILED\fP   102"
+.br
+.ti -1c
+.RI "#define \fBECDH_R_NON_FIPS_METHOD\fP   103"
+.br
+.ti -1c
+.RI "#define \fBECDH_R_NO_PRIVATE_VALUE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBECDH_R_POINT_ARITHMETIC_FAILURE\fP   101"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBECDH_METHOD\fP * \fBECDH_OpenSSL\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBECDH_set_default_method\fP (const \fBECDH_METHOD\fP *)"
+.br
+.ti -1c
+.RI "const \fBECDH_METHOD\fP * \fBECDH_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBECDH_set_method\fP (\fBEC_KEY\fP *, const \fBECDH_METHOD\fP *)"
+.br
+.ti -1c
+.RI "int \fBECDH_compute_key\fP (\fBvoid\fP *\fBout\fP, size_t outlen, const \fBEC_POINT\fP *pub_key, \fBEC_KEY\fP *ecdh, \fBvoid\fP *(*KDF)(const \fBvoid\fP *\fBin\fP, size_t inlen,                                                                                                                                                                                           \fBvoid\fP *\fBout\fP, size_t *outlen))"
+.br
+.ti -1c
+.RI "int \fBECDH_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBECDH_set_ex_data\fP (\fBEC_KEY\fP *d, int idx, \fBvoid\fP *\fBarg\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBECDH_get_ex_data\fP (\fBEC_KEY\fP *d, int idx)"
+.br
+.ti -1c
+.RI "int \fBECDH_KDF_X9_62\fP (unsigned char *\fBout\fP, size_t outlen, const unsigned char *\fBZ\fP, size_t Zlen, const unsigned char *sinfo, size_t sinfolen, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_ECDH_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EC_FLAG_COFACTOR_ECDH   0x1000"
+
+.PP
+Definition at line 88 of file ecdh\&.h\&.
+.SS "#define ECDH_F_ECDH_CHECK   102"
+
+.PP
+Definition at line 121 of file ecdh\&.h\&.
+.SS "#define ECDH_F_ECDH_COMPUTE_KEY   100"
+
+.PP
+Definition at line 122 of file ecdh\&.h\&.
+.SS "#define ECDH_F_ECDH_DATA_NEW_METHOD   101"
+
+.PP
+Definition at line 123 of file ecdh\&.h\&.
+.SS "#define ECDH_R_KDF_FAILED   102"
+
+.PP
+Definition at line 126 of file ecdh\&.h\&.
+.SS "#define ECDH_R_NO_PRIVATE_VALUE   100"
+
+.PP
+Definition at line 128 of file ecdh\&.h\&.
+.SS "#define ECDH_R_NON_FIPS_METHOD   103"
+
+.PP
+Definition at line 127 of file ecdh\&.h\&.
+.SS "#define ECDH_R_POINT_ARITHMETIC_FAILURE   101"
+
+.PP
+Definition at line 129 of file ecdh\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ECDH_compute_key (\fBvoid\fP * out, size_t outlen, const \fBEC_POINT\fP * pub_key, \fBEC_KEY\fP * ecdh, \fBvoid\fP *(*)(const \fBvoid\fP *\fBin\fP, size_t inlen,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBvoid\fP *\fBout\fP, size_t *outlen) KDF)"
+
+.SS "const \fBECDH_METHOD\fP* ECDH_get_default_method (\fBvoid\fP)"
+
+.PP
+Definition at line 93 of file ech_lib\&.c\&.
+.SS "\fBvoid\fP* ECDH_get_ex_data (\fBEC_KEY\fP * d, int idx)"
+
+.PP
+Definition at line 258 of file ech_lib\&.c\&.
+.SS "int ECDH_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.PP
+Definition at line 242 of file ech_lib\&.c\&.
+.SS "int ECDH_KDF_X9_62 (unsigned char * out, size_t outlen, const unsigned char * Z, size_t Zlen, const unsigned char * sinfo, size_t sinfolen, const \fBEVP_MD\fP * md)"
+
+.PP
+Definition at line 64 of file ech_kdf\&.c\&.
+.SS "const \fBECDH_METHOD\fP* ECDH_OpenSSL (\fBvoid\fP)"
+
+.PP
+Definition at line 97 of file ech_ossl\&.c\&.
+.SS "\fBvoid\fP ECDH_set_default_method (const \fBECDH_METHOD\fP *)"
+
+.PP
+Definition at line 88 of file ech_lib\&.c\&.
+.SS "int ECDH_set_ex_data (\fBEC_KEY\fP * d, int idx, \fBvoid\fP * arg)"
+
+.PP
+Definition at line 249 of file ech_lib\&.c\&.
+.SS "int ECDH_set_method (\fBEC_KEY\fP *, const \fBECDH_METHOD\fP *)"
+
+.PP
+Definition at line 108 of file ech_lib\&.c\&.
+.SS "\fBvoid\fP ERR_load_ECDH_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 89 of file ech_err\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

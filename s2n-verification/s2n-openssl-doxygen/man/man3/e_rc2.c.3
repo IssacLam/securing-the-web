@@ -1,0 +1,84 @@
+.TH "s2n/libcrypto-build/openssl/crypto/evp/e_rc2.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/evp/e_rc2.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include 'evp_locl\&.h'\fP
+.br
+\fC#include <openssl/rc2\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBEVP_RC2_KEY\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBdata\fP(\fBctx\fP)             ((\fBEVP_RC2_KEY\fP *)(\fBctx\fP)\->cipher_data)"
+.br
+.ti -1c
+.RI "#define \fBRC2_40_MAGIC\fP   0xa0"
+.br
+.ti -1c
+.RI "#define \fBRC2_64_MAGIC\fP   0x78"
+.br
+.ti -1c
+.RI "#define \fBRC2_128_MAGIC\fP   0x3a"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIMPLEMENT_BLOCK_CIPHER\fP (rc2, ks, RC2, \fBEVP_RC2_KEY\fP, NID_rc2, 8, \fBRC2_KEY_LENGTH\fP, 8, 64, \fBEVP_CIPH_VARIABLE_LENGTH\fP|\fBEVP_CIPH_CTRL_INIT\fP, rc2_init_key, \fBNULL\fP, rc2_set_asn1_type_and_iv, rc2_get_asn1_type_and_iv, rc2_ctrl) static const \fBEVP_CIPHER\fP r2_64_cbc_cipher"
+.br
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBEVP_rc2_64_cbc\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBEVP_rc2_40_cbc\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define data(\fBctx\fP)   ((\fBEVP_RC2_KEY\fP *)(\fBctx\fP)\->cipher_data)"
+
+.PP
+Definition at line 82 of file e_rc2\&.c\&.
+.SS "#define RC2_128_MAGIC   0x3a"
+
+.SS "#define RC2_40_MAGIC   0xa0"
+
+.SS "#define RC2_64_MAGIC   0x78"
+
+.SH "Function Documentation"
+.PP 
+.SS "const \fBEVP_CIPHER\fP* EVP_rc2_40_cbc (\fBvoid\fP)"
+
+.PP
+Definition at line 127 of file e_rc2\&.c\&.
+.SS "const \fBEVP_CIPHER\fP* EVP_rc2_64_cbc (\fBvoid\fP)"
+
+.PP
+Definition at line 122 of file e_rc2\&.c\&.
+.SS "IMPLEMENT_BLOCK_CIPHER (rc2, ks, RC2, \fBEVP_RC2_KEY\fP, NID_rc2, 8, \fBRC2_KEY_LENGTH\fP, 8, 64, \fBEVP_CIPH_VARIABLE_LENGTH\fP| EVP_CIPH_CTRL_INIT, rc2_init_key, \fBNULL\fP, rc2_set_asn1_type_and_iv, rc2_get_asn1_type_and_iv, rc2_ctrl) const"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

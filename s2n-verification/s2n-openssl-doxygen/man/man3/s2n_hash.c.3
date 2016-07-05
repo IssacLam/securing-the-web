@@ -1,0 +1,70 @@
+.TH "s2n/crypto/s2n_hash.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/crypto/s2n_hash.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/md5\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_hash_digest_size\fP (\fBs2n_hash_algorithm\fP alg)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_init\fP (struct \fBs2n_hash_state\fP *state, \fBs2n_hash_algorithm\fP alg)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_update\fP (struct \fBs2n_hash_state\fP *state, const \fBvoid\fP *\fBdata\fP, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_digest\fP (struct \fBs2n_hash_state\fP *state, \fBvoid\fP *\fBout\fP, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_reset\fP (struct \fBs2n_hash_state\fP *state)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_copy\fP (struct \fBs2n_hash_state\fP *to, struct \fBs2n_hash_state\fP *from)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_hash_copy (struct \fBs2n_hash_state\fP * to, struct \fBs2n_hash_state\fP * from)"
+
+.PP
+Definition at line 167 of file s2n_hash\&.c\&.
+.SS "int s2n_hash_digest (struct \fBs2n_hash_state\fP * state, \fBvoid\fP * out, uint32_t size)"
+
+.PP
+Definition at line 115 of file s2n_hash\&.c\&.
+.SS "int s2n_hash_digest_size (\fBs2n_hash_algorithm\fP alg)"
+
+.PP
+Definition at line 25 of file s2n_hash\&.c\&.
+.SS "int s2n_hash_init (struct \fBs2n_hash_state\fP * state, \fBs2n_hash_algorithm\fP alg)"
+
+.PP
+Definition at line 32 of file s2n_hash\&.c\&.
+.SS "int s2n_hash_reset (struct \fBs2n_hash_state\fP * state)"
+
+.PP
+Definition at line 162 of file s2n_hash\&.c\&.
+.SS "int s2n_hash_update (struct \fBs2n_hash_state\fP * state, const \fBvoid\fP * data, uint32_t size)"
+
+.PP
+Definition at line 75 of file s2n_hash\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

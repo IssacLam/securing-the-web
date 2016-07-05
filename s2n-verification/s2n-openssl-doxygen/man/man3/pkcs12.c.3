@@ -1,0 +1,153 @@
+.TH "s2n/libcrypto-build/openssl/apps/pkcs12.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/apps/pkcs12.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'apps\&.h'\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/pkcs12\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPROG\fP   \fBpkcs12_main\fP"
+.br
+.ti -1c
+.RI "#define \fBNOKEYS\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBNOCERTS\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBINFO\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBCLCERTS\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBCACERTS\fP   0x10"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBdump_certs_keys_p12\fP (\fBBIO\fP *\fBout\fP, \fBPKCS12\fP *p12, char *\fBpass\fP, int \fBpasslen\fP, int options, char *pempass)"
+.br
+.ti -1c
+.RI "int \fBdump_certs_pkeys_bags\fP (\fBBIO\fP *\fBout\fP, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)*bags, char *\fBpass\fP, int \fBpasslen\fP, int options, char *pempass)"
+.br
+.ti -1c
+.RI "int \fBdump_certs_pkeys_bag\fP (\fBBIO\fP *\fBout\fP, \fBPKCS12_SAFEBAG\fP *bags, char *\fBpass\fP, int \fBpasslen\fP, int options, char *pempass)"
+.br
+.ti -1c
+.RI "int \fBprint_attribs\fP (\fBBIO\fP *\fBout\fP, \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*attrlst, const char *name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBhex_prin\fP (\fBBIO\fP *\fBout\fP, unsigned char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBalg_print\fP (\fBBIO\fP *\fBx\fP, \fBX509_ALGOR\fP *alg)"
+.br
+.ti -1c
+.RI "int \fBcert_load\fP (\fBBIO\fP *\fBin\fP, \fBSTACK_OF\fP(\fBX509\fP)*sk)"
+.br
+.ti -1c
+.RI "int \fBMAIN\fP (int, char **)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBenc\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CACERTS   0x10"
+
+.PP
+Definition at line 80 of file pkcs12\&.c\&.
+.SS "#define CLCERTS   0x8"
+
+.PP
+Definition at line 79 of file pkcs12\&.c\&.
+.SS "#define INFO   0x4"
+
+.PP
+Definition at line 78 of file pkcs12\&.c\&.
+.SS "#define NOCERTS   0x2"
+
+.PP
+Definition at line 77 of file pkcs12\&.c\&.
+.SS "#define NOKEYS   0x1"
+
+.PP
+Definition at line 76 of file pkcs12\&.c\&.
+.SS "#define PROG   \fBpkcs12_main\fP"
+
+.PP
+Definition at line 72 of file pkcs12\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int alg_print (\fBBIO\fP * x, \fBX509_ALGOR\fP * alg)"
+
+.PP
+Definition at line 933 of file pkcs12\&.c\&.
+.SS "int cert_load (\fBBIO\fP * in, \fBSTACK_OF\fP(\fBX509\fP)* sk)"
+
+.PP
+Definition at line 950 of file pkcs12\&.c\&.
+.SS "int dump_certs_keys_p12 (\fBBIO\fP * out, \fBPKCS12\fP * p12, char * pass, int passlen, int options, char * pempass)"
+
+.PP
+Definition at line 771 of file pkcs12\&.c\&.
+.SS "int dump_certs_pkeys_bag (\fBBIO\fP * out, \fBPKCS12_SAFEBAG\fP * bags, char * pass, int passlen, int options, char * pempass)"
+
+.PP
+Definition at line 829 of file pkcs12\&.c\&.
+.SS "int dump_certs_pkeys_bags (\fBBIO\fP * out, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)* bags, char * pass, int passlen, int options, char * pempass)"
+
+.PP
+Definition at line 816 of file pkcs12\&.c\&.
+.SS "\fBvoid\fP hex_prin (\fBBIO\fP * out, unsigned char * buf, int len)"
+
+.PP
+Definition at line 1036 of file pkcs12\&.c\&.
+.SS "int MAIN (int argc, char ** argv)"
+
+.PP
+Definition at line 100 of file pkcs12\&.c\&.
+.SS "int print_attribs (\fBBIO\fP * out, \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* attrlst, const char * name)"
+
+.PP
+Definition at line 978 of file pkcs12\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBEVP_CIPHER\fP* enc"
+
+.PP
+Definition at line 74 of file pkcs12\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

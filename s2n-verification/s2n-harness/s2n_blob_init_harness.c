@@ -13,7 +13,7 @@ int main(int argc, char * const *argv){
     data = (uint8_t *) malloc(sizeof(uint8_t));
     size = nondet_uint32();
 
-    __CPROVER_assume(size >= 0);
+//    __CPROVER_assume(size >= 0);
 
     //for(int i = 0; i < size; i++)
       //      data[i] = nondet_uint8();

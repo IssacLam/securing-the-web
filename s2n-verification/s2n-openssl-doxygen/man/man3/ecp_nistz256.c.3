@@ -1,0 +1,186 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ecp_nistz256.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ecp_nistz256.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/ec\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+\fC#include 'ecp_nistz256_table\&.c'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBP256_POINT\fP"
+.br
+.ti -1c
+.RI "struct \fBP256_POINT_AFFINE\fP"
+.br
+.ti -1c
+.RI "struct \fBec_pre_comp_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTOBN\fP(hi,  lo)       lo,hi"
+.br
+.ti -1c
+.RI "#define \fBALIGN32\fP"
+.br
+.ti -1c
+.RI "#define \fBALIGNPTR\fP(\fBp\fP,  \fBN\fP)     ((unsigned char *)\fBp\fP+\fBN\fP\-(size_t)\fBp\fP%\fBN\fP)"
+.br
+.ti -1c
+.RI "#define \fBP256_LIMBS\fP   (256/BN_BITS2)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned short \fBu16\fP"
+.br
+.ti -1c
+.RI "typedef \fBP256_POINT_AFFINE\fP \fBPRECOMP256_ROW\fP[64]"
+.br
+.ti -1c
+.RI "typedef struct \fBec_pre_comp_st\fP \fBEC_PRE_COMP\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_mul_by_2\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_div_by_2\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_mul_by_3\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_add\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP], const BN_ULONG \fBb\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_sub\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP], const BN_ULONG \fBb\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_neg\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_mul_mont\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP], const BN_ULONG \fBb\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_sqr_mont\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBa\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_from_mont\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBin\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_to_mont\fP (BN_ULONG res[\fBP256_LIMBS\fP], const BN_ULONG \fBin\fP[\fBP256_LIMBS\fP])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_select_w5\fP (\fBP256_POINT\fP *val, const \fBP256_POINT\fP *in_t, int index)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_select_w7\fP (\fBP256_POINT_AFFINE\fP *val, const \fBP256_POINT_AFFINE\fP *in_t, int index)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_point_double\fP (\fBP256_POINT\fP *r, const \fBP256_POINT\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_point_add\fP (\fBP256_POINT\fP *r, const \fBP256_POINT\fP *\fBa\fP, const \fBP256_POINT\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBecp_nistz256_point_add_affine\fP (\fBP256_POINT\fP *r, const \fBP256_POINT\fP *\fBa\fP, const \fBP256_POINT_AFFINE\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "const \fBEC_METHOD\fP * \fBEC_GFp_nistz256_method\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ALIGN32"
+
+.PP
+Definition at line 49 of file ecp_nistz256\&.c\&.
+.SS "#define ALIGNPTR(\fBp\fP, \fBN\fP)   ((unsigned char *)\fBp\fP+\fBN\fP\-(size_t)\fBp\fP%\fBN\fP)"
+
+.PP
+Definition at line 52 of file ecp_nistz256\&.c\&.
+.SS "#define P256_LIMBS   (256/BN_BITS2)"
+
+.PP
+Definition at line 53 of file ecp_nistz256\&.c\&.
+.SS "#define TOBN(hi, lo)   lo,hi"
+
+.PP
+Definition at line 39 of file ecp_nistz256\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBec_pre_comp_st\fP  \fBEC_PRE_COMP\fP"
+
+.SS "typedef \fBP256_POINT_AFFINE\fP PRECOMP256_ROW[64]"
+
+.PP
+Definition at line 68 of file ecp_nistz256\&.c\&.
+.SS "typedef unsigned short \fBu16\fP"
+
+.PP
+Definition at line 55 of file ecp_nistz256\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "const \fBEC_METHOD\fP* EC_GFp_nistz256_method (\fBvoid\fP)"
+
+.PP
+Definition at line 1478 of file ecp_nistz256\&.c\&.
+.SS "\fBvoid\fP ecp_nistz256_add (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS], const BN_ULONG b[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_div_by_2 (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_from_mont (BN_ULONG res[P256_LIMBS], const BN_ULONG in[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_mul_by_2 (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_mul_by_3 (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_mul_mont (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS], const BN_ULONG b[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_neg (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_point_add (\fBP256_POINT\fP * r, const \fBP256_POINT\fP * a, const \fBP256_POINT\fP * b)"
+
+.SS "\fBvoid\fP ecp_nistz256_point_add_affine (\fBP256_POINT\fP * r, const \fBP256_POINT\fP * a, const \fBP256_POINT_AFFINE\fP * b)"
+
+.SS "\fBvoid\fP ecp_nistz256_point_double (\fBP256_POINT\fP * r, const \fBP256_POINT\fP * a)"
+
+.SS "\fBvoid\fP ecp_nistz256_select_w5 (\fBP256_POINT\fP * val, const \fBP256_POINT\fP * in_t, int index)"
+
+.SS "\fBvoid\fP ecp_nistz256_select_w7 (\fBP256_POINT_AFFINE\fP * val, const \fBP256_POINT_AFFINE\fP * in_t, int index)"
+
+.SS "\fBvoid\fP ecp_nistz256_sqr_mont (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_sub (BN_ULONG res[P256_LIMBS], const BN_ULONG a[P256_LIMBS], const BN_ULONG b[P256_LIMBS])"
+
+.SS "\fBvoid\fP ecp_nistz256_to_mont (BN_ULONG res[P256_LIMBS], const BN_ULONG in[P256_LIMBS])"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,190 @@
+.TH "s2n/libcrypto-build/openssl/crypto/pem/pvkfmt.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/pem/pvkfmt.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMS_PUBLICKEYBLOB\fP   0x6"
+.br
+.ti -1c
+.RI "#define \fBMS_PRIVATEKEYBLOB\fP   0x7"
+.br
+.ti -1c
+.RI "#define \fBMS_RSA1MAGIC\fP   0x31415352L"
+.br
+.ti -1c
+.RI "#define \fBMS_RSA2MAGIC\fP   0x32415352L"
+.br
+.ti -1c
+.RI "#define \fBMS_DSS1MAGIC\fP   0x31535344L"
+.br
+.ti -1c
+.RI "#define \fBMS_DSS2MAGIC\fP   0x32535344L"
+.br
+.ti -1c
+.RI "#define \fBMS_KEYALG_RSA_KEYX\fP   0xa400"
+.br
+.ti -1c
+.RI "#define \fBMS_KEYALG_DSS_SIGN\fP   0x2200"
+.br
+.ti -1c
+.RI "#define \fBMS_KEYTYPE_KEYX\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBMS_KEYTYPE_SIGN\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBMS_PVKMAGIC\fP   0xb0b5f11eL"
+.br
+.ti -1c
+.RI "#define \fBPVK_SALTLEN\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBPVK_MAX_KEYLEN\fP   102400"
+.br
+.ti -1c
+.RI "#define \fBPVK_MAX_SALTLEN\fP   10240"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PrivateKey\fP (const unsigned char **\fBin\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PublicKey\fP (const unsigned char **\fBin\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PrivateKey_bio\fP (\fBBIO\fP *\fBin\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PublicKey_bio\fP (\fBBIO\fP *\fBin\fP)"
+.br
+.ti -1c
+.RI "int \fBi2b_PrivateKey_bio\fP (\fBBIO\fP *\fBout\fP, \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "int \fBi2b_PublicKey_bio\fP (\fBBIO\fP *\fBout\fP, \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBb2i_PVK_bio\fP (\fBBIO\fP *\fBin\fP, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBi2b_PVK_bio\fP (\fBBIO\fP *\fBout\fP, \fBEVP_PKEY\fP *pk, int enclevel, \fBpem_password_cb\fP *\fBcb\fP, \fBvoid\fP *\fBu\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MS_DSS1MAGIC   0x31535344L"
+
+.PP
+Definition at line 121 of file pvkfmt\&.c\&.
+.SS "#define MS_DSS2MAGIC   0x32535344L"
+
+.PP
+Definition at line 122 of file pvkfmt\&.c\&.
+.SS "#define MS_KEYALG_DSS_SIGN   0x2200"
+
+.PP
+Definition at line 125 of file pvkfmt\&.c\&.
+.SS "#define MS_KEYALG_RSA_KEYX   0xa400"
+
+.PP
+Definition at line 124 of file pvkfmt\&.c\&.
+.SS "#define MS_KEYTYPE_KEYX   0x1"
+
+.PP
+Definition at line 127 of file pvkfmt\&.c\&.
+.SS "#define MS_KEYTYPE_SIGN   0x2"
+
+.PP
+Definition at line 128 of file pvkfmt\&.c\&.
+.SS "#define MS_PRIVATEKEYBLOB   0x7"
+
+.PP
+Definition at line 118 of file pvkfmt\&.c\&.
+.SS "#define MS_PUBLICKEYBLOB   0x6"
+
+.PP
+Definition at line 117 of file pvkfmt\&.c\&.
+.SS "#define MS_PVKMAGIC   0xb0b5f11eL"
+
+.PP
+Definition at line 131 of file pvkfmt\&.c\&.
+.SS "#define MS_RSA1MAGIC   0x31415352L"
+
+.PP
+Definition at line 119 of file pvkfmt\&.c\&.
+.SS "#define MS_RSA2MAGIC   0x32415352L"
+
+.PP
+Definition at line 120 of file pvkfmt\&.c\&.
+.SS "#define PVK_MAX_KEYLEN   102400"
+
+.PP
+Definition at line 135 of file pvkfmt\&.c\&.
+.SS "#define PVK_MAX_SALTLEN   10240"
+
+.PP
+Definition at line 137 of file pvkfmt\&.c\&.
+.SS "#define PVK_SALTLEN   0x10"
+
+.PP
+Definition at line 133 of file pvkfmt\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBEVP_PKEY\fP* b2i_PrivateKey (const unsigned char ** in, long length)"
+
+.PP
+Definition at line 399 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PrivateKey_bio (\fBBIO\fP * in)"
+
+.PP
+Definition at line 409 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PublicKey (const unsigned char ** in, long length)"
+
+.PP
+Definition at line 404 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PublicKey_bio (\fBBIO\fP * in)"
+
+.PP
+Definition at line 414 of file pvkfmt\&.c\&.
+.SS "\fBEVP_PKEY\fP* b2i_PVK_bio (\fBBIO\fP * in, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 755 of file pvkfmt\&.c\&.
+.SS "int i2b_PrivateKey_bio (\fBBIO\fP * out, \fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 608 of file pvkfmt\&.c\&.
+.SS "int i2b_PublicKey_bio (\fBBIO\fP * out, \fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 613 of file pvkfmt\&.c\&.
+.SS "int i2b_PVK_bio (\fBBIO\fP * out, \fBEVP_PKEY\fP * pk, int enclevel, \fBpem_password_cb\fP * cb, \fBvoid\fP * u)"
+
+.PP
+Definition at line 869 of file pvkfmt\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

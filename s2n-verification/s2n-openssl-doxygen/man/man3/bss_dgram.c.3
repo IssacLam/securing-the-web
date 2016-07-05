@@ -1,0 +1,154 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bio/bss_dgram.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bio/bss_dgram.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <netinet/sctp\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbio_dgram_data_st\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_dgram_sctp_save_message_st\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_dgram_sctp_data_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSE_SOCKETS\fP"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_SCTP_DATA_CHUNK_TYPE\fP   0x00"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_SCTP_FORWARD_CUM_TSN_CHUNK_TYPE\fP   0xc0"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBbio_dgram_data_st\fP \fBbio_dgram_data\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBbio_dgram_sctp_save_message_st\fP \fBbio_dgram_sctp_save_message\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBbio_dgram_sctp_data_st\fP \fBbio_dgram_sctp_data\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_datagram\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_dgram\fP (int fd, int close_flag)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_datagram_sctp\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_dgram_sctp\fP (int fd, int close_flag)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_is_sctp\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_sctp_notification_cb\fP (\fBBIO\fP *\fBb\fP, \fBvoid\fP(*handle_notifications)(\fBBIO\fP *bio,                                                                                                                                                                                                                                                           \fBvoid\fP                                                                                                                                                                                                                                                           *context,                                                                                                                                                                                                                                                           \fBvoid\fP *buf), \fBvoid\fP *context)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_sctp_wait_for_dry\fP (\fBBIO\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_sctp_msg_waiting\fP (\fBBIO\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_non_fatal_error\fP (int err)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define OPENSSL_SCTP_DATA_CHUNK_TYPE   0x00"
+
+.PP
+Definition at line 75 of file bss_dgram\&.c\&.
+.SS "#define OPENSSL_SCTP_FORWARD_CUM_TSN_CHUNK_TYPE   0xc0"
+
+.PP
+Definition at line 76 of file bss_dgram\&.c\&.
+.SS "#define USE_SOCKETS"
+
+.PP
+Definition at line 62 of file bss_dgram\&.c\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBbio_dgram_data_st\fP  \fBbio_dgram_data\fP"
+
+.SS "typedef struct \fBbio_dgram_sctp_data_st\fP  \fBbio_dgram_sctp_data\fP"
+
+.SS "typedef struct \fBbio_dgram_sctp_save_message_st\fP  \fBbio_dgram_sctp_save_message\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int BIO_dgram_is_sctp (\fBBIO\fP * bio)"
+
+.PP
+Definition at line 1091 of file bss_dgram\&.c\&.
+.SS "int BIO_dgram_non_fatal_error (int err)"
+
+.PP
+Definition at line 1998 of file bss_dgram\&.c\&.
+.SS "int BIO_dgram_sctp_msg_waiting (\fBBIO\fP * b)"
+
+.PP
+Definition at line 1909 of file bss_dgram\&.c\&.
+.SS "int BIO_dgram_sctp_notification_cb (\fBBIO\fP * b, \fBvoid\fP(*)(\fBBIO\fP *bio,                                                                                                                                                                                                                                                           \fBvoid\fP                                                                                                                                                                                                                                                           *context,                                                                                                                                                                                                                                                           \fBvoid\fP *buf) handle_notifications, \fBvoid\fP * context)"
+
+.PP
+Definition at line 1734 of file bss_dgram\&.c\&.
+.SS "int BIO_dgram_sctp_wait_for_dry (\fBBIO\fP * b)"
+
+.PP
+Definition at line 1752 of file bss_dgram\&.c\&.
+.SS "\fBBIO\fP* BIO_new_dgram (int fd, int close_flag)"
+
+.PP
+Definition at line 208 of file bss_dgram\&.c\&.
+.SS "\fBBIO\fP* BIO_new_dgram_sctp (int fd, int close_flag)"
+
+.PP
+Definition at line 967 of file bss_dgram\&.c\&.
+.SS "\fBBIO_METHOD\fP* BIO_s_datagram (\fBvoid\fP)"
+
+.PP
+Definition at line 203 of file bss_dgram\&.c\&.
+.SS "\fBBIO_METHOD\fP* BIO_s_datagram_sctp (\fBvoid\fP)"
+
+.PP
+Definition at line 962 of file bss_dgram\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

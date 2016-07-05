@@ -1,0 +1,69 @@
+.TH "s2n/libcrypto-build/openssl/crypto/dh/dh_rfc5114.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/dh/dh_rfc5114.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBmake_dh_bn\fP(\fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBmake_dh\fP(\fBx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define make_dh(\fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+DH * DH_get_##x(void) \
+        { \
+        DH *dh; \
+        make_dh_bn(dh##x##_p); \
+        make_dh_bn(dh##x##_q); \
+        make_dh_bn(dh##x##_g); \
+        dh = DH_new(); \
+        if (!dh) \
+                return NULL; \
+        dh->p = BN_dup(&_bignum_dh##x##_p); \
+        dh->g = BN_dup(&_bignum_dh##x##_g); \
+        dh->q = BN_dup(&_bignum_dh##x##_q); \
+        if (!dh->p || !dh->q || !dh->g) \
+                { \
+                DH_free(dh); \
+                return NULL; \
+                } \
+        return dh; \
+        }
+.fi
+.PP
+Definition at line 262 of file dh_rfc5114\&.c\&.
+.SS "#define make_dh_bn(\fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const BIGNUM _bignum_##x = { (BN_ULONG *) x, \
+                        sizeof(x)/sizeof(BN_ULONG),\
+                        sizeof(x)/sizeof(BN_ULONG),\
+                        0, BN_FLG_STATIC_DATA }
+.fi
+.PP
+Definition at line 251 of file dh_rfc5114\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

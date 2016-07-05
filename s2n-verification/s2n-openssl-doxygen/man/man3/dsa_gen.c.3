@@ -1,0 +1,75 @@
+.TH "s2n/libcrypto-build/openssl/crypto/dsa/dsa_gen.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/dsa/dsa_gen.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include 'dsa_locl\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHASH\fP   \fBEVP_sha1\fP()"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBDSA_generate_parameters_ex\fP (\fBDSA\fP *ret, int \fBbits\fP, const unsigned char *seed_in, int seed_len, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBdsa_builtin_paramgen\fP (\fBDSA\fP *ret, size_t \fBbits\fP, size_t qbits, const \fBEVP_MD\fP *evpmd, const unsigned char *seed_in, size_t seed_len, unsigned char *seed_out, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBdsa_builtin_paramgen2\fP (\fBDSA\fP *ret, size_t L, size_t \fBN\fP, const \fBEVP_MD\fP *evpmd, const unsigned char *seed_in, size_t seed_len, int idx, unsigned char *seed_out, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBdsa_paramgen_check_g\fP (\fBDSA\fP *dsa)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define HASH   \fBEVP_sha1\fP()"
+
+.PP
+Definition at line 73 of file dsa_gen\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int dsa_builtin_paramgen (\fBDSA\fP * ret, size_t bits, size_t qbits, const \fBEVP_MD\fP * evpmd, const unsigned char * seed_in, size_t seed_len, unsigned char * seed_out, int * counter_ret, unsigned long * h_ret, \fBBN_GENCB\fP * cb)"
+
+.PP
+Definition at line 126 of file dsa_gen\&.c\&.
+.SS "int dsa_builtin_paramgen2 (\fBDSA\fP * ret, size_t L, size_t N, const \fBEVP_MD\fP * evpmd, const unsigned char * seed_in, size_t seed_len, int idx, unsigned char * seed_out, int * counter_ret, unsigned long * h_ret, \fBBN_GENCB\fP * cb)"
+
+.PP
+Definition at line 398 of file dsa_gen\&.c\&.
+.SS "int DSA_generate_parameters_ex (\fBDSA\fP * ret, int bits, const unsigned char * seed_in, int seed_len, int * counter_ret, unsigned long * h_ret, \fBBN_GENCB\fP * cb)"
+
+.PP
+Definition at line 94 of file dsa_gen\&.c\&.
+.SS "int dsa_paramgen_check_g (\fBDSA\fP * dsa)"
+
+.PP
+Definition at line 712 of file dsa_gen\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,139 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509_v3.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509_v3.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/objects\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBX509v3_get_ext_count\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_by_NID\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_by_OBJ\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*sk, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBX509v3_get_ext_by_critical\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*sk, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509v3_get_ext\fP (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509v3_delete_ext\fP (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_EXTENSION\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_EXTENSION_create_by_NID\fP (\fBX509_EXTENSION\fP **\fBex\fP, int \fBnid\fP, int crit, \fBASN1_OCTET_STRING\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509_EXTENSION_create_by_OBJ\fP (\fBX509_EXTENSION\fP **\fBex\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int crit, \fBASN1_OCTET_STRING\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_set_object\fP (\fBX509_EXTENSION\fP *\fBex\fP, \fBASN1_OBJECT\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_set_critical\fP (\fBX509_EXTENSION\fP *\fBex\fP, int crit)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_set_data\fP (\fBX509_EXTENSION\fP *\fBex\fP, \fBASN1_OCTET_STRING\fP *\fBdata\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OBJECT\fP * \fBX509_EXTENSION_get_object\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBX509_EXTENSION_get_data\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_EXTENSION_get_critical\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "STACK_OF (\fBX509_EXTENSION\fP)"
+
+.PP
+Definition at line 144 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_EXTENSION_create_by_NID (\fBX509_EXTENSION\fP ** ex, int nid, int crit, \fBASN1_OCTET_STRING\fP * data)"
+
+.PP
+Definition at line 185 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509_EXTENSION_create_by_OBJ (\fBX509_EXTENSION\fP ** ex, \fBASN1_OBJECT\fP * obj, int crit, \fBASN1_OCTET_STRING\fP * data)"
+
+.PP
+Definition at line 203 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_get_critical (\fBX509_EXTENSION\fP * ex)"
+
+.PP
+Definition at line 277 of file x509_v3\&.c\&.
+.SS "\fBASN1_OCTET_STRING\fP* X509_EXTENSION_get_data (\fBX509_EXTENSION\fP * ex)"
+
+.PP
+Definition at line 270 of file x509_v3\&.c\&.
+.SS "\fBASN1_OBJECT\fP* X509_EXTENSION_get_object (\fBX509_EXTENSION\fP * ex)"
+
+.PP
+Definition at line 263 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_set_critical (\fBX509_EXTENSION\fP * ex, int crit)"
+
+.PP
+Definition at line 243 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_set_data (\fBX509_EXTENSION\fP * ex, \fBASN1_OCTET_STRING\fP * data)"
+
+.PP
+Definition at line 251 of file x509_v3\&.c\&.
+.SS "int X509_EXTENSION_set_object (\fBX509_EXTENSION\fP * ex, \fBASN1_OBJECT\fP * obj)"
+
+.PP
+Definition at line 234 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509v3_delete_ext (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int loc)"
+
+.PP
+Definition at line 134 of file x509_v3\&.c\&.
+.SS "\fBX509_EXTENSION\fP* X509v3_get_ext (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int loc)"
+
+.PP
+Definition at line 126 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_by_critical (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* sk, int crit, int lastpos)"
+
+.PP
+Definition at line 106 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_by_NID (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int nid, int lastpos)"
+
+.PP
+Definition at line 75 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_by_OBJ (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* sk, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.PP
+Definition at line 86 of file x509_v3\&.c\&.
+.SS "int X509v3_get_ext_count (const \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x)"
+
+.PP
+Definition at line 68 of file x509_v3\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

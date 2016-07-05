@@ -1,0 +1,77 @@
+.TH "s2n/crypto/s2n_cbc_cipher_3des.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/crypto/s2n_cbc_cipher_3des.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_cbc_cipher_3des_decrypt\fP (struct \fBs2n_session_key\fP *\fBkey\fP, struct \fBs2n_blob\fP *iv, struct \fBs2n_blob\fP *\fBin\fP, struct \fBs2n_blob\fP *\fBout\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_cbc_cipher_3des_get_decryption_key\fP (struct \fBs2n_session_key\fP *\fBkey\fP, struct \fBs2n_blob\fP *\fBin\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_cbc_cipher_3des_get_encryption_key\fP (struct \fBs2n_session_key\fP *\fBkey\fP, struct \fBs2n_blob\fP *\fBin\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_cipher\fP \fBs2n_3des\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_cbc_cipher_3des_decrypt (struct \fBs2n_session_key\fP * key, struct \fBs2n_blob\fP * iv, struct \fBs2n_blob\fP * in, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 45 of file s2n_cbc_cipher_3des\&.c\&.
+.SS "int s2n_cbc_cipher_3des_get_decryption_key (struct \fBs2n_session_key\fP * key, struct \fBs2n_blob\fP * in)"
+
+.PP
+Definition at line 61 of file s2n_cbc_cipher_3des\&.c\&.
+.SS "int s2n_cbc_cipher_3des_get_encryption_key (struct \fBs2n_session_key\fP * key, struct \fBs2n_blob\fP * in)"
+
+.PP
+Definition at line 71 of file s2n_cbc_cipher_3des\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBs2n_cipher\fP s2n_3des"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.key_material_size = 24,
+    \&.type = S2N_CBC,
+    \&.io\&.cbc = {
+               \&.block_size = 8,
+               \&.record_iv_size = 8,
+               \&.decrypt = s2n_cbc_cipher_3des_decrypt,
+               \&.encrypt = s2n_cbc_cipher_3des_encrypt},
+    \&.get_decryption_key = s2n_cbc_cipher_3des_get_decryption_key,
+    \&.get_encryption_key = s2n_cbc_cipher_3des_get_encryption_key,
+    \&.destroy_key = s2n_cbc_cipher_3des_destroy_key,
+}
+.fi
+.PP
+Definition at line 88 of file s2n_cbc_cipher_3des\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

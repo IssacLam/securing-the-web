@@ -1,0 +1,417 @@
+.TH "ssl2_state_st" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl2_state_st \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ssl2\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBthree_byte_header\fP"
+.br
+.ti -1c
+.RI "int \fBclear_text\fP"
+.br
+.ti -1c
+.RI "int \fBescape\fP"
+.br
+.ti -1c
+.RI "int \fBssl2_rollback\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBwnum\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_tot\fP"
+.br
+.ti -1c
+.RI "const unsigned char * \fBwpend_buf\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_off\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_len\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_ret\fP"
+.br
+.ti -1c
+.RI "int \fBrbuf_left\fP"
+.br
+.ti -1c
+.RI "int \fBrbuf_offs\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBrbuf\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBwbuf\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBwrite_ptr\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBpadding\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBrlength\fP"
+.br
+.ti -1c
+.RI "int \fBract_data_length\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBwlength\fP"
+.br
+.ti -1c
+.RI "int \fBwact_data_length\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBract_data\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBwact_data\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBmac_data\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBread_key\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBwrite_key\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBchallenge_length\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBchallenge\fP [\fBSSL2_MAX_CHALLENGE_LENGTH\fP]"
+.br
+.ti -1c
+.RI "unsigned int \fBconn_id_length\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBconn_id\fP [\fBSSL2_MAX_CONNECTION_ID_LENGTH\fP]"
+.br
+.ti -1c
+.RI "unsigned int \fBkey_material_length\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBkey_material\fP [\fBSSL2_MAX_KEY_MATERIAL_LENGTH\fP *2]"
+.br
+.ti -1c
+.RI "unsigned long \fBread_sequence\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBwrite_sequence\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   unsigned int \fBconn_id_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcert_type\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcert_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcsl\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBclear\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBenc\fP"
+.br
+.ti -1c
+.RI "   unsigned char \fBccl\fP [\fBSSL2_MAX_CERT_CHALLENGE_LENGTH\fP]"
+.br
+.ti -1c
+.RI "   unsigned int \fBcipher_spec_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBsession_id_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBclen\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBrlen\fP"
+.br
+.ti -1c
+.RI "} \fBtmp\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   unsigned int \fBconn_id_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcert_type\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcert_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcsl\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBclear\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBenc\fP"
+.br
+.ti -1c
+.RI "   unsigned char \fBccl\fP [\fBSSL2_MAX_CERT_CHALLENGE_LENGTH\fP]"
+.br
+.ti -1c
+.RI "   unsigned int \fBcipher_spec_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBsession_id_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBclen\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBrlen\fP"
+.br
+.ti -1c
+.RI "} \fBtmp\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   unsigned int \fBconn_id_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcert_type\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcert_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBcsl\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBclear\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBenc\fP"
+.br
+.ti -1c
+.RI "   unsigned char \fBccl\fP [\fBSSL2_MAX_CERT_CHALLENGE_LENGTH\fP]"
+.br
+.ti -1c
+.RI "   unsigned int \fBcipher_spec_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBsession_id_length\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBclen\fP"
+.br
+.ti -1c
+.RI "   unsigned int \fBrlen\fP"
+.br
+.ti -1c
+.RI "} \fBtmp\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 163 of file ssl2\&.h\&.
+.SH "Field Documentation"
+.PP 
+.SS "unsigned char ccl[\fBSSL2_MAX_CERT_CHALLENGE_LENGTH\fP]"
+
+.PP
+Definition at line 210 of file ssl2\&.h\&.
+.SS "unsigned int cert_length"
+
+.PP
+Definition at line 206 of file ssl2\&.h\&.
+.SS "unsigned int cert_type"
+
+.PP
+Definition at line 205 of file ssl2\&.h\&.
+.SS "unsigned char challenge"
+
+.PP
+Definition at line 196 of file ssl2\&.h\&.
+.SS "unsigned int challenge_length"
+
+.PP
+Definition at line 195 of file ssl2\&.h\&.
+.SS "unsigned int cipher_spec_length"
+
+.PP
+Definition at line 211 of file ssl2\&.h\&.
+.SS "unsigned int clear"
+
+.PP
+Definition at line 208 of file ssl2\&.h\&.
+.SS "int clear_text"
+
+.PP
+Definition at line 165 of file ssl2\&.h\&.
+.SS "unsigned int clen"
+
+.PP
+Definition at line 213 of file ssl2\&.h\&.
+.SS "unsigned char conn_id"
+
+.PP
+Definition at line 198 of file ssl2\&.h\&.
+.SS "unsigned int conn_id_length"
+
+.PP
+Definition at line 197 of file ssl2\&.h\&.
+.SS "unsigned int csl"
+
+.PP
+Definition at line 207 of file ssl2\&.h\&.
+.SS "unsigned int enc"
+
+.PP
+Definition at line 209 of file ssl2\&.h\&.
+.SS "int escape"
+
+.PP
+Definition at line 166 of file ssl2\&.h\&.
+.SS "unsigned char key_material"
+
+.PP
+Definition at line 200 of file ssl2\&.h\&.
+.SS "unsigned int key_material_length"
+
+.PP
+Definition at line 199 of file ssl2\&.h\&.
+.SS "unsigned char * mac_data"
+
+.PP
+Definition at line 191 of file ssl2\&.h\&.
+.SS "unsigned int padding"
+
+.PP
+Definition at line 184 of file ssl2\&.h\&.
+.SS "unsigned char * ract_data"
+
+.PP
+Definition at line 189 of file ssl2\&.h\&.
+.SS "int ract_data_length"
+
+.PP
+Definition at line 186 of file ssl2\&.h\&.
+.SS "unsigned char * rbuf"
+
+.PP
+Definition at line 180 of file ssl2\&.h\&.
+.SS "int rbuf_left"
+
+.PP
+Definition at line 178 of file ssl2\&.h\&.
+.SS "int rbuf_offs"
+
+.PP
+Definition at line 179 of file ssl2\&.h\&.
+.SS "unsigned char * read_key"
+
+.PP
+Definition at line 192 of file ssl2\&.h\&.
+.SS "unsigned long read_sequence"
+
+.PP
+Definition at line 201 of file ssl2\&.h\&.
+.SS "unsigned int rlen"
+
+.PP
+Definition at line 214 of file ssl2\&.h\&.
+.SS "unsigned int rlength"
+
+.PP
+Definition at line 185 of file ssl2\&.h\&.
+.SS "unsigned int session_id_length"
+
+.PP
+Definition at line 212 of file ssl2\&.h\&.
+.SS "int ssl2_rollback"
+
+.PP
+Definition at line 167 of file ssl2\&.h\&.
+.SS "int three_byte_header"
+
+.PP
+Definition at line 164 of file ssl2\&.h\&.
+.SS "struct { \&.\&.\&. }   tmp"
+
+.SS "struct { \&.\&.\&. }   tmp"
+
+.SS "struct { \&.\&.\&. }   tmp"
+
+.SS "unsigned char * wact_data"
+
+.PP
+Definition at line 190 of file ssl2\&.h\&.
+.SS "int wact_data_length"
+
+.PP
+Definition at line 188 of file ssl2\&.h\&.
+.SS "unsigned char * wbuf"
+
+.PP
+Definition at line 181 of file ssl2\&.h\&.
+.SS "unsigned int wlength"
+
+.PP
+Definition at line 187 of file ssl2\&.h\&.
+.SS "unsigned int wnum"
+
+.PP
+Definition at line 171 of file ssl2\&.h\&.
+.SS "const unsigned char * wpend_buf"
+
+.PP
+Definition at line 173 of file ssl2\&.h\&.
+.SS "int wpend_len"
+
+.PP
+Definition at line 175 of file ssl2\&.h\&.
+.SS "int wpend_off"
+
+.PP
+Definition at line 174 of file ssl2\&.h\&.
+.SS "int wpend_ret"
+
+.PP
+Definition at line 176 of file ssl2\&.h\&.
+.SS "int wpend_tot"
+
+.PP
+Definition at line 172 of file ssl2\&.h\&.
+.SS "unsigned char * write_key"
+
+.PP
+Definition at line 193 of file ssl2\&.h\&.
+.SS "unsigned char * write_ptr"
+
+.PP
+Definition at line 182 of file ssl2\&.h\&.
+.SS "unsigned long write_sequence"
+
+.PP
+Definition at line 202 of file ssl2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,491 @@
+.TH "s2n/libcrypto-build/openssl/apps/apps.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/apps/apps.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <assert\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/pkcs12\&.h>\fP
+.br
+\fC#include <openssl/ui\&.h>\fP
+.br
+\fC#include <openssl/safestack\&.h>\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/jpake\&.h>\fP
+.br
+\fC#include 'apps\&.h'\fP
+.br
+\fC#include <sys/time\&.h>\fP
+.br
+\fC#include <sys/resource\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBNAME_EX_TBL\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNON_MAIN\fP"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_UNKNOWN_MASK\fP   (0xfL << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_DEFAULT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_ERROR_UNKNOWN\fP   (1L << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_PARSE_UNKNOWN\fP   (2L << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_DUMP_UNKNOWN\fP   (3L << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509_FLAG_CA\fP"
+.br
+.ti -1c
+.RI "#define \fBBSIZE\fP   256"
+.br
+.ti -1c
+.RI "#define \fBS_ISDIR\fP(\fBa\fP)     (((\fBa\fP) & S_IFMT) == S_IFDIR)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBapp_init\fP (long mesgwin)"
+.br
+.ti -1c
+.RI "int \fBstr2fmt\fP (char *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBprogram_name\fP (char *\fBin\fP, char *\fBout\fP, int size)"
+.br
+.ti -1c
+.RI "int \fBchopup_args\fP (\fBARGS\fP *\fBarg\fP, char *buf, int *argc, char **argv[])"
+.br
+.ti -1c
+.RI "int \fBdump_cert_text\fP (\fBBIO\fP *\fBout\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBsetup_ui_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdestroy_ui_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBpassword_callback\fP (char *buf, int bufsiz, int verify, \fBPW_CB_DATA\fP *cb_tmp)"
+.br
+.ti -1c
+.RI "int \fBapp_passwd\fP (\fBBIO\fP *err, char *arg1, char *arg2, char **pass1, char **pass2)"
+.br
+.ti -1c
+.RI "int \fBadd_oid_section\fP (\fBBIO\fP *err, \fBCONF\fP *conf)"
+.br
+.ti -1c
+.RI "int \fBload_cert_crl_http\fP (const char *url, \fBBIO\fP *err, \fBX509\fP **pcert, \fBX509_CRL\fP **pcrl)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBload_cert\fP (\fBBIO\fP *err, const char *\fBfile\fP, int \fBformat\fP, const char *\fBpass\fP, \fBENGINE\fP *\fBe\fP, const char *\fBcert_descrip\fP)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBload_crl\fP (const char *infile, int \fBformat\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBload_key\fP (\fBBIO\fP *err, const char *\fBfile\fP, int \fBformat\fP, int maybe_stdin, const char *\fBpass\fP, \fBENGINE\fP *\fBe\fP, const char *key_descrip)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBload_pubkey\fP (\fBBIO\fP *err, const char *\fBfile\fP, int \fBformat\fP, int maybe_stdin, const char *\fBpass\fP, \fBENGINE\fP *\fBe\fP, const char *key_descrip)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)"
+.br
+.ti -1c
+.RI "int \fBset_cert_ex\fP (unsigned long *\fBflags\fP, const char *\fBarg\fP)"
+.br
+.ti -1c
+.RI "int \fBset_name_ex\fP (unsigned long *\fBflags\fP, const char *\fBarg\fP)"
+.br
+.ti -1c
+.RI "int \fBset_ext_copy\fP (int *copy_type, const char *\fBarg\fP)"
+.br
+.ti -1c
+.RI "int \fBcopy_extensions\fP (\fBX509\fP *\fBx\fP, \fBX509_REQ\fP *req, int copy_type)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBprint_name\fP (\fBBIO\fP *\fBout\fP, const char *title, \fBX509_NAME\fP *\fBnm\fP, unsigned long lflags)"
+.br
+.ti -1c
+.RI "\fBX509_STORE\fP * \fBsetup_verify\fP (\fBBIO\fP *\fBbp\fP, char *CAfile, char *CApath)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBsetup_engine\fP (\fBBIO\fP *err, const char *engine, int debug)"
+.br
+.ti -1c
+.RI "int \fBload_config\fP (\fBBIO\fP *err, \fBCONF\fP *cnf)"
+.br
+.ti -1c
+.RI "char * \fBmake_config_name\fP ()"
+.br
+.ti -1c
+.RI "int \fBindex_name_cmp\fP (const \fBOPENSSL_CSTRING\fP *\fBa\fP, const \fBOPENSSL_CSTRING\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBsave_serial\fP (char *serialfile, char *suffix, \fBBIGNUM\fP *serial, \fBASN1_INTEGER\fP **retai)"
+.br
+.ti -1c
+.RI "int \fBrotate_serial\fP (char *serialfile, char *new_suffix, char *old_suffix)"
+.br
+.ti -1c
+.RI "int \fBrand_serial\fP (\fBBIGNUM\fP *\fBb\fP, \fBASN1_INTEGER\fP *ai)"
+.br
+.ti -1c
+.RI "\fBCA_DB\fP * \fBload_index\fP (char *dbfile, \fBDB_ATTR\fP *db_attr)"
+.br
+.ti -1c
+.RI "int \fBindex_index\fP (\fBCA_DB\fP *db)"
+.br
+.ti -1c
+.RI "int \fBsave_index\fP (const char *dbfile, const char *suffix, \fBCA_DB\fP *db)"
+.br
+.ti -1c
+.RI "int \fBrotate_index\fP (const char *dbfile, const char *new_suffix, const char *old_suffix)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBfree_index\fP (\fBCA_DB\fP *db)"
+.br
+.ti -1c
+.RI "int \fBparse_yesno\fP (const char *str, int def)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBparse_name\fP (char *subject, long chtype, int multirdn)"
+.br
+.ti -1c
+.RI "int \fBargs_verify\fP (char ***pargs, int *pargc, int *badarg, \fBBIO\fP *err, \fBX509_VERIFY_PARAM\fP **pm)"
+.br
+.ti -1c
+.RI "int \fBbio_to_mem\fP (unsigned char **\fBout\fP, int maxlen, \fBBIO\fP *\fBin\fP)"
+.br
+.ti -1c
+.RI "int \fBpkey_ctrl_string\fP (\fBEVP_PKEY_CTX\fP *\fBctx\fP, const char *value)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBpolicies_print\fP (\fBBIO\fP *\fBout\fP, \fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBjpake_client_auth\fP (\fBBIO\fP *\fBout\fP, \fBBIO\fP *conn, const char *secret)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBjpake_server_auth\fP (\fBBIO\fP *\fBout\fP, \fBBIO\fP *conn, const char *secret)"
+.br
+.ti -1c
+.RI "unsigned char * \fBnext_protos_parse\fP (unsigned short *outlen, const char *\fBin\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBprint_cert_checks\fP (\fBBIO\fP *bio, \fBX509\fP *\fBx\fP, const char *checkhost, const char *checkemail, const char *checkip)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBstore_setup_crl_download\fP (\fBX509_STORE\fP *st)"
+.br
+.ti -1c
+.RI "double \fBapp_tminterval\fP (int stop, int usertime)"
+.br
+.ti -1c
+.RI "int \fBapp_isdir\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBraw_read_stdin\fP (\fBvoid\fP *buf, int siz)"
+.br
+.ti -1c
+.RI "int \fBraw_write_stdout\fP (const \fBvoid\fP *buf, int siz)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BSIZE   256"
+
+.SS "#define NON_MAIN"
+
+.PP
+Definition at line 144 of file apps\&.c\&.
+.SS "#define S_ISDIR(\fBa\fP)   (((\fBa\fP) & S_IFMT) == S_IFDIR)"
+
+.PP
+Definition at line 3178 of file apps\&.c\&.
+.SS "#define X509_FLAG_CA"
+\fBValue:\fP
+.PP
+.nf
+(X509_FLAG_NO_ISSUER | X509_FLAG_NO_PUBKEY | \
+                         X509_FLAG_NO_HEADER | X509_FLAG_NO_VERSION)
+.fi
+.PP
+Definition at line 1291 of file apps\&.c\&.
+.SS "#define X509V3_EXT_DEFAULT   0"
+
+.PP
+Definition at line 1283 of file apps\&.c\&.
+.SS "#define X509V3_EXT_DUMP_UNKNOWN   (3L << 16)"
+
+.PP
+Definition at line 1289 of file apps\&.c\&.
+.SS "#define X509V3_EXT_ERROR_UNKNOWN   (1L << 16)"
+
+.PP
+Definition at line 1285 of file apps\&.c\&.
+.SS "#define X509V3_EXT_PARSE_UNKNOWN   (2L << 16)"
+
+.PP
+Definition at line 1287 of file apps\&.c\&.
+.SS "#define X509V3_EXT_UNKNOWN_MASK   (0xfL << 16)"
+
+.PP
+Definition at line 1281 of file apps\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int add_oid_section (\fBBIO\fP * err, \fBCONF\fP * conf)"
+
+.PP
+Definition at line 723 of file apps\&.c\&.
+.SS "int app_init (long mesgwin)"
+
+.PP
+Definition at line 449 of file apps\&.c\&.
+.SS "int app_isdir (const char * name)"
+
+.PP
+Definition at line 3182 of file apps\&.c\&.
+.SS "int app_passwd (\fBBIO\fP * err, char * arg1, char * arg2, char ** pass1, char ** pass2)"
+
+.PP
+Definition at line 629 of file apps\&.c\&.
+.SS "double app_tminterval (int stop, int usertime)"
+
+.PP
+Definition at line 3122 of file apps\&.c\&.
+.SS "int args_verify (char *** pargs, int * pargc, int * badarg, \fBBIO\fP * err, \fBX509_VERIFY_PARAM\fP ** pm)"
+
+.PP
+Definition at line 2258 of file apps\&.c\&.
+.SS "int bio_to_mem (unsigned char ** out, int maxlen, \fBBIO\fP * in)"
+
+.PP
+Definition at line 2431 of file apps\&.c\&.
+.SS "int chopup_args (\fBARGS\fP * arg, char * buf, int * argc, char ** argv[])"
+
+.PP
+Definition at line 380 of file apps\&.c\&.
+.SS "int copy_extensions (\fBX509\fP * x, \fBX509_REQ\fP * req, int copy_type)"
+
+.PP
+Definition at line 1372 of file apps\&.c\&.
+.SS "\fBvoid\fP destroy_ui_method (\fBvoid\fP)"
+
+.PP
+Definition at line 535 of file apps\&.c\&.
+.SS "int dump_cert_text (\fBBIO\fP * out, \fBX509\fP * x)"
+
+.PP
+Definition at line 455 of file apps\&.c\&.
+.SS "\fBvoid\fP free_index (\fBCA_DB\fP * db)"
+
+.PP
+Definition at line 2090 of file apps\&.c\&.
+.SS "int index_index (\fBCA_DB\fP * db)"
+
+.PP
+Definition at line 1915 of file apps\&.c\&.
+.SS "int index_name_cmp (const \fBOPENSSL_CSTRING\fP * a, const \fBOPENSSL_CSTRING\fP * b)"
+
+.PP
+Definition at line 1641 of file apps\&.c\&.
+.SS "\fBvoid\fP jpake_client_auth (\fBBIO\fP * out, \fBBIO\fP * conn, const char * secret)"
+
+.PP
+Definition at line 2681 of file apps\&.c\&.
+.SS "\fBvoid\fP jpake_server_auth (\fBBIO\fP * out, \fBBIO\fP * conn, const char * secret)"
+
+.PP
+Definition at line 2713 of file apps\&.c\&.
+.SS "\fBX509\fP* load_cert (\fBBIO\fP * err, const char * file, int format, const char * pass, \fBENGINE\fP * e, const char * cert_descrip)"
+
+.PP
+Definition at line 844 of file apps\&.c\&.
+.SS "int load_cert_crl_http (const char * url, \fBBIO\fP * err, \fBX509\fP ** pcert, \fBX509_CRL\fP ** pcrl)"
+
+.PP
+Definition at line 789 of file apps\&.c\&.
+.SS "int load_config (\fBBIO\fP * err, \fBCONF\fP * cnf)"
+
+.PP
+Definition at line 1571 of file apps\&.c\&.
+.SS "\fBX509_CRL\fP* load_crl (const char * infile, int format)"
+
+.PP
+Definition at line 912 of file apps\&.c\&.
+.SS "\fBCA_DB\fP* load_index (char * dbfile, \fBDB_ATTR\fP * db_attr)"
+
+.PP
+Definition at line 1842 of file apps\&.c\&.
+.SS "\fBEVP_PKEY\fP* load_key (\fBBIO\fP * err, const char * file, int format, int maybe_stdin, const char * pass, \fBENGINE\fP * e, const char * key_descrip)"
+
+.PP
+Definition at line 955 of file apps\&.c\&.
+.SS "\fBEVP_PKEY\fP* load_pubkey (\fBBIO\fP * err, const char * file, int format, int maybe_stdin, const char * pass, \fBENGINE\fP * e, const char * key_descrip)"
+
+.PP
+Definition at line 1038 of file apps\&.c\&.
+.SS "char* make_config_name (\fBvoid\fP)"
+
+.PP
+Definition at line 1592 of file apps\&.c\&.
+.SS "unsigned char* next_protos_parse (unsigned short * outlen, const char * in)"
+
+.PP
+Definition at line 2757 of file apps\&.c\&.
+.SS "\fBX509_NAME\fP* parse_name (char * subject, long chtype, int multirdn)"
+
+.PP
+Definition at line 2130 of file apps\&.c\&.
+.SS "int parse_yesno (const char * str, int def)"
+
+.PP
+Definition at line 2099 of file apps\&.c\&.
+.SS "int password_callback (char * buf, int bufsiz, int verify, \fBPW_CB_DATA\fP * cb_tmp)"
+
+.PP
+Definition at line 543 of file apps\&.c\&.
+.SS "int pkey_ctrl_string (\fBEVP_PKEY_CTX\fP * ctx, const char * value)"
+
+.PP
+Definition at line 2466 of file apps\&.c\&.
+.SS "\fBvoid\fP policies_print (\fBBIO\fP * out, \fBX509_STORE_CTX\fP * ctx)"
+
+.PP
+Definition at line 2499 of file apps\&.c\&.
+.SS "\fBvoid\fP print_cert_checks (\fBBIO\fP * bio, \fBX509\fP * x, const char * checkhost, const char * checkemail, const char * checkip)"
+
+.PP
+Definition at line 2788 of file apps\&.c\&.
+.SS "\fBvoid\fP print_name (\fBBIO\fP * out, const char * title, \fBX509_NAME\fP * nm, unsigned long lflags)"
+
+.PP
+Definition at line 1459 of file apps\&.c\&.
+.SS "\fBvoid\fP program_name (char * in, char * out, int size)"
+
+.PP
+Definition at line 366 of file apps\&.c\&.
+.SS "int rand_serial (\fBBIGNUM\fP * b, \fBASN1_INTEGER\fP * ai)"
+
+.PP
+Definition at line 1815 of file apps\&.c\&.
+.SS "int raw_read_stdin (\fBvoid\fP * buf, int siz)"
+
+.PP
+Definition at line 3208 of file apps\&.c\&.
+.SS "int raw_write_stdout (const \fBvoid\fP * buf, int siz)"
+
+.PP
+Definition at line 3224 of file apps\&.c\&.
+.SS "int rotate_index (const char * dbfile, const char * new_suffix, const char * old_suffix)"
+
+.PP
+Definition at line 2000 of file apps\&.c\&.
+.SS "int rotate_serial (char * serialfile, char * new_suffix, char * old_suffix)"
+
+.PP
+Definition at line 1762 of file apps\&.c\&.
+.SS "int save_index (const char * dbfile, const char * suffix, \fBCA_DB\fP * db)"
+
+.PP
+Definition at line 1937 of file apps\&.c\&.
+.SS "int save_serial (char * serialfile, char * suffix, \fBBIGNUM\fP * serial, \fBASN1_INTEGER\fP ** retai)"
+
+.PP
+Definition at line 1703 of file apps\&.c\&.
+.SS "int set_cert_ex (unsigned long * flags, const char * arg)"
+
+.PP
+Definition at line 1294 of file apps\&.c\&.
+.SS "int set_ext_copy (int * copy_type, const char * arg)"
+
+.PP
+Definition at line 1359 of file apps\&.c\&.
+.SS "int set_name_ex (unsigned long * flags, const char * arg)"
+
+.PP
+Definition at line 1320 of file apps\&.c\&.
+.SS "\fBENGINE\fP* setup_engine (\fBBIO\fP * err, const char * engine, int debug)"
+
+.PP
+Definition at line 1535 of file apps\&.c\&.
+.SS "int setup_ui_method (\fBvoid\fP)"
+
+.PP
+Definition at line 525 of file apps\&.c\&.
+.SS "\fBX509_STORE\fP* setup_verify (\fBBIO\fP * bp, char * CAfile, char * CApath)"
+
+.PP
+Definition at line 1485 of file apps\&.c\&.
+.SS "STACK_OF (\fBX509\fP)"
+
+.PP
+Definition at line 1263 of file apps\&.c\&.
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.PP
+Definition at line 1272 of file apps\&.c\&.
+.SS "\fBvoid\fP store_setup_crl_download (\fBX509_STORE\fP * st)"
+
+.PP
+Definition at line 2882 of file apps\&.c\&.
+.SS "int str2fmt (char * s)"
+
+.PP
+Definition at line 265 of file apps\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

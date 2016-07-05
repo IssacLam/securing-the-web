@@ -1,0 +1,108 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509v3/v3_lib.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509v3/v3_lib.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include 'ext_dat\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDECLARE_OBJ_BSEARCH_CMP_FN\fP (const \fBX509V3_EXT_METHOD\fP *, const \fBX509V3_EXT_METHOD\fP *, \fBext\fP)"
+.br
+.ti -1c
+.RI "\fBIMPLEMENT_OBJ_BSEARCH_CMP_FN\fP (const \fBX509V3_EXT_METHOD\fP *, const \fBX509V3_EXT_METHOD\fP *, \fBext\fP)"
+.br
+.ti -1c
+.RI "const \fBX509V3_EXT_METHOD\fP * \fBX509V3_EXT_get_nid\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "const \fBX509V3_EXT_METHOD\fP * \fBX509V3_EXT_get\fP (\fBX509_EXTENSION\fP *\fBext\fP)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_free\fP (int \fBnid\fP, \fBvoid\fP *ext_data)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_list\fP (\fBX509V3_EXT_METHOD\fP *extlist)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_alias\fP (int nid_to, int nid_from)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_EXT_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add_standard_extensions\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509V3_EXT_d2i\fP (\fBX509_EXTENSION\fP *\fBext\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509V3_get_d2i\fP (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add1_i2d\fP (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)**\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "DECLARE_OBJ_BSEARCH_CMP_FN (const \fBX509V3_EXT_METHOD\fP *, const \fBX509V3_EXT_METHOD\fP *, \fBext\fP)"
+
+.SS "IMPLEMENT_OBJ_BSEARCH_CMP_FN (const \fBX509V3_EXT_METHOD\fP *, const \fBX509V3_EXT_METHOD\fP *, \fBext\fP)"
+
+.SS "int X509V3_add1_i2d (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)** x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.PP
+Definition at line 286 of file v3_lib\&.c\&.
+.SS "int X509V3_add_standard_extensions (\fBvoid\fP)"
+
+.PP
+Definition at line 194 of file v3_lib\&.c\&.
+.SS "int X509V3_EXT_add_alias (int nid_to, int nid_from)"
+
+.PP
+Definition at line 155 of file v3_lib\&.c\&.
+.SS "int X509V3_EXT_add_list (\fBX509V3_EXT_METHOD\fP * extlist)"
+
+.PP
+Definition at line 147 of file v3_lib\&.c\&.
+.SS "\fBvoid\fP X509V3_EXT_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 177 of file v3_lib\&.c\&.
+.SS "\fBvoid\fP* X509V3_EXT_d2i (\fBX509_EXTENSION\fP * ext)"
+
+.PP
+Definition at line 201 of file v3_lib\&.c\&.
+.SS "int X509V3_EXT_free (int nid, \fBvoid\fP * ext_data)"
+
+.PP
+Definition at line 125 of file v3_lib\&.c\&.
+.SS "const \fBX509V3_EXT_METHOD\fP* X509V3_EXT_get (\fBX509_EXTENSION\fP * ext)"
+
+.PP
+Definition at line 117 of file v3_lib\&.c\&.
+.SS "const \fBX509V3_EXT_METHOD\fP* X509V3_EXT_get_nid (int nid)"
+
+.PP
+Definition at line 98 of file v3_lib\&.c\&.
+.SS "\fBvoid\fP* X509V3_get_d2i (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int nid, int * crit, int * idx)"
+
+.PP
+Definition at line 231 of file v3_lib\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

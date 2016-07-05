@@ -1,0 +1,305 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509/x509_vpm.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509/x509_vpm.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include 'vpm_int\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSET_HOST\fP   0"
+.br
+.ti -1c
+.RI "#define \fBADD_HOST\fP   1"
+.br
+.ti -1c
+.RI "#define \fBstring_stack_free\fP(sk)   \fBsk_OPENSSL_STRING_pop_free\fP(sk, str_free)"
+.br
+.ti -1c
+.RI "#define \fBtest_x509_verify_param_copy\fP(field,  def)"
+.br
+.ti -1c
+.RI "#define \fBtest_x509_verify_param_copy_id\fP(idf,  def)   \fBtest_x509_verify_param_copy\fP(id\->idf, def)"
+.br
+.ti -1c
+.RI "#define \fBx509_verify_param_copy\fP(field,  def)"
+.br
+.ti -1c
+.RI "#define \fBvpm_empty_id\fP   (\fBX509_VERIFY_PARAM_ID\fP *)&_empty_id"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBX509_VERIFY_PARAM\fP * \fBX509_VERIFY_PARAM_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_VERIFY_PARAM_free\fP (\fBX509_VERIFY_PARAM\fP *param)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_inherit\fP (\fBX509_VERIFY_PARAM\fP *dest, const \fBX509_VERIFY_PARAM\fP *src)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1\fP (\fBX509_VERIFY_PARAM\fP *to, const \fBX509_VERIFY_PARAM\fP *from)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1_name\fP (\fBX509_VERIFY_PARAM\fP *param, const char *name)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set_flags\fP (\fBX509_VERIFY_PARAM\fP *param, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_clear_flags\fP (\fBX509_VERIFY_PARAM\fP *param, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBX509_VERIFY_PARAM_get_flags\fP (\fBX509_VERIFY_PARAM\fP *param)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set_purpose\fP (\fBX509_VERIFY_PARAM\fP *param, int purpose)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set_trust\fP (\fBX509_VERIFY_PARAM\fP *param, int trust)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_VERIFY_PARAM_set_depth\fP (\fBX509_VERIFY_PARAM\fP *param, int depth)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_VERIFY_PARAM_set_time\fP (\fBX509_VERIFY_PARAM\fP *param, time_t \fBt\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_add0_policy\fP (\fBX509_VERIFY_PARAM\fP *param, \fBASN1_OBJECT\fP *policy)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1_policies\fP (\fBX509_VERIFY_PARAM\fP *param, \fBSTACK_OF\fP(\fBASN1_OBJECT\fP)*policies)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1_host\fP (\fBX509_VERIFY_PARAM\fP *param, const char *name, size_t namelen)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_add1_host\fP (\fBX509_VERIFY_PARAM\fP *param, const char *name, size_t namelen)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_VERIFY_PARAM_set_hostflags\fP (\fBX509_VERIFY_PARAM\fP *param, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "char * \fBX509_VERIFY_PARAM_get0_peername\fP (\fBX509_VERIFY_PARAM\fP *param)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1_email\fP (\fBX509_VERIFY_PARAM\fP *param, const char *email, size_t emaillen)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1_ip\fP (\fBX509_VERIFY_PARAM\fP *param, const unsigned char *ip, size_t iplen)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_set1_ip_asc\fP (\fBX509_VERIFY_PARAM\fP *param, const char *ipasc)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_get_depth\fP (const \fBX509_VERIFY_PARAM\fP *param)"
+.br
+.ti -1c
+.RI "const char * \fBX509_VERIFY_PARAM_get0_name\fP (const \fBX509_VERIFY_PARAM\fP *param)"
+.br
+.ti -1c
+.RI "\fBDECLARE_OBJ_BSEARCH_CMP_FN\fP (\fBX509_VERIFY_PARAM\fP, \fBX509_VERIFY_PARAM\fP, table)"
+.br
+.ti -1c
+.RI "\fBIMPLEMENT_OBJ_BSEARCH_CMP_FN\fP (\fBX509_VERIFY_PARAM\fP, \fBX509_VERIFY_PARAM\fP, table)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_add0_table\fP (\fBX509_VERIFY_PARAM\fP *param)"
+.br
+.ti -1c
+.RI "int \fBX509_VERIFY_PARAM_get_count\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBX509_VERIFY_PARAM\fP * \fBX509_VERIFY_PARAM_get0\fP (int id)"
+.br
+.ti -1c
+.RI "const \fBX509_VERIFY_PARAM\fP * \fBX509_VERIFY_PARAM_lookup\fP (const char *name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_VERIFY_PARAM_table_cleanup\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ADD_HOST   1"
+
+.PP
+Definition at line 74 of file x509_vpm\&.c\&.
+.SS "#define SET_HOST   0"
+
+.PP
+Definition at line 73 of file x509_vpm\&.c\&.
+.SS "#define string_stack_free(sk)   \fBsk_OPENSSL_STRING_pop_free\fP(sk, str_free)"
+
+.PP
+Definition at line 86 of file x509_vpm\&.c\&.
+.SS "#define test_x509_verify_param_copy(field, def)"
+\fBValue:\fP
+.PP
+.nf
+(to_overwrite || \
+                ((src->field != def) && (to_default || (dest->field == def))))
+.fi
+.PP
+Definition at line 241 of file x509_vpm\&.c\&.
+.SS "#define test_x509_verify_param_copy_id(idf, def)   \fBtest_x509_verify_param_copy\fP(id\->idf, def)"
+
+.PP
+Definition at line 247 of file x509_vpm\&.c\&.
+.SS "#define vpm_empty_id   (\fBX509_VERIFY_PARAM_ID\fP *)&_empty_id"
+
+.PP
+Definition at line 527 of file x509_vpm\&.c\&.
+.SS "#define x509_verify_param_copy(field, def)"
+\fBValue:\fP
+.PP
+.nf
+if (test_x509_verify_param_copy(field, def)) \
+                dest->field = src->field
+.fi
+.PP
+Definition at line 252 of file x509_vpm\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "DECLARE_OBJ_BSEARCH_CMP_FN (\fBX509_VERIFY_PARAM\fP, \fBX509_VERIFY_PARAM\fP, table)"
+
+.SS "IMPLEMENT_OBJ_BSEARCH_CMP_FN (\fBX509_VERIFY_PARAM\fP, \fBX509_VERIFY_PARAM\fP, table)"
+
+.SS "int X509_VERIFY_PARAM_add0_policy (\fBX509_VERIFY_PARAM\fP * param, \fBASN1_OBJECT\fP * policy)"
+
+.PP
+Definition at line 419 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_add0_table (\fBX509_VERIFY_PARAM\fP * param)"
+
+.PP
+Definition at line 604 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_add1_host (\fBX509_VERIFY_PARAM\fP * param, const char * name, size_t namelen)"
+
+.PP
+Definition at line 471 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_clear_flags (\fBX509_VERIFY_PARAM\fP * param, unsigned long flags)"
+
+.PP
+Definition at line 386 of file x509_vpm\&.c\&.
+.SS "\fBvoid\fP X509_VERIFY_PARAM_free (\fBX509_VERIFY_PARAM\fP * param)"
+
+.PP
+Definition at line 198 of file x509_vpm\&.c\&.
+.SS "const \fBX509_VERIFY_PARAM\fP* X509_VERIFY_PARAM_get0 (int id)"
+
+.PP
+Definition at line 633 of file x509_vpm\&.c\&.
+.SS "const char* X509_VERIFY_PARAM_get0_name (const \fBX509_VERIFY_PARAM\fP * param)"
+
+.PP
+Definition at line 520 of file x509_vpm\&.c\&.
+.SS "char* X509_VERIFY_PARAM_get0_peername (\fBX509_VERIFY_PARAM\fP * param)"
+
+.PP
+Definition at line 483 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_get_count (\fBvoid\fP)"
+
+.PP
+Definition at line 625 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_get_depth (const \fBX509_VERIFY_PARAM\fP * param)"
+
+.PP
+Definition at line 515 of file x509_vpm\&.c\&.
+.SS "unsigned long X509_VERIFY_PARAM_get_flags (\fBX509_VERIFY_PARAM\fP * param)"
+
+.PP
+Definition at line 393 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_inherit (\fBX509_VERIFY_PARAM\fP * dest, const \fBX509_VERIFY_PARAM\fP * src)"
+
+.PP
+Definition at line 256 of file x509_vpm\&.c\&.
+.SS "const \fBX509_VERIFY_PARAM\fP* X509_VERIFY_PARAM_lookup (const char * name)"
+
+.PP
+Definition at line 641 of file x509_vpm\&.c\&.
+.SS "\fBX509_VERIFY_PARAM\fP* X509_VERIFY_PARAM_new (\fBvoid\fP)"
+
+.PP
+Definition at line 171 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1 (\fBX509_VERIFY_PARAM\fP * to, const \fBX509_VERIFY_PARAM\fP * from)"
+
+.PP
+Definition at line 333 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1_email (\fBX509_VERIFY_PARAM\fP * param, const char * email, size_t emaillen)"
+
+.PP
+Definition at line 488 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1_host (\fBX509_VERIFY_PARAM\fP * param, const char * name, size_t namelen)"
+
+.PP
+Definition at line 465 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1_ip (\fBX509_VERIFY_PARAM\fP * param, const unsigned char * ip, size_t iplen)"
+
+.PP
+Definition at line 495 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1_ip_asc (\fBX509_VERIFY_PARAM\fP * param, const char * ipasc)"
+
+.PP
+Definition at line 504 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1_name (\fBX509_VERIFY_PARAM\fP * param, const char * name)"
+
+.PP
+Definition at line 368 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set1_policies (\fBX509_VERIFY_PARAM\fP * param, \fBSTACK_OF\fP(\fBASN1_OBJECT\fP)* policies)"
+
+.PP
+Definition at line 432 of file x509_vpm\&.c\&.
+.SS "\fBvoid\fP X509_VERIFY_PARAM_set_depth (\fBX509_VERIFY_PARAM\fP * param, int depth)"
+
+.PP
+Definition at line 408 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set_flags (\fBX509_VERIFY_PARAM\fP * param, unsigned long flags)"
+
+.PP
+Definition at line 378 of file x509_vpm\&.c\&.
+.SS "\fBvoid\fP X509_VERIFY_PARAM_set_hostflags (\fBX509_VERIFY_PARAM\fP * param, unsigned int flags)"
+
+.PP
+Definition at line 477 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set_purpose (\fBX509_VERIFY_PARAM\fP * param, int purpose)"
+
+.PP
+Definition at line 398 of file x509_vpm\&.c\&.
+.SS "\fBvoid\fP X509_VERIFY_PARAM_set_time (\fBX509_VERIFY_PARAM\fP * param, time_t t)"
+
+.PP
+Definition at line 413 of file x509_vpm\&.c\&.
+.SS "int X509_VERIFY_PARAM_set_trust (\fBX509_VERIFY_PARAM\fP * param, int trust)"
+
+.PP
+Definition at line 403 of file x509_vpm\&.c\&.
+.SS "\fBvoid\fP X509_VERIFY_PARAM_table_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 657 of file x509_vpm\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

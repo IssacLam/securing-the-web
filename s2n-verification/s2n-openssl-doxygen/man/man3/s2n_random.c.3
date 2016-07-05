@@ -1,0 +1,173 @@
+.TH "s2n/utils/s2n_random.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/utils/s2n_random.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_drbg\&.h'\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBENTROPY_SOURCE\fP   '/dev/urandom'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBs2n_on_fork\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_public_random_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_private_random_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_public_random_bytes_used\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_private_random_bytes_used\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_urandom_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_public_random\fP (int64_t \fBmax\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_openssl_compat_rand\fP (unsigned char *buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_openssl_compat_status\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_openssl_compat_init\fP (\fBENGINE\fP *unused)"
+.br
+.ti -1c
+.RI "int \fBs2n_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_cleanup\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBRAND_METHOD\fP \fBs2n_openssl_rand_method\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ENTROPY_SOURCE   '/dev/urandom'"
+
+.PP
+Definition at line 40 of file s2n_random\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 248 of file s2n_random\&.c\&.
+.SS "int s2n_get_private_random_bytes_used (\fBvoid\fP)"
+
+.PP
+Definition at line 99 of file s2n_random\&.c\&.
+.SS "int s2n_get_private_random_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 86 of file s2n_random\&.c\&.
+.SS "int s2n_get_public_random_bytes_used (\fBvoid\fP)"
+
+.PP
+Definition at line 94 of file s2n_random\&.c\&.
+.SS "int s2n_get_public_random_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 78 of file s2n_random\&.c\&.
+.SS "int s2n_get_urandom_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 104 of file s2n_random\&.c\&.
+.SS "int s2n_init (\fBvoid\fP)"
+
+.PP
+Definition at line 190 of file s2n_random\&.c\&.
+.SS "\fBvoid\fP s2n_on_fork (\fBvoid\fP)"
+
+.PP
+Definition at line 50 of file s2n_random\&.c\&.
+.SS "int s2n_openssl_compat_init (\fBENGINE\fP * unused)"
+
+.PP
+Definition at line 175 of file s2n_random\&.c\&.
+.SS "int s2n_openssl_compat_rand (unsigned char * buf, int num)"
+
+.PP
+Definition at line 160 of file s2n_random\&.c\&.
+.SS "int s2n_openssl_compat_status (\fBvoid\fP)"
+
+.PP
+Definition at line 170 of file s2n_random\&.c\&.
+.SS "int64_t s2n_public_random (int64_t max)"
+
+.PP
+Definition at line 127 of file s2n_random\&.c\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBRAND_METHOD\fP s2n_openssl_rand_method"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.seed = NULL,
+    \&.bytes = s2n_openssl_compat_rand,
+    \&.cleanup = NULL,
+    \&.add = NULL,
+    \&.pseudorand = s2n_openssl_compat_rand,
+    \&.status = s2n_openssl_compat_status
+}
+.fi
+.PP
+Definition at line 180 of file s2n_random\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

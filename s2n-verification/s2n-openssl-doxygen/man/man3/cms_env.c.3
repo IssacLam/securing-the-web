@@ -1,0 +1,171 @@
+.TH "s2n/libcrypto-build/openssl/crypto/cms/cms_env.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/cms/cms_env.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/cms\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'cms_lcl\&.h'\fP
+.br
+\fC#include 'asn1_locl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCMS_EnvelopedData\fP * \fBcms_get0_enveloped\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_env_asn1_ctrl\fP (\fBCMS_RecipientInfo\fP *ri, int cmd)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBCMS_RecipientInfo\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_type\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBCMS_RecipientInfo_get0_pkey_ctx\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_EnvelopedData_create\fP (const \fBEVP_CIPHER\fP *cipher)"
+.br
+.ti -1c
+.RI "\fBCMS_RecipientInfo\fP * \fBCMS_add1_recipient_cert\fP (\fBCMS_ContentInfo\fP *cms, \fBX509\fP *recip, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_ktri_get0_algs\fP (\fBCMS_RecipientInfo\fP *ri, \fBEVP_PKEY\fP **pk, \fBX509\fP **recip, \fBX509_ALGOR\fP **palg)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_ktri_get0_signer_id\fP (\fBCMS_RecipientInfo\fP *ri, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_ktri_cert_cmp\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_set0_pkey\fP (\fBCMS_RecipientInfo\fP *ri, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kekri_id_cmp\fP (\fBCMS_RecipientInfo\fP *ri, const unsigned char *id, size_t idlen)"
+.br
+.ti -1c
+.RI "\fBCMS_RecipientInfo\fP * \fBCMS_add0_recipient_key\fP (\fBCMS_ContentInfo\fP *cms, int \fBnid\fP, unsigned char *\fBkey\fP, size_t keylen, unsigned char *id, size_t idlen, \fBASN1_GENERALIZEDTIME\fP *date, \fBASN1_OBJECT\fP *otherTypeId, \fBASN1_TYPE\fP *otherType)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kekri_get0_id\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509_ALGOR\fP **palg, \fBASN1_OCTET_STRING\fP **pid, \fBASN1_GENERALIZEDTIME\fP **pdate, \fBASN1_OBJECT\fP **potherid, \fBASN1_TYPE\fP **pothertype)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_set0_key\fP (\fBCMS_RecipientInfo\fP *ri, unsigned char *\fBkey\fP, size_t keylen)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_decrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_encrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBcms_EnvelopedData_init_bio\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBcms_pkey_get_ri_type\fP (\fBEVP_PKEY\fP *pk)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBCMS_RecipientInfo\fP* CMS_add0_recipient_key (\fBCMS_ContentInfo\fP * cms, int nid, unsigned char * key, size_t keylen, unsigned char * id, size_t idlen, \fBASN1_GENERALIZEDTIME\fP * date, \fBASN1_OBJECT\fP * otherTypeId, \fBASN1_TYPE\fP * otherType)"
+
+.PP
+Definition at line 527 of file cms_env\&.c\&.
+.SS "\fBCMS_RecipientInfo\fP* CMS_add1_recipient_cert (\fBCMS_ContentInfo\fP * cms, \fBX509\fP * recip, unsigned int flags)"
+
+.PP
+Definition at line 230 of file cms_env\&.c\&.
+.SS "int cms_env_asn1_ctrl (\fBCMS_RecipientInfo\fP * ri, int cmd)"
+
+.PP
+Definition at line 103 of file cms_env\&.c\&.
+.SS "\fBCMS_ContentInfo\fP* CMS_EnvelopedData_create (const \fBEVP_CIPHER\fP * cipher)"
+
+.PP
+Definition at line 156 of file cms_env\&.c\&.
+.SS "\fBBIO\fP* cms_EnvelopedData_init_bio (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 911 of file cms_env\&.c\&.
+.SS "\fBCMS_EnvelopedData\fP* cms_get0_enveloped (\fBCMS_ContentInfo\fP * cms)"
+
+.PP
+Definition at line 75 of file cms_env\&.c\&.
+.SS "int cms_pkey_get_ri_type (\fBEVP_PKEY\fP * pk)"
+
+.PP
+Definition at line 965 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_decrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 805 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_encrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 824 of file cms_env\&.c\&.
+.SS "\fBEVP_PKEY_CTX\fP* CMS_RecipientInfo_get0_pkey_ctx (\fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 147 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_kekri_get0_id (\fBCMS_RecipientInfo\fP * ri, \fBX509_ALGOR\fP ** palg, \fBASN1_OCTET_STRING\fP ** pid, \fBASN1_GENERALIZEDTIME\fP ** pdate, \fBASN1_OBJECT\fP ** potherid, \fBASN1_TYPE\fP ** pothertype)"
+
+.PP
+Definition at line 628 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_kekri_id_cmp (\fBCMS_RecipientInfo\fP * ri, const unsigned char * id, size_t idlen)"
+
+.PP
+Definition at line 491 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_ktri_cert_cmp (\fBCMS_RecipientInfo\fP * ri, \fBX509\fP * cert)"
+
+.PP
+Definition at line 326 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_ktri_get0_algs (\fBCMS_RecipientInfo\fP * ri, \fBEVP_PKEY\fP ** pk, \fBX509\fP ** recip, \fBX509_ALGOR\fP ** palg)"
+
+.PP
+Definition at line 288 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_ktri_get0_signer_id (\fBCMS_RecipientInfo\fP * ri, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.PP
+Definition at line 310 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_set0_key (\fBCMS_RecipientInfo\fP * ri, unsigned char * key, size_t keylen)"
+
+.PP
+Definition at line 662 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_set0_pkey (\fBCMS_RecipientInfo\fP * ri, \fBEVP_PKEY\fP * pkey)"
+
+.PP
+Definition at line 336 of file cms_env\&.c\&.
+.SS "int CMS_RecipientInfo_type (\fBCMS_RecipientInfo\fP * ri)"
+
+.PP
+Definition at line 142 of file cms_env\&.c\&.
+.SS "STACK_OF (\fBCMS_RecipientInfo\fP)"
+
+.PP
+Definition at line 133 of file cms_env\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

@@ -1,0 +1,219 @@
+.TH "s2n/libcrypto-root/include/openssl/rand.h" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-root/include/openssl/rand.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBrand_meth_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBRAND_F_RAND_GET_RAND_METHOD\fP   101"
+.br
+.ti -1c
+.RI "#define \fBRAND_F_RAND_INIT_FIPS\fP   102"
+.br
+.ti -1c
+.RI "#define \fBRAND_F_SSLEAY_RAND_BYTES\fP   100"
+.br
+.ti -1c
+.RI "#define \fBRAND_R_DUAL_EC_DRBG_DISABLED\fP   104"
+.br
+.ti -1c
+.RI "#define \fBRAND_R_ERROR_INITIALISING_DRBG\fP   102"
+.br
+.ti -1c
+.RI "#define \fBRAND_R_ERROR_INSTANTIATING_DRBG\fP   103"
+.br
+.ti -1c
+.RI "#define \fBRAND_R_NO_FIPS_RANDOM_METHOD_SET\fP   101"
+.br
+.ti -1c
+.RI "#define \fBRAND_R_PRNG_NOT_SEEDED\fP   100"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBRAND_set_rand_method\fP (const \fBRAND_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "const \fBRAND_METHOD\fP * \fBRAND_get_rand_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_set_rand_engine\fP (\fBENGINE\fP *engine)"
+.br
+.ti -1c
+.RI "\fBRAND_METHOD\fP * \fBRAND_SSLeay\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRAND_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_bytes\fP (unsigned char *buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_pseudo_bytes\fP (unsigned char *buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRAND_seed\fP (const \fBvoid\fP *buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRAND_add\fP (const \fBvoid\fP *buf, int \fBnum\fP, double entropy)"
+.br
+.ti -1c
+.RI "int \fBRAND_load_file\fP (const char *\fBfile\fP, long max_bytes)"
+.br
+.ti -1c
+.RI "int \fBRAND_write_file\fP (const char *\fBfile\fP)"
+.br
+.ti -1c
+.RI "const char * \fBRAND_file_name\fP (char *\fBfile\fP, size_t \fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_status\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_query_egd_bytes\fP (const char *path, unsigned char *buf, int \fBbytes\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_egd\fP (const char *path)"
+.br
+.ti -1c
+.RI "int \fBRAND_egd_bytes\fP (const char *path, int \fBbytes\fP)"
+.br
+.ti -1c
+.RI "int \fBRAND_poll\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_RAND_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define RAND_F_RAND_GET_RAND_METHOD   101"
+
+.PP
+Definition at line 136 of file rand\&.h\&.
+.SS "#define RAND_F_RAND_INIT_FIPS   102"
+
+.PP
+Definition at line 137 of file rand\&.h\&.
+.SS "#define RAND_F_SSLEAY_RAND_BYTES   100"
+
+.PP
+Definition at line 138 of file rand\&.h\&.
+.SS "#define RAND_R_DUAL_EC_DRBG_DISABLED   104"
+
+.PP
+Definition at line 141 of file rand\&.h\&.
+.SS "#define RAND_R_ERROR_INITIALISING_DRBG   102"
+
+.PP
+Definition at line 142 of file rand\&.h\&.
+.SS "#define RAND_R_ERROR_INSTANTIATING_DRBG   103"
+
+.PP
+Definition at line 143 of file rand\&.h\&.
+.SS "#define RAND_R_NO_FIPS_RANDOM_METHOD_SET   101"
+
+.PP
+Definition at line 144 of file rand\&.h\&.
+.SS "#define RAND_R_PRNG_NOT_SEEDED   100"
+
+.PP
+Definition at line 145 of file rand\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ERR_load_RAND_strings (\fBvoid\fP)"
+
+.PP
+Definition at line 91 of file rand_err\&.c\&.
+.SS "\fBvoid\fP RAND_add (const \fBvoid\fP * buf, int num, double entropy)"
+
+.PP
+Definition at line 148 of file rand_lib\&.c\&.
+.SS "int RAND_bytes (unsigned char * buf, int num)"
+
+.PP
+Definition at line 155 of file rand_lib\&.c\&.
+.SS "\fBvoid\fP RAND_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 133 of file rand_lib\&.c\&.
+.SS "int RAND_egd (const char * path)"
+
+.PP
+Definition at line 287 of file rand_egd\&.c\&.
+.SS "int RAND_egd_bytes (const char * path, int bytes)"
+
+.PP
+Definition at line 274 of file rand_egd\&.c\&.
+.SS "const char* RAND_file_name (char * file, size_t num)"
+
+.PP
+Definition at line 306 of file randfile\&.c\&.
+.SS "const \fBRAND_METHOD\fP* RAND_get_rand_method (\fBvoid\fP)"
+
+.PP
+Definition at line 92 of file rand_lib\&.c\&.
+.SS "int RAND_load_file (const char * file, long max_bytes)"
+
+.PP
+Definition at line 131 of file randfile\&.c\&.
+.SS "int RAND_poll (\fBvoid\fP)"
+
+.PP
+Definition at line 243 of file rand_unix\&.c\&.
+.SS "int RAND_pseudo_bytes (unsigned char * buf, int num)"
+
+.PP
+Definition at line 163 of file rand_lib\&.c\&.
+.SS "int RAND_query_egd_bytes (const char * path, unsigned char * buf, int bytes)"
+
+.PP
+Definition at line 138 of file rand_egd\&.c\&.
+.SS "\fBvoid\fP RAND_seed (const \fBvoid\fP * buf, int num)"
+
+.PP
+Definition at line 141 of file rand_lib\&.c\&.
+.SS "int RAND_set_rand_engine (\fBENGINE\fP * engine)"
+
+.PP
+Definition at line 114 of file rand_lib\&.c\&.
+.SS "int RAND_set_rand_method (const \fBRAND_METHOD\fP * meth)"
+
+.PP
+Definition at line 80 of file rand_lib\&.c\&.
+.SS "\fBRAND_METHOD\fP* RAND_SSLeay (\fBvoid\fP)"
+
+.PP
+Definition at line 176 of file md_rand\&.c\&.
+.SS "int RAND_status (\fBvoid\fP)"
+
+.PP
+Definition at line 171 of file rand_lib\&.c\&.
+.SS "int RAND_write_file (const char * file)"
+
+.PP
+Definition at line 212 of file randfile\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

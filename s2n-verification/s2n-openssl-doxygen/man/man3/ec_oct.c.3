@@ -1,0 +1,136 @@
+.TH "s2n/libcrypto-build/openssl/crypto/ec/ec_oct.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/ec/ec_oct.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/opensslv\&.h>\fP
+.br
+\fC#include 'ec_lcl\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBEC_POINT_set_compressed_coordinates_GFp\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, int y_bit, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_set_compressed_coordinates_GF2m\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const \fBBIGNUM\fP *\fBx\fP, int y_bit, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "size_t \fBEC_POINT_point2oct\fP (const \fBEC_GROUP\fP *group, const \fBEC_POINT\fP *point, \fBpoint_conversion_form_t\fP \fBform\fP, unsigned char *buf, size_t \fBlen\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBEC_POINT_oct2point\fP (const \fBEC_GROUP\fP *group, \fBEC_POINT\fP *point, const unsigned char *buf, size_t \fBlen\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int EC_POINT_oct2point (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * p, const unsigned char * buf, size_t len, \fBBN_CTX\fP * ctx)"
+Decodes a EC_POINT from a octet string 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIbuf\fP memory buffer with the encoded ec point 
+.br
+\fIlen\fP length of the encoded ec point 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 166 of file ec_oct\&.c\&.
+.SS "size_t EC_POINT_point2oct (const \fBEC_GROUP\fP * group, const \fBEC_POINT\fP * p, \fBpoint_conversion_form_t\fP form, unsigned char * buf, size_t len, \fBBN_CTX\fP * ctx)"
+Encodes a EC_POINT object to a octet string 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIform\fP point conversion form 
+.br
+\fIbuf\fP memory buffer for the result\&. If NULL the function returns required buffer size\&. 
+.br
+\fIlen\fP length of the memory buffer 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the length of the encoded octet string or 0 if an error occurred 
+.RE
+.PP
+
+.PP
+Definition at line 135 of file ec_oct\&.c\&.
+.SS "int EC_POINT_set_compressed_coordinates_GF2m (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * p, const \fBBIGNUM\fP * x, int y_bit, \fBBN_CTX\fP * ctx)"
+Sets the x9\&.62 compressed coordinates of a EC_POINT over GF2m 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM with x-coordinate 
+.br
+\fIy_bit\fP integer with the y-Bit (either 0 or 1) 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 107 of file ec_oct\&.c\&.
+.SS "int EC_POINT_set_compressed_coordinates_GFp (const \fBEC_GROUP\fP * group, \fBEC_POINT\fP * p, const \fBBIGNUM\fP * x, int y_bit, \fBBN_CTX\fP * ctx)"
+Sets the x9\&.62 compressed coordinates of a EC_POINT over GFp 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgroup\fP underlying EC_GROUP object 
+.br
+\fIp\fP EC_POINT object 
+.br
+\fIx\fP BIGNUM with x-coordinate 
+.br
+\fIy_bit\fP integer with the y-Bit (either 0 or 1) 
+.br
+\fIctx\fP BN_CTX object (optional) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 if an error occured 
+.RE
+.PP
+
+.PP
+Definition at line 71 of file ec_oct\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

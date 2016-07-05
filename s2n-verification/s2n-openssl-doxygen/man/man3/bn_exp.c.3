@@ -1,0 +1,128 @@
+.TH "s2n/libcrypto-build/openssl/crypto/bn/bn_exp.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/bn/bn_exp.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include 'constant_time_locl\&.h'\fP
+.br
+\fC#include 'bn_lcl\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include 'rsaz_exp\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTABLE_SIZE\fP   32"
+.br
+.ti -1c
+.RI "#define \fBMONT_MUL_MOD\fP"
+.br
+.ti -1c
+.RI "#define \fBMONT_EXP_WORD\fP"
+.br
+.ti -1c
+.RI "#define \fBRECP_MUL_MOD\fP"
+.br
+.ti -1c
+.RI "#define \fBMOD_EXP_CTIME_ALIGN\fP(x_)   ((unsigned char*)(x_) + (\fBMOD_EXP_CTIME_MIN_CACHE_LINE_WIDTH\fP \- (((size_t)(x_)) & (\fBMOD_EXP_CTIME_MIN_CACHE_LINE_MASK\fP))))"
+.br
+.ti -1c
+.RI "#define \fBBN_MOD_MUL_WORD\fP(r,  w,  m)"
+.br
+.ti -1c
+.RI "#define \fBBN_TO_MONTGOMERY_WORD\fP(r,  w,  mont)   (\fBBN_set_word\fP(r, (w)) && \fBBN_to_montgomery\fP(r, r, (mont), \fBctx\fP))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBBN_exp\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_mod_exp\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_mod_exp_recp\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBBN_mod_exp_mont\fP (\fBBIGNUM\fP *rr, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *in_mont)"
+.br
+.ti -1c
+.RI "int \fBBN_mod_exp_mont_consttime\fP (\fBBIGNUM\fP *rr, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *in_mont)"
+.br
+.ti -1c
+.RI "int \fBBN_mod_exp_mont_word\fP (\fBBIGNUM\fP *rr, BN_ULONG \fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP, \fBBN_MONT_CTX\fP *in_mont)"
+.br
+.ti -1c
+.RI "int \fBBN_mod_exp_simple\fP (\fBBIGNUM\fP *r, const \fBBIGNUM\fP *\fBa\fP, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *m, \fBBN_CTX\fP *\fBctx\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BN_MOD_MUL_WORD(r, w, m)"
+\fBValue:\fP
+.PP
+.nf
+(BN_mul_word(r, (w)) && \
+                (/* BN_ucmp(r, (m)) < 0 ? 1 :*/  \
+                        (BN_mod(t, r, m, ctx) && (swap_tmp = r, r = t, t = swap_tmp, 1))))
+.fi
+.SS "#define BN_TO_MONTGOMERY_WORD(r, w, mont)   (\fBBN_set_word\fP(r, (w)) && \fBBN_to_montgomery\fP(r, r, (mont), \fBctx\fP))"
+
+.SS "#define MOD_EXP_CTIME_ALIGN(x_)   ((unsigned char*)(x_) + (\fBMOD_EXP_CTIME_MIN_CACHE_LINE_WIDTH\fP \- (((size_t)(x_)) & (\fBMOD_EXP_CTIME_MIN_CACHE_LINE_MASK\fP))))"
+
+.PP
+Definition at line 684 of file bn_exp\&.c\&.
+.SS "#define MONT_EXP_WORD"
+
+.SS "#define MONT_MUL_MOD"
+
+.SS "#define RECP_MUL_MOD"
+
+.SS "#define TABLE_SIZE   32"
+
+.PP
+Definition at line 140 of file bn_exp\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int BN_exp (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * p, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 143 of file bn_exp\&.c\&.
+.SS "int BN_mod_exp (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 192 of file bn_exp\&.c\&.
+.SS "int BN_mod_exp_mont (\fBBIGNUM\fP * rr, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx, \fBBN_MONT_CTX\fP * in_mont)"
+
+.PP
+Definition at line 402 of file bn_exp\&.c\&.
+.SS "int BN_mod_exp_mont_consttime (\fBBIGNUM\fP * rr, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx, \fBBN_MONT_CTX\fP * in_mont)"
+
+.PP
+Definition at line 694 of file bn_exp\&.c\&.
+.SS "int BN_mod_exp_mont_word (\fBBIGNUM\fP * rr, BN_ULONG a, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx, \fBBN_MONT_CTX\fP * in_mont)"
+
+.PP
+Definition at line 1193 of file bn_exp\&.c\&.
+.SS "int BN_mod_exp_recp (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 269 of file bn_exp\&.c\&.
+.SS "int BN_mod_exp_simple (\fBBIGNUM\fP * r, const \fBBIGNUM\fP * a, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * m, \fBBN_CTX\fP * ctx)"
+
+.PP
+Definition at line 1341 of file bn_exp\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.

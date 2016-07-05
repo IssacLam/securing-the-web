@@ -1,0 +1,97 @@
+.TH "s2n/libcrypto-build/openssl/crypto/x509v3/v3_asid.c" 3 "Thu Jun 30 2016" "s2n-openssl-doxygen" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n/libcrypto-build/openssl/crypto/x509v3/v3_asid.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/asn1t\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBvalidation_err\fP(_err_)                  "
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBASN1_SEQUENCE\fP (\fBASRange\fP)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_inherits\fP (\fBASIdentifiers\fP *asid)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_subset\fP (\fBASIdentifiers\fP *\fBa\fP, \fBASIdentifiers\fP *\fBb\fP)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_validate_path\fP (\fBX509_STORE_CTX\fP *\fBctx\fP)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_validate_resource_set\fP (\fBSTACK_OF\fP(\fBX509\fP)*chain, \fBASIdentifiers\fP *\fBext\fP, int allow_inheritance)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define validation_err(_err_)"
+\fBValue:\fP
+.PP
+.nf
+do {                                  \
+    if (ctx != NULL) {                  \
+      ctx->error = _err_;               \
+      ctx->error_depth = i;             \
+      ctx->current_cert = x;            \
+      ret = ctx->verify_cb(0, ctx);     \
+    } else {                            \
+      ret = 0;                          \
+    }                                   \
+    if (!ret)                           \
+      goto done;                        \
+  } while (0)
+.fi
+.PP
+Definition at line 737 of file v3_asid\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "ASN1_SEQUENCE (\fBASRange\fP)"
+
+.SS "int v3_asid_inherits (\fBASIdentifiers\fP * asid)"
+
+.PP
+Definition at line 678 of file v3_asid\&.c\&.
+.SS "int v3_asid_subset (\fBASIdentifiers\fP * a, \fBASIdentifiers\fP * b)"
+
+.PP
+Definition at line 721 of file v3_asid\&.c\&.
+.SS "int v3_asid_validate_path (\fBX509_STORE_CTX\fP * ctx)"
+
+.PP
+Definition at line 875 of file v3_asid\&.c\&.
+.SS "int v3_asid_validate_resource_set (\fBSTACK_OF\fP(\fBX509\fP)* chain, \fBASIdentifiers\fP * ext, int allow_inheritance)"
+
+.PP
+Definition at line 884 of file v3_asid\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-openssl-doxygen from the source code\&.
