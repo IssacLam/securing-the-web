@@ -8,7 +8,6 @@ int main(int argc, char * const *argv){
         uint32_t size;
         int result;
 
-        stuffer = malloc(sizeof(struct s2n_stuffer));
         size = nondet_uint32();
 
        // __CPROVER_assume(stuffer != NULL);

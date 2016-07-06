@@ -1,3 +1,9 @@
+# Working on 
+
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/tls/s2n_prf.c --function s2n_p_hash ./s2n-lib/openssl/*.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c --unwind 1
+
+Create stub for CC_SHA_* & CC_MD_*
+
 # Relink the dynamic library
 
 install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nc
