@@ -23,8 +23,9 @@ int main(int argc, char **argv){
 
         struct s2n_blob out = {.data = output_pad, .size = sizeof(output_pad) };
         
-        length = nondet_uint8();
-        __CPROVER_assume(length <= 10);
+        //length = nondet_uint8();
+        length = 1000;
+        __CPROVER_assume(length <= 1000);
         msg = malloc(sizeof(uint8_t) * length);
 
         for(uint64_t i = 0; i < length; i++)
