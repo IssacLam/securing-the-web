@@ -33,7 +33,7 @@ void SHA1Transform(CC_SHA1_CTX *c, const void *data){
 
 // initialized with sha1 constant
 int CC_SHA1_Init(CC_SHA1_CTX *c){
-        __CPROVER_assert(!c, "ERROR: CC_SHA1_Init c is null"); 
+        __CPROVER_assert(c != NULL, "ERROR: CC_SHA1_Init c is null"); 
 
         c->h0 = 0x67452301;
         c->h1 = 0xEFCDAB89;
@@ -48,8 +48,8 @@ int CC_SHA1_Init(CC_SHA1_CTX *c){
 #define SHA1_DIGEST_SIZE        20
 
 int CC_SHA1_Update(CC_SHA1_CTX *c, const void *data, CC_LONG len){
-        __CPROVER_assert(!c, "ERROR: CC_SHA1_Update c is null");
-        __CPROVER_assert(!data, "ERROR: CC_SHA1_Update data is null");
+        __CPROVER_assert(c != NULL, "ERROR: CC_SHA1_Update c is null");
+        __CPROVER_assert(data != NULL, "ERROR: CC_SHA1_Update data is null");
 
         // calculate the message size
         // Nl = low bits, Nh = high bits
@@ -74,8 +74,8 @@ int CC_SHA1_Update(CC_SHA1_CTX *c, const void *data, CC_LONG len){
 };
 
 int CC_SHA1_Final(unsigned char *md, CC_SHA1_CTX *c){
-        __CPROVER_assert(!md, "ERROR: CC_SHA1_Final md is null");
-        __CPROVER_assert(!c, "ERROR: CC_SHA1_Final c is null");
+        __CPROVER_assert(md != NULL, "ERROR: CC_SHA1_Final md is null");
+        __CPROVER_assert(c != NULL, "ERROR: CC_SHA1_Final c is null");
 
         uint32_t i;
         uint8_t finalcount[8];
@@ -85,7 +85,7 @@ int CC_SHA1_Final(unsigned char *md, CC_SHA1_CTX *c){
                 finalcount[i] = (unsigned char) (((i >= 4 ? c->Nl : c->Nh) >> ((3 - (i & 3)) * 8)) & 255);        // Endian independent 
         
         // Padding 4.a & b
-        SHA1_Update(c, (uint8_t *) "\200", 1);
+        CC_SHA1_Update(c, (uint8_t *) "\200", 1);
         
         // Padding 4.b
         while ((c->Nl & 504) != 448) 
@@ -93,13 +93,14 @@ int CC_SHA1_Final(unsigned char *md, CC_SHA1_CTX *c){
         
         // Padding 4.c 
         // Should cause a SHA1_Transform();
-        SHA1_Update(c, finalcount, 8); 
+        CC_SHA1_Update(c, finalcount, 8); 
         for (i = 0; i < SHA1_DIGEST_SIZE; i++)
                 md[i] = (uint8_t) ((c->data[i >> 2] >> ((3 - (i & 3)) * 8)) & 255);
 
         //Wipe variables 
         i = 0;
         c->Nl = c->Nh = c->num = 0;
+        c->h0 = c->h1 = c->h2 = c->h3 = c->h4 = 0;
         memset(c->data, 0, 8);
         memset(finalcount, 0, 8);
 
