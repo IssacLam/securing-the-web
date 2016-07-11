@@ -2,9 +2,13 @@
 
 cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/tls/s2n_prf.c --function s2n_p_hash ./s2n-lib/openssl/*.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c --unwind 1
 
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n/stuffer/s2n_stuffer.c --unwind 10
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n-lib/CommonCrypto/CommonDigest.c ./s2n/stuffer/s2n_stuffer.c --unwind 10
 
 Create stub for CC_SHA_* & CC_MD_*
+
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/crypto/s2n_hmac.c --function s2n_hmac_reset
+
+This will terminate.
 
 # Relink the dynamic library
 
