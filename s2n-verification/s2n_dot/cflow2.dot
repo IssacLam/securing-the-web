@@ -1,0 +1,132 @@
+digraph G {
+node [peripheries=2 style="filled,rounded" fontname="Vera Sans Mono" color="#eecc80"];
+rankdir=LR;
+label="../s2n/crypto/s2n_hash.c"
+main [shape=box];
+SHA256_Init[label="SHA256_Init" color="#eecc80" shape=ellipse];
+
+SHA224_Final[label="SHA224_Final" color="#eecc80" shape=ellipse];
+
+s2n_hash_digest_size[label="s2n_hash_digest_size\n25" color="#eecc80" shape=box];
+
+eq_check[label="eq_check" color="#eecc80" shape=ellipse];
+
+SHA512_Final[label="SHA512_Final" color="#eecc80" shape=ellipse];
+
+SHA1_Final[label="SHA1_Final" color="#eecc80" shape=ellipse];
+
+s2n_hash_update[label="s2n_hash_update\n75" color="#eecc80" shape=box];
+
+s2n_hash_digest[label="s2n_hash_digest\n115" color="#eecc80" shape=box];
+
+s2n_hash_init[label="s2n_hash_init\n32" color="#eecc80" shape=box];
+
+SHA512_Update[label="SHA512_Update" color="#eecc80" shape=ellipse];
+
+SHA512_Init[label="SHA512_Init" color="#eecc80" shape=ellipse];
+
+SHA1_Init[label="SHA1_Init" color="#eecc80" shape=ellipse];
+
+MD5_Final[label="MD5_Final" color="#eecc80" shape=ellipse];
+
+MD5_Update[label="MD5_Update" color="#eecc80" shape=ellipse];
+
+SHA224_Update[label="SHA224_Update" color="#eecc80" shape=ellipse];
+
+SHA384_Final[label="SHA384_Final" color="#eecc80" shape=ellipse];
+
+s2n_hash_reset[label="s2n_hash_reset\n162" color="#eecc80" shape=box];
+
+S2N_ERROR[label="S2N_ERROR" color="#eecc80" shape=ellipse];
+
+memcpy_check[label="memcpy_check" color="#eecc80" shape=ellipse];
+
+SHA1_Update[label="SHA1_Update" color="#eecc80" shape=ellipse];
+
+SHA384_Init[label="SHA384_Init" color="#eecc80" shape=ellipse];
+
+SHA256_Final[label="SHA256_Final" color="#eecc80" shape=ellipse];
+
+SHA256_Update[label="SHA256_Update" color="#eecc80" shape=ellipse];
+
+s2n_hash_copy[label="s2n_hash_copy\n167" color="#eecc80" shape=box];
+
+SHA224_Init[label="SHA224_Init" color="#eecc80" shape=ellipse];
+
+SHA384_Update[label="SHA384_Update" color="#eecc80" shape=ellipse];
+
+MD5_Init[label="MD5_Init" color="#eecc80" shape=ellipse];
+
+edge [color="#000000"];
+
+s2n_hash_update->SHA1_Update
+edge [color="#000000"];
+
+s2n_hash_update->MD5_Update
+edge [color="#000000"];
+
+s2n_hash_update->SHA512_Update
+edge [color="#000000"];
+
+s2n_hash_update->SHA224_Update
+edge [color="#000000"];
+
+s2n_hash_update->S2N_ERROR
+edge [color="#000000"];
+
+s2n_hash_update->SHA384_Update
+edge [color="#000000"];
+
+s2n_hash_update->SHA256_Update
+edge [color="#000000"];
+
+s2n_hash_digest->eq_check
+edge [color="#000000"];
+
+s2n_hash_digest->MD5_Final
+edge [color="#000000"];
+
+s2n_hash_digest->SHA224_Final
+edge [color="#000000"];
+
+s2n_hash_digest->SHA256_Final
+edge [color="#000000"];
+
+s2n_hash_digest->SHA512_Final
+edge [color="#000000"];
+
+s2n_hash_digest->SHA1_Final
+edge [color="#000000"];
+
+s2n_hash_digest->SHA384_Final
+edge [color="#000000"];
+
+s2n_hash_digest->S2N_ERROR
+edge [color="#000000"];
+
+s2n_hash_init->SHA512_Init
+edge [color="#000000"];
+
+s2n_hash_init->SHA256_Init
+edge [color="#000000"];
+
+s2n_hash_init->SHA384_Init
+edge [color="#000000"];
+
+s2n_hash_init->SHA224_Init
+edge [color="#000000"];
+
+s2n_hash_init->S2N_ERROR
+edge [color="#000000"];
+
+s2n_hash_init->MD5_Init
+edge [color="#000000"];
+
+s2n_hash_init->SHA1_Init
+edge [color="#000000"];
+
+s2n_hash_reset->s2n_hash_init
+edge [color="#000000"];
+
+s2n_hash_copy->memcpy_check
+}

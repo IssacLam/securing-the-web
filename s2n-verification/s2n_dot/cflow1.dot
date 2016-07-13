@@ -1,0 +1,136 @@
+digraph G {
+node [peripheries=2 style="filled,rounded" fontname="Vera Sans Mono" color="#eecc80"];
+rankdir=LR;
+label="../s2n/crypto/s2n_hmac.c"
+main [shape=box];
+memcpy_check[label="memcpy_check" color="#eecc80" shape=ellipse];
+
+S2N_ERROR[label="S2N_ERROR" color="#eecc80" shape=ellipse];
+
+s2n_hmac_reset[label="s2n_hmac_reset\n234" color="#ccee80" shape=octagon];
+
+s2n_hmac_digest_two_compression_rounds[label="s2n_hmac_digest_two_compression_rounds\n216" color="#eecc80" shape=box];
+
+gte_check[label="gte_check" color="#eecc80" shape=ellipse];
+
+s2n_hmac_digest[label="s2n_hmac_digest\n202" color="#eecc80" shape=box];
+
+s2n_constant_time_equals[label="s2n_constant_time_equals" color="#eecc80" shape=ellipse];
+
+s2n_hash_digest_size[label="s2n_hash_digest_size" color="#eecc80" shape=ellipse];
+
+s2n_hmac_update[label="s2n_hmac_update\n173" color="#eecc80" shape=box];
+
+GUARD[label="GUARD" color="#ccee80" shape=octagon];
+
+s2n_hmac_copy[label="s2n_hmac_copy\n247" color="#eecc80" shape=box];
+
+s2n_hash_update[label="s2n_hash_update" color="#ccee80" shape=octagon];
+
+s2n_hmac_init[label="s2n_hmac_init\n84" color="#eecc80" shape=box];
+
+s2n_sslv3_mac_init[label="s2n_sslv3_mac_init\n40" color="#eecc80" shape=ellipse];
+
+s2n_hash_reset[label="s2n_hash_reset" color="#eecc80" shape=ellipse];
+
+s2n_hash_digest[label="s2n_hash_digest" color="#ccee80" shape=octagon];
+
+s2n_sslv3_mac_digest[label="s2n_sslv3_mac_digest\n71" color="#eecc80" shape=ellipse];
+
+s2n_hmac_digest_size[label="s2n_hmac_digest_size\n28" color="#eecc80" shape=box];
+
+s2n_hash_init[label="s2n_hash_init" color="#ccee80" shape=octagon];
+
+s2n_hmac_digest_verify[label="s2n_hmac_digest_verify\n242" color="#eecc80" shape=box];
+
+edge [color="#000000"];
+
+s2n_hmac_reset->memcpy_check
+edge [color="#000000"];
+
+s2n_hmac_digest_two_compression_rounds->GUARD
+edge [color="#000000"];
+
+s2n_hmac_digest_two_compression_rounds->s2n_hmac_digest
+edge [color="#000000"];
+
+s2n_hmac_digest_two_compression_rounds->s2n_hash_update
+edge [color="#000000"];
+
+s2n_hmac_digest->s2n_hash_reset
+edge [color="#000000"];
+
+s2n_hmac_digest->GUARD
+edge [color="#000000"];
+
+s2n_hmac_digest->s2n_sslv3_mac_digest
+edge [color="#000000"];
+
+s2n_hmac_digest->s2n_hash_digest
+edge [color="#000000"];
+
+s2n_hmac_digest->s2n_hash_update
+edge [color="#000000"];
+
+s2n_hmac_update->s2n_hash_update
+edge [color="#000000"];
+
+s2n_hmac_copy->memcpy_check
+edge [color="#000000"];
+
+s2n_hmac_init->memcpy_check
+edge [color="#000000"];
+
+s2n_hmac_init->gte_check
+edge [color="#000000"];
+
+s2n_hmac_init->s2n_hmac_reset
+edge [color="#000000"];
+
+s2n_hmac_init->GUARD
+edge [color="#000000"];
+
+s2n_hmac_init->s2n_sslv3_mac_init
+edge [color="#000000"];
+
+s2n_hmac_init->s2n_hash_update
+edge [color="#000000"];
+
+s2n_hmac_init->S2N_ERROR
+edge [color="#000000"];
+
+s2n_hmac_init->s2n_hash_digest
+edge [color="#000000"];
+
+s2n_hmac_init->s2n_hash_init
+edge [color="#000000"];
+
+s2n_sslv3_mac_init->GUARD
+edge [color="#000000"];
+
+s2n_sslv3_mac_init->s2n_hash_update
+edge [color="#000000"];
+
+s2n_sslv3_mac_init->s2n_hash_init
+edge [color="#000000"];
+
+s2n_sslv3_mac_init->s2n_hmac_reset
+edge [color="#000000"];
+
+s2n_sslv3_mac_digest->GUARD
+edge [color="#000000"];
+
+s2n_sslv3_mac_digest->memcpy_check
+edge [color="#000000"];
+
+s2n_sslv3_mac_digest->s2n_hash_digest
+edge [color="#000000"];
+
+s2n_sslv3_mac_digest->s2n_hash_update
+edge [color="#000000"];
+
+s2n_hmac_digest_size->s2n_hash_digest_size
+edge [color="#000000"];
+
+s2n_hmac_digest_verify->s2n_constant_time_equals
+}

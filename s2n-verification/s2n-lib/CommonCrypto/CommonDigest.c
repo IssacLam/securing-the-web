@@ -58,9 +58,9 @@ int CC_MD2_Final(unsigned char *md, CC_MD2_CTX *c) {
     
     *c = nondet_CC_MD2_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < MD2_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
-    
+   // for (uint8_t i = 0; i < MD2_DIGEST_SIZE; i++)
+        md[MD2_DIGEST_SIZE - 1] = nondet_uint8();  // write something to the last index of an array
+        
     return 1;
 };
 
@@ -90,8 +90,8 @@ int CC_MD4_Final(unsigned char *md, CC_MD4_CTX *c) {
     
     *c = nondet_CC_MD4_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < MD4_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
+    // for (uint8_t i = 0; i < MD4_DIGEST_SIZE; i++)
+        md[MD4_DIGEST_SIZE - 1] = nondet_uint8();         //return not deterministic hmac value
 
     return 1;
 };
@@ -122,8 +122,8 @@ int CC_MD5_Final(unsigned char *md, CC_MD5_CTX *c) {
     
     *c = nondet_CC_MD5_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < MD5_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
+    // for (uint8_t i = 0; i < MD5_DIGEST_SIZE; i++)
+        md[MD5_DIGEST_SIZE - 1] = nondet_uint8();         //return not deterministic hmac value
     
     return 1;
 };
@@ -215,13 +215,18 @@ int CC_SHA1_Final(unsigned char *md, CC_SHA1_CTX *c){
 
        *c = nondet_CC_SHA1_CTX(); // final update, we don't care about the value
 
-        for (uint8_t i = 0; i < SHA1_DIGEST_SIZE; i++)
-                md[i] = nondet_uint8();         //return not deterministic hmac value
+        
+        //for (uint8_t i = 0; i < SHA1_DIGEST_SIZE; i++) {
+                md[SHA1_DIGEST_SIZE - 1] = nondet_uint8();
+                //uint8_t t = nondet_uint8();
+                //__CPROVER_assume(!(md[i] == t));
+                //md[i] = t;   //return not deterministic hmac value
+        //}
 
         //Wipe variables 
-        c->Nl = c->Nh = c->num = 0;
-        c->h0 = c->h1 = c->h2 = c->h3 = c->h4 = 0;
-        memset(c->data, 0, 8);
+        //c->Nl = c->Nh = c->num = 0;
+        //c->h0 = c->h1 = c->h2 = c->h3 = c->h4 = 0;
+        //memset(c->data, 0, 8);
 
         return 1;
 };
@@ -247,8 +252,8 @@ int CC_SHA224_Final(unsigned char *md, CC_SHA256_CTX *c){
     
     *c = nondet_CC_SHA256_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < SHA224_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
+    //for (uint8_t i = 0; i < SHA224_DIGEST_SIZE; i++)
+        md[SHA224_DIGEST_SIZE - 1] = nondet_uint8();         //return not deterministic hmac value
     
     return 1;
 };
@@ -279,8 +284,8 @@ int CC_SHA256_Final(unsigned char *md, CC_SHA256_CTX *c){
     
     *c = nondet_CC_SHA256_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < SHA256_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
+    // for (uint8_t i = 0; i < SHA256_DIGEST_SIZE; i++)
+        md[SHA256_DIGEST_SIZE - 1] = nondet_uint8();         //return not deterministic hmac value
     
     return 1;
 };
@@ -306,8 +311,8 @@ int CC_SHA384_Final(unsigned char *md, CC_SHA512_CTX *c){
     
     *c = nondet_CC_SHA512_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < SHA384_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
+    //for (uint8_t i = 0; i < SHA384_DIGEST_SIZE; i++)
+        md[SHA384_DIGEST_SIZE - 1] = nondet_uint8();         //return not deterministic hmac value
     
     return 1;
 };
@@ -338,8 +343,8 @@ int CC_SHA512_Final(unsigned char *md, CC_SHA512_CTX *c){
     
     *c = nondet_CC_SHA512_CTX(); // final update, we don't care about the value
     
-    for (uint8_t i = 0; i < SHA512_DIGEST_SIZE; i++)
-        md[i] = nondet_uint8();         //return not deterministic hmac value
+    //for (uint8_t i = 0; i < SHA512_DIGEST_SIZE; i++)
+        md[SHA512_DIGEST_SIZE - 1] = nondet_uint8();         //return not deterministic hmac value
     
     return 1;
 };

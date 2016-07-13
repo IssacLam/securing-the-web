@@ -2,13 +2,13 @@
 
 cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/tls/s2n_prf.c --function s2n_p_hash ./s2n-lib/openssl/*.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c --unwind 1
 
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n-lib/CommonCrypto/CommonDigest.c ./s2n/stuffer/s2n_stuffer.c --unwind 10
+- [X] Create stub for CC_SHA_* & CC_MD_*
 
-Create stub for CC_SHA_* & CC_MD_*
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_hash_harness.c ./s2n/crypto/s2n_hash.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset main.0:3
 
-cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/crypto/s2n_hmac.c --function s2n_hmac_reset
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset s2n_hmac_init.2:64,s2n_hmac_init.3:64,s2n_hmac_init.4:128,s2n_hmac_init.5:128,s2n_hmac_init.6:128,s2n_hmac_init.7:128,s2n_hmac_init.8:128,s2n_sslv3_mac_init.0:48,s2n_sslv3_mac_init.1:48,s2n_sslv3_mac_digest.0:48,__builtin___memcpy_chk.0:216,main.0:2 --unsigned-overflow-check
 
-This will terminate.
+Success!
 
 # Relink the dynamic library
 
