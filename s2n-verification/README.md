@@ -2,7 +2,9 @@
 
 cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n/tls/s2n_prf.c --function s2n_p_hash ./s2n-lib/openssl/*.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c --unwind 1
 
-- [X] Create stub for CC_SHA_* & CC_MD_*
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_tls_prf_harness.c ./s2n/tls/s2n_connection.c ./s2n/stuffer/s2n_stuffer.c ./s2n/utils/s2n_mem.c ./s2n/utils/s2n_blob.c ./s2n/crypto/s2n_dhe.c ./s2n-lib/stdlib.c --show-loops >> ./s2n-loop-analysis/prf-loops-analysis.txt
+
+- [X] ~~Create stub for CC_SHA_* & CC_MD_*~~
 
 cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_hash_harness.c ./s2n/crypto/s2n_hash.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset main.0:3
 
@@ -18,7 +20,7 @@ install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nd
 
 -----
 
-# Functions to verify:
+# Pending - Functions to verify:
 
 - [ ] ./s2n/crypto/s2n_aead_cipher_aes_gcm.c : s2n_aead_cipher_aes_gcm_encrypt
 - [ ] ./s2n/crypto/s2n_aead_cipher_aes_gcm.c : s2n_aead_cipher_aes_gcm_decrypt
