@@ -1,4 +1,43 @@
-# Working on 
+# Plan
+
+- [ ] Report : Restructure the Background
+- [ ] Experiment : Turn Unit testing to formal verification analysis
+
+# Turning Unit test to formal verification analysis
+
+- [ ] s2n_3des_test.c
+- [ ] s2n_aead_aes_test.c
+- [ ] s2n_aes_test.c
+- [ ] s2n_cbc_verify_test.c
+- [ ] s2n_cipher_suite_match_test.c
+- [ ] s2n_client_disabled_test.c
+- [ ] s2n_client_extensions_test.c
+- [ ] s2n_drbg_test.c
+- [ ] s2n_ecc_test.c
+- [ ] s2n_fragmentation_coalescing_test.c
+- [ ] s2n_handshake_test.c
+- [ ] s2n_hash_test.c
+- [ ] s2n_hmac_test.c
+- [ ] s2n_malformed_handshake_test.c
+- [ ] s2n_override_openssl_random_test.c
+- [ ] s2n_pem_rsa_dhe_test.c
+- [ ] s2n_random_test.c
+- [ ] s2n_rc4_test.c
+- [ ] s2n_record_size.c
+- [ ] s2n_record_test.c
+- [ ] s2n_safety_test.c
+- [ ] s2n_self_talk_alpn_test.c
+- [ ] s2n_self_talk_test.c
+- [ ] s2n_ssl_prf_test.c
+- [ ] s2n_stuffer_base64_test.c
+- [ ] s2n_stuffer_hex_test.c
+- [ ] s2n_stuffer_test.c
+- [ ] s2n_stuffer_text_test.c
+- [ ] s2n_timer_test.c
+- [ ] s2n_tls_prf_test.c
+- [ ] s2n_tls_record_stuffer_test.c
+
+# Top-down command
 
 cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl -I ./s2n/libcrypto-build/openssl/crypto -I ./s2n/libcrypto-build/openssl/crypto/engine -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/s2n_test_harness.c ./s2n/utils/s2n_random.c ./s2n/crypto/s2n_drbg.c ./s2n/utils/s2n_mem.c ./s2n-lib/unistd.c ./s2n-lib/openssl/engine.c ./s2n-lib/fcntl.c --unwind 1 --unwindset __builtin___memcpy_chk.0:65,read.0:33,read.1:33,s2n_get_urandom_data.0:65,s2n_drbg_seed.0:33,s2n_drbg_bits.0:33,s2n_drbg_bits.1:33,s2n_drbg_bits.2:33,s2n_drbg_update.0:33,s2n_drbg_update.1:33,s2n_drbg_update.2:33,s2n_drbg_update.3:33
 
@@ -18,7 +57,7 @@ Success!
 # Grep no body Functions
 | grep -E "\*{4} WARNING:"
 
-# Relink the dynamic library
+# Relink the dynamic library for executing s2n sample code
 
 install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nc
 
@@ -26,7 +65,7 @@ install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib s2nd
 
 -----
 
-# Pending - Functions to verify:
+# Pending - Buttom-up functions to verify:
 
 - [ ] ./s2n/crypto/s2n_aead_cipher_aes_gcm.c : s2n_aead_cipher_aes_gcm_encrypt
 - [ ] ./s2n/crypto/s2n_aead_cipher_aes_gcm.c : s2n_aead_cipher_aes_gcm_decrypt
