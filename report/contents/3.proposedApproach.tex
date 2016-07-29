@@ -1,0 +1,38 @@
+\chapter{Approach and Hypothesis} % and System Implementation}
+
+\section{Methodology}
+% Proposed method.
+In this project, we will verify the above software packages with the help of CBMC. The verification process can be separated into two stages. We will first conduct a low-level verification on them to ensure the memory safety with those generic checks provided by CMBC: 1) array bounds checks, 2) division by zero checks, 3) pointer checks, 4) memory leak checks, and 5) arithmetic over- and underflow checks.
+% There are two different versions in order to support both signed types (e.g, int, long) and unsigned types (e.g, unsigned int, unsigned long). It will check whether there are any arithmetic over- and underflow on addition, subtraction, multiplication, division and negation operations. 
+
+Then, we will go though the implementation and perform an application-level verification to ensure the correctness of the implementation. According to the approaches that the packages based on, we study the behaviour of each function, and then extract the specifications of them. Each specification consists of a pre-condition and a post-condition. A pre-condition stating the property required of the input is the responsibility of the environment. Hence, it is modelled by an assumption to assume the property holds before function has been executed. A post-condition describes the property of the output established by the function which is modelled by an assertion. Then, we inject these assumptions and assertions into each functions in order to capture the functional properties of the two applications. If all the properties pass the verification, then we can conclude that they are implemented correctly and memory safe.
+
+\subsection{Assumption and Assertion}
+
+\subsection{Nondeterminism}
+
+\subsection{Top-down vs Bottom-up}
+% reduce the false alarm.
+
+\subsection{Safety properties check}
+\subsubsection{Bounds check}
+\subsubsection{Divided by zero check}
+\subsubsection{Pointer check}
+\subsubsection{Memory leak check}
+\subsubsection{Arithmetic overflow check}
+
+
+\subsection{Liveness properties check}
+
+
+
+\subsection{Specification Identification}
+
+\subsection{Function call graph analysis}
+
+\subsection{Stubbing}
+A stub method is a method that just returns a simple but valid (though not necessarily correct) result.
+
+\subsection{Loops analysis}
+% A Survey of Automated Techniques for Formal Software Verification
+This time is given by a bound on the maximum number of loop iterations and is usually computed via a simple syntactic analysis of loop structures. If the syntactic analysis fails, an iterative algorithm can be applied. First, a guess of the bound on the number of loop iterations is made. The loop is then unrolled up to this bound, as in Fig. 6, but with the assumption replaced by an assertion called an unwinding assertion. If the assertion is violated, there are paths in the program exceeding the bound, and a new guess for the bound is made [38], [83]. This method is applicable if the program (or its main loop body) has a run-time bound, which is highly desirable for many embedded applications.

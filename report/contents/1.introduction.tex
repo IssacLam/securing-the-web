@@ -1,0 +1,47 @@
+% What is the problem?
+% Why is it interesting and important?
+% Why is it hard? (E.g., why do naive approaches fail?)
+% Why hasn't it been solved before? (Or, what's wrong with previous proposed solutions? How does mine differ?)
+% What are the key components of my approach and results? Also include any specific limitations.
+
+\chapter{Introduction}
+% Towards Improving Software Security using Language Engineering and mbeddr C.
+% Many of the software security weakness originate from careless or wrong use of programming language.
+% Software security refer to the security properties of a software;s implementation.
+
+% The study further conclude that most of the software security weakness caused by careless or wrong use of programming languages, such as the Heartbleed bug, are possible to be prevented under a formal software verification.
+
+Internet surfing has become one of the important parts of life for most of the human being. No matter what we use it for, such as reading the daily news, watching our favourite sports or shopping online, our personal or sensitive information is always involved in the data transmission. Moreover, we will also assume that those data are safely handled by the web application provider. However, there are many web infrastructure components, such as establishing the connection, data encryption and security involved in the data transmissions between the actual application and users' browser. In practise, developers tend to rely on third party software packages to construct their web infrastructure. Most of the time, user will trust the software package based on its reputation either it has became popular or it is developed by leading company. However, we may have no idea how it was implementation or even how it had be tested. In spite of the web infrastructure component could be based on a proven secure approach, the implementation might not be exactly the same as the approach suggested. Once a bug is found while it became widely used, the consequences could be disastrous. One of the good example is described in the following section.
+
+\section{Motivation - The Heartbleed Bug} \label{sec:heartbleed bug}
+The Heartbleed Bug is a serious vulnerability in the famous OpenSSL cryptographic library disclosed in April 2014. This weakness caused by an improper input validation where a bounds-check is missing in the implementation of the Transport Layer Security(TLS) heartbeat extension. OpenSSL wrongly trusted the payload\string_length value, which makes the reading of the payload beyond the end of the buffer. Anyone on the Internet can read memory that supposed to be protected, even the secret keys, as a result the attackers can eavesdrop on communications to impersonate the services and user, and to steal the data. Since OpenSSL was widely used implementation of the TLS protocol at that time, there was about half a million (17\%) of SSL web servers are affected \cite{9_heartbleed} by this buffer over-read vulnerability. Hence, not only the approach must be formally proven secure, but also the correctness of the implementation is necessary to be verified. Therefore, we are interested to verify the correctness and safety of some widely used web infrastructure software packages using a formal verification technique, such as Bounded Model checking.
+
+\section{Problem Statement}
+In this project, we are interested in the software security of web infrastructure components. The research questions we would ask as follows:
+
+\begin{enumerate}
+    \item Is the implementation memory safe?
+    \item Does the component based on any standard approach, such as encryption, protocol?
+    \item If the component based on some standard approaches, has it been implemented correctly?
+    \item Is there any undiscovered bugs?
+    \item Has the component been code reviewed or security audited?
+\end{enumerate}
+
+\section{Aim and Objectives}
+% General open questions. 
+% Selection of particular question for study.
+\subsection{Proving Properties}
+% s2n is memory safe.
+
+\subsection{Bugs Finding}
+
+Our aim is to verify the correctness and the memory safety of two widely used software packages for web infrastructure components: 1) s2n, and 2) Nginx. They act as the critical roles for ensuring the security of a web application, moreover, there is no software verification done on them available online. Hence, we are going to take a deep look into the implementation and verify the satisfiability of the above two software packages. The verification result will be documented in the project report.
+
+
+% \subsection{Nginx}
+% Nginx \cite{4_the_documentation_nginx} is an open source web server and it can also act as a reverse proxy server for different protocols, such as HTTP, HTTPS, SMTP, POP3 and IMAP protocols, load balancer and HTTP cache. Nginx is growth rapidly and being commonly used in the recently years. According to Netcraft's April 2016 Web Server Survey \cite{6_web_server_survey}, Nginx was the second most widely used web server of the "active" sites (16.81\% of surveyed sites) and for the top million busiest sites as well (25.64\% of surveyed sites). According to W3Techs \cite{7_w3techs}, it was used by 43.4\% of the top 100,000 websites, by 50.6\% of the top 10,000 websites, and by 49\% of the top 1000. 
+
+\section{Dissertation Structure}
+This dissertation is composed of ?? chapters, fully describing the background theory and demonstrating all my work for this project.
+
+Chapter 1 is ...

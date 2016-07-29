@@ -1,0 +1,85 @@
+\chapter{Bounded Model Checking on s2n Using CBMC}
+
+% \chapter{Verification}
+
+% \subsection{Log}
+
+% \begin{verbatim}
+% function: int s2n_blob_init(struct s2n_blob *b, uint8_t *data, uint32_t size);
+% failed at pointer check: s2n_blob_init(null, data, n);
+
+% function: int s2n_blob_zero(struct s2n_blob *b);
+% failed at pointer check: s2n_blob_zero(null);
+
+% function: s2n_constant_time_equals
+% failed at pointer check: s2n_constant_time_equals(null, null, n);
+% a or b is null
+
+% function: s2n_constant_time_copy_or_dont
+% failed at pointer check: s2n_constant_time_copy_or_dont(null, null, n, m);
+% a or b is null
+
+% alarm at unsigned overflow check: s2n_constant_time_copy_or_dont(null, null, n, 0);
+% expected overflow behaviour.
+
+% function: s2n_free
+% failed at pointer check: s2n_free(null);
+% b is null / free invalid pointer
+
+% function: s2n_alloc
+% case 1: b != NULL, for any size
+% if mlock in s2n_free fail leads to double free b->data;
+
+% case 2: b != NULL, MAX_uint32_t
+% uint32_t allocate = page_size * ((size + (page_size - 1)) / page_size);
+% leads to buffer overflow;
+
+% function: s2n_realloc
+% case 1: b != NULL, for any size
+% if mlock in s2n_free fail leads to double free b->data;
+
+% function: s2n_increment_sequence_number
+% case 1: sequence != NULL, sequence->size == 0 
+% the function failed to increment the sequence number by 1 as the data size is 0;
+
+% case 2: failed at pointer check: s2n_increment_sequence_number(null);
+% sequence_number is null / free invalid pointer
+
+% case 3: failed at unsigned overflow check: s2n_increment_sequence_number(any sequence number);
+% sequence_number->data[i] += 1;
+% Overflow when MAX_uint32_t + 1;
+
+% case 4: failed at signed overflow check: s2n_increment_sequence_number(any sequence number);
+% int i = sequence_number->size - 1; 
+% Overflow when converting unsigned int to signed int;
+
+% function: get_nanoseconds_since_epoch
+% case 1: failed at pointer check: get_nanoseconds_since_epoch(null);
+% nanoseconds is null / free invalid pointer
+
+% case 2: failed at divided by zero check
+% conversion_factor.denom == 0;
+% but it is no sense for denom == 0 according to offical doc, unless it hasn't be initiated by mach_timebase_info();
+
+% case 3: failed at unsigned overflow check
+% *nanoseconds *= conversion_factor.numer can leads to an overflow while mach_absolute_time > 18446744073.7
+
+% This function returns its result in terms of the Mach absolute time unit, which is CPU dependent.
+% mach_absolute_time return ticks since last reboot (uptime).
+
+% http://stackoverflow.com/questions/23378063/how-can-i-use-mach-absolute-time-without-overflowing
+
+% function: s2n_timer_start
+% function: s2n_timer_elapsed
+% function: s2n_timer_reset
+
+% case 1: failed at pointer check:  int s2n_timer_*(null, null [, nanoseconds])
+% pointer invalid in config->nanoseconds_since_epoch
+
+% case 2: failed at unsigned overflow check: 
+% overflow because of get_nanoseconds_since_epoch *nanoseconds *= conversion_factor.numer
+% \end{verbatim}
+
+% \subsection{Notices}
+% Quantifier & unwind:
+% Quantifier value should be the same as unwind number
