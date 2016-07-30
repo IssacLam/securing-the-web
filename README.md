@@ -1,3 +1,9 @@
+# Current Status
+
+s2n_3des_test run out of time? process killed by kernel.
+
+Begin with the simplest test: s2n_tls_record_stuffer_harness, with the smallest size function call graph
+
 # Plan
 
 - [ ] Report : Restructure the Background
