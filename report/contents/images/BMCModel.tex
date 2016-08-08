@@ -1,0 +1,27 @@
+\begin{figure}[!h]
+\centering
+
+\begin{tikzpicture}[node distance=1cm]
+    \node[world] (a) [label={[name=s0]below:$s_0$}, label={[name=p0]above:$\neg\varphi_0$}] {};
+    \node[world] (b) [right=of a, label=below:{$s_1$}, label=above:{$\neg\varphi_1$}] {};
+    \node[world] (c) [right=of b, label=below:{$s_2$}, label=above:{$\neg\varphi_2$}] {};
+    \node[world] (d) [right=of c, label={[name=sk-1]below:$s_{k-1}$}, label=above:{$\neg\varphi_{k-1}$}] {};
+    \node[world] (e) [right=of d, label={[name=sk]below:$s_k$}, label={[name=pk]above:$\neg\varphi_k$}] {};
+    \path[->] (a) edge node [midway, above] {$\lor$} (b);
+    \path[->] (b) edge node [midway, above] {$\lor$} (c);
+    \path[loosely dotted] (c) edge node [midway, above] {$\lor$} (d);
+    \path[->] (d) edge node [near end, above] {$\lor$} (e);
+    
+    \node (stm) [left=of s0, align=right] {state of \\ transition model};
+    \node (p) [right=of pk, align=right] {property};
+    \node (bound) [right=of sk, align=right] {bound};
+    \path[dashed, ->] (stm) edge (s0);
+    \path[dashed, ->] (p) edge (pk);
+    \path[dashed, ->] (bound) edge (sk);
+    
+    \draw[red,thick,dotted, rounded corners] ($(p0.north west)+(-0.15,0.15)$) rectangle ($(sk-1.south east)+(0.15,-0.15)$) node[black, below left] {counterexample trace};
+\end{tikzpicture}
+
+\caption{The idea behind Bound Model Checking adapted from H. Rocha et al. \cite{7423219}}
+\label{fig:bmcm}
+\end{figure}

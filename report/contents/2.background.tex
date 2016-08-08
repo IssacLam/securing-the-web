@@ -6,17 +6,186 @@
 
 \chapter{Background}
 
-\section{Software Model Checking} \label{sec:mc}
-Model Checking is an algorithmic technique to formal prove the correctness properties of the model of a state system \cite{Clarke:2000:MC:332656, Clarke:2008:BMC:1423535.1423536}. In other words, a model checking problem is defined as whether the states $s$ of a given model $M$ satisfies a property $P$ specified by a temporal logic formula, such that $M, s \models P$. The concept can be fully adapted to software verification considering that $M$ consists of \textit{states} and \textit{transitions}, and $P$ refer to a program and its specification respectively. By traversing all the reachable states exhaustively, the model checking algorithm is able to tell whether the program meet its specification or not if there is finite number of states. Once a violation is found on any execution path, an \textit{counterexample} can be generated accordingly. Model checking is capable to verify both \textit{safety} and \textit{liveness} properties of a software in different manner. Safety properties means nothing bad happens in the program execution, such as arithmetic overflow, buffer overflow, or NULL dereference, which can be verified by proving the unreachability of these states. Liveness properties means something good eventually happens. This can be proved by showing that a function fulfilled its responsibilities or the program will terminate at the end. This technique is precise by examining the states exhaustively, however, state explosion becomes a real problem. Although the combination of symbolic model checking with Binary Decision Diagrams (BDDs) slightly improved the state space, BDDs can still grow exponentially, which becomes the bottleneck of verification as the efficiency and capability are restricted.
-% Model checking is able to compute the run-time states of the program without running the program. If the number of states is finite, then it is possible to perform an exhaustive analysis over all execution paths to check if a property holds. A program is claimed to be verified if its behaviours satisfied all properties in the specification. If a counter example is found, such that an execution path lead to a violation of any properties, then the program fails the verification. If the number of states is not finite, bounded model checking can still be applied by bounding the number of exploring states. Although this verification approach is not sound as bugs may exist beyond the bound, those bugs within the bound can still be identified.
+\section{Software Verification}
+Software verification is an important step in the software development life cycle, which is easily confused with software validation. It is questioning about "\textit{are we building the right product?}", while software verification cares about "\textit{are we building the product right?}" \cite{kung2008software}. In other word, we concern about \textbf{whether a system meet its specification}, including safety properties, liveness properties, concurrency properties, as well as functional and non-functional properties. This is the key to ensuring quality and reliability of the software, especially for those \textit{critical software}, such as safety-critical, security-critical, financial-critical, etc. By analysing the system behaviour and detecting errors in order to minimise or prevent system failure. 
 
+\section{Temporal Logic}
+In this project, we will use Computation Tree Logic (CTL) to explain the idea behind model checking as it has been commonly used to express and reason the system properties in the researches related to model checking. Besides of the basic \textit{logical operators}, including $negation (\neg)$, $disjunction (\lor)$, $conjunction (\land)$, $implication (\Rightarrow)$ and $equivalence (\Leftrightarrow)$, CTL is consist of \textit{path quantifiers} and \textit{temporal operators}, which are shown as the following:
+
+\smallskip
+\noindent
+\begin{minipage}[t]{.35\textwidth}\small
+\textbf{Path quantifiers:}
+\begin{itemize} [leftmargin=*, topsep=3pt,itemsep=0ex] 
+    \item[-] \textbf{A}: "for every path"
+    \item[-] \textbf{E}: "there exists a path"
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{.55\textwidth}\small
+\textbf{Temporal operators:}
+    \begin{itemize} [leftmargin=*, topsep=3pt,itemsep=0ex]
+        \item[-] \textbf{X}$p$: "$p$ holds at the next step"
+        \item[-] \textbf{F}$p$: "$p$ holds at some step in the future"
+        \item[-] \textbf{G}$p$: "$p$ holds at every step in the future"
+        \item[-] $p$\textbf{U}$q$: "$p$ holds until $q$ holds"
+   \end{itemize}
+\end{minipage}
+\bigskip
+
+\noindent
+, where $p$ and $q$ are propositional formulas and $step$ refers to a computational step.
+ 
+\section{Software Model Checking} \label{sec:mc}
+Model Checking is an algorithmic technique, based on graph theory, automata theory and logic, \cite{Vardi2005} to establish the correctness of the model of a state system regarding to the given properties, which is formalised from the specification \cite{Clarke:2000:MC:332656, Clarke:2008:BMC:1423535.1423536}. A model checking problem can be defined as whether all reachable states $s$ of a given model $M$ satisfies the given property $\varphi$, which is expressed by a temporal logic formula $p$, such that $$M, s \models \varphi \Leftrightarrow M \models \textbf{AG}p$$. This concept can be fully adapted to software verification considering that $M$ and $\varphi$ refer to a model of a program and its specification respectively. While a program consists of a set of \textit{states} describing its memory state at a particular time frame and a set of \textit{transitions} describing how the program evolves from one state to another. Model checking will first compute all the reachable states, then by traversing exhaustively, the model algorithm is able to tell whether the property $p$ holds at all states if there is finite number of states. Once a violation is found on any execution path, an \textit{counterexample} can be generated accordingly. Otherwise, \textit{witnesses} are present to confirm that the given property $\varphi$ is true. These concepts are all simplified into the Figure~\ref{fig:mcs} below.
+
+\input{contents/images/modelCheckingStructure}
+
+Model checking is capable to verify both \textit{safety} and \textit{liveness} properties of a software in sightly different manner \cite{4544862}. Safety properties means nothing bad happens in the program execution, such as arithmetic overflow, buffer overflow, or NULL dereference, which can be verified by proving the unreachability of these states. Liveness properties means something good eventually happens. This can be proved by showing that a program fulfilled its functional specifications or it simply guaranteed termination at the end. A program can be claimed as verified while all the given properties are satisfied by the given model. This technique is precise as all reachable states have been examined, however, the number of states can grows exponentially along with the complexity of the program \cite{Clarke:2001:BMC:510986.510987, biere2003bounded}. The state explosion problem becomes a major weakness of such techniques. In the history of model checking, several techniques have been applied in order to increase the capacity of the exploration states, for examples, some efficient graph traversal techniques, the symbolic representation, Binary Decision Diagrams (BDDs), and so on. During the 1990s, the combination of symbolic model checking with BDDs was proposed and continuously be improved. While symbolic representation encode sets of states into Boolean functions and BBDs further transform the boolean formulas as a canonical form, it allows transitions can be applied to a set of states directly instead of an individual state in each iterations. Because of the use of BDDs and some abstraction techniques, the capacity level has been improved, and model checking has also been applied on some realistic systems. However, the size of BDDs can grow exponentially, which becomes a bottleneck of verification as the efficiency and capability are restricted, and it is still not enough to carry out a full verification to meet the industrial needs.
 
 \section{Bounded Model Checking} \label{sec:bmc}
-In order to overcome the weakness of model checking and able to make use of it, Bounded Model Checking (BMC) based on Boolean Satisfiability (SAT) was proposed by A. Biere et al. \cite{biere2003bounded}. The basic idea of BMC is check the negation of a given property with in a given bounded length $k$ \cite{7371997}. Considering we have a model $M$ of a state machine, a property $P$, and a constant bound $k$ states, a BMC problem becomes whether a counterexample with at most $k$ state transitions exists satisfies a property $P$ for a given state machine $M$. This problem can be formulated as a SAT problem and hence be solved by a SAT solver \cite{1_sagiv_2015}. Hence, even if there is infinite number of states, BMC can still be applied by bounding the number of exploring states. Concerning the coverage of the verification, the bounded can lead to an unsound verification as bugs may exist beyond the bound. Nevertheless, all bugs within the bound are guaranteed to be identified. 
+% should be useful \cite{Clarke:2001:BMC:510986.510987}
+Bounded Model Checking (BMC) based on Boolean Satisfiability (SAT) was introduced by A. Biere et al. in 1999\cite{biere2003bounded}. Although it does not overcome the entire complexity weakness of model checking, it is more capable to verify different circumstances comparing with using the BDD-based techniques. While BMC only cover the execution paths within the user-defined bound, the properties beyond the bound will not be verified. Instead of proving "\textit{all reachable states satisfies the property $p$}", \textbf{AG}$p$, is true directly, the formula can also be checked in its negation by showing that "\textit{there exists a reachable state violates the property $p$}", \textbf{EF}$\neg p$, is false. This means that a counterexample of \textbf{AG}$p$ is a witness of \textbf{EF}$\neg p$ \cite{Clarke:2001:BMC:510986.510987}. Hence, the concept of BMC is to check the negation of given property $\varphi$ up to a given depth $k$, in order to find a witness for showing such a violation exists \cite{7423219}, shown in the Figure~\ref{fig:bmcm} below. 
+
+% Consider we have a state transition model $M$, a property $\varphi$ and a constant bound of $k$ iterations, the BMC problem becomes whether a witness within $k$ steps exists such that the property $\neg P$ is satisfied by the unrolled transition model $M$,. 
+
+\input{contents/images/BMCModel}
+
+In addition, such a boolean formula can be reduced as a SAT problem and hence it can be solved by a SAT solver \cite{biere2003bounded, 1_sagiv_2015}. The advantage of replacing BDDs with SAT is that the exponential growth of space in BDDs can be avoid, and also smart depth first search can be applied to reduce the memory consumption when using breadth first search in BDDs. 
+
+Sometimes there is a chance of missing bugs in the verification, due to the given bound does not cover all the possible execution paths, hence choosing an appropriate bound is fundamental to minimise such a chance. In practise, it is suggested to begin with a smaller length $k$, and then continue with a larger one if there is no error is found. Nevertheless, the verification result is promising while a counterexample can locate exactly where the violation is and all bugs within the bound are guaranteed to be found. Even when the property is not allow for proving the correctness, BMC is still useful and reliable for finding counterexamples. Because of such improvements and this impressive feature, BMC based on SAT has been successfully used in the formal verification of industrial practises. 
+
+% Hence, even if there is infinite number of states, BMC can still be applied by bounding the number of exploring states. Concerning the coverage of the verification, the bounded can lead to an verification as bugs may exist beyond the bound. Nevertheless, all bugs within the bound are guaranteed to be identified. 
 
 % Not done
 \section{C Bounded Model Checker (CBMC)} \label{sec:cbmc}
-CBMC \cite{the_cprover_user_manual} \cite{ckl2004} is a bounded model checker developed by D. Kroening et al. at Carnegie Mellon University. It utilizes a SAT solver in order to verify the software. It first translates a program into a static single assignment form without loops and function calls by bounding each loop with a number of executions and unwinding the loop to the bounded. Then, all variables can be renamed with states, ensuring that each variable is fresh and will only be assigned once. As a result, the program can be viewed as a set of constraints and be solved by using a SAT solver. Moreover, CBMC can also support the verification on dynamic allocations using malloc and free, buffer overflow, pointer safety, and also user-defined assertions. It has been widely used in a variety of applications, such as error explanation, verifying embedded programs, finding security bugs in windows binaries, etc.
+CBMC \footnote{The CBMC Homepage: http://www.cprover.org/cbmc/}, despite its name, is a bound model checking tool for the formal verification of ANSI-C programs using SAT solvers developed by D. Kroening et al. \cite{ckl2004}. It aims at reasoning about the safety properties of low level ANSI-C implementation as many safety-critical software are written in such low level languages. 
+
+\subsection{Ready for verifying a program}
+In order to analysis a given C/C++ code, CBMC will first reduce the model checking problem to a validity of bit vector equation problem by translating the program statement into an static single assignment (SSA) form \cite{ckl2004, Clarke:2003:HVU:1119772.1119831}. The translation consists of three main procedures described as follows: 
+
+\paragraph{Program translation} Suppose the ANSI-C program has been preprocessed already. The program will be translated into a consistent form, which is only consists of \code{if}, \code{while}, \code{goto} statements and simple assignments without any side effects by applying some semantics equivalent replacements listed below:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{| p{.4\textwidth} | c | p{.45\textwidth} |} 
+\hline
+Original instructions & $\to$ & Transformed statements \\
+\hline
+\hline
+\code{break}, \code{continue}, \code{return}  & $\to$ & \code{goto} \\
+\hline
+\code{switch}, \code{case}  & $\to$ & \code{if}, \code{goto} \\
+\hline
+\code{for}, \code{do while}  & $\to$ & \code{while} \\
+\hline
+\textit{Side effects}, i.e., function calls and pre- and post-increment operators & $\to$ & \textit{Assignments} using auxiliary variables \\
+e.g. \code{x=j+(i++);} & $\to$ & \code{tmp_i=i; i=i+1; x=j+tmp_i;} \\ 
+\hline
+\end{tabular}
+\caption{Program translation process descripted in \cite{Clarke:2003:HVU:1119772.1119831}}
+\end{table}
+
+\paragraph{Loop unwinding} In order to model the computation up to a given depth, loops are necessary to be unwound into a fixed number of iterations. This can be done by repeating the loop body with certain amounts of copies. While each copy is guarded by an \code{if} statement with the same condition as the loop, it is prepared for the case that less iterations are required for the loop. In addition, an assertion with the negated condition can be added after the last copy, which can ensure that the loop does not require more iterations by using \code{--unwinding-assertions} option in CBMC. This
+is essential for showing that whether the unwinding bound is large enough to model the program behaviour. Note that, after the program translation process above, loops can be constructed by using \code{while} statements, recursive function calls, and \code{goto} statements. We use \code{while} as an example below: 
+
+% $$\code{while(cond) instr}; \to \code{if(cond) {instr; while(cond) instr};}$$, such that
+
+% \smallskip
+% \noindent
+\begin{figure}[H]
+\centering
+{
+\begin{minipage}{.2\textwidth}
+\begin{minted}[fontsize=\footnotesize]{c}
+while(cond) {
+    instr;
+}    
+\end{minted}
+\end{minipage}
+\begin{minipage}[]{.05\textwidth}
+$\to$
+\end{minipage}
+\begin{minipage}[]{.5\textwidth}
+\begin{minted}[fontsize=\footnotesize]{c}
+if(cond) {
+    instr; /** 1st copy **/
+    if(cond) {
+        instr; /** 2nd copy **/
+            ...
+            if(cond) {
+                instr; /** kth copy **/
+                
+                /** unwinding assertion **/
+                assert(!cond)]; 
+            }
+    }
+}    
+\end{minted}
+\end{minipage}
+}
+\caption[The LOF caption]{Loop unwinding for $k$ times with unwinding assertion adapted from CPROVER tutorials \protect\footnotemark}
+\end{figure}
+\footnotetext{The CPROVER manual: http://www.cprover.org/cprover-manual/}
+% \bigskip
+
+\paragraph{Variable Renaming}
+After the previous operations, the program, containing \code{if} statements, assignments, assertions, \code{goto} instructions and labels only, is ready to be transformed into SSA form by using pointer analysis. The transformation is demostrated by the simple example below:
+
+\begin{figure}[H]
+\centering
+{
+\begin{minipage}{.2\textwidth}
+\begin{minted}[fontsize=\footnotesize]{c}
+x=x+y;
+if(x!=1)
+    x=2;
+else
+    x++;
+
+assert(x<=3);
+\end{minted}
+\end{minipage}
+\begin{minipage}[]{.05\textwidth}
+$\to$
+\end{minipage}
+\begin{minipage}[]{.2\textwidth}
+\begin{minted}[fontsize=\footnotesize, escapeinside=||,mathescape=true]{c}
+x|$_1$|=x|$_0$|+y|$_0$|;
+if(x|$_1$|!=1)
+    x|$_2$|=2;
+else
+    x|$_3$|=x|$_1$|+1;
+    
+x|$_4$|=(x|$_1$|!=1)?x|$_2$|:x|$_3$|;
+assert(x|$_4$|<=3);
+\end{minted}
+\end{minipage}
+\begin{minipage}[]{.05\textwidth}
+$\to$
+\end{minipage}
+\begin{minipage}[]{.35\textwidth}
+\begin{align*}
+    C \coloneqq{}& \code{x}_1\code{=x}_0\code{+y}_0 \land \\
+    &  \code{x}_2\code{=2} \land \\
+    &  \code{x}_3\code{=x}_1\code{+1} \land \\
+    &  \code{x}_4\code{=(x}_1\code{!=1)?x}_2\code{:x}_3 \\
+    P \coloneqq{}& \code{x}_4\leq\code{3} \\
+\end{align*}
+\end{minipage}
+}
+\caption[The LOF caption]{SSA form transformation adapted from \cite{ckl2004, Clarke:2003:HVU:1119772.1119831}}
+\end{figure}
+
+The procedure above renames all variables with states to ensure that each variable is fresh and will only be assigned once. As a result, the program can be viewed as a set of constraints and two bit-vector equations, constraints $C$ and properties $P$, can be produced accordingly. Hence, the property can now be verified by converting $C \land \neg P$ into Conjunctive Normal Form (CNF) through a SAT solver. Once the equation is \textit{satisfiable} which means a violation of the given property is found, otherwise, the property holds when the equation is \textit{unsatisfiable}. 
+
+\subsection{Assumption \& Assertion}
+As mentioned above, CBMC considers the verification conditions as a pair of bit-vector equations, constraints $C$ and properties $P$, which is specified by using \textit{assumption} (\code{__CPROVER_assume()}) and \textit{assertion} (\code{__CPROVER_assert()}) statement respectively. The \code{__CPROVER_assert()} statement takes a Boolean condition, which is an ANSI-C logic expression, and a string description as arguments. CBMC will check the given condition holds for all executions. The description is useful for locating the violated assertion. The \code{__CPROVER_assuem()} statement will also takes a Boolean expression, which is used to restrict the program traces exploration. The program trace examination will be aborted while the given assumption is false.
+
+\subsection{Non-Determinism}
+Non-deterministic choice functions is supported in CBMC by declaring \code{nondet_} as the prefix of their names and it is usefully for modelling the user inputs. The range of the generated values depends on the return type of the function and also the restriction given by the corresponding assumptions. 
+
+\subsection{Automatic Verification} 
+Concerning to the verification on safety properties, CBMC takes care of a widely range of program behaviour regarding to such properties, including dynamic allocations using \code{malloc()} and \code{free()}, buffer overflow, pointer safety, arithmetic overflow, user-defined assertions, etc. Moreover, by enabling CBMC with different options, the verification condition generator of CBMC will automatically generate the safety conditions respectively, which allows the above verifications become fully automated. The options of supported build-in safety check are as follows: \code{--divided-by-zero-check}, \code{--bounds-check}, \code{--pointer-check},  \code{--memory-leak-check}, and \code{--signed-overflow-check} as well as \code{--unsigned-overflow-check}. Because of the advantage of being automated and the verification capability, CBMC has been widely used in a variety of applications, such as error explanation, verifying embedded programs, finding security bugs in windows binaries, etc.
 
 % SAT-based Bounded Software Model Checking for Embedded Software: A Case Study
 % High maturity of CBMC:
@@ -25,7 +194,7 @@ CBMC \cite{the_cprover_user_manual} \cite{ckl2004} is a bounded model checker de
 % \section{Overview of the TLS/SSL}
 
 \section{Overview of s2n}
-s2n \cite{3_the_s2n_user_manual} is a lightweight and open-source implementation of the TLS/SSL protocols developed by the Amazon Security Labs. TLS/SSL protocols are cryptographic protocols providing the communication security over the network. s2n is designed to be simple, small, fast, and also with security as a priority. It is about 6,000 line of code ignoring tests, blank lines, and comments. It supports various version of the TLS/SSL protocols, such as SSLv3, TLS1.0-1.2, and also support different cipher suites.  
+s2n \cite{3_the_s2n_user_manual, 4_introducing_s2n} is an open-source implementation of the TLS/SSL protocols that was released in late June 2015 by the Amazon Security Labs. It is designed with the concern of security, reviewability, ease of use and efficiency. It can support various version of the TLS/SSL protocols, such as SSLv3, TLS1.0-1.2, with different cipher suites. The implementation of s2n is only around 6,000 lines of C99 code as it relies on OpenSSL or other its forks for handling the low-level cryptographic computation of the TLS protocol. Comparing with the implementation of OpenSSL which needs about 70,000 lines of code to implement the protocol. This makes s2n easier to be reviewed, indeed, Amazon also announced that three external security evaluations and penetration tests had been done on s2n at that time. 
 
 
 \input{contents/2.relatedWork}

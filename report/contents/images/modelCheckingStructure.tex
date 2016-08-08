@@ -1,0 +1,51 @@
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[->, auto, thick]
+\node (M) [rectangle, draw] {\textbf{Model Checker}};
+
+\node (A) [above left=0.1cm and 1.6cm of M, align=right] {
+    \begin{tikzpicture}[node distance=0.5cm]
+        \node (a) {};
+        \node[state] (b) [right=of a] {};
+        \node[world] (c) [right=of b] {};
+        \node[initial] (d) [right=of c] {};
+        \path[->] (a) edge (b);
+        \path[->] (b) edge (c);
+        \path[->] (c) edge (d);
+    \end{tikzpicture} \\ [0.3em]
+    model
+};
+
+\node (B) [below left=0.1cm and 1.6cm of M, align=right] {
+    \Huge{$\varphi$} \\ [0.3em]
+    property
+    % specification
+};
+
+\node (C) [above right=0.3cm and 1.6cm of M] { 
+    % verification successful 
+    witnesses
+};
+
+\node (D) [below right=0.3cm and 1.6cm of M, align=left] { 
+    counterexample \\ [0.3em]
+     \begin{tikzpicture}[node distance=0.3cm]
+        \node[mini world] (a) {};
+        \node[mini world] (b) [right=of a] {};
+        \node[mini world] (c) [right=of b] {};
+        \node[mini world] (d) [right=of c] {};
+        \path[->] (a) edge (b);
+        \path[->] (b) edge (c);
+        \path[->] (c) edge (d);
+    \end{tikzpicture}
+};
+
+\draw [->, >=stealth', shorten >=7pt, shorten <=7pt] (A.east) to (M.west);
+\draw [->, >=stealth', shorten >=7pt, shorten <=7pt] (B.east) to (M.west);
+\draw [->, >=stealth', shorten >=7pt, shorten <=7pt] (M.east) to node[above left]{\footnotesize \color{OliveGreen} TRUE} (C.west);
+\draw [->, >=stealth', shorten >=7pt, shorten <=7pt] (M.east) to node[below left]{\footnotesize \color{Red} FALSE} (D.west);
+
+\end{tikzpicture}
+\caption{The Model Checking Structure adapted from E. Clarke \cite{Clarke:2008:BMC:1423535.1423536}}
+\label{fig:mcs}
+\end{figure}

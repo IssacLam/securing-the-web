@@ -43,6 +43,8 @@ Begin with the simplest test: s2n_tls_record_stuffer_harness, with the smallest 
 - [ ] s2n_tls_prf_test.c
 - [ ] s2n_tls_record_stuffer_test.c
 
+cbmc -D__CPROVER_STRING_ABSTRACTION -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/unit/s2n_timer_harness.c ./s2n/utils/s2n_timer.c ./s2n/tls/s2n_config.c ./s2n/utils/s2n_mem.c ./s2n-lib/mach_time.c ./s2n-lib/mman.c ./s2n-lib/stdlib.c
+
 cbmc -D__CPROVER_STRING_ABSTRACTION -I ./s2n -I ./s2n/api -I ./s2n/tests -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/openssl/crypto/engine -I ./s2n/libcrypto-build/openssl/crypto -I ./s2n/libcrypto-build/openssl ./s2n-harness/unit/s2n_3des_harness.c ./s2n/utils/s2n_random.c ./s2n/utils/s2n_mem.c ./s2n/error/s2n_errno.c ./s2n/stuffer/s2n_stuffer.c ./s2n/crypto/s2n_drbg.c ./s2n/utils/s2n_blob.c ./s2n/tls/s2n_connection.c ./s2n/tls/s2n_record_write.c ./s2n/tls/s2n_record_read.c ./s2n/crypto/s2n_hmac.c ./s2n/utils/s2n_timer.c ./s2n/crypto/s2n_hash.c ./s2n/tls/s2n_aead.c ./s2n/crypto/s2n_rsa.c ./s2n/crypto/s2n_dhe.c ./s2n/crypto/s2n_ecc.c ./s2n/tls/s2n_cbc.c ./s2n/crypto/s2n_sequence.c ./s2n/utils/s2n_timer.c ./s2n/utils/s2n_safety.c ./s2n-lib/openssl/evp.c ./s2n-lib/openssl/engine.c ./s2n-lib/CommonCrypto/CommonDigest.c ./s2n-lib/mman.c ./s2n-lib/stdlib.c --unwind 1 2> test.txt
 
 # Top-down command
