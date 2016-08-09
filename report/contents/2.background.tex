@@ -4,57 +4,65 @@
 % The body consists of several paragraphs, each discussing a different relevant thread of research.
 % The section ends with a paragraph summary of the paper's contributions over existing research.
 
-\chapter{Background}
+\chapter{Background and Related Works}
 
-\section{Software Verification}
+\paragraph{Clarification} The terms of soundness and completeness of a software verification technique often have various meanings in different papers. Sometimes soundness and completeness refer to an under-approximation and an over-approximation to a program behaviour respectively while sometimes they are defined in the opposite way. In order to be more clear, we will avoid using them throughout the report instead of using "no missing bugs" and "no false alarms" of a detection.  
+
+\section{Overview of Software Verification}
 Software verification is an important step in the software development life cycle, which is easily confused with software validation. It is questioning about "\textit{are we building the right product?}", while software verification cares about "\textit{are we building the product right?}" \cite{kung2008software}. In other word, we concern about \textbf{whether a system meet its specification}, including safety properties, liveness properties, concurrency properties, as well as functional and non-functional properties. This is the key to ensuring quality and reliability of the software, especially for those \textit{critical software}, such as safety-critical, security-critical, financial-critical, etc. By analysing the system behaviour and detecting errors in order to minimise or prevent system failure. 
 
-\section{Temporal Logic}
-In this project, we will use Computation Tree Logic (CTL) to explain the idea behind model checking as it has been commonly used to express and reason the system properties in the researches related to model checking. Besides of the basic \textit{logical operators}, including $negation (\neg)$, $disjunction (\lor)$, $conjunction (\land)$, $implication (\Rightarrow)$ and $equivalence (\Leftrightarrow)$, CTL is consist of \textit{path quantifiers} and \textit{temporal operators}, which are shown as the following:
+\input{contents/images/triangleModel}
 
-\smallskip
-\noindent
-\begin{minipage}[t]{.35\textwidth}\small
-\textbf{Path quantifiers:}
-\begin{itemize} [leftmargin=*, topsep=3pt,itemsep=0ex] 
-    \item[-] \textbf{A}: "for every path"
-    \item[-] \textbf{E}: "there exists a path"
-\end{itemize}
-\end{minipage}\hfill
-\begin{minipage}[t]{.55\textwidth}\small
-\textbf{Temporal operators:}
-    \begin{itemize} [leftmargin=*, topsep=3pt,itemsep=0ex]
-        \item[-] \textbf{X}$p$: "$p$ holds at the next step"
-        \item[-] \textbf{F}$p$: "$p$ holds at some step in the future"
-        \item[-] \textbf{G}$p$: "$p$ holds at every step in the future"
-        \item[-] $p$\textbf{U}$q$: "$p$ holds until $q$ holds"
-   \end{itemize}
-\end{minipage}
-\bigskip
+% \subsection{A Triangle Model of Software Verification}
+There are numerous verification techniques, based on formal or informal methods, available into to achieve the ultimate goal of software verification. These techniques can be divided into three categories according to their approach: \textit{Static Analysis}, \textit{Dynamic Analysis}, and \textit{Human-directed Analysis}. Although each of them has their own focuses, strengths and weaknesses, their verification achievements can generally be concluded in three main properties: being automatic, not missing bugs, and excluding false alarms by M. Brain and D. Kroening \cite{TSVP}. These can also be visualised in a triangle model, which has been illustrated in  Figure~\ref{fig:tmsv} below. Since there always is a trade-off between the three proprieties, it becomes a weakness of such techniques. They can be considered as sitting at a corner of the triangle and climbing to the top of a pyramid while they are trying to tackle their own weakness. We will discuss each of them with some  highlighted techniques as examples and the use of software verification in the following subsections.
 
-\noindent
-, where $p$ and $q$ are propositional formulas and $step$ refers to a computational step.
- 
+% , while these existing techniques can be defined into six categories: 1) Static Analysis, 2) Abstract Interpretation, 3) Testing \& Symbolic Execution (Symex), 4) Model Checking, 5) Functional and 6) Deductive Verification. 
+
+% is designed for a particular purpose. We discuss those techniques which are highly researched or presented recently.
+% % A Survey of Automated Techniques for Formal Software Verification
+% A survey that conducted by V. D'Silva et al. \cite{4544862} gave a detailed overview of three main automatic formal verification techniques, and brought out their strengths and weaknesses for applying to practical problems. The three techniques are: 1) Static Analysis, 2) Model Checking, and 3) Bounded Model Checking. 
+
+\input{contents/2.1.softwareVerificationTechniques}
+
+\input{contents/2.2.theUseOfSoftwareVerification}
+
 \section{Software Model Checking} \label{sec:mc}
-Model Checking is an algorithmic technique, based on graph theory, automata theory and logic, \cite{Vardi2005} to establish the correctness of the model of a state system regarding to the given properties, which is formalised from the specification \cite{Clarke:2000:MC:332656, Clarke:2008:BMC:1423535.1423536}. A model checking problem can be defined as whether all reachable states $s$ of a given model $M$ satisfies the given property $\varphi$, which is expressed by a temporal logic formula $p$, such that $$M, s \models \varphi \Leftrightarrow M \models \textbf{AG}p$$. This concept can be fully adapted to software verification considering that $M$ and $\varphi$ refer to a model of a program and its specification respectively. While a program consists of a set of \textit{states} describing its memory state at a particular time frame and a set of \textit{transitions} describing how the program evolves from one state to another. Model checking will first compute all the reachable states, then by traversing exhaustively, the model algorithm is able to tell whether the property $p$ holds at all states if there is finite number of states. Once a violation is found on any execution path, an \textit{counterexample} can be generated accordingly. Otherwise, \textit{witnesses} are present to confirm that the given property $\varphi$ is true. These concepts are all simplified into the Figure~\ref{fig:mcs} below.
+Model Checking is an algorithmic technique, based on graph theory, automata theory and logic, \cite{Vardi2005} to establish the correctness of the model of a state system regarding to the given properties, which is formalised from the specification \cite{Clarke:2000:MC:332656, Clarke:2008:BMC:1423535.1423536}. A model checking problem can be defined as whether all reachable states $s$ of a given model $M$ satisfies the given property $\varphi$, which is expressed by a temporal logic formula, such that $M, s \models \varphi$. This concept can be fully adapted to software verification considering that $M$ and $\varphi$ refer to a model of a program and its specification respectively. While a program consists of a set of \textit{states} describing its memory state at a particular time frame and a set of \textit{transitions} describing how the program evolves from one state to another. Model checking will first compute all the reachable states, then by traversing exhaustively, the model algorithm is able to tell whether the property $p$ holds at all states if there is finite number of states. Once a violation is found on any execution path, an \textit{counterexample} can be generated accordingly. Otherwise, \textit{witnesses} are present to confirm that the given property $\varphi$ is true. These concepts are all simplified into the Figure~\ref{fig:mcs} below.
 
 \input{contents/images/modelCheckingStructure}
 
-Model checking is capable to verify both \textit{safety} and \textit{liveness} properties of a software in sightly different manner \cite{4544862}. Safety properties means nothing bad happens in the program execution, such as arithmetic overflow, buffer overflow, or NULL dereference, which can be verified by proving the unreachability of these states. Liveness properties means something good eventually happens. This can be proved by showing that a program fulfilled its functional specifications or it simply guaranteed termination at the end. A program can be claimed as verified while all the given properties are satisfied by the given model. This technique is precise as all reachable states have been examined, however, the number of states can grows exponentially along with the complexity of the program \cite{Clarke:2001:BMC:510986.510987, biere2003bounded}. The state explosion problem becomes a major weakness of such techniques. In the history of model checking, several techniques have been applied in order to increase the capacity of the exploration states, for examples, some efficient graph traversal techniques, the symbolic representation, Binary Decision Diagrams (BDDs), and so on. During the 1990s, the combination of symbolic model checking with BDDs was proposed and continuously be improved. While symbolic representation encode sets of states into Boolean functions and BBDs further transform the boolean formulas as a canonical form, it allows transitions can be applied to a set of states directly instead of an individual state in each iterations. Because of the use of BDDs and some abstraction techniques, the capacity level has been improved, and model checking has also been applied on some realistic systems. However, the size of BDDs can grow exponentially, which becomes a bottleneck of verification as the efficiency and capability are restricted, and it is still not enough to carry out a full verification to meet the industrial needs.
+Model checking is capable to verify both \textit{safety} and \textit{liveness} properties of a software in sightly different manner \cite{4544862}. Safety properties means nothing bad happens in the program execution, such as arithmetic overflow, buffer overflow, or NULL dereference, which can be verified by proving the unreachability of these states. Liveness properties means something good eventually happens. This can be proved by showing that a program fulfilled its functional specifications or it simply guaranteed termination at the end. A program can be claimed as verified while all the given properties are satisfied by the given model. This technique is precise as all reachable states have been examined, however, the number of states can grows exponentially along with the complexity of the program \cite{Clarke:2001:BMC:510986.510987, biere2003bounded}. The state explosion problem becomes a major weakness of such techniques, while analysing a medium sized code bases \cite{Yeolekar2013}. In the history of model checking, several techniques have been applied in order to increase the capacity of the exploration states, for examples, some efficient graph traversal techniques, the symbolic representation, Binary Decision Diagrams (BDDs), and so on. % During the 1990s, the combination of symbolic model checking with BDDs was proposed and continuously be improved. While symbolic representation encode sets of states into Boolean functions and BBDs further transform the boolean formulas as a canonical form, it allows transitions can be applied to a set of states directly instead of an individual state in each iterations. Because of the use of BDDs and some abstraction techniques, the capacity level has been improved, and model checking has also been applied on some realistic systems. % 
+However, the size of BDDs also can grow exponentially, which becomes a bottleneck of verification as the efficiency and capability are restricted, and it is still not enough to carry out a full verification to meet the industrial needs.
 
 \section{Bounded Model Checking} \label{sec:bmc}
 % should be useful \cite{Clarke:2001:BMC:510986.510987}
-Bounded Model Checking (BMC) based on Boolean Satisfiability (SAT) was introduced by A. Biere et al. in 1999\cite{biere2003bounded}. Although it does not overcome the entire complexity weakness of model checking, it is more capable to verify different circumstances comparing with using the BDD-based techniques. While BMC only cover the execution paths within the user-defined bound, the properties beyond the bound will not be verified. Instead of proving "\textit{all reachable states satisfies the property $p$}", \textbf{AG}$p$, is true directly, the formula can also be checked in its negation by showing that "\textit{there exists a reachable state violates the property $p$}", \textbf{EF}$\neg p$, is false. This means that a counterexample of \textbf{AG}$p$ is a witness of \textbf{EF}$\neg p$ \cite{Clarke:2001:BMC:510986.510987}. Hence, the concept of BMC is to check the negation of given property $\varphi$ up to a given depth $k$, in order to find a witness for showing such a violation exists \cite{7423219}, shown in the Figure~\ref{fig:bmcm} below. 
+Bounded Model Checking (BMC) based on Boolean Satisfiability (SAT) was introduced by A. Biere et al. in 1999\cite{biere2003bounded}, which is a complementary technique to model checking with an upper bound of the number for exploration state. Although it does not overcome the entire complexity weakness of model checking, it is more capable to verify different circumstances comparing with using the BDD-based techniques. While BMC only cover the execution paths within the user-defined bound, the properties beyond the bound will not be verified. Instead of proving "\textit{all reachable states satisfies the property}, is true directly, the formula can also be checked in its negation by showing that "\textit{there exists a reachable state violates the property}", is false \cite{Clarke:2001:BMC:510986.510987}. Hence, the concept of BMC is to check the negation of given property $\varphi$ up to a given depth $k$, in order to find a witness for showing such a violation exists \cite{7423219}, shown in the Figure~\ref{fig:bmcm} below. 
 
 % Consider we have a state transition model $M$, a property $\varphi$ and a constant bound of $k$ iterations, the BMC problem becomes whether a witness within $k$ steps exists such that the property $\neg P$ is satisfied by the unrolled transition model $M$,. 
 
 \input{contents/images/BMCModel}
 
-In addition, such a boolean formula can be reduced as a SAT problem and hence it can be solved by a SAT solver \cite{biere2003bounded, 1_sagiv_2015}. The advantage of replacing BDDs with SAT is that the exponential growth of space in BDDs can be avoid, and also smart depth first search can be applied to reduce the memory consumption when using breadth first search in BDDs. 
+In addition, by unrolling the transition operations for $k$ times and then combining those properties to form a propositional formula, such a boolean formula can be reduced as a SAT problem and hence it can be solved by a SAT solver \cite{biere2003bounded, 1_sagiv_2015}. The formula is satisfiable as long as the property is violated by a trace of length $k$. The advantage of replacing BDDs with SAT is that the exponential growth of space in BDDs can be avoid, and also smart depth first search can be applied to reduce the memory consumption when using breadth first search in BDDs. 
 
-Sometimes there is a chance of missing bugs in the verification, due to the given bound does not cover all the possible execution paths, hence choosing an appropriate bound is fundamental to minimise such a chance. In practise, it is suggested to begin with a smaller length $k$, and then continue with a larger one if there is no error is found. Nevertheless, the verification result is promising while a counterexample can locate exactly where the violation is and all bugs within the bound are guaranteed to be found. Even when the property is not allow for proving the correctness, BMC is still useful and reliable for finding counterexamples. Because of such improvements and this impressive feature, BMC based on SAT has been successfully used in the formal verification of industrial practises. 
+%  Although it may result in an inconclusive outcome as a bug can exist beyond the bound, BMC is still a great successful technique for finding bugs, as well as proving the liveness and safety properties. 
+Sometimes there is a chance of missing bugs in the verification, due to the given bound does not cover all the possible execution paths, hence choosing an appropriate bound is fundamental to minimise such a chance. In practise, it is suggested to begin with a smaller length $k$, and then continue with a larger one if there is no error is found. Nevertheless, the verification result is promising while a counterexample can locate exactly where the violation is and all bugs within the bound are guaranteed to be found. Even when the property is not allow for proving the correctness, BMC is still useful and reliable for finding counterexamples. Because of such improvements and this impressive feature, BMC based on SAT has been successfully used in the formal verification of industrial practises. Moreover, V. D'Silva et al. \cite{4544862} further concluded that BMC is the best technique to find shallow bugs comping with static analysis and model checking, and is able to provide a complete counterexample trace once a bug is found. 
+
 
 % Hence, even if there is infinite number of states, BMC can still be applied by bounding the number of exploring states. Concerning the coverage of the verification, the bounded can lead to an verification as bugs may exist beyond the bound. Nevertheless, all bugs within the bound are guaranteed to be identified. 
+
+%%%%%%%%%%%%%%%%%% From related works %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+A practical experiment conducted by J. Toman et al. \cite{7371997} combines exhaustive test generation and bounded model checking technique in order to detect memory safety errors. A bounded verifier, \textbf{CRUST}\footnote{CRUST github repository: https://github.com/maidsafe/crust}, was developed, which relies on \textbf{CBMC} for performing automated analysis. It will first generate a set of testing drivers for the relevant APIs and then convert the driver code from Rust to C for bounded model checking. With the help of exhaustive test generation, large input spaces can be explored efficiently and multiple test drivers can be generated for covering the input spaces as many as possible. By evaluating data structures from Rust standard library, CRUST successfully detect some underlying memory safety bugs from it.
+
+In contrast to static analysis, model checking is more precise in proving more complicated properties since an under-approximated model is used in the verification. This is supported by the experimental result conducted by K. Vorobyov and P. Krishnan \cite{vorobyov2010comparing}. The experiment compares the verification result of static program analysis with the one of model checking by applying \textbf{Parfait}\footnote{Parfait github repository: https://github.com/performancecopilot/parfait} and CBMC respectively on some benchmarked code bases. By configuring CBMC to focus on particular types of error, it showed a high accuracy rate (97\% overall true positive detections, and found about 19\% more bugs), whereas only 77\% with Parfait. Moreover, both of them reported a 0\% false positive detections, which is common for model checking and a specific design to minimise it for static program analysis. However, model checking is much more expensive with respect to computation time and memory usage, as it reached the memory limit in the experiment. The study further concluded that: 1) an insufficient unwinding was one of the reasons for false negative detections of CBMC, and 2) scalability can be a problem for model checking on a large size code base, such as an operating system.
+
+A counterexample-guided abstraction refinement (CEGAR) based technique, which was presented by A. Yeolekar and D. Unadkat \cite{Yeolekar2013}, utilises dynamic analysis to overcome the scalability limitation of model checking. Dynamic inference is used to guess invariants and refine the abstraction from spurious counterexamples, thus a better precision of the abstraction and an accelerated loop refinement are achieved in their experiment. 
+
+% This technique is frequently used on verifying the safety properties of device drivers and systems code. Even with the help of SAT or SMT solver and some abstraction techniques, model checking is hard to scale up to the size level that static analysis does.
+
+%%%%%%%%%%%%%%%%%% From related works %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 % Not done
 \section{C Bounded Model Checker (CBMC)} \label{sec:cbmc}
@@ -63,27 +71,27 @@ CBMC \footnote{The CBMC Homepage: http://www.cprover.org/cbmc/}, despite its nam
 \subsection{Ready for verifying a program}
 In order to analysis a given C/C++ code, CBMC will first reduce the model checking problem to a validity of bit vector equation problem by translating the program statement into an static single assignment (SSA) form \cite{ckl2004, Clarke:2003:HVU:1119772.1119831}. The translation consists of three main procedures described as follows: 
 
-\paragraph{Program translation} Suppose the ANSI-C program has been preprocessed already. The program will be translated into a consistent form, which is only consists of \code{if}, \code{while}, \code{goto} statements and simple assignments without any side effects by applying some semantics equivalent replacements listed below:
+\paragraph{Program translation} Suppose the ANSI-C program has been preprocessed already. The program will be translated into a control-flow graph only consisting of \code{if}, \code{while}, \code{goto} statements and simple assignments without any side effects, and then be analysis by using standard compiler technique.
 
-\begin{table}[H]
-\centering
-\begin{tabular}{| p{.4\textwidth} | c | p{.45\textwidth} |} 
-\hline
-Original instructions & $\to$ & Transformed statements \\
-\hline
-\hline
-\code{break}, \code{continue}, \code{return}  & $\to$ & \code{goto} \\
-\hline
-\code{switch}, \code{case}  & $\to$ & \code{if}, \code{goto} \\
-\hline
-\code{for}, \code{do while}  & $\to$ & \code{while} \\
-\hline
-\textit{Side effects}, i.e., function calls and pre- and post-increment operators & $\to$ & \textit{Assignments} using auxiliary variables \\
-e.g. \code{x=j+(i++);} & $\to$ & \code{tmp_i=i; i=i+1; x=j+tmp_i;} \\ 
-\hline
-\end{tabular}
-\caption{Program translation process descripted in \cite{Clarke:2003:HVU:1119772.1119831}}
-\end{table}
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{| p{.4\textwidth} | c | p{.45\textwidth} |} 
+% \hline
+% Original instructions & $\to$ & Transformed statements \\
+% \hline
+% \hline
+% \code{break}, \code{continue}, \code{return}  & $\to$ & \code{goto} \\
+% \hline
+% \code{switch}, \code{case}  & $\to$ & \code{if}, \code{goto} \\
+% \hline
+% \code{for}, \code{do while}  & $\to$ & \code{while} \\
+% \hline
+% \textit{Side effects}, i.e., function calls and pre- and post-increment operators & $\to$ & \textit{Assignments} using auxiliary variables \\
+% e.g. \code{x=j+(i++);} & $\to$ & \code{tmp_i=i; i=i+1; x=j+tmp_i;} \\ 
+% \hline
+% \end{tabular}
+% \caption{Program translation process descripted in \cite{Clarke:2003:HVU:1119772.1119831}}
+% \end{table}
 
 \paragraph{Loop unwinding} In order to model the computation up to a given depth, loops are necessary to be unwound into a fixed number of iterations. This can be done by repeating the loop body with certain amounts of copies. While each copy is guarded by an \code{if} statement with the same condition as the loop, it is prepared for the case that less iterations are required for the loop. In addition, an assertion with the negated condition can be added after the last copy, which can ensure that the loop does not require more iterations by using \code{--unwinding-assertions} option in CBMC. This
 is essential for showing that whether the unwinding bound is large enough to model the program behaviour. Note that, after the program translation process above, loops can be constructed by using \code{while} statements, recursive function calls, and \code{goto} statements. We use \code{while} as an example below: 

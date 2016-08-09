@@ -59,3 +59,10 @@ int EVP_CIPHER_CTX_cleanup(EVP_CIPHER_CTX *a) {
         return 1;
 }
 
+int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl, unsigned char *in, int inl) {
+    // read something from in
+    in[inl-1];
+    return (nondet_bool())? 1 : 0;
+}
+
+

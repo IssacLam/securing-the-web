@@ -5,6 +5,11 @@
 void *malloc(__CPROVER_size_t);
 
 int posix_memalign(void **memptr, size_t alignment, size_t size){
-        *memptr = (size == 0) ? NULL : malloc(size);
-        return 0;
+    if(size == 0) {
+//        *memptr = NULL;
+        return 1;
+    }
+    
+    *memptr = malloc(size);
+    return 0;
 };

@@ -2,14 +2,15 @@
 
 #include <s2n.h>
 
-int mock_clock(void *in, uint64_t *out)
-{
-        *out = *(uint64_t *)in;
-        return 0;
-}
+int entropy_fd = 3;
+
+//int mock_clock(void *in, uint64_t *out)
+//{
+//        *out = *(uint64_t *)in;
+//        return 0;
+//}
 
 int main(int arc, char * const *argv){
-
         s2n_init();
         s2n_cleanup();
 //

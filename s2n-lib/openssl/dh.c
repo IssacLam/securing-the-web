@@ -1,4 +1,4 @@
-#include <openssl/db.h>
+#include <openssl/dh.h>
 
 // Check windows
 #if _WIN32 || _WIN64
@@ -21,6 +21,8 @@
 void *malloc(__CPROVER_size_t);
 void free(void *);
 _Bool nondet_bool();
+uint8_t nondet_uint8();
+uint16_t nondet_uint16();
 
 /* d2i_X509() attempts to decode len bytes at *out. If successful a pointer to the X509 structure is returned. If an error occurred then NULL is returned. If px is not NULL then the returned structure is written to *px. If *px is not NULL then it is assumed that *px contains a valid X509 structure and an attempt is made to reuse it. If the call is successful *out is incremented to the byte following the parsed data. */
 
@@ -31,12 +33,10 @@ DH *d2i_DHparams(DH **a, unsigned char **pp, long length) {
 /* DH_size() returns the Diffie-Hellman prime size in bytes. It can be used to determine how much memory must be allocated for the shared secret computed by DH_compute_key(). */
 // dh->p must not be NULL;
 int DH_size(const DH *dh) {
-#if defind(ENV64BIT)
+#if define ENV64BIT
         return nondet_uint16();
-#elif defind(ENV32BIT)
-        return nondet_uint8();
 #else
-#error "Must define either ENV32BIT or ENV64BIT"
+        return nondet_uint8();
 #endif
 };
 

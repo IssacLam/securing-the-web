@@ -1,0 +1,29 @@
+s2n_blob_harness.c
+
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_blob_harness.c ./s2n/utils/s2n_blob.c --bounds-check
+
+s2n_hash_harness.c
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/unit/s2n_hash_harness.c ./s2n/crypto/s2n_hash.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset main.0:2 -D__MAIN_LOOP=1
+
+s2n_hmac_harness.c
+	cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/unit/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n/stuffer/s2n_stuffer.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset main.0:4 --unwind 129 -D__MAIN_LOOP=3
+	
+# cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/unit/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n/stuffer/s2n_stuffer.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset main.0:2 --unwind 129 -D__MAIN_LOOP=1 --div-by-zero-check 2>&1 > ./s2n-verification-result/s2n_hmac_harness/div-by-check.txt
+
+* s2n_timer_harness
+don't know why the verification time is a bit long
+
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/ ./s2n-harness/unit/s2n_timer_harness.c ./s2n/utils/s2n_timer.c ./s2n/tls/s2n_config.c ./s2n/utils/s2n_mem.c ./s2n-lib/mach_time.c ./s2n-lib/mman.c ./s2n-lib/stdlib.c ./s2n/crypto/s2n_rsa.c ./s2n/crypto/s2n_dhe.c ./s2n-lib/openssl/dh.c ./s2n-lib/openssl/rsa.c
+
+s2n_mem_harness.c
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_mem_harness.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n-lib/mman.c ./s2n-lib/stdlib.c --bounds-check --pointer-check --trace
+
+s2n_stuffer_harness.c
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_stuffer_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/stuffer/s2n_stuffer_text.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_random.c ./s2n/utils/s2n_mem.c ./s2n-lib/stdlib.c ./s2n-lib/mman.c  -D__BUFFER_SIZE=8 --unwind 9 --pointer-check
+
+execution time is so long
+*s2n_stuffer_base64_harness.c
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_stuffer_base64_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/stuffer/s2n_stuffer_base64.c ./s2n/stuffer/s2n_stuffer_text.c ./s2n/utils/s2n_random.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n-lib/stdlib.c ./s2n-lib/mman.c --unwind 10
+
+s2n_stuffer_text_harness.c
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_stuffer_text_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/stuffer/s2n_stuffer_text.c ./s2n/stuffer/s2n_stuffer_text.c ./s2n/utils/s2n_random.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n-lib/stdlib.c ./s2n-lib/mman.c --unwind 10 --unwinding-assertions
