@@ -60,3 +60,14 @@ void DH_free(DH *dh) {
                 free(dh); 
         return;
 };
+
+/* 
+ DH_generate_key() performs the first step of a Diffie-Hellman key exchange by generating private and public DH values. By calling DH_compute_key(), these are combined with the other party's public value to compute the shared key.
+ 
+ DH_generate_key() expects dh to contain the shared parameters dh->p and dh->g. It generates a random private DH value unless dh->priv_key is already set, and computes the corresponding public value dh->pub_key, which can then be published. 
+ */
+
+/* DH_generate_key() returns 1 on success, 0 otherwise. */
+int DH_generate_key(DH *dh) {
+    return (nondet_bool())? 1 : 0;
+}

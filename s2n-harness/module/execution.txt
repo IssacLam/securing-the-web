@@ -27,3 +27,6 @@ cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harnes
 
 s2n_stuffer_text_harness.c
 cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_stuffer_text_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/stuffer/s2n_stuffer_text.c ./s2n/stuffer/s2n_stuffer_text.c ./s2n/utils/s2n_random.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n-lib/stdlib.c ./s2n-lib/mman.c --unwind 10 --unwinding-assertions
+
+s2n_override_openssl_random_harness.c
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_override_openssl_random_harness.c ./s2n/stuffer/s2n_stuffer.c ./s2n/utils/s2n_random.c ./s2n/utils/s2n_mem.c ./s2n/utils/s2n_blob.c ./s2n/crypto/s2n_dhe.c ./s2n/crypto/s2n_drbg.c ./s2n/stuffer/s2n_stuffer_pem.c ./s2n-lib/openssl/dh.c ./s2n-lib/mman.c ./s2n-lib/stdlib.c ./s2n/stuffer/s2n_stuffer_base64.c ./s2n/stuffer/s2n_stuffer_text.c --unwind 5

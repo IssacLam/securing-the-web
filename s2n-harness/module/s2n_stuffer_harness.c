@@ -10,10 +10,10 @@ _Bool nondet_bool();
 int main(int argc, char **argv)
 {
     uint32_t stuffer_size = nondet_uint32();
-	__CPROVER_assert(stuffer_size > 0);
+	__CPROVER_assume(stuffer_size > 0);
 	
 	uint32_t entropy_size = nondet_uint32();
-	__CPROVER_assert(entropy_size > 0);
+	__CPROVER_assume(entropy_size > 0);
 	
 	uint8_t entropy[entropy_size];
     struct s2n_stuffer stuffer;
