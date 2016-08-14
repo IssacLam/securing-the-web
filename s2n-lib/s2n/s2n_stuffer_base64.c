@@ -22,32 +22,10 @@
 #include "utils/s2n_safety.h"
 
 // don't care about the content
-static const uint8_t b64[64];//  = {
-//     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-//     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
-//     'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-//     'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
-// };
+static const uint8_t b64[64];
 	
 // don't care about the content
-static const uint8_t b64_inverse[256];//  = {
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 62, 255, 255, 255, 63,
-//     52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 255, 255, 255, 64, 255, 255,
-//     255, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-//     15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 255, 255, 255, 255, 255,
-//     255, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-//     41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-//     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-// };
+static const uint8_t b64_inverse[256];
 
 /**
  * NOTE:
@@ -59,11 +37,15 @@ int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out
     uint8_t pad[4];
     int bytes_this_round = 3;
     struct s2n_blob o = {.data = pad,.size = sizeof(pad) };
+    
+    
 
-    do {
+//    do {
         if (s2n_stuffer_data_available(stuffer) < 4) {
-            break;
+            return 0;
         }
+        
+        s2n_stuffer_skip_read(stuffer, s2n_stuffer_data_available(stuffer) / 4 * 4); // must success;
 
         GUARD(s2n_stuffer_read(stuffer, &o));
 
@@ -94,8 +76,8 @@ int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out
                 S2N_ERROR(S2N_ERR_INVALID_BASE64);
             }
             bytes_this_round = 1;
-            value3 = 0;
-            value4 = 0;
+//            value3 = 0;
+//            value4 = 0;
         } else if (o.data[3] == '=') {
             /* The last two bits of the final value should be unset */
             if (value3 & 0x03) {
@@ -103,41 +85,40 @@ int s2n_stuffer_read_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *out
             }
 
             bytes_this_round = 2;
-            value4 = 0;
+//            value4 = 0;
         }
 
         /* value1 maps to the first 6 bits of the first data byte */
         /* value2's top two bits are the rest */
-        uint8_t c = ((value1 << 2) & 0xfc) | ((value2 >> 4) & 0x03);
+        uint8_t c;
         GUARD(s2n_stuffer_write_uint8(out, c));
 
         if (bytes_this_round > 1) {
             /* Put the next four bits in the second data byte */
             /* Put the next four bits in the third data byte */
-            c = ((value2 << 4) & 0xf0) | ((value3 >> 2) & 0x0f);
+//            c = ((value2 << 4) & 0xf0) | ((value3 >> 2) & 0x0f);
             GUARD(s2n_stuffer_write_uint8(out, c));
         }
 
         if (bytes_this_round > 2) {
             /* Put the next two bits in the third data byte */
             /* Put the next six bits in the fourth data byte */
-            c = ((value3 << 6) & 0xc0) | (value4 & 0x3f);
+//            c = ((value3 << 6) & 0xc0) | (value4 & 0x3f);
             GUARD(s2n_stuffer_write_uint8(out, c));
         }
 
-    } while (bytes_this_round == 3);
+//    } while (bytes_this_round == 3);
 
     return 0;
 }
 
 int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *in)
 {
-    uint8_t outpad[4];
-    uint8_t inpad[3];
-    struct s2n_blob o = {.data = outpad,.size = sizeof(outpad) };
-    struct s2n_blob i = {.data = inpad,.size = sizeof(inpad) };
-
-    while (s2n_stuffer_data_available(in) > 2) {
+//    while (s2n_stuffer_data_available(in) > 2) {
+    if(s2n_stuffer_data_available(in) > 2){
+        uint32_t in_size = s2n_stuffer_data_available(in) / 3 * 3;
+        uint8_t inpad[in_size];
+        struct s2n_blob i = {.data = inpad,.size = in_size };
         GUARD(s2n_stuffer_read(in, &i));
 		
 		// Don't care a
@@ -159,34 +140,41 @@ int s2n_stuffer_write_base64(struct s2n_stuffer *stuffer, struct s2n_stuffer *in
          */
         // o.data[3] = b64[i.data[2] & 0x3f];
 
+        uint32_t out_size = s2n_stuffer_data_available(in) / 3 * 4;
+        uint8_t outpad[out_size];
+        struct s2n_blob o = {.data = outpad,.size = out_size };
         GUARD(s2n_stuffer_write(stuffer, &o));
     }
 
     if (s2n_stuffer_data_available(in)) {
+        uint8_t outpad[4];
+        uint8_t inpad[3];
+        struct s2n_blob o = {.data = outpad,.size = sizeof(outpad) };
+        struct s2n_blob i = {.data = inpad,.size = sizeof(inpad) };
         /* Read just one byte */
         i.size = 1;
         GUARD(s2n_stuffer_read(in, &i));
-        uint8_t c = i.data[0];
+//        uint8_t c = i.data[0];
 
         /* We at least one data byte left to encode, encode
          * its first six bits 
          */
-        o.data[0] = b64[(c >> 2) & 0x3f];
+//        o.data[0] = b64[(c >> 2) & 0x3f];
 
         /* And our end has to be an equals */
-        o.data[3] = '=';
+//        o.data[3] = '=';
 
         /* How many bytes are actually left? */
-        if (s2n_stuffer_data_available(in) == 0) {
+        if (s2n_stuffer_data_available(in) != 0) {
             /* We just have the last two bits to deal with */
-            o.data[1] = b64[(c << 4) & 0x30];
-            o.data[2] = '=';
-        } else {
+//            o.data[1] = b64[(c << 4) & 0x30];
+//            o.data[2] = '=';
+//        } else {
             /* Read the last byte */
             GUARD(s2n_stuffer_read(in, &i));
 
-            o.data[1] = b64[((c << 4) & 0x30) | ((i.data[0] >> 4) & 0x0f)];
-            o.data[2] = b64[((i.data[0] << 2) & 0x3c)];
+//            o.data[1] = b64[((c << 4) & 0x30) | ((i.data[0] >> 4) & 0x0f)];
+//            o.data[2] = b64[((i.data[0] << 2) & 0x3c)];
         }
 
         GUARD(s2n_stuffer_write(stuffer, &o));
