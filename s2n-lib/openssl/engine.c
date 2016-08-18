@@ -6,6 +6,8 @@ void free(void *);
 _Bool nondet_bool();
 // https://www.openssl.org/docs/manmaster/crypto/ENGINE_add.html
 
+static ENGINE* engine;
+
 /* The ENGINE_new() function returns a structural reference to a new (empty) ENGINE object. */
 ENGINE *ENGINE_new(void){
         return (ENGINE *) malloc(sizeof(ENGINE));
@@ -22,10 +24,10 @@ int ENGINE_free(ENGINE *e){
 /* The ENGINE_by_id() function structural references. */
 ENGINE *ENGINE_by_id(const char *id){
         // TODO: do I need to implement a list?
-        if(id == NULL)
-                return NULL;
-
-        return NULL;
+        if(id != NULL && engine != NULL)
+            return engine;
+        else
+            return NULL;
 }
 
 /* Functions to get/set an ENGINE's elements -mainly to avoid exposing the
@@ -63,9 +65,10 @@ int ENGINE_set_RAND(ENGINE *e, const RAND_METHOD *rand_meth){
  * their own reference with ENGINE_free() when they are finished with it.
  */
 int ENGINE_add(ENGINE *e){
-        if(e == NULL)
-                return 0;
-        return 0;
+    if(e == NULL)
+            return 0;
+    engine = (ENGINE *) malloc(sizeof(ENGINE));
+    return 0;
 }
 
 /* To obtain a functional reference from an existing structural reference, call the ENGINE_init()

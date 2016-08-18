@@ -1,0 +1,75 @@
+> gtimeout 1h cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_blob_harness.c ./s2n/utils/s2n_blob.c --bounds-check --div-by-zero-check --pointer-check --memory-leak-check --signed-overflow-check --unsigned-overflow-check --float-overflow-check
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./s2n-harness/module/s2n_blob_harness.c
+Parsing ./s2n/utils/s2n_blob.c
+Converting
+Type-checking s2n_blob
+Type-checking s2n_blob_harness
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+size of program expression: 119 steps
+simple slicing removed 44 assignments
+Generated 30 VCC(s), 11 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+1450 variables, 2823 clauses
+SAT checker: instance is SATISFIABLE
+Solving with MiniSAT 2.2.1 with simplifier
+1450 variables, 1043 clauses
+SAT checker: instance is UNSATISFIABLE
+Runtime decision procedure: 0.007s
+
+** Results:
+[main.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned long int)data_size$array_size0: SUCCESS
+[main.overflow.2] arithmetic overflow on unsigned to unsigned type conversion in (unsigned int)(unsigned long int)data_size$array_size0: SUCCESS
+[_start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
+[__builtin___memset_chk.assertion.1] memset n is least or equal to zero: SUCCESS
+[__builtin___memset_chk.overflow.1] arithmetic overflow on unsigned - in n - (unsigned long int)1: SUCCESS
+[__builtin___memset_chk.overflow.2] arithmetic overflow on unsigned to signed type conversion in (signed long int)(n - (unsigned long int)1): SUCCESS
+[__builtin___memset_chk.pointer_dereference.1] dereference failure: pointer NULL in ((char *)s)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memset_chk.pointer_dereference.2] dereference failure: pointer invalid in ((char *)s)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memset_chk.pointer_dereference.3] dereference failure: deallocated dynamic object in ((char *)s)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memset_chk.pointer_dereference.4] dereference failure: dead object in ((char *)s)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memset_chk.pointer_dereference.5] dereference failure: dynamic object bounds in ((char *)s)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memset_chk.pointer_dereference.6] dereference failure: object bounds in ((char *)s)[(signed long int)(n - (unsigned long int)1)]: FAILURE
+[s2n_blob_init.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.13] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.14] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.15] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.16] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.17] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.18] dereference failure: object bounds in *b: SUCCESS
+
+** 1 of 42 failed (2 iterations)
+VERIFICATION FAILED
+Time taken: 415

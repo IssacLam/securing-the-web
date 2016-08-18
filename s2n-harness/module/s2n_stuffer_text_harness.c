@@ -19,21 +19,17 @@ int main(int argc, char **argv)
     char c;
     struct s2n_stuffer stuffer, token;
     struct s2n_blob pblob = { .data = pad, .size = sizeof(pad)};
+    struct s2n_blob tblob = { .data = tokenpad, .size = sizeof(tokenpad)};
 	
-//    GUARD(s2n_blob_init(&pblob, (uint8_t *)pad, sizeof(pad)));
+    GUARD(s2n_stuffer_init(&token, &tblob));
     GUARD(s2n_stuffer_init(&stuffer, &pblob));
 	
     GUARD(s2n_stuffer_write_text(&stuffer, text, sizeof(text)));
-
-
     GUARD(s2n_stuffer_skip_whitespace(&stuffer));
-
     GUARD(s2n_stuffer_peek_char(&stuffer, &c));
-
-    GUARD(s2n_stuffer_read_text(&stuffer, out, 17));
     
+    GUARD(s2n_stuffer_read_text(&stuffer, out, 17));
     GUARD(s2n_stuffer_read_char(&stuffer, &c));
-
     GUARD(s2n_stuffer_read_token(&stuffer, &token, ','));
 
     return 0;

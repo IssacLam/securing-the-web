@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "utils/s2n_timer.h"
 #include "tls/s2n_config.h"
 
@@ -29,6 +30,7 @@ int main(int argc, char **argv)
     __CPROVER_assert(nanoseconds == mock_time, "ERROR: s2n_timer_reset");
 
     elapsed = nondet_uint64();
+    __CPROVER_assume(elapsed <= (UINT64_MAX - mock_time));
     mock_time += elapsed;
 
     s2n_timer_elapsed(&config, &timer, &nanoseconds);

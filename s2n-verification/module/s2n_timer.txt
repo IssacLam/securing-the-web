@@ -1,0 +1,432 @@
+> gtimeout 1h cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include -I ./s2n/libcrypto-build/ ./s2n-harness/module/s2n_timer_harness.c ./s2n/utils/s2n_timer.c ./s2n/tls/s2n_config.c ./s2n-lib/mach_time.c --bounds-check --div-by-zero-check --pointer-check --memory-leak-check --signed-overflow-check --unsigned-overflow-check --float-overflow-check
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./s2n-harness/module/s2n_timer_harness.c
+Parsing ./s2n/utils/s2n_timer.c
+Parsing ./s2n/tls/s2n_config.c
+Parsing ./s2n-lib/mach_time.c
+Converting
+Type-checking mach_time
+Type-checking s2n_config
+Type-checking s2n_timer
+Type-checking s2n_timer_harness
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+size of program expression: 421 steps
+simple slicing removed 13 assignments
+Generated 275 VCC(s), 125 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+55254 variables, 281492 clauses
+SAT checker: instance is UNSATISFIABLE
+Runtime decision procedure: 0.38s
+
+** Results:
+[main.overflow.1] arithmetic overflow on unsigned + in mock_time + elapsed: SUCCESS
+[main.assertion.1] ERROR: s2n_timer_reset: SUCCESS
+[main.overflow.2] arithmetic overflow on unsigned - in 18446744073709551615ULL - mock_time: SUCCESS
+[main.overflow.3] arithmetic overflow on unsigned + in mock_time + elapsed: SUCCESS
+[main.assertion.2] ERROR:s2n_timer_reset: SUCCESS
+[_start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: SUCCESS
+[s2n_timer_start.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.7] dereference failure: pointer NULL in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_start.pointer_dereference.8] dereference failure: pointer invalid in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_start.pointer_dereference.9] dereference failure: deallocated dynamic object in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_start.pointer_dereference.10] dereference failure: dead object in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_start.pointer_dereference.11] dereference failure: dynamic object bounds in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_start.pointer_dereference.12] dereference failure: object bounds in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_start.pointer_dereference.13] invalid function pointer: SUCCESS
+[s2n_timer_start.pointer_dereference.14] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.15] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.16] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.17] dereference failure: dead object in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.18] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.19] dereference failure: object bounds in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.20] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.21] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.22] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.23] dereference failure: dead object in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.24] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_timer_start.pointer_dereference.25] dereference failure: object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.7] dereference failure: pointer NULL in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.8] dereference failure: pointer invalid in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.9] dereference failure: deallocated dynamic object in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.10] dereference failure: dead object in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.11] dereference failure: dynamic object bounds in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.12] dereference failure: object bounds in config->nanoseconds_since_epoch: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.13] invalid function pointer: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.14] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.15] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.16] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.17] dereference failure: dead object in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.18] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.19] dereference failure: object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.20] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.21] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.22] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.23] dereference failure: dead object in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.24] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.25] dereference failure: object bounds in *config: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.26] dereference failure: pointer NULL in *nanoseconds: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.27] dereference failure: pointer invalid in *nanoseconds: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.28] dereference failure: deallocated dynamic object in *nanoseconds: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.29] dereference failure: dead object in *nanoseconds: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.30] dereference failure: dynamic object bounds in *nanoseconds: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.31] dereference failure: object bounds in *nanoseconds: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.32] dereference failure: pointer NULL in *timer: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.33] dereference failure: pointer invalid in *timer: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.34] dereference failure: deallocated dynamic object in *timer: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.35] dereference failure: dead object in *timer: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.36] dereference failure: dynamic object bounds in *timer: SUCCESS
+[s2n_timer_elapsed.pointer_dereference.37] dereference failure: object bounds in *timer: SUCCESS
+[s2n_timer_elapsed.overflow.1] arithmetic overflow on unsigned - in current_time - timer->time: SUCCESS
+[s2n_timer_reset.pointer_dereference.1] dereference failure: pointer NULL in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.2] dereference failure: pointer invalid in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.3] dereference failure: deallocated dynamic object in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.4] dereference failure: dead object in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.5] dereference failure: dynamic object bounds in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.6] dereference failure: object bounds in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.7] dereference failure: pointer NULL in *nanoseconds: SUCCESS
+[s2n_timer_reset.pointer_dereference.8] dereference failure: pointer invalid in *nanoseconds: SUCCESS
+[s2n_timer_reset.pointer_dereference.9] dereference failure: deallocated dynamic object in *nanoseconds: SUCCESS
+[s2n_timer_reset.pointer_dereference.10] dereference failure: dead object in *nanoseconds: SUCCESS
+[s2n_timer_reset.pointer_dereference.11] dereference failure: dynamic object bounds in *nanoseconds: SUCCESS
+[s2n_timer_reset.pointer_dereference.12] dereference failure: object bounds in *nanoseconds: SUCCESS
+[s2n_timer_reset.pointer_dereference.13] dereference failure: pointer NULL in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.14] dereference failure: pointer invalid in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.15] dereference failure: deallocated dynamic object in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.16] dereference failure: dead object in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.17] dereference failure: dynamic object bounds in *timer: SUCCESS
+[s2n_timer_reset.pointer_dereference.18] dereference failure: object bounds in *timer: SUCCESS
+[s2n_timer_reset.overflow.1] arithmetic overflow on unsigned - in timer->time - previous_time: SUCCESS
+[s2n_config_new.pointer_dereference.1] dereference failure: pointer NULL in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.2] dereference failure: pointer invalid in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.3] dereference failure: deallocated dynamic object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.4] dereference failure: dead object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.5] dereference failure: dynamic object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.6] dereference failure: object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.7] dereference failure: pointer NULL in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.8] dereference failure: pointer invalid in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.9] dereference failure: deallocated dynamic object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.10] dereference failure: dead object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.11] dereference failure: dynamic object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.12] dereference failure: object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.13] dereference failure: pointer NULL in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.14] dereference failure: pointer invalid in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.15] dereference failure: deallocated dynamic object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.16] dereference failure: dead object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.17] dereference failure: dynamic object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.18] dereference failure: object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.19] dereference failure: pointer NULL in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.20] dereference failure: pointer invalid in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.21] dereference failure: deallocated dynamic object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.22] dereference failure: dead object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.23] dereference failure: dynamic object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.24] dereference failure: object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.25] dereference failure: pointer NULL in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.26] dereference failure: pointer invalid in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.27] dereference failure: deallocated dynamic object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.28] dereference failure: dead object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.29] dereference failure: dynamic object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.30] dereference failure: object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.31] dereference failure: pointer NULL in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.32] dereference failure: pointer invalid in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.33] dereference failure: deallocated dynamic object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.34] dereference failure: dead object in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.35] dereference failure: dynamic object bounds in *new_config: SUCCESS
+[s2n_config_new.pointer_dereference.36] dereference failure: object bounds in *new_config: SUCCESS
+[s2n_config_free_dhparams.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_free_dhparams.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_free_dhparams.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_free_dhparams.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_free_dhparams.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_free_dhparams.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.7] dereference failure: pointer NULL in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.8] dereference failure: pointer invalid in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.9] dereference failure: deallocated dynamic object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.10] dereference failure: dead object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.11] dereference failure: dynamic object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.12] dereference failure: object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.13] dereference failure: pointer NULL in *node: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.14] dereference failure: pointer invalid in *node: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.15] dereference failure: deallocated dynamic object in *node: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.16] dereference failure: dead object in *node: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.17] dereference failure: dynamic object bounds in *node: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.18] dereference failure: object bounds in *node: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.19] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.20] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.21] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.22] dereference failure: dead object in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.23] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.24] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.25] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.26] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.27] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.28] dereference failure: dead object in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.29] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_free_cert_chain_and_key.pointer_dereference.30] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.7] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.8] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.9] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.10] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.11] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_nanoseconds_since_epoch_callback.pointer_dereference.12] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.7] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.8] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.9] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.10] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.11] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.12] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.13] dereference failure: pointer NULL in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.14] dereference failure: pointer invalid in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.15] dereference failure: deallocated dynamic object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.16] dereference failure: dead object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.17] dereference failure: dynamic object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.18] dereference failure: object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.19] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.20] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.21] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.22] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.23] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.24] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.25] dereference failure: pointer NULL in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.26] dereference failure: pointer invalid in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.27] dereference failure: deallocated dynamic object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.28] dereference failure: dead object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.29] dereference failure: dynamic object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.30] dereference failure: object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.overflow.1] arithmetic overflow on unsigned to unsigned type conversion in (const unsigned int)return_value_strlen$3: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.31] dereference failure: dead object in *(&key_out_stuffer): SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.overflow.2] arithmetic overflow on unsigned - in (&key_out_stuffer)->write_cursor - (&key_out_stuffer)->read_cursor: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.32] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.33] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.34] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.35] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.36] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.37] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.38] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.39] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.40] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.41] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.42] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.43] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.44] dereference failure: dead object in *(&cert_out_stuffer): SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.overflow.3] arithmetic overflow on unsigned - in (&cert_out_stuffer)->write_cursor - (&cert_out_stuffer)->read_cursor: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.45] dereference failure: pointer NULL in *new_node: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.46] dereference failure: pointer invalid in *new_node: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.47] dereference failure: deallocated dynamic object in *new_node: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.48] dereference failure: dead object in *new_node: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.49] dereference failure: dynamic object bounds in *new_node: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.50] dereference failure: object bounds in *new_node: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.overflow.4] arithmetic overflow on unsigned + in new_node->cert.size + (unsigned int)3: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.overflow.5] arithmetic overflow on unsigned + in chain_size + new_node->cert.size + (unsigned int)3: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.51] dereference failure: pointer NULL in *insert: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.52] dereference failure: pointer invalid in *insert: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.53] dereference failure: deallocated dynamic object in *insert: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.54] dereference failure: dead object in *insert: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.55] dereference failure: dynamic object bounds in *insert: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.56] dereference failure: object bounds in *insert: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.57] dereference failure: dead object in *(&chain_in_stuffer): SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.overflow.6] arithmetic overflow on unsigned - in (&chain_in_stuffer)->write_cursor - (&chain_in_stuffer)->read_cursor: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.58] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.59] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.60] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.61] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.62] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.63] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.64] dereference failure: pointer NULL in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.65] dereference failure: pointer invalid in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.66] dereference failure: deallocated dynamic object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.67] dereference failure: dead object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.68] dereference failure: dynamic object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.69] dereference failure: object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.70] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.71] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.72] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.73] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.74] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.75] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.76] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.77] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.78] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.79] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.80] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.81] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.82] dereference failure: pointer NULL in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.83] dereference failure: pointer invalid in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.84] dereference failure: deallocated dynamic object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.85] dereference failure: dead object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.86] dereference failure: dynamic object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.87] dereference failure: object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.88] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.89] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.90] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.91] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.92] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.93] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.94] dereference failure: pointer NULL in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.95] dereference failure: pointer invalid in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.96] dereference failure: deallocated dynamic object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.97] dereference failure: dead object in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.98] dereference failure: dynamic object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_cert_chain_and_key_with_status.pointer_dereference.99] dereference failure: object bounds in *config->cert_and_key_pairs: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_add_dhparams.overflow.1] arithmetic overflow on unsigned to unsigned type conversion in (const unsigned int)return_value_strlen$3: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.7] dereference failure: dead object in *(&dhparams_out_stuffer): SUCCESS
+[s2n_config_add_dhparams.overflow.2] arithmetic overflow on unsigned - in (&dhparams_out_stuffer)->write_cursor - (&dhparams_out_stuffer)->read_cursor: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.8] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.9] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.10] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.11] dereference failure: dead object in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.12] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_add_dhparams.pointer_dereference.13] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_cipher_preferences.array_bounds.1] array `selection' lower bound in selection[(signed long int)i]: SUCCESS
+[s2n_config_set_cipher_preferences.array_bounds.2] array `selection' upper bound in selection[(signed long int)i]: SUCCESS
+[s2n_config_set_cipher_preferences.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_cipher_preferences.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_cipher_preferences.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_cipher_preferences.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_cipher_preferences.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_cipher_preferences.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_cipher_preferences.array_bounds.3] array `selection' lower bound in selection[(signed long int)i]: SUCCESS
+[s2n_config_set_cipher_preferences.array_bounds.4] array `selection' upper bound in selection[(signed long int)i]: SUCCESS
+[s2n_config_set_cipher_preferences.overflow.1] arithmetic overflow on signed + in i + 1: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.1] dereference failure: pointer NULL in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.2] dereference failure: pointer invalid in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.3] dereference failure: deallocated dynamic object in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.4] dereference failure: dead object in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.5] dereference failure: dynamic object bounds in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.6] dereference failure: object bounds in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.7] dereference failure: dead object in *(&protocol_stuffer): SUCCESS
+[s2n_config_set_protocol_preferences.overflow.1] arithmetic overflow on unsigned - in (&protocol_stuffer)->write_cursor - (&protocol_stuffer)->read_cursor: SUCCESS
+[s2n_config_set_protocol_preferences.overflow.2] arithmetic overflow on unsigned + in (unsigned long int)((&protocol_stuffer)->write_cursor - (&protocol_stuffer)->read_cursor) + length: SUCCESS
+[s2n_config_set_protocol_preferences.overflow.3] arithmetic overflow on unsigned + in (unsigned long int)((&protocol_stuffer)->write_cursor - (&protocol_stuffer)->read_cursor) + length + (unsigned long int)1: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.8] dereference failure: pointer NULL in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.9] dereference failure: pointer invalid in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.10] dereference failure: deallocated dynamic object in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.11] dereference failure: dead object in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.12] dereference failure: dynamic object bounds in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.13] dereference failure: object bounds in protocols[(signed long int)i]: SUCCESS
+[s2n_config_set_protocol_preferences.overflow.4] arithmetic overflow on unsigned to unsigned type conversion in (const unsigned char)length: SUCCESS
+[s2n_config_set_protocol_preferences.overflow.5] arithmetic overflow on unsigned to unsigned type conversion in (const unsigned int)length: SUCCESS
+[s2n_config_set_protocol_preferences.overflow.6] arithmetic overflow on signed + in i + 1: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.14] dereference failure: dead object in *(&protocol_stuffer): SUCCESS
+[s2n_config_set_protocol_preferences.overflow.7] arithmetic overflow on unsigned - in (&protocol_stuffer)->write_cursor - (&protocol_stuffer)->read_cursor: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.15] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.16] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.17] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.18] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.19] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.20] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.21] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.22] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.23] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.24] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.25] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.26] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.27] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.28] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.29] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.30] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.31] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_protocol_preferences.pointer_dereference.32] dereference failure: object bounds in *config: SUCCESS
+[s2n_config_set_status_request_type.pointer_dereference.1] dereference failure: pointer NULL in *config: SUCCESS
+[s2n_config_set_status_request_type.pointer_dereference.2] dereference failure: pointer invalid in *config: SUCCESS
+[s2n_config_set_status_request_type.pointer_dereference.3] dereference failure: deallocated dynamic object in *config: SUCCESS
+[s2n_config_set_status_request_type.pointer_dereference.4] dereference failure: dead object in *config: SUCCESS
+[s2n_config_set_status_request_type.pointer_dereference.5] dereference failure: dynamic object bounds in *config: SUCCESS
+[s2n_config_set_status_request_type.pointer_dereference.6] dereference failure: object bounds in *config: SUCCESS
+[mock_clock.pointer_dereference.1] dereference failure: pointer NULL in *out: SUCCESS
+[mock_clock.pointer_dereference.2] dereference failure: pointer invalid in *out: SUCCESS
+[mock_clock.pointer_dereference.3] dereference failure: deallocated dynamic object in *out: SUCCESS
+[mock_clock.pointer_dereference.4] dereference failure: dead object in *out: SUCCESS
+[mock_clock.pointer_dereference.5] dereference failure: dynamic object bounds in *out: SUCCESS
+[mock_clock.pointer_dereference.6] dereference failure: object bounds in *out: SUCCESS
+[mock_clock.pointer_dereference.7] dereference failure: pointer NULL in *((unsigned long long int *)in): SUCCESS
+[mock_clock.pointer_dereference.8] dereference failure: pointer invalid in *((unsigned long long int *)in): SUCCESS
+[mock_clock.pointer_dereference.9] dereference failure: deallocated dynamic object in *((unsigned long long int *)in): SUCCESS
+[mock_clock.pointer_dereference.10] dereference failure: dead object in *((unsigned long long int *)in): SUCCESS
+[mock_clock.pointer_dereference.11] dereference failure: dynamic object bounds in *((unsigned long long int *)in): SUCCESS
+[mock_clock.pointer_dereference.12] dereference failure: object bounds in *((unsigned long long int *)in): SUCCESS
+[mach_timebase_info.pointer_dereference.1] dereference failure: pointer NULL in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.2] dereference failure: pointer invalid in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.3] dereference failure: deallocated dynamic object in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.4] dereference failure: dead object in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.5] dereference failure: dynamic object bounds in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.6] dereference failure: object bounds in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.7] dereference failure: pointer NULL in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.8] dereference failure: pointer invalid in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.9] dereference failure: deallocated dynamic object in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.10] dereference failure: dead object in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.11] dereference failure: dynamic object bounds in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.12] dereference failure: object bounds in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.13] dereference failure: pointer NULL in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.14] dereference failure: pointer invalid in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.15] dereference failure: deallocated dynamic object in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.16] dereference failure: dead object in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.17] dereference failure: dynamic object bounds in *info: SUCCESS
+[mach_timebase_info.pointer_dereference.18] dereference failure: object bounds in *info: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.1] dereference failure: pointer NULL in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.2] dereference failure: pointer invalid in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.3] dereference failure: deallocated dynamic object in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.4] dereference failure: dead object in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.5] dereference failure: dynamic object bounds in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.6] dereference failure: object bounds in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.7] dereference failure: pointer NULL in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.8] dereference failure: pointer invalid in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.9] dereference failure: deallocated dynamic object in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.10] dereference failure: dead object in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.11] dereference failure: dynamic object bounds in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.12] dereference failure: object bounds in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.overflow.1] arithmetic overflow on unsigned * in *nanoseconds * (unsigned long long int)conversion_factor.numer: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.13] dereference failure: pointer NULL in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.14] dereference failure: pointer invalid in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.15] dereference failure: deallocated dynamic object in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.16] dereference failure: dead object in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.17] dereference failure: dynamic object bounds in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.pointer_dereference.18] dereference failure: object bounds in *nanoseconds: SUCCESS
+[get_nanoseconds_since_epoch.division-by-zero.1] division by zero in *nanoseconds / (unsigned long long int)conversion_factor.denom: SUCCESS
+
+** 0 of 398 failed (1 iteration)
+VERIFICATION SUCCESSFUL
+Time taken: 1762

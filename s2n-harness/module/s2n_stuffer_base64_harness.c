@@ -8,7 +8,7 @@ uint32_t nondet_uint32();
 int main(int argc, char **argv)
 {
     uint32_t message_size = nondet_uint32();
-    __CPROVER_assume(message_size > 0 && message_size < 5);
+    __CPROVER_assume(message_size);
     
     char message[message_size];
 //    __CPROVER_assume(message[message_size-1] == '\0');

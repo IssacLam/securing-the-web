@@ -1,4 +1,5 @@
 #include <openssl/evp.h>
+#include <string.h>
 
 void *malloc(__CPROVER_size_t);
 void free(void *);
@@ -28,8 +29,9 @@ EVP_CIPHER_CTX nondet_evp_cipher();
  * EVP_CIPHER_CTX ctx;
  * EVP_CIPHER_CTX_init(&ctx);
  */
-void EVP_CIPHER_CTX_init(EVP_CIPHER_CTX *a) {
-        *a = nondet_evp_cipher();
+void EVP_CIPHER_CTX_init(EVP_CIPHER_CTX *ctx) {
+        memset(ctx, 0, sizeof(EVP_CIPHER_CTX));
+//        *a = nondet_evp_cipher();
         return;
 }
 
@@ -52,10 +54,11 @@ EVP_CIPHER *EVP_aes_128_ecb(void) {
  * EVP_CIPHER_CTX_cleanup(&ctx);
  */
 // EVP_CIPHER_CTX_cleanup() returns 1 for success and 0 for failure.
-int EVP_CIPHER_CTX_cleanup(EVP_CIPHER_CTX *a) {
-        if(a == NULL)
+int EVP_CIPHER_CTX_cleanup(EVP_CIPHER_CTX *ctx) {
+        if(ctx == NULL)
                 return 0;
-        free(a);
+        memset(ctx, 0, sizeof(EVP_CIPHER_CTX));
+//        free(a);
         return 1;
 }
 

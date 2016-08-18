@@ -1,0 +1,343 @@
+> gtimeout 1h cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_mem_harness.c ./s2n/utils/s2n_blob.c ./s2n/utils/s2n_mem.c ./s2n-lib/mman.c ./s2n-lib/stdlib.c ./s2n-lib/unistd.c --bounds-check --div-by-zero-check --pointer-check --memory-leak-check --signed-overflow-check --unsigned-overflow-check --float-overflow-check
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./s2n-harness/module/s2n_mem_harness.c
+Parsing ./s2n/utils/s2n_blob.c
+Parsing ./s2n/utils/s2n_mem.c
+Parsing ./s2n-lib/mman.c
+Parsing ./s2n-lib/stdlib.c
+Parsing ./s2n-lib/unistd.c
+Converting
+Type-checking mman
+Type-checking s2n_blob
+Type-checking s2n_mem
+Type-checking s2n_mem_harness
+Type-checking stdlib
+Type-checking unistd
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+size of program expression: 1119 steps
+simple slicing removed 1 assignments
+Generated 403 VCC(s), 168 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+25021 variables, 62481 clauses
+SAT checker: instance is SATISFIABLE
+Solving with MiniSAT 2.2.1 with simplifier
+25021 variables, 14801 clauses
+SAT checker: instance is UNSATISFIABLE
+Runtime decision procedure: 0.099s
+
+** Results:
+[] dereference failure: object bounds in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[_start.memory-leak.1] dynamically allocated memory never freed in __CPROVER_memory_leak == NULL: FAILURE
+[__builtin___memcpy_chk.assertion.1] memcpy n is least or equal to zero: SUCCESS
+[__builtin___memcpy_chk.overflow.1] arithmetic overflow on unsigned - in n - (unsigned long int)1: SUCCESS
+[__builtin___memcpy_chk.overflow.2] arithmetic overflow on unsigned to signed type conversion in (signed long int)(n - (unsigned long int)1): SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.1] dereference failure: pointer NULL in ((char *)dst)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.2] dereference failure: pointer invalid in ((char *)dst)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.3] dereference failure: deallocated dynamic object in ((char *)dst)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.4] dereference failure: dead object in ((char *)dst)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.5] dereference failure: dynamic object bounds in ((char *)dst)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.6] dereference failure: object bounds in ((char *)dst)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.7] dereference failure: pointer NULL in ((const char *)src)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.8] dereference failure: pointer invalid in ((const char *)src)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.9] dereference failure: deallocated dynamic object in ((const char *)src)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.10] dereference failure: dead object in ((const char *)src)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.11] dereference failure: dynamic object bounds in ((const char *)src)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[__builtin___memcpy_chk.pointer_dereference.12] dereference failure: object bounds in ((const char *)src)[(signed long int)(n - (unsigned long int)1)]: SUCCESS
+[s2n_blob_init.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_init.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.13] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.14] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.15] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.16] dereference failure: dead object in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.17] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_blob_zero.pointer_dereference.18] dereference failure: object bounds in *b: SUCCESS
+[s2n_mem_init.pointer_dereference.1] dereference failure: pointer NULL in *name: SUCCESS
+[s2n_mem_init.pointer_dereference.2] dereference failure: pointer invalid in *name: SUCCESS
+[s2n_mem_init.pointer_dereference.3] dereference failure: deallocated dynamic object in *name: SUCCESS
+[s2n_mem_init.pointer_dereference.4] dereference failure: dead object in *name: SUCCESS
+[s2n_mem_init.pointer_dereference.5] dereference failure: dynamic object bounds in *name: SUCCESS
+[s2n_mem_init.pointer_dereference.6] dereference failure: object bounds in *name: SUCCESS
+[s2n_mem_init.overflow.1] arithmetic overflow on unsigned - in buf_size - (unsigned long int)1: SUCCESS
+[s2n_mem_init.overflow.2] arithmetic overflow on unsigned to signed type conversion in (signed long int)(buf_size - (unsigned long int)1): SUCCESS
+[s2n_mem_init.pointer_dereference.7] dereference failure: pointer NULL in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[s2n_mem_init.pointer_dereference.8] dereference failure: pointer invalid in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[s2n_mem_init.pointer_dereference.9] dereference failure: deallocated dynamic object in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[s2n_mem_init.pointer_dereference.10] dereference failure: dead object in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[s2n_mem_init.pointer_dereference.11] dereference failure: dynamic object bounds in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[s2n_mem_init.pointer_dereference.12] dereference failure: object bounds in buffer[(signed long int)(buf_size - (unsigned long int)1)]: SUCCESS
+[s2n_alloc.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_alloc.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_alloc.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_alloc.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_alloc.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.13] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_alloc.pointer_dereference.14] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_alloc.pointer_dereference.15] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.16] dereference failure: dead object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.17] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.18] dereference failure: object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.19] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_alloc.pointer_dereference.20] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_alloc.pointer_dereference.21] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.22] dereference failure: dead object in *b: SUCCESS
+[s2n_alloc.pointer_dereference.23] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_alloc.pointer_dereference.24] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.overflow.1] arithmetic overflow on signed - in page_size - (signed long int)1: SUCCESS
+[s2n_realloc.overflow.2] arithmetic overflow on signed + in (signed long int)size + (page_size - (signed long int)1): SUCCESS
+[s2n_realloc.division-by-zero.1] division by zero in ((signed long int)size + (page_size - (signed long int)1)) / page_size: SUCCESS
+[s2n_realloc.overflow.3] arithmetic overflow on signed division in ((signed long int)size + (page_size - (signed long int)1)) / page_size: SUCCESS
+[s2n_realloc.overflow.4] arithmetic overflow on signed * in page_size * (((signed long int)size + (page_size - (signed long int)1)) / page_size): SUCCESS
+[s2n_realloc.overflow.5] arithmetic overflow on signed to unsigned type conversion in (unsigned int)(page_size * (((signed long int)size + (page_size - (signed long int)1)) / page_size)): FAILURE
+[s2n_realloc.overflow.6] arithmetic overflow on signed to unsigned type conversion in (unsigned long int)page_size: SUCCESS
+[s2n_realloc.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.13] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.14] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.15] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.16] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.17] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.18] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.19] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.20] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.21] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.22] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.23] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.24] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.25] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.26] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.27] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.28] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.29] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.30] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.31] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.32] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.33] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.34] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.35] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.36] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.37] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.38] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.39] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.40] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.41] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.42] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.43] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.44] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.45] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.46] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.47] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.48] dereference failure: object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.49] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_realloc.pointer_dereference.50] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_realloc.pointer_dereference.51] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.52] dereference failure: dead object in *b: SUCCESS
+[s2n_realloc.pointer_dereference.53] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_realloc.pointer_dereference.54] dereference failure: object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.1] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_free.pointer_dereference.2] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_free.pointer_dereference.3] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_free.pointer_dereference.4] dereference failure: dead object in *b: SUCCESS
+[s2n_free.pointer_dereference.5] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.6] dereference failure: object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.7] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_free.pointer_dereference.8] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_free.pointer_dereference.9] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_free.pointer_dereference.10] dereference failure: dead object in *b: SUCCESS
+[s2n_free.pointer_dereference.11] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.12] dereference failure: object bounds in *b: SUCCESS
+[s2n_free.assertion.1] free argument is dynamic object: SUCCESS
+[s2n_free.assertion.2] free argument has offset zero: SUCCESS
+[s2n_free.assertion.3] double free: SUCCESS
+[s2n_free.assertion.4] free called for new[] object: SUCCESS
+[s2n_free.pointer_dereference.13] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_free.pointer_dereference.14] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_free.pointer_dereference.15] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_free.pointer_dereference.16] dereference failure: dead object in *b: SUCCESS
+[s2n_free.pointer_dereference.17] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.18] dereference failure: object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.19] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_free.pointer_dereference.20] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_free.pointer_dereference.21] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_free.pointer_dereference.22] dereference failure: dead object in *b: SUCCESS
+[s2n_free.pointer_dereference.23] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.24] dereference failure: object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.25] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_free.pointer_dereference.26] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_free.pointer_dereference.27] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_free.pointer_dereference.28] dereference failure: dead object in *b: SUCCESS
+[s2n_free.pointer_dereference.29] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.30] dereference failure: object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.31] dereference failure: pointer NULL in *b: SUCCESS
+[s2n_free.pointer_dereference.32] dereference failure: pointer invalid in *b: SUCCESS
+[s2n_free.pointer_dereference.33] dereference failure: deallocated dynamic object in *b: SUCCESS
+[s2n_free.pointer_dereference.34] dereference failure: dead object in *b: SUCCESS
+[s2n_free.pointer_dereference.35] dereference failure: dynamic object bounds in *b: SUCCESS
+[s2n_free.pointer_dereference.36] dereference failure: object bounds in *b: SUCCESS
+[close.overflow.1] arithmetic overflow on signed - in fildes - __CPROVER_pipe_offset: SUCCESS
+[close.overflow.2] arithmetic overflow on signed - in fildes - 1: SUCCESS
+[close.array_bounds.1] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[pipe.pointer_dereference.1] dereference failure: pointer NULL in *return_value___error$1: SUCCESS
+[pipe.pointer_dereference.2] dereference failure: pointer invalid in *return_value___error$1: SUCCESS
+[pipe.pointer_dereference.3] dereference failure: deallocated dynamic object in *return_value___error$1: SUCCESS
+[pipe.pointer_dereference.4] dereference failure: dead object in *return_value___error$1: SUCCESS
+[pipe.pointer_dereference.5] dereference failure: dynamic object bounds in *return_value___error$1: SUCCESS
+[pipe.pointer_dereference.6] dereference failure: object bounds in *return_value___error$1: SUCCESS
+[pipe.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned int)__CPROVER_pipe_offset: SUCCESS
+[pipe.overflow.2] arithmetic overflow on unsigned + in (unsigned int)__CPROVER_pipe_offset + __CPROVER_pipe_count: SUCCESS
+[pipe.overflow.3] arithmetic overflow on unsigned to signed type conversion in (signed int)((unsigned int)__CPROVER_pipe_offset + __CPROVER_pipe_count): SUCCESS
+[pipe.pointer_dereference.7] dereference failure: pointer NULL in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.8] dereference failure: pointer invalid in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.9] dereference failure: deallocated dynamic object in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.10] dereference failure: dead object in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.11] dereference failure: dynamic object bounds in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.12] dereference failure: object bounds in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.13] dereference failure: pointer NULL in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.14] dereference failure: pointer invalid in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.15] dereference failure: deallocated dynamic object in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.16] dereference failure: dead object in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.17] dereference failure: dynamic object bounds in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.18] dereference failure: object bounds in fildes[(signed long int)1]: SUCCESS
+[pipe.overflow.4] arithmetic overflow on signed to unsigned type conversion in (unsigned int)__CPROVER_pipe_offset: SUCCESS
+[pipe.overflow.5] arithmetic overflow on unsigned + in (unsigned int)__CPROVER_pipe_offset + __CPROVER_pipe_count: SUCCESS
+[pipe.overflow.6] arithmetic overflow on unsigned + in (unsigned int)__CPROVER_pipe_offset + __CPROVER_pipe_count + (unsigned int)1: SUCCESS
+[pipe.overflow.7] arithmetic overflow on unsigned to signed type conversion in (signed int)((unsigned int)__CPROVER_pipe_offset + __CPROVER_pipe_count + (unsigned int)1): SUCCESS
+[pipe.overflow.8] arithmetic overflow on unsigned + in __CPROVER_pipe_count + (unsigned int)2: SUCCESS
+[pipe.pointer_dereference.19] dereference failure: pointer NULL in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.20] dereference failure: pointer invalid in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.21] dereference failure: deallocated dynamic object in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.22] dereference failure: dead object in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.23] dereference failure: dynamic object bounds in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.24] dereference failure: object bounds in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.25] dereference failure: pointer NULL in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.26] dereference failure: pointer invalid in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.27] dereference failure: deallocated dynamic object in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.28] dereference failure: dead object in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.29] dereference failure: dynamic object bounds in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.30] dereference failure: object bounds in fildes[(signed long int)0]: SUCCESS
+[pipe.pointer_dereference.31] dereference failure: pointer NULL in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.32] dereference failure: pointer invalid in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.33] dereference failure: deallocated dynamic object in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.34] dereference failure: dead object in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.35] dereference failure: dynamic object bounds in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.36] dereference failure: object bounds in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.37] dereference failure: pointer NULL in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.38] dereference failure: pointer invalid in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.39] dereference failure: deallocated dynamic object in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.40] dereference failure: dead object in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.41] dereference failure: dynamic object bounds in fildes[(signed long int)1]: SUCCESS
+[pipe.pointer_dereference.42] dereference failure: object bounds in fildes[(signed long int)1]: SUCCESS
+[read.overflow.1] arithmetic overflow on signed to unsigned type conversion in (unsigned long int)nread: SUCCESS
+[read.overflow.2] arithmetic overflow on unsigned to signed type conversion in (signed long int)i: SUCCESS
+[read.pointer_dereference.1] dereference failure: pointer NULL in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.2] dereference failure: pointer invalid in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.3] dereference failure: deallocated dynamic object in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.4] dereference failure: dead object in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.5] dereference failure: dynamic object bounds in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.6] dereference failure: object bounds in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.overflow.3] arithmetic overflow on unsigned + in i + 1ul: SUCCESS
+[read.overflow.4] arithmetic overflow on signed - in fildes - __CPROVER_pipe_offset: SUCCESS
+[read.overflow.5] arithmetic overflow on signed - in fildes - 1: SUCCESS
+[read.array_bounds.1] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[read.array_bounds.2] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[read.overflow.6] arithmetic overflow on unsigned to signed type conversion in (signed long int)i: SUCCESS
+[read.pointer_dereference.7] dereference failure: pointer NULL in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.8] dereference failure: pointer invalid in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.9] dereference failure: deallocated dynamic object in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.10] dereference failure: dead object in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.11] dereference failure: dynamic object bounds in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.pointer_dereference.12] dereference failure: object bounds in ((char *)buf)[(signed long int)i]: SUCCESS
+[read.array_bounds.3] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[read.array_bounds.4] array `__CPROVER_pipes'[].data lower bound in __CPROVER_pipes[(signed long int)fildes].data[(signed long int)__CPROVER_pipes[(signed long int)fildes].next_unread]: SUCCESS
+[read.array_bounds.5] array `__CPROVER_pipes'[].data upper bound in __CPROVER_pipes[(signed long int)fildes].data[(signed long int)__CPROVER_pipes[(signed long int)fildes].next_unread]: SUCCESS
+[read.array_bounds.6] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[read.overflow.7] arithmetic overflow on signed + in __CPROVER_pipes[(signed long int)fildes].next_unread + 1: SUCCESS
+[read.overflow.8] arithmetic overflow on signed + in retval + 1: SUCCESS
+[read.overflow.9] arithmetic overflow on unsigned + in i + 1ul: SUCCESS
+[read.array_bounds.7] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[unlink.pointer_dereference.1] dereference failure: pointer NULL in *s: SUCCESS
+[unlink.pointer_dereference.2] dereference failure: pointer invalid in *s: SUCCESS
+[unlink.pointer_dereference.3] dereference failure: deallocated dynamic object in *s: SUCCESS
+[unlink.pointer_dereference.4] dereference failure: dead object in *s: SUCCESS
+[unlink.pointer_dereference.5] dereference failure: dynamic object bounds in *s: SUCCESS
+[unlink.pointer_dereference.6] dereference failure: object bounds in *s: SUCCESS
+[write.overflow.1] arithmetic overflow on unsigned to signed type conversion in (signed long int)nbyte: SUCCESS
+[write.overflow.2] arithmetic overflow on signed - in fildes - __CPROVER_pipe_offset: SUCCESS
+[write.overflow.3] arithmetic overflow on signed - in fildes - 1: SUCCESS
+[write.array_bounds.1] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[write.overflow.4] arithmetic overflow on signed to unsigned type conversion in (unsigned long int)__CPROVER_pipes[(signed long int)fildes].next_avail: SUCCESS
+[write.overflow.5] arithmetic overflow on unsigned + in (unsigned long int)__CPROVER_pipes[(signed long int)fildes].next_avail + nbyte: SUCCESS
+[write.array_bounds.2] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[write.overflow.6] arithmetic overflow on signed to unsigned type conversion in (unsigned long int)__CPROVER_pipes[(signed long int)fildes].next_avail: SUCCESS
+[write.overflow.7] arithmetic overflow on unsigned + in i + (unsigned long int)__CPROVER_pipes[(signed long int)fildes].next_avail: SUCCESS
+[write.overflow.8] arithmetic overflow on unsigned to signed type conversion in (signed long int)(i + (unsigned long int)__CPROVER_pipes[(signed long int)fildes].next_avail): SUCCESS
+[write.array_bounds.3] array `__CPROVER_pipes'[].data upper bound in __CPROVER_pipes[(signed long int)fildes].data[(signed long int)(i + (unsigned long int)__CPROVER_pipes[(signed long int)fildes].next_avail)]: SUCCESS
+[write.overflow.9] arithmetic overflow on unsigned to signed type conversion in (signed long int)i: SUCCESS
+[write.pointer_dereference.1] dereference failure: pointer NULL in ((char *)buf)[(signed long int)i]: SUCCESS
+[write.pointer_dereference.2] dereference failure: pointer invalid in ((char *)buf)[(signed long int)i]: SUCCESS
+[write.pointer_dereference.3] dereference failure: deallocated dynamic object in ((char *)buf)[(signed long int)i]: SUCCESS
+[write.pointer_dereference.4] dereference failure: dead object in ((char *)buf)[(signed long int)i]: SUCCESS
+[write.pointer_dereference.5] dereference failure: dynamic object bounds in ((char *)buf)[(signed long int)i]: SUCCESS
+[write.pointer_dereference.6] dereference failure: object bounds in ((char *)buf)[(signed long int)i]: SUCCESS
+[write.overflow.10] arithmetic overflow on unsigned + in i + 1ul: SUCCESS
+[write.array_bounds.4] array `__CPROVER_pipes' lower bound in __CPROVER_pipes[(signed long int)fildes]: SUCCESS
+[write.overflow.11] arithmetic overflow on unsigned to signed type conversion in (signed short int)nbyte: SUCCESS
+[write.overflow.12] arithmetic overflow on signed + in __CPROVER_pipes[(signed long int)fildes].next_avail + (signed short int)nbyte: SUCCESS
+[write.overflow.13] arithmetic overflow on unsigned to signed type conversion in (signed int)nbyte: SUCCESS
+[posix_memalign.pointer_dereference.1] dereference failure: pointer NULL in *memptr: SUCCESS
+[posix_memalign.pointer_dereference.2] dereference failure: pointer invalid in *memptr: SUCCESS
+[posix_memalign.pointer_dereference.3] dereference failure: deallocated dynamic object in *memptr: SUCCESS
+[posix_memalign.pointer_dereference.4] dereference failure: dead object in *memptr: SUCCESS
+[posix_memalign.pointer_dereference.5] dereference failure: dynamic object bounds in *memptr: SUCCESS
+[posix_memalign.pointer_dereference.6] dereference failure: object bounds in *memptr: SUCCESS
+
+** 2 of 302 failed (2 iterations)
+VERIFICATION FAILED
+Time taken: 1157
