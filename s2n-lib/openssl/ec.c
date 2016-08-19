@@ -33,9 +33,6 @@ int EC_GROUP_get_degree(const EC_GROUP *group) {
 #else
         return nondet_uint8();
 #endif
-//#else
-//#error "Must define either ENV32BIT or ENV64BIT"
-//#endif
 };
 
 
@@ -63,7 +60,6 @@ EC_KEY *EC_KEY_new_by_curve_name(int nid) {
 };
 
 /* EC_KEY_generate_key() generates a new public and private key for the supplied eckey object. eckey must have an EC_GROUP object associated with it before calling this function. The private key is a random integer (0 < priv_key < order, where order is the order of the EC_GROUP object). The public key is an EC_POINT on the curve calculated by multiplying the generator for the curve by the private key. */
-// do we care about the key?
 // return 1 on success or 0 on error.
 int EC_KEY_generate_key(EC_KEY *key) {
         return (nondet_bool())? 1 : 0;
@@ -81,10 +77,11 @@ EC_POINT *EC_POINT_new(const EC_GROUP *group) {
 // EC_POINT_oct2point() convert from and to EC_points for the format octet
 // return 1 on success or 0 on error
 int EC_POINT_oct2point(const EC_GROUP *group, EC_POINT *p, const unsigned char *buf, size_t len, BN_CTX *ctx) {
-        _Bool success = nondet_bool();
-        if(success)
-                buf[len - 1];
-        return (success)? 1 : 0;
+    if(len && nondet_bool()){
+        buf[len - 1];
+        return 1;
+    }
+    return 0;
 };
 
 void EC_POINT_free(EC_POINT *point) {
@@ -99,7 +96,13 @@ size_t EC_POINT_point2oct(const EC_GROUP *group, const EC_POINT *p, point_conver
 #else
         return nondet_uint16();
 #endif
-//#else
-//#error "Must define either ENV32BIT or ENV64BIT"
-//#endif
+};
+
+const EC_POINT *EC_KEY_get0_public_key(const EC_KEY *key) {
+    return key->pub_key;
+};
+
+// return 1 on success or 0 on error
+int EC_KEY_set_public_key(EC_KEY *key, const EC_POINT *pub){
+   return (nondet_bool())? 1 : 0;
 };
