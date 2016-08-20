@@ -59,8 +59,6 @@ int main(int argc, char **argv)
     struct s2n_stuffer nist_reference_values;
     struct s2n_config *config;
 
-//    BEGIN_TEST();
-
     config = s2n_config_new();
     __CPROVER_assert(config != NULL, "ERROR: s2n_config_new()");
 
@@ -88,7 +86,6 @@ int main(int argc, char **argv)
         uint8_t nist_v[16];
 
         GUARD(s2n_stuffer_read_bytes(&nist_reference_values, nist_v, sizeof(nist_v)));
-//        EXPECT_TRUE(memcmp(nist_v, nist_drbg.v, sizeof(nist_drbg.v)) == 0);
 
         /* Generate 512 bits (FIRST CALL) */
         uint8_t out[64];
@@ -96,17 +93,14 @@ int main(int argc, char **argv)
         GUARD(s2n_drbg_generate(&nist_drbg, &generated));
 
         GUARD(s2n_stuffer_read_bytes(&nist_reference_values, nist_v, sizeof(nist_v)));
-//        EXPECT_TRUE(memcmp(nist_v, nist_drbg.v, sizeof(nist_drbg.v)) == 0);
 
         /* Generate another 512 bits (SECOND CALL) */
         GUARD(s2n_drbg_generate(&nist_drbg, &generated));
 
         GUARD(s2n_stuffer_read_bytes(&nist_reference_values, nist_v, sizeof(nist_v)));
-//        EXPECT_TRUE(memcmp(nist_v, nist_drbg.v, sizeof(nist_drbg.v)) == 0);
 
         uint8_t nist_returned_bits[64];
         GUARD(s2n_stuffer_read_bytes(&nist_reference_returned_bits, nist_returned_bits, sizeof(nist_returned_bits)));
-//        EXPECT_TRUE(memcmp(nist_returned_bits, out, sizeof(nist_returned_bits)) == 0);
 
         GUARD(s2n_drbg_wipe(&nist_drbg));
     }
@@ -127,9 +121,6 @@ int main(int argc, char **argv)
     }
     GUARD(s2n_timer_reset(config, &timer, &urandom_nanoseconds));
 
-    /* Confirm that the DRBG is faster than urandom */
-//    EXPECT_TRUE(drbg_nanoseconds < urandom_nanoseconds);
-
     /* NOTE: s2n_random_test also includes monobit tests for this DRBG */
 
     /* the DRBG state is 128 bytes, test that we can get more than that */
@@ -139,12 +130,10 @@ int main(int argc, char **argv)
     }
 
     /* Move the DRBG to where it would be just before a reseed */
-//    EXPECT_EQUAL(drbg.generation, 1);
     drbg.bytes_used = S2N_DRBG_RESEED_LIMIT - 128;
     for (int i = 0; i < 10; i++) {
         GUARD(s2n_drbg_generate(&drbg, &blob));
     }
-//    EXPECT_EQUAL(drbg.generation, 2);
 
     GUARD(s2n_drbg_wipe(&drbg));
 

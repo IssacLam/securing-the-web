@@ -29,7 +29,7 @@ fi
 #do
     # echo $check;
     start_ns=$(gdate +%s%N);
-    result=$(gtimeout 1h $@ $buildInChecks);
+    result=$(gtimeout 3h $@ $buildInChecks);
     end_ns=$(gdate +%s%N);
     elapsed_ms=$(((end_ns - start_ns) / 1000000));
     echo $elapsed_ms;

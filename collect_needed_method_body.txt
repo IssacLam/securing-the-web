@@ -1,0 +1,11 @@
+cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl -I ./s2n/libcrypto-build/openssl/crypto -I ./s2n/libcrypto-build/openssl/crypto/engine -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_connection_gs_harness.c ./s2n/tls/s2n_connection.c --unwind 1 2>&1 | grep "WARNING"
+**** WARNING: no body for function s2n_timer_elapsed
+**** WARNING: no body for function s2n_rsa_public_key_free
+**** WARNING: no body for function s2n_dh_params_free
+**** WARNING: no body for function s2n_ecc_params_free
+**** WARNING: no body for function s2n_free
+**** WARNING: no body for function s2n_stuffer_wipe
+**** WARNING: no body for function s2n_stuffer_resize
+**** WARNING: no body for function s2n_hash_init
+**** WARNING: no body for function s2n_hmac_init
+**** WARNING: no body for function s2n_stuffer_read_uint8

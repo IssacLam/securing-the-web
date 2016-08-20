@@ -1,13 +1,6 @@
 #include <s2n.h>
-//
-//mock_clock(void *in, uint64_t *out)
-//{
-//        *out = *(uint64_t *)in;
-//        return 0;
-//}
 
-int main_test(arc, char * const *argv){
-
+int harness(arc, char * const *argv){
         s2n_init();
         s2n_cleanup();
 

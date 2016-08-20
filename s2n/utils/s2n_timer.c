@@ -31,6 +31,7 @@ int s2n_timer_elapsed(struct s2n_config *config, struct s2n_timer *timer, uint64
 
     GUARD(config->nanoseconds_since_epoch(config->data_for_nanoseconds_since_epoch, &current_time));
 
+    __CPROVER_assume(current_time > timer->time);
     *nanoseconds = current_time - timer->time;
 
     return 0;
