@@ -1,11 +1,11 @@
 #!/bin/bash
-filename="functions.txt"
-regex="^(\w+ )+\*?\w+\(.*\)$"
-for f in $(find ./s2n -name '*.c' -not -path '*bin*' -not -path '*test*');
+filename="all_functions.txt"
+result=""
+for f in $(find ./s2n -name '*.c' -not -path '*bin*' -not -path '*tests*' -not -path '*libcrypto-build*' -not -path '*libcrypto-root'); 
 do
-        grep -E '^(\w+ )+\*?\w+\(.*\)' $f | cut -d "(" -f 1 | tr -d "*" | while read -r line; do
-        echo -n "- [ ] " >> $filename;
-        echo -n "$f : " >> $filename;
-        echo "${line##* }" >> $filename;
+       result="$result$(grep -Eo '^(\w+ )+\*?\w+\(.*\)' $f | cut -d '(' -f 1 | tr '\n' ';')"; 
 done
+
+echo $result | tr -d '*' | tr ';' '\n' | sort | uniq | while read -r line; do
+	 echo "- [ ] ${line##* }" >> $filename;
 done

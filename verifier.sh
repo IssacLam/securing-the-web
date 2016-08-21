@@ -12,12 +12,10 @@ buildInChecks="--bounds-check --div-by-zero-check --pointer-check --memory-leak-
 
 filename="$1"
 
-prefix="s2n-verification/module/"
+prefix="s2n-verification-result/module-based/"
 dir="$prefix"
 mkdir $dir;
 shift
-
-echo "$1";
 
 if [ "$1" != "cbmc" ] 
 then
@@ -25,16 +23,13 @@ then
     exit 1
 fi
 
-#for check in "${buildInChecks[@]}"
-#do
-    # echo $check;
-    start_ns=$(gdate +%s%N);
-    result=$(gtimeout 3h $@ $buildInChecks);
-    end_ns=$(gdate +%s%N);
-    elapsed_ms=$(((end_ns - start_ns) / 1000000));
-    echo $elapsed_ms;
-    #echo "Time take: $(($END - $START))";
-    echo "> gtimeout 1h $@ $buildInChecks" > $dir/$filename.txt;
-    echo "$result" >> $dir/$filename.txt;
-    echo "Time taken: $elapsed_ms" >> $dir/$filename.txt
-#done
+start_ns=$(gdate +%s%N);
+result=$(gtimeout 3h $@ $buildInChecks);
+end_ns=$(gdate +%s%N);
+elapsed_ms=$(((end_ns - start_ns) / 1000000));
+echo $elapsed_ms;
+
+echo "> gtimeout 1h $@ $buildInChecks" > $dir/$filename.txt;
+echo "$result" >> $dir/$filename.txt;
+echo "Time taken: $elapsed_ms" >> $dir/$filename.txt
+
