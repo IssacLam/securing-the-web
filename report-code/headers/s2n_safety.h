@@ -39,6 +39,12 @@
 #define inclusive_range_check( low, n, high )  gte_check(n, low); lte_check(n, high)
 #define exclusive_range_check( low, n, high )  gt_check(n, low); lt_check(n, high)
 
+
+/**
+ *  s2n suggested practice for error handling:
+ *  if (s2n_do_something(with_something_else) < 0) { return -1; }
+ */
+
 #define GUARD( x )      if ( (x) < 0 ) return -1
 #define GUARD_PTR( x )  if ( (x) < 0 ) return NULL
 
