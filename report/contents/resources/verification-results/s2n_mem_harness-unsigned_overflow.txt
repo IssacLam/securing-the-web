@@ -1,0 +1,16 @@
+/* detail error trace is omitted */
+
+State 70 file ./s2n/utils/s2n_mem.c line 46 function s2n_alloc thread 0
+----------------------------------------------------
+  size=4294963204u (11111111111111111111000000000100)
+
+State 73 file ./s2n/utils/s2n_mem.c line 61 function s2n_realloc thread 0
+----------------------------------------------------
+  allocate=0u (00000000000000000000000000000000)
+
+Violated property:
+  file ./s2n/utils/s2n_mem.c line 61 function s2n_realloc
+  arithmetic overflow on signed to unsigned type conversion in (unsigned int)(page_size * (((signed long int)size + (page_size - (signed long int)1)) / page_size))
+  ((-1l + page_size + (signed long int)size) / page_size) * page_size >= 0l && !(((-1l + page_size + (signed long int)size) / page_size) * page_size >= 4294967296l)
+
+VERIFICATION FAILED

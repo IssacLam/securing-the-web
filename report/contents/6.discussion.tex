@@ -1,0 +1,30 @@
+\chapter{Discussion and lessons learnt}
+\section{Trade-offs in Software Verification}
+During this project, we made some trade-offs regarding to the properties of the triangle model mentioned in Section~\ref{sec:osv} to obtain this successful result. First of all, we make use of over-approximation in order to scale up the verification capability of model checking. However, this would introduce false alarms to the verification. The use of human-assisted at this point can help to minimise the number of false alarms.
+
+\paragraph{Trade-off between Under- and Over- Approximation}
+Concerning model checking is an under-approximation verification technique that would produce no false alarms. In order to achieve this results, CBMC requires the detailed implementations of all functions involved to be included, including those underlying software packages and system libraries. However, in this case, as s2n is not a stand-alone software package, including the implementations of external functions would enlarge the exploration spaces and go beyond our verification scope. Moreover, sometimes the implementations are not available but only some descriptions in the documentations. Hence, we have to create stubs for those functions always with over-approximations as mentioned in Section~\ref{subsec:stubbing}. In addition, we further simplified some functions depending on the verification needs by using over-approximation as mentioned in Section~\ref{sec:suc}.
+
+\paragraph{Trade-off between Automated and Human-assisted} To remain a low false alarm rate while using over-approximation, human effort is needed. Besides the use of over-approximation described above, the regardless to the function usage contracts can also introduce false alarms. Since s2n is not a single-function software package, an appropriate execution environment is necessary to the verification. Therefore, human-assisted is required to capture the function usage contracts for preparing proper harnesses with suitable LUBs as mentioned in Section~\ref{cfuc} and Section~\ref{sec:lba}.
+
+\section{Manual Loop Bounds Analysis Effort for BMC}
+As mentioned in Section~\ref{sec:lba}, loop bounds analysis are performed on all involved functions in the verification and the maximum numbers of iterations are chosen as the LUBs. This can ensure the coverage of the verification in order to detect bugs and more importantly to show the memory safety of the implementations. Our approach is sightly different from the study conducted by Y. Kim et al. \cite{7091291}. Instead of showing the memory safety of the implementation, they are focusing on detecting bugs only. They chose the minimum number of iterations to exit a loop as their loop unwinding bounds. By increasing the number in each iterations, hopefully a witness to the property violation will exists. In this case, a sound upper bound is good enough for detecting bugs, but not enough for showing the memory safety. The authors further concluded that without an accurate loop bounds analysis can make the verification fail to detect bugs even a large LUB is used. Since the choices of LUBs directly affect the quality of verification results and the effectiveness of BMC, therefore the manual effort of loop bounds analysis are necessary.
+
+
+\section{Dealing with the Scalability of BMC}
+During this project, we observed that the key limitation of BMC is the lack of scalability. The is a well-known limitation of model checking due to state explosions, which makes it hard to be applied on industrial software \cite{7091291}. Since industrial software always consists of numerous loops, even be nested, and also with a huge number of iterations, this is the main cause of the exponential complexity as well as state explosions. For example, some string manipulation functions in s2n, such as \code{s2n_stuffer_read_base64()}, will iterate over the entire memory spaces of a given \code{char} array. It is impractical to use the maximum value of \code{uint64_t} as the LUBs of such functions. Since it has taken more than 5 hours to convert explored space into SSA form, when 49 was chosen as its LUB. In this case, we have chosen a smaller number as the LUB in order to reduce the exploration spaces and keep up the verification. Due to the insufficient LUB coverage, the memory safety of those functions are not guaranteed, but nevertheless, the verification is still useful for detecting bugs in that limited coverage. Besides of choosing a smaller LUBs, simplifying some complex computations and those verified functions is also a viable way to further scale up the verification, as mentioned in Section~\ref{sec:suc}.
+
+
+\section{Limitation on Functional Correctness Verification}
+Due to the use of non-determinism, stubs only return a valid result but not necessary correct, as described in Section~\ref{subsec:stubbing}. This makes the correctness of several functional properties are not able to be verified. For example, the functional properties of hash function are as the following:
+
+\begin{enumerate}[nolistsep]
+    \item Same input string must have the same hash value.
+    \item Similar inputs are result in very different hash values.
+    \item Fixed output size for variable input size.
+\end{enumerate}
+
+\noindent 
+Only the $3^{rd}$ property is able to be verified while other properties require deterministic values to verify the functional correctness. In contract, deductive verification could be a better choice to verify such properties. Since it preform the verification over the dynamic execution instead of static execution, which does not require the source code of the underlying software packages and large number of exploration spaces. However, this would heavily relies on human efforts for capturing the specifications and introducing invariants for each functions to support the verification. 
+
+

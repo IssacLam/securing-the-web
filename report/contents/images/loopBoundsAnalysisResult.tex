@@ -1,0 +1,94 @@
+\begin{table}[p]
+\centering
+\scriptsize
+\begin{threeparttable}
+    \begin{tabular}{ p{.3\textwidth} || p{.16\textwidth} || p{.03\textwidth} || p{.03\textwidth} || p{.38\textwidth} }
+        \hline
+        \hline
+        Loop ID & File & Line & LUB & Description (bytes)\\
+        \hline
+        \hline
+        s2n\_sslv3\_mac\_init.0 & s2n\_hmac.c & 51 &  49 & The loop iterates the block size of \code{SHA1} (40) or \code{MD5} (48). \\ 
+        \hline
+        s2n\_sslv3\_mac\_init.1 & s2n\_hmac.c & 59 &  49 & The loop iterates the block size of \code{SHA1} (40) or \code{MD5} (48). \\ 
+        \hline
+        s2n\_hmac\_init.6 & s2n\_hmac.c & 156 & 129  & The loop iterates the \code{MAX_DIGEST_LENGTH} (64) or \code{MAX_BLOCK_SIZE} (128). \\ 
+        \hline
+        s2n\_hmac\_init.7 & s2n\_hmac.c & 159 & 129 & The loop iterates the \code{MAX_BLOCK_SIZE}(128). \\ 
+        \hline
+        s2n\_hmac\_init.8 & s2n\_hmac.c & 166 & 129 & The loop iterates the \code{MAX_BLOCK_SIZE}(128). \\ 
+        \hline
+        s2n\_sslv3\_mac\_digest.0 & s2n\_hmac.c & 73 & 49 & The loop iterates the block size of \code{SHA1} (40) or \code{MD5} (48). \\ 
+        \hline
+        
+        s2n\_stuffer\_alloc\_ro\_from\_string.0 & s2n\_stuffer\_text.c & 76 & 50\tnote{\textsection} & The loop exists in \code{strlen()} (49). \\ 
+        \hline 
+        s2n\_stuffer\_write\_base64.0 & s2n\_stuffer\_base64.c & 153 & 17\tnote{\textsection} & The loop iterates over a \code{stuffer} for \code{s2n_stuffer_data_available(in)/3} times. It is only used for testing purpose (49/3=16). \\ 
+        \hline
+        s2n\_stuffer\_read\_base64.0 & s2n\_stuffer\_base64.c & 141 & 17 & The loop iterates over a \code{stuffer} for \code{s2n_stuffer_data_available(in)/4} times. It is only used for reading pem file line by line (65\tnote{\textdagger} /4=16). \\ 
+        \hline
+        
+        %  s2n\_stuffer\_skip\_whitespace.0 & s2n\_stuffer\_text.c & 32 &  & The loop iterates over a \code{stuffer} until it reaches a non-space character or the end. It is only used for testing purpose \\
+        % \hline
+         s2n\_stuffer\_read\_token.0 & s2n\_stuffer\_text.c & 56 & 66 & The loop iterates over a \code{stuffer} until it reaches the given taken or the end. It is only used for reading pem file line by line (65\tnote{\textdagger} ) \\ 
+        \hline
+        
+        s2n\_stuffer\_data\_from\_pem.1 & s2n\_stuffer\_pem.c & 46 & 17 & The loop exists in \code{strlen()} for counting the keyword length of pem\tnote{\textdaggerdbl}  (16), (12) or (14). \\ 
+        \hline
+        
+        s2n\_stuffer\_data\_from\_pem.3 & s2n\_stuffer\_pem.c & 48 & 17 & The loop exists in \code{strlen()} for counting the keyword length of pem\tnote{\textdaggerdbl}  (16), (12) or (14). \\ 
+        \hline
+        
+        s2n\_stuffer\_data\_from\_pem.5 & s2n\_stuffer\_pem.c & 75 & 14 & The loop iterates over the pem \code{stuffer} until it reach a pem line or the end of file. Minimum number of lines in pem\tnote{\textdaggerdbl} (8), (13) or (3). \\
+        \hline
+        
+        s2n\_stuffer\_data\_from\_pem.7 & s2n\_stuffer\_pem.c & 84 & 17 & The loop exists in \code{strlen()} for counting the keyword length of pem\tnote{\textdaggerdbl}  (16), (12) or (14). \\ 
+        \hline
+        
+        s2n\_stuffer\_data\_from\_pem.9 & s2n\_stuffer\_pem.c & 86 & 17 & The loop exists in \code{strlen()} for counting the keyword length of pem\tnote{\textdaggerdbl}  (16), (12) or (14). \\ 
+        \hline
+        
+        s2n\_drbg\_bits.0 & s2n\_drbg.c & 44 & 4 & The loop iterates the data each drbg block(16). Different size of data are given for various usages: (8), (28), (32), (36), (48). i.e. (48/16=3) \\ 
+        \hline
+
+        s2n\_drbg\_update.1 & s2n\_drbg.c & 74 & 33 & The loop iterates over the provided data and \code{xor} each bytes. It is only used by \code{s2n_drbg_generate()} (32) and \code{s2n_drbg_seed()} (32). \\ 
+        \hline
+        
+        s2n\_drbg\_seed.0 & s2n\_drbg.c & 100 & 33 & The loop iterates over the personalised string provided by \code{s2n_drbg_generate()} (32) or \code{s2n_drbg_instantiate()} (32). \\ 
+        \hline
+        
+        s2n\_get\_urandom\_data.0 & s2n\_random.c & 113 & 33 & The loop is used to read a user-defined random data for \code{s2n_drbg_seed()} (32).\\
+        \hline
+        
+        \_read.0 & unistd.c & 193 & 33 & The loop models the behaviour of reading from a file provided by the CBMC ANSI-C Library.\\
+        \hline
+        
+         s2n\_config\_set\_cipher\_preferences.0 & s2n\_config.c & 225 & 8 & The loop iterates over the available cipher preferences (7) \\
+        \hline
+        
+        s2n\_config\_free\_cert\_chain\_and\_key.0 & s2n\_config.c & 175 & 11 & The loop iterates over the certificate chains. The default maximum chain length in OpenSSL is 10. \\
+        \hline
+        
+        s2n\_ecc\_find\_supported\_curve.0 & s2n\_ecc.c & 286 & 2 & The loop iterates over the number of \code{IANA IDs/2}. (1) \\
+        \hline
+        
+        s2n\_set\_server\_name.0 & s2n\_connection.c & 335 & 257 & The loop exists in \code{strlen()}. (256)\\
+        \hline
+        
+        s2n\_get\_server\_name.0 & s2n\_connection.c & 347 & 257  & The loop exists in \code{strlen()}. (256)\\
+        \hline
+        
+        s2n\_get\_application\_protocol.0 & s2n\_connection.c & 356 & 257 & The loop exists in \code{strlen()}. (256)\\
+        \hline
+        
+        \hline
+    \end{tabular}
+    \begin{tablenotes}
+    \item[\textdagger] the maximum length per line in a pem file.
+    \item[\textdaggerdbl] the three numbers refer to the property of \textit{RSA Private key}, \textit{Certificate} and \textit{DH Parameters} in a pem file respectively.
+    \item[\textsection] the bound depends on the size of string (48bytes), used to convert to a base64 string (64bytes) for the \code{s2n_stuffer_read_base64()} verification.
+    \end{tablenotes}
+\end{threeparttable}
+\caption{Loop Bounds Analysis Result of s2n}
+\label{tab:lba}
+\end{table}

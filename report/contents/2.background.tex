@@ -9,6 +9,7 @@
 \paragraph{Clarification} The terms of soundness and completeness of a software verification technique often have various meanings in different papers. Sometimes soundness and completeness refer to an under-approximation and an over-approximation to a program behaviour respectively while sometimes they are defined in the opposite way. In order to be more clear, we will avoid using them throughout the report instead of using "no missing bugs" and "no false alarms" of a detection.  
 
 \section{Overview of Software Verification}
+\label{sec:osv}
 Software verification is an important step in the software development life cycle, which is easily confused with software validation. It is questioning about "\textit{are we building the right product?}", while software verification cares about "\textit{are we building the product right?}" \cite{kung2008software}. In other word, we concern about \textbf{whether a system meet its specification}, including safety properties, liveness properties, concurrency properties, as well as functional and non-functional properties. This is the key to ensuring quality and reliability of the software, especially for those \textit{critical software}, such as safety-critical, security-critical, financial-critical, etc. By analysing the system behaviour and detecting errors in order to minimise or prevent system failure. 
 
 \input{contents/images/triangleModel}
@@ -93,7 +94,7 @@ In order to analysis a given C/C++ code, CBMC will first reduce the model checki
 % \caption{Program translation process descripted in \cite{Clarke:2003:HVU:1119772.1119831}}
 % \end{table}
 
-\paragraph{Loop unwinding} In order to model the computation up to a given depth, loops are necessary to be unwound into a fixed number of iterations. This can be done by repeating the loop body with certain amounts of copies. While each copy is guarded by an \code{if} statement with the same condition as the loop, it is prepared for the case that less iterations are required for the loop. In addition, an assertion with the negated condition can be added after the last copy, which can ensure that the loop does not require more iterations by using \code{--unwinding-assertions} option in CBMC. This
+\paragraph{Loop unwinding} \label{unwinding} In order to model the computation up to a given depth, loops are necessary to be unwound into a fixed number of iterations. This can be done by repeating the loop body with certain amounts of copies. While each copy is guarded by an \code{if} statement with the same condition as the loop, it is prepared for the case that less iterations are required for the loop. In addition, an assertion with the negated condition can be added after the last copy, which can ensure that the loop does not require more iterations by using \code{--unwinding-assertions} option in CBMC. This
 is essential for showing that whether the unwinding bound is large enough to model the program behaviour. Note that, after the program translation process above, loops can be constructed by using \code{while} statements, recursive function calls, and \code{goto} statements. We use \code{while} as an example below: 
 
 % $$\code{while(cond) instr}; \to \code{if(cond) {instr; while(cond) instr};}$$, such that
@@ -131,7 +132,7 @@ if(cond) {
 \end{minted}
 \end{minipage}
 }
-\caption[The LOF caption]{Loop unwinding for $k$ times with unwinding assertion adapted from CPROVER tutorials \protect\footnotemark}
+\caption{Loop unwinding for $k$ times with unwinding assertion adapted from CPROVER tutorials \protect\footnotemark}
 \end{figure}
 \footnotetext{The CPROVER manual: http://www.cprover.org/cprover-manual/}
 % \bigskip
@@ -192,7 +193,7 @@ As mentioned above, CBMC considers the verification conditions as a pair of bit-
 \subsection{Non-Determinism}
 Non-deterministic choice functions is supported in CBMC by declaring \code{nondet_} as the prefix of their names and it is usefully for modelling the user inputs. The range of the generated values depends on the return type of the function and also the restriction given by the corresponding assumptions. 
 
-\subsection{Automatic Verification} 
+\subsection{Automatic Verification} \label{subsec:av}
 Concerning to the verification on safety properties, CBMC takes care of a widely range of program behaviour regarding to such properties, including dynamic allocations using \code{malloc()} and \code{free()}, buffer overflow, pointer safety, arithmetic overflow, user-defined assertions, etc. Moreover, by enabling CBMC with different options, the verification condition generator of CBMC will automatically generate the safety conditions respectively, which allows the above verifications become fully automated. The options of supported build-in safety check are as follows: \code{--divided-by-zero-check}, \code{--bounds-check}, \code{--pointer-check},  \code{--memory-leak-check}, and \code{--signed-overflow-check} as well as \code{--unsigned-overflow-check}. Because of the advantage of being automated and the verification capability, CBMC has been widely used in a variety of applications, such as error explanation, verifying embedded programs, finding security bugs in windows binaries, etc.
 
 % SAT-based Bounded Software Model Checking for Embedded Software: A Case Study
@@ -204,5 +205,8 @@ Concerning to the verification on safety properties, CBMC takes care of a widely
 \section{Overview of s2n}
 s2n \cite{3_the_s2n_user_manual, 4_introducing_s2n} is an open-source implementation of the TLS/SSL protocols that was released in late June 2015 by the Amazon Security Labs. It is designed with the concern of security, reviewability, ease of use and efficiency. It can support various version of the TLS/SSL protocols, such as SSLv3, TLS1.0-1.2, with different cipher suites. The implementation of s2n is only around 6,000 lines of C99 code as it relies on OpenSSL or other its forks for handling the low-level cryptographic computation of the TLS protocol. Comparing with the implementation of OpenSSL which needs about 70,000 lines of code to implement the protocol. This makes s2n easier to be reviewed, indeed, Amazon also announced that three external security evaluations and penetration tests had been done on s2n at that time. 
 
+
+\subsection{TLS}
+\code{https://hpbn.co/transport-layer-security-tls/}
 
 \input{contents/2.relatedWork}

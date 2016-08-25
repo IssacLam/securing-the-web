@@ -1,0 +1,87 @@
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{threeparttable}
+    \begin{tabular}{ P{.17\textwidth} || P{.06\textwidth} || P{.06\textwidth} || P{.08\textwidth} | P{.06\textwidth} | P{.07\textwidth} || P{.05\textwidth} | P{.05\textwidth} || P{.07\textwidth} | P{.07\textwidth} }
+        \hline
+        \hline
+        \multirow{2}{*}{Harness} & \multirow{2}{*}{SAT} & \multirow{2}{*}{\specialcell{\#of \\ failed \\ Results}} & \multicolumn{3}{c ||}{Time (s)} & \multicolumn{2}{c ||}{VCC\tnote{\textsection}} &  \multicolumn{2}{c}{
+        \specialcell{SAT formula \\ statistics}}  \\
+        \cline{4-10}
+            & & & \specialcell{Formula \\ generation} & Solving & Total & Gen & Simp & \specialcell{\#of \\ variables} & \specialcell{\#of \\ clauses}  \\
+        \hline
+        \hline
+        \multirow{2}{*}{s2n\_blob} & SAT & \multirow{2}{*}{1/42} & \multirow{2}{*}{0.418} & \multirow{2}{*}{0.007} & \multirow{2}{*}{0.415}& \multirow{2}{*}{29} &  \multirow{2}{*}{11} & 1450 & 2823 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 1450 & 1043  \\
+        \hline
+        
+        \multirow{2}{*}{s2n\_mem} & SAT & \multirow{2}{*}{2/302} & \multirow{2}{*}{1.058} & \multirow{2}{*}{0.099} & \multirow{2}{*}{1.157} & \multirow{2}{*}{403} &  \multirow{2}{*}{168} & 25021 & 62481 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 25012 & 14801  \\
+        \hline
+        
+        s2n\_timer & UNSAT & 0/398 & 1.322 & 0.380 & 1.762 & 275 & 125 & 55254 & 281492\\ 
+        \hline
+        
+        s2n\_hash & UNSAT & 0/312 & 0.841 & 0.400 & 1.241 & 340 & 60 & 98319 & 267059\\ 
+        \hline
+        
+        s2n\_hmac & UNSAT & 0/1015 & 14.356 & 16.137 & 30.493 & 7495 & 1275 & 1445978 & 5606727\\ 
+        \hline
+        
+        s2n\_stuffer & UNSAT & 0/704 & 1722.768 & 564.44 & 2287.208 & 67540 & 38730 & 13431597 & 34789455\\ 
+        \hline
+        
+        \multirow{3}{*}{s2n\_stuffer\_base64}\tnote{\textparagraph} & SAT & \multirow{3}{*}{3/901} & \multirow{3}{*}{915.566} & \multirow{3}{*}{464.398} & \multirow{3}{*}{1379.964} & \multirow{3}{*}{25176} &  \multirow{3}{*}{14286}  & 3181447 & 14472455 \\\cline{9-10}\cline{2-2}
+                                 & SAT & & & & & & & 3181447 & 1802115 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 3181447 & 1604792 \\
+        \hline
+        
+        s2n\_stuffer\_text\tnote{\textparagraph} & UNSAT & 0/702 & 3.346 & 78.278 & 81.624 & 1827 & 1075 & 4854780 & 28002070 \\ 
+        \hline
+        
+        \multirow{3}{*}{\specialcell{s2n\_override\\\_openssl\_random}} & SAT & \multirow{3}{*}{2/1516} &  \multirow{3}{*}{226.482} & \multirow{3}{*}{93.505} & \multirow{3}{*}{319.987} & \multirow{3}{*}{21305} & \multirow{3}{*}{12126} & 2650201 & 11191936 \\\cline{9-10}\cline{2-2}
+                                 & SAT & & & & & & & 2650201 & 412966 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 2650201 & 403524 \\
+        \hline
+        
+        s2n\_drbg & UNSAT & 0/1167 & 114.91 & 103.009 & 217.919 & 182338 & 92342 & 44585234 & 140834724 \\ 
+        \hline
+        
+        \multirow{3}{*}{\specialcell{s2n\_ecc}} & SAT & \multirow{3}{*}{3/874} &  \multirow{3}{*}{10.012} & \multirow{3}{*}{8.481} & \multirow{3}{*}{18.493} & \multirow{3}{*}{7518} & \multirow{3}{*}{4235} & 779809 & 2200597 \\\cline{9-10}\cline{2-2}
+                                 & SAT & & & & & & & 779809 & 52580 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 779809 & 48486 \\
+        \hline
+        
+        s2n\_config\_client & UNSAT & 0/1186 & 6.827 & 696.328 & 703.115 & 1536 & 1073 & 55583317 & 180060732 \\ 
+        \hline
+        
+        s2n\_config\_server\tnote{\textdagger} & N/A & N/A & N/A & N/A & N/A & N/A & N/A & N/A & N/A \\
+        \hline
+        
+        s2n\_config\_dhparams & UNSAT & 0/1896 & 435.212 & 412.252 & 847.464 & 29601 & 16636 & 70985517 & 232832304 \\ 
+        \hline
+        
+        \multirow{2}{*}{s2n} & SAT & \multirow{2}{*}{1/555} & \multirow{2}{*}{7.995} & \multirow{2}{*}{1355.71} & \multirow{2}{*}{1363.705} & \multirow{2}{*}{21947} &  \multirow{2}{*}{15820} & 2572719 & 14221606 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 2572719 & 2158242  \\
+        \hline
+        
+        
+        s2n\_connection\tnote{\textdaggerdbl} & N/A & N/A & N/A & N/A & N/A & N/A & N/A & N/A & N/A \\ 
+        \hline
+        
+        \multirow{3}{*}{\specialcell{s2n\_connection\_gs}} & SAT & \multirow{3}{*}{2/3011} &  \multirow{3}{*}{29.241} & \multirow{3}{*}{3.525} & \multirow{3}{*}{32.766} & \multirow{3}{*}{6709} & \multirow{3}{*}{1750} & 410718 & 556807 \\\cline{9-10}\cline{2-2}
+                                 & SAT & & & & & & & 410718 & 113608 \\\cline{9-10}\cline{2-2}
+                                 & UNSAT & & & & & & & 410718 & 43716 \\
+        \hline
+        \hline
+    \end{tabular}
+    \begin{tablenotes}
+    \item[\textparagraph] The chosen LUB does not cover the entire loop due to the limited scalability of BMC.
+    \item[\textsection] Gen: Generated Verification Condition; Simp: Simplified Verification Condition.
+    \item[\textdagger] Error occurred during the verification.
+    \item[\textdaggerdbl] The verification process is killed by the terminal.
+    \end{tablenotes}
+\end{threeparttable}
+\caption{Model Checking Result of s2n}
+\label{tab:mcr}
+\end{table}    

@@ -1,8 +1,49 @@
 % \documentclass[12pt]{ociamthesis}  % default square logo 
 \documentclass[12pt, beltcrest, fleqn, twoside]{ociamthesis} % use old belt crest logo
 % \documentclass[12pt,shieldcrest]{ ociamthesis} % use older shield crest logo
+\newcounter{filePrg}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage[skins,minted]{tcolorbox}
+
+\definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
+\definecolor{mintedframe}{rgb}{0.70,0.85,0.95}
+\definecolor{mintedframe2}{rgb}{0.50,0.65,0.75}
+\definecolor{mintedtitle}{rgb}{0.28,0.28,0.28}
+
+\newtcblisting{commandshell}{colback=black,colupper=white,colframe=yellow!75!black,
+listing only,listing options={style=tcblatex,language=sh},
+every listing line={\textcolor{red}{\small\ttfamily\bfseries root \$> }}}
+
+\newtcbinputlisting[use counter=filePrg, number within=section, list inside=mypyg]{\codeFromFile}[5][]{%
+  listing engine=minted,
+  minted language=#2,
+  listing file={#3},
+  minted options={autogobble,linenos,breaklines,tabsize=4,fontsize=\footnotesize,#1},
+  listing only,
+  size=title,
+  colbacktitle=mintedbackground,
+% breakable,
+  enhanced,
+  sharp corners, top=0mm, bottom=0mm,
+  fonttitle=\ttfamily\footnotesize,
+  colback=mintedbackground,
+  colframe=mintedframe,
+  titlerule style={red!30!black!50, dashed},
+  boxrule=0.5pt,
+  coltitle=mintedtitle,
+  title={#4},
+  label=#5
+}
+
 
 %load any additional packages
+\usepackage{multirow}
+\usepackage[justification=centering]{subfig}
+\usepackage{threeparttable}
+\usepackage{multicol}
+\usepackage{verbatim}
 \usepackage{longtable}
 \usepackage{tabu}
 \usepackage{amssymb}
@@ -12,12 +53,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
 \usepackage{listings}
-\usepackage[usenames, dvipsnames]{color}
+
 \usepackage{enumitem}
 \usepackage{minted}
 \usepackage[fleqn]{mathtools}
 \usepackage{tikz}
-\usetikzlibrary{positioning, arrows, automata, calc}
+\usetikzlibrary{positioning,arrows,automata,calc,fit,shapes,backgrounds,shapes.multipart}
 
 \tikzset{
 modal/.style={>=stealth’,shorten >=1pt,shorten <=1pt,auto, node distance=1.5cm,
@@ -32,7 +73,20 @@ reflexive below/.style={->,loop,looseness=7,in=240,out=300},
 reflexive left/.style={->,loop,looseness=7,in=150,out=210},
 reflexive right/.style={->,loop,looseness=7,in=30,out=330}}
 
-\usepackage{marginnote} %todo note
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+% 
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+% \usepackage[pdftex,dvipsnames]{xcolor}  
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+%
 
 % \usepackage[headheight=14.5pt]{geometry} % layout
 
@@ -51,7 +105,7 @@ reflexive right/.style={->,loop,looseness=7,in=30,out=330}}
   breaklines=true
 }
 
-\def\code{\mintinline{c}}
+\def\code{\mintinline[escapeinside=||, mathescape=true]{c}}
 
 %input macros (i.e. write your own macros file called mymacros.tex 
 %and uncomment the next line)
@@ -95,17 +149,24 @@ reflexive right/.style={->,loop,looseness=7,in=30,out=330}}
 \end{romanpages}            % end roman page numbering
 
 %now include the files of latex for each of the chapters etc
-\include{contents/1.introduction}
+% \include{contents/1.introduction}
 % \include{contents/2.background}
 % \include{contents/3.proposedApproach}
-% \include{contents/4.verification}
-% \include{contents/5.evaluation}
-% \include{contents/6.conclusions}
+\include{contents/4.verification}
+\include{contents/5.evaluation}
+\include{contents/6.discussion}
+\include{contents/7.conclusion}
 
 %now enable appendix numbering format and include any appendices
 \appendix
-% \include{appendices/appendix1}
-% \include{appendices/appendix2}
+\include{appendices/fileStructure}
+\include{appendices/appendix1}
+\include{appendices/appendix2}
+\include{appendices/appendix3}
+\include{appendices/appendix4}
+\include{appendices/executionCommands}
+\include{appendices/helperTools}
+\include{appendices/harnesses}
 
 %next line adds the Bibliography to the contents page
 \addcontentsline{toc}{chapter}{Bibliography}

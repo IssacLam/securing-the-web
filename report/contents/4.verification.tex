@@ -1,85 +1,90 @@
-\chapter{Bounded Model Checking on s2n Using CBMC}
+\chapter{Experiment} \label{chpt:verification}
 
-% \chapter{Verification}
+In this chapter, we describe our verification in details 
 
-% \subsection{Log}
+By the dependency analysis, we decide to verify the module of s2n in the following sequence (from the core part to the outer part)
 
-% \begin{verbatim}
-% function: int s2n_blob_init(struct s2n_blob *b, uint8_t *data, uint32_t size);
-% failed at pointer check: s2n_blob_init(null, data, n);
+All the verification result are summarised in Section~\ref{sec:verificationResult}
 
-% function: int s2n_blob_zero(struct s2n_blob *b);
-% failed at pointer check: s2n_blob_zero(null);
+% % ***************************** s2n_blob
 
-% function: s2n_constant_time_equals
-% failed at pointer check: s2n_constant_time_equals(null, null, n);
-% a or b is null
+% \section{s2n\_blob Verification}
+% The header file of \code{s2n_blob} is shown as follows. 
+% \begin{listing}[ht]
+% \inputminted[frame=single, breaklines, linenos, numbersep=5pt, tabsize=4, firstline=20, fontsize=\footnotesize]{c}{./contents/code/s2n_blob.h} %firstline=359, lastline=385, 
+% \caption{The header file - s2n\_blob.h}
+% \end{listing}
 
-% function: s2n_constant_time_copy_or_dont
-% failed at pointer check: s2n_constant_time_copy_or_dont(null, null, n, m);
-% a or b is null
+% There are 2 functions are declared in the header file, however, we found there is no method call that uses the function \code{s2n_blob_init()}. Alternatively, the \code{struct s2n_blob} always be initialised directly (line 14). According to the usage of these functions, we constructed a simple harness, shown as follows:
 
-% alarm at unsigned overflow check: s2n_constant_time_copy_or_dont(null, null, n, 0);
-% expected overflow behaviour.
+% \begin{listing}[ht]
+% \inputminted[frame=single, breaklines, linenos, numbersep=5pt, tabsize=4, firstline=8, fontsize=\footnotesize]{c}{./contents/code/harness/s2n_blob_harness.c} %firstline=359, lastline=385, 
+% \caption{The harness for \textit{s2n\_blob.h}}
+% \end{listing}
 
-% function: s2n_free
-% failed at pointer check: s2n_free(null);
-% b is null / free invalid pointer
+% First, we create a \code{data} array with non-deterministic size (line 13) in order to model all possible size of data being wrapped in \code{struct s2n_blob}. Then, we apply the function \code{s2n_blob_zero()} to the initialised \code{struct s2n_blob}. Since there is no loop involved in the above harness, no loop bound analysis is needed.
 
-% function: s2n_alloc
-% case 1: b != NULL, for any size
-% if mlock in s2n_free fail leads to double free b->data;
+% % *************************** s2n_mem
+% \section{s2n\_mem Verification}
 
-% case 2: b != NULL, MAX_uint32_t
-% uint32_t allocate = page_size * ((size + (page_size - 1)) / page_size);
-% leads to buffer overflow;
+% There are 4 functions are declared in \textit{s2n\_mem.h}, which aim at handling the memory allocation of \code{struct s2n_blob}. As their names suggest, \code{s2n_alloc()} allocates a \code{s2n_blob} with the given size, \code{s2n_realloc()} reallocates the given \code{s2n_blob} with the given size and \code{s2n_free()} is used to reclaim the memory of the given \code{s2n_blob}. \code{s2n_mem_init()} initialises those environment variables related to memory allocation, for example, the system page size. 
 
-% function: s2n_realloc
-% case 1: b != NULL, for any size
-% if mlock in s2n_free fail leads to double free b->data;
+% \begin{listing}[ht]
+% \inputminted[frame=single, breaklines, linenos, numbersep=5pt, tabsize=4, firstline=22, fontsize=\footnotesize]{c}{./contents/code/s2n_mem.h} %firstline=359, lastline=385, 
+% \caption{The header file - s2n\_mem.h}
+% \end{listing}
 
-% function: s2n_increment_sequence_number
-% case 1: sequence != NULL, sequence->size == 0 
-% the function failed to increment the sequence number by 1 as the data size is 0;
+% After studying the commonly practise of these functions, we created an corresponding harness with respect to the usage contracts of these functions. First, we prepare the environment with an uninitialised variable \code{s2n_blob} and a non-deterministic value as the size of the \code{s2n_blob} (line 11-14). Then, we initialise those s2n environment variables by using \code{s2n_mem_init()} (line 16) and finally we call the functions in the following sequence, \code{s2n_alloc()}, \code{s2n_realloc()} and \code{s2n_free()}. Similar to the case of \code{s2n_blob}, no loops is involved in these functions. Therefore, no loop bound analysis is needed as well.
 
-% case 2: failed at pointer check: s2n_increment_sequence_number(null);
-% sequence_number is null / free invalid pointer
+% \begin{listing}[ht]
+% \inputminted[frame=single, breaklines, linenos, numbersep=5pt, tabsize=4, firstline=9, fontsize=\footnotesize]{c}{./contents/code/harness/s2n_mem_harness.c} %firstline=359, lastline=385, 
+% \caption{The harness for \textit{s2n\_mem.h}}
+% \end{listing}
 
-% case 3: failed at unsigned overflow check: s2n_increment_sequence_number(any sequence number);
-% sequence_number->data[i] += 1;
-% Overflow when MAX_uint32_t + 1;
 
-% case 4: failed at signed overflow check: s2n_increment_sequence_number(any sequence number);
-% int i = sequence_number->size - 1; 
-% Overflow when converting unsigned int to signed int;
+% \section{s2n\_stuffer Verification}
 
-% function: get_nanoseconds_since_epoch
-% case 1: failed at pointer check: get_nanoseconds_since_epoch(null);
-% nanoseconds is null / free invalid pointer
+% \subsection{s2n\_stuffer}
+% \subsection{s2n\_stuffer\_text}
+% \subsection{s2n\_stuffer\_pem}
+% \subsection{s2n\_stuffer\_base64}
 
-% case 2: failed at divided by zero check
-% conversion_factor.denom == 0;
-% but it is no sense for denom == 0 according to offical doc, unless it hasn't be initiated by mach_timebase_info();
+\section{Tool Setup and Configuration}
+\label{sec:tsc}
 
-% case 3: failed at unsigned overflow check
-% *nanoseconds *= conversion_factor.numer can leads to an overflow while mach_absolute_time > 18446744073.7
 
-% This function returns its result in terms of the Mach absolute time unit, which is CPU dependent.
-% mach_absolute_time return ticks since last reboot (uptime).
+\section{Execution Environment}
+\label{sec:ee}
+% \subsection{Big / little endian}
+% http://searchnetworking.techtarget.com/definition/big-endian-and-little-endian
 
-% http://stackoverflow.com/questions/23378063/how-can-i-use-mach-absolute-time-without-overflowing
+% \section{Experiment Setup}
+The machine configuration for the experiment is shown below:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \hline
+        \hline
+        Item & Value \\
+        \hline
+        \hline
+        Processor & 2.5 GHz Intel Core i7\\
+        Memory & 16 GB 1600 MHz DDR3\\
+        Disk & 500GB Apple SSD SM0512G Media\\
+        OS & OS X 10.11.5\\
+        CBMC Version & 5.4\\
+        CBMC Github Commit ID & d031ccc0f8ec82495310c3268066dcde5bc18c59\\
+        s2n Github Commit ID & 42d9daf1813e60b9c8ad235096309486e9fbfa05\\
+        OpenSSL & 1.0.2i-dev \\
+        \hline
+        \hline
+    \end{tabular}
+    \caption{Machine Configuration}
+    \label{tab:mc}
+\end{table}
 
-% function: s2n_timer_start
-% function: s2n_timer_elapsed
-% function: s2n_timer_reset
+\section{CBMC Parameter Setting} \label{sec:cbmcps}
 
-% case 1: failed at pointer check:  int s2n_timer_*(null, null [, nanoseconds])
-% pointer invalid in config->nanoseconds_since_epoch
+\section{Over-Approximation on ANSI-C Library}
 
-% case 2: failed at unsigned overflow check: 
-% overflow because of get_nanoseconds_since_epoch *nanoseconds *= conversion_factor.numer
-% \end{verbatim}
-
-% \subsection{Notices}
-% Quantifier & unwind:
-% Quantifier value should be the same as unwind number
+\section{A detailed show case for show the verification procedure.}
