@@ -1,0 +1,128 @@
+.TH "s2n-master/libcrypto-build/openssl/MacOS/GUSI_Init.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/MacOS/GUSI_Init.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <GUSIConfig\&.h>\fP
+.br
+\fC#include <sys/cdefs\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBGUSI_SOURCE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "__BEGIN_DECLS \fBvoid\fP \fBGUSIwithInetSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithLocalSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithMTInetSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithMTTcpSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithMTUdpSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithOTInetSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithOTTcpSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithOTUdpSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithPPCSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSISetupFactories\fP ()"
+.br
+.ti -1c
+.RI "__BEGIN_DECLS \fBvoid\fP \fBGUSIwithDConSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSIwithNullSockets\fP ()"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGUSISetupDevices\fP ()"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define GUSI_SOURCE"
+
+.PP
+Definition at line 9 of file GUSI_Init\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "__BEGIN_DECLS \fBvoid\fP GUSIwithInetSockets ()"
+
+.SS "\fBvoid\fP GUSIwithLocalSockets ()"
+
+.SS "\fBvoid\fP GUSIwithMTInetSockets ()"
+
+.SS "\fBvoid\fP GUSIwithMTTcpSockets ()"
+
+.SS "\fBvoid\fP GUSIwithMTUdpSockets ()"
+
+.SS "\fBvoid\fP GUSIwithOTInetSockets ()"
+
+.SS "\fBvoid\fP GUSIwithOTTcpSockets ()"
+
+.SS "\fBvoid\fP GUSIwithOTUdpSockets ()"
+
+.SS "\fBvoid\fP GUSIwithPPCSockets ()"
+
+.SS "__END_DECLS \fBvoid\fP GUSISetupFactories ()"
+
+.PP
+Definition at line 30 of file GUSI_Init\&.cpp\&.
+.PP
+.nf
+31 {
+32 #ifdef GUSISetupFactories_BeginHook
+33     GUSISetupFactories_BeginHook
+34 #endif
+35     GUSIwithInetSockets();
+36 #ifdef GUSISetupFactories_EndHook
+37     GUSISetupFactories_EndHook
+38 #endif
+39 }
+.fi
+.SS "__BEGIN_DECLS \fBvoid\fP GUSIwithDConSockets ()"
+
+.SS "\fBvoid\fP GUSIwithNullSockets ()"
+
+.SS "__END_DECLS \fBvoid\fP GUSISetupDevices ()"
+
+.PP
+Definition at line 51 of file GUSI_Init\&.cpp\&.
+.PP
+.nf
+52 {
+53 #ifdef GUSISetupDevices_BeginHook
+54     GUSISetupDevices_BeginHook
+55 #endif
+56     GUSIwithNullSockets();
+57 #ifdef GUSISetupDevices_EndHook
+58     GUSISetupDevices_EndHook
+59 #endif
+60 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,47 @@
+.TH "s2n-master/tests/unit/s2n_client_disabled_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_client_disabled_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 20 of file s2n_client_disabled_test\&.c\&.
+.PP
+.nf
+21 {
+22     struct s2n_connection *conn;
+23 
+24     BEGIN_TEST();
+25 
+26     EXPECT_NULL(conn = s2n_connection_new(S2N_CLIENT));
+27 
+28     EXPECT_SUCCESS(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+29     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_CLIENT));
+30     EXPECT_SUCCESS(s2n_connection_free(conn));
+31 
+32     END_TEST();
+33 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

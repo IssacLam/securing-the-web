@@ -1,0 +1,142 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/engine/eng_int.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/engine/eng_int.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cryptlib\&.h'\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBst_engine_cleanup_item\fP"
+.br
+.ti -1c
+.RI "struct \fBengine_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBengine_ref_debug\fP(\fBe\fP,  isfunct,  diff)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBvoid\fP( \fBENGINE_CLEANUP_CB\fP) (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef struct \fBst_engine_cleanup_item\fP \fBENGINE_CLEANUP_ITEM\fP"
+.br
+.ti -1c
+.RI "typedef struct st_engine_table \fBENGINE_TABLE\fP"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP( \fBengine_table_doall_cb\fP) (int \fBnid\fP, \fBSTACK_OF\fP(\fBENGINE\fP)*sk, \fBENGINE\fP *def, \fBvoid\fP *arg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBengine_cleanup_add_first\fP (\fBENGINE_CLEANUP_CB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_cleanup_add_last\fP (\fBENGINE_CLEANUP_CB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBengine_table_register\fP (\fBENGINE_TABLE\fP **table, \fBENGINE_CLEANUP_CB\fP *cleanup, \fBENGINE\fP *\fBe\fP, const int *nids, int num_nids, int setdefault)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_table_unregister\fP (\fBENGINE_TABLE\fP **table, \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_table_cleanup\fP (\fBENGINE_TABLE\fP **table)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBengine_table_select\fP (\fBENGINE_TABLE\fP **table, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_table_doall\fP (\fBENGINE_TABLE\fP *table, \fBengine_table_doall_cb\fP *\fBcb\fP, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "int \fBengine_unlocked_init\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBengine_unlocked_finish\fP (\fBENGINE\fP *\fBe\fP, int unlock_for_handlers)"
+.br
+.ti -1c
+.RI "int \fBengine_free_util\fP (\fBENGINE\fP *\fBe\fP, int locked)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_set_all_null\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_pkey_meths_free\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBengine_pkey_asn1_meths_free\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define engine_ref_debug(\fBe\fP, isfunct, diff)"
+
+.PP
+Definition at line 95 of file eng_int\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef \fBvoid\fP( ENGINE_CLEANUP_CB) (\fBvoid\fP)"
+
+.PP
+Definition at line 105 of file eng_int\&.h\&.
+.SS "typedef struct \fBst_engine_cleanup_item\fP  \fBENGINE_CLEANUP_ITEM\fP"
+
+.SS "typedef struct st_engine_table \fBENGINE_TABLE\fP"
+
+.PP
+Definition at line 128 of file eng_int\&.h\&.
+.SS "typedef \fBvoid\fP( engine_table_doall_cb) (int \fBnid\fP, \fBSTACK_OF\fP(\fBENGINE\fP)*sk, \fBENGINE\fP *def, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 141 of file eng_int\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP engine_cleanup_add_first (\fBENGINE_CLEANUP_CB\fP * cb)"
+
+.SS "\fBvoid\fP engine_cleanup_add_last (\fBENGINE_CLEANUP_CB\fP * cb)"
+
+.SS "int engine_table_register (\fBENGINE_TABLE\fP ** table, \fBENGINE_CLEANUP_CB\fP * cleanup, \fBENGINE\fP * e, const int * nids, int num_nids, int setdefault)"
+
+.SS "\fBvoid\fP engine_table_unregister (\fBENGINE_TABLE\fP ** table, \fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP engine_table_cleanup (\fBENGINE_TABLE\fP ** table)"
+
+.SS "\fBENGINE\fP* engine_table_select (\fBENGINE_TABLE\fP ** table, int nid)"
+
+.SS "\fBvoid\fP engine_table_doall (\fBENGINE_TABLE\fP * table, \fBengine_table_doall_cb\fP * cb, \fBvoid\fP * arg)"
+
+.SS "int engine_unlocked_init (\fBENGINE\fP * e)"
+
+.SS "int engine_unlocked_finish (\fBENGINE\fP * e, int unlock_for_handlers)"
+
+.SS "int engine_free_util (\fBENGINE\fP * e, int locked)"
+
+.SS "\fBvoid\fP engine_set_all_null (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP engine_pkey_meths_free (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP engine_pkey_asn1_meths_free (\fBENGINE\fP * e)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

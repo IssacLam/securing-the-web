@@ -1,0 +1,1355 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/crypto.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/crypto.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include <openssl/safestack\&.h>\fP
+.br
+\fC#include <openssl/opensslv\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBopenssl_item_st\fP"
+.br
+.ti -1c
+.RI "struct \fBCRYPTO_dynlock\fP"
+.br
+.ti -1c
+.RI "struct \fBcrypto_ex_data_st\fP"
+.br
+.ti -1c
+.RI "struct \fBcrypto_ex_data_func_st\fP"
+.br
+.ti -1c
+.RI "struct \fBcrypto_threadid_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSSLEAY_VERSION_NUMBER\fP   \fBOPENSSL_VERSION_NUMBER\fP"
+.br
+.ti -1c
+.RI "#define \fBSSLEAY_VERSION\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSLEAY_CFLAGS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSLEAY_BUILT_ON\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSLEAY_PLATFORM\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSLEAY_DIR\fP   5"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_ERR\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_EX_DATA\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_X509\fP   3"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_X509_INFO\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_X509_PKEY\fP   5"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_X509_CRL\fP   6"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_X509_REQ\fP   7"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_DSA\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_RSA\fP   9"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_EVP_PKEY\fP   10"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_X509_STORE\fP   11"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_SSL_CTX\fP   12"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_SSL_CERT\fP   13"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_SSL_SESSION\fP   14"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_SSL_SESS_CERT\fP   15"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_SSL\fP   16"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_SSL_METHOD\fP   17"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_RAND\fP   18"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_RAND2\fP   19"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_MALLOC\fP   20"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_BIO\fP   21"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_GETHOSTBYNAME\fP   22"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_GETSERVBYNAME\fP   23"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_READDIR\fP   24"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_RSA_BLINDING\fP   25"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_DH\fP   26"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_MALLOC2\fP   27"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_DSO\fP   28"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_DYNLOCK\fP   29"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_ENGINE\fP   30"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_UI\fP   31"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_ECDSA\fP   32"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_EC\fP   33"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_ECDH\fP   34"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_BN\fP   35"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_EC_PRE_COMP\fP   36"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_STORE\fP   37"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_COMP\fP   38"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_FIPS\fP   39"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK_FIPS2\fP   40"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_NUM_LOCKS\fP   41"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_LOCK\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_UNLOCK\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_READ\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_WRITE\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_w_lock\fP(\fBtype\fP)         \fBCRYPTO_lock\fP(\fBCRYPTO_LOCK\fP|\fBCRYPTO_WRITE\fP,\fBtype\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_w_unlock\fP(\fBtype\fP)     \fBCRYPTO_lock\fP(\fBCRYPTO_UNLOCK\fP|\fBCRYPTO_WRITE\fP,\fBtype\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_r_lock\fP(\fBtype\fP)         \fBCRYPTO_lock\fP(\fBCRYPTO_LOCK\fP|\fBCRYPTO_READ\fP,\fBtype\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_r_unlock\fP(\fBtype\fP)     \fBCRYPTO_lock\fP(\fBCRYPTO_UNLOCK\fP|\fBCRYPTO_READ\fP,\fBtype\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_add\fP(addr,  amount,  \fBtype\fP)       \fBCRYPTO_add_lock\fP(addr,amount,\fBtype\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_MEM_CHECK_OFF\fP   0x0/* an enume */"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_MEM_CHECK_ON\fP   0x1/* a bit */"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_MEM_CHECK_ENABLE\fP   0x2/* a bit */"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_MEM_CHECK_DISABLE\fP   0x3/* an enume */"
+.br
+.ti -1c
+.RI "#define \fBV_CRYPTO_MDEBUG_TIME\fP   0x1/* a bit */"
+.br
+.ti -1c
+.RI "#define \fBV_CRYPTO_MDEBUG_THREAD\fP   0x2/* a bit */"
+.br
+.ti -1c
+.RI "#define \fBV_CRYPTO_MDEBUG_ALL\fP   (\fBV_CRYPTO_MDEBUG_TIME\fP | \fBV_CRYPTO_MDEBUG_THREAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_BIO\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_SSL\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_SSL_CTX\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_SSL_SESSION\fP   3"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_X509_STORE\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_X509_STORE_CTX\fP   5"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_RSA\fP   6"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_DSA\fP   7"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_DH\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_ENGINE\fP   9"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_X509\fP   10"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_UI\fP   11"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_ECDSA\fP   12"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_ECDH\fP   13"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_COMP\fP   14"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_STORE\fP   15"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_EX_INDEX_USER\fP   100"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_malloc_init\fP()    "
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_malloc_debug_init\fP()        "
+.br
+.ti -1c
+.RI "#define \fBMemCheck_start\fP()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_ON\fP)"
+.br
+.ti -1c
+.RI "#define \fBMemCheck_stop\fP()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_OFF\fP)"
+.br
+.ti -1c
+.RI "#define \fBMemCheck_on\fP()     \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_ENABLE\fP)"
+.br
+.ti -1c
+.RI "#define \fBMemCheck_off\fP()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_DISABLE\fP)"
+.br
+.ti -1c
+.RI "#define \fBis_MemCheck_on\fP()   \fBCRYPTO_is_mem_check_on\fP()"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_malloc\fP(\fBnum\fP)         \fBCRYPTO_malloc\fP((int)\fBnum\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_strdup\fP(str)         \fBCRYPTO_strdup\fP((str),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_realloc\fP(addr,  \fBnum\fP)   \fBCRYPTO_realloc\fP((char *)addr,(int)\fBnum\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_realloc_clean\fP(addr,  old_num,  \fBnum\fP)   \fBCRYPTO_realloc_clean\fP(addr,old_num,\fBnum\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_remalloc\fP(addr,  \fBnum\fP)   \fBCRYPTO_remalloc\fP((char **)addr,(int)\fBnum\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_freeFunc\fP   \fBCRYPTO_free\fP"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_free\fP(addr)           \fBCRYPTO_free\fP(addr)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_malloc_locked\fP(\fBnum\fP)   \fBCRYPTO_malloc_locked\fP((int)\fBnum\fP,__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_free_locked\fP(addr)   \fBCRYPTO_free_locked\fP(addr)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_push_info\fP(info)   \fBCRYPTO_push_info_\fP(info, __FILE__, __LINE__);"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_assert\fP(\fBe\fP)             (\fBvoid\fP)((\fBe\fP) ? 0 : (\fBOpenSSLDie\fP(__FILE__, __LINE__, #\fBe\fP),1))"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_ia32cap\fP   (*(\fBOPENSSL_ia32cap_loc\fP()))"
+.br
+.ti -1c
+.RI "#define \fBfips_md_init\fP(alg)   \fBfips_md_init_ctx\fP(alg, alg)"
+.br
+.ti -1c
+.RI "#define \fBfips_md_init_ctx\fP(alg,  cx)   int alg##_Init(cx##_CTX *\fBc\fP)"
+.br
+.ti -1c
+.RI "#define \fBfips_cipher_abort\fP(alg)   while(0)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_CRYPTO_GET_EX_NEW_INDEX\fP   100"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_CRYPTO_GET_NEW_DYNLOCKID\fP   103"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_CRYPTO_GET_NEW_LOCKID\fP   101"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_CRYPTO_SET_EX_DATA\fP   102"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_DEF_ADD_INDEX\fP   104"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_DEF_GET_CLASS\fP   105"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_FIPS_MODE_SET\fP   109"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_INT_DUP_EX_DATA\fP   106"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_INT_FREE_EX_DATA\fP   107"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_F_INT_NEW_EX_DATA\fP   108"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_R_FIPS_MODE_NOT_SUPPORTED\fP   101"
+.br
+.ti -1c
+.RI "#define \fBCRYPTO_R_NO_DYNLOCK_CREATE_CALLBACK\fP   100"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBopenssl_item_st\fP \fBOPENSSL_ITEM\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBbio_st\fP \fBBIO_dummy\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBcrypto_ex_data_func_st\fP \fBCRYPTO_EX_DATA_FUNCS\fP"
+.br
+.ti -1c
+.RI "typedef struct st_CRYPTO_EX_DATA_IMPL \fBCRYPTO_EX_DATA_IMPL\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBcrypto_threadid_st\fP \fBCRYPTO_THREADID\fP"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP * \fBCRYPTO_MEM_LEAK_CB\fP(unsigned long, const char *, int, int, \fBvoid\fP *)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBCRYPTO_mem_ctrl\fP (int mode)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_is_mem_check_on\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBSSLeay_version\fP (int \fBtype\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBSSLeay\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBOPENSSL_issetugid\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBCRYPTO_EX_DATA_IMPL\fP * \fBCRYPTO_get_ex_data_implementation\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_ex_data_implementation\fP (const \fBCRYPTO_EX_DATA_IMPL\fP *i)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ex_data_new_class\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_get_ex_new_index\fP (int class_index, long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_new_ex_data\fP (int class_index, \fBvoid\fP *\fBobj\fP, \fBCRYPTO_EX_DATA\fP *ad)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_dup_ex_data\fP (int class_index, \fBCRYPTO_EX_DATA\fP *to, \fBCRYPTO_EX_DATA\fP *from)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_free_ex_data\fP (int class_index, \fBvoid\fP *\fBobj\fP, \fBCRYPTO_EX_DATA\fP *ad)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_ex_data\fP (\fBCRYPTO_EX_DATA\fP *ad, int idx, \fBvoid\fP *val)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_get_ex_data\fP (const \fBCRYPTO_EX_DATA\fP *ad, int idx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cleanup_all_ex_data\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_get_new_lockid\fP (char *name)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_num_locks\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_lock\fP (int mode, int \fBtype\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_locking_callback\fP (\fBvoid\fP(*func)(int mode, int \fBtype\fP,                                                                                                                                                                                   const char *\fBfile\fP, int line))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_add_lock_callback\fP (int(*func)(int *\fBnum\fP, int mount, int \fBtype\fP,                                                                                                                                       const char *\fBfile\fP, int line))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_THREADID_set_numeric\fP (\fBCRYPTO_THREADID\fP *id, unsigned long val)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_THREADID_set_pointer\fP (\fBCRYPTO_THREADID\fP *id, \fBvoid\fP *ptr)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_THREADID_set_callback\fP (\fBvoid\fP(*threadid_func)(\fBCRYPTO_THREADID\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_THREADID_current\fP (\fBCRYPTO_THREADID\fP *id)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_THREADID_cmp\fP (const \fBCRYPTO_THREADID\fP *\fBa\fP, const \fBCRYPTO_THREADID\fP *b)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_THREADID_cpy\fP (\fBCRYPTO_THREADID\fP *dest, const \fBCRYPTO_THREADID\fP *src)"
+.br
+.ti -1c
+.RI "unsigned long \fBCRYPTO_THREADID_hash\fP (const \fBCRYPTO_THREADID\fP *id)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_id_callback\fP (unsigned long(*func)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "unsigned long \fBCRYPTO_thread_id\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBCRYPTO_get_lock_name\fP (int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_add_lock\fP (int *pointer, int amount, int \fBtype\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_get_new_dynlockid\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_destroy_dynlockid\fP (int i)"
+.br
+.ti -1c
+.RI "struct CRYPTO_dynlock_value * \fBCRYPTO_get_dynlock_value\fP (int i)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_dynlock_create_callback\fP (struct CRYPTO_dynlock_value *(*dyn_create_function)(const char                                                                                                                                                                                                                                                           *\fBfile\fP,                                                                                                                                                                                                                                                           int line))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_dynlock_lock_callback\fP (\fBvoid\fP(*dyn_lock_function)(int mode,                                                                                                                                                       struct CRYPTO_dynlock_value *l,                                                                                                                                                       const char *\fBfile\fP, int line))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_dynlock_destroy_callback\fP (\fBvoid\fP(*dyn_destroy_function)(struct CRYPTO_dynlock_value *l,                                                                                                                                                                   const char *\fBfile\fP, int line))"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_mem_functions\fP (\fBvoid\fP *(*m)(size_t), \fBvoid\fP *(*r)(\fBvoid\fP *, size_t), \fBvoid\fP(*f)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_locked_mem_functions\fP (\fBvoid\fP *(*m)(size_t), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_mem_ex_functions\fP (\fBvoid\fP *(*m)(size_t, const char *, int), \fBvoid\fP *(*r)(\fBvoid\fP *, size_t, const char *,                                                                                                                                                                       int), \fBvoid\fP(*f)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_locked_mem_ex_functions\fP (\fBvoid\fP *(*m)(size_t, const char *, int), \fBvoid\fP(*\fBfree_func\fP)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_set_mem_debug_functions\fP (\fBvoid\fP(*m)(\fBvoid\fP *, int, const char *, int, int), \fBvoid\fP(*r)(\fBvoid\fP *, \fBvoid\fP *, int,                                                                                                                                                                               const char *, int, int), \fBvoid\fP(*f)(\fBvoid\fP *, int), \fBvoid\fP(*so)(long), long(*go)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_get_mem_functions\fP (\fBvoid\fP *(**m)(size_t), \fBvoid\fP *(**r)(\fBvoid\fP *, size_t), \fBvoid\fP(**f)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_get_locked_mem_functions\fP (\fBvoid\fP *(**m)(size_t), \fBvoid\fP(**f)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_get_mem_ex_functions\fP (\fBvoid\fP *(**m)(size_t, const char *, int), \fBvoid\fP *(**r)(\fBvoid\fP *, size_t, const char *,                                                                                                                                                                               int), \fBvoid\fP(**f)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_get_locked_mem_ex_functions\fP (\fBvoid\fP *(**m)(size_t, const char *, int), \fBvoid\fP(**f)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_get_mem_debug_functions\fP (\fBvoid\fP(**m)(\fBvoid\fP *, int, const char *, int, int), \fBvoid\fP(**r)(\fBvoid\fP *, \fBvoid\fP *, int,                                                                                                                                                                                       const char *, int, int), \fBvoid\fP(**f)(\fBvoid\fP *, int), \fBvoid\fP(**so)(long), long(**go)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_malloc_locked\fP (int \fBnum\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_free_locked\fP (\fBvoid\fP *ptr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_malloc\fP (int \fBnum\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "char * \fBCRYPTO_strdup\fP (const char *str, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_free\fP (\fBvoid\fP *ptr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_realloc\fP (\fBvoid\fP *addr, int \fBnum\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_realloc_clean\fP (\fBvoid\fP *addr, int old_num, int \fBnum\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCRYPTO_remalloc\fP (\fBvoid\fP *addr, int \fBnum\fP, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOPENSSL_cleanse\fP (\fBvoid\fP *ptr, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_set_mem_debug_options\fP (long \fBbits\fP)"
+.br
+.ti -1c
+.RI "long \fBCRYPTO_get_mem_debug_options\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_push_info_\fP (const char *info, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_pop_info\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_remove_all_info\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_malloc\fP (\fBvoid\fP *addr, int \fBnum\fP, const char *\fBfile\fP, int line, int before_p)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_realloc\fP (\fBvoid\fP *addr1, \fBvoid\fP *addr2, int \fBnum\fP, const char *\fBfile\fP, int line, int before_p)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_free\fP (\fBvoid\fP *addr, int before_p)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_dbg_set_options\fP (long \fBbits\fP)"
+.br
+.ti -1c
+.RI "long \fBCRYPTO_dbg_get_options\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_mem_leaks_fp\fP (FILE *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_mem_leaks\fP (struct \fBbio_st\fP *bio)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_mem_leaks_cb\fP (\fBCRYPTO_MEM_LEAK_CB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOpenSSLDie\fP (const char *\fBfile\fP, int line, const char *assertion)"
+.br
+.ti -1c
+.RI "unsigned long * \fBOPENSSL_ia32cap_loc\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBOPENSSL_isservice\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBFIPS_mode\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBFIPS_mode_set\fP (int r)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOPENSSL_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_memcmp\fP (const volatile \fBvoid\fP *\fBa\fP, const volatile \fBvoid\fP *b, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_CRYPTO_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP(*)(int mode, int \fBtype\fP, const char *\fBfile\fP, int line) \fBCRYPTO_get_locking_callback\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int(*)(int *\fBnum\fP, int mount, int \fBtype\fP, const char *\fBfile\fP, int line) \fBCRYPTO_get_add_lock_callback\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(*)(\fBCRYPTO_THREADID\fP *) \fBCRYPTO_THREADID_get_callback\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long(*)(\fBvoid\fP) \fBCRYPTO_get_id_callback\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "struct CRYPTO_dynlock_value *(*)(const char *\fBfile\fP, int line) \fBCRYPTO_get_dynlock_create_callback\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(*)(int mode, struct CRYPTO_dynlock_value *l, const char *\fBfile\fP, int line) \fBCRYPTO_get_dynlock_lock_callback\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(*)(struct CRYPTO_dynlock_value *l, const char *\fBfile\fP, int line) \fBCRYPTO_get_dynlock_destroy_callback\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SSLEAY_VERSION_NUMBER   \fBOPENSSL_VERSION_NUMBER\fP"
+
+.PP
+Definition at line 152 of file crypto\&.h\&.
+.SS "#define SSLEAY_VERSION   0"
+
+.PP
+Definition at line 153 of file crypto\&.h\&.
+.SS "#define SSLEAY_CFLAGS   2"
+
+.PP
+Definition at line 155 of file crypto\&.h\&.
+.SS "#define SSLEAY_BUILT_ON   3"
+
+.PP
+Definition at line 156 of file crypto\&.h\&.
+.SS "#define SSLEAY_PLATFORM   4"
+
+.PP
+Definition at line 157 of file crypto\&.h\&.
+.SS "#define SSLEAY_DIR   5"
+
+.PP
+Definition at line 158 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_ERR   1"
+
+.PP
+Definition at line 188 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_EX_DATA   2"
+
+.PP
+Definition at line 189 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_X509   3"
+
+.PP
+Definition at line 190 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_X509_INFO   4"
+
+.PP
+Definition at line 191 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_X509_PKEY   5"
+
+.PP
+Definition at line 192 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_X509_CRL   6"
+
+.PP
+Definition at line 193 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_X509_REQ   7"
+
+.PP
+Definition at line 194 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_DSA   8"
+
+.PP
+Definition at line 195 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_RSA   9"
+
+.PP
+Definition at line 196 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_EVP_PKEY   10"
+
+.PP
+Definition at line 197 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_X509_STORE   11"
+
+.PP
+Definition at line 198 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_SSL_CTX   12"
+
+.PP
+Definition at line 199 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_SSL_CERT   13"
+
+.PP
+Definition at line 200 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_SSL_SESSION   14"
+
+.PP
+Definition at line 201 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_SSL_SESS_CERT   15"
+
+.PP
+Definition at line 202 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_SSL   16"
+
+.PP
+Definition at line 203 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_SSL_METHOD   17"
+
+.PP
+Definition at line 204 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_RAND   18"
+
+.PP
+Definition at line 205 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_RAND2   19"
+
+.PP
+Definition at line 206 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_MALLOC   20"
+
+.PP
+Definition at line 207 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_BIO   21"
+
+.PP
+Definition at line 208 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_GETHOSTBYNAME   22"
+
+.PP
+Definition at line 209 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_GETSERVBYNAME   23"
+
+.PP
+Definition at line 210 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_READDIR   24"
+
+.PP
+Definition at line 211 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_RSA_BLINDING   25"
+
+.PP
+Definition at line 212 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_DH   26"
+
+.PP
+Definition at line 213 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_MALLOC2   27"
+
+.PP
+Definition at line 214 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_DSO   28"
+
+.PP
+Definition at line 215 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_DYNLOCK   29"
+
+.PP
+Definition at line 216 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_ENGINE   30"
+
+.PP
+Definition at line 217 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_UI   31"
+
+.PP
+Definition at line 218 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_ECDSA   32"
+
+.PP
+Definition at line 219 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_EC   33"
+
+.PP
+Definition at line 220 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_ECDH   34"
+
+.PP
+Definition at line 221 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_BN   35"
+
+.PP
+Definition at line 222 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_EC_PRE_COMP   36"
+
+.PP
+Definition at line 223 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_STORE   37"
+
+.PP
+Definition at line 224 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_COMP   38"
+
+.PP
+Definition at line 225 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_FIPS   39"
+
+.PP
+Definition at line 226 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK_FIPS2   40"
+
+.PP
+Definition at line 227 of file crypto\&.h\&.
+.SS "#define CRYPTO_NUM_LOCKS   41"
+
+.PP
+Definition at line 228 of file crypto\&.h\&.
+.SS "#define CRYPTO_LOCK   1"
+
+.PP
+Definition at line 230 of file crypto\&.h\&.
+.SS "#define CRYPTO_UNLOCK   2"
+
+.PP
+Definition at line 231 of file crypto\&.h\&.
+.SS "#define CRYPTO_READ   4"
+
+.PP
+Definition at line 232 of file crypto\&.h\&.
+.SS "#define CRYPTO_WRITE   8"
+
+.PP
+Definition at line 233 of file crypto\&.h\&.
+.SS "#define CRYPTO_w_lock(\fBtype\fP)   \fBCRYPTO_lock\fP(\fBCRYPTO_LOCK\fP|\fBCRYPTO_WRITE\fP,\fBtype\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 237 of file crypto\&.h\&.
+.SS "#define CRYPTO_w_unlock(\fBtype\fP)   \fBCRYPTO_lock\fP(\fBCRYPTO_UNLOCK\fP|\fBCRYPTO_WRITE\fP,\fBtype\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 239 of file crypto\&.h\&.
+.SS "#define CRYPTO_r_lock(\fBtype\fP)   \fBCRYPTO_lock\fP(\fBCRYPTO_LOCK\fP|\fBCRYPTO_READ\fP,\fBtype\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 241 of file crypto\&.h\&.
+.SS "#define CRYPTO_r_unlock(\fBtype\fP)   \fBCRYPTO_lock\fP(\fBCRYPTO_UNLOCK\fP|\fBCRYPTO_READ\fP,\fBtype\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 243 of file crypto\&.h\&.
+.SS "#define CRYPTO_add(addr, amount, \fBtype\fP)   \fBCRYPTO_add_lock\fP(addr,amount,\fBtype\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 245 of file crypto\&.h\&.
+.SS "#define CRYPTO_MEM_CHECK_OFF   0x0/* an enume */"
+
+.PP
+Definition at line 272 of file crypto\&.h\&.
+.SS "#define CRYPTO_MEM_CHECK_ON   0x1/* a bit */"
+
+.PP
+Definition at line 273 of file crypto\&.h\&.
+.SS "#define CRYPTO_MEM_CHECK_ENABLE   0x2/* a bit */"
+
+.PP
+Definition at line 274 of file crypto\&.h\&.
+.SS "#define CRYPTO_MEM_CHECK_DISABLE   0x3/* an enume */"
+
+.PP
+Definition at line 275 of file crypto\&.h\&.
+.SS "#define V_CRYPTO_MDEBUG_TIME   0x1/* a bit */"
+
+.PP
+Definition at line 283 of file crypto\&.h\&.
+.SS "#define V_CRYPTO_MDEBUG_THREAD   0x2/* a bit */"
+
+.PP
+Definition at line 285 of file crypto\&.h\&.
+.SS "#define V_CRYPTO_MDEBUG_ALL   (\fBV_CRYPTO_MDEBUG_TIME\fP | \fBV_CRYPTO_MDEBUG_THREAD\fP)"
+
+.PP
+Definition at line 287 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_BIO   0"
+
+.PP
+Definition at line 319 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_SSL   1"
+
+.PP
+Definition at line 320 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_SSL_CTX   2"
+
+.PP
+Definition at line 321 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_SSL_SESSION   3"
+
+.PP
+Definition at line 322 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_X509_STORE   4"
+
+.PP
+Definition at line 323 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_X509_STORE_CTX   5"
+
+.PP
+Definition at line 324 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_RSA   6"
+
+.PP
+Definition at line 325 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_DSA   7"
+
+.PP
+Definition at line 326 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_DH   8"
+
+.PP
+Definition at line 327 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_ENGINE   9"
+
+.PP
+Definition at line 328 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_X509   10"
+
+.PP
+Definition at line 329 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_UI   11"
+
+.PP
+Definition at line 330 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_ECDSA   12"
+
+.PP
+Definition at line 331 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_ECDH   13"
+
+.PP
+Definition at line 332 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_COMP   14"
+
+.PP
+Definition at line 333 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_STORE   15"
+
+.PP
+Definition at line 334 of file crypto\&.h\&.
+.SS "#define CRYPTO_EX_INDEX_USER   100"
+
+.PP
+Definition at line 340 of file crypto\&.h\&.
+.SS "#define CRYPTO_malloc_init()"
+\fBValue:\fP
+.PP
+.nf
+CRYPTO_set_mem_functions(\
+        malloc, realloc, free)
+.fi
+.PP
+Definition at line 347 of file crypto\&.h\&.
+.SS "#define CRYPTO_malloc_debug_init()"
+\fBValue:\fP
+.PP
+.nf
+do {\
+        CRYPTO_set_mem_debug_functions(\
+                CRYPTO_dbg_malloc,\
+                CRYPTO_dbg_realloc,\
+                CRYPTO_dbg_free,\
+                CRYPTO_dbg_set_options,\
+                CRYPTO_dbg_get_options);\
+        } while(0)
+.fi
+.PP
+Definition at line 360 of file crypto\&.h\&.
+.SS "#define MemCheck_start()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_ON\fP)"
+
+.PP
+Definition at line 373 of file crypto\&.h\&.
+.SS "#define MemCheck_stop()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_OFF\fP)"
+
+.PP
+Definition at line 374 of file crypto\&.h\&.
+.SS "#define MemCheck_on()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_ENABLE\fP)"
+
+.PP
+Definition at line 377 of file crypto\&.h\&.
+.SS "#define MemCheck_off()   \fBCRYPTO_mem_ctrl\fP(\fBCRYPTO_MEM_CHECK_DISABLE\fP)"
+
+.PP
+Definition at line 378 of file crypto\&.h\&.
+.SS "#define is_MemCheck_on()   \fBCRYPTO_is_mem_check_on\fP()"
+
+.PP
+Definition at line 379 of file crypto\&.h\&.
+.SS "#define OPENSSL_malloc(\fBnum\fP)   \fBCRYPTO_malloc\fP((int)\fBnum\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 381 of file crypto\&.h\&.
+.SS "#define OPENSSL_strdup(str)   \fBCRYPTO_strdup\fP((str),__FILE__,__LINE__)"
+
+.PP
+Definition at line 382 of file crypto\&.h\&.
+.SS "#define OPENSSL_realloc(addr, \fBnum\fP)   \fBCRYPTO_realloc\fP((char *)addr,(int)\fBnum\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 383 of file crypto\&.h\&.
+.SS "#define OPENSSL_realloc_clean(addr, old_num, \fBnum\fP)   \fBCRYPTO_realloc_clean\fP(addr,old_num,\fBnum\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 385 of file crypto\&.h\&.
+.SS "#define OPENSSL_remalloc(addr, \fBnum\fP)   \fBCRYPTO_remalloc\fP((char **)addr,(int)\fBnum\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 387 of file crypto\&.h\&.
+.SS "#define OPENSSL_freeFunc   \fBCRYPTO_free\fP"
+
+.PP
+Definition at line 389 of file crypto\&.h\&.
+.SS "#define OPENSSL_free(addr)   \fBCRYPTO_free\fP(addr)"
+
+.PP
+Definition at line 390 of file crypto\&.h\&.
+.SS "#define OPENSSL_malloc_locked(\fBnum\fP)   \fBCRYPTO_malloc_locked\fP((int)\fBnum\fP,__FILE__,__LINE__)"
+
+.PP
+Definition at line 392 of file crypto\&.h\&.
+.SS "#define OPENSSL_free_locked(addr)   \fBCRYPTO_free_locked\fP(addr)"
+
+.PP
+Definition at line 394 of file crypto\&.h\&.
+.SS "#define CRYPTO_push_info(info)   \fBCRYPTO_push_info_\fP(info, __FILE__, __LINE__);"
+
+.PP
+Definition at line 547 of file crypto\&.h\&.
+.SS "#define OPENSSL_assert(\fBe\fP)   (\fBvoid\fP)((\fBe\fP) ? 0 : (\fBOpenSSLDie\fP(__FILE__, __LINE__, #\fBe\fP),1))"
+
+.PP
+Definition at line 591 of file crypto\&.h\&.
+.SS "#define OPENSSL_ia32cap   (*(\fBOPENSSL_ia32cap_loc\fP()))"
+
+.PP
+Definition at line 594 of file crypto\&.h\&.
+.SS "#define fips_md_init(alg)   \fBfips_md_init_ctx\fP(alg, alg)"
+
+.PP
+Definition at line 602 of file crypto\&.h\&.
+.SS "#define fips_md_init_ctx(alg, cx)   int alg##_Init(cx##_CTX *\fBc\fP)"
+
+.PP
+Definition at line 619 of file crypto\&.h\&.
+.SS "#define fips_cipher_abort(alg)   while(0)"
+
+.PP
+Definition at line 621 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_CRYPTO_GET_EX_NEW_INDEX   100"
+
+.PP
+Definition at line 643 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_CRYPTO_GET_NEW_DYNLOCKID   103"
+
+.PP
+Definition at line 644 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_CRYPTO_GET_NEW_LOCKID   101"
+
+.PP
+Definition at line 645 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_CRYPTO_SET_EX_DATA   102"
+
+.PP
+Definition at line 646 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_DEF_ADD_INDEX   104"
+
+.PP
+Definition at line 647 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_DEF_GET_CLASS   105"
+
+.PP
+Definition at line 648 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_FIPS_MODE_SET   109"
+
+.PP
+Definition at line 649 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_INT_DUP_EX_DATA   106"
+
+.PP
+Definition at line 650 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_INT_FREE_EX_DATA   107"
+
+.PP
+Definition at line 651 of file crypto\&.h\&.
+.SS "#define CRYPTO_F_INT_NEW_EX_DATA   108"
+
+.PP
+Definition at line 652 of file crypto\&.h\&.
+.SS "#define CRYPTO_R_FIPS_MODE_NOT_SUPPORTED   101"
+
+.PP
+Definition at line 655 of file crypto\&.h\&.
+.SS "#define CRYPTO_R_NO_DYNLOCK_CREATE_CALLBACK   100"
+
+.PP
+Definition at line 656 of file crypto\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBopenssl_item_st\fP  \fBOPENSSL_ITEM\fP"
+
+.SS "typedef struct \fBbio_st\fP \fBBIO_dummy\fP"
+
+.PP
+Definition at line 290 of file crypto\&.h\&.
+.SS "typedef struct \fBcrypto_ex_data_func_st\fP  \fBCRYPTO_EX_DATA_FUNCS\fP"
+
+.SS "typedef struct st_CRYPTO_EX_DATA_IMPL \fBCRYPTO_EX_DATA_IMPL\fP"
+
+.PP
+Definition at line 402 of file crypto\&.h\&.
+.SS "typedef struct \fBcrypto_threadid_st\fP  \fBCRYPTO_THREADID\fP"
+
+.SS "typedef \fBvoid\fP* CRYPTO_MEM_LEAK_CB(unsigned long, const char *, int, int, \fBvoid\fP *)"
+
+.PP
+Definition at line 585 of file crypto\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int CRYPTO_mem_ctrl (int mode)"
+
+.SS "int CRYPTO_is_mem_check_on (\fBvoid\fP)"
+
+.SS "const char* SSLeay_version (int type)"
+
+.SS "unsigned long SSLeay (\fBvoid\fP)"
+
+.SS "int OPENSSL_issetugid (\fBvoid\fP)"
+
+.SS "const \fBCRYPTO_EX_DATA_IMPL\fP* CRYPTO_get_ex_data_implementation (\fBvoid\fP)"
+
+.SS "int CRYPTO_set_ex_data_implementation (const \fBCRYPTO_EX_DATA_IMPL\fP * i)"
+
+.SS "int CRYPTO_ex_data_new_class (\fBvoid\fP)"
+
+.SS "int CRYPTO_get_ex_new_index (int class_index, long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int CRYPTO_new_ex_data (int class_index, \fBvoid\fP * obj, \fBCRYPTO_EX_DATA\fP * ad)"
+
+.SS "int CRYPTO_dup_ex_data (int class_index, \fBCRYPTO_EX_DATA\fP * to, \fBCRYPTO_EX_DATA\fP * from)"
+
+.SS "\fBvoid\fP CRYPTO_free_ex_data (int class_index, \fBvoid\fP * obj, \fBCRYPTO_EX_DATA\fP * ad)"
+
+.SS "int CRYPTO_set_ex_data (\fBCRYPTO_EX_DATA\fP * ad, int idx, \fBvoid\fP * val)"
+
+.SS "\fBvoid\fP* CRYPTO_get_ex_data (const \fBCRYPTO_EX_DATA\fP * ad, int idx)"
+
+.SS "\fBvoid\fP CRYPTO_cleanup_all_ex_data (\fBvoid\fP)"
+
+.SS "int CRYPTO_get_new_lockid (char * name)"
+
+.SS "int CRYPTO_num_locks (\fBvoid\fP)"
+
+.SS "\fBvoid\fP CRYPTO_lock (int mode, int type, const char * file, int line)"
+
+.SS "\fBvoid\fP CRYPTO_set_locking_callback (\fBvoid\fP(*)(int mode, int \fBtype\fP,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char *\fBfile\fP, int line) func)"
+
+.SS "\fBvoid\fP CRYPTO_set_add_lock_callback (int(*)(int *\fBnum\fP, int mount, int \fBtype\fP,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char *\fBfile\fP, int line) func)"
+
+.SS "\fBvoid\fP CRYPTO_THREADID_set_numeric (\fBCRYPTO_THREADID\fP * id, unsigned long val)"
+
+.SS "\fBvoid\fP CRYPTO_THREADID_set_pointer (\fBCRYPTO_THREADID\fP * id, \fBvoid\fP * ptr)"
+
+.SS "int CRYPTO_THREADID_set_callback (\fBvoid\fP(*)(\fBCRYPTO_THREADID\fP *) threadid_func)"
+
+.SS "\fBvoid\fP CRYPTO_THREADID_current (\fBCRYPTO_THREADID\fP * id)"
+
+.SS "int CRYPTO_THREADID_cmp (const \fBCRYPTO_THREADID\fP * a, const \fBCRYPTO_THREADID\fP * b)"
+
+.SS "\fBvoid\fP CRYPTO_THREADID_cpy (\fBCRYPTO_THREADID\fP * dest, const \fBCRYPTO_THREADID\fP * src)"
+
+.SS "unsigned long CRYPTO_THREADID_hash (const \fBCRYPTO_THREADID\fP * id)"
+
+.SS "\fBvoid\fP CRYPTO_set_id_callback (unsigned long(*)(\fBvoid\fP) func)"
+
+.SS "unsigned long CRYPTO_thread_id (\fBvoid\fP)"
+
+.SS "const char* CRYPTO_get_lock_name (int type)"
+
+.SS "int CRYPTO_add_lock (int * pointer, int amount, int type, const char * file, int line)"
+
+.SS "int CRYPTO_get_new_dynlockid (\fBvoid\fP)"
+
+.SS "\fBvoid\fP CRYPTO_destroy_dynlockid (int i)"
+
+.SS "struct CRYPTO_dynlock_value* CRYPTO_get_dynlock_value (int i)"
+
+.SS "\fBvoid\fP CRYPTO_set_dynlock_create_callback (struct CRYPTO_dynlock_value *(*)(const char                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   *\fBfile\fP,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   int line) dyn_create_function)"
+
+.SS "\fBvoid\fP CRYPTO_set_dynlock_lock_callback (\fBvoid\fP(*)(int mode,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   struct CRYPTO_dynlock_value *l,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char *\fBfile\fP, int line) dyn_lock_function)"
+
+.SS "\fBvoid\fP CRYPTO_set_dynlock_destroy_callback (\fBvoid\fP(*)(struct CRYPTO_dynlock_value *l,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char *\fBfile\fP, int line) dyn_destroy_function)"
+
+.SS "int CRYPTO_set_mem_functions (\fBvoid\fP *(*)(size_t) m, \fBvoid\fP *(*)(\fBvoid\fP *, size_t) r, \fBvoid\fP(*)(\fBvoid\fP *) f)"
+
+.SS "int CRYPTO_set_locked_mem_functions (\fBvoid\fP *(*)(size_t) m, \fBvoid\fP(*)(\fBvoid\fP *) free_func)"
+
+.SS "int CRYPTO_set_mem_ex_functions (\fBvoid\fP *(*)(size_t, const char *, int) m, \fBvoid\fP *(*)(\fBvoid\fP *, size_t, const char *,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   int) r, \fBvoid\fP(*)(\fBvoid\fP *) f)"
+
+.SS "int CRYPTO_set_locked_mem_ex_functions (\fBvoid\fP *(*)(size_t, const char *, int) m, \fBvoid\fP(*)(\fBvoid\fP *) free_func)"
+
+.SS "int CRYPTO_set_mem_debug_functions (\fBvoid\fP(*)(\fBvoid\fP *, int, const char *, int, int) m, \fBvoid\fP(*)(\fBvoid\fP *, \fBvoid\fP *, int,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char *, int, int) r, \fBvoid\fP(*)(\fBvoid\fP *, int) f, \fBvoid\fP(*)(long) so, long(*)(\fBvoid\fP) go)"
+
+.SS "\fBvoid\fP CRYPTO_get_mem_functions (\fBvoid\fP *(**)(size_t) m, \fBvoid\fP *(**)(\fBvoid\fP *, size_t) r, \fBvoid\fP(**)(\fBvoid\fP *) f)"
+
+.SS "\fBvoid\fP CRYPTO_get_locked_mem_functions (\fBvoid\fP *(**)(size_t) m, \fBvoid\fP(**)(\fBvoid\fP *) f)"
+
+.SS "\fBvoid\fP CRYPTO_get_mem_ex_functions (\fBvoid\fP *(**)(size_t, const char *, int) m, \fBvoid\fP *(**)(\fBvoid\fP *, size_t, const char *,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   int) r, \fBvoid\fP(**)(\fBvoid\fP *) f)"
+
+.SS "\fBvoid\fP CRYPTO_get_locked_mem_ex_functions (\fBvoid\fP *(**)(size_t, const char *, int) m, \fBvoid\fP(**)(\fBvoid\fP *) f)"
+
+.SS "\fBvoid\fP CRYPTO_get_mem_debug_functions (\fBvoid\fP(**)(\fBvoid\fP *, int, const char *, int, int) m, \fBvoid\fP(**)(\fBvoid\fP *, \fBvoid\fP *, int,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char *, int, int) r, \fBvoid\fP(**)(\fBvoid\fP *, int) f, \fBvoid\fP(**)(long) so, long(**)(\fBvoid\fP) go)"
+
+.SS "\fBvoid\fP* CRYPTO_malloc_locked (int num, const char * file, int line)"
+
+.SS "\fBvoid\fP CRYPTO_free_locked (\fBvoid\fP * ptr)"
+
+.SS "\fBvoid\fP* CRYPTO_malloc (int num, const char * file, int line)"
+
+.SS "char* CRYPTO_strdup (const char * str, const char * file, int line)"
+
+.SS "\fBvoid\fP CRYPTO_free (\fBvoid\fP * ptr)"
+
+.SS "\fBvoid\fP* CRYPTO_realloc (\fBvoid\fP * addr, int num, const char * file, int line)"
+
+.SS "\fBvoid\fP* CRYPTO_realloc_clean (\fBvoid\fP * addr, int old_num, int num, const char * file, int line)"
+
+.SS "\fBvoid\fP* CRYPTO_remalloc (\fBvoid\fP * addr, int num, const char * file, int line)"
+
+.SS "\fBvoid\fP OPENSSL_cleanse (\fBvoid\fP * ptr, size_t len)"
+
+.SS "\fBvoid\fP CRYPTO_set_mem_debug_options (long bits)"
+
+.SS "long CRYPTO_get_mem_debug_options (\fBvoid\fP)"
+
+.SS "int CRYPTO_push_info_ (const char * info, const char * file, int line)"
+
+.SS "int CRYPTO_pop_info (\fBvoid\fP)"
+
+.SS "int CRYPTO_remove_all_info (\fBvoid\fP)"
+
+.SS "\fBvoid\fP CRYPTO_dbg_malloc (\fBvoid\fP * addr, int num, const char * file, int line, int before_p)"
+
+.SS "\fBvoid\fP CRYPTO_dbg_realloc (\fBvoid\fP * addr1, \fBvoid\fP * addr2, int num, const char * file, int line, int before_p)"
+
+.SS "\fBvoid\fP CRYPTO_dbg_free (\fBvoid\fP * addr, int before_p)"
+
+.SS "\fBvoid\fP CRYPTO_dbg_set_options (long bits)"
+
+.SS "long CRYPTO_dbg_get_options (\fBvoid\fP)"
+
+.SS "\fBvoid\fP CRYPTO_mem_leaks_fp (FILE *)"
+
+.SS "\fBvoid\fP CRYPTO_mem_leaks (struct \fBbio_st\fP * bio)"
+
+.SS "\fBvoid\fP CRYPTO_mem_leaks_cb (\fBCRYPTO_MEM_LEAK_CB\fP * cb)"
+
+.SS "\fBvoid\fP OpenSSLDie (const char * file, int line, const char * assertion)"
+
+.SS "unsigned long* OPENSSL_ia32cap_loc (\fBvoid\fP)"
+
+.SS "int OPENSSL_isservice (\fBvoid\fP)"
+
+.SS "int FIPS_mode (\fBvoid\fP)"
+
+.SS "int FIPS_mode_set (int r)"
+
+.SS "\fBvoid\fP OPENSSL_init (\fBvoid\fP)"
+
+.SS "int CRYPTO_memcmp (const volatile \fBvoid\fP * a, const volatile \fBvoid\fP * b, size_t len)"
+
+.SS "\fBvoid\fP ERR_load_CRYPTO_strings (\fBvoid\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBvoid\fP(*)(int mode, int \fBtype\fP, const char *\fBfile\fP, int line) CRYPTO_get_locking_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 439 of file crypto\&.h\&.
+.SS "int(*)(int *\fBnum\fP, int mount, int \fBtype\fP, const char *\fBfile\fP, int line) CRYPTO_get_add_lock_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 444 of file crypto\&.h\&.
+.SS "\fBvoid\fP(*)(\fBCRYPTO_THREADID\fP *) CRYPTO_THREADID_get_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 456 of file crypto\&.h\&.
+.SS "unsigned long(*)(\fBvoid\fP) CRYPTO_get_id_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 463 of file crypto\&.h\&.
+.SS "struct CRYPTO_dynlock_value*(*)(const char *\fBfile\fP, int line) CRYPTO_get_dynlock_create_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 486 of file crypto\&.h\&.
+.SS "\fBvoid\fP(*)(int mode, struct CRYPTO_dynlock_value *l, const char *\fBfile\fP, int line) CRYPTO_get_dynlock_lock_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 487 of file crypto\&.h\&.
+.SS "\fBvoid\fP(*)(struct CRYPTO_dynlock_value *l, const char *\fBfile\fP, int line) CRYPTO_get_dynlock_destroy_callback(\fBvoid\fP)"
+
+.PP
+Definition at line 491 of file crypto\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

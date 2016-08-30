@@ -1,0 +1,104 @@
+.TH "s2n-master/tests/unit/s2n_ssl_prf_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_ssl_prf_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'tls/s2n_prf\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 34 of file s2n_ssl_prf_test\&.c\&.
+.PP
+.nf
+35 {
+36     uint8_t master_secret_hex_pad[96];
+37     char premaster_secret_hex_in[] = "03009e8e006a7f1451d32164088a8cba5077d1b819160662a97e90a765cec244b5f8f98fd50cfe8e4fba97994a7a4843";
+38     char client_random_hex_in[] = "537fb7fdddc05090774e55f8ef8564c2b5b238819703409bfdabe14e4cf1897d";
+39     char server_random_hex_in[] = "537fb7fe649225c9f37904b24916452d51794b3b5735fc7e628b6090db52209f";
+40     char master_secret_hex_in[] = "02b811717e3aa29e6b0526d7e9ae2b74496d461564401f47498e9cdbdf54c8afa69c25a648b360de2004c74850e8f7db";
+41 
+42     struct s2n_stuffer client_random_in;
+43     struct s2n_stuffer server_random_in;
+44     struct s2n_stuffer premaster_secret_in;
+45     struct s2n_stuffer master_secret_hex_out;
+46     struct s2n_blob master_secret = {\&.data = master_secret_hex_pad,\&.size = sizeof(master_secret_hex_pad) };
+47     struct s2n_blob pms;
+48 
+49     struct s2n_connection *conn;
+50 
+51     BEGIN_TEST();
+52 
+53 
+54     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+55 
+56     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_string(&client_random_in, client_random_hex_in));
+57     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_string(&server_random_in, server_random_hex_in));
+58     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_string(&premaster_secret_in, premaster_secret_hex_in));
+59 
+60     EXPECT_SUCCESS(s2n_stuffer_init(&master_secret_hex_out, &master_secret));
+61 
+62     /* Parse the hex */
+63     for (int i = 0; i < 48; i++) {
+64         uint8_t c;
+65         EXPECT_SUCCESS(s2n_stuffer_read_uint8_hex(&premaster_secret_in, &c));
+66         conn->secure\&.rsa_premaster_secret[i] = c;
+67     }
+68     for (int i = 0; i < 32; i++) {
+69         uint8_t c;
+70         EXPECT_SUCCESS(s2n_stuffer_read_uint8_hex(&client_random_in, &c));
+71         conn->secure\&.client_random[i] = c;
+72     }
+73     for (int i = 0; i < 32; i++) {
+74         uint8_t c;
+75         EXPECT_SUCCESS(s2n_stuffer_read_uint8_hex(&server_random_in, &c));
+76         conn->secure\&.server_random[i] = c;
+77     }
+78 
+79     /* Set the protocol version to sslv3 */
+80     conn->actual_protocol_version = S2N_SSLv3;
+81     pms\&.data = conn->secure\&.rsa_premaster_secret;
+82     pms\&.size = sizeof(conn->secure\&.rsa_premaster_secret);
+83     EXPECT_SUCCESS(s2n_prf_master_secret(conn, &pms));
+84 
+85     /* Convert the master secret to hex */
+86     for (int i = 0; i < 48; i++) {
+87         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&master_secret_hex_out, conn->secure\&.master_secret[i]));
+88     }
+89 
+90     EXPECT_EQUAL(memcmp(master_secret_hex_pad, master_secret_hex_in, sizeof(master_secret_hex_pad)), 0);
+91 
+92     EXPECT_SUCCESS(s2n_connection_free(conn));
+93     EXPECT_SUCCESS(s2n_stuffer_free(&client_random_in));
+94     EXPECT_SUCCESS(s2n_stuffer_free(&server_random_in));
+95     EXPECT_SUCCESS(s2n_stuffer_free(&premaster_secret_in));
+96 
+97     END_TEST();
+98 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

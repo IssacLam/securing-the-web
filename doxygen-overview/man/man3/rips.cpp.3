@@ -1,0 +1,90 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/ripemd/asm/rips.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/ripemd/asm/rips.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/ripemd\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBripemd160_block_x86\fP   ripemd160_block_asm_host_order"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBripemd160_block_x86\fP (\fBRIPEMD160_CTX\fP *ctx, unsigned char *buffer, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ripemd160_block_x86   ripemd160_block_asm_host_order"
+
+.PP
+Definition at line 37 of file rips\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ripemd160_block_x86 (\fBRIPEMD160_CTX\fP * ctx, unsigned char * buffer, int num)"
+
+.SS "\fBvoid\fP main (int argc, char * argv[])"
+
+.PP
+Definition at line 43 of file rips\&.cpp\&.
+.PP
+.nf
+44     {
+45     unsigned char buffer[64*256];
+46     RIPEMD160_CTX ctx;
+47     unsigned long s1,s2,e1,e2;
+48     unsigned char k[16];
+49     unsigned long data[2];
+50     unsigned char iv[8];
+51     int i,num=0,numm;
+52     int j=0;
+53 
+54     if (argc >= 2)
+55         num=atoi(argv[1]);
+56 
+57     if (num == 0) num=16;
+58     if (num > 250) num=16;
+59     numm=num+2;
+60 #if 0
+61     num*=64;
+62     numm*=64;
+63 #endif
+64 
+65     for (j=0; j<6; j++)
+66         {
+67         for (i=0; i<10; i++) 
+68             {
+69             ripemd160_block_x86(&ctx,buffer,numm);
+70             GetTSC(s1);
+71             ripemd160_block_x86(&ctx,buffer,numm);
+72             GetTSC(e1);
+73             GetTSC(s2);
+74             ripemd160_block_x86(&ctx,buffer,num);
+75             GetTSC(e2);
+76             ripemd160_block_x86(&ctx,buffer,num);
+77             }
+78         printf("ripemd160 (%d bytes) %d %d (%\&.2f)\n",num*64,
+79             e1-s1,e2-s2,(double)((e1-s1)-(e2-s2))/2);
+80         }
+81     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

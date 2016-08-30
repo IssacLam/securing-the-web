@@ -1,0 +1,1337 @@
+.TH "s2n-master/tls/s2n_tls.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_tls.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBs2n_server_can_send_ocsp\fP(conn)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_flush\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *more)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_hello_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_hello_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_sslv2_client_hello_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_hello_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_hello_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_cert_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_cert_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_status_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_status_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_key_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_key_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_done_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_done_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_key_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_key_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_ccs_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_ccs_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_ccs_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_ccs_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_finished_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_finished_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_finished_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_finished_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_handshake_write_header\fP (struct \fBs2n_connection\fP *conn, uint8_t message_type)"
+.br
+.ti -1c
+.RI "int \fBs2n_handshake_finish_header\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_handshake_parse_header\fP (struct \fBs2n_connection\fP *conn, uint8_t *message_type, uint32_t *\fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_read_full_record\fP (struct \fBs2n_connection\fP *conn, uint8_t *record_type, int *isSSLv2)"
+.br
+.ti -1c
+.RI "int \fBs2n_recv_close_notify\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_extensions_send\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_stuffer\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_extensions_recv\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_blob\fP *extensions)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_extensions_send\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_stuffer\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_extensions_recv\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_blob\fP *extensions)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "uint8_t \fBs2n_highest_protocol_version\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define s2n_server_can_send_ocsp(conn)"
+\fBValue:\fP
+.PP
+.nf
+((conn)->status_type == S2N_STATUS_REQUEST_OCSP && \
+        (conn)->config->cert_and_key_pairs && \
+        (conn)->config->cert_and_key_pairs->ocsp_status\&.size > 0)
+.fi
+.PP
+Definition at line 58 of file s2n_tls\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_flush (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * more)"
+
+.PP
+Definition at line 34 of file s2n_send\&.c\&.
+.PP
+.nf
+35 {
+36     int w;
+37 
+38     *blocked = S2N_BLOCKED_ON_WRITE;
+39 
+40     /* Write any data that's already pending */
+41   WRITE:
+42     while (s2n_stuffer_data_available(&conn->out)) {
+43         w = s2n_stuffer_send_to_fd(&conn->out, conn->writefd, s2n_stuffer_data_available(&conn->out));
+44         if (w < 0) {
+45             if (errno == EWOULDBLOCK) {
+46                 S2N_ERROR(S2N_ERR_BLOCKED);
+47             }
+48             S2N_ERROR(S2N_ERR_IO);
+49         }
+50         conn->wire_bytes_out += w;
+51     }
+52     if (conn->closing) {
+53         conn->closed = 1;
+54         /* Delay wiping for close_notify\&. s2n_shutdown() needs to wait for peer's close_notify */
+55         if (!conn->close_notify_queued) {
+56             GUARD(s2n_connection_wipe(conn));
+57         }
+58     }
+59     GUARD(s2n_stuffer_rewrite(&conn->out));
+60 
+61     /* If there's an alert pending out, send that */
+62     if (s2n_stuffer_data_available(&conn->reader_alert_out) == 2) {
+63         struct s2n_blob alert;
+64         alert\&.data = conn->reader_alert_out\&.blob\&.data;
+65         alert\&.size = 2;
+66         GUARD(s2n_record_write(conn, TLS_ALERT, &alert));
+67         GUARD(s2n_stuffer_rewrite(&conn->reader_alert_out));
+68         conn->closing = 1;
+69 
+70         /* Actually write it \&.\&.\&. */
+71         goto WRITE;
+72     }
+73 
+74     /* Do the same for writer driven alerts */
+75     if (s2n_stuffer_data_available(&conn->writer_alert_out) == 2) {
+76         struct s2n_blob alert;
+77         alert\&.data = conn->writer_alert_out\&.blob\&.data;
+78         alert\&.size = 2;
+79         GUARD(s2n_record_write(conn, TLS_ALERT, &alert));
+80         GUARD(s2n_stuffer_rewrite(&conn->writer_alert_out));
+81         conn->closing = 1;
+82 
+83         /* Actually write it \&.\&.\&. */
+84         goto WRITE;
+85     }
+86 
+87     *blocked = S2N_NOT_BLOCKED;
+88 
+89     return 0;
+90 }
+.fi
+.SS "int s2n_client_hello_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 106 of file s2n_client_hello\&.c\&.
+.PP
+.nf
+107 {
+108     uint32_t gmt_unix_time = time(NULL);
+109     struct s2n_stuffer *out = &conn->handshake\&.io;
+110     struct s2n_stuffer client_random;
+111     struct s2n_blob b, r;
+112     uint8_t session_id_len = 0;
+113     uint8_t client_protocol_version[S2N_TLS_PROTOCOL_VERSION_LEN];
+114 
+115     b\&.data = conn->secure\&.client_random;
+116     b\&.size = S2N_TLS_RANDOM_DATA_LEN;
+117 
+118     /* Create the client random data */
+119     GUARD(s2n_stuffer_init(&client_random, &b));
+120     GUARD(s2n_stuffer_write_uint32(&client_random, gmt_unix_time));
+121 
+122     r\&.data = s2n_stuffer_raw_write(&client_random, S2N_TLS_RANDOM_DATA_LEN - 4);
+123     r\&.size = S2N_TLS_RANDOM_DATA_LEN - 4;
+124     notnull_check(r\&.data);
+125     GUARD(s2n_get_public_random_data(&r));
+126 
+127     client_protocol_version[0] = conn->client_protocol_version / 10;
+128     client_protocol_version[1] = conn->client_protocol_version % 10;
+129     conn->client_hello_version = conn->client_protocol_version;
+130 
+131     GUARD(s2n_stuffer_write_bytes(out, client_protocol_version, S2N_TLS_PROTOCOL_VERSION_LEN));
+132     GUARD(s2n_stuffer_copy(&client_random, out, S2N_TLS_RANDOM_DATA_LEN));
+133     GUARD(s2n_stuffer_write_uint8(out, session_id_len));
+134     GUARD(s2n_stuffer_write_uint16(out, conn->config->cipher_preferences->count * S2N_TLS_CIPHER_SUITE_LEN));
+135     GUARD(s2n_stuffer_write_bytes(out, conn->config->cipher_preferences->wire_format, conn->config->cipher_preferences->count * S2N_TLS_CIPHER_SUITE_LEN));
+136 
+137     /* Zero compression methods */
+138     GUARD(s2n_stuffer_write_uint8(out, 1));
+139     GUARD(s2n_stuffer_write_uint8(out, 0));
+140 
+141     /* Write the extensions */
+142     GUARD(s2n_client_extensions_send(conn, out));
+143 
+144     return 0;
+145 }
+.fi
+.SS "int s2n_client_hello_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 39 of file s2n_client_hello\&.c\&.
+.PP
+.nf
+40 {
+41     struct s2n_stuffer *in = &conn->handshake\&.io;
+42     uint8_t compression_methods;
+43     uint16_t extensions_size;
+44     uint16_t cipher_suites_length;
+45     uint8_t *cipher_suites;
+46     uint8_t client_protocol_version[S2N_TLS_PROTOCOL_VERSION_LEN];
+47 
+48     GUARD(s2n_stuffer_read_bytes(in, client_protocol_version, S2N_TLS_PROTOCOL_VERSION_LEN));
+49     GUARD(s2n_stuffer_read_bytes(in, conn->secure\&.client_random, S2N_TLS_RANDOM_DATA_LEN));
+50     GUARD(s2n_stuffer_read_uint8(in, &conn->session_id_len));
+51 
+52     conn->client_protocol_version = (client_protocol_version[0] * 10) + client_protocol_version[1];
+53     if (conn->client_protocol_version < conn->config->cipher_preferences->minimum_protocol_version || conn->client_protocol_version > S2N_TLS12) {
+54         GUARD(s2n_queue_reader_unsupported_protocol_version_alert(conn));
+55         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+56     }
+57     conn->client_hello_version = conn->client_protocol_version;
+58     conn->actual_protocol_version = MIN(conn->client_protocol_version, conn->server_protocol_version);
+59 
+60     if (conn->session_id_len > S2N_TLS_SESSION_ID_MAX_LEN || conn->session_id_len > s2n_stuffer_data_available(in)) {
+61         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+62     }
+63 
+64     GUARD(s2n_stuffer_read_bytes(in, conn->session_id, conn->session_id_len));
+65 
+66     GUARD(s2n_stuffer_read_uint16(in, &cipher_suites_length));
+67     if (cipher_suites_length % S2N_TLS_CIPHER_SUITE_LEN) {
+68         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+69     }
+70     cipher_suites = s2n_stuffer_raw_read(in, cipher_suites_length);
+71     notnull_check(cipher_suites);
+72     /* Don't choose the cipher yet, read the extensions first */
+73 
+74     GUARD(s2n_stuffer_read_uint8(in, &compression_methods));
+75     GUARD(s2n_stuffer_skip_read(in, compression_methods));
+76 
+77     /* This is going to be our default if the client has no preference\&. */
+78     conn->secure\&.server_ecc_params\&.negotiated_curve = &s2n_ecc_supported_curves[0];
+79 
+80     if (s2n_stuffer_data_available(in) >= 2) {
+81         /* Read extensions if they are present */
+82         GUARD(s2n_stuffer_read_uint16(in, &extensions_size));
+83 
+84         if (extensions_size > s2n_stuffer_data_available(in)) {
+85             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+86         }
+87 
+88         struct s2n_blob extensions;
+89         extensions\&.size = extensions_size;
+90         extensions\&.data = s2n_stuffer_raw_read(in, extensions\&.size);
+91         notnull_check(extensions\&.data);
+92 
+93         GUARD(s2n_client_extensions_recv(conn, &extensions));
+94     }
+95 
+96     /* Now choose the ciphers and the cert chain\&. */
+97     GUARD(s2n_set_cipher_as_tls_server(conn, cipher_suites, cipher_suites_length / 2));
+98     conn->server->chosen_cert_chain = conn->config->cert_and_key_pairs;
+99 
+100     /* Set the handshake type */
+101     GUARD(s2n_conn_set_handshake_type(conn));
+102 
+103     return 0;
+104 }
+.fi
+.SS "int s2n_sslv2_client_hello_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 148 of file s2n_client_hello\&.c\&.
+.PP
+.nf
+149 {
+150     struct s2n_stuffer *in = &conn->handshake\&.io;
+151     uint16_t session_id_length;
+152     uint16_t cipher_suites_length;
+153     uint16_t challenge_length;
+154     uint8_t *cipher_suites;
+155 
+156     if (conn->client_protocol_version < conn->config->cipher_preferences->minimum_protocol_version || conn->client_protocol_version > S2N_TLS12) {
+157         GUARD(s2n_queue_reader_unsupported_protocol_version_alert(conn));
+158         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+159     }
+160     conn->actual_protocol_version = MIN(conn->client_protocol_version, conn->server_protocol_version);
+161     conn->client_hello_version = S2N_SSLv2;
+162 
+163     /* We start 5 bytes into the record */
+164     GUARD(s2n_stuffer_read_uint16(in, &cipher_suites_length));
+165 
+166     if (cipher_suites_length % S2N_SSLv2_CIPHER_SUITE_LEN) {
+167         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+168     }
+169 
+170     GUARD(s2n_stuffer_read_uint16(in, &session_id_length));
+171 
+172     GUARD(s2n_stuffer_read_uint16(in, &challenge_length));
+173 
+174     if (challenge_length > S2N_TLS_RANDOM_DATA_LEN) {
+175         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+176     }
+177 
+178     cipher_suites = s2n_stuffer_raw_read(in, cipher_suites_length);
+179     notnull_check(cipher_suites);
+180     GUARD(s2n_set_cipher_as_sslv2_server(conn, cipher_suites, cipher_suites_length / S2N_SSLv2_CIPHER_SUITE_LEN));
+181 
+182     if (session_id_length > s2n_stuffer_data_available(in)) {
+183         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+184     }
+185     if (session_id_length > 0 && session_id_length <= S2N_TLS_SESSION_ID_MAX_LEN) {
+186         GUARD(s2n_stuffer_read_bytes(in, conn->session_id, session_id_length));
+187         conn->session_id_len = (uint8_t) session_id_length;
+188     } else {
+189         GUARD(s2n_stuffer_skip_read(in, session_id_length));
+190     }
+191 
+192     struct s2n_blob b;
+193     b\&.data = conn->secure\&.client_random;
+194     b\&.size = S2N_TLS_RANDOM_DATA_LEN;
+195 
+196     b\&.data += S2N_TLS_RANDOM_DATA_LEN - challenge_length;
+197     b\&.size -= S2N_TLS_RANDOM_DATA_LEN - challenge_length;
+198 
+199     GUARD(s2n_stuffer_read(in, &b));
+200 
+201     conn->server->chosen_cert_chain = conn->config->cert_and_key_pairs;
+202     GUARD(s2n_conn_set_handshake_type(conn));
+203 
+204     return 0;
+205 }
+.fi
+.SS "int s2n_server_hello_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 111 of file s2n_server_hello\&.c\&.
+.PP
+.nf
+112 {
+113     uint32_t gmt_unix_time = time(NULL);
+114     struct s2n_stuffer *out = &conn->handshake\&.io;
+115     struct s2n_stuffer server_random;
+116     struct s2n_blob b, r;
+117     uint8_t protocol_version[S2N_TLS_PROTOCOL_VERSION_LEN];
+118 
+119     b\&.data = conn->secure\&.server_random;
+120     b\&.size = S2N_TLS_RANDOM_DATA_LEN;
+121 
+122     /* Create the server random data */
+123     GUARD(s2n_stuffer_init(&server_random, &b));
+124     GUARD(s2n_stuffer_write_uint32(&server_random, gmt_unix_time));
+125 
+126     r\&.data = s2n_stuffer_raw_write(&server_random, S2N_TLS_RANDOM_DATA_LEN - 4);
+127     r\&.size = S2N_TLS_RANDOM_DATA_LEN - 4;
+128     notnull_check(r\&.data);
+129     GUARD(s2n_get_public_random_data(&r));
+130 
+131     protocol_version[0] = conn->actual_protocol_version / 10;
+132     protocol_version[1] = conn->actual_protocol_version % 10;
+133 
+134     conn->secure\&.signature_digest_alg = S2N_HASH_MD5_SHA1;
+135     if (conn->actual_protocol_version == S2N_TLS12) {
+136         conn->secure\&.signature_digest_alg = S2N_HASH_SHA1;
+137     }
+138 
+139     GUARD(s2n_stuffer_write_bytes(out, protocol_version, S2N_TLS_PROTOCOL_VERSION_LEN));
+140     GUARD(s2n_stuffer_write_bytes(out, conn->secure\&.server_random, S2N_TLS_RANDOM_DATA_LEN));
+141     GUARD(s2n_stuffer_write_uint8(out, conn->session_id_len));
+142     GUARD(s2n_stuffer_write_bytes(out, conn->session_id, conn->session_id_len));
+143     GUARD(s2n_stuffer_write_bytes(out, conn->secure\&.cipher_suite->value, S2N_TLS_CIPHER_SUITE_LEN));
+144     GUARD(s2n_stuffer_write_uint8(out, S2N_TLS_COMPRESSION_METHOD_NULL));
+145 
+146     GUARD(s2n_server_extensions_send(conn, out));
+147 
+148     conn->actual_protocol_version_established = 1;
+149 
+150     return 0;
+151 }
+.fi
+.SS "int s2n_server_hello_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 36 of file s2n_server_hello\&.c\&.
+.PP
+.nf
+37 {
+38     struct s2n_stuffer *in = &conn->handshake\&.io;
+39     uint8_t compression_method;
+40     uint8_t session_id[S2N_TLS_SESSION_ID_MAX_LEN];
+41     uint8_t session_id_len;
+42     uint16_t extensions_size;
+43     uint8_t protocol_version[S2N_TLS_PROTOCOL_VERSION_LEN];
+44 
+45     GUARD(s2n_stuffer_read_bytes(in, protocol_version, S2N_TLS_PROTOCOL_VERSION_LEN));
+46 
+47     conn->server_protocol_version = (protocol_version[0] * 10) + protocol_version[1];
+48 
+49     if (conn->server_protocol_version > conn->actual_protocol_version) {
+50         GUARD(s2n_queue_reader_unsupported_protocol_version_alert(conn));
+51         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+52     }
+53     conn->actual_protocol_version = conn->server_protocol_version;
+54     conn->actual_protocol_version_established = 1;
+55 
+56     /* Verify that the protocol version is sane */
+57     if (conn->actual_protocol_version < S2N_SSLv3 || conn->actual_protocol_version > S2N_TLS12) {
+58         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+59     }
+60 
+61     conn->secure\&.signature_digest_alg = S2N_HASH_MD5_SHA1;
+62     if (conn->actual_protocol_version == S2N_TLS12) {
+63         conn->secure\&.signature_digest_alg = S2N_HASH_SHA1;
+64     }
+65 
+66     GUARD(s2n_stuffer_read_bytes(in, conn->secure\&.server_random, S2N_TLS_RANDOM_DATA_LEN));
+67     GUARD(s2n_stuffer_read_uint8(in, &session_id_len));
+68 
+69     if (session_id_len > S2N_TLS_SESSION_ID_MAX_LEN) {
+70         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+71     }
+72 
+73     conn->session_id_len = session_id_len;
+74     GUARD(s2n_stuffer_read_bytes(in, session_id, session_id_len));
+75     uint8_t *cipher_suite_wire = s2n_stuffer_raw_read(in, S2N_TLS_CIPHER_SUITE_LEN);
+76     notnull_check(cipher_suite_wire);
+77     GUARD(s2n_set_cipher_as_client(conn, cipher_suite_wire));
+78     GUARD(s2n_stuffer_read_uint8(in, &compression_method));
+79 
+80     if (compression_method != S2N_TLS_COMPRESSION_METHOD_NULL) {
+81         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+82     }
+83 
+84     GUARD(s2n_conn_set_handshake_type(conn));
+85 
+86     if (conn->handshake\&.handshake_type == RESUME) {
+87         GUARD(s2n_prf_key_expansion(conn));
+88     }
+89 
+90     if (s2n_stuffer_data_available(in) < 2) {
+91         /* No extensions */
+92         return 0;
+93     }
+94 
+95     GUARD(s2n_stuffer_read_uint16(in, &extensions_size));
+96 
+97     if (extensions_size > s2n_stuffer_data_available(in)) {
+98         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+99     }
+100 
+101     struct s2n_blob extensions;
+102     extensions\&.size = extensions_size;
+103     extensions\&.data = s2n_stuffer_raw_read(in, extensions\&.size);
+104     notnull_check(extensions\&.data);
+105 
+106     GUARD(s2n_server_extensions_recv(conn, &extensions));
+107 
+108     return 0;
+109 }
+.fi
+.SS "int s2n_server_cert_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 70 of file s2n_server_cert\&.c\&.
+.PP
+.nf
+71 {
+72     struct s2n_cert_chain *head = conn->server->chosen_cert_chain->head;
+73 
+74     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, conn->server->chosen_cert_chain->chain_size));
+75 
+76     while (head) {
+77         GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, head->cert\&.size));
+78         GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, head->cert\&.data, head->cert\&.size));
+79         head = head->next;
+80     }
+81 
+82     return 0;
+83 }
+.fi
+.SS "int s2n_server_cert_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 29 of file s2n_server_cert\&.c\&.
+.PP
+.nf
+30 {
+31     uint32_t size_of_all_certificates;
+32 
+33     GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, &size_of_all_certificates));
+34 
+35     if (size_of_all_certificates > s2n_stuffer_data_available(&conn->handshake\&.io) || size_of_all_certificates < 3) {
+36         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+37     }
+38 
+39     int certificate_count = 0;
+40     while (s2n_stuffer_data_available(&conn->handshake\&.io)) {
+41         uint32_t certificate_size;
+42 
+43         GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, &certificate_size));
+44 
+45         if (certificate_size > s2n_stuffer_data_available(&conn->handshake\&.io) || certificate_size == 0) {
+46             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+47         }
+48 
+49         struct s2n_blob asn1cert;
+50         asn1cert\&.data = s2n_stuffer_raw_read(&conn->handshake\&.io, certificate_size);
+51         asn1cert\&.size = certificate_size;
+52         notnull_check(asn1cert\&.data);
+53 
+54         /* TODO: certificate validation goes here */
+55         gt_check(certificate_size, 0);
+56 
+57         /* Pull the public key from the first certificate */
+58         if (certificate_count == 0) {
+59             GUARD(s2n_asn1der_to_rsa_public_key(&conn->secure\&.server_rsa_public_key, &asn1cert));
+60         }
+61 
+62         certificate_count++;
+63     }
+64 
+65     gte_check(certificate_count, 1);
+66 
+67     return 0;
+68 }
+.fi
+.SS "int s2n_server_status_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 27 of file s2n_ocsp_stapling\&.c\&.
+.PP
+.nf
+28 {
+29     uint32_t length = conn->config->cert_and_key_pairs->ocsp_status\&.size + 4;
+30     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, length));
+31 
+32     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, (uint8_t) S2N_STATUS_REQUEST_OCSP));
+33     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, conn->config->cert_and_key_pairs->ocsp_status\&.size));
+34     GUARD(s2n_stuffer_write(&conn->handshake\&.io, &conn->config->cert_and_key_pairs->ocsp_status));
+35 
+36     return 0;
+37 }
+.fi
+.SS "int s2n_server_status_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 39 of file s2n_ocsp_stapling\&.c\&.
+.PP
+.nf
+40 {
+41     uint8_t type;
+42     struct s2n_blob status = {\&.data = NULL,\&.size = 0 };
+43 
+44     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, &type));
+45     GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, &status\&.size));
+46     status\&.data = s2n_stuffer_raw_read(&conn->handshake\&.io, status\&.size);
+47     notnull_check(status\&.data);
+48 
+49     if (type == S2N_STATUS_REQUEST_OCSP) {
+50         GUARD(s2n_alloc(&conn->status_response, status\&.size));
+51         memcpy_check(conn->status_response\&.data, status\&.data, status\&.size);
+52         conn->status_response\&.size = status\&.size;
+53     }
+54 
+55     return 0;
+56 }
+.fi
+.SS "int s2n_server_key_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 210 of file s2n_server_key_exchange\&.c\&.
+.PP
+.nf
+211 {
+212     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_ECC) {
+213         GUARD(s2n_ecdhe_server_key_send(conn));
+214     } else {
+215         GUARD(s2n_dhe_server_key_send(conn));
+216     }
+217 
+218     return 0;
+219 }
+.fi
+.SS "int s2n_server_key_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 35 of file s2n_server_key_exchange\&.c\&.
+.PP
+.nf
+36 {
+37     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_ECC) {
+38         GUARD(s2n_ecdhe_server_key_recv(conn));
+39     } else {
+40         GUARD(s2n_dhe_server_key_recv(conn));
+41     }
+42 
+43     return 0;
+44 }
+.fi
+.SS "int s2n_server_done_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 34 of file s2n_server_done\&.c\&.
+.PP
+.nf
+35 {
+36     return 0;
+37 }
+.fi
+.SS "int s2n_server_done_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 25 of file s2n_server_done\&.c\&.
+.PP
+.nf
+26 {
+27     if (s2n_stuffer_data_available(&conn->handshake\&.io)) {
+28         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+29     }
+30 
+31     return 0;
+32 }
+.fi
+.SS "int s2n_client_key_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 224 of file s2n_client_key_exchange\&.c\&.
+.PP
+.nf
+225 {
+226     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_DH) {
+227         return s2n_dhe_client_key_send(conn);
+228     } else {
+229         return s2n_rsa_client_key_send(conn);
+230     }
+231 }
+.fi
+.SS "int s2n_client_key_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 127 of file s2n_client_key_exchange\&.c\&.
+.PP
+.nf
+128 {
+129     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_DH) {
+130         return s2n_dhe_client_key_recv(conn);
+131     } else {
+132         return s2n_rsa_client_key_recv(conn);
+133     }
+134 }
+.fi
+.SS "int s2n_client_ccs_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 54 of file s2n_client_ccs\&.c\&.
+.PP
+.nf
+55 {
+56     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, CHANGE_CIPHER_SPEC_TYPE));
+57 
+58     return 0;
+59 }
+.fi
+.SS "int s2n_client_ccs_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 31 of file s2n_client_ccs\&.c\&.
+.PP
+.nf
+32 {
+33     uint8_t type;
+34 
+35     GUARD(s2n_prf_client_finished(conn));
+36 
+37     struct s2n_blob seq = {\&.data = conn->secure\&.client_sequence_number,\&.size = sizeof(conn->secure\&.client_sequence_number) };
+38     GUARD(s2n_blob_zero(&seq));
+39 
+40     /* Update the client to use the cipher-suite */
+41     conn->client = &conn->secure;
+42 
+43     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, &type));
+44     if (type != CHANGE_CIPHER_SPEC_TYPE) {
+45         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+46     }
+47 
+48     /* Flush any partial alert messages that were pending */
+49     GUARD(s2n_stuffer_wipe(&conn->alert_in));
+50 
+51     return 0;
+52 }
+.fi
+.SS "int s2n_server_ccs_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 59 of file s2n_server_ccs\&.c\&.
+.PP
+.nf
+60 {
+61     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, CHANGE_CIPHER_SPEC_TYPE));
+62 
+63     if (conn->handshake\&.handshake_type == RESUME) {
+64         GUARD(s2n_prf_key_expansion(conn));
+65     }
+66 
+67     return 0;
+68 }
+.fi
+.SS "int s2n_server_ccs_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 30 of file s2n_server_ccs\&.c\&.
+.PP
+.nf
+31 {
+32     uint8_t type;
+33 
+34     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, &type));
+35     if (type != CHANGE_CIPHER_SPEC_TYPE) {
+36         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+37     }
+38 
+39     /* Zero the sequence number */
+40     struct s2n_blob seq = {\&.data = conn->secure\&.server_sequence_number,\&.size = S2N_TLS_SEQUENCE_NUM_LEN };
+41     GUARD(s2n_blob_zero(&seq));
+42 
+43     /* Compute the finished message */
+44     GUARD(s2n_prf_server_finished(conn));
+45 
+46     /* Update the secure state to active, and point the client at the active state */
+47     conn->server = &conn->secure;
+48 
+49     /* Flush any partial alert messages that were pending */
+50     GUARD(s2n_stuffer_wipe(&conn->alert_in));
+51 
+52     if (conn->handshake\&.handshake_type == RESUME) {
+53         GUARD(s2n_prf_key_expansion(conn));
+54     }
+55 
+56     return 0;
+57 }
+.fi
+.SS "int s2n_client_finished_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 42 of file s2n_client_finished\&.c\&.
+.PP
+.nf
+43 {
+44     uint8_t *our_version;
+45 
+46     GUARD(s2n_prf_client_finished(conn));
+47 
+48     struct s2n_blob seq = {\&.data = conn->secure\&.client_sequence_number,\&.size = sizeof(conn->secure\&.client_sequence_number) };
+49     GUARD(s2n_blob_zero(&seq));
+50     our_version = conn->handshake\&.client_finished;
+51 
+52     /* Update the server to use the cipher suite */
+53     conn->client = &conn->secure;
+54 
+55     if (conn->actual_protocol_version == S2N_SSLv3) {
+56         GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, our_version, S2N_SSL_FINISHED_LEN));
+57     } else {
+58         GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, our_version, S2N_TLS_FINISHED_LEN));
+59     }
+60 
+61     return 0;
+62 }
+.fi
+.SS "int s2n_client_finished_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 27 of file s2n_client_finished\&.c\&.
+.PP
+.nf
+28 {
+29     uint8_t *our_version;
+30 
+31     our_version = conn->handshake\&.client_finished;
+32     uint8_t *their_version = s2n_stuffer_raw_read(&conn->handshake\&.io, S2N_TLS_FINISHED_LEN);
+33     notnull_check(their_version);
+34 
+35     if (!s2n_constant_time_equals(our_version, their_version, S2N_TLS_FINISHED_LEN) || conn->handshake\&.rsa_failed) {
+36         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+37     }
+38 
+39     return 0;
+40 }
+.fi
+.SS "int s2n_server_finished_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 48 of file s2n_server_finished\&.c\&.
+.PP
+.nf
+49 {
+50     uint8_t *our_version;
+51     int length = S2N_TLS_FINISHED_LEN;
+52 
+53     /* Compute the finished message */
+54     GUARD(s2n_prf_server_finished(conn));
+55 
+56     our_version = conn->handshake\&.server_finished;
+57 
+58     if (conn->actual_protocol_version == S2N_SSLv3) {
+59         length = S2N_SSL_FINISHED_LEN;
+60     }
+61 
+62     GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, our_version, length));
+63 
+64     /* Zero the sequence number */
+65     struct s2n_blob seq = {\&.data = conn->secure\&.server_sequence_number,\&.size = S2N_TLS_SEQUENCE_NUM_LEN };
+66     GUARD(s2n_blob_zero(&seq));
+67 
+68     /* Update the secure state to active, and point the client at the active state */
+69     conn->server = &conn->secure;
+70 
+71     if (conn->handshake\&.handshake_type == RESUME) {
+72         GUARD(s2n_prf_key_expansion(conn));
+73     }
+74 
+75     return 0;
+76 }
+.fi
+.SS "int s2n_server_finished_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 28 of file s2n_server_finished\&.c\&.
+.PP
+.nf
+29 {
+30     uint8_t *our_version;
+31     int length = S2N_TLS_FINISHED_LEN;
+32     our_version = conn->handshake\&.server_finished;
+33 
+34     if (conn->actual_protocol_version == S2N_SSLv3) {
+35         length = S2N_SSL_FINISHED_LEN;
+36     }
+37 
+38     uint8_t *their_version = s2n_stuffer_raw_read(&conn->handshake\&.io, length);
+39     notnull_check(their_version);
+40 
+41     if (!s2n_constant_time_equals(our_version, their_version, length)) {
+42         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+43     }
+44 
+45     return 0;
+46 }
+.fi
+.SS "int s2n_handshake_write_header (struct \fBs2n_connection\fP * conn, uint8_t message_type)"
+
+.PP
+Definition at line 27 of file s2n_handshake\&.c\&.
+.PP
+.nf
+28 {
+29     if (s2n_stuffer_data_available(&conn->handshake\&.io)) {
+30         S2N_ERROR(S2N_ERR_HANDSHAKE_STATE);
+31     }
+32 
+33     /* Write the message header */
+34     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, message_type));
+35 
+36     /* Leave the length blank for now */
+37     uint16_t length = 0;
+38     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, length));
+39 
+40     return 0;
+41 }
+.fi
+.SS "int s2n_handshake_finish_header (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 43 of file s2n_handshake\&.c\&.
+.PP
+.nf
+44 {
+45     uint16_t length = s2n_stuffer_data_available(&conn->handshake\&.io);
+46     if (length < TLS_HANDSHAKE_HEADER_LENGTH) {
+47         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+48     }
+49 
+50     uint16_t payload = length - TLS_HANDSHAKE_HEADER_LENGTH;
+51 
+52     /* Write the message header */
+53     GUARD(s2n_stuffer_rewrite(&conn->handshake\&.io));
+54     GUARD(s2n_stuffer_skip_write(&conn->handshake\&.io, 1));
+55     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, payload));
+56     GUARD(s2n_stuffer_skip_write(&conn->handshake\&.io, payload));
+57 
+58     return 0;
+59 }
+.fi
+.SS "int s2n_handshake_parse_header (struct \fBs2n_connection\fP * conn, uint8_t * message_type, uint32_t * length)"
+
+.PP
+Definition at line 61 of file s2n_handshake\&.c\&.
+.PP
+.nf
+62 {
+63     if (s2n_stuffer_data_available(&conn->handshake\&.io) < TLS_HANDSHAKE_HEADER_LENGTH) {
+64         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+65     }
+66 
+67     /* read the message header */
+68     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, message_type));
+69     GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, length));
+70 
+71     return 0;
+72 }
+.fi
+.SS "int s2n_read_full_record (struct \fBs2n_connection\fP * conn, uint8_t * record_type, int * isSSLv2)"
+
+.PP
+Definition at line 39 of file s2n_recv\&.c\&.
+.PP
+.nf
+40 {
+41     int r;
+42 
+43     *isSSLv2 = 0;
+44 
+45     /* If the record has already been decrypted, then leave it alone */
+46     if (conn->in_status == PLAINTEXT) {
+47         /* Only application data packets count as plaintext */
+48         *record_type = TLS_APPLICATION_DATA;
+49         return 0;
+50     }
+51 
+52     /* Read the record until we at least have a header */
+53     while (s2n_stuffer_data_available(&conn->header_in) < S2N_TLS_RECORD_HEADER_LENGTH) {
+54         r = s2n_stuffer_recv_from_fd(&conn->header_in, conn->readfd, S2N_TLS_RECORD_HEADER_LENGTH - s2n_stuffer_data_available(&conn->header_in));
+55         if (r == 0) {
+56             conn->closed = 1;
+57             S2N_ERROR(S2N_ERR_CLOSED);
+58         } else if (r < 0) {
+59             if (errno == EWOULDBLOCK) {
+60                 S2N_ERROR(S2N_ERR_BLOCKED);
+61             }
+62             S2N_ERROR(S2N_ERR_IO);
+63         }
+64         conn->wire_bytes_in += r;
+65     }
+66     uint16_t fragment_length;
+67 
+68     /* If the first bit is set then this is an SSLv2 record */
+69     if (conn->header_in\&.blob\&.data[0] & 0x80) {
+70         conn->header_in\&.blob\&.data[0] &= 0x7f;
+71         *isSSLv2 = 1;
+72 
+73         if (s2n_sslv2_record_header_parse(conn, record_type, &conn->client_protocol_version, &fragment_length) < 0) {
+74             GUARD(s2n_connection_kill(conn));
+75             return -1;
+76         }
+77     } else {
+78         if (s2n_record_header_parse(conn, record_type, &fragment_length) < 0) {
+79             GUARD(s2n_connection_kill(conn));
+80             return -1;
+81         }
+82     }
+83 
+84     /* Read enough to have the whole record */
+85     while (s2n_stuffer_data_available(&conn->in) < fragment_length) {
+86         r = s2n_stuffer_recv_from_fd(&conn->in, conn->readfd, fragment_length - s2n_stuffer_data_available(&conn->in));
+87         if (r == 0) {
+88             conn->closed = 1;
+89             S2N_ERROR(S2N_ERR_CLOSED);
+90         } else if (r < 0) {
+91             if (errno == EWOULDBLOCK) {
+92                 S2N_ERROR(S2N_ERR_BLOCKED);
+93             }
+94             S2N_ERROR(S2N_ERR_IO);
+95         }
+96         conn->wire_bytes_in += r;
+97     }
+98 
+99     if (*isSSLv2) {
+100         return 0;
+101     }
+102 
+103     /* Decrypt and parse the record */
+104     if (s2n_record_parse(conn) < 0) {
+105         GUARD(s2n_connection_kill(conn));
+106 
+107         return -1;
+108     }
+109 
+110     return 0;
+111 }
+.fi
+.SS "int s2n_recv_close_notify (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 198 of file s2n_recv\&.c\&.
+.PP
+.nf
+199 {
+200     uint8_t record_type;
+201     int isSSLv2;
+202     *blocked = S2N_BLOCKED_ON_READ;
+203 
+204     GUARD(s2n_read_full_record(conn, &record_type, &isSSLv2));
+205 
+206     if (isSSLv2) {
+207         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+208     }
+209 
+210     if (record_type != TLS_ALERT) {
+211         S2N_ERROR(S2N_ERR_SHUTDOWN_RECORD_TYPE);
+212     }
+213 
+214     /* Only succeds for an incoming close_notify alert */
+215     GUARD(s2n_process_alert_fragment(conn));
+216 
+217     *blocked = S2N_NOT_BLOCKED;
+218     return 0;
+219 }
+.fi
+.SS "int s2n_client_extensions_send (struct \fBs2n_connection\fP * conn, struct \fBs2n_stuffer\fP * out)"
+
+.PP
+Definition at line 37 of file s2n_client_extensions\&.c\&.
+.PP
+.nf
+38 {
+39     uint16_t total_size = 0;
+40 
+41     /* Signature algorithms */
+42     if (conn->actual_protocol_version == S2N_TLS12) {
+43         total_size += 8;
+44     }
+45 
+46     uint16_t application_protocols_len = conn->config->application_protocols\&.size;
+47     uint16_t server_name_len = strlen(conn->server_name);
+48 
+49     if (server_name_len) {
+50         total_size += 9 + server_name_len;
+51     }
+52     if (application_protocols_len) {
+53         total_size += 6 + application_protocols_len;
+54     }
+55     if (conn->config->status_request_type != S2N_STATUS_REQUEST_NONE) {
+56         total_size += 9;
+57     }
+58 
+59     /* Write ECC extensions: Supported Curves and Supported Point Formats */
+60     int ec_curves_count = sizeof(s2n_ecc_supported_curves) / sizeof(s2n_ecc_supported_curves[0]);
+61     total_size += 12 + ec_curves_count * 2;
+62 
+63     GUARD(s2n_stuffer_write_uint16(out, total_size));
+64 
+65     if (conn->actual_protocol_version == S2N_TLS12) {
+66         /* The extension header */
+67         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_SIGNATURE_ALGORITHMS));
+68         GUARD(s2n_stuffer_write_uint16(out, 4));
+69 
+70         /* Just one signature/hash pair, so 2 bytes */
+71         GUARD(s2n_stuffer_write_uint16(out, 2));
+72         GUARD(s2n_stuffer_write_uint8(out, TLS_HASH_ALGORITHM_SHA1));
+73         GUARD(s2n_stuffer_write_uint8(out, TLS_SIGNATURE_ALGORITHM_RSA));
+74     }
+75 
+76     if (server_name_len) {
+77         /* Write the server name */
+78         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_SERVER_NAME));
+79         GUARD(s2n_stuffer_write_uint16(out, server_name_len + 5));
+80 
+81         /* Size of all of the server names */
+82         GUARD(s2n_stuffer_write_uint16(out, server_name_len + 3));
+83 
+84         /* Name type - host name, RFC3546 */
+85         GUARD(s2n_stuffer_write_uint8(out, 0));
+86 
+87         struct s2n_blob server_name;
+88         server_name\&.data = (uint8_t *) conn->server_name;
+89         server_name\&.size = server_name_len;
+90         GUARD(s2n_stuffer_write_uint16(out, server_name_len));
+91         GUARD(s2n_stuffer_write(out, &server_name));
+92     }
+93 
+94     /* Write ALPN extension */
+95     if (application_protocols_len) {
+96         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_ALPN));
+97         GUARD(s2n_stuffer_write_uint16(out, application_protocols_len + 2));
+98         GUARD(s2n_stuffer_write_uint16(out, application_protocols_len));
+99         GUARD(s2n_stuffer_write(out, &conn->config->application_protocols));
+100     }
+101 
+102     if (conn->config->status_request_type != S2N_STATUS_REQUEST_NONE) {
+103         /* We only support OCSP */
+104         eq_check(conn->config->status_request_type, S2N_STATUS_REQUEST_OCSP);
+105         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_STATUS_REQUEST));
+106         GUARD(s2n_stuffer_write_uint16(out, 5));
+107         GUARD(s2n_stuffer_write_uint8(out, (uint8_t) conn->config->status_request_type));
+108         GUARD(s2n_stuffer_write_uint16(out, 0));
+109         GUARD(s2n_stuffer_write_uint16(out, 0));
+110     }
+111 
+112     /*
+113      * RFC 4492: Clients SHOULD send both the Supported Elliptic Curves Extension
+114      * and the Supported Point Formats Extension\&.
+115      */
+116     {
+117         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_ELLIPTIC_CURVES));
+118         GUARD(s2n_stuffer_write_uint16(out, 2 + ec_curves_count * 2));
+119         /* Curve list len */
+120         GUARD(s2n_stuffer_write_uint16(out, ec_curves_count * 2));
+121         /* Curve list */
+122         for (int i = 0; i < ec_curves_count; i++) {
+123             GUARD(s2n_stuffer_write_uint16(out, s2n_ecc_supported_curves[i]\&.iana_id));
+124         }
+125 
+126         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_EC_POINT_FORMATS));
+127         GUARD(s2n_stuffer_write_uint16(out, 2));
+128         /* Point format list len */
+129         GUARD(s2n_stuffer_write_uint8(out, 1));
+130         /* Only allow uncompressed format */
+131         GUARD(s2n_stuffer_write_uint8(out, 0));
+132     }
+133 
+134     return 0;
+135 }
+.fi
+.SS "int s2n_client_extensions_recv (struct \fBs2n_connection\fP * conn, struct \fBs2n_blob\fP * extensions)"
+
+.PP
+Definition at line 137 of file s2n_client_extensions\&.c\&.
+.PP
+.nf
+138 {
+139     struct s2n_stuffer in;
+140 
+141     GUARD(s2n_stuffer_init(&in, extensions));
+142     GUARD(s2n_stuffer_write(&in, extensions));
+143 
+144     while (s2n_stuffer_data_available(&in)) {
+145         struct s2n_blob ext;
+146         uint16_t extension_type, extension_size;
+147         struct s2n_stuffer extension;
+148 
+149         GUARD(s2n_stuffer_read_uint16(&in, &extension_type));
+150         GUARD(s2n_stuffer_read_uint16(&in, &extension_size));
+151 
+152         ext\&.size = extension_size;
+153         lte_check(extension_size, s2n_stuffer_data_available(&in));
+154         ext\&.data = s2n_stuffer_raw_read(&in, ext\&.size);
+155         notnull_check(ext\&.data);
+156 
+157         GUARD(s2n_stuffer_init(&extension, &ext));
+158         GUARD(s2n_stuffer_write(&extension, &ext));
+159 
+160         switch (extension_type) {
+161         case TLS_EXTENSION_SERVER_NAME:
+162             GUARD(s2n_recv_client_server_name(conn, &extension));
+163             break;
+164         case TLS_EXTENSION_SIGNATURE_ALGORITHMS:
+165             GUARD(s2n_recv_client_signature_algorithms(conn, &extension));
+166             break;
+167         case TLS_EXTENSION_ALPN:
+168             GUARD(s2n_recv_client_alpn(conn, &extension));
+169             break;
+170         case TLS_EXTENSION_STATUS_REQUEST:
+171             GUARD(s2n_recv_client_status_request(conn, &extension));
+172             break;
+173         case TLS_EXTENSION_ELLIPTIC_CURVES:
+174             GUARD(s2n_recv_client_elliptic_curves(conn, &extension));
+175             break;
+176         case TLS_EXTENSION_EC_POINT_FORMATS:
+177             GUARD(s2n_recv_client_ec_point_formats(conn, &extension));
+178             break;
+179         case TLS_EXTENSION_RENEGOTIATION_INFO:
+180             GUARD(s2n_recv_client_renegotiation_info(conn, &extension));
+181             break;
+182         }
+183     }
+184 
+185     return 0;
+186 }
+.fi
+.SS "int s2n_server_extensions_send (struct \fBs2n_connection\fP * conn, struct \fBs2n_stuffer\fP * out)"
+
+.PP
+Definition at line 33 of file s2n_server_extensions\&.c\&.
+.PP
+.nf
+34 {
+35     uint16_t total_size = 0;
+36 
+37     uint8_t application_protocol_len = strlen(conn->application_protocol);
+38 
+39     if (application_protocol_len) {
+40         total_size += 7 + application_protocol_len;
+41     }
+42     if (s2n_server_can_send_ocsp(conn)) {
+43         total_size += 4;
+44     }
+45     if (conn->secure_renegotiation) {
+46         total_size += 5;
+47     }
+48 
+49     if (total_size == 0) {
+50         return 0;
+51     }
+52 
+53     GUARD(s2n_stuffer_write_uint16(out, total_size));
+54 
+55     /* Write the renegotiation_info extension */
+56     if (conn->secure_renegotiation) {
+57         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_RENEGOTIATION_INFO));
+58         /* renegotiation_info length */
+59         GUARD(s2n_stuffer_write_uint16(out, 1));
+60         /* renegotiated_connection length */
+61         GUARD(s2n_stuffer_write_uint8(out, 0));
+62     }
+63 
+64     /* Write ALPN extension */
+65     if (application_protocol_len) {
+66         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_ALPN));
+67         GUARD(s2n_stuffer_write_uint16(out, application_protocol_len + 3));
+68         GUARD(s2n_stuffer_write_uint16(out, application_protocol_len + 1));
+69         GUARD(s2n_stuffer_write_uint8(out, application_protocol_len));
+70         GUARD(s2n_stuffer_write_bytes(out, (uint8_t *) conn->application_protocol, application_protocol_len));
+71     }
+72 
+73     /* Write OCSP extension */
+74     if (s2n_server_can_send_ocsp(conn)) {
+75         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_STATUS_REQUEST));
+76         GUARD(s2n_stuffer_write_uint16(out, 0));
+77     }
+78 
+79     return 0;
+80 }
+.fi
+.SS "int s2n_server_extensions_recv (struct \fBs2n_connection\fP * conn, struct \fBs2n_blob\fP * extensions)"
+
+.PP
+Definition at line 82 of file s2n_server_extensions\&.c\&.
+.PP
+.nf
+83 {
+84     struct s2n_stuffer in;
+85 
+86     GUARD(s2n_stuffer_init(&in, extensions));
+87     GUARD(s2n_stuffer_write(&in, extensions));
+88 
+89     while (s2n_stuffer_data_available(&in)) {
+90         struct s2n_blob ext;
+91         uint16_t extension_type, extension_size;
+92         struct s2n_stuffer extension;
+93 
+94         GUARD(s2n_stuffer_read_uint16(&in, &extension_type));
+95         GUARD(s2n_stuffer_read_uint16(&in, &extension_size));
+96 
+97         ext\&.size = extension_size;
+98         ext\&.data = s2n_stuffer_raw_read(&in, ext\&.size);
+99         notnull_check(ext\&.data);
+100 
+101         GUARD(s2n_stuffer_init(&extension, &ext));
+102         GUARD(s2n_stuffer_write(&extension, &ext));
+103 
+104         switch (extension_type) {
+105         case TLS_EXTENSION_ALPN:
+106             GUARD(s2n_recv_server_alpn(conn, &extension));
+107             break;
+108         case TLS_EXTENSION_STATUS_REQUEST:
+109             GUARD(s2n_recv_server_status_request(conn, &extension));
+110             break;
+111         }
+112     }
+113 
+114     return 0;
+115 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "uint8_t s2n_highest_protocol_version"
+
+.PP
+Definition at line 21 of file s2n_tls\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

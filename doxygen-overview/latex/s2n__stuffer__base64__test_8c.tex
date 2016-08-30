@@ -1,0 +1,114 @@
+\hypertarget{s2n__stuffer__base64__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+base64\+\_\+test.c File Reference}
+\label{s2n__stuffer__base64__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__base64__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__base64__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__base64__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__stuffer__base64__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 23 of file s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+24 \{
+25     \textcolor{keywordtype}{char} hello\_world[] = \textcolor{stringliteral}{"Hello world!"};
+26     uint8\_t hello\_world\_base64[] = \textcolor{stringliteral}{"SGVsbG8gd29ybGQhAA=="};
+27     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} stuffer, known\_data, scratch, entropy, mirror;
+28     uint8\_t pad[50];
+29     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} r = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = pad, .size = \textcolor{keyword}{sizeof}(pad)\};
+30 
+31     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+32     
+33 
+34     \textcolor{comment}{/* Create a 100 byte stuffer */}
+35     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&stuffer, 1000));
+36 
+37     \textcolor{comment}{/* Write our known data */}
+38     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a60fa5894187dfe382077cce73964cd35}{s2n\_stuffer\_alloc\_ro\_from\_string}(&
+      known\_data, hello\_world));
+39     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_acdcd3666a23eb79c0ba2ef1ca7c0dd14}{s2n\_stuffer\_write\_base64}(&stuffer, &known\_data));
+40     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&known\_data));
+41 
+42     \textcolor{comment}{/* Check it against the known output */}
+43     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(stuffer.blob.data, hello\_world\_base64, strlen((\textcolor{keywordtype}{char} *)hello\_world)), 0)
+      ;
+44 
+45     \textcolor{comment}{/* Check that we can read it again */}
+46     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&scratch, 50));
+47     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a705de7fd84edef31f728b0c31e17f12a}{s2n\_stuffer\_read\_base64}(&stuffer, &scratch));
+48     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(memcmp(scratch.blob.data, hello\_world, strlen(hello\_world)));
+49 
+50     \textcolor{comment}{/* Now try with some randomly generated data. Make sure we try each boundary case,}
+51 \textcolor{comment}{     * where size % 3 == 0, 1, 2}
+52 \textcolor{comment}{     */}
+53     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&entropy, 50));
+54     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&mirror, 50));
+55 
+56     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = entropy.blob.size; i > 0; i--) \{
+57         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+58         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&entropy));
+59         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&mirror));
+60 
+61         \textcolor{comment}{/* Get i bytes of random data */}
+62         r.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = i;
+63         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\_get\_urandom\_data}(&r));
+64         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&entropy, pad, i));
+65 
+66         \textcolor{comment}{/* Write i bytes  it, base64 encoded */}
+67         \textcolor{comment}{/* Read it back, decoded */}
+68         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_acdcd3666a23eb79c0ba2ef1ca7c0dd14}{s2n\_stuffer\_write\_base64}(&stuffer, &entropy));
+69 
+70         \textcolor{comment}{/* Should be (i / 3) * 4 + a carry  */}
+71         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}((i / 3) * 4 + ((i % 3) ? 4 : 0), 
+      \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&stuffer));
+72 
+73         \textcolor{comment}{/* Read it back, decoded */}
+74         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a705de7fd84edef31f728b0c31e17f12a}{s2n\_stuffer\_read\_base64}(&stuffer, &mirror));
+75 
+76         \textcolor{comment}{/* Verify it's the same */}
+77         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(mirror.blob.data, entropy.blob.data, i), 0);
+78     \}
+79 
+80     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&stuffer));
+81     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&scratch));
+82     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&mirror));
+83     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&entropy));
+84 
+85     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+86 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__base64__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

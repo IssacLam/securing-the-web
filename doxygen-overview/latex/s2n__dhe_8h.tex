@@ -1,0 +1,573 @@
+\hypertarget{s2n__dhe_8h}{}\section{s2n-\/master/crypto/s2n\+\_\+dhe.h File Reference}
+\label{s2n__dhe_8h}\index{s2n-\/master/crypto/s2n\+\_\+dhe.\+h@{s2n-\/master/crypto/s2n\+\_\+dhe.\+h}}
+{\ttfamily \#include $<$openssl/dh.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+dhe.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__dhe_8h_a2a588f9f6c78190225878f36cfb98ae8}{s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$dh\+\_\+params, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$pkcs3)
+\item 
+int \hyperlink{s2n__dhe_8h_acb70d409d79a64d53764a24de78de3c8}{s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$dh\+\_\+params, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$\hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p}, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$g, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$ys)
+\item 
+int \hyperlink{s2n__dhe_8h_a847b2d0a73d4e014a41c50b9780b8245}{s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$server\+\_\+dh\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$out, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$output)
+\item 
+int \hyperlink{s2n__dhe_8h_a7ea5b026f3ee78ae37fe194a8e27a203}{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$server\+\_\+dh\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$Yc\+\_\+in, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$shared\+\_\+key)
+\item 
+int \hyperlink{s2n__dhe_8h_a5883f9a420e0b7c297b061ea0ed108e8}{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$server\+\_\+dh\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$Yc\+\_\+out, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$shared\+\_\+key)
+\item 
+int \hyperlink{s2n__dhe_8h_a3de1805a7078d382e8f9c8fd776b75b0}{s2n\+\_\+dh\+\_\+params\+\_\+copy} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$from, struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$to)
+\item 
+int \hyperlink{s2n__dhe_8h_ab505c6e7917e92a2b3c2cb33246b919b}{s2n\+\_\+dh\+\_\+params\+\_\+check} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$params)
+\item 
+int \hyperlink{s2n__dhe_8h_a52481b6c08da550c51db7be50445c54a}{s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$dh\+\_\+params)
+\item 
+int \hyperlink{s2n__dhe_8h_ad31b1e9b035a2f883bd9e8338e2e61de}{s2n\+\_\+dh\+\_\+params\+\_\+free} (struct \hyperlink{structs2n__dh__params}{s2n\+\_\+dh\+\_\+params} $\ast$dh\+\_\+params)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params@{s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params}}
+\index{s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params@{s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params(struct s2n\+\_\+dh\+\_\+params $\ast$dh\+\_\+params, struct s2n\+\_\+blob $\ast$pkcs3)}{s2n_pkcs3_to_dh_params(struct s2n_dh_params *dh_params, struct s2n_blob *pkcs3)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+pkcs3\+\_\+to\+\_\+dh\+\_\+params (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{dh\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{pkcs3}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_a2a588f9f6c78190225878f36cfb98ae8}{}\label{s2n__dhe_8h_a2a588f9f6c78190225878f36cfb98ae8}
+
+
+Definition at line 65 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+66 \{
+67     uint8\_t *original\_ptr = pkcs3->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+68     dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh} = \hyperlink{crypto_2dh_2dh_8h_a24ea03dc870df9a1292e23c86ae31f25}{d2i\_DHparams}(NULL, (\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} **)(\textcolor{keywordtype}{void} *)&pkcs3->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, pkcs3->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+69     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_check\_p\_g\_dh\_params(dh\_params));
+70     \textcolor{keywordflow}{if} (pkcs3->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} - original\_ptr != pkcs3->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+71         \hyperlink{crypto_2dh_2dh_8h_a1f15312ca21e290ee714e86578820c35}{DH\_free}(dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh});
+72         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374af89c8a897fc5730787cd111eadd1ace8}{S2N\_ERR\_INVALID\_PKCS3});
+73     \}
+74     pkcs3->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = original\_ptr;
+75 
+76     \textcolor{comment}{/* Require at least 2048 bits for the DH size */}
+77     \textcolor{keywordflow}{if} (\hyperlink{crypto_2dh_2dh_8h_a9e1fdd62e3bfe4b671dbfc363f0e6297}{DH\_size}(dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}) < (2048 / 8)) \{
+78         \hyperlink{crypto_2dh_2dh_8h_a1f15312ca21e290ee714e86578820c35}{DH\_free}(dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh});
+79         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374acd8104497ab7863359d073815cfd9f96}{S2N\_ERR\_DH\_TOO\_SMALL});
+80     \}
+81 
+82     \textcolor{comment}{/* Check the generator and prime */}
+83     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_ab505c6e7917e92a2b3c2cb33246b919b}{s2n\_dh\_params\_check}(dh\_params));
+84 
+85     \textcolor{keywordflow}{return} 0;
+86 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a2a588f9f6c78190225878f36cfb98ae8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a2a588f9f6c78190225878f36cfb98ae8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params@{s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params}}
+\index{s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params@{s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params(struct s2n\+\_\+dh\+\_\+params $\ast$dh\+\_\+params, struct s2n\+\_\+blob $\ast$p, struct s2n\+\_\+blob $\ast$g, struct s2n\+\_\+blob $\ast$ys)}{s2n_dh_p_g_Ys_to_dh_params(struct s2n_dh_params *dh_params, struct s2n_blob *p, struct s2n_blob *g, struct s2n_blob *ys)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+p\+\_\+g\+\_\+\+Ys\+\_\+to\+\_\+dh\+\_\+params (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{dh\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{p, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{g, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{ys}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_acb70d409d79a64d53764a24de78de3c8}{}\label{s2n__dhe_8h_acb70d409d79a64d53764a24de78de3c8}
+
+
+Definition at line 88 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+89 \{
+90     server\_dh\_params->dh = \hyperlink{crypto_2dh_2dh_8h_a76c6e12bd1f0b9977d80fee83b086031}{DH\_new}();
+91     \textcolor{keywordflow}{if} (server\_dh\_params->dh == NULL) \{
+92         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4071d2b17d5b3c8525982aa983ddd2a2}{S2N\_ERR\_DH\_PARAMS\_CREATE});
+93     \}
+94 
+95     server\_dh\_params->dh->p = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}((\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)p->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, p->
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, NULL);
+96     server\_dh\_params->dh->g = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}((\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)g->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, g->
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, NULL);
+97     server\_dh\_params->dh->pub\_key = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}((\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)Ys->data, Ys->size, NULL);
+98 
+99     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_abdd990a3dbfa9733ba67c06fa8c1a056}{s2n\_check\_all\_dh\_params}(server\_dh\_params));
+100 
+101     \textcolor{keywordflow}{return} 0;
+102 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_acb70d409d79a64d53764a24de78de3c8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{s2n__dhe_8h_acb70d409d79a64d53764a24de78de3c8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys@{s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys}}
+\index{s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys@{s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys(struct s2n\+\_\+dh\+\_\+params $\ast$server\+\_\+dh\+\_\+params, struct s2n\+\_\+stuffer $\ast$out, struct s2n\+\_\+blob $\ast$output)}{s2n_dh_params_to_p_g_Ys(struct s2n_dh_params *server_dh_params, struct s2n_stuffer *out, struct s2n_blob *output)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+params\+\_\+to\+\_\+p\+\_\+g\+\_\+\+Ys (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{server\+\_\+dh\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{out, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{output}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_a847b2d0a73d4e014a41c50b9780b8245}{}\label{s2n__dhe_8h_a847b2d0a73d4e014a41c50b9780b8245}
+
+
+Definition at line 104 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+105 \{
+106     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_abdd990a3dbfa9733ba67c06fa8c1a056}{s2n\_check\_all\_dh\_params}(server\_dh\_params));
+107 
+108     uint16\_t p\_size = \hyperlink{crypto_2bn_2bn_8h_a6f1f92317e94bcae2e83ae518824c01d}{BN\_num\_bytes}(server\_dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_ab39230b0a53cb4326ae76467247959c3}{p});
+109     uint16\_t g\_size = \hyperlink{crypto_2bn_2bn_8h_a6f1f92317e94bcae2e83ae518824c01d}{BN\_num\_bytes}(server\_dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_a13fc89a0daf188f7de9a2011bc9b051f}{g});
+110     uint16\_t Ys\_size = \hyperlink{crypto_2bn_2bn_8h_a6f1f92317e94bcae2e83ae518824c01d}{BN\_num\_bytes}(server\_dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_a7090145c3a15799f21c377097e2a1fd4}{pub\_key});
+111     uint8\_t *\hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p};
+112     uint8\_t *g;
+113     uint8\_t *Ys;
+114 
+115     output->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(out, 0);
+116     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(output->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data});
+117 
+118     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(out, p\_size));
+119     p = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(out, p\_size);
+120     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(p);
+121     \textcolor{keywordflow}{if} (\hyperlink{crypto_2bn_2bn_8h_a72e393df20fc0ec8e761204fe5f28c17}{BN\_bn2bin}(server\_dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_ab39230b0a53cb4326ae76467247959c3}{p}, p) != p\_size) \{
+122         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a90c39e8292b678318634f900d6672008}{S2N\_ERR\_DH\_SERIAZING});
+123     \}
+124 
+125     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(out, g\_size));
+126     g = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(out, g\_size);
+127     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(g);
+128     \textcolor{keywordflow}{if} (\hyperlink{crypto_2bn_2bn_8h_a72e393df20fc0ec8e761204fe5f28c17}{BN\_bn2bin}(server\_dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_a13fc89a0daf188f7de9a2011bc9b051f}{g}, g) != g\_size) \{
+129         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a90c39e8292b678318634f900d6672008}{S2N\_ERR\_DH\_SERIAZING});
+130     \}
+131 
+132     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(out, Ys\_size));
+133     Ys = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(out, Ys\_size);
+134     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(Ys);
+135     \textcolor{keywordflow}{if} (\hyperlink{crypto_2bn_2bn_8h_a72e393df20fc0ec8e761204fe5f28c17}{BN\_bn2bin}(server\_dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_a7090145c3a15799f21c377097e2a1fd4}{pub\_key}, Ys) != Ys\_size) \{
+136         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a90c39e8292b678318634f900d6672008}{S2N\_ERR\_DH\_SERIAZING});
+137     \}
+138 
+139     output->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = p\_size + 2 + g\_size + 2 + Ys\_size + 2;
+140 
+141     \textcolor{keywordflow}{return} 0;
+142 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a847b2d0a73d4e014a41c50b9780b8245_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a847b2d0a73d4e014a41c50b9780b8245_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server@{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server}}
+\index{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server@{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server(struct s2n\+\_\+dh\+\_\+params $\ast$server\+\_\+dh\+\_\+params, struct s2n\+\_\+stuffer $\ast$\+Yc\+\_\+in, struct s2n\+\_\+blob $\ast$shared\+\_\+key)}{s2n_dh_compute_shared_secret_as_server(struct s2n_dh_params *server_dh_params, struct s2n_stuffer *Yc_in, struct s2n_blob *shared_key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{server\+\_\+dh\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{Yc\+\_\+in, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{shared\+\_\+key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_a7ea5b026f3ee78ae37fe194a8e27a203}{}\label{s2n__dhe_8h_a7ea5b026f3ee78ae37fe194a8e27a203}
+
+
+Definition at line 185 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+186 \{
+187     uint16\_t Yc\_length;
+188     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} Yc;
+189     \textcolor{keywordtype}{int} shared\_key\_size;
+190     \hyperlink{structbignum__st}{BIGNUM} *pub\_key;
+191 
+192     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_abdd990a3dbfa9733ba67c06fa8c1a056}{s2n\_check\_all\_dh\_params}(server\_dh\_params));
+193 
+194     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(Yc\_in, &Yc\_length));
+195     Yc.size = Yc\_length;
+196     Yc.data = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(Yc\_in, Yc.size);
+197     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(Yc.data);
+198 
+199     pub\_key = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}((\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)Yc.data, Yc.size, NULL);
+200     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(pub\_key);
+201     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f}{s2n\_alloc}(shared\_key, \hyperlink{crypto_2dh_2dh_8h_a9e1fdd62e3bfe4b671dbfc363f0e6297}{DH\_size}(server\_dh\_params->
+      \hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh})));
+202 
+203     shared\_key\_size = \hyperlink{crypto_2dh_2dh_8h_ac47f31f61d60571c0987c97a268e4865}{DH\_compute\_key}(shared\_key->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, pub\_key, server\_dh\_params->
+      \hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh});
+204     \textcolor{keywordflow}{if} (shared\_key\_size <= 0) \{
+205         \hyperlink{crypto_2bn_2bn_8h_a2d660f4ff6015d33035484c4e9f09e88}{BN\_free}(pub\_key);
+206         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374abfabc3263311a9f4ddb11da41d1a3aaa}{S2N\_ERR\_DH\_SHARED\_SECRET});
+207     \}
+208 
+209     shared\_key->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = shared\_key\_size;
+210 
+211     \hyperlink{crypto_2bn_2bn_8h_a2d660f4ff6015d33035484c4e9f09e88}{BN\_free}(pub\_key);
+212 
+213     \textcolor{keywordflow}{return} 0;
+214 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a7ea5b026f3ee78ae37fe194a8e27a203_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client@{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client}}
+\index{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client@{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client(struct s2n\+\_\+dh\+\_\+params $\ast$server\+\_\+dh\+\_\+params, struct s2n\+\_\+stuffer $\ast$\+Yc\+\_\+out, struct s2n\+\_\+blob $\ast$shared\+\_\+key)}{s2n_dh_compute_shared_secret_as_client(struct s2n_dh_params *server_dh_params, struct s2n_stuffer *Yc_out, struct s2n_blob *shared_key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{server\+\_\+dh\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{Yc\+\_\+out, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{shared\+\_\+key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_a5883f9a420e0b7c297b061ea0ed108e8}{}\label{s2n__dhe_8h_a5883f9a420e0b7c297b061ea0ed108e8}
+
+
+Definition at line 144 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+145 \{
+146     \textcolor{keyword}{struct }\hyperlink{structs2n__dh__params}{s2n\_dh\_params} client\_params;
+147     uint8\_t *public\_key;
+148     uint16\_t public\_key\_size;
+149     \textcolor{keywordtype}{int} shared\_key\_size;
+150 
+151     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_ab505c6e7917e92a2b3c2cb33246b919b}{s2n\_dh\_params\_check}(server\_dh\_params));
+152     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_a3de1805a7078d382e8f9c8fd776b75b0}{s2n\_dh\_params\_copy}(server\_dh\_params, &client\_params));
+153     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_a52481b6c08da550c51db7be50445c54a}{s2n\_dh\_generate\_ephemeral\_key}(&client\_params));
+154     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f}{s2n\_alloc}(shared\_key, \hyperlink{crypto_2dh_2dh_8h_a9e1fdd62e3bfe4b671dbfc363f0e6297}{DH\_size}(server\_dh\_params->
+      \hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh})));
+155 
+156     public\_key\_size = \hyperlink{crypto_2bn_2bn_8h_a6f1f92317e94bcae2e83ae518824c01d}{BN\_num\_bytes}(client\_params.dh->pub\_key);
+157     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(Yc\_out, public\_key\_size));
+158     public\_key = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(Yc\_out, public\_key\_size);
+159     \textcolor{keywordflow}{if} (public\_key == NULL) \{
+160         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__memory__leak__negative__test__overrides_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(shared\_key));
+161         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_ad31b1e9b035a2f883bd9e8338e2e61de}{s2n\_dh\_params\_free}(&client\_params));
+162         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374aec7baf57d106bd52b114ec4c3fbf0568}{S2N\_ERR\_DH\_WRITING\_PUBLIC\_KEY});
+163     \}
+164 
+165     \textcolor{keywordflow}{if} (\hyperlink{crypto_2bn_2bn_8h_a72e393df20fc0ec8e761204fe5f28c17}{BN\_bn2bin}(client\_params.dh->pub\_key, public\_key) != public\_key\_size) \{
+166         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__memory__leak__negative__test__overrides_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(shared\_key));
+167         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_ad31b1e9b035a2f883bd9e8338e2e61de}{s2n\_dh\_params\_free}(&client\_params));
+168         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374adec124ecb79d810d583a31e0fc33c9a6}{S2N\_ERR\_DH\_COPYING\_PUBLIC\_KEY});
+169     \}
+170 
+171     shared\_key\_size = \hyperlink{crypto_2dh_2dh_8h_ac47f31f61d60571c0987c97a268e4865}{DH\_compute\_key}(shared\_key->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, server\_dh\_params->
+      \hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}->\hyperlink{structdh__st_a7090145c3a15799f21c377097e2a1fd4}{pub\_key}, client\_params.dh);
+172     \textcolor{keywordflow}{if} (shared\_key\_size < 0) \{
+173         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__memory__leak__negative__test__overrides_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(shared\_key));
+174         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_ad31b1e9b035a2f883bd9e8338e2e61de}{s2n\_dh\_params\_free}(&client\_params));
+175         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374abfabc3263311a9f4ddb11da41d1a3aaa}{S2N\_ERR\_DH\_SHARED\_SECRET});
+176     \}
+177 
+178     shared\_key->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = shared\_key\_size;
+179 
+180     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__dhe_8c_ad31b1e9b035a2f883bd9e8338e2e61de}{s2n\_dh\_params\_free}(&client\_params));
+181 
+182     \textcolor{keywordflow}{return} 0;
+183 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a5883f9a420e0b7c297b061ea0ed108e8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a5883f9a420e0b7c297b061ea0ed108e8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+params\+\_\+copy@{s2n\+\_\+dh\+\_\+params\+\_\+copy}}
+\index{s2n\+\_\+dh\+\_\+params\+\_\+copy@{s2n\+\_\+dh\+\_\+params\+\_\+copy}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+params\+\_\+copy(struct s2n\+\_\+dh\+\_\+params $\ast$from, struct s2n\+\_\+dh\+\_\+params $\ast$to)}{s2n_dh_params_copy(struct s2n_dh_params *from, struct s2n_dh_params *to)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+params\+\_\+copy (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{from, }
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{to}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_a3de1805a7078d382e8f9c8fd776b75b0}{}\label{s2n__dhe_8h_a3de1805a7078d382e8f9c8fd776b75b0}
+
+
+Definition at line 231 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+232 \{
+233     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_check\_p\_g\_dh\_params(from));
+234 
+235     to->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh} = \hyperlink{crypto_2dh_2dh_8h_ab71b4cb56c0ad4c6bbf3606aab6dd175}{DHparams\_dup}(from->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh});
+236     \textcolor{keywordflow}{if} (to->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh} == NULL) \{
+237         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ace9a340f09f59dab372078333649ad2f}{S2N\_ERR\_DH\_COPYING\_PARAMETERS});
+238     \}
+239 
+240     \textcolor{keywordflow}{return} 0;
+241 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{s2n__dhe_8h_a3de1805a7078d382e8f9c8fd776b75b0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a3de1805a7078d382e8f9c8fd776b75b0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+params\+\_\+check@{s2n\+\_\+dh\+\_\+params\+\_\+check}}
+\index{s2n\+\_\+dh\+\_\+params\+\_\+check@{s2n\+\_\+dh\+\_\+params\+\_\+check}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+params\+\_\+check(struct s2n\+\_\+dh\+\_\+params $\ast$params)}{s2n_dh_params_check(struct s2n_dh_params *params)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+params\+\_\+check (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_ab505c6e7917e92a2b3c2cb33246b919b}{}\label{s2n__dhe_8h_ab505c6e7917e92a2b3c2cb33246b919b}
+
+
+Definition at line 216 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+217 \{
+218     \textcolor{keywordtype}{int} codes = 0;
+219 
+220     \textcolor{keywordflow}{if} (\hyperlink{crypto_2dh_2dh_8h_ae37f7b9808959007f12b420a836a650e}{DH\_check}(params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}, &codes) == 0) \{
+221         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ac3ef5bd668265a693fc8ca3ad5ef5ed8}{S2N\_ERR\_DH\_PARAMETER\_CHECK});
+222     \}
+223 
+224     \textcolor{keywordflow}{if} (codes != 0) \{
+225         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ac3ef5bd668265a693fc8ca3ad5ef5ed8}{S2N\_ERR\_DH\_PARAMETER\_CHECK});
+226     \}
+227 
+228     \textcolor{keywordflow}{return} 0;
+229 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{s2n__dhe_8h_ab505c6e7917e92a2b3c2cb33246b919b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_ab505c6e7917e92a2b3c2cb33246b919b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key@{s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key}}
+\index{s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key@{s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key(struct s2n\+\_\+dh\+\_\+params $\ast$dh\+\_\+params)}{s2n_dh_generate_ephemeral_key(struct s2n_dh_params *dh_params)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+generate\+\_\+ephemeral\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{dh\+\_\+params}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_a52481b6c08da550c51db7be50445c54a}{}\label{s2n__dhe_8h_a52481b6c08da550c51db7be50445c54a}
+
+
+Definition at line 243 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+244 \{
+245     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_check\_p\_g\_dh\_params(dh\_params));
+246 
+247     \textcolor{keywordflow}{if} (\hyperlink{crypto_2dh_2dh_8h_ab90ec6b9e64f62c05754731c0c13ea01}{DH\_generate\_key}(dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh}) == 0) \{
+248         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a8d181b1ef77d0c168a4b43b49f15a3c0}{S2N\_ERR\_DH\_GENERATING\_PARAMETERS});
+249     \}
+250 
+251     \textcolor{keywordflow}{return} 0;
+252 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a52481b6c08da550c51db7be50445c54a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_a52481b6c08da550c51db7be50445c54a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}!s2n\+\_\+dh\+\_\+params\+\_\+free@{s2n\+\_\+dh\+\_\+params\+\_\+free}}
+\index{s2n\+\_\+dh\+\_\+params\+\_\+free@{s2n\+\_\+dh\+\_\+params\+\_\+free}!s2n\+\_\+dhe.\+h@{s2n\+\_\+dhe.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dh\+\_\+params\+\_\+free(struct s2n\+\_\+dh\+\_\+params $\ast$dh\+\_\+params)}{s2n_dh_params_free(struct s2n_dh_params *dh_params)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+dh\+\_\+params\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+dh\+\_\+params} $\ast$}]{dh\+\_\+params}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__dhe_8h_ad31b1e9b035a2f883bd9e8338e2e61de}{}\label{s2n__dhe_8h_ad31b1e9b035a2f883bd9e8338e2e61de}
+
+
+Definition at line 254 of file s2n\+\_\+dhe.\+c.
+
+
+\begin{DoxyCode}
+255 \{
+256     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(dh\_params);
+257     \hyperlink{crypto_2dh_2dh_8h_a1f15312ca21e290ee714e86578820c35}{DH\_free}(dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh});
+258     dh\_params->\hyperlink{structs2n__dh__params_a29d3a6b30f8ddddfe73007d3611b3de8}{dh} = NULL;
+259 
+260     \textcolor{keywordflow}{return} 0;
+261 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{s2n__dhe_8h_ad31b1e9b035a2f883bd9e8338e2e61de_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__dhe_8h_ad31b1e9b035a2f883bd9e8338e2e61de_icgraph}
+\end{center}
+\end{figure}
+
+

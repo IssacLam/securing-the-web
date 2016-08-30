@@ -1,0 +1,83 @@
+.TH "s2n-master/tls/s2n_client_finished.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_client_finished.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_client_finished_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_finished_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_client_finished_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 27 of file s2n_client_finished\&.c\&.
+.PP
+.nf
+28 {
+29     uint8_t *our_version;
+30 
+31     our_version = conn->handshake\&.client_finished;
+32     uint8_t *their_version = s2n_stuffer_raw_read(&conn->handshake\&.io, S2N_TLS_FINISHED_LEN);
+33     notnull_check(their_version);
+34 
+35     if (!s2n_constant_time_equals(our_version, their_version, S2N_TLS_FINISHED_LEN) || conn->handshake\&.rsa_failed) {
+36         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+37     }
+38 
+39     return 0;
+40 }
+.fi
+.SS "int s2n_client_finished_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 42 of file s2n_client_finished\&.c\&.
+.PP
+.nf
+43 {
+44     uint8_t *our_version;
+45 
+46     GUARD(s2n_prf_client_finished(conn));
+47 
+48     struct s2n_blob seq = {\&.data = conn->secure\&.client_sequence_number,\&.size = sizeof(conn->secure\&.client_sequence_number) };
+49     GUARD(s2n_blob_zero(&seq));
+50     our_version = conn->handshake\&.client_finished;
+51 
+52     /* Update the server to use the cipher suite */
+53     conn->client = &conn->secure;
+54 
+55     if (conn->actual_protocol_version == S2N_SSLv3) {
+56         GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, our_version, S2N_SSL_FINISHED_LEN));
+57     } else {
+58         GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, our_version, S2N_TLS_FINISHED_LEN));
+59     }
+60 
+61     return 0;
+62 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

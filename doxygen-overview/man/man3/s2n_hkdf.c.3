@@ -1,0 +1,89 @@
+.TH "s2n-master/crypto/s2n_hkdf.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_hkdf.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_DIGEST_SIZE\fP   64      /* Current highest is \fBSHA512\fP */"
+.br
+.ti -1c
+.RI "#define \fBMAX_HKDF_ROUNDS\fP   255"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_hkdf_extract\fP (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP *salt, const struct \fBs2n_blob\fP *key, struct \fBs2n_blob\fP *pseudo_rand_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_hkdf\fP (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP *salt, const struct \fBs2n_blob\fP *key, const struct \fBs2n_blob\fP *info, struct \fBs2n_blob\fP *output)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_DIGEST_SIZE   64      /* Current highest is \fBSHA512\fP */"
+
+.PP
+Definition at line 26 of file s2n_hkdf\&.c\&.
+.SS "#define MAX_HKDF_ROUNDS   255"
+
+.PP
+Definition at line 27 of file s2n_hkdf\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_hkdf_extract (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP * salt, const struct \fBs2n_blob\fP * key, struct \fBs2n_blob\fP * pseudo_rand_key)"
+
+.PP
+Definition at line 31 of file s2n_hkdf\&.c\&.
+.PP
+.nf
+32 {
+33     struct s2n_hmac_state hmac;
+34     pseudo_rand_key->size = s2n_hmac_digest_size(alg);
+35 
+36     GUARD(s2n_hmac_init(&hmac, alg, salt->data, salt->size));
+37     GUARD(s2n_hmac_update(&hmac, key->data, key->size));
+38     GUARD(s2n_hmac_digest(&hmac, pseudo_rand_key->data, pseudo_rand_key->size));
+39 
+40     return 0;
+41 }
+.fi
+.SS "int s2n_hkdf (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP * salt, const struct \fBs2n_blob\fP * key, const struct \fBs2n_blob\fP * info, struct \fBs2n_blob\fP * output)"
+
+.PP
+Definition at line 84 of file s2n_hkdf\&.c\&.
+.PP
+.nf
+85 {
+86     uint8_t prk_pad[MAX_DIGEST_SIZE];
+87     struct s2n_blob pseudo_rand_key = {\&.data = prk_pad,\&.size = sizeof(prk_pad) };
+88 
+89     GUARD(s2n_hkdf_extract(alg, salt, key, &pseudo_rand_key));
+90     GUARD(s2n_hkdf_expand(alg, &pseudo_rand_key, info, output));
+91 
+92     return 0;
+93 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,118 @@
+\hypertarget{api__test_8c}{}\section{s2n-\/master/api\+\_\+test.c File Reference}
+\label{api__test_8c}\index{s2n-\/master/api\+\_\+test.\+c@{s2n-\/master/api\+\_\+test.\+c}}
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for api\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{api__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{api__test_8c_a767caeff0f20559426ecc269ca133182}{harness} (arc, char $\ast$const $\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{api\+\_\+test.\+c@{api\+\_\+test.\+c}!harness@{harness}}
+\index{harness@{harness}!api\+\_\+test.\+c@{api\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{harness(arc, char $\ast$const $\ast$argv)}{harness(arc, char *const *argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int harness (
+\begin{DoxyParamCaption}
+\item[{arc}]{, }
+\item[{char $\ast$const $\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{api__test_8c_a767caeff0f20559426ecc269ca133182}{}\label{api__test_8c_a767caeff0f20559426ecc269ca133182}
+
+
+Definition at line 3 of file api\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+3                                     \{
+4         \hyperlink{s2n_8h_abc620f8194383c6fcddd911edcf7d692}{s2n\_init}();
+5         \hyperlink{s2n_8h_a907fdf445e5fb1752f1b18f0ddf935b3}{s2n\_cleanup}();
+6 
+7         \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config} = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}();
+8 
+9         \hyperlink{s2n_8h_a25b7d82e94f572b657be3936196222c3}{s2n\_config\_free}(config);
+10         \hyperlink{s2n_8h_a3bf1287851eae46189744a86b883a7da}{s2n\_config\_free\_dhparams}(config);
+11         \hyperlink{s2n_8h_acb820ee4c2c4978ddeb317d746ad1038}{s2n\_config\_free\_cert\_chain\_and\_key}(config);
+12 
+13         uint64\_t mock\_time;
+14         \hyperlink{s2n_8h_a55f4687b7def930a7ac41335d35d72ef}{s2n\_config\_set\_nanoseconds\_since\_epoch\_callback}(
+      config, NULL, NULL);
+15         \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"});
+16 
+17         \hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(config, NULL, NULL);
+18 
+19 
+20     
+21     
+22      \hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(config, NULL, NULL);
+23      \hyperlink{s2n_8h_a0275e457e9c62cf1d5b9a1126e853003}{s2n\_config\_add\_cert\_chain\_and\_key\_with\_status}(config, 
+      NULL, NULL, NULL, 0);
+24      \hyperlink{s2n_8h_a82513564c95dc7a4174c3d04eb043564}{s2n\_config\_add\_dhparams}(config, NULL);
+25      s2n\_config\_set\_key\_exchange\_preferences(config, NULL);
+26      \hyperlink{s2n_8h_a21b09fcd09e2d33e8ed9389a109f2ab2}{s2n\_config\_set\_cipher\_preferences}(config, NULL);
+27      \hyperlink{s2n_8h_a9f5f2fca97444f9c039a3681c2351fb0}{s2n\_config\_set\_protocol\_preferences}(config, NULL, 0);
+28     
+29      \hyperlink{s2n_8h_ae98f2b06b3311e7e845e938392d3505d}{s2n\_config\_set\_status\_request\_type}(config, 0);
+30     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(0);
+31     
+32     
+33      \hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config);
+34     
+35      \hyperlink{s2n_8h_a80776ecf7e726f52165cdec5e2652d1e}{s2n\_connection\_set\_fd}(conn, \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd});
+36      \hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd});
+37      \hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd});
+38     
+39      \hyperlink{s2n_8h_ab242f62c5824c72476844970b1ae7301}{s2n\_connection\_prefer\_throughput}(conn);
+40      \hyperlink{s2n_8h_a332427237ca8907196034ac5768a65bf}{s2n\_connection\_prefer\_low\_latency}(conn);
+41     
+42      \hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 0);
+43      int64\_t \hyperlink{s2n_8h_aebf38ba3c1ebd08e7fdd185d8f3ec521}{s2n\_connection\_get\_delay}(conn);
+44     
+45      \hyperlink{s2n_8h_a9b37f3c0364e6de9f0b534e624204f62}{s2n\_set\_server\_name}(conn, NULL);
+46      \hyperlink{s2n_8h_a541a5e22fc8b6295e4c6bb1692cdd850}{s2n\_get\_server\_name}(conn);
+47      \hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn);
+48      \hyperlink{s2n_8h_a2b18cd3437636a7a21e10f3d5d09ff9d}{s2n\_connection\_get\_ocsp\_response}(conn, NULL);
+49     
+50      \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, NULL);
+51      ssize\_t \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, NULL, 0, NULL);
+52      ssize\_t \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn,  NULL, 0, NULL);
+53     
+54      \hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn);
+55      \hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn);
+56      \hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, NULL);
+57     
+58      uint64\_t \hyperlink{s2n_8h_a4d1194b561c825208d387b4660670b63}{s2n\_connection\_get\_wire\_bytes\_in}(conn);
+59      uint64\_t \hyperlink{s2n_8h_a43ef96c4123345ccc7952a387125409e}{s2n\_connection\_get\_wire\_bytes\_out}(conn);
+60      \hyperlink{s2n_8h_af15303e1d72a95320b6138edeef7a6ab}{s2n\_connection\_get\_client\_protocol\_version}(conn);
+61      \hyperlink{s2n_8h_ae2ea6a2e6468883f56459431f2024b0f}{s2n\_connection\_get\_server\_protocol\_version}(conn);
+62      \hyperlink{s2n_8h_a4cb9df94e1fe137f10040fbfc1ad98f9}{s2n\_connection\_get\_actual\_protocol\_version}(conn);
+63      \hyperlink{s2n_8h_a3d4e8c095c40ea7689f14022567cd3e9}{s2n\_connection\_get\_client\_hello\_version}(conn);
+64      \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\hyperlink{s2n_8h_a119c0252cf7edde4d4a5c65f8cd23721}{s2n\_connection\_get\_cipher}(conn);
+65      \hyperlink{s2n_8h_a6726a1cbae275671f2751ac610dc5f0f}{s2n\_connection\_get\_alert}(conn);
+66 
+67 
+68 
+69 
+70 
+71 
+72         \textcolor{keywordflow}{return} 0;
+73 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{api__test_8c_a767caeff0f20559426ecc269ca133182_cgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,730 @@
+.TH "md_s2n-master_docs__u_s_a_g_e-_g_u_i_d_e" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+md_s2n-master_docs__u_s_a_g_e-_g_u_i_d_e \- Using s2n 
+s2n is a C library, and is built using Make\&. To clone the latest copy of s2n from git use:
+.PP
+.PP
+.nf
+1 git clone https://github\&.com/awslabs/s2n\&.git
+2 cd s2n
+.fi
+.PP
+.PP
+.SS "Building s2n with existing libcrypto"
+.PP
+To build s2n with an existing libcrypto installation, store its root folder in the \fCLIBCRYPTO_ROOT\fP environment variable\&. 
+.PP
+.nf
+1 # /usr/local/ssl/lib should contain libcrypto\&.a
+2 LIBCRYPTO_ROOT=/usr/local/ssl make
+
+.fi
+.PP
+.PP
+.SS "Building s2n with LibreSSL"
+.PP
+To build s2n with LibreSSL, do the following:
+.PP
+.PP
+.nf
+1 # We keep the build artifacts in the -build directory
+2 cd libcrypto-build
+3 
+4 # Download the latest version of LibreSSL
+5 curl -O http://ftp\&.openbsd\&.org/pub/OpenBSD/LibreSSL/libressl-x\&.y\&.z\&.tar\&.gz
+6 tar -xzvf libressl-x\&.y\&.z\&.tar\&.gz
+7 
+8 # Build LibreSSL's libcrypto
+9 cd libressl-x\&.y\&.z
+10 \&./configure --prefix=`pwd`/\&.\&./\&.\&./libcrypto-root/
+11 make CFLAGS=-fPIC install
+12 
+13 # Make to the main s2n directory
+14 cd \&.\&./\&.\&./
+15 
+16 # Build s2n
+17 make
+.fi
+.PP
+.PP
+once built, static and dynamic libraries for s2n will be available in the lib/ directory\&.
+.PP
+.SS "Building s2n with BoringSSL"
+.PP
+To build s2n with BoringSSL, you must check out a copy of the BoringSSL directly via git\&. This procedure has been tested with fb68d6c901b98ffe15b8890d00bc819bf44c5f01 of BoringSSL\&.
+.PP
+.PP
+.nf
+1 # We keep the build artifacts in the -build directory
+2 cd libcrypto-build
+3 
+4 # Clone BoringSSL
+5 git clone https://boringssl\&.googlesource\&.com/boringssl
+6 
+7 # Build BoringSSL
+8 cd boringssl
+9 mkdir build
+10 cd build
+11 cmake -DCMAKE_C_FLAGS="-fPIC" \&.\&./
+12 make
+13 
+14 # Copy the built library and includes
+15 mkdir \&.\&./\&.\&./\&.\&./libcrypto-root/lib/
+16 cp crypto/libcrypto\&.a \&.\&./\&.\&./\&.\&./libcrypto-root/lib/
+17 cp -r \&.\&./include/ \&.\&./\&.\&./\&.\&./libcrypto-root/include
+18 
+19 # Build s2n
+20 cd \&.\&./\&.\&./\&.\&./
+21 make
+.fi
+.PP
+.PP
+once built, static and dynamic libraries for s2n will be available in the lib/ directory\&.
+.PP
+.SS "Building s2n with OpenSSL-1\&.0\&.2"
+.PP
+To build s2n with OpenSSL-1\&.0\&.2, do the following:
+.PP
+.PP
+.nf
+1 # We keep the build artifacts in the -build directory
+2 cd libcrypto-build
+3 
+4 # Download the latest version of OpenSSL
+5 curl -LO https://www\&.openssl\&.org/source/openssl-1\&.0\&.2-latest\&.tar\&.gz
+6 tar -xzvf openssl-1\&.0\&.2-latest\&.tar\&.gz
+7 
+8 # Build openssl' libcrypto  (NOTE: check directory name 1\&.0\&.2-latest unpacked as)
+9 cd openssl-1\&.0\&.2d
+10 \&./config -fPIC no-shared no-libunbound no-gmp no-jpake no-krb5              \
+11          no-md2 no-rc5 no-rfc3779 no-sctp no-ssl-trace no-store no-zlib     \
+12          no-hw no-mdc2 no-seed no-idea enable-ec-nist_64_gcc_128 no-camellia\
+13          no-bf no-ripemd no-dsa no-ssl2 no-ssl3 no-capieng                  \
+14          -DSSL_FORBID_ENULL -DOPENSSL_NO_DTLS1 -DOPENSSL_NO_HEARTBEATS      \
+15          --prefix=`pwd`/\&.\&./\&.\&./libcrypto-root/
+16 make depend
+17 make
+18 make install
+19 
+20 # Make to the main s2n directory
+21 cd \&.\&./\&.\&./
+22 
+23 # Build s2n
+24 make
+.fi
+.PP
+.PP
+\fBMac Users:\fP please replace '\&./config' with '\&./Configure darwin64-x86_64-cc'\&.
+.PP
+once built, static and dynamic libraries for s2n will be available in the lib/ directory\&.
+.PP
+.SS "mlock() and system limits"
+.PP
+Internally s2n uses mlock() to prevent memory from being swapped to disk\&. The s2n build tests may fail in some environments where the default limit on locked memory is too low\&. To check this limit, run:
+.PP
+.PP
+.nf
+1 ulimit -l
+.fi
+.PP
+.PP
+to raise the limit, consult the documentation for your platform\&.
+.PP
+.SS "Disabling mlock()"
+.PP
+To disable s2n's mlock behavior, run your application with the \fCS2N_DONT_MLOCK\fP environment variable set\&. s2n also reads this for unit tests\&. Try \fCS2N_DONT_MLOCK=1 make\fP if you're having mlock failures during unit tests\&.
+.PP
+.SS "client mode"
+.PP
+At this time s2n does not perform certificate validation and client mode is disabled as a precaution\&. To enable client mode for testing and development, set the \fBS2N_ENABLE_CLIENT_MODE\fP environment variable\&.
+.PP
+.PP
+.nf
+1 export S2N_ENABLE_CLIENT_MODE=1
+.fi
+.PP
+.PP
+.SH "s2n API"
+.PP
+.PP
+The API exposed by s2n is the set of functions and declarations that are in the 's2n\&.h' header file\&. Any functions and declarations that are in the 's2n\&.h' file are intended to be stable (API and ABI) within major version numbers of s2n releases\&. Other functions and structures used in s2n internally can not be considered stable and their parameters, names, and sizes may change\&.
+.PP
+At this time (Summer 2015), there has been no numbered release of s2n and all APIs are subject to change based on the feedback and preferences of early adopters\&.
+.PP
+.SS "Preprocessor macros"
+.PP
+s2n defines five preprocessor macros that are used to determine what version of SSL/TLS is in use on a connection\&.
+.PP
+.PP
+.nf
+#define S2N_SSLv2 20
+#define S2N_SSLv3 30
+#define S2N_TLS10 31
+#define S2N_TLS11 32
+#define S2N_TLS12 33
+.fi
+.PP
+.PP
+These correspond to SSL2\&.0, SSL3\&.0, TLS1\&.0, TLS1\&.1 and TLS1\&.2 respectively\&. Note that s2n does not support SSL2\&.0 for sending and receiving encrypted data, but does accept SSL2\&.0 hello messages\&.
+.PP
+.SS "Enums"
+.PP
+s2n defines four enum types:
+.PP
+.PP
+.nf
+typedef enum { S2N_SERVER, S2N_CLIENT } s2n_mode;
+.fi
+.PP
+.PP
+\fBs2n_mode\fP is used to declare connections as server or client type, respectively\&. At this time, s2n does not function as a client and only S2N_SERVER should be used\&.
+.PP
+.PP
+.nf
+typedef enum { S2N_NOT_BLOCKED, S2N_BLOCKED_ON_READ, S2N_BLOCKED_ON_WRITE } s2n_blocked_status;
+.fi
+.PP
+.PP
+\fBs2n_blocked_status\fP is used in non-blocking mode to indicate in which direction s2n became blocked on I/O before it returned control to the caller\&. This allows an application to avoid retrying s2n operations until I/O is possible in that direction\&.
+.PP
+.PP
+.nf
+typedef enum { S2N_BUILT_IN_BLINDING, S2N_SELF_SERVICE_BLINDING } s2n_blinding;
+.fi
+.PP
+.PP
+\fBs2n_blinding\fP is used to opt-out of s2n's built-in blinding\&. Blinding is a mitigation against timing side-channels which in some cases can leak information about encrypted data\&. By default s2n will cause a thread to sleep between 1ms and 10 seconds whenever tampering is detected\&.
+.PP
+Setting the \fBS2N_SELF_SERVICE_BLINDING\fP option with \fBs2n_connection_set_blinding\fP turns off this behavior\&. This is useful for applications that are handling many connections in a single thread\&. In that case, if \fBs2n_recv()\fP or \fBs2n_negotiate()\fP return an error, self-service applications should call \fBs2n_connection_get_delay\fP and pause activity on the connection for the specified number of nanoseconds before calling close() or shutdown()\&.
+.PP
+.PP
+.nf
+typedef enum { S2N_STATUS_REQUEST_NONE, S2N_STATUS_REQUEST_OCSP } s2n_status_request_type;
+.fi
+.PP
+.PP
+\fBs2n_status_request_type\fP is used to define the type, if any, of certificate status request an S2N_CLIENT should make during the handshake\&. The only supported status request type is OCSP, \fBS2N_STATUS_REQUEST_OCSP\fP\&.
+.PP
+.SS "Opaque structures"
+.PP
+s2n defines two opaque structures that are used for managed objects\&. Because these structures are opaque, they can only be safely referenced indirectly through pointers and their sizes may change with future versions of s2n\&.
+.PP
+.PP
+.nf
+struct s2n_config;
+struct s2n_connection;
+.fi
+.PP
+.PP
+\fB\fBs2n_config\fP\fP structures are a configuration object, used by servers for holding cryptographic certificates, keys and preferences\&. \fB\fBs2n_connection\fP\fP structures are used to track each connection\&.
+.PP
+.SS "Error handling"
+.PP
+s2n functions that return 'int' return 0 to indicate success and -1 to indicate failure\&. s2n functions that return pointer types return NULL in the case of failure\&. When an s2n function returns a failure, s2n_errno will be set to a value corresponding to the error\&. This error value can be translated into a string explaining the error in English by calling s2n_strerror(s2n_errno, 'EN');
+.PP
+Example:
+.PP
+.PP
+.nf
+1 if (s2n_config_set_cipher_preferences(config, prefs) < 0) {
+2     printf("Setting cipher prefs failed! %s", (s2n_strerror(s2n_errno, "EN"));
+3     return -1;
+4 }
+.fi
+.PP
+.PP
+.SS "Error categories"
+.PP
+s2n organizes errors into different 'types' to allow applications to do logic on error values without catching all possibilities\&. Applications using non-blocking I/O should check error type to determine if the I/O operation failed because it would block or for some other error\&. To retrieve the type for a given error use \fC\fBs2n_error_get_type()\fP\fP\&. Applications should perform any error handling logic using these high level types:
+.PP
+.PP
+.nf
+1 S2N_ERR_T_OK=0, /* No error */
+2 S2N_ERR_T_IO, /* Underlying I/O operation failed, check system errno */
+3 S2N_ERR_T_CLOSED, /* EOF */
+4 S2N_ERR_T_BLOCKED, /* Underlying I/O operation would block */
+5 S2N_ERR_T_ALERT, /* Incoming Alert */
+6 S2N_ERR_T_PROTO, /* Failure in some part of the TLS protocol\&. Ex: CBC verification failure */
+7 S2N_ERR_T_INTERNAL, /* Error internal to s2n\&. A precondition could have failed\&. */
+8 S2N_ERR_T_USAGE /* User input error\&. Ex: Providing an invalid cipher preference version */
+.fi
+.PP
+.PP
+Here's an example that handles errors based on type:
+.PP
+.PP
+.nf
+1 if (s2n_recv(conn, &blocked) < 0) {
+2     switch(s2n_error_get_type(s2n_errno)) {
+3         case S2N_ERR_T_BLOCKED:
+4             /* Blocked, come back later */
+5             return -1;
+6         case S2N_ERR_T_CLOSED:
+7             return 0;
+8         case S2N_ERR_T_IO:
+9             handle_io_err();
+10             return -1;
+11         case S2N_ERR_T_PROTO:
+12             handle_proto_err();
+13             return -1;
+14         case S2N_ERR_T_ALERT:
+15             log_alert(s2n_connection_get_alert(conn));
+16             return -1;
+17         /* Everything else */
+18         default:
+19             log_other_error();
+20             return -1;
+21     }
+22 }
+.fi
+.PP
+.PP
+.SS "Initialization and teardown"
+.PP
+.SS "s2n_init"
+.PP
+.PP
+.nf
+int s2n_init();
+.fi
+.PP
+.PP
+\fBs2n_init\fP initializes the s2n library and should be called once in your application, before any other s2n functions are called\&. Failure to call \fBs2n_init()\fP will result in errors from other s2n functions\&.
+.PP
+.SS "s2n_cleanup"
+.PP
+.PP
+.nf
+int s2n_cleanup();
+.fi
+.PP
+.PP
+\fBs2n_cleanup\fP cleans up any internal resources used by s2n\&. This function should be called from each thread or process that is created subsequent to calling \fBs2n_init\fP when that thread or process is done calling other s2n functions\&.
+.PP
+.SS "Configuration-oriented functions"
+.PP
+.SS "s2n_config_new"
+.PP
+.PP
+.nf
+struct s2n_config * s2n_config_new();
+.fi
+.PP
+.PP
+\fBs2n_config_new\fP returns a new configuration object suitable for associating certs and keys\&. This object can (and should) be associated with many connection objects\&.
+.PP
+.SS "s2n_config_free"
+.PP
+.PP
+.nf
+struct int s2n_config_free(struct s2n_config *config);
+.fi
+.PP
+.PP
+\fBs2n_config_free\fP frees the memory associated with an \fB\fBs2n_config\fP\fP object\&.
+.PP
+.SS "s2n_config_set_cipher_preferences"
+.PP
+.PP
+.nf
+int s2n_config_set_cipher_preferences(struct s2n_config *config,
+                                      const char *version);
+.fi
+.PP
+.PP
+\fBs2n_config_set_cipher_preferences\fP sets the ciphersuite and protocol versions\&. The currently supported versions are;
+.PP
+version SSLv3 TLS1\&.0 TLS1\&.1 TLS1\&.2 AES-CBC AES-GCM 3DES RC4 DHE ECDHE  'default' X X X X X X X '20160411' X X X X X X X '20150306' X X X X X X X '20150214' X X X X X X X '20150202' X X X X X X '20141001' X X X X X X X '20140601' X X X X X X X X The 'default' version is special in that it will be updated with future s2n changes and ciphersuites and protocol versions may be added and removed, or their internal order of preference might change\&. Numbered versions are fixed and will never change\&.
+.PP
+'20160411' follows the same general preference order as 'default'\&. The main difference is it has a CBC cipher suite at the top\&. This is to accomodate certain Java clients that have poor GCM implementations\&. Users of s2n who have found GCM to be hurting performance for their clients should consider this version\&.
+.PP
+s2n does not expose an API to control the order of preference for each ciphersuite or protocol version\&. s2n follows the following order:
+.PP
+.IP "1." 4
+Always prefer the highest protocol version supported
+.IP "2." 4
+Always use forward secrecy where possible\&. Prefer ECDHE over DHE\&.
+.IP "3." 4
+Prefer encryption ciphers in the following order: AES128, 3DES, AES256, RC4\&.
+.IP "4." 4
+Prefer record authentication modes in the following order: GCM, SHA256, SHA1, MD5\&.
+.PP
+.PP
+.SS "s2n_config_add_cert_chain_and_key"
+.PP
+.PP
+.nf
+int s2n_config_add_cert_chain_and_key(struct s2n_config *config, 
+                                      char *cert_chain_pem, 
+                                      char *private_key_pem);
+.fi
+.PP
+.PP
+\fBs2n_config_add_cert_chain_and_key\fP associates a certificate chain and a private key, with an \fB\fBs2n_config\fP\fP object\&. At present, only one certificate-chain/key pair may be associated with a config\&.
+.PP
+\fBcert_chain_pem\fP should be a PEM encoded certificate chain, with the first certificate in the chain being your servers certificate\&. \fBprivate_key_pem\fP should be a PEM encoded private key corresponding to the server certificate\&.
+.PP
+.SS "s2n_config_add_cert_chain_and_key_with_status"
+.PP
+.PP
+.nf
+int s2n_config_add_cert_chain_and_key_with_status(struct s2n_config *config, 
+                                                  char *cert_chain_pem, 
+                                                  char *private_key_pem,
+                                                  const uint8_t *status,
+                                                  uint32_t length);
+.fi
+.PP
+.PP
+\fBs2n_config_add_cert_chain_and_key_with_status\fP performs the same function as s2n_config_add_cert_chain_and_key, and associates an OCSP status response with the server certificate\&. If a client requests the OCSP status of the server certificate, this is the response used in the CertificateStatus handshake message\&.
+.PP
+.SS "s2n_config_add_dhparams"
+.PP
+.PP
+.nf
+int s2n_config_add_dhparams(struct s2n_config *config, 
+                            char *dhparams_pem);
+.fi
+.PP
+.PP
+\fBs2n_config_add_dhparams\fP associates a set of Diffie-Hellman parameters with an \fB\fBs2n_config\fP\fP object\&. \fBdhparams_pem\fP should be PEM encoded DH parameters\&.
+.PP
+.SS "s2n_config_set_protocol_preferences"
+.PP
+.PP
+.nf
+int s2n_config_set_protocol_preferences(struct s2n_config *config,
+                                        const char **protocols,
+                                        int protocol_count);
+.fi
+.PP
+.PP
+\fBs2n_config_set_protocol_preferences\fP sets the application protocol preferences on an \fB\fBs2n_config\fP\fP object\&. \fBprotocols\fP is a list in order of preference, with most preferred protocol first, and of length \fBprotocol_count\fP\&. When acting as an \fBS2N_CLIENT\fP the protocol list is included in the Client Hello message as the ALPN extension\&. As an \fBS2N_SERVER\fP, the list is used to negotiate a mutual application protocol with the client\&.
+.PP
+.SS "s2n_config_set_status_request_type"
+.PP
+.PP
+.nf
+int s2n_config_set_status_request_type(struct s2n_config *config, s2n_status_request_type type);
+.fi
+.PP
+.PP
+\fBs2n_config_set_status_request_type\fP Sets up an S2N_CLIENT to request the server certificate status during an SSL handshake\&. If set to S2N_STATUS_REQUEST_NONE, no status request is made\&.
+.PP
+.SS "s2n_config_set_nanoseconds_since_epoch_callback"
+.PP
+.PP
+.nf
+int s2n_config_set_nanoseconds_since_epoch_callback(struct s2n_config *config, int (*nanoseconds_since_epoch)(void *, uint64_t *), void * data);
+.fi
+.PP
+.PP
+\fBs2n_config_set_nanoseconds_since_epoch_callback\fP allows the caller to set a callback function that will be used to get the time\&. The callback function takes two arguments; a pointer to abitrary data for use within the callback, and a pointer to a 64 bit unsigned integer\&. The first pointer will be set to the value of \fBdata\fP which supplied by the caller when setting the callback\&. The integer pointed to by the second pointer should be set to the number of nanoseconds since the Unix epoch (Midnight, January 1st, 1970)\&. The function should return 0 on success and -1 on error\&. The function is also required to implement a monotonic time source; the number of nanoseconds returned should never decrease between calls\&.
+.PP
+.SS "Session Caching related calls"
+.PP
+s2n includes support for resuming from cached SSL/TLS session, provided the caller sets (and implements) three callback functions\&.
+.PP
+.SS "s2n_config_set_cache_store_callback"
+.PP
+.PP
+.nf
+int s2n_config_set_cache_store_callback(struct s2n_config *config, int (*cache_store)(void *, uint64_t ttl_in_seconds, const void *key, uint64_t key_size, const void *value, uint64_t value_size), void *data);
+.fi
+.PP
+.PP
+\fBs2n_config_set_cache_store_callback\fP allows the caller to set a callback function that will be used to store SSL session data in a cache\&. The callback function takes six arguments: a pointer to abitrary data for use within the callback, a 64-bit unsigned integer specifying the number of seconds the session data may be stored for, a pointer to a key which can be used to retrieve the cached entry, a 64 bit unsigned integer specifying the size of this key, a pointer to a value which should be stored, and a 64 bit unsigned integer specified the size of this value\&.
+.PP
+.SS "s2n_config_set_cache_retrieve_callback"
+.PP
+.PP
+.nf
+int s2n_config_set_cache_retrieve_callback(struct s2n_config *config, int (*cache_retrieve)(void *, const void *key, uint64_t key_size, void *value, uint64_t *value_size), void *data)
+.fi
+.PP
+.PP
+\fBs2n_config_set_cache_retrieve_callback\fP allows the caller to set a callback function that will be used to retrieve SSL session data from a cache\&. The callback function takes five arguments: a pointer to abitrary data for use within the callback, a pointer to a key which can be used to retrieve the cached entry, a 64 bit unsigned integer specifying the size of this key, a pointer to a memory location where the value should be stored, and a pointer to a 64 bit unsigned integer specifing the size of this value\&. Initially *value_size will be set to the amount of space allocated for the value, the callback should set *value_size to the actual size of the data returned\&. If there is insufficient space, -1 should be returned\&.
+.PP
+.SS "s2n_config_set_cache_delete_callback"
+.PP
+.PP
+.nf
+int s2n_config_set_cache_delete_callback(struct s2n_config *config, int (*cache_delete))(void *, const void *key, uint64_t key_size), void *data);
+.fi
+.PP
+.PP
+\fBs2n_config_set_cache_delete_callback\fP allows the caller to set a callback function that will be used to delete SSL session data from a cache\&. The callback function takes three arguments: a pointer to abitrary data for use within the callback, a pointer to a key which can be used to delete the cached entry, and a 64 bit unsigned integer specifying the size of this key\&.
+.PP
+.SS "Connection-oriented functions"
+.PP
+.SS "s2n_connection_new"
+.PP
+.PP
+.nf
+struct s2n_connection * s2n_connection_new(s2n_mode mode);
+.fi
+.PP
+.PP
+\fBs2n_connection_new\fP creates a new connection object\&. Each s2n SSL/TLS connection uses one of these objects\&. These connection objects can be operated on by up to two threads at a time, one sender and one receiver, but neither sending nor receiving are atomic, so if these objects are being called by multiple sender or receiver threads, you must perform your own locking to ensure that only one sender or receiver is active at a time\&. The \fBmode\fP parameters specifies if the caller is a server, or is a client\&.
+.PP
+Connections objects are re-usable across many connections, and should be re-used (to avoid deallocating and allocating memory)\&. You should wipe connections immediately after use\&.
+.PP
+.SS "s2n_connection_set_config"
+.PP
+.PP
+.nf
+int s2n_connection_set_config(struct s2n_connection *conn, 
+                              struct s2n_config *config);
+.fi
+.PP
+.PP
+\fBs2n_connection_set_config\fP Associates a configuration object with a connection\&.
+.PP
+.SS "s2n_connection_set_fd"
+.PP
+.PP
+.nf
+int s2n_connection_set_fd(struct s2n_connection *conn, 
+                          int readfd);
+int s2n_connection_set_read_fd(struct s2n_connection *conn, 
+                               int readfd);
+int s2n_connection_set_write_fd(struct s2n_connection *conn, 
+                                int writefd);
+.fi
+.PP
+.PP
+\fBs2n_connection_set_fd\fP sets the file-descriptor for an s2n connection\&. This file-descriptor should be active and connected\&. s2n also supports setting the read and write file-descriptors to different values (for pipes or other unusual types of I/O)\&.
+.PP
+.SS "s2n_set_server_name"
+.PP
+.PP
+.nf
+int s2n_set_server_name(struct s2n_connection *conn, 
+                        const char *server_name);
+.fi
+.PP
+.PP
+\fBs2n_set_server_name\fP Sets the server name for the connection\&. In future, this can be used by clients who wish to use the TLS 'Server Name indicator' extension\&. At present, client functionality is disabled\&.
+.PP
+.SS "s2n_get_server_name"
+.PP
+.PP
+.nf
+const char *s2n_get_server_name(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_get_server_name\fP returns the server name associated with a connection, or NULL if none is found\&. This can be used by a server to determine which server name the client is using\&.
+.PP
+.SS "s2n_connection_set_blinding"
+.PP
+.PP
+.nf
+int s2n_connection_set_blinding(struct s2n_connection *conn, s2n_blinding blinding);
+.fi
+.PP
+.PP
+\fBs2n_connection_set_blinding\fP can be used to configure s2n to either use built-in blinding (set blinding to S2N_BUILT_IN_BLINDING) or self-service blinding (set blinding to S2N_SELF_SERVICE_BLINDING)\&.
+.PP
+.SS "s2n_connection_get_delay"
+.PP
+.PP
+.nf
+int64_t s2n_connection_get_delay(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_get_delay\fP returns the number of nanoseconds an application using self-service blinding should pause before calling close() or shutdown()\&.
+.PP
+.SS "\fBs2n_connection_prefer_throughput(struct s2n_connection *conn)\fP"
+.PP
+.PP
+.nf
+int s2n_connection_prefer_throughput(struct s2n_connection *conn);
+int s2n_connection_prefer_low_latency(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_prefer_throughput\fP and \fBs2n_connection_prefer_low_latency\fP change the behavior of s2n when sending data to prefer either throughput or low latency\&. Connections prefering low latency will be encrypted using small record sizes that can be decrypted sooner by the recipient\&. Connections prefering throughput will use large record sizes that minimize overhead\&.
+.PP
+Connections prefer low latency by default\&.
+.PP
+.SS "s2n_connection_get_wire_bytes"
+.PP
+.PP
+.nf
+uint64_t s2n_connection_get_wire_bytes_in(struct s2n_connection *conn);
+uint64_t s2n_connection_get_wire_bytes_out(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_get_wire_bytes_in\fP and \fBs2n_connection_get_wire_bytes_out\fP return the number of bytes transmitted by s2n 'on the wire', in and out respectively\&.
+.PP
+.SS "s2n_connection_get_protocol_version"
+.PP
+.PP
+.nf
+int s2n_connection_get_client_hello_version(struct s2n_connection *conn);
+int s2n_connection_get_client_protocol_version(struct s2n_connection *conn);
+int s2n_connection_get_server_protocol_version(struct s2n_connection *conn);
+int s2n_connection_get_actual_protocol_version(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_get_client_protocol_version\fP returns the protocol version number supported by the client, \fBs2n_connection_get_server_protocol_version\fP returns the protocol version number supported by the server and \fBs2n_connection_get_actual_protocol_version\fP returns the protocol version number actually used by s2n for the connection\&. \fBs2n_connection_get_client_hello_version\fP returns the protocol version used in the initial client hello message\&.
+.PP
+Each version number value corresponds to the macros defined as \fBS2N_SSLv2\fP, \fBS2N_SSLv3\fP, \fBS2N_TLS10\fP, \fBS2N_TLS11\fP and \fBS2N_TLS12\fP\&.
+.PP
+.SS "s2n_get_application_protocol"
+.PP
+.PP
+.nf
+const char *s2n_get_application_protocol(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_get_application_protocol\fP returns the negotiated application protocol for a \fB\fBs2n_connection\fP\fP\&. In the event of no protocol being negotiated, NULL is returned\&.
+.PP
+.SS "s2n_connection_get_ocsp_response"
+.PP
+.PP
+.nf
+const uint8_t *s2n_connection_get_ocsp_response(struct s2n_connection *conn, uint32_t *length);
+.fi
+.PP
+.PP
+\fBs2n_connection_get_ocsp_response\fP returns the OCSP response sent by a server during the handshake\&. If no status response is received, NULL is returned\&.
+.PP
+.SS "s2n_connection_get_alert"
+.PP
+.PP
+.nf
+int s2n_connection_get_alert(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+If a connection was shut down by the peer, \fBs2n_connection_get_alert\fP returns the TLS alert code that caused a connection to be shut down\&. s2n considers all TLS alerts fatal and shuts down a connection whenever one is received\&.
+.PP
+.SS "s2n_connection_get_cipher"
+.PP
+.PP
+.nf
+const char * s2n_connection_get_cipher(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_get_cipher\fP returns a string indicating the cipher suite negotiated by s2n for a connection in Openssl format, e\&.g\&. 'ECDHE-RSA-AES128-GCM-SHA256'\&.
+.PP
+.SS "s2n_connection_wipe"
+.PP
+.PP
+.nf
+int s2n_connection_wipe(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_wipe\fP erases all data associated with a connection including pending reads\&.
+.PP
+.SS "s2n_connection_free"
+.PP
+.PP
+.nf
+int s2n_connection_free(struct s2n_connection *conn);
+.fi
+.PP
+.PP
+\fBs2n_connection_free\fP frees the memory associated with an \fBs2n_connection\fP handle\&.
+.PP
+.SS "I/O functions"
+.PP
+s2n supports both blocking and non-blocking I/O\&. To use s2n in non-blocking mode, set the underlying file descriptors as non-blocking (i\&.e\&. with \fBfcntl\fP)\&. In blocking mode, each s2n I/O function will not return until it is complete\&. In non-blocking mode an s2n I/O function may return while there is still I/O pending\&. In this case the value of the \fBblocked\fP parameter will be set to either \fBS2N_BLOCKED_ON_READ\fP or \fBS2N_BLOCKED_ON_WRITE\fP, depending on the direction in which s2n is blocked\&.
+.PP
+s2n I/O functions should be called repeatedly until the \fBblocked\fP parameter is \fBS2N_NOT_BLOCKED\fP\&.
+.PP
+.SS "s2n_negotiate"
+.PP
+.PP
+.nf
+int s2n_negotiate(struct s2n_connection *conn, s2n_blocked_status *blocked);
+.fi
+.PP
+.PP
+\fBs2n_negotiate\fP performs the initial 'handshake' phase of a TLS connection and must be called before any \fBs2n_recv\fP or \fBs2n_send\fP calls\&.
+.PP
+.SS "s2n_send"
+.PP
+.PP
+.nf
+ssize_t s2n_send(struct s2n_connection *conn 
+              void *buf,
+              ssize_t size,
+              s2n_blocked_status *blocked);
+.fi
+.PP
+.PP
+\fBs2n_send\fP writes and encrypts \fBsize* of **buf\fP data to the associated connection\&. \fBs2n_send\fP will return the number of bytes written, and may indicate a partial write\&. Partial writes are possible not just for non-blocking I/O, but also for connections aborted while active\&. \fBNOTE:\fP Unlike OpenSSL, repeated calls to \fBs2n_send\fP should not duplicate the original parameters, but should update \fBbuf\fP and \fBsize\fP per the indication of size written\&. For example;
+.PP
+.PP
+.nf
+s2n_blocked_status blocked;
+int written = 0;
+char data[10]; /* Some data we want to write */
+do {
+    int w = s2n_send(conn, data + written, 10 - written, &blocked);
+    if (w < 0) {
+        /* Some kind of error */
+        break;
+    }
+    written += w;
+} while (blocked != S2N_NOT_BLOCKED); 
+.fi
+.PP
+.PP
+.SS "s2n_recv"
+.PP
+.PP
+.nf
+ssize_t s2n_recv(struct s2n_connection *conn,
+             void *buf,
+             ssize_t size,
+             s2n_blocked_status *blocked);
+.fi
+.PP
+.PP
+\fBs2n_recv\fP decrypts and reads \fBsize* to **buf\fP data from the associated connection\&. \fBs2n_recv\fP will return the number of bytes read and also return '0' on connection shutdown by the peer\&.
+.PP
+\fBNOTE:\fP Unlike OpenSSL, repeated calls to \fBs2n_recv\fP should not duplicate the original parameters, but should update \fBbuf\fP and \fBsize\fP per the indication of size read\&. For example;
+.PP
+.PP
+.nf
+s2n_blocked_status blocked;
+int bytes_read = 0;
+char data[10];
+do {
+    int r = s2n_recv(conn, data + bytes_read, 10 - bytes_read, &blocked);
+    if (r < 0) {
+        /* Some kind of error */
+        break;
+    }
+    bytes_read += r;
+} while (blocked != S2N_NOT_BLOCKED);
+.fi
+.PP
+.PP
+.SS "s2n_shutdown"
+.PP
+.PP
+.nf
+int s2n_shutdown(struct s2n_connection *conn,
+                 s2n_blocked_status *blocked);
+.fi
+.PP
+.PP
+\fBs2n_shutdown\fP shuts down the s2n connection\&. Once a connection has been shut down it is not available for reading or writing\&.
+.PP
+.SH "Examples"
+.PP
+.PP
+To understand the API it may be easiest to see examples in action\&. s2n's \fCbin/\fP directory includes an example client (s2nc) and server (s2nd)\&. 

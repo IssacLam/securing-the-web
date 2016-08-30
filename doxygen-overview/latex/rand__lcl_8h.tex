@@ -1,0 +1,119 @@
+\hypertarget{rand__lcl_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/rand/rand\+\_\+lcl.h File Reference}
+\label{rand__lcl_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/rand/rand\+\_\+lcl.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/rand/rand\+\_\+lcl.\+h}}
+{\ttfamily \#include $<$openssl/evp.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/sha.\+h$>$}\\*
+Include dependency graph for rand\+\_\+lcl.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{rand__lcl_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rand__lcl_8h_a5972563c3c73ed61024177821bd28f5c}{E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED}~32      /$\ast$ require 256 \hyperlink{include_2openssl_2x509v3_8h_ab3c186980893d6836a68407d221ae9c9}{bits} = 32 \hyperlink{include_2openssl_2x509_8h_abbe3a4f96d7d74b301e1121078fe75d8}{bytes} \hyperlink{usparc_8cc_a8ded0acb574430fd00c67aaacaeb313b}{of} randomness $\ast$/
+\item 
+\#define \hyperlink{rand__lcl_8h_a2d48a08f36296d082c7454d620672bb7}{U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND}
+\item 
+\#define \hyperlink{rand__lcl_8h_af0ff2caf48fc1ca9c09dd0c2677a4a04}{M\+D\+\_\+\+Update}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})            ~\hyperlink{include_2openssl_2evp_8h_ab5b2f1ef6d30db8471c673194949c245}{E\+V\+P\+\_\+\+Digest\+Update}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},b,\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})
+\item 
+\#define \hyperlink{rand__lcl_8h_aa3ccd8b3f4b0f50dee6089e7ec72ae11}{M\+D\+\_\+\+Final}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b)                  ~\hyperlink{include_2openssl_2evp_8h_a06e905e22b95690a5417e575c486373a}{E\+V\+P\+\_\+\+Digest\+Final\+\_\+ex}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},b,N\+U\+LL)
+\item 
+\#define \hyperlink{rand__lcl_8h_a8b6abac809e97c07a0df949136cffd82}{M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH}~\hyperlink{include_2openssl_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{S\+H\+A\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH}
+\item 
+\#define \hyperlink{rand__lcl_8h_a64a03ada5a586e08bef8594d9f1307ab}{M\+D\+\_\+\+Init}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a})                        ~\hyperlink{include_2openssl_2evp_8h_a039cce8e234ebef1284710b019075ddc}{E\+V\+P\+\_\+\+Digest\+Init\+\_\+ex}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},\hyperlink{include_2openssl_2evp_8h_aa090d659a494a10525e38d272efb01ae}{E\+V\+P\+\_\+sha1}(), N\+U\+LL)
+\item 
+\#define \hyperlink{rand__lcl_8h_a465d79a803162b58796f56db1057b2af}{MD}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})                          ~\hyperlink{include_2openssl_2evp_8h_aaf1dcfa403148677376101633deb9025}{E\+V\+P\+\_\+\+Digest}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},b,\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},N\+U\+LL,\hyperlink{include_2openssl_2evp_8h_aa090d659a494a10525e38d272efb01ae}{E\+V\+P\+\_\+sha1}(), N\+U\+LL)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{rand__lcl_8h_a2bb504eeb786a82b9fab1721ca0d8dc0}{ssleay\+\_\+rand\+\_\+bytes} (unsigned char $\ast$buf, int \hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num}, int pseudo, int lock)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED@{E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED}}
+\index{E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED@{E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED}{ENTROPY_NEEDED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+N\+T\+R\+O\+P\+Y\+\_\+\+N\+E\+E\+D\+ED~32      /$\ast$ require 256 {\bf bits} = 32 {\bf bytes} {\bf of} randomness $\ast$/}\hypertarget{rand__lcl_8h_a5972563c3c73ed61024177821bd28f5c}{}\label{rand__lcl_8h_a5972563c3c73ed61024177821bd28f5c}
+
+
+Definition at line 115 of file rand\+\_\+lcl.\+h.
+
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND@{U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND}}
+\index{U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND@{U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND}{USE_SHA1_RAND}}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+S\+E\+\_\+\+S\+H\+A1\+\_\+\+R\+A\+ND}\hypertarget{rand__lcl_8h_a2d48a08f36296d082c7454d620672bb7}{}\label{rand__lcl_8h_a2d48a08f36296d082c7454d620672bb7}
+
+
+Definition at line 119 of file rand\+\_\+lcl.\+h.
+
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!M\+D\+\_\+\+Update@{M\+D\+\_\+\+Update}}
+\index{M\+D\+\_\+\+Update@{M\+D\+\_\+\+Update}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{M\+D\+\_\+\+Update}{MD_Update}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+D\+\_\+\+Update(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)~{\bf E\+V\+P\+\_\+\+Digest\+Update}({\bf a},b,{\bf c})}\hypertarget{rand__lcl_8h_af0ff2caf48fc1ca9c09dd0c2677a4a04}{}\label{rand__lcl_8h_af0ff2caf48fc1ca9c09dd0c2677a4a04}
+
+
+Definition at line 132 of file rand\+\_\+lcl.\+h.
+
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!M\+D\+\_\+\+Final@{M\+D\+\_\+\+Final}}
+\index{M\+D\+\_\+\+Final@{M\+D\+\_\+\+Final}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{M\+D\+\_\+\+Final}{MD_Final}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+D\+\_\+\+Final(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~{\bf E\+V\+P\+\_\+\+Digest\+Final\+\_\+ex}({\bf a},b,N\+U\+LL)}\hypertarget{rand__lcl_8h_aa3ccd8b3f4b0f50dee6089e7ec72ae11}{}\label{rand__lcl_8h_aa3ccd8b3f4b0f50dee6089e7ec72ae11}
+
+
+Definition at line 133 of file rand\+\_\+lcl.\+h.
+
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH@{M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH}}
+\index{M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH@{M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH}{MD_DIGEST_LENGTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+D\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH~{\bf S\+H\+A\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+L\+E\+N\+G\+TH}}\hypertarget{rand__lcl_8h_a8b6abac809e97c07a0df949136cffd82}{}\label{rand__lcl_8h_a8b6abac809e97c07a0df949136cffd82}
+
+
+Definition at line 141 of file rand\+\_\+lcl.\+h.
+
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!M\+D\+\_\+\+Init@{M\+D\+\_\+\+Init}}
+\index{M\+D\+\_\+\+Init@{M\+D\+\_\+\+Init}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{M\+D\+\_\+\+Init}{MD_Init}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+D\+\_\+\+Init(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}}
+\end{DoxyParamCaption}
+)~{\bf E\+V\+P\+\_\+\+Digest\+Init\+\_\+ex}({\bf a},{\bf E\+V\+P\+\_\+sha1}(), N\+U\+LL)}\hypertarget{rand__lcl_8h_a64a03ada5a586e08bef8594d9f1307ab}{}\label{rand__lcl_8h_a64a03ada5a586e08bef8594d9f1307ab}
+
+
+Definition at line 142 of file rand\+\_\+lcl.\+h.
+
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!MD@{MD}}
+\index{MD@{MD}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{MD}{MD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define MD(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)~{\bf E\+V\+P\+\_\+\+Digest}({\bf a},b,{\bf c},N\+U\+LL,{\bf E\+V\+P\+\_\+sha1}(), N\+U\+LL)}\hypertarget{rand__lcl_8h_a465d79a803162b58796f56db1057b2af}{}\label{rand__lcl_8h_a465d79a803162b58796f56db1057b2af}
+
+
+Definition at line 143 of file rand\+\_\+lcl.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}!ssleay\+\_\+rand\+\_\+bytes@{ssleay\+\_\+rand\+\_\+bytes}}
+\index{ssleay\+\_\+rand\+\_\+bytes@{ssleay\+\_\+rand\+\_\+bytes}!rand\+\_\+lcl.\+h@{rand\+\_\+lcl.\+h}}
+\subsubsection[{\texorpdfstring{ssleay\+\_\+rand\+\_\+bytes(unsigned char $\ast$buf, int num, int pseudo, int lock)}{ssleay_rand_bytes(unsigned char *buf, int num, int pseudo, int lock)}}]{\setlength{\rightskip}{0pt plus 5cm}int ssleay\+\_\+rand\+\_\+bytes (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{buf, }
+\item[{int}]{num, }
+\item[{int}]{pseudo, }
+\item[{int}]{lock}
+\end{DoxyParamCaption}
+)}\hypertarget{rand__lcl_8h_a2bb504eeb786a82b9fab1721ca0d8dc0}{}\label{rand__lcl_8h_a2bb504eeb786a82b9fab1721ca0d8dc0}

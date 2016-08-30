@@ -1,0 +1,63 @@
+.TH "s2n-master/libcrypto-build/openssl/test/testutil.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/test/testutil.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSETUP_TEST_FIXTURE\fP(TEST_FIXTURE_TYPE,  set_up)"
+.br
+.ti -1c
+.RI "#define \fBEXECUTE_TEST\fP(execute_func,  tear_down)"
+.br
+.ti -1c
+.RI "#define \fBtestutil_stringify_helper\fP(s)   #s"
+.br
+.ti -1c
+.RI "#define \fBtestutil_stringify\fP(s)   \fBtestutil_stringify_helper\fP(s)"
+.br
+.ti -1c
+.RI "#define \fBTEST_CASE_NAME\fP   __FILE__ ':' \fBtestutil_stringify\fP(__LINE__)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SETUP_TEST_FIXTURE(TEST_FIXTURE_TYPE, set_up)"
+\fBValue:\fP
+.PP
+.nf
+TEST_FIXTURE_TYPE fixture = set_up(TEST_CASE_NAME);\
+        int result = 0
+.fi
+.PP
+Definition at line 93 of file testutil\&.h\&.
+.SS "#define EXECUTE_TEST(execute_func, tear_down)"
+\fBValue:\fP
+.PP
+.nf
+if (execute_func(fixture) != 0) result = 1;\
+        tear_down(fixture);\
+        return result
+.fi
+.PP
+Definition at line 97 of file testutil\&.h\&.
+.SS "#define testutil_stringify_helper(s)   #s"
+
+.PP
+Definition at line 110 of file testutil\&.h\&.
+.SS "#define testutil_stringify(s)   \fBtestutil_stringify_helper\fP(s)"
+
+.PP
+Definition at line 111 of file testutil\&.h\&.
+.SS "#define TEST_CASE_NAME   __FILE__ ':' \fBtestutil_stringify\fP(__LINE__)"
+
+.PP
+Definition at line 112 of file testutil\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

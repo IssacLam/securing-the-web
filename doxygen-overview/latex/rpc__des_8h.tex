@@ -1,0 +1,121 @@
+\hypertarget{rpc__des_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/des/rpc\+\_\+des.h File Reference}
+\label{rpc__des_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/des/rpc\+\_\+des.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/des/rpc\+\_\+des.\+h}}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdesparams}{desparams}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rpc__des_8h_a948abbf5566744fad25cf21ec3a714a8}{D\+E\+S\+\_\+\+M\+A\+X\+L\+EN}~65536   /$\ast$ maximum \# \hyperlink{usparc_8cc_a8ded0acb574430fd00c67aaacaeb313b}{of} \hyperlink{include_2openssl_2x509_8h_abbe3a4f96d7d74b301e1121078fe75d8}{bytes} to encrypt $\ast$/
+\item 
+\#define \hyperlink{rpc__des_8h_a101de127f1dd078f5973f6e95fb7d520}{D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN}~16      /$\ast$ maximum \# \hyperlink{usparc_8cc_a8ded0acb574430fd00c67aaacaeb313b}{of} \hyperlink{include_2openssl_2x509_8h_abbe3a4f96d7d74b301e1121078fe75d8}{bytes} to encrypt quickly $\ast$/
+\item 
+\#define \hyperlink{rpc__des_8h_aafa8613e7bb3e4312cc87a5e6671d42a}{des\+\_\+data}~U\+D\+E\+S.\+U\+D\+E\+S\+\_\+data /$\ast$ direct data here if quick $\ast$/
+\item 
+\#define \hyperlink{rpc__des_8h_a62cd5b9196f9ea833fc2418d79b73a40}{des\+\_\+buf}~U\+D\+E\+S.\+U\+D\+E\+S\+\_\+buf  /$\ast$ otherwise, pointer to data $\ast$/
+\item 
+\#define \hyperlink{rpc__des_8h_ae28d49131d7e8433a079972f157628e4}{D\+E\+S\+I\+O\+C\+B\+L\+O\+CK}~\+\_\+\+I\+O\+WR(\textquotesingle{}d\textquotesingle{}, 6, struct \hyperlink{structdesparams}{desparams})
+\item 
+\#define \hyperlink{rpc__des_8h_a37211a25060f881efc4222d61cbc5ed5}{D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK}~\+\_\+\+I\+O\+WR(\textquotesingle{}d\textquotesingle{}, 7, struct \hyperlink{structdesparams}{desparams})
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{rpc__des_8h_a77d581848d3140d21decf45fd1284044}{desdir} \{ \hyperlink{rpc__des_8h_a77d581848d3140d21decf45fd1284044a606f7451c00ce2831f56eceb9ab6bb96}{E\+N\+C\+R\+Y\+PT}, 
+\hyperlink{rpc__des_8h_a77d581848d3140d21decf45fd1284044a3179dbaa639c5906029876801dcf4e11}{D\+E\+C\+R\+Y\+PT}
+ \}
+\item 
+enum \hyperlink{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8d}{desmode} \{ \hyperlink{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da4ace9ef28707cb98c2ccaaff518b3a49}{C\+BC}, 
+\hyperlink{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da7d741b13309dda6483a636c9d75e009e}{E\+CB}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!D\+E\+S\+\_\+\+M\+A\+X\+L\+EN@{D\+E\+S\+\_\+\+M\+A\+X\+L\+EN}}
+\index{D\+E\+S\+\_\+\+M\+A\+X\+L\+EN@{D\+E\+S\+\_\+\+M\+A\+X\+L\+EN}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+S\+\_\+\+M\+A\+X\+L\+EN}{DES_MAXLEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+S\+\_\+\+M\+A\+X\+L\+EN~65536   /$\ast$ maximum \# {\bf of} {\bf bytes} to encrypt $\ast$/}\hypertarget{rpc__des_8h_a948abbf5566744fad25cf21ec3a714a8}{}\label{rpc__des_8h_a948abbf5566744fad25cf21ec3a714a8}
+
+
+Definition at line 94 of file rpc\+\_\+des.\+h.
+
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN@{D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN}}
+\index{D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN@{D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN}{DES_QUICKLEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+S\+\_\+\+Q\+U\+I\+C\+K\+L\+EN~16      /$\ast$ maximum \# {\bf of} {\bf bytes} to encrypt quickly $\ast$/}\hypertarget{rpc__des_8h_a101de127f1dd078f5973f6e95fb7d520}{}\label{rpc__des_8h_a101de127f1dd078f5973f6e95fb7d520}
+
+
+Definition at line 95 of file rpc\+\_\+des.\+h.
+
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!des\+\_\+data@{des\+\_\+data}}
+\index{des\+\_\+data@{des\+\_\+data}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{des\+\_\+data}{des_data}}]{\setlength{\rightskip}{0pt plus 5cm}\#define des\+\_\+data~U\+D\+E\+S.\+U\+D\+E\+S\+\_\+data /$\ast$ direct data here if quick $\ast$/}\hypertarget{rpc__des_8h_aafa8613e7bb3e4312cc87a5e6671d42a}{}\label{rpc__des_8h_aafa8613e7bb3e4312cc87a5e6671d42a}
+
+
+Definition at line 118 of file rpc\+\_\+des.\+h.
+
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!des\+\_\+buf@{des\+\_\+buf}}
+\index{des\+\_\+buf@{des\+\_\+buf}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{des\+\_\+buf}{des_buf}}]{\setlength{\rightskip}{0pt plus 5cm}\#define des\+\_\+buf~U\+D\+E\+S.\+U\+D\+E\+S\+\_\+buf  /$\ast$ otherwise, pointer to data $\ast$/}\hypertarget{rpc__des_8h_a62cd5b9196f9ea833fc2418d79b73a40}{}\label{rpc__des_8h_a62cd5b9196f9ea833fc2418d79b73a40}
+
+
+Definition at line 119 of file rpc\+\_\+des.\+h.
+
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!D\+E\+S\+I\+O\+C\+B\+L\+O\+CK@{D\+E\+S\+I\+O\+C\+B\+L\+O\+CK}}
+\index{D\+E\+S\+I\+O\+C\+B\+L\+O\+CK@{D\+E\+S\+I\+O\+C\+B\+L\+O\+CK}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+S\+I\+O\+C\+B\+L\+O\+CK}{DESIOCBLOCK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+S\+I\+O\+C\+B\+L\+O\+CK~\+\_\+\+I\+O\+WR(\textquotesingle{}d\textquotesingle{}, 6, struct {\bf desparams})}\hypertarget{rpc__des_8h_ae28d49131d7e8433a079972f157628e4}{}\label{rpc__des_8h_ae28d49131d7e8433a079972f157628e4}
+
+
+Definition at line 125 of file rpc\+\_\+des.\+h.
+
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK@{D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK}}
+\index{D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK@{D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK}{DESIOCQUICK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+S\+I\+O\+C\+Q\+U\+I\+CK~\+\_\+\+I\+O\+WR(\textquotesingle{}d\textquotesingle{}, 7, struct {\bf desparams})}\hypertarget{rpc__des_8h_a37211a25060f881efc4222d61cbc5ed5}{}\label{rpc__des_8h_a37211a25060f881efc4222d61cbc5ed5}
+
+
+Definition at line 130 of file rpc\+\_\+des.\+h.
+
+
+
+\subsection{Enumeration Type Documentation}
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!desdir@{desdir}}
+\index{desdir@{desdir}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{desdir}{desdir}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf desdir}}\hypertarget{rpc__des_8h_a77d581848d3140d21decf45fd1284044}{}\label{rpc__des_8h_a77d581848d3140d21decf45fd1284044}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{E\+N\+C\+R\+Y\+PT@{E\+N\+C\+R\+Y\+PT}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!E\+N\+C\+R\+Y\+PT@{E\+N\+C\+R\+Y\+PT}}\item[{\em 
+E\+N\+C\+R\+Y\+PT\hypertarget{rpc__des_8h_a77d581848d3140d21decf45fd1284044a606f7451c00ce2831f56eceb9ab6bb96}{}\label{rpc__des_8h_a77d581848d3140d21decf45fd1284044a606f7451c00ce2831f56eceb9ab6bb96}
+}]\index{D\+E\+C\+R\+Y\+PT@{D\+E\+C\+R\+Y\+PT}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!D\+E\+C\+R\+Y\+PT@{D\+E\+C\+R\+Y\+PT}}\item[{\em 
+D\+E\+C\+R\+Y\+PT\hypertarget{rpc__des_8h_a77d581848d3140d21decf45fd1284044a3179dbaa639c5906029876801dcf4e11}{}\label{rpc__des_8h_a77d581848d3140d21decf45fd1284044a3179dbaa639c5906029876801dcf4e11}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 102 of file rpc\+\_\+des.\+h.
+
+
+\begin{DoxyCode}
+102 \{ \hyperlink{rpc__des_8h_a77d581848d3140d21decf45fd1284044a606f7451c00ce2831f56eceb9ab6bb96}{ENCRYPT}, \hyperlink{rpc__des_8h_a77d581848d3140d21decf45fd1284044a3179dbaa639c5906029876801dcf4e11}{DECRYPT} \};
+\end{DoxyCode}
+\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!desmode@{desmode}}
+\index{desmode@{desmode}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}
+\subsubsection[{\texorpdfstring{desmode}{desmode}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf desmode}}\hypertarget{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8d}{}\label{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8d}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+BC@{C\+BC}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!C\+BC@{C\+BC}}\item[{\em 
+C\+BC\hypertarget{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da4ace9ef28707cb98c2ccaaff518b3a49}{}\label{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da4ace9ef28707cb98c2ccaaff518b3a49}
+}]\index{E\+CB@{E\+CB}!rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}}\index{rpc\+\_\+des.\+h@{rpc\+\_\+des.\+h}!E\+CB@{E\+CB}}\item[{\em 
+E\+CB\hypertarget{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da7d741b13309dda6483a636c9d75e009e}{}\label{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da7d741b13309dda6483a636c9d75e009e}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 103 of file rpc\+\_\+des.\+h.
+
+
+\begin{DoxyCode}
+103 \{ \hyperlink{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da4ace9ef28707cb98c2ccaaff518b3a49}{CBC}, \hyperlink{rpc__des_8h_ae587160a013e5130f62c6ccaaebd6c8da7d741b13309dda6483a636c9d75e009e}{ECB} \};
+\end{DoxyCode}

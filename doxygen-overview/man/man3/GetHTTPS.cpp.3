@@ -1,0 +1,230 @@
+.TH "s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/GetHTTPS.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/GetHTTPS.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'CPStringUtils\&.hpp'\fP
+.br
+\fC#include 'ErrorHandling\&.hpp'\fP
+.br
+\fC#include 'MacSocket\&.h'\fP
+.br
+\fC#include 'Randomizer\&.h'\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <timer\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBkHTTPS_DNS\fP   'www\&.apache\-ssl\&.org'"
+.br
+.ti -1c
+.RI "#define \fBkHTTPS_Port\fP   443"
+.br
+.ti -1c
+.RI "#define \fBkHTTPS_URI\fP   '/'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "OSErr \fBMyMacSocket_IdleWaitCallback\fP (\fBvoid\fP *inUserRefPtr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define kHTTPS_DNS   'www\&.apache\-ssl\&.org'"
+
+.PP
+Definition at line 42 of file GetHTTPS\&.cpp\&.
+.SS "#define kHTTPS_Port   443"
+
+.PP
+Definition at line 43 of file GetHTTPS\&.cpp\&.
+.SS "#define kHTTPS_URI   '/'"
+
+.PP
+Definition at line 44 of file GetHTTPS\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "OSErr MyMacSocket_IdleWaitCallback (\fBvoid\fP * inUserRefPtr)"
+
+.PP
+Definition at line 53 of file GetHTTPS\&.cpp\&.
+.PP
+.nf
+54 {
+55 #pragma unused(inUserRefPtr)
+56 
+57 EventRecord     theEvent;
+58     ::EventAvail(everyEvent,&theEvent);
+59     
+60     CRandomizer *randomizer = (CRandomizer*)inUserRefPtr;
+61     if (randomizer)
+62         randomizer->PeriodicAction();
+63 
+64     return(noErr);
+65 }
+.fi
+.SS "\fBvoid\fP main (\fBvoid\fP)"
+
+.PP
+Definition at line 70 of file GetHTTPS\&.cpp\&.
+.PP
+.nf
+71 {
+72     OSErr               errCode;
+73     int                 theSocket = -1;
+74     int                 theTimeout = 30;
+75 
+76     SSL_CTX             *ssl_ctx = nil;
+77     SSL                 *ssl = nil;
+78 
+79     char                tempString[256];
+80     UnsignedWide        microTickCount;
+81 
+82 
+83     CRandomizer randomizer;
+84     
+85     printf("OpenSSL Demo by Roy Wood, roy@centricsystems\&.ca\n\n");
+86     
+87     BailIfError(errCode = MacSocket_Startup());
+88 
+89 
+90 
+91     //  Create a socket-like object
+92     
+93     BailIfError(errCode = MacSocket_socket(&theSocket,false,theTimeout * 60,MyMacSocket_IdleWaitCallback,&randomizer));
+94 
+95     
+96     //  Set up the connect string and try to connect
+97     
+98     CopyCStrAndInsertCStrLongIntIntoCStr("%s:%ld",kHTTPS_DNS,kHTTPS_Port,tempString,sizeof(tempString));
+99     
+100     printf("Connecting to %s\&.\&.\&.\&.\n",tempString);
+101 
+102     BailIfError(errCode = MacSocket_connect(theSocket,tempString));
+103     
+104     
+105     //  Init SSL stuff
+106     
+107     SSL_load_error_strings();
+108     
+109     SSLeay_add_ssl_algorithms();
+110     
+111     
+112     //  Pick the SSL method
+113     
+114 //  ssl_ctx = SSL_CTX_new(SSLv2_client_method());
+115     ssl_ctx = SSL_CTX_new(SSLv23_client_method());
+116 //  ssl_ctx = SSL_CTX_new(SSLv3_client_method());
+117             
+118 
+119     //  Create an SSL thingey and try to negotiate the connection
+120     
+121     ssl = SSL_new(ssl_ctx);
+122     
+123     SSL_set_fd(ssl,theSocket);
+124     
+125     errCode = SSL_connect(ssl);
+126     
+127     if (errCode < 0)
+128     {
+129         SetErrorMessageAndLongIntAndBail("OpenSSL: Can't initiate SSL connection, SSL_connect() = ",errCode);
+130     }
+131     
+132     //  Request the URI from the host
+133     
+134     CopyCStrToCStr("GET ",tempString,sizeof(tempString));
+135     ConcatCStrToCStr(kHTTPS_URI,tempString,sizeof(tempString));
+136     ConcatCStrToCStr(" HTTP/1\&.0\r\n\r\n",tempString,sizeof(tempString));
+137 
+138     
+139     errCode = SSL_write(ssl,tempString,CStrLength(tempString));
+140     
+141     if (errCode < 0)
+142     {
+143         SetErrorMessageAndLongIntAndBail("OpenSSL: Error writing data via ssl, SSL_write() = ",errCode);
+144     }
+145     
+146 
+147     for (;;)
+148     {
+149     char    tempString[256];
+150     int     bytesRead;
+151         
+152 
+153         //  Read some bytes and dump them to the console
+154         
+155         bytesRead = SSL_read(ssl,tempString,sizeof(tempString) - 1);
+156         
+157         if (bytesRead == 0 && MacSocket_RemoteEndIsClosing(theSocket))
+158         {
+159             break;
+160         }
+161         
+162         else if (bytesRead < 0)
+163         {
+164             SetErrorMessageAndLongIntAndBail("OpenSSL: Error reading data via ssl, SSL_read() = ",bytesRead);
+165         }
+166         
+167         
+168         tempString[bytesRead] = '\0';
+169         
+170         printf("%s", tempString);
+171     }
+172     
+173     printf("\n\n\n");
+174     
+175     //  All done!
+176     
+177     errCode = noErr;
+178     
+179     
+180 EXITPOINT:
+181 
+182     //  Clean up and go home
+183     
+184     if (theSocket >= 0)
+185     {
+186         MacSocket_close(theSocket);
+187     }
+188     
+189     if (ssl != nil)
+190     {
+191         SSL_free(ssl);
+192     }
+193     
+194     if (ssl_ctx != nil)
+195     {
+196         SSL_CTX_free(ssl_ctx);
+197     }
+198     
+199     
+200     if (errCode != noErr)
+201     {
+202         printf("An error occurred:\n");
+203         
+204         printf("%s",GetErrorMessage());
+205     }
+206     
+207     
+208     MacSocket_Shutdown();
+209 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

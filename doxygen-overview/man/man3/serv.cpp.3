@@ -1,0 +1,220 @@
+.TH "s2n-master/libcrypto-build/openssl/demos/ssl/serv.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/demos/ssl/serv.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <memory\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/socket\&.h>\fP
+.br
+\fC#include <netinet/in\&.h>\fP
+.br
+\fC#include <arpa/inet\&.h>\fP
+.br
+\fC#include <netdb\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHOME\fP   '\&./'"
+.br
+.ti -1c
+.RI "#define \fBCERTF\fP   \fBHOME\fP 'foo\-cert\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBKEYF\fP   \fBHOME\fP  'foo\-cert\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBCHK_NULL\fP(\fBx\fP)   if ((\fBx\fP)==NULL) exit (1)"
+.br
+.ti -1c
+.RI "#define \fBCHK_ERR\fP(err,  s)   if ((err)==\-1) { perror(s); exit(1); }"
+.br
+.ti -1c
+.RI "#define \fBCHK_SSL\fP(err)   if ((err)==\-1) { \fBERR_print_errors_fp\fP(stderr); exit(2); }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP ()"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define HOME   '\&./'"
+
+.PP
+Definition at line 29 of file serv\&.cpp\&.
+.SS "#define CERTF   \fBHOME\fP 'foo\-cert\&.pem'"
+
+.PP
+Definition at line 31 of file serv\&.cpp\&.
+.SS "#define KEYF   \fBHOME\fP  'foo\-cert\&.pem'"
+
+.PP
+Definition at line 32 of file serv\&.cpp\&.
+.SS "#define CHK_NULL(\fBx\fP)   if ((\fBx\fP)==NULL) exit (1)"
+
+.PP
+Definition at line 35 of file serv\&.cpp\&.
+.SS "#define CHK_ERR(err, s)   if ((err)==\-1) { perror(s); exit(1); }"
+
+.PP
+Definition at line 36 of file serv\&.cpp\&.
+.SS "#define CHK_SSL(err)   if ((err)==\-1) { \fBERR_print_errors_fp\fP(stderr); exit(2); }"
+
+.PP
+Definition at line 37 of file serv\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP main (\fBvoid\fP)"
+
+.PP
+Definition at line 39 of file serv\&.cpp\&.
+.PP
+.nf
+40 {
+41   int err;
+42   int listen_sd;
+43   int sd;
+44   struct sockaddr_in sa_serv;
+45   struct sockaddr_in sa_cli;
+46   size_t client_len;
+47   SSL_CTX* ctx;
+48   SSL*     ssl;
+49   X509*    client_cert;
+50   char*    str;
+51   char     buf [4096];
+52   SSL_METHOD *meth;
+53   
+54   /* SSL preliminaries\&. We keep the certificate and key with the context\&. */
+55 
+56   SSL_load_error_strings();
+57   SSLeay_add_ssl_algorithms();
+58   meth = SSLv23_server_method();
+59   ctx = SSL_CTX_new (meth);
+60   if (!ctx) {
+61     ERR_print_errors_fp(stderr);
+62     exit(2);
+63   }
+64   
+65   if (SSL_CTX_use_certificate_file(ctx, CERTF, SSL_FILETYPE_PEM) <= 0) {
+66     ERR_print_errors_fp(stderr);
+67     exit(3);
+68   }
+69   if (SSL_CTX_use_PrivateKey_file(ctx, KEYF, SSL_FILETYPE_PEM) <= 0) {
+70     ERR_print_errors_fp(stderr);
+71     exit(4);
+72   }
+73 
+74   if (!SSL_CTX_check_private_key(ctx)) {
+75     fprintf(stderr,"Private key does not match the certificate public key\n");
+76     exit(5);
+77   }
+78 
+79   /* ----------------------------------------------- */
+80   /* Prepare TCP socket for receiving connections */
+81 
+82   listen_sd = socket (AF_INET, SOCK_STREAM, 0);   CHK_ERR(listen_sd, "socket");
+83   
+84   memset (&sa_serv, '\0', sizeof(sa_serv));
+85   sa_serv\&.sin_family      = AF_INET;
+86   sa_serv\&.sin_addr\&.s_addr = INADDR_ANY;
+87   sa_serv\&.sin_port        = htons (1111);          /* Server Port number */
+88   
+89   err = bind(listen_sd, (struct sockaddr*) &sa_serv,
+90          sizeof (sa_serv));                   CHK_ERR(err, "bind");
+91          
+92   /* Receive a TCP connection\&. */
+93          
+94   err = listen (listen_sd, 5);                    CHK_ERR(err, "listen");
+95   
+96   client_len = sizeof(sa_cli);
+97   sd = accept (listen_sd, (struct sockaddr*) &sa_cli, &client_len);
+98   CHK_ERR(sd, "accept");
+99   close (listen_sd);
+100 
+101   printf ("Connection from %lx, port %x\n",
+102       sa_cli\&.sin_addr\&.s_addr, sa_cli\&.sin_port);
+103   
+104   /* ----------------------------------------------- */
+105   /* TCP connection is ready\&. Do server side SSL\&. */
+106 
+107   ssl = SSL_new (ctx);                           CHK_NULL(ssl);
+108   SSL_set_fd (ssl, sd);
+109   err = SSL_accept (ssl);                        CHK_SSL(err);
+110   
+111   /* Get the cipher - opt */
+112   
+113   printf ("SSL connection using %s\n", SSL_get_cipher (ssl));
+114   
+115   /* Get client's certificate (note: beware of dynamic allocation) - opt */
+116 
+117   client_cert = SSL_get_peer_certificate (ssl);
+118   if (client_cert != NULL) {
+119     printf ("Client certificate:\n");
+120     
+121     str = X509_NAME_oneline (X509_get_subject_name (client_cert), 0, 0);
+122     CHK_NULL(str);
+123     printf ("\t subject: %s\n", str);
+124     OPENSSL_free (str);
+125     
+126     str = X509_NAME_oneline (X509_get_issuer_name  (client_cert), 0, 0);
+127     CHK_NULL(str);
+128     printf ("\t issuer: %s\n", str);
+129     OPENSSL_free (str);
+130     
+131     /* We could do all sorts of certificate verification stuff here before
+132        deallocating the certificate\&. */
+133     
+134     X509_free (client_cert);
+135   } else
+136     printf ("Client does not have certificate\&.\n");
+137 
+138   /* DATA EXCHANGE - Receive message and send reply\&. */
+139 
+140   err = SSL_read (ssl, buf, sizeof(buf) - 1);                   CHK_SSL(err);
+141   buf[err] = '\0';
+142   printf ("Got %d chars:'%s'\n", err, buf);
+143   
+144   err = SSL_write (ssl, "I hear you\&.", strlen("I hear you\&."));  CHK_SSL(err);
+145 
+146   /* Clean up\&. */
+147 
+148   close (sd);
+149   SSL_free (ssl);
+150   SSL_CTX_free (ctx);
+151 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

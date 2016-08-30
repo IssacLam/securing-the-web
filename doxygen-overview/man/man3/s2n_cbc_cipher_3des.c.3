@@ -1,0 +1,51 @@
+.TH "s2n-master/crypto/s2n_cbc_cipher_3des.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_cbc_cipher_3des.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_cipher\fP \fBs2n_3des\fP"
+.br
+.in -1c
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBs2n_cipher\fP s2n_3des"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.key_material_size = 24,
+    \&.type = S2N_CBC,
+    \&.io\&.cbc = {
+               \&.block_size = 8,
+               \&.record_iv_size = 8,
+               \&.decrypt = s2n_cbc_cipher_3des_decrypt,
+               \&.encrypt = s2n_cbc_cipher_3des_encrypt},
+    \&.init = s2n_cbc_cipher_3des_init,
+    \&.get_decryption_key = s2n_cbc_cipher_3des_get_decryption_key,
+    \&.get_encryption_key = s2n_cbc_cipher_3des_get_encryption_key,
+    \&.destroy_key = s2n_cbc_cipher_3des_destroy_key,
+}
+.fi
+.PP
+Definition at line 93 of file s2n_cbc_cipher_3des\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

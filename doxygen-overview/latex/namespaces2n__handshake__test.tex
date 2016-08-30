@@ -1,0 +1,214 @@
+\hypertarget{namespaces2n__handshake__test}{}\section{s2n\+\_\+handshake\+\_\+test Namespace Reference}
+\label{namespaces2n__handshake__test}\index{s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaces2n__handshake__test_a287252556f49081bcdf3a2e0f4168de7}{try\+\_\+handshake} (endpoint, port, cipher, ssl\+\_\+version)
+\item 
+def \hyperlink{namespaces2n__handshake__test_a4e34068c8732bcdcbd61b1a7f54a05b5}{main} (argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \hyperlink{namespaces2n__handshake__test_adbfecdf840887c5e82f08e23e9d9430f}{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}
+\item 
+dictionary \hyperlink{namespaces2n__handshake__test_a58e49fbf9e2d2275dc26b83ca33c2be5}{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}!try\+\_\+handshake@{try\+\_\+handshake}}
+\index{try\+\_\+handshake@{try\+\_\+handshake}!s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}}
+\subsubsection[{\texorpdfstring{try\+\_\+handshake(endpoint, port, cipher, ssl\+\_\+version)}{try_handshake(endpoint, port, cipher, ssl_version)}}]{\setlength{\rightskip}{0pt plus 5cm}def s2n\+\_\+handshake\+\_\+test.\+try\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{}]{endpoint, }
+\item[{}]{port, }
+\item[{}]{cipher, }
+\item[{}]{ssl\+\_\+version}
+\end{DoxyParamCaption}
+)}\hypertarget{namespaces2n__handshake__test_a287252556f49081bcdf3a2e0f4168de7}{}\label{namespaces2n__handshake__test_a287252556f49081bcdf3a2e0f4168de7}
+
+
+Definition at line 54 of file s2n\+\_\+handshake\+\_\+test.\+py.
+
+
+\begin{DoxyCode}
+54 \textcolor{keyword}{def }\hyperlink{namespaces2n__handshake__test_a287252556f49081bcdf3a2e0f4168de7}{try\_handshake}(endpoint, port, cipher, ssl\_version):
+55     \textcolor{comment}{# Fire up s2nd}
+56     s2nd = subprocess.Popen([\textcolor{stringliteral}{"../../bin/s2nd"}, \textcolor{stringliteral}{"-c"}, \textcolor{stringliteral}{"test\_all"}, str(endpoint), str(port)], stdin=
+      subprocess.PIPE, stdout=subprocess.PIPE)
+57 
+58     \textcolor{comment}{# Make sure it's running}
+59     s2nd.stdout.readline()
+60 
+61     sock = socket.socket(socket.AF\_INET, socket.SOCK\_STREAM)
+62     sock.settimeout(1)
+63 
+64     \textcolor{keywordflow}{try}:
+65         ssl\_sock = ssl.wrap\_socket(sock, ssl\_version=ssl\_version, ciphers=cipher)
+66     \textcolor{keywordflow}{except} ssl.SSLError \textcolor{keyword}{as} err:
+67         print(str(err))
+68         \textcolor{keywordflow}{return} -1
+69     \textcolor{keywordflow}{try}:
+70         ssl\_sock.connect((endpoint, port))
+71     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} err:
+72         print(str(err))
+73         \textcolor{keywordflow}{return} -1
+74 
+75     \textcolor{comment}{# Write the cipher name towards s2n}
+76     ssl\_sock.send((cipher + \textcolor{stringliteral}{"\(\backslash\)n"}).encode(\textcolor{stringliteral}{"utf-8"}))
+77     found = 0
+78     \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} range(0, 10):
+79         output = s2nd.stdout.readline().decode(\textcolor{stringliteral}{"utf-8"})
+80         \textcolor{keywordflow}{if} output.strip() == cipher:
+81             found = 1
+82             \textcolor{keywordflow}{break}
+83 
+84     \textcolor{keywordflow}{if} found == 0:
+85         \textcolor{keywordflow}{return} -1
+86 
+87     \textcolor{comment}{# Write the cipher name from s2n}
+88     buffered = ssl\_sock.makefile()
+89     s2nd.stdin.write((cipher + \textcolor{stringliteral}{"\(\backslash\)n"}).encode(\textcolor{stringliteral}{"utf-8"}))
+90     s2nd.stdin.flush()
+91     found = 0
+92     \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} range(0, 10):
+93         \textcolor{keywordflow}{try}:
+94             output = buffered.readline().decode(\textcolor{stringliteral}{"utf-8"})
+95         \textcolor{keywordflow}{except}:
+96             \textcolor{keywordflow}{pass}
+97 
+98         \textcolor{keywordflow}{if} output.strip() == cipher:
+99             found = 1
+100             \textcolor{keywordflow}{break}
+101 
+102     \textcolor{keywordflow}{if} found == 0:
+103         \textcolor{keywordflow}{return} -1
+104 
+105     s2nd.kill()
+106     s2nd.wait()
+107 
+108     \textcolor{keywordflow}{return} 0
+109 
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{namespaces2n__handshake__test_a287252556f49081bcdf3a2e0f4168de7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}!main@{main}}
+\index{main@{main}!s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}}
+\subsubsection[{\texorpdfstring{main(argv)}{main(argv)}}]{\setlength{\rightskip}{0pt plus 5cm}def s2n\+\_\+handshake\+\_\+test.\+main (
+\begin{DoxyParamCaption}
+\item[{}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{namespaces2n__handshake__test_a4e34068c8732bcdcbd61b1a7f54a05b5}{}\label{namespaces2n__handshake__test_a4e34068c8732bcdcbd61b1a7f54a05b5}
+
+
+Definition at line 110 of file s2n\+\_\+handshake\+\_\+test.\+py.
+
+
+\begin{DoxyCode}
+110 \textcolor{keyword}{def }\hyperlink{namespaces2n__handshake__test_a4e34068c8732bcdcbd61b1a7f54a05b5}{main}(argv):
+111     \textcolor{keywordflow}{if} \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}(argv) < 2:
+112         print(\textcolor{stringliteral}{"s2n\_handshake\_test.py host port"})
+113         sys.exit(1)
+114 
+115     print(\textcolor{stringliteral}{"\(\backslash\)nRunning handshake tests with: "} + str(ssl.OPENSSL\_VERSION))
+116     failed = 0
+117     \textcolor{keywordflow}{for} ssl\_version \textcolor{keywordflow}{in} [ssl.PROTOCOL\_SSLv3, ssl.PROTOCOL\_TLSv1, ssl.PROTOCOL\_TLSv1\_1, ssl.PROTOCOL\_TLSv1\_2]
+      :
+118         print(\textcolor{stringliteral}{"\(\backslash\)n\(\backslash\)tTesting ciphers using client version: "} + PROTO\_VERS\_TO\_STR[ssl\_version])
+119         \textcolor{keywordflow}{for} cipher \textcolor{keywordflow}{in} S2N\_CIPHERS:
+120             cipher\_name = cipher[0]
+121             cipher\_vers = cipher[1]
+122 
+123             \textcolor{keywordflow}{if} ssl\_version < cipher\_vers:
+124                 \textcolor{keywordflow}{continue}
+125 
+126             ret = \hyperlink{namespaces2n__handshake__test_a287252556f49081bcdf3a2e0f4168de7}{try\_handshake}(argv[0], int(argv[1]), cipher\_name, ssl\_version)
+127             print(\textcolor{stringliteral}{"Cipher: %-30s Vers: %-10s ... "} % (cipher\_name, PROTO\_VERS\_TO\_STR[ssl\_version]), end=\textcolor{stringliteral}{''})
+128             \textcolor{keywordflow}{if} ret == 0:
+129                 \textcolor{keywordflow}{if} sys.stdout.isatty():
+130                     print(\textcolor{stringliteral}{"\(\backslash\)033[32;1mPASSED\(\backslash\)033[0m"})
+131                 \textcolor{keywordflow}{else}:
+132                     print(\textcolor{stringliteral}{"PASSED"})
+133             \textcolor{keywordflow}{else}:
+134                 \textcolor{keywordflow}{if} sys.stdout.isatty():
+135                     print(\textcolor{stringliteral}{"\(\backslash\)033[31;1mFAILED\(\backslash\)033[0m"})
+136                 \textcolor{keywordflow}{else}:
+137                     print(\textcolor{stringliteral}{"FAILED"})
+138                 failed = 1
+139     \textcolor{keywordflow}{return} failed
+140 
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{namespaces2n__handshake__test_a4e34068c8732bcdcbd61b1a7f54a05b5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}!S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS@{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}}
+\index{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS@{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}!s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}{S2N_CIPHERS}}]{\setlength{\rightskip}{0pt plus 5cm}list S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}\hypertarget{namespaces2n__handshake__test_adbfecdf840887c5e82f08e23e9d9430f}{}\label{namespaces2n__handshake__test_adbfecdf840887c5e82f08e23e9d9430f}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = [
+2     (\textcolor{stringliteral}{"RC4-MD5"}, ssl.PROTOCOL\_SSLv3),
+3     (\textcolor{stringliteral}{"RC4-SHA"}, ssl.PROTOCOL\_SSLv3),
+4     (\textcolor{stringliteral}{"DES-CBC3-SHA"}, ssl.PROTOCOL\_SSLv3),
+5     (\textcolor{stringliteral}{"EDH-RSA-DES-CBC3-SHA"}, ssl.PROTOCOL\_SSLv3),
+6     (\textcolor{stringliteral}{"AES128-SHA"}, ssl.PROTOCOL\_TLSv1),
+7     (\textcolor{stringliteral}{"DHE-RSA-AES128-SHA"}, ssl.PROTOCOL\_TLSv1),
+8     (\textcolor{stringliteral}{"AES256-SHA"}, ssl.PROTOCOL\_TLSv1),
+9     (\textcolor{stringliteral}{"DHE-RSA-AES256-SHA"}, ssl.PROTOCOL\_TLSv1),
+10     (\textcolor{stringliteral}{"AES128-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+11     (\textcolor{stringliteral}{"AES256-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+12     (\textcolor{stringliteral}{"DHE-RSA-AES128-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+13     (\textcolor{stringliteral}{"DHE-RSA-AES256-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+14     (\textcolor{stringliteral}{"AES128-GCM-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+15     (\textcolor{stringliteral}{"AES256-GCM-SHA384"}, ssl.PROTOCOL\_TLSv1\_2),
+16     (\textcolor{stringliteral}{"DHE-RSA-AES128-GCM-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+17     (\textcolor{stringliteral}{"ECDHE-RSA-DES-CBC3-SHA"}, ssl.PROTOCOL\_TLSv1),
+18     (\textcolor{stringliteral}{"ECDHE-RSA-AES128-SHA"}, ssl.PROTOCOL\_TLSv1),
+19     (\textcolor{stringliteral}{"ECDHE-RSA-AES256-SHA"}, ssl.PROTOCOL\_TLSv1),
+20     (\textcolor{stringliteral}{"ECDHE-RSA-AES128-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+21     (\textcolor{stringliteral}{"ECDHE-RSA-AES256-SHA384"}, ssl.PROTOCOL\_TLSv1\_2),
+22     (\textcolor{stringliteral}{"ECDHE-RSA-AES128-GCM-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+23     (\textcolor{stringliteral}{"ECDHE-RSA-AES256-GCM-SHA384"}, ssl.PROTOCOL\_TLSv1\_2),
+24 ]
+\end{DoxyCode}
+
+
+Definition at line 22 of file s2n\+\_\+handshake\+\_\+test.\+py.
+
+\index{s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}!P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR@{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}}
+\index{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR@{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}!s2n\+\_\+handshake\+\_\+test@{s2n\+\_\+handshake\+\_\+test}}
+\subsubsection[{\texorpdfstring{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}{PROTO_VERS_TO_STR}}]{\setlength{\rightskip}{0pt plus 5cm}dictionary P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}\hypertarget{namespaces2n__handshake__test_a58e49fbf9e2d2275dc26b83ca33c2be5}{}\label{namespaces2n__handshake__test_a58e49fbf9e2d2275dc26b83ca33c2be5}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = \{
+2     ssl.PROTOCOL\_SSLv3 : \textcolor{stringliteral}{"SSlv3"},
+3     ssl.PROTOCOL\_TLSv1 : \textcolor{stringliteral}{"TLSv1.0"},
+4     ssl.PROTOCOL\_TLSv1\_1 : \textcolor{stringliteral}{"TLSv1.1"},
+5     ssl.PROTOCOL\_TLSv1\_2 : \textcolor{stringliteral}{"TLSv1.2"},
+6 \}
+\end{DoxyCode}
+
+
+Definition at line 47 of file s2n\+\_\+handshake\+\_\+test.\+py.
+

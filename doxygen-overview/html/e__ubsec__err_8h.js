@@ -1,0 +1,25 @@
+var e__ubsec__err_8h =
+[
+    [ "UBSECerr", "e__ubsec__err_8h.html#ad06199b96da035b0e80fab7bf6e89655", null ],
+    [ "UBSEC_F_UBSEC_CTRL", "e__ubsec__err_8h.html#aecddbf9b9faac9aa769bbf52ad3c58c7", null ],
+    [ "UBSEC_F_UBSEC_DH_COMPUTE_KEY", "e__ubsec__err_8h.html#a270ac25525582a797fc446b2d5b27e93", null ],
+    [ "UBSEC_F_UBSEC_DH_GENERATE_KEY", "e__ubsec__err_8h.html#ab55b1708ab1396ee3c1385c75cc92a34", null ],
+    [ "UBSEC_F_UBSEC_DSA_DO_SIGN", "e__ubsec__err_8h.html#aba409163442c72f69f10754925dc8f0e", null ],
+    [ "UBSEC_F_UBSEC_DSA_VERIFY", "e__ubsec__err_8h.html#a402d89325f4dd3bfc45c90bf3aa39a2f", null ],
+    [ "UBSEC_F_UBSEC_FINISH", "e__ubsec__err_8h.html#a1802d342e24f918a9eccf3fc7bc331b8", null ],
+    [ "UBSEC_F_UBSEC_INIT", "e__ubsec__err_8h.html#a7432365b91e513fd2da5b2a74950fa52", null ],
+    [ "UBSEC_F_UBSEC_MOD_EXP", "e__ubsec__err_8h.html#a98e9de9675c97c3b41a8462e1445cf93", null ],
+    [ "UBSEC_F_UBSEC_MOD_EXP_CRT", "e__ubsec__err_8h.html#aac9b40f34cf608e75e3af4039a56b601", null ],
+    [ "UBSEC_F_UBSEC_RAND_BYTES", "e__ubsec__err_8h.html#a8662b7ff821e731950255c9980328b82", null ],
+    [ "UBSEC_F_UBSEC_RSA_MOD_EXP", "e__ubsec__err_8h.html#a6cf65d108a94ad6983e71282a92f7ef9", null ],
+    [ "UBSEC_F_UBSEC_RSA_MOD_EXP_CRT", "e__ubsec__err_8h.html#a01b7d4ff4aebe0abbdad75dfb5f85244", null ],
+    [ "UBSEC_R_ALREADY_LOADED", "e__ubsec__err_8h.html#a95013aff0f1b5cd6a613e876ec2e70b6", null ],
+    [ "UBSEC_R_BN_EXPAND_FAIL", "e__ubsec__err_8h.html#a1b61183916e7827d0264e078a365d19f", null ],
+    [ "UBSEC_R_CTRL_COMMAND_NOT_IMPLEMENTED", "e__ubsec__err_8h.html#afa41df40c8c2e7012a316ac2fdb43504", null ],
+    [ "UBSEC_R_DSO_FAILURE", "e__ubsec__err_8h.html#a0d878dc3aa0fe371b8dcc90eca1078b7", null ],
+    [ "UBSEC_R_MISSING_KEY_COMPONENTS", "e__ubsec__err_8h.html#a69d04d5efb7b1f89fb90ef2bbb0b88c6", null ],
+    [ "UBSEC_R_NOT_LOADED", "e__ubsec__err_8h.html#a744c92acf83b19be102fcd7b45fe5935", null ],
+    [ "UBSEC_R_REQUEST_FAILED", "e__ubsec__err_8h.html#ac8da3c27b8e1ef8af035af2a1661ead6", null ],
+    [ "UBSEC_R_SIZE_TOO_LARGE_OR_TOO_SMALL", "e__ubsec__err_8h.html#a6d2f0f7af5a9e816d84d111e78c1c117", null ],
+    [ "UBSEC_R_UNIT_FAILURE", "e__ubsec__err_8h.html#aa1d346f0f1479230bcb1a3e4ad3030a2", null ]
+];

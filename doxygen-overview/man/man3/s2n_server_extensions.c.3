@@ -1,0 +1,136 @@
+.TH "s2n-master/tls/s2n_server_extensions.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_server_extensions.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_server_extensions_send\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_stuffer\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_extensions_recv\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_blob\fP *extensions)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_server_extensions_send (struct \fBs2n_connection\fP * conn, struct \fBs2n_stuffer\fP * out)"
+
+.PP
+Definition at line 33 of file s2n_server_extensions\&.c\&.
+.PP
+.nf
+34 {
+35     uint16_t total_size = 0;
+36 
+37     uint8_t application_protocol_len = strlen(conn->application_protocol);
+38 
+39     if (application_protocol_len) {
+40         total_size += 7 + application_protocol_len;
+41     }
+42     if (s2n_server_can_send_ocsp(conn)) {
+43         total_size += 4;
+44     }
+45     if (conn->secure_renegotiation) {
+46         total_size += 5;
+47     }
+48 
+49     if (total_size == 0) {
+50         return 0;
+51     }
+52 
+53     GUARD(s2n_stuffer_write_uint16(out, total_size));
+54 
+55     /* Write the renegotiation_info extension */
+56     if (conn->secure_renegotiation) {
+57         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_RENEGOTIATION_INFO));
+58         /* renegotiation_info length */
+59         GUARD(s2n_stuffer_write_uint16(out, 1));
+60         /* renegotiated_connection length */
+61         GUARD(s2n_stuffer_write_uint8(out, 0));
+62     }
+63 
+64     /* Write ALPN extension */
+65     if (application_protocol_len) {
+66         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_ALPN));
+67         GUARD(s2n_stuffer_write_uint16(out, application_protocol_len + 3));
+68         GUARD(s2n_stuffer_write_uint16(out, application_protocol_len + 1));
+69         GUARD(s2n_stuffer_write_uint8(out, application_protocol_len));
+70         GUARD(s2n_stuffer_write_bytes(out, (uint8_t *) conn->application_protocol, application_protocol_len));
+71     }
+72 
+73     /* Write OCSP extension */
+74     if (s2n_server_can_send_ocsp(conn)) {
+75         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_STATUS_REQUEST));
+76         GUARD(s2n_stuffer_write_uint16(out, 0));
+77     }
+78 
+79     return 0;
+80 }
+.fi
+.SS "int s2n_server_extensions_recv (struct \fBs2n_connection\fP * conn, struct \fBs2n_blob\fP * extensions)"
+
+.PP
+Definition at line 82 of file s2n_server_extensions\&.c\&.
+.PP
+.nf
+83 {
+84     struct s2n_stuffer in;
+85 
+86     GUARD(s2n_stuffer_init(&in, extensions));
+87     GUARD(s2n_stuffer_write(&in, extensions));
+88 
+89     while (s2n_stuffer_data_available(&in)) {
+90         struct s2n_blob ext;
+91         uint16_t extension_type, extension_size;
+92         struct s2n_stuffer extension;
+93 
+94         GUARD(s2n_stuffer_read_uint16(&in, &extension_type));
+95         GUARD(s2n_stuffer_read_uint16(&in, &extension_size));
+96 
+97         ext\&.size = extension_size;
+98         ext\&.data = s2n_stuffer_raw_read(&in, ext\&.size);
+99         notnull_check(ext\&.data);
+100 
+101         GUARD(s2n_stuffer_init(&extension, &ext));
+102         GUARD(s2n_stuffer_write(&extension, &ext));
+103 
+104         switch (extension_type) {
+105         case TLS_EXTENSION_ALPN:
+106             GUARD(s2n_recv_server_alpn(conn, &extension));
+107             break;
+108         case TLS_EXTENSION_STATUS_REQUEST:
+109             GUARD(s2n_recv_server_status_request(conn, &extension));
+110             break;
+111         }
+112     }
+113 
+114     return 0;
+115 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

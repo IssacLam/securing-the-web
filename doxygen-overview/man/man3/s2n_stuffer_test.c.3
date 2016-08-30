@@ -1,0 +1,134 @@
+.TH "s2n-master/tests/unit/s2n_stuffer_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_stuffer_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 22 of file s2n_stuffer_test\&.c\&.
+.PP
+.nf
+23 {
+24     uint8_t entropy[2048];
+25     struct s2n_stuffer stuffer;
+26     uint8_t u8;
+27     uint16_t u16;
+28     uint32_t u32;
+29     uint64_t u64;
+30 
+31     BEGIN_TEST();
+32 
+33     /* Create a 100 byte stuffer */
+34     EXPECT_SUCCESS(s2n_stuffer_alloc(&stuffer, 100));
+35 
+36     /* Try to write 101 bytes */
+37     struct s2n_blob in = {\&.data = entropy,\&.size = 101 };
+38     EXPECT_FAILURE(s2n_stuffer_write(&stuffer, &in));
+39 
+40     /* Try to write 101 1-byte ints bytes */
+41     for (uint64_t i = 0; i < 100; i++) {
+42         uint64_t value = i * (0xff / 100);
+43         EXPECT_SUCCESS(s2n_stuffer_write_uint8(&stuffer, value));
+44     }
+45     EXPECT_FAILURE(s2n_stuffer_write_uint8(&stuffer, 1));
+46 
+47     /* Read those back, and expect the same results */
+48     for (uint64_t i = 0; i < 100; i++) {
+49         uint64_t value = i * (0xff / 100);
+50         EXPECT_SUCCESS(s2n_stuffer_read_uint8(&stuffer, &u8));
+51         EXPECT_EQUAL(value, u8);
+52     }
+53     EXPECT_FAILURE(s2n_stuffer_read_uint8(&stuffer, &u8));
+54 
+55     /* Try to write 51 2-byte ints bytes */
+56     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+57     for (uint64_t i = 0; i < 50; i++) {
+58         uint64_t value = i * (0xffff / 50);
+59         EXPECT_SUCCESS(s2n_stuffer_write_uint16(&stuffer, value));
+60     }
+61     EXPECT_FAILURE(s2n_stuffer_write_uint16(&stuffer, 1));
+62 
+63     /* Read those back, and expect the same results */
+64     for (uint64_t i = 0; i < 50; i++) {
+65         uint64_t value = i * (0xffff / 50);
+66         EXPECT_SUCCESS(s2n_stuffer_read_uint16(&stuffer, &u16));
+67         EXPECT_EQUAL(value, u16);
+68     }
+69     EXPECT_FAILURE(s2n_stuffer_read_uint16(&stuffer, &u16));
+70 
+71     /* Try to write 34 3-byte ints bytes */
+72     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+73     for (uint64_t i = 0; i < 33; i++) {
+74         uint64_t value = i * (0xffffff / 33);
+75         EXPECT_SUCCESS(s2n_stuffer_write_uint24(&stuffer, value));
+76     }
+77     EXPECT_FAILURE(s2n_stuffer_write_uint24(&stuffer, 1));
+78 
+79     /* Read those back, and expect the same results */
+80     for (uint64_t i = 0; i < 33; i++) {
+81         uint64_t value = i * (0xffffff / 33);
+82         EXPECT_SUCCESS(s2n_stuffer_read_uint24(&stuffer, &u32));
+83         EXPECT_EQUAL(value, u32);
+84     }
+85     EXPECT_FAILURE(s2n_stuffer_read_uint16(&stuffer, &u16));
+86 
+87     /* Try to write 26 4-byte ints bytes */
+88     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+89     for (uint64_t i = 0; i < 25; i++) {
+90         uint64_t value = i * (0xffffffff / 25);
+91         EXPECT_SUCCESS(s2n_stuffer_write_uint32(&stuffer, value));
+92     }
+93     EXPECT_FAILURE(s2n_stuffer_write_uint32(&stuffer, 1));
+94 
+95     /* Read those back, and expect the same results */
+96     for (uint64_t i = 0; i < 25; i++) {
+97         uint64_t value = i * (0xffffffff / 25);
+98         EXPECT_SUCCESS(s2n_stuffer_read_uint32(&stuffer, &u32));
+99         EXPECT_EQUAL(value, u32);
+100     }
+101     EXPECT_FAILURE(s2n_stuffer_read_uint32(&stuffer, &u32));
+102 
+103     /* Try to write 13 8-byte ints bytes */
+104     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+105     for (int i = 0; i < 12; i++) {
+106         uint64_t value = i * (0xffffffffffffffff / 12);
+107         EXPECT_SUCCESS(s2n_stuffer_write_uint64(&stuffer, value));
+108     }
+109     EXPECT_FAILURE(s2n_stuffer_write_uint64(&stuffer, 1));
+110 
+111     /* Read those back, and expect the same results */
+112     for (int i = 0; i < 12; i++) {
+113         uint64_t value = i * (0xffffffffffffffff / 12);
+114         EXPECT_SUCCESS(s2n_stuffer_read_uint64(&stuffer, &u64));
+115         EXPECT_EQUAL(value, u64);
+116     }
+117     EXPECT_FAILURE(s2n_stuffer_read_uint64(&stuffer, &u64));
+118 
+119     EXPECT_SUCCESS(s2n_stuffer_free(&stuffer));
+120 
+121     END_TEST();
+122 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,2773 @@
+.TH "x509v3.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+x509v3.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/conf\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBv3_ext_method\fP"
+.br
+.ti -1c
+.RI "struct \fBX509V3_CONF_METHOD_st\fP"
+.br
+.ti -1c
+.RI "struct \fBv3_ext_ctx\fP"
+.br
+.ti -1c
+.RI "struct \fBBASIC_CONSTRAINTS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPKEY_USAGE_PERIOD_st\fP"
+.br
+.ti -1c
+.RI "struct \fBotherName_st\fP"
+.br
+.ti -1c
+.RI "struct \fBEDIPartyName_st\fP"
+.br
+.ti -1c
+.RI "struct \fBGENERAL_NAME_st\fP"
+.br
+.ti -1c
+.RI "struct \fBACCESS_DESCRIPTION_st\fP"
+.br
+.ti -1c
+.RI "struct \fBDIST_POINT_NAME_st\fP"
+.br
+.ti -1c
+.RI "struct \fBDIST_POINT_st\fP"
+.br
+.ti -1c
+.RI "struct \fBAUTHORITY_KEYID_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSXNET_ID_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSXNET_st\fP"
+.br
+.ti -1c
+.RI "struct \fBNOTICEREF_st\fP"
+.br
+.ti -1c
+.RI "struct \fBUSERNOTICE_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPOLICYQUALINFO_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPOLICYINFO_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPOLICY_MAPPING_st\fP"
+.br
+.ti -1c
+.RI "struct \fBGENERAL_SUBTREE_st\fP"
+.br
+.ti -1c
+.RI "struct \fBNAME_CONSTRAINTS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPOLICY_CONSTRAINTS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPROXY_POLICY_st\fP"
+.br
+.ti -1c
+.RI "struct \fBPROXY_CERT_INFO_EXTENSION_st\fP"
+.br
+.ti -1c
+.RI "struct \fBISSUING_DIST_POINT_st\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_purpose_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASRange_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASIdOrRange_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASIdentifierChoice_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASIdentifiers_st\fP"
+.br
+.ti -1c
+.RI "struct \fBIPAddressRange_st\fP"
+.br
+.ti -1c
+.RI "struct \fBIPAddressOrRange_st\fP"
+.br
+.ti -1c
+.RI "struct \fBIPAddressChoice_st\fP"
+.br
+.ti -1c
+.RI "struct \fBIPAddressFamily_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCTX_TEST\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_DYNAMIC\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_CTX_DEP\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_MULTILINE\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBGEN_OTHERNAME\fP   0"
+.br
+.ti -1c
+.RI "#define \fBGEN_EMAIL\fP   1"
+.br
+.ti -1c
+.RI "#define \fBGEN_DNS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBGEN_X400\fP   3"
+.br
+.ti -1c
+.RI "#define \fBGEN_DIRNAME\fP   4"
+.br
+.ti -1c
+.RI "#define \fBGEN_EDIPARTY\fP   5"
+.br
+.ti -1c
+.RI "#define \fBGEN_URI\fP   6"
+.br
+.ti -1c
+.RI "#define \fBGEN_IPADD\fP   7"
+.br
+.ti -1c
+.RI "#define \fBGEN_RID\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCRLDP_ALL_REASONS\fP   0x807f"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_NONE\fP   \-1"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_UNSPECIFIED\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_KEY_COMPROMISE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_CA_COMPROMISE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_AFFILIATION_CHANGED\fP   3"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_SUPERSEDED\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_CESSATION_OF_OPERATION\fP   5"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_CERTIFICATE_HOLD\fP   6"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_REMOVE_FROM_CRL\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_PRIVILEGE_WITHDRAWN\fP   9"
+.br
+.ti -1c
+.RI "#define \fBCRL_REASON_AA_COMPROMISE\fP   10"
+.br
+.ti -1c
+.RI "#define \fBIDP_PRESENT\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBIDP_INVALID\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBIDP_ONLYUSER\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBIDP_ONLYCA\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBIDP_ONLYATTR\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBIDP_INDIRECT\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBIDP_REASONS\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBX509V3_conf_err\fP(val)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_set_ctx_test\fP(ctx)   \fBX509V3_set_ctx\fP(ctx, NULL, NULL, NULL, NULL, \fBCTX_TEST\fP)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_set_ctx_nodb\fP(ctx)   (ctx)\->db = NULL;"
+.br
+.ti -1c
+.RI "#define \fBEXT_BITSTRING\fP(\fBnid\fP,  table)"
+.br
+.ti -1c
+.RI "#define \fBEXT_IA5STRING\fP(\fBnid\fP)"
+.br
+.ti -1c
+.RI "#define \fBEXT_END\fP   { \-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_BCONS\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_KUSAGE\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_XKUSAGE\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_NSCERT\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_CA\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_SI\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_V1\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_INVALID\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_SET\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_CRITICAL\fP   0x200"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_PROXY\fP   0x400"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_INVALID_POLICY\fP   0x800"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_FRESHEST\fP   0x1000"
+.br
+.ti -1c
+.RI "#define \fBEXFLAG_SS\fP   0x2000"
+.br
+.ti -1c
+.RI "#define \fBKU_DIGITAL_SIGNATURE\fP   0x0080"
+.br
+.ti -1c
+.RI "#define \fBKU_NON_REPUDIATION\fP   0x0040"
+.br
+.ti -1c
+.RI "#define \fBKU_KEY_ENCIPHERMENT\fP   0x0020"
+.br
+.ti -1c
+.RI "#define \fBKU_DATA_ENCIPHERMENT\fP   0x0010"
+.br
+.ti -1c
+.RI "#define \fBKU_KEY_AGREEMENT\fP   0x0008"
+.br
+.ti -1c
+.RI "#define \fBKU_KEY_CERT_SIGN\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBKU_CRL_SIGN\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBKU_ENCIPHER_ONLY\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBKU_DECIPHER_ONLY\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBNS_SSL_CLIENT\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBNS_SSL_SERVER\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBNS_SMIME\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBNS_OBJSIGN\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBNS_SSL_CA\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBNS_SMIME_CA\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBNS_OBJSIGN_CA\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBNS_ANY_CA\fP   (\fBNS_SSL_CA\fP|\fBNS_SMIME_CA\fP|\fBNS_OBJSIGN_CA\fP)"
+.br
+.ti -1c
+.RI "#define \fBXKU_SSL_SERVER\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBXKU_SSL_CLIENT\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBXKU_SMIME\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBXKU_CODE_SIGN\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBXKU_SGC\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBXKU_OCSP_SIGN\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBXKU_TIMESTAMP\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBXKU_DVCS\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBXKU_ANYEKU\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_DYNAMIC\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_DYNAMIC_NAME\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_SSL_CLIENT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_SSL_SERVER\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_NS_SSL_SERVER\fP   3"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_SMIME_SIGN\fP   4"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_SMIME_ENCRYPT\fP   5"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_CRL_SIGN\fP   6"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_ANY\fP   7"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_OCSP_HELPER\fP   8"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_TIMESTAMP_SIGN\fP   9"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_MIN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBX509_PURPOSE_MAX\fP   9"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_UNKNOWN_MASK\fP   (0xfL << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_DEFAULT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_ERROR_UNKNOWN\fP   (1L << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_PARSE_UNKNOWN\fP   (2L << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_EXT_DUMP_UNKNOWN\fP   (3L << 16)"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_OP_MASK\fP   0xfL"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_DEFAULT\fP   0L"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_APPEND\fP   1L"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_REPLACE\fP   2L"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_REPLACE_EXISTING\fP   3L"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_KEEP_EXISTING\fP   4L"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_DELETE\fP   5L"
+.br
+.ti -1c
+.RI "#define \fBX509V3_ADD_SILENT\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBX509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBX509_CHECK_FLAG_NO_WILDCARDS\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBX509_CHECK_FLAG_NO_PARTIAL_WILDCARDS\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBX509_CHECK_FLAG_MULTI_LABEL_WILDCARDS\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBX509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fB_X509_CHECK_FLAG_DOT_SUBDOMAINS\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBASIdOrRange_id\fP   0"
+.br
+.ti -1c
+.RI "#define \fBASIdOrRange_range\fP   1"
+.br
+.ti -1c
+.RI "#define \fBASIdentifierChoice_inherit\fP   0"
+.br
+.ti -1c
+.RI "#define \fBASIdentifierChoice_asIdsOrRanges\fP   1"
+.br
+.ti -1c
+.RI "#define \fBIPAddressOrRange_addressPrefix\fP   0"
+.br
+.ti -1c
+.RI "#define \fBIPAddressOrRange_addressRange\fP   1"
+.br
+.ti -1c
+.RI "#define \fBIPAddressChoice_inherit\fP   0"
+.br
+.ti -1c
+.RI "#define \fBIPAddressChoice_addressesOrRanges\fP   1"
+.br
+.ti -1c
+.RI "#define \fBV3_ASID_ASNUM\fP   0"
+.br
+.ti -1c
+.RI "#define \fBV3_ASID_RDI\fP   1"
+.br
+.ti -1c
+.RI "#define \fBIANA_AFI_IPV4\fP   1"
+.br
+.ti -1c
+.RI "#define \fBIANA_AFI_IPV6\fP   2"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_A2I_GENERAL_NAME\fP   164"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_ASIDENTIFIERCHOICE_CANONIZE\fP   161"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_ASIDENTIFIERCHOICE_IS_CANONICAL\fP   162"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_COPY_EMAIL\fP   122"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_COPY_ISSUER\fP   123"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_DO_DIRNAME\fP   144"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_DO_EXT_CONF\fP   124"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_DO_EXT_I2D\fP   135"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_DO_EXT_NCONF\fP   151"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_DO_I2V_NAME_CONSTRAINTS\fP   148"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_GNAMES_FROM_SECTNAME\fP   156"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_HEX_TO_STRING\fP   111"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_I2S_ASN1_ENUMERATED\fP   121"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_I2S_ASN1_IA5STRING\fP   149"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_I2S_ASN1_INTEGER\fP   120"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_I2V_AUTHORITY_INFO_ACCESS\fP   138"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_NOTICE_SECTION\fP   132"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_NREF_NOS\fP   133"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_POLICY_SECTION\fP   131"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_PROCESS_PCI_VALUE\fP   150"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_R2I_CERTPOL\fP   130"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_R2I_PCI\fP   155"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_S2I_ASN1_IA5STRING\fP   100"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_S2I_ASN1_INTEGER\fP   108"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_S2I_ASN1_OCTET_STRING\fP   112"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_S2I_ASN1_SKEY_ID\fP   114"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_S2I_SKEY_ID\fP   115"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_SET_DIST_POINT_NAME\fP   158"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_STRING_TO_HEX\fP   113"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_SXNET_ADD_ID_ASC\fP   125"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_SXNET_ADD_ID_INTEGER\fP   126"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_SXNET_ADD_ID_ULONG\fP   127"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_SXNET_GET_ID_ASC\fP   128"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_SXNET_GET_ID_ULONG\fP   129"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_ASIDENTIFIERS\fP   163"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_ASN1_BIT_STRING\fP   101"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_AUTHORITY_INFO_ACCESS\fP   139"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_AUTHORITY_KEYID\fP   119"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_BASIC_CONSTRAINTS\fP   102"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_CRLD\fP   134"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_EXTENDED_KEY_USAGE\fP   103"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_GENERAL_NAMES\fP   118"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_GENERAL_NAME_EX\fP   117"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_IDP\fP   157"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_IPADDRBLOCKS\fP   159"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_ISSUER_ALT\fP   153"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_NAME_CONSTRAINTS\fP   147"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_POLICY_CONSTRAINTS\fP   146"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_POLICY_MAPPINGS\fP   145"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V2I_SUBJECT_ALT\fP   154"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V3_ADDR_VALIDATE_PATH_INTERNAL\fP   160"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_V3_GENERIC_EXTENSION\fP   116"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_ADD1_I2D\fP   140"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_ADD_VALUE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_EXT_ADD\fP   104"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_EXT_ADD_ALIAS\fP   106"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_EXT_CONF\fP   107"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_EXT_FREE\fP   165"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_EXT_I2D\fP   136"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_EXT_NCONF\fP   152"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_GET_SECTION\fP   142"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_GET_STRING\fP   143"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_GET_VALUE_BOOL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509V3_PARSE_LIST\fP   109"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509_PURPOSE_ADD\fP   137"
+.br
+.ti -1c
+.RI "#define \fBX509V3_F_X509_PURPOSE_SET\fP   141"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_BAD_IP_ADDRESS\fP   118"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_BAD_OBJECT\fP   119"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_BN_DEC2BN_ERROR\fP   100"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_BN_TO_ASN1_INTEGER_ERROR\fP   101"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_CANNOT_FIND_FREE_FUNCTION\fP   168"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_DIRNAME_ERROR\fP   149"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_DISTPOINT_ALREADY_SET\fP   160"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_DUPLICATE_ZONE_ID\fP   133"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ERROR_CONVERTING_ZONE\fP   131"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ERROR_CREATING_EXTENSION\fP   144"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ERROR_IN_EXTENSION\fP   128"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_EXPECTED_A_SECTION_NAME\fP   137"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_EXTENSION_EXISTS\fP   145"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_EXTENSION_NAME_ERROR\fP   115"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_EXTENSION_NOT_FOUND\fP   102"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_EXTENSION_SETTING_NOT_SUPPORTED\fP   103"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_EXTENSION_VALUE_ERROR\fP   116"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ILLEGAL_EMPTY_EXTENSION\fP   151"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ILLEGAL_HEX_DIGIT\fP   113"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INCORRECT_POLICY_SYNTAX_TAG\fP   152"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_ASNUMBER\fP   162"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_ASRANGE\fP   163"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_BOOLEAN_STRING\fP   104"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_EXTENSION_STRING\fP   105"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_INHERITANCE\fP   165"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_IPADDRESS\fP   166"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_MULTIPLE_RDNS\fP   161"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_NAME\fP   106"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_NULL_ARGUMENT\fP   107"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_NULL_NAME\fP   108"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_NULL_VALUE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_NUMBER\fP   140"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_NUMBERS\fP   141"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_OBJECT_IDENTIFIER\fP   110"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_OPTION\fP   138"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_POLICY_IDENTIFIER\fP   134"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_PROXY_POLICY_SETTING\fP   153"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_PURPOSE\fP   146"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_SAFI\fP   164"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_SECTION\fP   135"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_INVALID_SYNTAX\fP   143"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ISSUER_DECODE_ERROR\fP   126"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_MISSING_VALUE\fP   124"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NEED_ORGANIZATION_AND_NUMBERS\fP   142"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_CONFIG_DATABASE\fP   136"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_ISSUER_CERTIFICATE\fP   121"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_ISSUER_DETAILS\fP   127"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_POLICY_IDENTIFIER\fP   139"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_PROXY_CERT_POLICY_LANGUAGE_DEFINED\fP   154"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_PUBLIC_KEY\fP   114"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_NO_SUBJECT_DETAILS\fP   125"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_ODD_NUMBER_OF_DIGITS\fP   112"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_OPERATION_NOT_DEFINED\fP   148"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_OTHERNAME_ERROR\fP   147"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_POLICY_LANGUAGE_ALREADY_DEFINED\fP   155"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_POLICY_PATH_LENGTH\fP   156"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_POLICY_PATH_LENGTH_ALREADY_DEFINED\fP   157"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_POLICY_SYNTAX_NOT_CURRENTLY_SUPPORTED\fP   158"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_POLICY_WHEN_PROXY_LANGUAGE_REQUIRES_NO_POLICY\fP   159"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_SECTION_NOT_FOUND\fP   150"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNABLE_TO_GET_ISSUER_DETAILS\fP   122"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNABLE_TO_GET_ISSUER_KEYID\fP   123"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNKNOWN_BIT_STRING_ARGUMENT\fP   111"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNKNOWN_EXTENSION\fP   129"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNKNOWN_EXTENSION_NAME\fP   130"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNKNOWN_OPTION\fP   120"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNSUPPORTED_OPTION\fP   117"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_UNSUPPORTED_TYPE\fP   167"
+.br
+.ti -1c
+.RI "#define \fBX509V3_R_USER_TOO_LONG\fP   132"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBX509V3_EXT_NEW\fP) (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBX509V3_EXT_FREE\fP) (\fBvoid\fP *)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBX509V3_EXT_D2I\fP) (\fBvoid\fP *, const unsigned char **, long)"
+.br
+.ti -1c
+.RI "typedef int(* \fBX509V3_EXT_I2D\fP) (\fBvoid\fP *, unsigned char **)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP * \fBext\fP"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*extlist)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBX509V3_EXT_V2I\fP) (const struct \fBv3_ext_method\fP *method, struct \fBv3_ext_ctx\fP *ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*values)"
+.br
+.ti -1c
+.RI "typedef char *(* \fBX509V3_EXT_I2S\fP) (const struct \fBv3_ext_method\fP *method, \fBvoid\fP *\fBext\fP)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBX509V3_EXT_S2I\fP) (const struct \fBv3_ext_method\fP *method, struct \fBv3_ext_ctx\fP *ctx, const char *str)"
+.br
+.ti -1c
+.RI "typedef int(* \fBX509V3_EXT_I2R\fP) (const struct \fBv3_ext_method\fP *method, \fBvoid\fP *\fBext\fP, \fBBIO\fP *out, int indent)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBX509V3_EXT_R2I\fP) (const struct \fBv3_ext_method\fP *method, struct \fBv3_ext_ctx\fP *ctx, const char *str)"
+.br
+.ti -1c
+.RI "typedef struct \fBX509V3_CONF_METHOD_st\fP \fBX509V3_CONF_METHOD\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBv3_ext_method\fP \fBX509V3_EXT_METHOD\fP"
+.br
+.ti -1c
+.RI "typedef \fBBIT_STRING_BITNAME\fP \fBENUMERATED_NAMES\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBBASIC_CONSTRAINTS_st\fP \fBBASIC_CONSTRAINTS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPKEY_USAGE_PERIOD_st\fP \fBPKEY_USAGE_PERIOD\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBotherName_st\fP \fBOTHERNAME\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBEDIPartyName_st\fP \fBEDIPARTYNAME\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBGENERAL_NAME_st\fP \fBGENERAL_NAME\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBACCESS_DESCRIPTION_st\fP \fBACCESS_DESCRIPTION\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBDIST_POINT_NAME_st\fP \fBDIST_POINT_NAME\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSXNET_ID_st\fP \fBSXNETID\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSXNET_st\fP \fBSXNET\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBNOTICEREF_st\fP \fBNOTICEREF\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBUSERNOTICE_st\fP \fBUSERNOTICE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPOLICYQUALINFO_st\fP \fBPOLICYQUALINFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPOLICYINFO_st\fP \fBPOLICYINFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPOLICY_MAPPING_st\fP \fBPOLICY_MAPPING\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBGENERAL_SUBTREE_st\fP \fBGENERAL_SUBTREE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPOLICY_CONSTRAINTS_st\fP \fBPOLICY_CONSTRAINTS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPROXY_POLICY_st\fP \fBPROXY_POLICY\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBPROXY_CERT_INFO_EXTENSION_st\fP \fBPROXY_CERT_INFO_EXTENSION\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBx509_purpose_st\fP \fBX509_PURPOSE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASRange_st\fP \fBASRange\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASIdOrRange_st\fP \fBASIdOrRange\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASIdentifierChoice_st\fP \fBASIdentifierChoice\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASIdentifiers_st\fP \fBASIdentifiers\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBIPAddressRange_st\fP \fBIPAddressRange\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBIPAddressOrRange_st\fP \fBIPAddressOrRange\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBIPAddressChoice_st\fP \fBIPAddressChoice\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBIPAddressFamily_st\fP \fBIPAddressFamily\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBCONF_VALUE\fP)*(*X509V3_EXT_I2V)(const struct \fBv3_ext_method\fP *method"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBGENERAL_NAME\fP) GENERAL_NAMES"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBACCESS_DESCRIPTION\fP) AUTHORITY_INFO_ACCESS"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBASN1_OBJECT\fP) EXTENDED_KEY_USAGE"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBDIST_POINT\fP) CRL_DIST_POINTS"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBPOLICYINFO\fP) CERTIFICATEPOLICIES"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBPOLICY_MAPPING\fP) POLICY_MAPPINGS"
+.br
+.ti -1c
+.RI "int \fBSXNET_add_id_asc\fP (\fBSXNET\fP **psx, char *zone, char *user, int userlen)"
+.br
+.ti -1c
+.RI "int \fBSXNET_add_id_ulong\fP (\fBSXNET\fP **psx, unsigned long lzone, char *user, int userlen)"
+.br
+.ti -1c
+.RI "int \fBSXNET_add_id_INTEGER\fP (\fBSXNET\fP **psx, \fBASN1_INTEGER\fP *izone, char *user, int userlen)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBSXNET_get_id_asc\fP (\fBSXNET\fP *sx, char *zone)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBSXNET_get_id_ulong\fP (\fBSXNET\fP *sx, unsigned long lzone)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBSXNET_get_id_INTEGER\fP (\fBSXNET\fP *sx, \fBASN1_INTEGER\fP *zone)"
+.br
+.ti -1c
+.RI "\fBGENERAL_NAME\fP * \fBGENERAL_NAME_dup\fP (\fBGENERAL_NAME\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBGENERAL_NAME_cmp\fP (\fBGENERAL_NAME\fP *\fBa\fP, \fBGENERAL_NAME\fP *b)"
+.br
+.ti -1c
+.RI "\fBASN1_BIT_STRING\fP * \fBv2i_ASN1_BIT_STRING\fP (\fBX509V3_EXT_METHOD\fP *method, \fBX509V3_CTX\fP *ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*nval)"
+.br
+.ti -1c
+.RI "int \fBGENERAL_NAME_print\fP (\fBBIO\fP *out, \fBGENERAL_NAME\fP *\fBgen\fP)"
+.br
+.ti -1c
+.RI "GENERAL_NAMES * \fBv2i_GENERAL_NAMES\fP (const \fBX509V3_EXT_METHOD\fP *method, \fBX509V3_CTX\fP *ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*nval)"
+.br
+.ti -1c
+.RI "int \fBOTHERNAME_cmp\fP (\fBOTHERNAME\fP *\fBa\fP, \fBOTHERNAME\fP *b)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBGENERAL_NAME_set0_value\fP (\fBGENERAL_NAME\fP *\fBa\fP, int \fBtype\fP, \fBvoid\fP *value)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBGENERAL_NAME_get0_value\fP (\fBGENERAL_NAME\fP *\fBa\fP, int *ptype)"
+.br
+.ti -1c
+.RI "int \fBGENERAL_NAME_set0_othername\fP (\fBGENERAL_NAME\fP *\fBgen\fP, \fBASN1_OBJECT\fP *oid, \fBASN1_TYPE\fP *value)"
+.br
+.ti -1c
+.RI "int \fBGENERAL_NAME_get0_otherName\fP (\fBGENERAL_NAME\fP *\fBgen\fP, \fBASN1_OBJECT\fP **poid, \fBASN1_TYPE\fP **pvalue)"
+.br
+.ti -1c
+.RI "char * \fBi2s_ASN1_OCTET_STRING\fP (\fBX509V3_EXT_METHOD\fP *method, \fBASN1_OCTET_STRING\fP *ia5)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBs2i_ASN1_OCTET_STRING\fP (\fBX509V3_EXT_METHOD\fP *method, \fBX509V3_CTX\fP *ctx, char *str)"
+.br
+.ti -1c
+.RI "int \fBi2a_ACCESS_DESCRIPTION\fP (\fBBIO\fP *\fBbp\fP, \fBACCESS_DESCRIPTION\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBDIST_POINT_set_dpname\fP (\fBDIST_POINT_NAME\fP *dpn, \fBX509_NAME\fP *iname)"
+.br
+.ti -1c
+.RI "int \fBNAME_CONSTRAINTS_check\fP (\fBX509\fP *\fBx\fP, \fBNAME_CONSTRAINTS\fP *nc)"
+.br
+.ti -1c
+.RI "\fBGENERAL_NAME\fP * \fBa2i_GENERAL_NAME\fP (\fBGENERAL_NAME\fP *out, const \fBX509V3_EXT_METHOD\fP *method, \fBX509V3_CTX\fP *ctx, int gen_type, char *value, int is_nc)"
+.br
+.ti -1c
+.RI "char * \fBX509V3_get_string\fP (\fBX509V3_CTX\fP *ctx, char *name, char *\fBsection\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_string_free\fP (\fBX509V3_CTX\fP *ctx, char *str)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_section_free\fP (\fBX509V3_CTX\fP *ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*\fBsection\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_set_ctx\fP (\fBX509V3_CTX\fP *ctx, \fBX509\fP *issuer, \fBX509\fP *subject, \fBX509_REQ\fP *req, \fBX509_CRL\fP *crl, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add_value\fP (const char *name, const char *value, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)**extlist)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add_value_uchar\fP (const char *name, const unsigned char *value, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)**extlist)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add_value_bool\fP (const char *name, int asn1_bool, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)**extlist)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add_value_int\fP (const char *name, \fBASN1_INTEGER\fP *aint, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)**extlist)"
+.br
+.ti -1c
+.RI "char * \fBi2s_ASN1_INTEGER\fP (\fBX509V3_EXT_METHOD\fP *meth, \fBASN1_INTEGER\fP *aint)"
+.br
+.ti -1c
+.RI "\fBASN1_INTEGER\fP * \fBs2i_ASN1_INTEGER\fP (\fBX509V3_EXT_METHOD\fP *meth, char *value)"
+.br
+.ti -1c
+.RI "char * \fBi2s_ASN1_ENUMERATED\fP (\fBX509V3_EXT_METHOD\fP *meth, \fBASN1_ENUMERATED\fP *aint)"
+.br
+.ti -1c
+.RI "char * \fBi2s_ASN1_ENUMERATED_TABLE\fP (\fBX509V3_EXT_METHOD\fP *meth, \fBASN1_ENUMERATED\fP *aint)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add\fP (\fBX509V3_EXT_METHOD\fP *\fBext\fP)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_list\fP (\fBX509V3_EXT_METHOD\fP *extlist)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_add_alias\fP (int nid_to, int nid_from)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_EXT_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBX509V3_EXT_METHOD\fP * \fBX509V3_EXT_get\fP (\fBX509_EXTENSION\fP *\fBext\fP)"
+.br
+.ti -1c
+.RI "const \fBX509V3_EXT_METHOD\fP * \fBX509V3_EXT_get_nid\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add_standard_extensions\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509V3_EXT_d2i\fP (\fBX509_EXTENSION\fP *\fBext\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBX509V3_get_d2i\fP (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_free\fP (int \fBnid\fP, \fBvoid\fP *ext_data)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBX509V3_EXT_i2d\fP (int ext_nid, int crit, \fBvoid\fP *ext_struc)"
+.br
+.ti -1c
+.RI "int \fBX509V3_add1_i2d\fP (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)**\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "char * \fBhex_to_string\fP (const unsigned char *buffer, long \fBlen\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBstring_to_hex\fP (const char *str, long *\fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBname_cmp\fP (const char *name, const char *cmp)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509V3_EXT_val_prn\fP (\fBBIO\fP *out, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*val, int indent, int ml)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_print\fP (\fBBIO\fP *out, \fBX509_EXTENSION\fP *\fBext\fP, unsigned long flag, int indent)"
+.br
+.ti -1c
+.RI "int \fBX509V3_EXT_print_fp\fP (FILE *out, \fBX509_EXTENSION\fP *\fBext\fP, int flag, int indent)"
+.br
+.ti -1c
+.RI "int \fBX509V3_extensions_print\fP (\fBBIO\fP *out, char *title, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)*exts, unsigned long flag, int indent)"
+.br
+.ti -1c
+.RI "int \fBX509_check_ca\fP (\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_check_purpose\fP (\fBX509\fP *\fBx\fP, int id, int ca)"
+.br
+.ti -1c
+.RI "int \fBX509_supported_extension\fP (\fBX509_EXTENSION\fP *\fBex\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_set\fP (int *\fBp\fP, int purpose)"
+.br
+.ti -1c
+.RI "int \fBX509_check_issued\fP (\fBX509\fP *issuer, \fBX509\fP *subject)"
+.br
+.ti -1c
+.RI "int \fBX509_check_akid\fP (\fBX509\fP *issuer, \fBAUTHORITY_KEYID\fP *akid)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_get_count\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBX509_PURPOSE\fP * \fBX509_PURPOSE_get0\fP (int idx)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_get_by_sname\fP (char *sname)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_get_by_id\fP (int id)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_add\fP (int id, int trust, int \fBflags\fP, int(*ck)(const \fBX509_PURPOSE\fP *, const \fBX509\fP *, int), char *name, char *sname, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "char * \fBX509_PURPOSE_get0_name\fP (\fBX509_PURPOSE\fP *xp)"
+.br
+.ti -1c
+.RI "char * \fBX509_PURPOSE_get0_sname\fP (\fBX509_PURPOSE\fP *xp)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_get_trust\fP (\fBX509_PURPOSE\fP *xp)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_PURPOSE_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_PURPOSE_get_id\fP (\fBX509_PURPOSE\fP *)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBOPENSSL_STRING\fP)*X509_get1_email(\fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_email_free\fP (\fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)*sk)"
+.br
+.ti -1c
+.RI "int \fBX509_check_host\fP (\fBX509\fP *\fBx\fP, const char *chk, size_t chklen, unsigned int \fBflags\fP, char **peername)"
+.br
+.ti -1c
+.RI "int \fBX509_check_email\fP (\fBX509\fP *\fBx\fP, const char *chk, size_t chklen, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_check_ip\fP (\fBX509\fP *\fBx\fP, const unsigned char *chk, size_t chklen, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBX509_check_ip_asc\fP (\fBX509\fP *\fBx\fP, const char *ipasc, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBa2i_IPADDRESS\fP (const char *ipasc)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBa2i_IPADDRESS_NC\fP (const char *ipasc)"
+.br
+.ti -1c
+.RI "int \fBa2i_ipadd\fP (unsigned char *ipout, const char *ipasc)"
+.br
+.ti -1c
+.RI "int \fBX509V3_NAME_from_section\fP (\fBX509_NAME\fP *\fBnm\fP, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*dn_sk, unsigned long chtype)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBX509_POLICY_NODE_print\fP (\fBBIO\fP *out, \fBX509_POLICY_NODE\fP *node, int indent)"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBASIdOrRange\fP) ASIdOrRanges"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBIPAddressOrRange\fP) IPAddressOrRanges"
+.br
+.ti -1c
+.RI "typedef \fBSTACK_OF\fP (\fBIPAddressFamily\fP) IPAddrBlocks"
+.br
+.ti -1c
+.RI "int \fBv3_asid_add_inherit\fP (\fBASIdentifiers\fP *asid, int which)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_add_id_or_range\fP (\fBASIdentifiers\fP *asid, int which, \fBASN1_INTEGER\fP *min, \fBASN1_INTEGER\fP *max)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_add_inherit\fP (IPAddrBlocks *addr, const unsigned afi, const unsigned *safi)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_add_prefix\fP (IPAddrBlocks *addr, const unsigned afi, const unsigned *safi, unsigned char *\fBa\fP, const int prefixlen)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_add_range\fP (IPAddrBlocks *addr, const unsigned afi, const unsigned *safi, unsigned char *min, unsigned char *max)"
+.br
+.ti -1c
+.RI "unsigned \fBv3_addr_get_afi\fP (const \fBIPAddressFamily\fP *f)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_get_range\fP (\fBIPAddressOrRange\fP *aor, const unsigned afi, unsigned char *min, unsigned char *max, const int \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_is_canonical\fP (\fBASIdentifiers\fP *asid)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_is_canonical\fP (IPAddrBlocks *addr)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_canonize\fP (\fBASIdentifiers\fP *asid)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_canonize\fP (IPAddrBlocks *addr)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_inherits\fP (\fBASIdentifiers\fP *asid)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_inherits\fP (IPAddrBlocks *addr)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_subset\fP (\fBASIdentifiers\fP *\fBa\fP, \fBASIdentifiers\fP *b)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_subset\fP (IPAddrBlocks *\fBa\fP, IPAddrBlocks *b)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_validate_path\fP (\fBX509_STORE_CTX\fP *)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_validate_path\fP (\fBX509_STORE_CTX\fP *)"
+.br
+.ti -1c
+.RI "int \fBv3_asid_validate_resource_set\fP (\fBSTACK_OF\fP(\fBX509\fP)*\fBchain\fP, \fBASIdentifiers\fP *\fBext\fP, int allow_inheritance)"
+.br
+.ti -1c
+.RI "int \fBv3_addr_validate_resource_set\fP (\fBSTACK_OF\fP(\fBX509\fP)*\fBchain\fP, IPAddrBlocks *\fBext\fP, int allow_inheritance)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_X509V3_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBASN1_BIT_STRING\fP * \fBbits\fP"
+.br
+.ti -1c
+.RI "\fBGENERAL_NAME\fP * \fBgen\fP"
+.br
+.ti -1c
+.RI "char * \fBsection\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _X509_CHECK_FLAG_DOT_SUBDOMAINS   0x8000"
+
+.PP
+Definition at line 739 of file include/openssl/x509v3\&.h\&.
+.SS "#define ASIdentifierChoice_asIdsOrRanges   1"
+
+.PP
+Definition at line 779 of file include/openssl/x509v3\&.h\&.
+.SS "#define ASIdentifierChoice_inherit   0"
+
+.PP
+Definition at line 778 of file include/openssl/x509v3\&.h\&.
+.SS "#define ASIdOrRange_id   0"
+
+.PP
+Definition at line 764 of file include/openssl/x509v3\&.h\&.
+.SS "#define ASIdOrRange_range   1"
+
+.PP
+Definition at line 765 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_AA_COMPROMISE   10"
+
+.PP
+Definition at line 248 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_AFFILIATION_CHANGED   3"
+
+.PP
+Definition at line 242 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_CA_COMPROMISE   2"
+
+.PP
+Definition at line 241 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_CERTIFICATE_HOLD   6"
+
+.PP
+Definition at line 245 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_CESSATION_OF_OPERATION   5"
+
+.PP
+Definition at line 244 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_KEY_COMPROMISE   1"
+
+.PP
+Definition at line 240 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_NONE   \-1"
+
+.PP
+Definition at line 238 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_PRIVILEGE_WITHDRAWN   9"
+
+.PP
+Definition at line 247 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_REMOVE_FROM_CRL   8"
+
+.PP
+Definition at line 246 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_SUPERSEDED   4"
+
+.PP
+Definition at line 243 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRL_REASON_UNSPECIFIED   0"
+
+.PP
+Definition at line 239 of file include/openssl/x509v3\&.h\&.
+.SS "#define CRLDP_ALL_REASONS   0x807f"
+
+.PP
+Definition at line 236 of file include/openssl/x509v3\&.h\&.
+.SS "#define CTX_TEST   0x1"
+
+.PP
+Definition at line 135 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_BCONS   0x1"
+
+.PP
+Definition at line 407 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_CA   0x10"
+
+.PP
+Definition at line 412 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_CRITICAL   0x200"
+
+.PP
+Definition at line 418 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_FRESHEST   0x1000"
+
+.PP
+Definition at line 422 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_INVALID   0x80"
+
+.PP
+Definition at line 416 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_INVALID_POLICY   0x800"
+
+.PP
+Definition at line 421 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_KUSAGE   0x2"
+
+.PP
+Definition at line 408 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_NSCERT   0x8"
+
+.PP
+Definition at line 410 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_PROXY   0x400"
+
+.PP
+Definition at line 419 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_SET   0x100"
+
+.PP
+Definition at line 417 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_SI   0x20"
+
+.PP
+Definition at line 414 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_SS   0x2000"
+
+.PP
+Definition at line 424 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_V1   0x40"
+
+.PP
+Definition at line 415 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXFLAG_XKUSAGE   0x4"
+
+.PP
+Definition at line 409 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXT_BITSTRING(\fBnid\fP, table)"
+\fBValue:\fP
+.PP
+.nf
+{ nid, 0, ASN1_ITEM_ref(ASN1_BIT_STRING), \
+                        0,0,0,0, \
+                        0,0, \
+                        (X509V3_EXT_I2V)i2v_ASN1_BIT_STRING, \
+                        (X509V3_EXT_V2I)v2i_ASN1_BIT_STRING, \
+                        NULL, NULL, \
+                        table}
+.fi
+.PP
+Definition at line 388 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXT_END   { \-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}"
+
+.PP
+Definition at line 403 of file include/openssl/x509v3\&.h\&.
+.SS "#define EXT_IA5STRING(\fBnid\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ nid, 0, ASN1_ITEM_ref(ASN1_IA5STRING), \
+                        0,0,0,0, \
+                        (X509V3_EXT_I2S)i2s_ASN1_IA5STRING, \
+                        (X509V3_EXT_S2I)s2i_ASN1_IA5STRING, \
+                        0,0,0,0, \
+                        NULL}
+.fi
+.PP
+Definition at line 396 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_DIRNAME   4"
+
+.PP
+Definition at line 182 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_DNS   2"
+
+.PP
+Definition at line 180 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_EDIPARTY   5"
+
+.PP
+Definition at line 183 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_EMAIL   1"
+
+.PP
+Definition at line 179 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_IPADD   7"
+
+.PP
+Definition at line 185 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_OTHERNAME   0"
+
+.PP
+Definition at line 178 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_RID   8"
+
+.PP
+Definition at line 186 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_URI   6"
+
+.PP
+Definition at line 184 of file include/openssl/x509v3\&.h\&.
+.SS "#define GEN_X400   3"
+
+.PP
+Definition at line 181 of file include/openssl/x509v3\&.h\&.
+.SS "#define IANA_AFI_IPV4   1"
+
+.PP
+Definition at line 852 of file include/openssl/x509v3\&.h\&.
+.SS "#define IANA_AFI_IPV6   2"
+
+.PP
+Definition at line 853 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_INDIRECT   0x20"
+
+.PP
+Definition at line 377 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_INVALID   0x2"
+
+.PP
+Definition at line 369 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_ONLYATTR   0x10"
+
+.PP
+Definition at line 375 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_ONLYCA   0x8"
+
+.PP
+Definition at line 373 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_ONLYUSER   0x4"
+
+.PP
+Definition at line 371 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_PRESENT   0x1"
+
+.PP
+Definition at line 367 of file include/openssl/x509v3\&.h\&.
+.SS "#define IDP_REASONS   0x40"
+
+.PP
+Definition at line 379 of file include/openssl/x509v3\&.h\&.
+.SS "#define IPAddressChoice_addressesOrRanges   1"
+
+.PP
+Definition at line 817 of file include/openssl/x509v3\&.h\&.
+.SS "#define IPAddressChoice_inherit   0"
+
+.PP
+Definition at line 816 of file include/openssl/x509v3\&.h\&.
+.SS "#define IPAddressOrRange_addressPrefix   0"
+
+.PP
+Definition at line 802 of file include/openssl/x509v3\&.h\&.
+.SS "#define IPAddressOrRange_addressRange   1"
+
+.PP
+Definition at line 803 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_CRL_SIGN   0x0002"
+
+.PP
+Definition at line 432 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_DATA_ENCIPHERMENT   0x0010"
+
+.PP
+Definition at line 429 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_DECIPHER_ONLY   0x8000"
+
+.PP
+Definition at line 434 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_DIGITAL_SIGNATURE   0x0080"
+
+.PP
+Definition at line 426 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_ENCIPHER_ONLY   0x0001"
+
+.PP
+Definition at line 433 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_KEY_AGREEMENT   0x0008"
+
+.PP
+Definition at line 430 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_KEY_CERT_SIGN   0x0004"
+
+.PP
+Definition at line 431 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_KEY_ENCIPHERMENT   0x0020"
+
+.PP
+Definition at line 428 of file include/openssl/x509v3\&.h\&.
+.SS "#define KU_NON_REPUDIATION   0x0040"
+
+.PP
+Definition at line 427 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_ANY_CA   (\fBNS_SSL_CA\fP|\fBNS_SMIME_CA\fP|\fBNS_OBJSIGN_CA\fP)"
+
+.PP
+Definition at line 443 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_OBJSIGN   0x10"
+
+.PP
+Definition at line 439 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_OBJSIGN_CA   0x01"
+
+.PP
+Definition at line 442 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_SMIME   0x20"
+
+.PP
+Definition at line 438 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_SMIME_CA   0x02"
+
+.PP
+Definition at line 441 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_SSL_CA   0x04"
+
+.PP
+Definition at line 440 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_SSL_CLIENT   0x80"
+
+.PP
+Definition at line 436 of file include/openssl/x509v3\&.h\&.
+.SS "#define NS_SSL_SERVER   0x40"
+
+.PP
+Definition at line 437 of file include/openssl/x509v3\&.h\&.
+.SS "#define V3_ASID_ASNUM   0"
+
+.PP
+Definition at line 843 of file include/openssl/x509v3\&.h\&.
+.SS "#define V3_ASID_RDI   1"
+
+.PP
+Definition at line 844 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT   0x1"
+
+.PP
+Definition at line 725 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS   0x8"
+
+.PP
+Definition at line 731 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS   0x4"
+
+.PP
+Definition at line 729 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_CHECK_FLAG_NO_WILDCARDS   0x2"
+
+.PP
+Definition at line 727 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS   0x10"
+
+.PP
+Definition at line 733 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_ANY   7"
+
+.PP
+Definition at line 474 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_CRL_SIGN   6"
+
+.PP
+Definition at line 473 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_DYNAMIC   0x1"
+
+.PP
+Definition at line 455 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_DYNAMIC_NAME   0x2"
+
+.PP
+Definition at line 456 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_MAX   9"
+
+.PP
+Definition at line 479 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_MIN   1"
+
+.PP
+Definition at line 478 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_NS_SSL_SERVER   3"
+
+.PP
+Definition at line 470 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_OCSP_HELPER   8"
+
+.PP
+Definition at line 475 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_SMIME_ENCRYPT   5"
+
+.PP
+Definition at line 472 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_SMIME_SIGN   4"
+
+.PP
+Definition at line 471 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_SSL_CLIENT   1"
+
+.PP
+Definition at line 468 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_SSL_SERVER   2"
+
+.PP
+Definition at line 469 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509_PURPOSE_TIMESTAMP_SIGN   9"
+
+.PP
+Definition at line 476 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_APPEND   1L"
+
+.PP
+Definition at line 497 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_DEFAULT   0L"
+
+.PP
+Definition at line 496 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_DELETE   5L"
+
+.PP
+Definition at line 501 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_KEEP_EXISTING   4L"
+
+.PP
+Definition at line 500 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_OP_MASK   0xfL"
+
+.PP
+Definition at line 495 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_REPLACE   2L"
+
+.PP
+Definition at line 498 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_REPLACE_EXISTING   3L"
+
+.PP
+Definition at line 499 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_ADD_SILENT   0x10"
+
+.PP
+Definition at line 502 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_conf_err(val)"
+\fBValue:\fP
+.PP
+.nf
+ERR_add_error_data(6, "section:", val->section, \
+",name:", val->name, ",value:", val->value);
+.fi
+.PP
+Definition at line 381 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_CTX_DEP   0x2"
+
+.PP
+Definition at line 152 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_DEFAULT   0"
+
+.PP
+Definition at line 485 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_DUMP_UNKNOWN   (3L << 16)"
+
+.PP
+Definition at line 491 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_DYNAMIC   0x1"
+
+.PP
+Definition at line 151 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_ERROR_UNKNOWN   (1L << 16)"
+
+.PP
+Definition at line 487 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_MULTILINE   0x4"
+
+.PP
+Definition at line 153 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_PARSE_UNKNOWN   (2L << 16)"
+
+.PP
+Definition at line 489 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_EXT_UNKNOWN_MASK   (0xfL << 16)"
+
+.PP
+Definition at line 483 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_A2I_GENERAL_NAME   164"
+
+.PP
+Definition at line 914 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_ASIDENTIFIERCHOICE_CANONIZE   161"
+
+.PP
+Definition at line 915 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_ASIDENTIFIERCHOICE_IS_CANONICAL   162"
+
+.PP
+Definition at line 916 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_COPY_EMAIL   122"
+
+.PP
+Definition at line 917 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_COPY_ISSUER   123"
+
+.PP
+Definition at line 918 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_DO_DIRNAME   144"
+
+.PP
+Definition at line 919 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_DO_EXT_CONF   124"
+
+.PP
+Definition at line 920 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_DO_EXT_I2D   135"
+
+.PP
+Definition at line 921 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_DO_EXT_NCONF   151"
+
+.PP
+Definition at line 922 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_DO_I2V_NAME_CONSTRAINTS   148"
+
+.PP
+Definition at line 923 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_GNAMES_FROM_SECTNAME   156"
+
+.PP
+Definition at line 924 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_HEX_TO_STRING   111"
+
+.PP
+Definition at line 925 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_I2S_ASN1_ENUMERATED   121"
+
+.PP
+Definition at line 926 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_I2S_ASN1_IA5STRING   149"
+
+.PP
+Definition at line 927 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_I2S_ASN1_INTEGER   120"
+
+.PP
+Definition at line 928 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_I2V_AUTHORITY_INFO_ACCESS   138"
+
+.PP
+Definition at line 929 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_NOTICE_SECTION   132"
+
+.PP
+Definition at line 930 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_NREF_NOS   133"
+
+.PP
+Definition at line 931 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_POLICY_SECTION   131"
+
+.PP
+Definition at line 932 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_PROCESS_PCI_VALUE   150"
+
+.PP
+Definition at line 933 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_R2I_CERTPOL   130"
+
+.PP
+Definition at line 934 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_R2I_PCI   155"
+
+.PP
+Definition at line 935 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_S2I_ASN1_IA5STRING   100"
+
+.PP
+Definition at line 936 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_S2I_ASN1_INTEGER   108"
+
+.PP
+Definition at line 937 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_S2I_ASN1_OCTET_STRING   112"
+
+.PP
+Definition at line 938 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_S2I_ASN1_SKEY_ID   114"
+
+.PP
+Definition at line 939 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_S2I_SKEY_ID   115"
+
+.PP
+Definition at line 940 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_SET_DIST_POINT_NAME   158"
+
+.PP
+Definition at line 941 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_STRING_TO_HEX   113"
+
+.PP
+Definition at line 942 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_SXNET_ADD_ID_ASC   125"
+
+.PP
+Definition at line 943 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_SXNET_ADD_ID_INTEGER   126"
+
+.PP
+Definition at line 944 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_SXNET_ADD_ID_ULONG   127"
+
+.PP
+Definition at line 945 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_SXNET_GET_ID_ASC   128"
+
+.PP
+Definition at line 946 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_SXNET_GET_ID_ULONG   129"
+
+.PP
+Definition at line 947 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_ASIDENTIFIERS   163"
+
+.PP
+Definition at line 948 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_ASN1_BIT_STRING   101"
+
+.PP
+Definition at line 949 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_AUTHORITY_INFO_ACCESS   139"
+
+.PP
+Definition at line 950 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_AUTHORITY_KEYID   119"
+
+.PP
+Definition at line 951 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_BASIC_CONSTRAINTS   102"
+
+.PP
+Definition at line 952 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_CRLD   134"
+
+.PP
+Definition at line 953 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_EXTENDED_KEY_USAGE   103"
+
+.PP
+Definition at line 954 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_GENERAL_NAME_EX   117"
+
+.PP
+Definition at line 956 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_GENERAL_NAMES   118"
+
+.PP
+Definition at line 955 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_IDP   157"
+
+.PP
+Definition at line 957 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_IPADDRBLOCKS   159"
+
+.PP
+Definition at line 958 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_ISSUER_ALT   153"
+
+.PP
+Definition at line 959 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_NAME_CONSTRAINTS   147"
+
+.PP
+Definition at line 960 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_POLICY_CONSTRAINTS   146"
+
+.PP
+Definition at line 961 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_POLICY_MAPPINGS   145"
+
+.PP
+Definition at line 962 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V2I_SUBJECT_ALT   154"
+
+.PP
+Definition at line 963 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V3_ADDR_VALIDATE_PATH_INTERNAL   160"
+
+.PP
+Definition at line 964 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_V3_GENERIC_EXTENSION   116"
+
+.PP
+Definition at line 965 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509_PURPOSE_ADD   137"
+
+.PP
+Definition at line 978 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509_PURPOSE_SET   141"
+
+.PP
+Definition at line 979 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_ADD1_I2D   140"
+
+.PP
+Definition at line 966 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_ADD_VALUE   105"
+
+.PP
+Definition at line 967 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_EXT_ADD   104"
+
+.PP
+Definition at line 968 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_EXT_ADD_ALIAS   106"
+
+.PP
+Definition at line 969 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_EXT_CONF   107"
+
+.PP
+Definition at line 970 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_EXT_FREE   165"
+
+.PP
+Definition at line 971 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_EXT_I2D   136"
+
+.PP
+Definition at line 972 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_EXT_NCONF   152"
+
+.PP
+Definition at line 973 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_GET_SECTION   142"
+
+.PP
+Definition at line 974 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_GET_STRING   143"
+
+.PP
+Definition at line 975 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_GET_VALUE_BOOL   110"
+
+.PP
+Definition at line 976 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_F_X509V3_PARSE_LIST   109"
+
+.PP
+Definition at line 977 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_BAD_IP_ADDRESS   118"
+
+.PP
+Definition at line 982 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_BAD_OBJECT   119"
+
+.PP
+Definition at line 983 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_BN_DEC2BN_ERROR   100"
+
+.PP
+Definition at line 984 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_BN_TO_ASN1_INTEGER_ERROR   101"
+
+.PP
+Definition at line 985 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_CANNOT_FIND_FREE_FUNCTION   168"
+
+.PP
+Definition at line 986 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_DIRNAME_ERROR   149"
+
+.PP
+Definition at line 987 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_DISTPOINT_ALREADY_SET   160"
+
+.PP
+Definition at line 988 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_DUPLICATE_ZONE_ID   133"
+
+.PP
+Definition at line 989 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ERROR_CONVERTING_ZONE   131"
+
+.PP
+Definition at line 990 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ERROR_CREATING_EXTENSION   144"
+
+.PP
+Definition at line 991 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ERROR_IN_EXTENSION   128"
+
+.PP
+Definition at line 992 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_EXPECTED_A_SECTION_NAME   137"
+
+.PP
+Definition at line 993 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_EXTENSION_EXISTS   145"
+
+.PP
+Definition at line 994 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_EXTENSION_NAME_ERROR   115"
+
+.PP
+Definition at line 995 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_EXTENSION_NOT_FOUND   102"
+
+.PP
+Definition at line 996 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_EXTENSION_SETTING_NOT_SUPPORTED   103"
+
+.PP
+Definition at line 997 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_EXTENSION_VALUE_ERROR   116"
+
+.PP
+Definition at line 998 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ILLEGAL_EMPTY_EXTENSION   151"
+
+.PP
+Definition at line 999 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ILLEGAL_HEX_DIGIT   113"
+
+.PP
+Definition at line 1000 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INCORRECT_POLICY_SYNTAX_TAG   152"
+
+.PP
+Definition at line 1001 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_ASNUMBER   162"
+
+.PP
+Definition at line 1002 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_ASRANGE   163"
+
+.PP
+Definition at line 1003 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_BOOLEAN_STRING   104"
+
+.PP
+Definition at line 1004 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_EXTENSION_STRING   105"
+
+.PP
+Definition at line 1005 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_INHERITANCE   165"
+
+.PP
+Definition at line 1006 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_IPADDRESS   166"
+
+.PP
+Definition at line 1007 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_MULTIPLE_RDNS   161"
+
+.PP
+Definition at line 1008 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_NAME   106"
+
+.PP
+Definition at line 1009 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_NULL_ARGUMENT   107"
+
+.PP
+Definition at line 1010 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_NULL_NAME   108"
+
+.PP
+Definition at line 1011 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_NULL_VALUE   109"
+
+.PP
+Definition at line 1012 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_NUMBER   140"
+
+.PP
+Definition at line 1013 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_NUMBERS   141"
+
+.PP
+Definition at line 1014 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_OBJECT_IDENTIFIER   110"
+
+.PP
+Definition at line 1015 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_OPTION   138"
+
+.PP
+Definition at line 1016 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_POLICY_IDENTIFIER   134"
+
+.PP
+Definition at line 1017 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_PROXY_POLICY_SETTING   153"
+
+.PP
+Definition at line 1018 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_PURPOSE   146"
+
+.PP
+Definition at line 1019 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_SAFI   164"
+
+.PP
+Definition at line 1020 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_SECTION   135"
+
+.PP
+Definition at line 1021 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_INVALID_SYNTAX   143"
+
+.PP
+Definition at line 1022 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ISSUER_DECODE_ERROR   126"
+
+.PP
+Definition at line 1023 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_MISSING_VALUE   124"
+
+.PP
+Definition at line 1024 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NEED_ORGANIZATION_AND_NUMBERS   142"
+
+.PP
+Definition at line 1025 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_CONFIG_DATABASE   136"
+
+.PP
+Definition at line 1026 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_ISSUER_CERTIFICATE   121"
+
+.PP
+Definition at line 1027 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_ISSUER_DETAILS   127"
+
+.PP
+Definition at line 1028 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_POLICY_IDENTIFIER   139"
+
+.PP
+Definition at line 1029 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_PROXY_CERT_POLICY_LANGUAGE_DEFINED   154"
+
+.PP
+Definition at line 1030 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_PUBLIC_KEY   114"
+
+.PP
+Definition at line 1031 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_NO_SUBJECT_DETAILS   125"
+
+.PP
+Definition at line 1032 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_ODD_NUMBER_OF_DIGITS   112"
+
+.PP
+Definition at line 1033 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_OPERATION_NOT_DEFINED   148"
+
+.PP
+Definition at line 1034 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_OTHERNAME_ERROR   147"
+
+.PP
+Definition at line 1035 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_POLICY_LANGUAGE_ALREADY_DEFINED   155"
+
+.PP
+Definition at line 1036 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_POLICY_PATH_LENGTH   156"
+
+.PP
+Definition at line 1037 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_POLICY_PATH_LENGTH_ALREADY_DEFINED   157"
+
+.PP
+Definition at line 1038 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_POLICY_SYNTAX_NOT_CURRENTLY_SUPPORTED   158"
+
+.PP
+Definition at line 1039 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_POLICY_WHEN_PROXY_LANGUAGE_REQUIRES_NO_POLICY   159"
+
+.PP
+Definition at line 1040 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_SECTION_NOT_FOUND   150"
+
+.PP
+Definition at line 1041 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNABLE_TO_GET_ISSUER_DETAILS   122"
+
+.PP
+Definition at line 1042 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNABLE_TO_GET_ISSUER_KEYID   123"
+
+.PP
+Definition at line 1043 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNKNOWN_BIT_STRING_ARGUMENT   111"
+
+.PP
+Definition at line 1044 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNKNOWN_EXTENSION   129"
+
+.PP
+Definition at line 1045 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNKNOWN_EXTENSION_NAME   130"
+
+.PP
+Definition at line 1046 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNKNOWN_OPTION   120"
+
+.PP
+Definition at line 1047 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNSUPPORTED_OPTION   117"
+
+.PP
+Definition at line 1048 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_UNSUPPORTED_TYPE   167"
+
+.PP
+Definition at line 1049 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_R_USER_TOO_LONG   132"
+
+.PP
+Definition at line 1050 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_set_ctx_nodb(ctx)   (ctx)\->db = NULL;"
+
+.PP
+Definition at line 386 of file include/openssl/x509v3\&.h\&.
+.SS "#define X509V3_set_ctx_test(ctx)   \fBX509V3_set_ctx\fP(ctx, NULL, NULL, NULL, NULL, \fBCTX_TEST\fP)"
+
+.PP
+Definition at line 384 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_ANYEKU   0x100"
+
+.PP
+Definition at line 453 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_CODE_SIGN   0x8"
+
+.PP
+Definition at line 448 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_DVCS   0x80"
+
+.PP
+Definition at line 452 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_OCSP_SIGN   0x20"
+
+.PP
+Definition at line 450 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_SGC   0x10"
+
+.PP
+Definition at line 449 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_SMIME   0x4"
+
+.PP
+Definition at line 447 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_SSL_CLIENT   0x2"
+
+.PP
+Definition at line 446 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_SSL_SERVER   0x1"
+
+.PP
+Definition at line 445 of file include/openssl/x509v3\&.h\&.
+.SS "#define XKU_TIMESTAMP   0x40"
+
+.PP
+Definition at line 451 of file include/openssl/x509v3\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBACCESS_DESCRIPTION_st\fP  \fBACCESS_DESCRIPTION\fP"
+
+.SS "typedef struct \fBASIdentifierChoice_st\fP  \fBASIdentifierChoice\fP"
+
+.SS "typedef struct \fBASIdentifiers_st\fP  \fBASIdentifiers\fP"
+
+.SS "typedef struct \fBASIdOrRange_st\fP  \fBASIdOrRange\fP"
+
+.SS "typedef struct \fBASRange_st\fP  \fBASRange\fP"
+
+.SS "typedef struct \fBBASIC_CONSTRAINTS_st\fP  \fBBASIC_CONSTRAINTS\fP"
+
+.SS "typedef struct \fBDIST_POINT_NAME_st\fP  \fBDIST_POINT_NAME\fP"
+
+.SS "typedef struct \fBEDIPartyName_st\fP  \fBEDIPARTYNAME\fP"
+
+.SS "typedef \fBBIT_STRING_BITNAME\fP \fBENUMERATED_NAMES\fP"
+
+.PP
+Definition at line 155 of file include/openssl/x509v3\&.h\&.
+.SS "typedef \fBvoid\fP* \fBext\fP"
+
+.PP
+Definition at line 88 of file include/openssl/x509v3\&.h\&.
+.SS "typedef struct \fBGENERAL_NAME_st\fP  \fBGENERAL_NAME\fP"
+
+.SS "typedef struct \fBGENERAL_SUBTREE_st\fP  \fBGENERAL_SUBTREE\fP"
+
+.SS "typedef struct \fBIPAddressChoice_st\fP  \fBIPAddressChoice\fP"
+
+.SS "typedef struct \fBIPAddressFamily_st\fP  \fBIPAddressFamily\fP"
+
+.SS "typedef struct \fBIPAddressOrRange_st\fP  \fBIPAddressOrRange\fP"
+
+.SS "typedef struct \fBIPAddressRange_st\fP  \fBIPAddressRange\fP"
+
+.SS "typedef struct \fBNOTICEREF_st\fP  \fBNOTICEREF\fP"
+
+.SS "typedef struct \fBotherName_st\fP  \fBOTHERNAME\fP"
+
+.SS "typedef struct \fBPKEY_USAGE_PERIOD_st\fP  \fBPKEY_USAGE_PERIOD\fP"
+
+.SS "typedef struct \fBPOLICY_CONSTRAINTS_st\fP  \fBPOLICY_CONSTRAINTS\fP"
+
+.SS "typedef struct \fBPOLICY_MAPPING_st\fP  \fBPOLICY_MAPPING\fP"
+
+.SS "typedef struct \fBPOLICYINFO_st\fP  \fBPOLICYINFO\fP"
+
+.SS "typedef struct \fBPOLICYQUALINFO_st\fP  \fBPOLICYQUALINFO\fP"
+
+.SS "typedef struct \fBPROXY_CERT_INFO_EXTENSION_st\fP  \fBPROXY_CERT_INFO_EXTENSION\fP"
+
+.SS "typedef struct \fBPROXY_POLICY_st\fP  \fBPROXY_POLICY\fP"
+
+.SS "typedef \fBvoid\fP STACK_OF(\fBCONF_VALUE\fP)*extlist)"
+
+.PP
+Definition at line 89 of file include/openssl/x509v3\&.h\&.
+.SS "typedef struct \fBSXNET_st\fP  \fBSXNET\fP"
+
+.SS "typedef struct \fBSXNET_ID_st\fP  \fBSXNETID\fP"
+
+.SS "typedef struct \fBUSERNOTICE_st\fP  \fBUSERNOTICE\fP"
+
+.SS "typedef struct \fBx509_purpose_st\fP  \fBX509_PURPOSE\fP"
+
+.SS "typedef struct \fBX509V3_CONF_METHOD_st\fP  \fBX509V3_CONF_METHOD\fP"
+
+.SS "typedef \fBvoid\fP*(* X509V3_EXT_D2I) (\fBvoid\fP *, const unsigned char **, long)"
+
+.PP
+Definition at line 85 of file include/openssl/x509v3\&.h\&.
+.SS "typedef \fBvoid\fP(* X509V3_EXT_FREE) (\fBvoid\fP *)"
+
+.PP
+Definition at line 84 of file include/openssl/x509v3\&.h\&.
+.SS "typedef int(* X509V3_EXT_I2D) (\fBvoid\fP *, unsigned char **)"
+
+.PP
+Definition at line 86 of file include/openssl/x509v3\&.h\&.
+.SS "typedef int(* X509V3_EXT_I2R) (const struct \fBv3_ext_method\fP *method, \fBvoid\fP *\fBext\fP, \fBBIO\fP *out, int indent)"
+
+.PP
+Definition at line 97 of file include/openssl/x509v3\&.h\&.
+.SS "typedef char*(* X509V3_EXT_I2S) (const struct \fBv3_ext_method\fP *method, \fBvoid\fP *\fBext\fP)"
+
+.PP
+Definition at line 93 of file include/openssl/x509v3\&.h\&.
+.SS "typedef struct \fBv3_ext_method\fP \fBX509V3_EXT_METHOD\fP"
+
+.PP
+Definition at line 146 of file include/openssl/x509v3\&.h\&.
+.SS "typedef \fBvoid\fP*(* X509V3_EXT_NEW) (\fBvoid\fP)"
+
+.PP
+Definition at line 83 of file include/openssl/x509v3\&.h\&.
+.SS "typedef \fBvoid\fP*(* X509V3_EXT_R2I) (const struct \fBv3_ext_method\fP *method, struct \fBv3_ext_ctx\fP *ctx, const char *str)"
+
+.PP
+Definition at line 99 of file include/openssl/x509v3\&.h\&.
+.SS "typedef \fBvoid\fP*(* X509V3_EXT_S2I) (const struct \fBv3_ext_method\fP *method, struct \fBv3_ext_ctx\fP *ctx, const char *str)"
+
+.PP
+Definition at line 95 of file include/openssl/x509v3\&.h\&.
+.SS "typedef \fBvoid\fP*(* X509V3_EXT_V2I) (const struct \fBv3_ext_method\fP *method, struct \fBv3_ext_ctx\fP *ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)*values)"
+
+.PP
+Definition at line 90 of file include/openssl/x509v3\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBGENERAL_NAME\fP* a2i_GENERAL_NAME (\fBGENERAL_NAME\fP * out, const \fBX509V3_EXT_METHOD\fP * method, \fBX509V3_CTX\fP * ctx, int gen_type, char * value, int is_nc)"
+
+.SS "int a2i_ipadd (unsigned char * ipout, const char * ipasc)"
+
+.SS "\fBASN1_OCTET_STRING\fP* a2i_IPADDRESS (const char * ipasc)"
+
+.SS "\fBASN1_OCTET_STRING\fP* a2i_IPADDRESS_NC (const char * ipasc)"
+
+.SS "int DIST_POINT_set_dpname (\fBDIST_POINT_NAME\fP * dpn, \fBX509_NAME\fP * iname)"
+
+.SS "\fBvoid\fP ERR_load_X509V3_strings (\fBvoid\fP)"
+
+.SS "int GENERAL_NAME_cmp (\fBGENERAL_NAME\fP * a, \fBGENERAL_NAME\fP * b)"
+
+.SS "\fBGENERAL_NAME\fP* GENERAL_NAME_dup (\fBGENERAL_NAME\fP * a)"
+
+.SS "int GENERAL_NAME_get0_otherName (\fBGENERAL_NAME\fP * gen, \fBASN1_OBJECT\fP ** poid, \fBASN1_TYPE\fP ** pvalue)"
+
+.SS "\fBvoid\fP* GENERAL_NAME_get0_value (\fBGENERAL_NAME\fP * a, int * ptype)"
+
+.SS "int GENERAL_NAME_print (\fBBIO\fP * out, \fBGENERAL_NAME\fP * gen)"
+
+.SS "int GENERAL_NAME_set0_othername (\fBGENERAL_NAME\fP * gen, \fBASN1_OBJECT\fP * oid, \fBASN1_TYPE\fP * value)"
+
+.SS "\fBvoid\fP GENERAL_NAME_set0_value (\fBGENERAL_NAME\fP * a, int type, \fBvoid\fP * value)"
+
+.SS "char* hex_to_string (const unsigned char * buffer, long len)"
+
+.SS "int i2a_ACCESS_DESCRIPTION (\fBBIO\fP * bp, \fBACCESS_DESCRIPTION\fP * a)"
+
+.SS "char* i2s_ASN1_ENUMERATED (\fBX509V3_EXT_METHOD\fP * meth, \fBASN1_ENUMERATED\fP * aint)"
+
+.SS "char* i2s_ASN1_ENUMERATED_TABLE (\fBX509V3_EXT_METHOD\fP * meth, \fBASN1_ENUMERATED\fP * aint)"
+
+.SS "char* i2s_ASN1_INTEGER (\fBX509V3_EXT_METHOD\fP * meth, \fBASN1_INTEGER\fP * aint)"
+
+.SS "char* i2s_ASN1_OCTET_STRING (\fBX509V3_EXT_METHOD\fP * method, \fBASN1_OCTET_STRING\fP * ia5)"
+
+.SS "int name_cmp (const char * name, const char * cmp)"
+
+.SS "int NAME_CONSTRAINTS_check (\fBX509\fP * x, \fBNAME_CONSTRAINTS\fP * nc)"
+
+.SS "int OTHERNAME_cmp (\fBOTHERNAME\fP * a, \fBOTHERNAME\fP * b)"
+
+.SS "\fBASN1_INTEGER\fP* s2i_ASN1_INTEGER (\fBX509V3_EXT_METHOD\fP * meth, char * value)"
+
+.SS "\fBASN1_OCTET_STRING\fP* s2i_ASN1_OCTET_STRING (\fBX509V3_EXT_METHOD\fP * method, \fBX509V3_CTX\fP * ctx, char * str)"
+
+.SS "typedef STACK_OF (\fBCONF_VALUE\fP) const"
+
+.SS "typedef STACK_OF (\fBGENERAL_NAME\fP)"
+
+.SS "typedef STACK_OF (\fBACCESS_DESCRIPTION\fP)"
+
+.SS "typedef STACK_OF (\fBASN1_OBJECT\fP)"
+
+.SS "typedef STACK_OF (\fBDIST_POINT\fP)"
+
+.SS "typedef STACK_OF (\fBPOLICYINFO\fP)"
+
+.SS "typedef STACK_OF (\fBPOLICY_MAPPING\fP)"
+
+.SS "STACK_OF (\fBOPENSSL_STRING\fP)"
+
+.SS "typedef STACK_OF (\fBASIdOrRange\fP)"
+
+.SS "typedef STACK_OF (\fBIPAddressOrRange\fP)"
+
+.SS "typedef STACK_OF (\fBIPAddressFamily\fP)"
+
+.SS "unsigned char* string_to_hex (const char * str, long * len)"
+
+.SS "int SXNET_add_id_asc (\fBSXNET\fP ** psx, char * zone, char * user, int userlen)"
+
+.SS "int SXNET_add_id_INTEGER (\fBSXNET\fP ** psx, \fBASN1_INTEGER\fP * izone, char * user, int userlen)"
+
+.SS "int SXNET_add_id_ulong (\fBSXNET\fP ** psx, unsigned long lzone, char * user, int userlen)"
+
+.SS "\fBASN1_OCTET_STRING\fP* SXNET_get_id_asc (\fBSXNET\fP * sx, char * zone)"
+
+.SS "\fBASN1_OCTET_STRING\fP* SXNET_get_id_INTEGER (\fBSXNET\fP * sx, \fBASN1_INTEGER\fP * zone)"
+
+.SS "\fBASN1_OCTET_STRING\fP* SXNET_get_id_ulong (\fBSXNET\fP * sx, unsigned long lzone)"
+
+.SS "\fBASN1_BIT_STRING\fP* v2i_ASN1_BIT_STRING (\fBX509V3_EXT_METHOD\fP * method, \fBX509V3_CTX\fP * ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)* nval)"
+
+.SS "GENERAL_NAMES* v2i_GENERAL_NAMES (const \fBX509V3_EXT_METHOD\fP * method, \fBX509V3_CTX\fP * ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)* nval)"
+
+.SS "int v3_addr_add_inherit (IPAddrBlocks * addr, const unsigned afi, const unsigned * safi)"
+
+.SS "int v3_addr_add_prefix (IPAddrBlocks * addr, const unsigned afi, const unsigned * safi, unsigned char * a, const int prefixlen)"
+
+.SS "int v3_addr_add_range (IPAddrBlocks * addr, const unsigned afi, const unsigned * safi, unsigned char * min, unsigned char * max)"
+
+.SS "int v3_addr_canonize (IPAddrBlocks * addr)"
+
+.SS "unsigned v3_addr_get_afi (const \fBIPAddressFamily\fP * f)"
+
+.SS "int v3_addr_get_range (\fBIPAddressOrRange\fP * aor, const unsigned afi, unsigned char * min, unsigned char * max, const int length)"
+
+.SS "int v3_addr_inherits (IPAddrBlocks * addr)"
+
+.SS "int v3_addr_is_canonical (IPAddrBlocks * addr)"
+
+.SS "int v3_addr_subset (IPAddrBlocks * a, IPAddrBlocks * b)"
+
+.SS "int v3_addr_validate_path (\fBX509_STORE_CTX\fP *)"
+
+.SS "int v3_addr_validate_resource_set (\fBSTACK_OF\fP(\fBX509\fP)* chain, IPAddrBlocks * ext, int allow_inheritance)"
+
+.SS "int v3_asid_add_id_or_range (\fBASIdentifiers\fP * asid, int which, \fBASN1_INTEGER\fP * min, \fBASN1_INTEGER\fP * max)"
+
+.SS "int v3_asid_add_inherit (\fBASIdentifiers\fP * asid, int which)"
+
+.SS "int v3_asid_canonize (\fBASIdentifiers\fP * asid)"
+
+.SS "int v3_asid_inherits (\fBASIdentifiers\fP * asid)"
+
+.SS "int v3_asid_is_canonical (\fBASIdentifiers\fP * asid)"
+
+.SS "int v3_asid_subset (\fBASIdentifiers\fP * a, \fBASIdentifiers\fP * b)"
+
+.SS "int v3_asid_validate_path (\fBX509_STORE_CTX\fP *)"
+
+.SS "int v3_asid_validate_resource_set (\fBSTACK_OF\fP(\fBX509\fP)* chain, \fBASIdentifiers\fP * ext, int allow_inheritance)"
+
+.SS "int X509_check_akid (\fBX509\fP * issuer, \fBAUTHORITY_KEYID\fP * akid)"
+
+.SS "int X509_check_ca (\fBX509\fP * x)"
+
+.SS "int X509_check_email (\fBX509\fP * x, const char * chk, size_t chklen, unsigned int flags)"
+
+.SS "int X509_check_host (\fBX509\fP * x, const char * chk, size_t chklen, unsigned int flags, char ** peername)"
+
+.SS "int X509_check_ip (\fBX509\fP * x, const unsigned char * chk, size_t chklen, unsigned int flags)"
+
+.SS "int X509_check_ip_asc (\fBX509\fP * x, const char * ipasc, unsigned int flags)"
+
+.SS "int X509_check_issued (\fBX509\fP * issuer, \fBX509\fP * subject)"
+
+.SS "int X509_check_purpose (\fBX509\fP * x, int id, int ca)"
+
+.SS "\fBvoid\fP X509_email_free (\fBSTACK_OF\fP(\fBOPENSSL_STRING\fP)* sk)"
+
+.SS "\fBvoid\fP X509_POLICY_NODE_print (\fBBIO\fP * out, \fBX509_POLICY_NODE\fP * node, int indent)"
+
+.SS "int X509_PURPOSE_add (int id, int trust, int flags, int(*)(const \fBX509_PURPOSE\fP *, const \fBX509\fP *, int) ck, char * name, char * sname, \fBvoid\fP * arg)"
+
+.SS "\fBvoid\fP X509_PURPOSE_cleanup (\fBvoid\fP)"
+
+.SS "\fBX509_PURPOSE\fP* X509_PURPOSE_get0 (int idx)"
+
+.SS "char* X509_PURPOSE_get0_name (\fBX509_PURPOSE\fP * xp)"
+
+.SS "char* X509_PURPOSE_get0_sname (\fBX509_PURPOSE\fP * xp)"
+
+.SS "int X509_PURPOSE_get_by_id (int id)"
+
+.SS "int X509_PURPOSE_get_by_sname (char * sname)"
+
+.SS "int X509_PURPOSE_get_count (\fBvoid\fP)"
+
+.SS "int X509_PURPOSE_get_id (\fBX509_PURPOSE\fP *)"
+
+.SS "int X509_PURPOSE_get_trust (\fBX509_PURPOSE\fP * xp)"
+
+.SS "int X509_PURPOSE_set (int * p, int purpose)"
+
+.SS "int X509_supported_extension (\fBX509_EXTENSION\fP * ex)"
+
+.SS "int X509V3_add1_i2d (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)** x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.SS "int X509V3_add_standard_extensions (\fBvoid\fP)"
+
+.SS "int X509V3_add_value (const char * name, const char * value, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)** extlist)"
+
+.SS "int X509V3_add_value_bool (const char * name, int asn1_bool, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)** extlist)"
+
+.SS "int X509V3_add_value_int (const char * name, \fBASN1_INTEGER\fP * aint, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)** extlist)"
+
+.SS "int X509V3_add_value_uchar (const char * name, const unsigned char * value, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)** extlist)"
+
+.SS "int X509V3_EXT_add (\fBX509V3_EXT_METHOD\fP * ext)"
+
+.SS "int X509V3_EXT_add_alias (int nid_to, int nid_from)"
+
+.SS "int X509V3_EXT_add_list (\fBX509V3_EXT_METHOD\fP * extlist)"
+
+.SS "\fBvoid\fP X509V3_EXT_cleanup (\fBvoid\fP)"
+
+.SS "\fBvoid\fP* X509V3_EXT_d2i (\fBX509_EXTENSION\fP * ext)"
+
+.SS "int X509V3_EXT_free (int nid, \fBvoid\fP * ext_data)"
+
+.SS "const \fBX509V3_EXT_METHOD\fP* X509V3_EXT_get (\fBX509_EXTENSION\fP * ext)"
+
+.SS "const \fBX509V3_EXT_METHOD\fP* X509V3_EXT_get_nid (int nid)"
+
+.SS "\fBX509_EXTENSION\fP* X509V3_EXT_i2d (int ext_nid, int crit, \fBvoid\fP * ext_struc)"
+
+.SS "int X509V3_EXT_print (\fBBIO\fP * out, \fBX509_EXTENSION\fP * ext, unsigned long flag, int indent)"
+
+.SS "int X509V3_EXT_print_fp (FILE * out, \fBX509_EXTENSION\fP * ext, int flag, int indent)"
+
+.SS "\fBvoid\fP X509V3_EXT_val_prn (\fBBIO\fP * out, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)* val, int indent, int ml)"
+
+.SS "int X509V3_extensions_print (\fBBIO\fP * out, char * title, \fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* exts, unsigned long flag, int indent)"
+
+.SS "\fBvoid\fP* X509V3_get_d2i (\fBSTACK_OF\fP(\fBX509_EXTENSION\fP)* x, int nid, int * crit, int * idx)"
+
+.SS "char* X509V3_get_string (\fBX509V3_CTX\fP * ctx, char * name, char * section)"
+
+.SS "int X509V3_NAME_from_section (\fBX509_NAME\fP * nm, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)* dn_sk, unsigned long chtype)"
+
+.SS "\fBvoid\fP X509V3_section_free (\fBX509V3_CTX\fP * ctx, \fBSTACK_OF\fP(\fBCONF_VALUE\fP)* section)"
+
+.SS "\fBvoid\fP X509V3_set_ctx (\fBX509V3_CTX\fP * ctx, \fBX509\fP * issuer, \fBX509\fP * subject, \fBX509_REQ\fP * req, \fBX509_CRL\fP * crl, int flags)"
+
+.SS "\fBvoid\fP X509V3_string_free (\fBX509V3_CTX\fP * ctx, char * str)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBASN1_BIT_STRING\fP* bits"
+
+.PP
+Definition at line 533 of file include/openssl/x509v3\&.h\&.
+.SS "GENERAL_NAMES* gen"
+
+.PP
+Definition at line 537 of file include/openssl/x509v3\&.h\&.
+.SS "char* section"
+
+.PP
+Definition at line 646 of file include/openssl/x509v3\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

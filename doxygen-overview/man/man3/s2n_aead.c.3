@@ -1,0 +1,46 @@
+.TH "s2n-master/tls/s2n_aead.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_aead.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_aead_aad_init\fP (const struct \fBs2n_connection\fP *conn, uint8_t *sequence_number, uint8_t content_type, uint16_t record_length, struct \fBs2n_stuffer\fP *ad)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_aead_aad_init (const struct \fBs2n_connection\fP * conn, uint8_t * sequence_number, uint8_t content_type, uint16_t record_length, struct \fBs2n_stuffer\fP * ad)"
+
+.PP
+Definition at line 25 of file s2n_aead\&.c\&.
+.PP
+.nf
+26 {
+27     /* ad = seq_num || record_type || version || length */
+28     GUARD(s2n_stuffer_write_bytes(ad, sequence_number, S2N_TLS_SEQUENCE_NUM_LEN));
+29     GUARD(s2n_stuffer_write_uint8(ad, content_type));
+30     GUARD(s2n_stuffer_write_uint8(ad, conn->actual_protocol_version / 10));
+31     GUARD(s2n_stuffer_write_uint8(ad, conn->actual_protocol_version % 10));
+32     GUARD(s2n_stuffer_write_uint16(ad, record_length));
+33 
+34     return 0;
+35 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

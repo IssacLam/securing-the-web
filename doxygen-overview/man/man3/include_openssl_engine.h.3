@@ -1,0 +1,1908 @@
+.TH "engine.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+engine.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <openssl/ecdh\&.h>\fP
+.br
+\fC#include <openssl/ecdsa\&.h>\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+\fC#include <openssl/ui\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBENGINE_CMD_DEFN_st\fP"
+.br
+.ti -1c
+.RI "struct \fBst_dynamic_MEM_fns\fP"
+.br
+.ti -1c
+.RI "struct \fBst_dynamic_LOCK_fns\fP"
+.br
+.ti -1c
+.RI "struct \fBst_dynamic_fns\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBENGINE_METHOD_RSA\fP   (unsigned int)0x0001"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_DSA\fP   (unsigned int)0x0002"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_DH\fP   (unsigned int)0x0004"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_RAND\fP   (unsigned int)0x0008"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_ECDH\fP   (unsigned int)0x0010"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_ECDSA\fP   (unsigned int)0x0020"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_CIPHERS\fP   (unsigned int)0x0040"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_DIGESTS\fP   (unsigned int)0x0080"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_STORE\fP   (unsigned int)0x0100"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_PKEY_METHS\fP   (unsigned int)0x0200"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_PKEY_ASN1_METHS\fP   (unsigned int)0x0400"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_ALL\fP   (unsigned int)0xFFFF"
+.br
+.ti -1c
+.RI "#define \fBENGINE_METHOD_NONE\fP   (unsigned int)0x0000"
+.br
+.ti -1c
+.RI "#define \fBENGINE_TABLE_FLAG_NOINIT\fP   (unsigned int)0x0001"
+.br
+.ti -1c
+.RI "#define \fBENGINE_FLAGS_MANUAL_CMD_CTRL\fP   (int)0x0002"
+.br
+.ti -1c
+.RI "#define \fBENGINE_FLAGS_BY_ID_COPY\fP   (int)0x0004"
+.br
+.ti -1c
+.RI "#define \fBENGINE_FLAGS_NO_REGISTER_ALL\fP   (int)0x0008"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CMD_FLAG_NUMERIC\fP   (unsigned int)0x0001"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CMD_FLAG_STRING\fP   (unsigned int)0x0002"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CMD_FLAG_NO_INPUT\fP   (unsigned int)0x0004"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CMD_FLAG_INTERNAL\fP   (unsigned int)0x0008"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_SET_LOGSTREAM\fP   1"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_SET_PASSWORD_CALLBACK\fP   2"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_HUP\fP"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_SET_USER_INTERFACE\fP   4/* Alternative to callback */"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_SET_CALLBACK_DATA\fP"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_LOAD_CONFIGURATION\fP"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_LOAD_SECTION\fP"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_HAS_CTRL_FUNCTION\fP   10"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_FIRST_CMD_TYPE\fP   11"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_NEXT_CMD_TYPE\fP   12"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_CMD_FROM_NAME\fP   13"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_NAME_LEN_FROM_CMD\fP   14"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_NAME_FROM_CMD\fP   15"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_DESC_LEN_FROM_CMD\fP   16"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_DESC_FROM_CMD\fP   17"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_GET_CMD_FLAGS\fP   18"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CMD_BASE\fP   200"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_CHIL_SET_FORKCHECK\fP   100"
+.br
+.ti -1c
+.RI "#define \fBENGINE_CTRL_CHIL_NO_LOCKING\fP   101"
+.br
+.ti -1c
+.RI "#define \fBOSSL_DYNAMIC_VERSION\fP   (unsigned long)0x00020000"
+.br
+.ti -1c
+.RI "#define \fBOSSL_DYNAMIC_OLDEST\fP   (unsigned long)0x00020000"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_DYNAMIC_CHECK_FN\fP()"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_DYNAMIC_BIND_FN\fP(fn)"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_DYNAMIC_CTRL\fP   180"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_DYNAMIC_GET_DATA_CTX\fP   181"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_DYNAMIC_LOAD\fP   182"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_DYNAMIC_SET_DATA_CTX\fP   183"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_ADD\fP   105"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_BY_ID\fP   106"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_CMD_IS_EXECUTABLE\fP   170"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_CTRL\fP   142"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_CTRL_CMD\fP   178"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_CTRL_CMD_STRING\fP   171"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_FINISH\fP   107"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_FREE_UTIL\fP   108"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_CIPHER\fP   185"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_DEFAULT_TYPE\fP   177"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_DIGEST\fP   186"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_NEXT\fP   115"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_PKEY_ASN1_METH\fP   193"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_PKEY_METH\fP   192"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_GET_PREV\fP   116"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_INIT\fP   119"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_LIST_ADD\fP   120"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_LIST_REMOVE\fP   121"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_LOAD_PRIVATE_KEY\fP   150"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_LOAD_PUBLIC_KEY\fP   151"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_LOAD_SSL_CLIENT_CERT\fP   194"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_NEW\fP   122"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_REMOVE\fP   123"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_SET_DEFAULT_STRING\fP   189"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_SET_DEFAULT_TYPE\fP   126"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_SET_ID\fP   129"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_SET_NAME\fP   130"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_TABLE_REGISTER\fP   184"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_UNLOAD_KEY\fP   152"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_UNLOCKED_FINISH\fP   191"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_ENGINE_UP_REF\fP   190"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_INT_CTRL_HELPER\fP   172"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_INT_ENGINE_CONFIGURE\fP   188"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_INT_ENGINE_MODULE_INIT\fP   187"
+.br
+.ti -1c
+.RI "#define \fBENGINE_F_LOG_MESSAGE\fP   141"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ALREADY_LOADED\fP   100"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ARGUMENT_IS_NOT_A_NUMBER\fP   133"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_CMD_NOT_EXECUTABLE\fP   134"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_COMMAND_TAKES_INPUT\fP   135"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_COMMAND_TAKES_NO_INPUT\fP   136"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_CONFLICTING_ENGINE_ID\fP   103"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_CTRL_COMMAND_NOT_IMPLEMENTED\fP   119"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_DH_NOT_IMPLEMENTED\fP   139"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_DSA_NOT_IMPLEMENTED\fP   140"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_DSO_FAILURE\fP   104"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_DSO_NOT_FOUND\fP   132"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ENGINES_SECTION_ERROR\fP   148"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ENGINE_CONFIGURATION_ERROR\fP   102"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ENGINE_IS_NOT_IN_LIST\fP   105"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ENGINE_SECTION_ERROR\fP   149"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_FAILED_LOADING_PRIVATE_KEY\fP   128"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_FAILED_LOADING_PUBLIC_KEY\fP   129"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_FINISH_FAILED\fP   106"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_GET_HANDLE_FAILED\fP   107"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_ID_OR_NAME_MISSING\fP   108"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INIT_FAILED\fP   109"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INTERNAL_LIST_ERROR\fP   110"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INVALID_ARGUMENT\fP   143"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INVALID_CMD_NAME\fP   137"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INVALID_CMD_NUMBER\fP   138"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INVALID_INIT_VALUE\fP   151"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_INVALID_STRING\fP   150"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NOT_INITIALISED\fP   117"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NOT_LOADED\fP   112"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NO_CONTROL_FUNCTION\fP   120"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NO_INDEX\fP   144"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NO_LOAD_FUNCTION\fP   125"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NO_REFERENCE\fP   130"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NO_SUCH_ENGINE\fP   116"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_NO_UNLOAD_FUNCTION\fP   126"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_PROVIDE_PARAMETERS\fP   113"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_RSA_NOT_IMPLEMENTED\fP   141"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_UNIMPLEMENTED_CIPHER\fP   146"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_UNIMPLEMENTED_DIGEST\fP   147"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_UNIMPLEMENTED_PUBLIC_KEY_METHOD\fP   101"
+.br
+.ti -1c
+.RI "#define \fBENGINE_R_VERSION_INCOMPATIBILITY\fP   145"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBENGINE_CMD_DEFN_st\fP \fBENGINE_CMD_DEFN\fP"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_GEN_FUNC_PTR\fP) (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_GEN_INT_FUNC_PTR\fP) (\fBENGINE\fP *)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_CTRL_FUNC_PTR\fP) (\fBENGINE\fP *, int, long, \fBvoid\fP *, \fBvoid\fP(*f) (\fBvoid\fP))"
+.br
+.ti -1c
+.RI "typedef \fBEVP_PKEY\fP *(* \fBENGINE_LOAD_KEY_PTR\fP) (\fBENGINE\fP *, const char *, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_SSL_CLIENT_CERT_PTR\fP) (\fBENGINE\fP *, \fBSSL\fP *ssl, \fBSTACK_OF\fP(\fBX509_NAME\fP)*ca_dn, \fBX509\fP **pcert, \fBEVP_PKEY\fP **pkey, \fBSTACK_OF\fP(\fBX509\fP)**pother, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_CIPHERS_PTR\fP) (\fBENGINE\fP *, const \fBEVP_CIPHER\fP **, const int **, int)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_DIGESTS_PTR\fP) (\fBENGINE\fP *, const \fBEVP_MD\fP **, const int **, int)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_PKEY_METHS_PTR\fP) (\fBENGINE\fP *, \fBEVP_PKEY_METHOD\fP **, const int **, int)"
+.br
+.ti -1c
+.RI "typedef int(* \fBENGINE_PKEY_ASN1_METHS_PTR\fP) (\fBENGINE\fP *, \fBEVP_PKEY_ASN1_METHOD\fP **, const int **, int)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBdyn_MEM_malloc_cb\fP) (size_t)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBdyn_MEM_realloc_cb\fP) (\fBvoid\fP *, size_t)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBdyn_MEM_free_cb\fP) (\fBvoid\fP *)"
+.br
+.ti -1c
+.RI "typedef struct \fBst_dynamic_MEM_fns\fP \fBdynamic_MEM_fns\fP"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBdyn_lock_locking_cb\fP) (int, int, const char *, int)"
+.br
+.ti -1c
+.RI "typedef int(* \fBdyn_lock_add_lock_cb\fP) (int *, int, int, const char *, int)"
+.br
+.ti -1c
+.RI "typedef struct CRYPTO_dynlock_value *(* \fBdyn_dynlock_create_cb\fP) (const char *, int)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBdyn_dynlock_lock_cb\fP) (int, struct CRYPTO_dynlock_value *, const char *, int)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBdyn_dynlock_destroy_cb\fP) (struct CRYPTO_dynlock_value *, const char *, int)"
+.br
+.ti -1c
+.RI "typedef struct \fBst_dynamic_LOCK_fns\fP \fBdynamic_LOCK_fns\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBst_dynamic_fns\fP \fBdynamic_fns\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long(* \fBdynamic_v_check_fn\fP) (unsigned long ossl_version)"
+.br
+.ti -1c
+.RI "typedef int(* \fBdynamic_bind_engine\fP) (\fBENGINE\fP *\fBe\fP, const char *id, const \fBdynamic_fns\fP *fns)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_first\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_last\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_next\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_prev\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_add\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_remove\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_by_id\fP (const char *id)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_openssl\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_dynamic\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_4758cca\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_aep\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_atalla\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_chil\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_cswift\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_nuron\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_sureware\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_ubsec\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_padlock\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_capi\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_gmp\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_gost\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_cryptodev\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_rdrand\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_load_builtin_engines\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned int \fBENGINE_get_table_flags\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_set_table_flags\fP (unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_RSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_RSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_RSA\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_DSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_DSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_DSA\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_ECDH\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_ECDH\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_ECDH\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_ECDSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_ECDSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_ECDSA\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_DH\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_DH\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_DH\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_RAND\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_RAND\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_RAND\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_STORE\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_STORE\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_STORE\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_ciphers\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_ciphers\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_ciphers\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_digests\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_digests\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_digests\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_pkey_meths\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_pkey_meths\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_pkey_meths\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_pkey_asn1_meths\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_unregister_pkey_asn1_meths\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_register_all_pkey_asn1_meths\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_complete\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_register_all_complete\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_ctrl\fP (\fBENGINE\fP *\fBe\fP, int cmd, long i, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*f)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBENGINE_cmd_is_executable\fP (\fBENGINE\fP *\fBe\fP, int cmd)"
+.br
+.ti -1c
+.RI "int \fBENGINE_ctrl_cmd\fP (\fBENGINE\fP *\fBe\fP, const char *cmd_name, long i, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*f)(\fBvoid\fP), int cmd_optional)"
+.br
+.ti -1c
+.RI "int \fBENGINE_ctrl_cmd_string\fP (\fBENGINE\fP *\fBe\fP, const char *cmd_name, const char *arg, int cmd_optional)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_free\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_up_ref\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_id\fP (\fBENGINE\fP *\fBe\fP, const char *id)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_name\fP (\fBENGINE\fP *\fBe\fP, const char *name)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_RSA\fP (\fBENGINE\fP *\fBe\fP, const \fBRSA_METHOD\fP *rsa_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_DSA\fP (\fBENGINE\fP *\fBe\fP, const \fBDSA_METHOD\fP *dsa_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ECDH\fP (\fBENGINE\fP *\fBe\fP, const \fBECDH_METHOD\fP *ecdh_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ECDSA\fP (\fBENGINE\fP *\fBe\fP, const \fBECDSA_METHOD\fP *ecdsa_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_DH\fP (\fBENGINE\fP *\fBe\fP, const \fBDH_METHOD\fP *dh_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_RAND\fP (\fBENGINE\fP *\fBe\fP, const \fBRAND_METHOD\fP *rand_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_STORE\fP (\fBENGINE\fP *\fBe\fP, const \fBSTORE_METHOD\fP *store_meth)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_destroy_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_GEN_INT_FUNC_PTR\fP destroy_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_init_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_GEN_INT_FUNC_PTR\fP init_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_finish_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_GEN_INT_FUNC_PTR\fP finish_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ctrl_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_CTRL_FUNC_PTR\fP ctrl_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_load_privkey_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_LOAD_KEY_PTR\fP loadpriv_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_load_pubkey_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_LOAD_KEY_PTR\fP loadpub_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_load_ssl_client_cert_function\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_SSL_CLIENT_CERT_PTR\fP loadssl_f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ciphers\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_CIPHERS_PTR\fP f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_digests\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_DIGESTS_PTR\fP f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_pkey_meths\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_PKEY_METHS_PTR\fP f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_pkey_asn1_meths\fP (\fBENGINE\fP *\fBe\fP, \fBENGINE_PKEY_ASN1_METHS_PTR\fP f)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_flags\fP (\fBENGINE\fP *\fBe\fP, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_cmd_defns\fP (\fBENGINE\fP *\fBe\fP, const \fBENGINE_CMD_DEFN\fP *defns)"
+.br
+.ti -1c
+.RI "int \fBENGINE_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_ex_data\fP (\fBENGINE\fP *\fBe\fP, int idx, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBENGINE_get_ex_data\fP (const \fBENGINE\fP *\fBe\fP, int idx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const char * \fBENGINE_get_id\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const char * \fBENGINE_get_name\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBRSA_METHOD\fP * \fBENGINE_get_RSA\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBDSA_METHOD\fP * \fBENGINE_get_DSA\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBECDH_METHOD\fP * \fBENGINE_get_ECDH\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBECDSA_METHOD\fP * \fBENGINE_get_ECDSA\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBDH_METHOD\fP * \fBENGINE_get_DH\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBRAND_METHOD\fP * \fBENGINE_get_RAND\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBSTORE_METHOD\fP * \fBENGINE_get_STORE\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_GEN_INT_FUNC_PTR\fP \fBENGINE_get_destroy_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_GEN_INT_FUNC_PTR\fP \fBENGINE_get_init_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_GEN_INT_FUNC_PTR\fP \fBENGINE_get_finish_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_CTRL_FUNC_PTR\fP \fBENGINE_get_ctrl_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_LOAD_KEY_PTR\fP \fBENGINE_get_load_privkey_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_LOAD_KEY_PTR\fP \fBENGINE_get_load_pubkey_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_SSL_CLIENT_CERT_PTR\fP \fBENGINE_get_ssl_client_cert_function\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_CIPHERS_PTR\fP \fBENGINE_get_ciphers\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_DIGESTS_PTR\fP \fBENGINE_get_digests\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_PKEY_METHS_PTR\fP \fBENGINE_get_pkey_meths\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE_PKEY_ASN1_METHS_PTR\fP \fBENGINE_get_pkey_asn1_meths\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_CIPHER\fP * \fBENGINE_get_cipher\fP (\fBENGINE\fP *\fBe\fP, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_MD\fP * \fBENGINE_get_digest\fP (\fBENGINE\fP *\fBe\fP, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_METHOD\fP * \fBENGINE_get_pkey_meth\fP (\fBENGINE\fP *\fBe\fP, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBENGINE_get_pkey_asn1_meth\fP (\fBENGINE\fP *\fBe\fP, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBENGINE_get_pkey_asn1_meth_str\fP (\fBENGINE\fP *\fBe\fP, const char *str, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "const \fBEVP_PKEY_ASN1_METHOD\fP * \fBENGINE_pkey_asn1_find_str\fP (\fBENGINE\fP **pe, const char *str, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "const \fBENGINE_CMD_DEFN\fP * \fBENGINE_get_cmd_defns\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_get_flags\fP (const \fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_init\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_finish\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBENGINE_load_private_key\fP (\fBENGINE\fP *\fBe\fP, const char *key_id, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBENGINE_load_public_key\fP (\fBENGINE\fP *\fBe\fP, const char *key_id, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+.br
+.ti -1c
+.RI "int \fBENGINE_load_ssl_client_cert\fP (\fBENGINE\fP *\fBe\fP, \fBSSL\fP *s, \fBSTACK_OF\fP(\fBX509_NAME\fP)*ca_dn, \fBX509\fP **pcert, \fBEVP_PKEY\fP **ppkey, \fBSTACK_OF\fP(\fBX509\fP)**pother, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_default_RSA\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_default_DSA\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_default_ECDH\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_default_ECDSA\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_default_DH\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_default_RAND\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_cipher_engine\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_digest_engine\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_pkey_meth_engine\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBENGINE_get_pkey_asn1_meth_engine\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_RSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_string\fP (\fBENGINE\fP *\fBe\fP, const char *def_list)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_DSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_ECDH\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_ECDSA\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_DH\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_RAND\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_ciphers\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_digests\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_pkey_meths\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default_pkey_asn1_meths\fP (\fBENGINE\fP *\fBe\fP)"
+.br
+.ti -1c
+.RI "int \fBENGINE_set_default\fP (\fBENGINE\fP *\fBe\fP, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBENGINE_add_conf_module\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBENGINE_get_static_state\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_ENGINE_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ENGINE_CMD_BASE   200"
+
+.PP
+Definition at line 290 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CMD_FLAG_INTERNAL   (unsigned int)0x0008"
+
+.PP
+Definition at line 193 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CMD_FLAG_NO_INPUT   (unsigned int)0x0004"
+
+.PP
+Definition at line 187 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CMD_FLAG_NUMERIC   (unsigned int)0x0001"
+
+.PP
+Definition at line 177 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CMD_FLAG_STRING   (unsigned int)0x0002"
+
+.PP
+Definition at line 182 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_CHIL_NO_LOCKING   101"
+
+.PP
+Definition at line 307 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_CHIL_SET_FORKCHECK   100"
+
+.PP
+Definition at line 301 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_CMD_FLAGS   18"
+
+.PP
+Definition at line 284 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_CMD_FROM_NAME   13"
+
+.PP
+Definition at line 265 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_DESC_FROM_CMD   17"
+
+.PP
+Definition at line 278 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_DESC_LEN_FROM_CMD   16"
+
+.PP
+Definition at line 277 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_FIRST_CMD_TYPE   11"
+
+.PP
+Definition at line 255 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_NAME_FROM_CMD   15"
+
+.PP
+Definition at line 275 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_NAME_LEN_FROM_CMD   14"
+
+.PP
+Definition at line 274 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_GET_NEXT_CMD_TYPE   12"
+
+.PP
+Definition at line 260 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_HAS_CTRL_FUNCTION   10"
+
+.PP
+Definition at line 250 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_HUP"
+\fBValue:\fP
+.PP
+.nf
+3/* Close and reinitialise
+                                                   * any handles/connections
+                                                   * etc\&. */
+.fi
+.PP
+Definition at line 214 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_LOAD_CONFIGURATION"
+\fBValue:\fP
+.PP
+.nf
+6/* Load a configuration,
+                                                   * given a string that
+                                                   * represents a file name
+                                                   * or so */
+.fi
+.PP
+Definition at line 222 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_LOAD_SECTION"
+\fBValue:\fP
+.PP
+.nf
+7/* Load data from a given
+                                                   * section in the already
+                                                   * loaded configuration */
+.fi
+.PP
+Definition at line 226 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_SET_CALLBACK_DATA"
+\fBValue:\fP
+.PP
+.nf
+5/* User-specific data, used
+                                                   * when calling the password
+                                                   * callback and the user
+                                                   * interface */
+.fi
+.PP
+Definition at line 218 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_SET_LOGSTREAM   1"
+
+.PP
+Definition at line 212 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_SET_PASSWORD_CALLBACK   2"
+
+.PP
+Definition at line 213 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_CTRL_SET_USER_INTERFACE   4/* Alternative to callback */"
+
+.PP
+Definition at line 217 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_DYNAMIC_CTRL   180"
+
+.PP
+Definition at line 874 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_DYNAMIC_GET_DATA_CTX   181"
+
+.PP
+Definition at line 875 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_DYNAMIC_LOAD   182"
+
+.PP
+Definition at line 876 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_DYNAMIC_SET_DATA_CTX   183"
+
+.PP
+Definition at line 877 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_ADD   105"
+
+.PP
+Definition at line 878 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_BY_ID   106"
+
+.PP
+Definition at line 879 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_CMD_IS_EXECUTABLE   170"
+
+.PP
+Definition at line 880 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_CTRL   142"
+
+.PP
+Definition at line 881 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_CTRL_CMD   178"
+
+.PP
+Definition at line 882 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_CTRL_CMD_STRING   171"
+
+.PP
+Definition at line 883 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_FINISH   107"
+
+.PP
+Definition at line 884 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_FREE_UTIL   108"
+
+.PP
+Definition at line 885 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_CIPHER   185"
+
+.PP
+Definition at line 886 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_DEFAULT_TYPE   177"
+
+.PP
+Definition at line 887 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_DIGEST   186"
+
+.PP
+Definition at line 888 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_NEXT   115"
+
+.PP
+Definition at line 889 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_PKEY_ASN1_METH   193"
+
+.PP
+Definition at line 890 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_PKEY_METH   192"
+
+.PP
+Definition at line 891 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_GET_PREV   116"
+
+.PP
+Definition at line 892 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_INIT   119"
+
+.PP
+Definition at line 893 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_LIST_ADD   120"
+
+.PP
+Definition at line 894 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_LIST_REMOVE   121"
+
+.PP
+Definition at line 895 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_LOAD_PRIVATE_KEY   150"
+
+.PP
+Definition at line 896 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_LOAD_PUBLIC_KEY   151"
+
+.PP
+Definition at line 897 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_LOAD_SSL_CLIENT_CERT   194"
+
+.PP
+Definition at line 898 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_NEW   122"
+
+.PP
+Definition at line 899 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_REMOVE   123"
+
+.PP
+Definition at line 900 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_SET_DEFAULT_STRING   189"
+
+.PP
+Definition at line 901 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_SET_DEFAULT_TYPE   126"
+
+.PP
+Definition at line 902 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_SET_ID   129"
+
+.PP
+Definition at line 903 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_SET_NAME   130"
+
+.PP
+Definition at line 904 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_TABLE_REGISTER   184"
+
+.PP
+Definition at line 905 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_UNLOAD_KEY   152"
+
+.PP
+Definition at line 906 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_UNLOCKED_FINISH   191"
+
+.PP
+Definition at line 907 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_ENGINE_UP_REF   190"
+
+.PP
+Definition at line 908 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_INT_CTRL_HELPER   172"
+
+.PP
+Definition at line 909 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_INT_ENGINE_CONFIGURE   188"
+
+.PP
+Definition at line 910 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_INT_ENGINE_MODULE_INIT   187"
+
+.PP
+Definition at line 911 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_F_LOG_MESSAGE   141"
+
+.PP
+Definition at line 912 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_FLAGS_BY_ID_COPY   (int)0x0004"
+
+.PP
+Definition at line 154 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_FLAGS_MANUAL_CMD_CTRL   (int)0x0002"
+
+.PP
+Definition at line 142 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_FLAGS_NO_REGISTER_ALL   (int)0x0008"
+
+.PP
+Definition at line 162 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_ALL   (unsigned int)0xFFFF"
+
+.PP
+Definition at line 121 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_CIPHERS   (unsigned int)0x0040"
+
+.PP
+Definition at line 115 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_DH   (unsigned int)0x0004"
+
+.PP
+Definition at line 111 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_DIGESTS   (unsigned int)0x0080"
+
+.PP
+Definition at line 116 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_DSA   (unsigned int)0x0002"
+
+.PP
+Definition at line 110 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_ECDH   (unsigned int)0x0010"
+
+.PP
+Definition at line 113 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_ECDSA   (unsigned int)0x0020"
+
+.PP
+Definition at line 114 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_NONE   (unsigned int)0x0000"
+
+.PP
+Definition at line 122 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_PKEY_ASN1_METHS   (unsigned int)0x0400"
+
+.PP
+Definition at line 119 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_PKEY_METHS   (unsigned int)0x0200"
+
+.PP
+Definition at line 118 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_RAND   (unsigned int)0x0008"
+
+.PP
+Definition at line 112 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_RSA   (unsigned int)0x0001"
+
+.PP
+Definition at line 109 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_METHOD_STORE   (unsigned int)0x0100"
+
+.PP
+Definition at line 117 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ALREADY_LOADED   100"
+
+.PP
+Definition at line 915 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ARGUMENT_IS_NOT_A_NUMBER   133"
+
+.PP
+Definition at line 916 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_CMD_NOT_EXECUTABLE   134"
+
+.PP
+Definition at line 917 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_COMMAND_TAKES_INPUT   135"
+
+.PP
+Definition at line 918 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_COMMAND_TAKES_NO_INPUT   136"
+
+.PP
+Definition at line 919 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_CONFLICTING_ENGINE_ID   103"
+
+.PP
+Definition at line 920 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_CTRL_COMMAND_NOT_IMPLEMENTED   119"
+
+.PP
+Definition at line 921 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_DH_NOT_IMPLEMENTED   139"
+
+.PP
+Definition at line 922 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_DSA_NOT_IMPLEMENTED   140"
+
+.PP
+Definition at line 923 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_DSO_FAILURE   104"
+
+.PP
+Definition at line 924 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_DSO_NOT_FOUND   132"
+
+.PP
+Definition at line 925 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ENGINE_CONFIGURATION_ERROR   102"
+
+.PP
+Definition at line 927 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ENGINE_IS_NOT_IN_LIST   105"
+
+.PP
+Definition at line 928 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ENGINE_SECTION_ERROR   149"
+
+.PP
+Definition at line 929 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ENGINES_SECTION_ERROR   148"
+
+.PP
+Definition at line 926 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_FAILED_LOADING_PRIVATE_KEY   128"
+
+.PP
+Definition at line 930 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_FAILED_LOADING_PUBLIC_KEY   129"
+
+.PP
+Definition at line 931 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_FINISH_FAILED   106"
+
+.PP
+Definition at line 932 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_GET_HANDLE_FAILED   107"
+
+.PP
+Definition at line 933 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_ID_OR_NAME_MISSING   108"
+
+.PP
+Definition at line 934 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INIT_FAILED   109"
+
+.PP
+Definition at line 935 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INTERNAL_LIST_ERROR   110"
+
+.PP
+Definition at line 936 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INVALID_ARGUMENT   143"
+
+.PP
+Definition at line 937 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INVALID_CMD_NAME   137"
+
+.PP
+Definition at line 938 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INVALID_CMD_NUMBER   138"
+
+.PP
+Definition at line 939 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INVALID_INIT_VALUE   151"
+
+.PP
+Definition at line 940 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_INVALID_STRING   150"
+
+.PP
+Definition at line 941 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NO_CONTROL_FUNCTION   120"
+
+.PP
+Definition at line 944 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NO_INDEX   144"
+
+.PP
+Definition at line 945 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NO_LOAD_FUNCTION   125"
+
+.PP
+Definition at line 946 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NO_REFERENCE   130"
+
+.PP
+Definition at line 947 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NO_SUCH_ENGINE   116"
+
+.PP
+Definition at line 948 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NO_UNLOAD_FUNCTION   126"
+
+.PP
+Definition at line 949 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NOT_INITIALISED   117"
+
+.PP
+Definition at line 942 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_NOT_LOADED   112"
+
+.PP
+Definition at line 943 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_PROVIDE_PARAMETERS   113"
+
+.PP
+Definition at line 950 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_RSA_NOT_IMPLEMENTED   141"
+
+.PP
+Definition at line 951 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_UNIMPLEMENTED_CIPHER   146"
+
+.PP
+Definition at line 952 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_UNIMPLEMENTED_DIGEST   147"
+
+.PP
+Definition at line 953 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_UNIMPLEMENTED_PUBLIC_KEY_METHOD   101"
+
+.PP
+Definition at line 954 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_R_VERSION_INCOMPATIBILITY   145"
+
+.PP
+Definition at line 955 of file include/openssl/engine\&.h\&.
+.SS "#define ENGINE_TABLE_FLAG_NOINIT   (unsigned int)0x0001"
+
+.PP
+Definition at line 130 of file include/openssl/engine\&.h\&.
+.SS "#define IMPLEMENT_DYNAMIC_BIND_FN(fn)"
+\fBValue:\fP
+.PP
+.nf
+OPENSSL_EXPORT \
+        int bind_engine(ENGINE *e, const char *id, const dynamic_fns *fns); \
+        OPENSSL_EXPORT \
+        int bind_engine(ENGINE *e, const char *id, const dynamic_fns *fns) { \
+                if(ENGINE_get_static_state() == fns->static_state) goto skip_cbs; \
+                if(!CRYPTO_set_mem_functions(fns->mem_fns\&.malloc_cb, \
+                        fns->mem_fns\&.realloc_cb, fns->mem_fns\&.free_cb)) \
+                        return 0; \
+                CRYPTO_set_locking_callback(fns->lock_fns\&.lock_locking_cb); \
+                CRYPTO_set_add_lock_callback(fns->lock_fns\&.lock_add_lock_cb); \
+                CRYPTO_set_dynlock_create_callback(fns->lock_fns\&.dynlock_create_cb); \
+                CRYPTO_set_dynlock_lock_callback(fns->lock_fns\&.dynlock_lock_cb); \
+                CRYPTO_set_dynlock_destroy_callback(fns->lock_fns\&.dynlock_destroy_cb); \
+                if(!CRYPTO_set_ex_data_implementation(fns->ex_data_fns)) \
+                        return 0; \
+                if(!ERR_set_implementation(fns->err_fns)) return 0; \
+        skip_cbs: \
+                if(!fn(e,id)) return 0; \
+                return 1; }
+.fi
+.PP
+Definition at line 826 of file include/openssl/engine\&.h\&.
+.SS "#define IMPLEMENT_DYNAMIC_CHECK_FN()"
+\fBValue:\fP
+.PP
+.nf
+OPENSSL_EXPORT unsigned long v_check(unsigned long v); \
+        OPENSSL_EXPORT unsigned long v_check(unsigned long v) { \
+                if(v >= OSSL_DYNAMIC_OLDEST) return OSSL_DYNAMIC_VERSION; \
+                return 0; }
+.fi
+.PP
+Definition at line 800 of file include/openssl/engine\&.h\&.
+.SS "#define OSSL_DYNAMIC_OLDEST   (unsigned long)0x00020000"
+
+.PP
+Definition at line 738 of file include/openssl/engine\&.h\&.
+.SS "#define OSSL_DYNAMIC_VERSION   (unsigned long)0x00020000"
+
+.PP
+Definition at line 733 of file include/openssl/engine\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct CRYPTO_dynlock_value*(* dyn_dynlock_create_cb) (const char *, int)"
+
+.PP
+Definition at line 765 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBvoid\fP(* dyn_dynlock_destroy_cb) (struct CRYPTO_dynlock_value *, const char *, int)"
+
+.PP
+Definition at line 769 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBvoid\fP(* dyn_dynlock_lock_cb) (int, struct CRYPTO_dynlock_value *, const char *, int)"
+
+.PP
+Definition at line 767 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* dyn_lock_add_lock_cb) (int *, int, int, const char *, int)"
+
+.PP
+Definition at line 764 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBvoid\fP(* dyn_lock_locking_cb) (int, int, const char *, int)"
+
+.PP
+Definition at line 763 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBvoid\fP(* dyn_MEM_free_cb) (\fBvoid\fP *)"
+
+.PP
+Definition at line 753 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBvoid\fP*(* dyn_MEM_malloc_cb) (size_t)"
+
+.PP
+Definition at line 751 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBvoid\fP*(* dyn_MEM_realloc_cb) (\fBvoid\fP *, size_t)"
+
+.PP
+Definition at line 752 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* dynamic_bind_engine) (\fBENGINE\fP *\fBe\fP, const char *id, const \fBdynamic_fns\fP *fns)"
+
+.PP
+Definition at line 824 of file include/openssl/engine\&.h\&.
+.SS "typedef struct \fBst_dynamic_fns\fP  \fBdynamic_fns\fP"
+
+.SS "typedef struct \fBst_dynamic_LOCK_fns\fP  \fBdynamic_LOCK_fns\fP"
+
+.SS "typedef struct \fBst_dynamic_MEM_fns\fP  \fBdynamic_MEM_fns\fP"
+
+.SS "typedef unsigned long(* dynamic_v_check_fn) (unsigned long ossl_version)"
+
+.PP
+Definition at line 799 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_CIPHERS_PTR) (\fBENGINE\fP *, const \fBEVP_CIPHER\fP **, const int **, int)"
+
+.PP
+Definition at line 362 of file include/openssl/engine\&.h\&.
+.SS "typedef struct \fBENGINE_CMD_DEFN_st\fP  \fBENGINE_CMD_DEFN\fP"
+
+.SS "typedef int(* ENGINE_CTRL_FUNC_PTR) (\fBENGINE\fP *, int, long, \fBvoid\fP *, \fBvoid\fP(*f)(\fBvoid\fP))"
+
+.PP
+Definition at line 335 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_DIGESTS_PTR) (\fBENGINE\fP *, const \fBEVP_MD\fP **, const int **, int)"
+
+.PP
+Definition at line 364 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_GEN_FUNC_PTR) (\fBvoid\fP)"
+
+.PP
+Definition at line 331 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_GEN_INT_FUNC_PTR) (\fBENGINE\fP *)"
+
+.PP
+Definition at line 333 of file include/openssl/engine\&.h\&.
+.SS "typedef \fBEVP_PKEY\fP*(* ENGINE_LOAD_KEY_PTR) (\fBENGINE\fP *, const char *, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+
+.PP
+Definition at line 338 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_PKEY_ASN1_METHS_PTR) (\fBENGINE\fP *, \fBEVP_PKEY_ASN1_METHOD\fP **, const int **, int)"
+
+.PP
+Definition at line 368 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_PKEY_METHS_PTR) (\fBENGINE\fP *, \fBEVP_PKEY_METHOD\fP **, const int **, int)"
+
+.PP
+Definition at line 366 of file include/openssl/engine\&.h\&.
+.SS "typedef int(* ENGINE_SSL_CLIENT_CERT_PTR) (\fBENGINE\fP *, \fBSSL\fP *ssl, \fBSTACK_OF\fP(\fBX509_NAME\fP)*ca_dn, \fBX509\fP **pcert, \fBEVP_PKEY\fP **pkey, \fBSTACK_OF\fP(\fBX509\fP)**pother, \fBUI_METHOD\fP *ui_method, \fBvoid\fP *callback_data)"
+
+.PP
+Definition at line 341 of file include/openssl/engine\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ENGINE_add (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_add_conf_module (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_by_id (const char * id)"
+
+.SS "\fBvoid\fP ENGINE_cleanup (\fBvoid\fP)"
+
+.SS "int ENGINE_cmd_is_executable (\fBENGINE\fP * e, int cmd)"
+
+.SS "int ENGINE_ctrl (\fBENGINE\fP * e, int cmd, long i, \fBvoid\fP * p, \fBvoid\fP(*)(\fBvoid\fP) f)"
+
+.SS "int ENGINE_ctrl_cmd (\fBENGINE\fP * e, const char * cmd_name, long i, \fBvoid\fP * p, \fBvoid\fP(*)(\fBvoid\fP) f, int cmd_optional)"
+
+.SS "int ENGINE_ctrl_cmd_string (\fBENGINE\fP * e, const char * cmd_name, const char * arg, int cmd_optional)"
+
+.SS "int ENGINE_finish (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_free (\fBENGINE\fP * e)"
+
+.SS "const \fBEVP_CIPHER\fP* ENGINE_get_cipher (\fBENGINE\fP * e, int nid)"
+
+.SS "\fBENGINE\fP* ENGINE_get_cipher_engine (int nid)"
+
+.SS "\fBENGINE_CIPHERS_PTR\fP ENGINE_get_ciphers (const \fBENGINE\fP * e)"
+
+.SS "const \fBENGINE_CMD_DEFN\fP* ENGINE_get_cmd_defns (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE_CTRL_FUNC_PTR\fP ENGINE_get_ctrl_function (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE\fP* ENGINE_get_default_DH (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_get_default_DSA (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_get_default_ECDH (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_get_default_ECDSA (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_get_default_RAND (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_get_default_RSA (\fBvoid\fP)"
+
+.SS "\fBENGINE_GEN_INT_FUNC_PTR\fP ENGINE_get_destroy_function (const \fBENGINE\fP * e)"
+
+.SS "const \fBDH_METHOD\fP* ENGINE_get_DH (const \fBENGINE\fP * e)"
+
+.SS "const \fBEVP_MD\fP* ENGINE_get_digest (\fBENGINE\fP * e, int nid)"
+
+.SS "\fBENGINE\fP* ENGINE_get_digest_engine (int nid)"
+
+.SS "\fBENGINE_DIGESTS_PTR\fP ENGINE_get_digests (const \fBENGINE\fP * e)"
+
+.SS "const \fBDSA_METHOD\fP* ENGINE_get_DSA (const \fBENGINE\fP * e)"
+
+.SS "const \fBECDH_METHOD\fP* ENGINE_get_ECDH (const \fBENGINE\fP * e)"
+
+.SS "const \fBECDSA_METHOD\fP* ENGINE_get_ECDSA (const \fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP* ENGINE_get_ex_data (const \fBENGINE\fP * e, int idx)"
+
+.SS "int ENGINE_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "\fBENGINE_GEN_INT_FUNC_PTR\fP ENGINE_get_finish_function (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE\fP* ENGINE_get_first (\fBvoid\fP)"
+
+.SS "int ENGINE_get_flags (const \fBENGINE\fP * e)"
+
+.SS "const char* ENGINE_get_id (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE_GEN_INT_FUNC_PTR\fP ENGINE_get_init_function (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE\fP* ENGINE_get_last (\fBvoid\fP)"
+
+.SS "\fBENGINE_LOAD_KEY_PTR\fP ENGINE_get_load_privkey_function (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE_LOAD_KEY_PTR\fP ENGINE_get_load_pubkey_function (const \fBENGINE\fP * e)"
+
+.SS "const char* ENGINE_get_name (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE\fP* ENGINE_get_next (\fBENGINE\fP * e)"
+
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* ENGINE_get_pkey_asn1_meth (\fBENGINE\fP * e, int nid)"
+
+.SS "\fBENGINE\fP* ENGINE_get_pkey_asn1_meth_engine (int nid)"
+
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* ENGINE_get_pkey_asn1_meth_str (\fBENGINE\fP * e, const char * str, int len)"
+
+.SS "\fBENGINE_PKEY_ASN1_METHS_PTR\fP ENGINE_get_pkey_asn1_meths (const \fBENGINE\fP * e)"
+
+.SS "const \fBEVP_PKEY_METHOD\fP* ENGINE_get_pkey_meth (\fBENGINE\fP * e, int nid)"
+
+.SS "\fBENGINE\fP* ENGINE_get_pkey_meth_engine (int nid)"
+
+.SS "\fBENGINE_PKEY_METHS_PTR\fP ENGINE_get_pkey_meths (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE\fP* ENGINE_get_prev (\fBENGINE\fP * e)"
+
+.SS "const \fBRAND_METHOD\fP* ENGINE_get_RAND (const \fBENGINE\fP * e)"
+
+.SS "const \fBRSA_METHOD\fP* ENGINE_get_RSA (const \fBENGINE\fP * e)"
+
+.SS "\fBENGINE_SSL_CLIENT_CERT_PTR\fP ENGINE_get_ssl_client_cert_function (const \fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP* ENGINE_get_static_state (\fBvoid\fP)"
+
+.SS "const \fBSTORE_METHOD\fP* ENGINE_get_STORE (const \fBENGINE\fP * e)"
+
+.SS "unsigned int ENGINE_get_table_flags (\fBvoid\fP)"
+
+.SS "int ENGINE_init (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_load_4758cca (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_aep (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_atalla (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_builtin_engines (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_capi (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_chil (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_cryptodev (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_cswift (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_dynamic (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_gmp (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_gost (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_nuron (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_openssl (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_padlock (\fBvoid\fP)"
+
+.SS "\fBEVP_PKEY\fP* ENGINE_load_private_key (\fBENGINE\fP * e, const char * key_id, \fBUI_METHOD\fP * ui_method, \fBvoid\fP * callback_data)"
+
+.SS "\fBEVP_PKEY\fP* ENGINE_load_public_key (\fBENGINE\fP * e, const char * key_id, \fBUI_METHOD\fP * ui_method, \fBvoid\fP * callback_data)"
+
+.SS "\fBvoid\fP ENGINE_load_rdrand (\fBvoid\fP)"
+
+.SS "int ENGINE_load_ssl_client_cert (\fBENGINE\fP * e, \fBSSL\fP * s, \fBSTACK_OF\fP(\fBX509_NAME\fP)* ca_dn, \fBX509\fP ** pcert, \fBEVP_PKEY\fP ** ppkey, \fBSTACK_OF\fP(\fBX509\fP)** pother, \fBUI_METHOD\fP * ui_method, \fBvoid\fP * callback_data)"
+
+.SS "\fBvoid\fP ENGINE_load_sureware (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_load_ubsec (\fBvoid\fP)"
+
+.SS "\fBENGINE\fP* ENGINE_new (\fBvoid\fP)"
+
+.SS "const \fBEVP_PKEY_ASN1_METHOD\fP* ENGINE_pkey_asn1_find_str (\fBENGINE\fP ** pe, const char * str, int len)"
+
+.SS "\fBvoid\fP ENGINE_register_all_ciphers (\fBvoid\fP)"
+
+.SS "int ENGINE_register_all_complete (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_DH (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_digests (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_DSA (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_ECDH (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_ECDSA (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_pkey_asn1_meths (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_pkey_meths (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_RAND (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_RSA (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ENGINE_register_all_STORE (\fBvoid\fP)"
+
+.SS "int ENGINE_register_ciphers (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_complete (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_DH (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_digests (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_DSA (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_ECDH (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_ECDSA (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_pkey_asn1_meths (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_pkey_meths (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_RAND (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_RSA (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_register_STORE (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_remove (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_ciphers (\fBENGINE\fP * e, \fBENGINE_CIPHERS_PTR\fP f)"
+
+.SS "int ENGINE_set_cmd_defns (\fBENGINE\fP * e, const \fBENGINE_CMD_DEFN\fP * defns)"
+
+.SS "int ENGINE_set_ctrl_function (\fBENGINE\fP * e, \fBENGINE_CTRL_FUNC_PTR\fP ctrl_f)"
+
+.SS "int ENGINE_set_default (\fBENGINE\fP * e, unsigned int flags)"
+
+.SS "int ENGINE_set_default_ciphers (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_DH (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_digests (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_DSA (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_ECDH (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_ECDSA (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_pkey_asn1_meths (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_pkey_meths (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_RAND (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_RSA (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_set_default_string (\fBENGINE\fP * e, const char * def_list)"
+
+.SS "int ENGINE_set_destroy_function (\fBENGINE\fP * e, \fBENGINE_GEN_INT_FUNC_PTR\fP destroy_f)"
+
+.SS "int ENGINE_set_DH (\fBENGINE\fP * e, const \fBDH_METHOD\fP * dh_meth)"
+
+.SS "int ENGINE_set_digests (\fBENGINE\fP * e, \fBENGINE_DIGESTS_PTR\fP f)"
+
+.SS "int ENGINE_set_DSA (\fBENGINE\fP * e, const \fBDSA_METHOD\fP * dsa_meth)"
+
+.SS "int ENGINE_set_ECDH (\fBENGINE\fP * e, const \fBECDH_METHOD\fP * ecdh_meth)"
+
+.SS "int ENGINE_set_ECDSA (\fBENGINE\fP * e, const \fBECDSA_METHOD\fP * ecdsa_meth)"
+
+.SS "int ENGINE_set_ex_data (\fBENGINE\fP * e, int idx, \fBvoid\fP * arg)"
+
+.SS "int ENGINE_set_finish_function (\fBENGINE\fP * e, \fBENGINE_GEN_INT_FUNC_PTR\fP finish_f)"
+
+.SS "int ENGINE_set_flags (\fBENGINE\fP * e, int flags)"
+
+.SS "int ENGINE_set_id (\fBENGINE\fP * e, const char * id)"
+
+.SS "int ENGINE_set_init_function (\fBENGINE\fP * e, \fBENGINE_GEN_INT_FUNC_PTR\fP init_f)"
+
+.SS "int ENGINE_set_load_privkey_function (\fBENGINE\fP * e, \fBENGINE_LOAD_KEY_PTR\fP loadpriv_f)"
+
+.SS "int ENGINE_set_load_pubkey_function (\fBENGINE\fP * e, \fBENGINE_LOAD_KEY_PTR\fP loadpub_f)"
+
+.SS "int ENGINE_set_load_ssl_client_cert_function (\fBENGINE\fP * e, \fBENGINE_SSL_CLIENT_CERT_PTR\fP loadssl_f)"
+
+.SS "int ENGINE_set_name (\fBENGINE\fP * e, const char * name)"
+
+.SS "int ENGINE_set_pkey_asn1_meths (\fBENGINE\fP * e, \fBENGINE_PKEY_ASN1_METHS_PTR\fP f)"
+
+.SS "int ENGINE_set_pkey_meths (\fBENGINE\fP * e, \fBENGINE_PKEY_METHS_PTR\fP f)"
+
+.SS "int ENGINE_set_RAND (\fBENGINE\fP * e, const \fBRAND_METHOD\fP * rand_meth)"
+
+.SS "int ENGINE_set_RSA (\fBENGINE\fP * e, const \fBRSA_METHOD\fP * rsa_meth)"
+
+.SS "int ENGINE_set_STORE (\fBENGINE\fP * e, const \fBSTORE_METHOD\fP * store_meth)"
+
+.SS "\fBvoid\fP ENGINE_set_table_flags (unsigned int flags)"
+
+.SS "\fBvoid\fP ENGINE_unregister_ciphers (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_DH (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_digests (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_DSA (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_ECDH (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_ECDSA (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_pkey_asn1_meths (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_pkey_meths (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_RAND (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_RSA (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ENGINE_unregister_STORE (\fBENGINE\fP * e)"
+
+.SS "int ENGINE_up_ref (\fBENGINE\fP * e)"
+
+.SS "\fBvoid\fP ERR_load_ENGINE_strings (\fBvoid\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,180 @@
+.TH "s2n_handshake_test" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n_handshake_test \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fBtry_handshake\fP (endpoint, port, cipher, ssl_version)"
+.br
+.ti -1c
+.RI "def \fBmain\fP (argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "list \fBS2N_CIPHERS\fP"
+.br
+.ti -1c
+.RI "dictionary \fBPROTO_VERS_TO_STR\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "def s2n_handshake_test\&.try_handshake ( endpoint,  port,  cipher,  ssl_version)"
+
+.PP
+Definition at line 54 of file s2n_handshake_test\&.py\&.
+.PP
+.nf
+54 def try_handshake(endpoint, port, cipher, ssl_version):
+55     # Fire up s2nd
+56     s2nd = subprocess\&.Popen(["\&.\&./\&.\&./bin/s2nd", "-c", "test_all", str(endpoint), str(port)], stdin=subprocess\&.PIPE, stdout=subprocess\&.PIPE)
+57 
+58     # Make sure it's running
+59     s2nd\&.stdout\&.readline()
+60 
+61     sock = socket\&.socket(socket\&.AF_INET, socket\&.SOCK_STREAM)
+62     sock\&.settimeout(1)
+63 
+64     try:
+65         ssl_sock = ssl\&.wrap_socket(sock, ssl_version=ssl_version, ciphers=cipher)
+66     except ssl\&.SSLError as err:
+67         print(str(err))
+68         return -1
+69     try:
+70         ssl_sock\&.connect((endpoint, port))
+71     except Exception as err:
+72         print(str(err))
+73         return -1
+74 
+75     # Write the cipher name towards s2n
+76     ssl_sock\&.send((cipher + "\n")\&.encode("utf-8"))
+77     found = 0
+78     for line in range(0, 10):
+79         output = s2nd\&.stdout\&.readline()\&.decode("utf-8")
+80         if output\&.strip() == cipher:
+81             found = 1
+82             break
+83 
+84     if found == 0:
+85         return -1
+86 
+87     # Write the cipher name from s2n
+88     buffered = ssl_sock\&.makefile()
+89     s2nd\&.stdin\&.write((cipher + "\n")\&.encode("utf-8"))
+90     s2nd\&.stdin\&.flush()
+91     found = 0
+92     for line in range(0, 10):
+93         try:
+94             output = buffered\&.readline()\&.decode("utf-8")
+95         except:
+96             pass
+97 
+98         if output\&.strip() == cipher:
+99             found = 1
+100             break
+101 
+102     if found == 0:
+103         return -1
+104 
+105     s2nd\&.kill()
+106     s2nd\&.wait()
+107 
+108     return 0
+109 
+.fi
+.SS "def s2n_handshake_test\&.main ( argv)"
+
+.PP
+Definition at line 110 of file s2n_handshake_test\&.py\&.
+.PP
+.nf
+110 def main(argv):
+111     if len(argv) < 2:
+112         print("s2n_handshake_test\&.py host port")
+113         sys\&.exit(1)
+114 
+115     print("\nRunning handshake tests with: " + str(ssl\&.OPENSSL_VERSION))
+116     failed = 0
+117     for ssl_version in [ssl\&.PROTOCOL_SSLv3, ssl\&.PROTOCOL_TLSv1, ssl\&.PROTOCOL_TLSv1_1, ssl\&.PROTOCOL_TLSv1_2]:
+118         print("\n\tTesting ciphers using client version: " + PROTO_VERS_TO_STR[ssl_version])
+119         for cipher in S2N_CIPHERS:
+120             cipher_name = cipher[0]
+121             cipher_vers = cipher[1]
+122 
+123             if ssl_version < cipher_vers:
+124                 continue
+125 
+126             ret = try_handshake(argv[0], int(argv[1]), cipher_name, ssl_version)
+127             print("Cipher: %-30s Vers: %-10s \&.\&.\&. " % (cipher_name, PROTO_VERS_TO_STR[ssl_version]), end='')
+128             if ret == 0:
+129                 if sys\&.stdout\&.isatty():
+130                     print("\033[32;1mPASSED\033[0m")
+131                 else:
+132                     print("PASSED")
+133             else:
+134                 if sys\&.stdout\&.isatty():
+135                     print("\033[31;1mFAILED\033[0m")
+136                 else:
+137                     print("FAILED")
+138                 failed = 1
+139     return failed
+140 
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "list S2N_CIPHERS"
+\fBInitial value:\fP
+.PP
+.nf
+1 = [
+2     ("RC4-MD5", ssl\&.PROTOCOL_SSLv3),
+3     ("RC4-SHA", ssl\&.PROTOCOL_SSLv3),
+4     ("DES-CBC3-SHA", ssl\&.PROTOCOL_SSLv3),
+5     ("EDH-RSA-DES-CBC3-SHA", ssl\&.PROTOCOL_SSLv3),
+6     ("AES128-SHA", ssl\&.PROTOCOL_TLSv1),
+7     ("DHE-RSA-AES128-SHA", ssl\&.PROTOCOL_TLSv1),
+8     ("AES256-SHA", ssl\&.PROTOCOL_TLSv1),
+9     ("DHE-RSA-AES256-SHA", ssl\&.PROTOCOL_TLSv1),
+10     ("AES128-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+11     ("AES256-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+12     ("DHE-RSA-AES128-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+13     ("DHE-RSA-AES256-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+14     ("AES128-GCM-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+15     ("AES256-GCM-SHA384", ssl\&.PROTOCOL_TLSv1_2),
+16     ("DHE-RSA-AES128-GCM-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+17     ("ECDHE-RSA-DES-CBC3-SHA", ssl\&.PROTOCOL_TLSv1),
+18     ("ECDHE-RSA-AES128-SHA", ssl\&.PROTOCOL_TLSv1),
+19     ("ECDHE-RSA-AES256-SHA", ssl\&.PROTOCOL_TLSv1),
+20     ("ECDHE-RSA-AES128-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+21     ("ECDHE-RSA-AES256-SHA384", ssl\&.PROTOCOL_TLSv1_2),
+22     ("ECDHE-RSA-AES128-GCM-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+23     ("ECDHE-RSA-AES256-GCM-SHA384", ssl\&.PROTOCOL_TLSv1_2),
+24 ]
+.fi
+.PP
+Definition at line 22 of file s2n_handshake_test\&.py\&.
+.SS "dictionary PROTO_VERS_TO_STR"
+\fBInitial value:\fP
+.PP
+.nf
+1 = {
+2     ssl\&.PROTOCOL_SSLv3 : "SSlv3",
+3     ssl\&.PROTOCOL_TLSv1 : "TLSv1\&.0",
+4     ssl\&.PROTOCOL_TLSv1_1 : "TLSv1\&.1",
+5     ssl\&.PROTOCOL_TLSv1_2 : "TLSv1\&.2",
+6 }
+.fi
+.PP
+Definition at line 47 of file s2n_handshake_test\&.py\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

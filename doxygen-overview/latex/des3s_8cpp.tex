@@ -1,0 +1,64 @@
+\hypertarget{des3s_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/des/des3s.cpp File Reference}
+\label{des3s_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/des/des3s.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/crypto/des/des3s.\+cpp}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/des.\+h$>$}\\*
+Include dependency graph for des3s.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{des3s_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{des3s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{des3s.\+cpp@{des3s.\+cpp}!main@{main}}
+\index{main@{main}!des3s.\+cpp@{des3s.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{des3s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{}\label{des3s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}
+
+
+Definition at line 37 of file des3s.\+cpp.
+
+
+\begin{DoxyCode}
+38     \{
+39     \hyperlink{crypto_2des_2des__old_8h_af9eef9bcad78df4353e607084af2b6f2}{des\_key\_schedule} key1,key2,key3;
+40     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} s1,s2,e1,e2;
+41     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[2];
+42     \textcolor{keywordtype}{int} i,j;
+43 
+44     \textcolor{keywordflow}{for} (j=0; j<6; j++)
+45         \{
+46         \textcolor{keywordflow}{for} (i=0; i<1000; i++) 
+47             \{
+48             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+49             GetTSC(s1);
+50             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+51             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+52             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+53             GetTSC(e1);
+54             GetTSC(s2);
+55             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+56             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+57             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+58             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+59             GetTSC(e2);
+60             \hyperlink{crypto_2des_2des__old_8h_a97a777fb81d39abfaa1dd9e29cf2d047}{des\_encrypt3}(&data[0],key1,key2,key3);
+61             \}
+62 
+63         printf(\textcolor{stringliteral}{"des %d %d (%d)\(\backslash\)n"},
+64             e1-s1,e2-s2,((e2-s2)-(e1-s1)));
+65         \}
+66     \}
+\end{DoxyCode}

@@ -1,0 +1,358 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/des.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/des.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/des_old\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBDES_ks\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOPENSSL_ENABLE_OLD_DES_SUPPORT\fP"
+.br
+.ti -1c
+.RI "#define \fBDES_KEY_SZ\fP   (sizeof(\fBDES_cblock\fP))"
+.br
+.ti -1c
+.RI "#define \fBDES_SCHEDULE_SZ\fP   (sizeof(\fBDES_key_schedule\fP))"
+.br
+.ti -1c
+.RI "#define \fBDES_ENCRYPT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBDES_DECRYPT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBDES_CBC_MODE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBDES_PCBC_MODE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBDES_ecb2_encrypt\fP(i,  o,  k1,  k2,  \fBe\fP)   \fBDES_ecb3_encrypt\fP((i),(o),(k1),(k2),(k1),(\fBe\fP))"
+.br
+.ti -1c
+.RI "#define \fBDES_ede2_cbc_encrypt\fP(i,  o,  l,  k1,  k2,  iv,  \fBe\fP)   \fBDES_ede3_cbc_encrypt\fP((i),(o),(l),(k1),(k2),(k1),(iv),(\fBe\fP))"
+.br
+.ti -1c
+.RI "#define \fBDES_ede2_cfb64_encrypt\fP(i,  o,  l,  k1,  k2,  iv,  n,  \fBe\fP)   \fBDES_ede3_cfb64_encrypt\fP((i),(o),(l),(k1),(k2),(k1),(iv),(n),(\fBe\fP))"
+.br
+.ti -1c
+.RI "#define \fBDES_ede2_ofb64_encrypt\fP(i,  o,  l,  k1,  k2,  iv,  n)   \fBDES_ede3_ofb64_encrypt\fP((i),(o),(l),(k1),(k2),(k1),(iv),(n))"
+.br
+.ti -1c
+.RI "#define \fBDES_check_key\fP   \fBOPENSSL_GLOBAL_REF\fP(DES_check_key)"
+.br
+.ti -1c
+.RI "#define \fBDES_rw_mode\fP   \fBOPENSSL_GLOBAL_REF\fP(DES_rw_mode)"
+.br
+.ti -1c
+.RI "#define \fBDES_fixup_key_parity\fP   \fBDES_set_odd_parity\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned char \fBDES_cblock\fP[8]"
+.br
+.ti -1c
+.RI "typedef unsigned char \fBconst_DES_cblock\fP[8]"
+.br
+.ti -1c
+.RI "typedef struct \fBDES_ks\fP \fBDES_key_schedule\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBOPENSSL_DECLARE_GLOBAL\fP (int, \fBDES_check_key\fP)"
+.br
+.ti -1c
+.RI "\fBOPENSSL_DECLARE_GLOBAL\fP (int, \fBDES_rw_mode\fP)"
+.br
+.ti -1c
+.RI "const char * \fBDES_options\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ecb3_encrypt\fP (\fBconst_DES_cblock\fP *input, \fBDES_cblock\fP *output, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3, int enc)"
+.br
+.ti -1c
+.RI "DES_LONG \fBDES_cbc_cksum\fP (const unsigned char *input, \fBDES_cblock\fP *output, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBconst_DES_cblock\fP *ivec)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_cbc_encrypt\fP (const unsigned char *input, unsigned char *output, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ncbc_encrypt\fP (const unsigned char *input, unsigned char *output, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_xcbc_encrypt\fP (const unsigned char *input, unsigned char *output, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, \fBconst_DES_cblock\fP *inw, \fBconst_DES_cblock\fP *outw, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_cfb_encrypt\fP (const unsigned char *in, unsigned char *out, int numbits, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ecb_encrypt\fP (\fBconst_DES_cblock\fP *input, \fBDES_cblock\fP *output, \fBDES_key_schedule\fP *ks, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_encrypt1\fP (DES_LONG *data, \fBDES_key_schedule\fP *ks, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_encrypt2\fP (DES_LONG *data, \fBDES_key_schedule\fP *ks, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_encrypt3\fP (DES_LONG *data, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_decrypt3\fP (DES_LONG *data, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ede3_cbc_encrypt\fP (const unsigned char *input, unsigned char *output, long \fBlength\fP, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3, \fBDES_cblock\fP *ivec, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ede3_cbcm_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3, \fBDES_cblock\fP *ivec1, \fBDES_cblock\fP *ivec2, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ede3_cfb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3, \fBDES_cblock\fP *ivec, int *\fBnum\fP, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ede3_cfb_encrypt\fP (const unsigned char *in, unsigned char *out, int numbits, long \fBlength\fP, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3, \fBDES_cblock\fP *ivec, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ede3_ofb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBDES_key_schedule\fP *ks1, \fBDES_key_schedule\fP *ks2, \fBDES_key_schedule\fP *ks3, \fBDES_cblock\fP *ivec, int *\fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBDES_enc_read\fP (int fd, \fBvoid\fP *buf, int \fBlen\fP, \fBDES_key_schedule\fP *sched, \fBDES_cblock\fP *iv)"
+.br
+.ti -1c
+.RI "int \fBDES_enc_write\fP (int fd, const \fBvoid\fP *buf, int \fBlen\fP, \fBDES_key_schedule\fP *sched, \fBDES_cblock\fP *iv)"
+.br
+.ti -1c
+.RI "char * \fBDES_fcrypt\fP (const char *buf, const char *salt, char *ret)"
+.br
+.ti -1c
+.RI "char * \fBDES_crypt\fP (const char *buf, const char *salt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ofb_encrypt\fP (const unsigned char *in, unsigned char *out, int numbits, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_pcbc_encrypt\fP (const unsigned char *input, unsigned char *output, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, int enc)"
+.br
+.ti -1c
+.RI "DES_LONG \fBDES_quad_cksum\fP (const unsigned char *input, \fBDES_cblock\fP output[], long \fBlength\fP, int out_count, \fBDES_cblock\fP *seed)"
+.br
+.ti -1c
+.RI "int \fBDES_random_key\fP (\fBDES_cblock\fP *ret)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_set_odd_parity\fP (\fBDES_cblock\fP *key)"
+.br
+.ti -1c
+.RI "int \fBDES_check_key_parity\fP (\fBconst_DES_cblock\fP *key)"
+.br
+.ti -1c
+.RI "int \fBDES_is_weak_key\fP (\fBconst_DES_cblock\fP *key)"
+.br
+.ti -1c
+.RI "int \fBDES_set_key\fP (\fBconst_DES_cblock\fP *key, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "int \fBDES_key_sched\fP (\fBconst_DES_cblock\fP *key, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "int \fBDES_set_key_checked\fP (\fBconst_DES_cblock\fP *key, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_set_key_unchecked\fP (\fBconst_DES_cblock\fP *key, \fBDES_key_schedule\fP *schedule)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_string_to_key\fP (const char *str, \fBDES_cblock\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_string_to_2keys\fP (const char *str, \fBDES_cblock\fP *key1, \fBDES_cblock\fP *key2)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_cfb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, int *\fBnum\fP, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDES_ofb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBDES_key_schedule\fP *schedule, \fBDES_cblock\fP *ivec, int *\fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBDES_read_password\fP (\fBDES_cblock\fP *key, const char *prompt, int verify)"
+.br
+.ti -1c
+.RI "int \fBDES_read_2passwords\fP (\fBDES_cblock\fP *key1, \fBDES_cblock\fP *key2, const char *prompt, int verify)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define OPENSSL_ENABLE_OLD_DES_SUPPORT"
+
+.PP
+Definition at line 97 of file des\&.h\&.
+.SS "#define DES_KEY_SZ   (sizeof(\fBDES_cblock\fP))"
+
+.PP
+Definition at line 105 of file des\&.h\&.
+.SS "#define DES_SCHEDULE_SZ   (sizeof(\fBDES_key_schedule\fP))"
+
+.PP
+Definition at line 106 of file des\&.h\&.
+.SS "#define DES_ENCRYPT   1"
+
+.PP
+Definition at line 108 of file des\&.h\&.
+.SS "#define DES_DECRYPT   0"
+
+.PP
+Definition at line 109 of file des\&.h\&.
+.SS "#define DES_CBC_MODE   0"
+
+.PP
+Definition at line 111 of file des\&.h\&.
+.SS "#define DES_PCBC_MODE   1"
+
+.PP
+Definition at line 112 of file des\&.h\&.
+.SS "#define DES_ecb2_encrypt(i, o, k1, k2, \fBe\fP)   \fBDES_ecb3_encrypt\fP((i),(o),(k1),(k2),(k1),(\fBe\fP))"
+
+.PP
+Definition at line 114 of file des\&.h\&.
+.SS "#define DES_ede2_cbc_encrypt(i, o, l, k1, k2, iv, \fBe\fP)   \fBDES_ede3_cbc_encrypt\fP((i),(o),(l),(k1),(k2),(k1),(iv),(\fBe\fP))"
+
+.PP
+Definition at line 117 of file des\&.h\&.
+.SS "#define DES_ede2_cfb64_encrypt(i, o, l, k1, k2, iv, n, \fBe\fP)   \fBDES_ede3_cfb64_encrypt\fP((i),(o),(l),(k1),(k2),(k1),(iv),(n),(\fBe\fP))"
+
+.PP
+Definition at line 120 of file des\&.h\&.
+.SS "#define DES_ede2_ofb64_encrypt(i, o, l, k1, k2, iv, n)   \fBDES_ede3_ofb64_encrypt\fP((i),(o),(l),(k1),(k2),(k1),(iv),(n))"
+
+.PP
+Definition at line 123 of file des\&.h\&.
+.SS "#define DES_check_key   \fBOPENSSL_GLOBAL_REF\fP(DES_check_key)"
+
+.PP
+Definition at line 127 of file des\&.h\&.
+.SS "#define DES_rw_mode   \fBOPENSSL_GLOBAL_REF\fP(DES_rw_mode)"
+
+.PP
+Definition at line 129 of file des\&.h\&.
+.SS "#define DES_fixup_key_parity   \fBDES_set_odd_parity\fP"
+
+.PP
+Definition at line 251 of file des\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned char DES_cblock[8]"
+
+.PP
+Definition at line 78 of file des\&.h\&.
+.SS "typedef unsigned char const_DES_cblock[8]"
+
+.PP
+Definition at line 79 of file des\&.h\&.
+.SS "typedef struct \fBDES_ks\fP  \fBDES_key_schedule\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "OPENSSL_DECLARE_GLOBAL (int, \fBDES_check_key\fP)"
+
+.SS "OPENSSL_DECLARE_GLOBAL (int, \fBDES_rw_mode\fP)"
+
+.SS "const char* DES_options (\fBvoid\fP)"
+
+.SS "\fBvoid\fP DES_ecb3_encrypt (\fBconst_DES_cblock\fP * input, \fBDES_cblock\fP * output, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3, int enc)"
+
+.SS "DES_LONG DES_cbc_cksum (const unsigned char * input, \fBDES_cblock\fP * output, long length, \fBDES_key_schedule\fP * schedule, \fBconst_DES_cblock\fP * ivec)"
+
+.SS "\fBvoid\fP DES_cbc_encrypt (const unsigned char * input, unsigned char * output, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, int enc)"
+
+.SS "\fBvoid\fP DES_ncbc_encrypt (const unsigned char * input, unsigned char * output, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, int enc)"
+
+.SS "\fBvoid\fP DES_xcbc_encrypt (const unsigned char * input, unsigned char * output, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, \fBconst_DES_cblock\fP * inw, \fBconst_DES_cblock\fP * outw, int enc)"
+
+.SS "\fBvoid\fP DES_cfb_encrypt (const unsigned char * in, unsigned char * out, int numbits, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, int enc)"
+
+.SS "\fBvoid\fP DES_ecb_encrypt (\fBconst_DES_cblock\fP * input, \fBDES_cblock\fP * output, \fBDES_key_schedule\fP * ks, int enc)"
+
+.SS "\fBvoid\fP DES_encrypt1 (DES_LONG * data, \fBDES_key_schedule\fP * ks, int enc)"
+
+.SS "\fBvoid\fP DES_encrypt2 (DES_LONG * data, \fBDES_key_schedule\fP * ks, int enc)"
+
+.SS "\fBvoid\fP DES_encrypt3 (DES_LONG * data, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3)"
+
+.SS "\fBvoid\fP DES_decrypt3 (DES_LONG * data, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3)"
+
+.SS "\fBvoid\fP DES_ede3_cbc_encrypt (const unsigned char * input, unsigned char * output, long length, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3, \fBDES_cblock\fP * ivec, int enc)"
+
+.SS "\fBvoid\fP DES_ede3_cbcm_encrypt (const unsigned char * in, unsigned char * out, long length, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3, \fBDES_cblock\fP * ivec1, \fBDES_cblock\fP * ivec2, int enc)"
+
+.SS "\fBvoid\fP DES_ede3_cfb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3, \fBDES_cblock\fP * ivec, int * num, int enc)"
+
+.SS "\fBvoid\fP DES_ede3_cfb_encrypt (const unsigned char * in, unsigned char * out, int numbits, long length, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3, \fBDES_cblock\fP * ivec, int enc)"
+
+.SS "\fBvoid\fP DES_ede3_ofb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBDES_key_schedule\fP * ks1, \fBDES_key_schedule\fP * ks2, \fBDES_key_schedule\fP * ks3, \fBDES_cblock\fP * ivec, int * num)"
+
+.SS "int DES_enc_read (int fd, \fBvoid\fP * buf, int len, \fBDES_key_schedule\fP * sched, \fBDES_cblock\fP * iv)"
+
+.SS "int DES_enc_write (int fd, const \fBvoid\fP * buf, int len, \fBDES_key_schedule\fP * sched, \fBDES_cblock\fP * iv)"
+
+.SS "char* DES_fcrypt (const char * buf, const char * salt, char * ret)"
+
+.SS "char* DES_crypt (const char * buf, const char * salt)"
+
+.SS "\fBvoid\fP DES_ofb_encrypt (const unsigned char * in, unsigned char * out, int numbits, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec)"
+
+.SS "\fBvoid\fP DES_pcbc_encrypt (const unsigned char * input, unsigned char * output, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, int enc)"
+
+.SS "DES_LONG DES_quad_cksum (const unsigned char * input, \fBDES_cblock\fP output[], long length, int out_count, \fBDES_cblock\fP * seed)"
+
+.SS "int DES_random_key (\fBDES_cblock\fP * ret)"
+
+.SS "\fBvoid\fP DES_set_odd_parity (\fBDES_cblock\fP * key)"
+
+.SS "int DES_check_key_parity (\fBconst_DES_cblock\fP * key)"
+
+.SS "int DES_is_weak_key (\fBconst_DES_cblock\fP * key)"
+
+.SS "int DES_set_key (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.SS "int DES_key_sched (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.SS "int DES_set_key_checked (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.SS "\fBvoid\fP DES_set_key_unchecked (\fBconst_DES_cblock\fP * key, \fBDES_key_schedule\fP * schedule)"
+
+.SS "\fBvoid\fP DES_string_to_key (const char * str, \fBDES_cblock\fP * key)"
+
+.SS "\fBvoid\fP DES_string_to_2keys (const char * str, \fBDES_cblock\fP * key1, \fBDES_cblock\fP * key2)"
+
+.SS "\fBvoid\fP DES_cfb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, int * num, int enc)"
+
+.SS "\fBvoid\fP DES_ofb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBDES_key_schedule\fP * schedule, \fBDES_cblock\fP * ivec, int * num)"
+
+.SS "int DES_read_password (\fBDES_cblock\fP * key, const char * prompt, int verify)"
+
+.SS "int DES_read_2passwords (\fBDES_cblock\fP * key1, \fBDES_cblock\fP * key2, const char * prompt, int verify)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,1228 @@
+\hypertarget{apps_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/apps/apps.h File Reference}
+\label{apps_8h}\index{s2n-\/master/libcrypto-\/build/openssl/apps/apps.\+h@{s2n-\/master/libcrypto-\/build/openssl/apps/apps.\+h}}
+{\ttfamily \#include \char`\"{}e\+\_\+os.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$openssl/bio.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/x509.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/lhash.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/conf.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/txt\+\_\+db.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/engine.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ocsp.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ossl\+\_\+typ.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+Include dependency graph for apps.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{apps_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structargs__st}{args\+\_\+st}
+\item 
+struct \hyperlink{structpw__cb__data}{pw\+\_\+cb\+\_\+data}
+\item 
+struct \hyperlink{structdb__attr__st}{db\+\_\+attr\+\_\+st}
+\item 
+struct \hyperlink{structca__db__st}{ca\+\_\+db\+\_\+st}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{apps_8h_afbbb9cac3eded90fce26fa29508c0455}{M\+A\+IN}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  v)          ~\hyperlink{s2n__tls__record__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},v)
+\item 
+\#define \hyperlink{apps_8h_a881699b274b0830f12d13db489b05c81}{do\+\_\+pipe\+\_\+sig}()
+\item 
+\#define \hyperlink{apps_8h_a7498c3ee332b298fe912ca7eaff116a4}{zlib\+\_\+cleanup}()~\hyperlink{include_2openssl_2comp_8h_a39cccc0f98c0b03ea0fc4ec91279c96c}{C\+O\+M\+P\+\_\+zlib\+\_\+cleanup}()
+\item 
+\#define \hyperlink{apps_8h_ad876e630ac525426f653af4007ddb207}{apps\+\_\+startup}()
+\item 
+\#define \hyperlink{apps_8h_a23d73e09aff136a6b8359adb83071288}{apps\+\_\+shutdown}()
+\item 
+\#define \hyperlink{apps_8h_ad1d6c784e20b52c7c9adbcc070be469d}{openssl\+\_\+fdset}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b)~F\+D\+\_\+\+S\+ET(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, b)
+\item 
+\#define \hyperlink{apps_8h_a81d3d997713f872cce8991d4ddf4be5d}{P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH}~4
+\item 
+\#define \hyperlink{apps_8h_aef6f5b1e0e0e24afb46673dfe085566f}{D\+B\+\_\+type}~0
+\item 
+\#define \hyperlink{apps_8h_a9e58d15fff9d3d9483605e9f1fc8bf4f}{D\+B\+\_\+exp\+\_\+date}~1
+\item 
+\#define \hyperlink{apps_8h_a8597d913394c1b47c2c16861b40c77fe}{D\+B\+\_\+rev\+\_\+date}~2
+\item 
+\#define \hyperlink{apps_8h_a099672e9e2e32f1d47d7d68e1ca3b066}{D\+B\+\_\+serial}~3      /$\ast$ index -\/ unique $\ast$/
+\item 
+\#define \hyperlink{apps_8h_a0e5027fbc5b781d75f7687a5f8c08e6c}{D\+B\+\_\+file}~4
+\item 
+\#define \hyperlink{apps_8h_a60456ae4d9690fac92c4970137c4c433}{D\+B\+\_\+name}
+\item 
+\#define \hyperlink{apps_8h_acc01d3ad7269a5bb155a9cd2eb89655e}{D\+B\+\_\+\+N\+U\+M\+B\+ER}~6
+\item 
+\#define \hyperlink{apps_8h_a0b7c3ebd5db62fa13cb3f3d8f127f626}{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV}~\textquotesingle{}R\textquotesingle{}
+\item 
+\#define \hyperlink{apps_8h_a1429edc7a40dd681d1744a74f3382bd3}{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP}~\textquotesingle{}E\textquotesingle{}
+\item 
+\#define \hyperlink{apps_8h_a973c7bd40ec17b1e50568cb3e222dc1e}{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL}~\textquotesingle{}V\textquotesingle{}
+\item 
+\#define \hyperlink{apps_8h_afd5b176a51360b57116d48391ffc6bda}{index\+\_\+name\+\_\+cmp\+\_\+noconst}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b)
+\item 
+\#define \hyperlink{apps_8h_a12247d29ea1b76902d2d48b2548e1e9e}{F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF}~0
+\item 
+\#define \hyperlink{apps_8h_a5d53e459bcc9dce661edf7e49320c965}{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1}~1
+\item 
+\#define \hyperlink{apps_8h_a27732175b1dc98aec7d3906187ffb602}{F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT}~2
+\item 
+\#define \hyperlink{apps_8h_afcd60b46f7e3cd3d9e437405c4180341}{F\+O\+R\+M\+A\+T\+\_\+\+P\+EM}~3
+\item 
+\#define \hyperlink{apps_8h_aa1df5d783b72c6db3517af8c75a18ba2}{F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE}~4
+\item 
+\#define \hyperlink{apps_8h_a2bd58eb0bf99c55cabc7b7edce17d009}{F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12}~5
+\item 
+\#define \hyperlink{apps_8h_abe4a6f5ecbaedd2cbfad8e11a1ade6ae}{F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME}~6
+\item 
+\#define \hyperlink{apps_8h_af33236b975200211a848fa835431285f}{F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE}~7
+\item 
+\#define \hyperlink{apps_8h_a536eee6a3875bab1290d5aa1c1732731}{F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC}
+\item 
+\#define \hyperlink{apps_8h_a3b126de99c4aef382aacc02dab465228}{F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA}~9      /$\ast$ P\+EM R\+S\+A\+Pubic\+Key \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format} $\ast$/
+\item 
+\#define \hyperlink{apps_8h_ad84b91bac07176aacbc7aab8e870481d}{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA}~10     /$\ast$ D\+ER R\+S\+A\+Pubic\+Key \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format} $\ast$/
+\item 
+\#define \hyperlink{apps_8h_a59af92fa2c5bcaef7eae8011b7fee68e}{F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB}~11     /$\ast$ MS Key blob \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format} $\ast$/
+\item 
+\#define \hyperlink{apps_8h_a25f3d06bf661d6be558b395425a37577}{F\+O\+R\+M\+A\+T\+\_\+\+P\+VK}~12     /$\ast$ MS P\+VK \hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file} \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format} $\ast$/
+\item 
+\#define \hyperlink{apps_8h_aeedde9fbb36943244d5826f68d64ad4f}{F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP}~13     /$\ast$ Download using H\+T\+TP $\ast$/
+\item 
+\#define \hyperlink{apps_8h_a5ac80aec76e62c3943fa00ada2fd3061}{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE}~0
+\item 
+\#define \hyperlink{apps_8h_abadb3eb7962ef66f22b220624260ac70}{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD}~1
+\item 
+\#define \hyperlink{apps_8h_a4029ba8d8425c50c1996257bd3996943}{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL}~2
+\item 
+\#define \hyperlink{apps_8h_a75837b39bf1c9bc6d34b467c848c5331}{N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR}~\char`\"{}certificate\char`\"{}
+\item 
+\#define \hyperlink{apps_8h_a3d95340ae579e67dd069721556a2511b}{A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN}~1024
+\item 
+\#define \hyperlink{apps_8h_a10437888e9d1a2def8a22035905f0625}{S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS}~64
+\item 
+\#define \hyperlink{apps_8h_a1db9345e429a917bf1e39eb289e36355}{T\+M\+\_\+\+S\+T\+A\+RT}~0
+\item 
+\#define \hyperlink{apps_8h_ae2959797a2c4c1529a1eb17fd2d48d64}{T\+M\+\_\+\+S\+T\+OP}~1
+\item 
+\#define \hyperlink{apps_8h_a134d773b56912bc29799fcecc731d82e}{O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structargs__st}{args\+\_\+st} \hyperlink{apps_8h_a0407ae6b5af3a97dbf11ced41f64f57a}{A\+R\+GS}
+\item 
+typedef struct \hyperlink{structpw__cb__data}{pw\+\_\+cb\+\_\+data} \hyperlink{apps_8h_a52565be3606bf73f56000a86c994098c}{P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA}
+\item 
+typedef struct \hyperlink{structdb__attr__st}{db\+\_\+attr\+\_\+st} \hyperlink{apps_8h_ade35648b3fa1d78f88b6c892c578cea3}{D\+B\+\_\+\+A\+T\+TR}
+\item 
+typedef struct \hyperlink{structca__db__st}{ca\+\_\+db\+\_\+st} \hyperlink{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}{C\+A\+\_\+\+DB}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{apps_8h_ab8c4398dd6b9cd68601afd98abfc7a2f}{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file} (const char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file}, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio\+\_\+e, int dont\+\_\+warn)
+\item 
+int \hyperlink{apps_8h_ad76abda8cc6aebe1522cd295e87f4cd6}{app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file} (const char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file}, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio\+\_\+e)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_a00eabe8289ec3052538b055b7e949e5b}{app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+long \hyperlink{apps_8h_a5c55429c2d6acd5de0babca8da19b1f2}{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files} (char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file})
+\item 
+int \hyperlink{apps_8h_ad9322338e35f82ed7c2909ad4dcbbc4d}{password\+\_\+callback} (char $\ast$buf, int bufsiz, int verify, \hyperlink{apps_8h_a52565be3606bf73f56000a86c994098c}{P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA} $\ast$cb\+\_\+data)
+\item 
+int \hyperlink{apps_8h_a1c94279845094380ada09f2bf2c399f5}{setup\+\_\+ui\+\_\+method} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_a4c651a48294d988617febb00cbad6b7a}{destroy\+\_\+ui\+\_\+method} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{apps_8h_a47c2d30f3d5443ba9a3930369ca05257}{should\+\_\+retry} (int i)
+\item 
+int \hyperlink{apps_8h_abb255ce97120c43b56b18356421a1e62}{args\+\_\+from\+\_\+file} (char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file}, int $\ast$argc, char $\ast$$\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+int \hyperlink{apps_8h_a76b335b9a3dd89af63ea2a8b96c1691b}{str2fmt} (char $\ast$s)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_aa2f2bee3856c23d554ccb8b7bd2160e4}{program\+\_\+name} (char $\ast$in, char $\ast$out, int size)
+\item 
+int \hyperlink{apps_8h_a02b292bc03693c475d46674fd7c06535}{chopup\+\_\+args} (\hyperlink{apps_8h_a0407ae6b5af3a97dbf11ced41f64f57a}{A\+R\+GS} $\ast$arg, char $\ast$buf, int $\ast$argc, char $\ast$$\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+int \hyperlink{apps_8h_ae1f7a352429233fe472da552b2b3c05f}{set\+\_\+cert\+\_\+ex} (unsigned long $\ast$\hyperlink{include_2openssl_2pkcs7_8h_ac8bf36fe0577cba66bccda3a6f7e80a4}{flags}, const char $\ast$arg)
+\item 
+int \hyperlink{apps_8h_a31d9a132c305b9378fea1760c9aac674}{set\+\_\+name\+\_\+ex} (unsigned long $\ast$\hyperlink{include_2openssl_2pkcs7_8h_ac8bf36fe0577cba66bccda3a6f7e80a4}{flags}, const char $\ast$arg)
+\item 
+int \hyperlink{apps_8h_aec5fd8a8839d13606b9c51669f9a7979}{set\+\_\+ext\+\_\+copy} (int $\ast$copy\+\_\+type, const char $\ast$arg)
+\item 
+int \hyperlink{apps_8h_a6e23e3507ef7948d1fcc33b861efcc4f}{copy\+\_\+extensions} (\hyperlink{crypto_2ossl__typ_8h_a4f666bde6518f95deb3050c54b408416}{X509} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}, \hyperlink{crypto_2x509_2x509_8h_afcb1c737fc5aee6c012c238794ef2d66}{X509\+\_\+\+R\+EQ} $\ast$req, int copy\+\_\+type)
+\item 
+int \hyperlink{apps_8h_a2583cf8fb6844da21bdbc2f18fe32d98}{app\+\_\+passwd} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, char $\ast$arg1, char $\ast$arg2, char $\ast$$\ast$pass1, char $\ast$$\ast$pass2)
+\item 
+int \hyperlink{apps_8h_a3714476163f119dfb5c968b334aed77e}{add\+\_\+oid\+\_\+section} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ossl__typ_8h_a22bfdc2f19c31f1ec7bd6d807aeb68d2}{C\+O\+NF} $\ast$conf)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a4f666bde6518f95deb3050c54b408416}{X509} $\ast$ \hyperlink{apps_8h_a7d4dfe3f45e998275b510ef291ef2daa}{load\+\_\+cert} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, const char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file}, int \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format}, const char $\ast$\hyperlink{include_2openssl_2pkcs12_8h_a3bef28806edf8f4c8cb82584b7e8c3cb}{pass}, \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e}, const char $\ast$\hyperlink{apps_8h_a392469603ac80832cec5a50b94cce346}{cert\+\_\+descrip})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_ac8661d2485c2c8da5fd7dd26b846f4bf}{X509\+\_\+\+C\+RL} $\ast$ \hyperlink{apps_8h_a7510bb0b0d7de793fc9a1ae0a028f187}{load\+\_\+crl} (const char $\ast$infile, int \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format})
+\item 
+int \hyperlink{apps_8h_a1364cdf4f402c783c1d108a35efc5238}{load\+\_\+cert\+\_\+crl\+\_\+http} (const char $\ast$url, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ossl__typ_8h_a4f666bde6518f95deb3050c54b408416}{X509} $\ast$$\ast$pcert, \hyperlink{crypto_2ossl__typ_8h_ac8661d2485c2c8da5fd7dd26b846f4bf}{X509\+\_\+\+C\+RL} $\ast$$\ast$pcrl)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a2fca4fef9e4c7a2a739b1ea04acb56ce}{E\+V\+P\+\_\+\+P\+K\+EY} $\ast$ \hyperlink{apps_8h_a249483de1c7d6584ba02b632efa1108b}{load\+\_\+key} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, const char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file}, int \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format}, int maybe\+\_\+stdin, const char $\ast$\hyperlink{include_2openssl_2pkcs12_8h_a3bef28806edf8f4c8cb82584b7e8c3cb}{pass}, \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e}, const char $\ast$key\+\_\+descrip)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a2fca4fef9e4c7a2a739b1ea04acb56ce}{E\+V\+P\+\_\+\+P\+K\+EY} $\ast$ \hyperlink{apps_8h_ac844255c0c91a2d11083a21907ae11f6}{load\+\_\+pubkey} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, const char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file}, int \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format}, int maybe\+\_\+stdin, const char $\ast$\hyperlink{include_2openssl_2pkcs12_8h_a3bef28806edf8f4c8cb82584b7e8c3cb}{pass}, \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e}, const char $\ast$key\+\_\+descrip)
+\item 
+\hyperlink{apps_8h_a98c15588f0eaf83288bb7bc34899edc3}{S\+T\+A\+C\+K\+\_\+\+OF} (\hyperlink{crypto_2ossl__typ_8h_a4f666bde6518f95deb3050c54b408416}{X509})$\ast$load\+\_\+certs(\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err
+\item 
+\hyperlink{apps_8h_a42ba9734dd64d9f54856d29a5e96817b}{S\+T\+A\+C\+K\+\_\+\+OF} (\hyperlink{crypto_2ossl__typ_8h_ac8661d2485c2c8da5fd7dd26b846f4bf}{X509\+\_\+\+C\+RL})$\ast$load\+\_\+crls(\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a3a2b800bae08729d11bc28f12b795597}{X509\+\_\+\+S\+T\+O\+RE} $\ast$ \hyperlink{apps_8h_accb48c5f1eb3bd7d88220227d83b2fe6}{setup\+\_\+verify} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$\hyperlink{include_2openssl_2conf_8h_a8f12a78fdc053e4143bc0896f8b3d937}{bp}, char $\ast$C\+Afile, char $\ast$C\+Apath)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$ \hyperlink{apps_8h_a3ee57f9b101171a5e9d09a57ce803aa3}{setup\+\_\+engine} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, const char $\ast$engine, int debug)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a126a9513b35297c9f53956eacf2b333d}{O\+C\+S\+P\+\_\+\+R\+E\+S\+P\+O\+N\+SE} $\ast$ \hyperlink{apps_8h_a1c737061d17e87d58afd7510054ac56c}{process\+\_\+responder} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ocsp_2ocsp_8h_a17153531638085adb112e6bf8c2bd099}{O\+C\+S\+P\+\_\+\+R\+E\+Q\+U\+E\+ST} $\ast$req, const char $\ast$host, const char $\ast$path, const char $\ast$port, int use\+\_\+ssl, const \hyperlink{ssl__locl_8h_af93eaf1cf5199c5034408ed027c29f2a}{S\+T\+A\+C\+K\+\_\+\+OF}(\hyperlink{struct_c_o_n_f___v_a_l_u_e}{C\+O\+N\+F\+\_\+\+V\+A\+L\+UE})$\ast$headers, int req\+\_\+timeout)
+\item 
+int \hyperlink{apps_8h_a96d153d79d368ec6f8fcf24db7a551f2}{load\+\_\+config} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ossl__typ_8h_a22bfdc2f19c31f1ec7bd6d807aeb68d2}{C\+O\+NF} $\ast$cnf)
+\item 
+char $\ast$ \hyperlink{apps_8h_a9353bf09c6c613f03808a132c0f4bc8d}{make\+\_\+config\+\_\+name} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{apps_8h_ae33923e202de958b271c0dcf76030141}{unpack\+\_\+revinfo} (\hyperlink{crypto_2ossl__typ_8h_ad8d7393bc444b691d2b2c20d247b4e27}{A\+S\+N1\+\_\+\+T\+I\+ME} $\ast$$\ast$prevtm, int $\ast$preason, \hyperlink{crypto_2ossl__typ_8h_ae3fda0801e4c8e250087052bafb3ce2e}{A\+S\+N1\+\_\+\+O\+B\+J\+E\+CT} $\ast$$\ast$phold, \hyperlink{crypto_2ossl__typ_8h_abd19ea5b527807ce3a516e6a41440f84}{A\+S\+N1\+\_\+\+G\+E\+N\+E\+R\+A\+L\+I\+Z\+E\+D\+T\+I\+ME} $\ast$$\ast$pinvtm, const char $\ast$str)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$ \hyperlink{apps_8h_afdf97050afbe49be3a0339460fa9f164}{load\+\_\+serial} (char $\ast$serialfile, int create, \hyperlink{crypto_2ossl__typ_8h_af4335399bf9774cb410a5e93de65998b}{A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+ER} $\ast$$\ast$retai)
+\item 
+int \hyperlink{apps_8h_adec9b49d091cc462722d8158ffe7b0c1}{save\+\_\+serial} (char $\ast$serialfile, char $\ast$suffix, \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$serial, \hyperlink{crypto_2ossl__typ_8h_af4335399bf9774cb410a5e93de65998b}{A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+ER} $\ast$$\ast$retai)
+\item 
+int \hyperlink{apps_8h_a875b2aa05f768e0ce3ae93ea5545275a}{rotate\+\_\+serial} (char $\ast$serialfile, char $\ast$new\+\_\+suffix, char $\ast$old\+\_\+suffix)
+\item 
+int \hyperlink{apps_8h_a7a139be7a11cb7f35aef619c2fadd815}{rand\+\_\+serial} (\hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$b, \hyperlink{crypto_2ossl__typ_8h_af4335399bf9774cb410a5e93de65998b}{A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+ER} $\ast$ai)
+\item 
+\hyperlink{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}{C\+A\+\_\+\+DB} $\ast$ \hyperlink{apps_8h_aae8e6543b3f82bd56f333a781491e905}{load\+\_\+index} (char $\ast$dbfile, \hyperlink{apps_8h_ade35648b3fa1d78f88b6c892c578cea3}{D\+B\+\_\+\+A\+T\+TR} $\ast$dbattr)
+\item 
+int \hyperlink{apps_8h_aad07092b35be9449e7b4c16a32266abe}{index\+\_\+index} (\hyperlink{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}{C\+A\+\_\+\+DB} $\ast$db)
+\item 
+int \hyperlink{apps_8h_a45e7098c598df7ac40ec5f32e0d02938}{save\+\_\+index} (const char $\ast$dbfile, const char $\ast$suffix, \hyperlink{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}{C\+A\+\_\+\+DB} $\ast$db)
+\item 
+int \hyperlink{apps_8h_a9b07c274846aa358da94ead85b3f0ec2}{rotate\+\_\+index} (const char $\ast$dbfile, const char $\ast$new\+\_\+suffix, const char $\ast$old\+\_\+suffix)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_a8d5c34535244e547830747a78c523a58}{free\+\_\+index} (\hyperlink{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}{C\+A\+\_\+\+DB} $\ast$db)
+\item 
+int \hyperlink{apps_8h_a6e0e96807c0b98fff46c75ff030a809b}{index\+\_\+name\+\_\+cmp} (const \hyperlink{crypto_2stack_2safestack_8h_a3d57f71500796869bfb032f6b0cb8dd2}{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+S\+T\+R\+I\+NG} $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const \hyperlink{crypto_2stack_2safestack_8h_a3d57f71500796869bfb032f6b0cb8dd2}{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+S\+T\+R\+I\+NG} $\ast$b)
+\item 
+int \hyperlink{apps_8h_aeb726cf8e5c7a5624b90d267410c5b47}{parse\+\_\+yesno} (const char $\ast$str, int def)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5c5fc036757e87b9bd163d0221696533}{X509\+\_\+\+N\+A\+ME} $\ast$ \hyperlink{apps_8h_ab11182fa1a07bf1e0d6919c3d0d92fe2}{parse\+\_\+name} (char $\ast$str, long chtype, int multirdn)
+\item 
+int \hyperlink{apps_8h_a018f138d4e07a4b8d4d5155c3cbbfcf1}{args\+\_\+verify} (char $\ast$$\ast$$\ast$pargs, int $\ast$pargc, int $\ast$badarg, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2x509_2x509__vfy_8h_a9b8209a7a29bafa279e1b5bc5f81cb23}{X509\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+P\+A\+R\+AM} $\ast$$\ast$pm)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_a1d24cae36e9ef4b4fdf610737c741233}{policies\+\_\+print} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$out, \hyperlink{crypto_2ossl__typ_8h_ae681945a2cf88d6337137dc0260a1545}{X509\+\_\+\+S\+T\+O\+R\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+int \hyperlink{apps_8h_a7d27e4cf1e1b142471d24c11f279934e}{bio\+\_\+to\+\_\+mem} (unsigned char $\ast$$\ast$out, int maxlen, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$in)
+\item 
+int \hyperlink{apps_8h_ab78a2169907276477976d8d2a4df7b3e}{pkey\+\_\+ctrl\+\_\+string} (\hyperlink{crypto_2ossl__typ_8h_aaadbb75633e4460a52864970a3b875de}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+TX} $\ast$ctx, const char $\ast$value)
+\item 
+int \hyperlink{apps_8h_a7380b8149fdf2c11647161e73de1840a}{init\+\_\+gen\+\_\+str} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ossl__typ_8h_aaadbb75633e4460a52864970a3b875de}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+TX} $\ast$$\ast$pctx, const char $\ast$algname, \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e}, int do\+\_\+param)
+\item 
+int \hyperlink{apps_8h_ad7eeb100a025b4b8e866630af52acacf}{do\+\_\+\+X509\+\_\+sign} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ossl__typ_8h_a4f666bde6518f95deb3050c54b408416}{X509} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}, \hyperlink{crypto_2ossl__typ_8h_a2fca4fef9e4c7a2a739b1ea04acb56ce}{E\+V\+P\+\_\+\+P\+K\+EY} $\ast$pkey, const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$md, \hyperlink{ssl__locl_8h_af93eaf1cf5199c5034408ed027c29f2a}{S\+T\+A\+C\+K\+\_\+\+OF}(\hyperlink{crypto_2stack_2safestack_8h_a0c7cad03962a61035f753d64e05503e3}{O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+NG})$\ast$sigopts)
+\item 
+int \hyperlink{apps_8h_a185eb9cdd7e02dcbb8ab3eebee333120}{do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2x509_2x509_8h_afcb1c737fc5aee6c012c238794ef2d66}{X509\+\_\+\+R\+EQ} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}, \hyperlink{crypto_2ossl__typ_8h_a2fca4fef9e4c7a2a739b1ea04acb56ce}{E\+V\+P\+\_\+\+P\+K\+EY} $\ast$pkey, const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$md, \hyperlink{ssl__locl_8h_af93eaf1cf5199c5034408ed027c29f2a}{S\+T\+A\+C\+K\+\_\+\+OF}(\hyperlink{crypto_2stack_2safestack_8h_a0c7cad03962a61035f753d64e05503e3}{O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+NG})$\ast$sigopts)
+\item 
+int \hyperlink{apps_8h_afed5a9b055cd73e25daea18d02c0c56d}{do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{crypto_2ossl__typ_8h_ac8661d2485c2c8da5fd7dd26b846f4bf}{X509\+\_\+\+C\+RL} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}, \hyperlink{crypto_2ossl__typ_8h_a2fca4fef9e4c7a2a739b1ea04acb56ce}{E\+V\+P\+\_\+\+P\+K\+EY} $\ast$pkey, const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$md, \hyperlink{ssl__locl_8h_af93eaf1cf5199c5034408ed027c29f2a}{S\+T\+A\+C\+K\+\_\+\+OF}(\hyperlink{crypto_2stack_2safestack_8h_a0c7cad03962a61035f753d64e05503e3}{O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+NG})$\ast$sigopts)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_afbffdcb9af23ba9d42541b9aeeec6e95}{jpake\+\_\+client\+\_\+auth} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$out, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$conn, const char $\ast$secret)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_a468af4d9f3df52e972a484815ff3902a}{jpake\+\_\+server\+\_\+auth} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$out, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$conn, const char $\ast$secret)
+\item 
+unsigned char $\ast$ \hyperlink{apps_8h_a7744c6943bfb61a32f66f14931ef0970}{next\+\_\+protos\+\_\+parse} (unsigned short $\ast$outlen, const char $\ast$in)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_ace45478dd4024d5e42f085a37b81342f}{print\+\_\+cert\+\_\+checks} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio, \hyperlink{crypto_2ossl__typ_8h_a4f666bde6518f95deb3050c54b408416}{X509} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}, const char $\ast$checkhost, const char $\ast$checkemail, const char $\ast$checkip)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{apps_8h_a764ce5a4f48fa0e815d43c912992bc44}{store\+\_\+setup\+\_\+crl\+\_\+download} (\hyperlink{crypto_2ossl__typ_8h_a3a2b800bae08729d11bc28f12b795597}{X509\+\_\+\+S\+T\+O\+RE} $\ast$st)
+\item 
+int \hyperlink{apps_8h_a250e19d3e20f467469c5ded510cf3c8c}{app\+\_\+isdir} (const char $\ast$)
+\item 
+int \hyperlink{apps_8h_a9704b724f3d7a3109e551a9c8b73c1dc}{raw\+\_\+read\+\_\+stdin} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$, int)
+\item 
+int \hyperlink{apps_8h_ac622c9c17c506689dfe425991718868d}{raw\+\_\+write\+\_\+stdout} (const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$, int)
+\item 
+double \hyperlink{apps_8h_a0189f01b3f21c71f989cfb58cc1e480c}{app\+\_\+tminterval} (int stop, int usertime)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a22bfdc2f19c31f1ec7bd6d807aeb68d2}{C\+O\+NF} $\ast$ \hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config} = N\+U\+LL
+\item 
+\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$ \hyperlink{apps_8h_a4903f4ea946648d18bd6a32f4fd35361}{bio\+\_\+err} = N\+U\+LL
+\item 
+const char $\ast$ \hyperlink{apps_8h_a29e8a72bd9d3020e517d381df2eab3cb}{file}
+\item 
+const char int \hyperlink{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{format}
+\item 
+const char int const char $\ast$ \hyperlink{apps_8h_a883ea4511569b63d8e1dff36305b4ea4}{pass}
+\item 
+const char int const char \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$ \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e}
+\item 
+const char int const char \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} const char $\ast$ \hyperlink{apps_8h_a392469603ac80832cec5a50b94cce346}{cert\+\_\+descrip}
+\item 
+char $\ast$ \hyperlink{apps_8h_a953c645675598422cbde37a08d4161c8}{psk\+\_\+key}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{apps.\+h@{apps.\+h}!M\+A\+IN@{M\+A\+IN}}
+\index{M\+A\+IN@{M\+A\+IN}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+IN}{MAIN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+IN(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{v}
+\end{DoxyParamCaption}
+)~{\bf main}({\bf a},v)}\hypertarget{apps_8h_afbbb9cac3eded90fce26fa29508c0455}{}\label{apps_8h_afbbb9cac3eded90fce26fa29508c0455}
+
+
+Definition at line 143 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!do\+\_\+pipe\+\_\+sig@{do\+\_\+pipe\+\_\+sig}}
+\index{do\+\_\+pipe\+\_\+sig@{do\+\_\+pipe\+\_\+sig}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{do\+\_\+pipe\+\_\+sig}{do_pipe_sig}}]{\setlength{\rightskip}{0pt plus 5cm}\#define do\+\_\+pipe\+\_\+sig(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a881699b274b0830f12d13db489b05c81}{}\label{apps_8h_a881699b274b0830f12d13db489b05c81}
+
+
+Definition at line 169 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!zlib\+\_\+cleanup@{zlib\+\_\+cleanup}}
+\index{zlib\+\_\+cleanup@{zlib\+\_\+cleanup}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{zlib\+\_\+cleanup}{zlib_cleanup}}]{\setlength{\rightskip}{0pt plus 5cm}\#define zlib\+\_\+cleanup(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf C\+O\+M\+P\+\_\+zlib\+\_\+cleanup}()}\hypertarget{apps_8h_a7498c3ee332b298fe912ca7eaff116a4}{}\label{apps_8h_a7498c3ee332b298fe912ca7eaff116a4}
+
+
+Definition at line 175 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!apps\+\_\+startup@{apps\+\_\+startup}}
+\index{apps\+\_\+startup@{apps\+\_\+startup}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{apps\+\_\+startup}{apps_startup}}]{\setlength{\rightskip}{0pt plus 5cm}\#define apps\+\_\+startup(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ad876e630ac525426f653af4007ddb207}{}\label{apps_8h_ad876e630ac525426f653af4007ddb207}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{ \hyperlink{apps_8h_a881699b274b0830f12d13db489b05c81}{do\_pipe\_sig}(); \hyperlink{crypto_2crypto_8h_aef3997ae203366f339c9a0676fa991a9}{CRYPTO\_malloc\_init}(); \(\backslash\)
+                        ERR\_load\_crypto\_strings(); \hyperlink{crypto_2evp_2evp_8h_a2e3885a5280c9959ceee3989613c6195}{OpenSSL\_add\_all\_algorithms}(); 
+      \(\backslash\)
+                        ENGINE\_load\_builtin\_engines(); \hyperlink{apps_8h_a1c94279845094380ada09f2bf2c399f5}{setup\_ui\_method}(); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Definition at line 184 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!apps\+\_\+shutdown@{apps\+\_\+shutdown}}
+\index{apps\+\_\+shutdown@{apps\+\_\+shutdown}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{apps\+\_\+shutdown}{apps_shutdown}}]{\setlength{\rightskip}{0pt plus 5cm}\#define apps\+\_\+shutdown(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a23d73e09aff136a6b8359adb83071288}{}\label{apps_8h_a23d73e09aff136a6b8359adb83071288}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{ \hyperlink{crypto_2conf_2conf_8h_a4b153468b0cd40d863e8432d0c5bb93c}{CONF\_modules\_unload}(1); \hyperlink{apps_8h_a4c651a48294d988617febb00cbad6b7a}{destroy\_ui\_method}(); \(\backslash\)
+                        OBJ\_cleanup(); \hyperlink{crypto_2evp_2evp_8h_a6666c96ec4253929ce314e4c1a64c7a4}{EVP\_cleanup}(); \hyperlink{crypto_2engine_2engine_8h_a64c9922aae58dde145cb4aee95d5edf8}{ENGINE\_cleanup}(); \(\backslash\)
+                        CRYPTO\_cleanup\_all\_ex\_data(); \hyperlink{crypto_2err_2err_8h_a7f2a3ef6dc9f01717569d95497d65606}{ERR\_remove\_thread\_state}(NULL);
+       \(\backslash\)
+                        RAND\_cleanup(); \(\backslash\)
+                        ERR\_free\_strings(); \hyperlink{apps_8h_a7498c3ee332b298fe912ca7eaff116a4}{zlib\_cleanup}();\} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Definition at line 188 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!openssl\+\_\+fdset@{openssl\+\_\+fdset}}
+\index{openssl\+\_\+fdset@{openssl\+\_\+fdset}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{openssl\+\_\+fdset}{openssl_fdset}}]{\setlength{\rightskip}{0pt plus 5cm}\#define openssl\+\_\+fdset(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~F\+D\+\_\+\+S\+ET({\bf a}, b)}\hypertarget{apps_8h_ad1d6c784e20b52c7c9adbcc070be469d}{}\label{apps_8h_ad1d6c784e20b52c7c9adbcc070be469d}
+
+
+Definition at line 211 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH@{P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH}}
+\index{P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH@{P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH}{PW_MIN_LENGTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+\_\+\+M\+I\+N\+\_\+\+L\+E\+N\+G\+TH~4}\hypertarget{apps_8h_a81d3d997713f872cce8991d4ddf4be5d}{}\label{apps_8h_a81d3d997713f872cce8991d4ddf4be5d}
+
+
+Definition at line 219 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+type@{D\+B\+\_\+type}}
+\index{D\+B\+\_\+type@{D\+B\+\_\+type}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+type}{DB_type}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+type~0}\hypertarget{apps_8h_aef6f5b1e0e0e24afb46673dfe085566f}{}\label{apps_8h_aef6f5b1e0e0e24afb46673dfe085566f}
+
+
+Definition at line 281 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+exp\+\_\+date@{D\+B\+\_\+exp\+\_\+date}}
+\index{D\+B\+\_\+exp\+\_\+date@{D\+B\+\_\+exp\+\_\+date}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+exp\+\_\+date}{DB_exp_date}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+exp\+\_\+date~1}\hypertarget{apps_8h_a9e58d15fff9d3d9483605e9f1fc8bf4f}{}\label{apps_8h_a9e58d15fff9d3d9483605e9f1fc8bf4f}
+
+
+Definition at line 282 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+rev\+\_\+date@{D\+B\+\_\+rev\+\_\+date}}
+\index{D\+B\+\_\+rev\+\_\+date@{D\+B\+\_\+rev\+\_\+date}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+rev\+\_\+date}{DB_rev_date}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+rev\+\_\+date~2}\hypertarget{apps_8h_a8597d913394c1b47c2c16861b40c77fe}{}\label{apps_8h_a8597d913394c1b47c2c16861b40c77fe}
+
+
+Definition at line 283 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+serial@{D\+B\+\_\+serial}}
+\index{D\+B\+\_\+serial@{D\+B\+\_\+serial}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+serial}{DB_serial}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+serial~3      /$\ast$ index -\/ unique $\ast$/}\hypertarget{apps_8h_a099672e9e2e32f1d47d7d68e1ca3b066}{}\label{apps_8h_a099672e9e2e32f1d47d7d68e1ca3b066}
+
+
+Definition at line 284 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+file@{D\+B\+\_\+file}}
+\index{D\+B\+\_\+file@{D\+B\+\_\+file}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+file}{DB_file}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+file~4}\hypertarget{apps_8h_a0e5027fbc5b781d75f7687a5f8c08e6c}{}\label{apps_8h_a0e5027fbc5b781d75f7687a5f8c08e6c}
+
+
+Definition at line 285 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+name@{D\+B\+\_\+name}}
+\index{D\+B\+\_\+name@{D\+B\+\_\+name}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+name}{DB_name}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+name}\hypertarget{apps_8h_a60456ae4d9690fac92c4970137c4c433}{}\label{apps_8h_a60456ae4d9690fac92c4970137c4c433}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+5      \textcolor{comment}{/* index - unique when active and not}
+\textcolor{comment}{                                 * disabled */}
+\end{DoxyCode}
+
+
+Definition at line 286 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+\+N\+U\+M\+B\+ER@{D\+B\+\_\+\+N\+U\+M\+B\+ER}}
+\index{D\+B\+\_\+\+N\+U\+M\+B\+ER@{D\+B\+\_\+\+N\+U\+M\+B\+ER}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+\+N\+U\+M\+B\+ER}{DB_NUMBER}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+\+N\+U\+M\+B\+ER~6}\hypertarget{apps_8h_acc01d3ad7269a5bb155a9cd2eb89655e}{}\label{apps_8h_acc01d3ad7269a5bb155a9cd2eb89655e}
+
+
+Definition at line 288 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV@{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV}}
+\index{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV@{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV}{DB_TYPE_REV}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+R\+EV~\textquotesingle{}R\textquotesingle{}}\hypertarget{apps_8h_a0b7c3ebd5db62fa13cb3f3d8f127f626}{}\label{apps_8h_a0b7c3ebd5db62fa13cb3f3d8f127f626}
+
+
+Definition at line 290 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP@{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP}}
+\index{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP@{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP}{DB_TYPE_EXP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+E\+XP~\textquotesingle{}E\textquotesingle{}}\hypertarget{apps_8h_a1429edc7a40dd681d1744a74f3382bd3}{}\label{apps_8h_a1429edc7a40dd681d1744a74f3382bd3}
+
+
+Definition at line 291 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL@{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL}}
+\index{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL@{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL}{DB_TYPE_VAL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+\_\+\+T\+Y\+P\+E\+\_\+\+V\+AL~\textquotesingle{}V\textquotesingle{}}\hypertarget{apps_8h_a973c7bd40ec17b1e50568cb3e222dc1e}{}\label{apps_8h_a973c7bd40ec17b1e50568cb3e222dc1e}
+
+
+Definition at line 292 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!index\+\_\+name\+\_\+cmp\+\_\+noconst@{index\+\_\+name\+\_\+cmp\+\_\+noconst}}
+\index{index\+\_\+name\+\_\+cmp\+\_\+noconst@{index\+\_\+name\+\_\+cmp\+\_\+noconst}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{index\+\_\+name\+\_\+cmp\+\_\+noconst}{index_name_cmp_noconst}}]{\setlength{\rightskip}{0pt plus 5cm}\#define index\+\_\+name\+\_\+cmp\+\_\+noconst(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_afd5b176a51360b57116d48391ffc6bda}{}\label{apps_8h_afd5b176a51360b57116d48391ffc6bda}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{apps_8h_a6e0e96807c0b98fff46c75ff030a809b}{index\_name\_cmp}((\textcolor{keyword}{const} \hyperlink{crypto_2stack_2safestack_8h_a3d57f71500796869bfb032f6b0cb8dd2}{OPENSSL\_CSTRING} *)
+      \hyperlink{crypto_2asn1_2asn1_8h_aacd1414f919a894c64b62e09e055a26d}{CHECKED\_PTR\_OF}(\hyperlink{crypto_2stack_2safestack_8h_a0c7cad03962a61035f753d64e05503e3}{OPENSSL\_STRING}, \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}), \(\backslash\)
+        (\textcolor{keyword}{const} \hyperlink{crypto_2stack_2safestack_8h_a3d57f71500796869bfb032f6b0cb8dd2}{OPENSSL\_CSTRING} *)\hyperlink{crypto_2asn1_2asn1_8h_aacd1414f919a894c64b62e09e055a26d}{CHECKED\_PTR\_OF}(
+      \hyperlink{crypto_2stack_2safestack_8h_a0c7cad03962a61035f753d64e05503e3}{OPENSSL\_STRING}, b))
+\end{DoxyCode}
+
+
+Definition at line 313 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF@{F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF@{F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF}{FORMAT_UNDEF}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+U\+N\+D\+EF~0}\hypertarget{apps_8h_a12247d29ea1b76902d2d48b2548e1e9e}{}\label{apps_8h_a12247d29ea1b76902d2d48b2548e1e9e}
+
+
+Definition at line 351 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1@{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1@{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1}{FORMAT_ASN1}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1~1}\hypertarget{apps_8h_a5d53e459bcc9dce661edf7e49320c965}{}\label{apps_8h_a5d53e459bcc9dce661edf7e49320c965}
+
+
+Definition at line 352 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT@{F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT@{F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT}{FORMAT_TEXT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+T\+E\+XT~2}\hypertarget{apps_8h_a27732175b1dc98aec7d3906187ffb602}{}\label{apps_8h_a27732175b1dc98aec7d3906187ffb602}
+
+
+Definition at line 353 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+P\+EM@{F\+O\+R\+M\+A\+T\+\_\+\+P\+EM}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+P\+EM@{F\+O\+R\+M\+A\+T\+\_\+\+P\+EM}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+P\+EM}{FORMAT_PEM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+P\+EM~3}\hypertarget{apps_8h_afcd60b46f7e3cd3d9e437405c4180341}{}\label{apps_8h_afcd60b46f7e3cd3d9e437405c4180341}
+
+
+Definition at line 354 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE@{F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE@{F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE}{FORMAT_NETSCAPE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+N\+E\+T\+S\+C\+A\+PE~4}\hypertarget{apps_8h_aa1df5d783b72c6db3517af8c75a18ba2}{}\label{apps_8h_aa1df5d783b72c6db3517af8c75a18ba2}
+
+
+Definition at line 355 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12@{F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12@{F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12}{FORMAT_PKCS12}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+P\+K\+C\+S12~5}\hypertarget{apps_8h_a2bd58eb0bf99c55cabc7b7edce17d009}{}\label{apps_8h_a2bd58eb0bf99c55cabc7b7edce17d009}
+
+
+Definition at line 356 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME@{F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME@{F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME}{FORMAT_SMIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+S\+M\+I\+ME~6}\hypertarget{apps_8h_abe4a6f5ecbaedd2cbfad8e11a1ade6ae}{}\label{apps_8h_abe4a6f5ecbaedd2cbfad8e11a1ade6ae}
+
+
+Definition at line 357 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE@{F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE@{F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE}{FORMAT_ENGINE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+E\+N\+G\+I\+NE~7}\hypertarget{apps_8h_af33236b975200211a848fa835431285f}{}\label{apps_8h_af33236b975200211a848fa835431285f}
+
+
+Definition at line 358 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC@{F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC@{F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC}{FORMAT_IISSGC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+I\+I\+S\+S\+GC}\hypertarget{apps_8h_a536eee6a3875bab1290d5aa1c1732731}{}\label{apps_8h_a536eee6a3875bab1290d5aa1c1732731}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+8      \textcolor{comment}{/* XXX this stupid macro helps us to avoid}
+\textcolor{comment}{                                 * adding yet another param to load\_*key() */}
+\end{DoxyCode}
+
+
+Definition at line 359 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA@{F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA@{F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA}{FORMAT_PEMRSA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+P\+E\+M\+R\+SA~9      /$\ast$ P\+EM R\+S\+A\+Pubic\+Key {\bf format} $\ast$/}\hypertarget{apps_8h_a3b126de99c4aef382aacc02dab465228}{}\label{apps_8h_a3b126de99c4aef382aacc02dab465228}
+
+
+Definition at line 361 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA@{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA@{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA}{FORMAT_ASN1RSA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+A\+S\+N1\+R\+SA~10     /$\ast$ D\+ER R\+S\+A\+Pubic\+Key {\bf format} $\ast$/}\hypertarget{apps_8h_ad84b91bac07176aacbc7aab8e870481d}{}\label{apps_8h_ad84b91bac07176aacbc7aab8e870481d}
+
+
+Definition at line 362 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB@{F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB@{F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB}{FORMAT_MSBLOB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+M\+S\+B\+L\+OB~11     /$\ast$ MS Key blob {\bf format} $\ast$/}\hypertarget{apps_8h_a59af92fa2c5bcaef7eae8011b7fee68e}{}\label{apps_8h_a59af92fa2c5bcaef7eae8011b7fee68e}
+
+
+Definition at line 363 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+P\+VK@{F\+O\+R\+M\+A\+T\+\_\+\+P\+VK}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+P\+VK@{F\+O\+R\+M\+A\+T\+\_\+\+P\+VK}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+P\+VK}{FORMAT_PVK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+P\+VK~12     /$\ast$ MS P\+VK {\bf file} {\bf format} $\ast$/}\hypertarget{apps_8h_a25f3d06bf661d6be558b395425a37577}{}\label{apps_8h_a25f3d06bf661d6be558b395425a37577}
+
+
+Definition at line 364 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP@{F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP}}
+\index{F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP@{F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP}{FORMAT_HTTP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+M\+A\+T\+\_\+\+H\+T\+TP~13     /$\ast$ Download using H\+T\+TP $\ast$/}\hypertarget{apps_8h_aeedde9fbb36943244d5826f68d64ad4f}{}\label{apps_8h_aeedde9fbb36943244d5826f68d64ad4f}
+
+
+Definition at line 365 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE@{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE}}
+\index{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE@{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE}{EXT_COPY_NONE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+N\+O\+NE~0}\hypertarget{apps_8h_a5ac80aec76e62c3943fa00ada2fd3061}{}\label{apps_8h_a5ac80aec76e62c3943fa00ada2fd3061}
+
+
+Definition at line 367 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD@{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD}}
+\index{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD@{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD}{EXT_COPY_ADD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+DD~1}\hypertarget{apps_8h_abadb3eb7962ef66f22b220624260ac70}{}\label{apps_8h_abadb3eb7962ef66f22b220624260ac70}
+
+
+Definition at line 368 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL@{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL}}
+\index{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL@{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL}{EXT_COPY_ALL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+X\+T\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+LL~2}\hypertarget{apps_8h_a4029ba8d8425c50c1996257bd3996943}{}\label{apps_8h_a4029ba8d8425c50c1996257bd3996943}
+
+
+Definition at line 369 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR@{N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR}}
+\index{N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR@{N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR}{NETSCAPE_CERT_HDR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+E\+T\+S\+C\+A\+P\+E\+\_\+\+C\+E\+R\+T\+\_\+\+H\+DR~\char`\"{}certificate\char`\"{}}\hypertarget{apps_8h_a75837b39bf1c9bc6d34b467c848c5331}{}\label{apps_8h_a75837b39bf1c9bc6d34b467c848c5331}
+
+
+Definition at line 371 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN@{A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN}}
+\index{A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN@{A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN}{APP_PASS_LEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+P\+P\+\_\+\+P\+A\+S\+S\+\_\+\+L\+EN~1024}\hypertarget{apps_8h_a3d95340ae579e67dd069721556a2511b}{}\label{apps_8h_a3d95340ae579e67dd069721556a2511b}
+
+
+Definition at line 373 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS@{S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS}}
+\index{S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS@{S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS}{SERIAL_RAND_BITS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+R\+I\+A\+L\+\_\+\+R\+A\+N\+D\+\_\+\+B\+I\+TS~64}\hypertarget{apps_8h_a10437888e9d1a2def8a22035905f0625}{}\label{apps_8h_a10437888e9d1a2def8a22035905f0625}
+
+
+Definition at line 375 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!T\+M\+\_\+\+S\+T\+A\+RT@{T\+M\+\_\+\+S\+T\+A\+RT}}
+\index{T\+M\+\_\+\+S\+T\+A\+RT@{T\+M\+\_\+\+S\+T\+A\+RT}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{T\+M\+\_\+\+S\+T\+A\+RT}{TM_START}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+M\+\_\+\+S\+T\+A\+RT~0}\hypertarget{apps_8h_a1db9345e429a917bf1e39eb289e36355}{}\label{apps_8h_a1db9345e429a917bf1e39eb289e36355}
+
+
+Definition at line 381 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!T\+M\+\_\+\+S\+T\+OP@{T\+M\+\_\+\+S\+T\+OP}}
+\index{T\+M\+\_\+\+S\+T\+OP@{T\+M\+\_\+\+S\+T\+OP}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{T\+M\+\_\+\+S\+T\+OP}{TM_STOP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+M\+\_\+\+S\+T\+OP~1}\hypertarget{apps_8h_ae2959797a2c4c1529a1eb17fd2d48d64}{}\label{apps_8h_ae2959797a2c4c1529a1eb17fd2d48d64}
+
+
+Definition at line 382 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN@{O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN}}
+\index{O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN@{O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN}{OPENSSL_NO_SSL_INTERN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\+P\+E\+N\+S\+S\+L\+\_\+\+N\+O\+\_\+\+S\+S\+L\+\_\+\+I\+N\+T\+E\+RN}\hypertarget{apps_8h_a134d773b56912bc29799fcecc731d82e}{}\label{apps_8h_a134d773b56912bc29799fcecc731d82e}
+
+
+Definition at line 385 of file apps.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{apps.\+h@{apps.\+h}!A\+R\+GS@{A\+R\+GS}}
+\index{A\+R\+GS@{A\+R\+GS}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{A\+R\+GS}{ARGS}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf args\+\_\+st}  {\bf A\+R\+GS}}\hypertarget{apps_8h_a0407ae6b5af3a97dbf11ced41f64f57a}{}\label{apps_8h_a0407ae6b5af3a97dbf11ced41f64f57a}
+\index{apps.\+h@{apps.\+h}!P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA@{P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA}}
+\index{P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA@{P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA}{PW_CB_DATA}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf pw\+\_\+cb\+\_\+data}  {\bf P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA}}\hypertarget{apps_8h_a52565be3606bf73f56000a86c994098c}{}\label{apps_8h_a52565be3606bf73f56000a86c994098c}
+\index{apps.\+h@{apps.\+h}!D\+B\+\_\+\+A\+T\+TR@{D\+B\+\_\+\+A\+T\+TR}}
+\index{D\+B\+\_\+\+A\+T\+TR@{D\+B\+\_\+\+A\+T\+TR}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{D\+B\+\_\+\+A\+T\+TR}{DB_ATTR}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf db\+\_\+attr\+\_\+st}  {\bf D\+B\+\_\+\+A\+T\+TR}}\hypertarget{apps_8h_ade35648b3fa1d78f88b6c892c578cea3}{}\label{apps_8h_ade35648b3fa1d78f88b6c892c578cea3}
+\index{apps.\+h@{apps.\+h}!C\+A\+\_\+\+DB@{C\+A\+\_\+\+DB}}
+\index{C\+A\+\_\+\+DB@{C\+A\+\_\+\+DB}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{C\+A\+\_\+\+DB}{CA_DB}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf ca\+\_\+db\+\_\+st}  {\bf C\+A\+\_\+\+DB}}\hypertarget{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}{}\label{apps_8h_accc222bb2f0c0b89e281e0e70bb2d187}
+
+
+\subsection{Function Documentation}
+\index{apps.\+h@{apps.\+h}!app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file@{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file}}
+\index{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file@{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file(const char $\ast$file, B\+I\+O $\ast$bio\+\_\+e, int dont\+\_\+warn)}{app_RAND_load_file(const char *file, BIO *bio_e, int dont_warn)}}]{\setlength{\rightskip}{0pt plus 5cm}int app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{file, }
+\item[{{\bf B\+IO} $\ast$}]{bio\+\_\+e, }
+\item[{int}]{dont\+\_\+warn}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ab8c4398dd6b9cd68601afd98abfc7a2f}{}\label{apps_8h_ab8c4398dd6b9cd68601afd98abfc7a2f}
+\index{apps.\+h@{apps.\+h}!app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file@{app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file}}
+\index{app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file@{app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file(const char $\ast$file, B\+I\+O $\ast$bio\+\_\+e)}{app_RAND_write_file(const char *file, BIO *bio_e)}}]{\setlength{\rightskip}{0pt plus 5cm}int app\+\_\+\+R\+A\+N\+D\+\_\+write\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{file, }
+\item[{{\bf B\+IO} $\ast$}]{bio\+\_\+e}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ad76abda8cc6aebe1522cd295e87f4cd6}{}\label{apps_8h_ad76abda8cc6aebe1522cd295e87f4cd6}
+\index{apps.\+h@{apps.\+h}!app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file@{app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file}}
+\index{app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file@{app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file(void)}{app_RAND_allow_write_file(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} app\+\_\+\+R\+A\+N\+D\+\_\+allow\+\_\+write\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a00eabe8289ec3052538b055b7e949e5b}{}\label{apps_8h_a00eabe8289ec3052538b055b7e949e5b}
+\index{apps.\+h@{apps.\+h}!app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files@{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files}}
+\index{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files@{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files(char $\ast$file)}{app_RAND_load_files(char *file)}}]{\setlength{\rightskip}{0pt plus 5cm}long app\+\_\+\+R\+A\+N\+D\+\_\+load\+\_\+files (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a5c55429c2d6acd5de0babca8da19b1f2}{}\label{apps_8h_a5c55429c2d6acd5de0babca8da19b1f2}
+\index{apps.\+h@{apps.\+h}!password\+\_\+callback@{password\+\_\+callback}}
+\index{password\+\_\+callback@{password\+\_\+callback}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{password\+\_\+callback(char $\ast$buf, int bufsiz, int verify, P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+T\+A $\ast$cb\+\_\+data)}{password_callback(char *buf, int bufsiz, int verify, PW_CB_DATA *cb_data)}}]{\setlength{\rightskip}{0pt plus 5cm}int password\+\_\+callback (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{buf, }
+\item[{int}]{bufsiz, }
+\item[{int}]{verify, }
+\item[{{\bf P\+W\+\_\+\+C\+B\+\_\+\+D\+A\+TA} $\ast$}]{cb\+\_\+data}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ad9322338e35f82ed7c2909ad4dcbbc4d}{}\label{apps_8h_ad9322338e35f82ed7c2909ad4dcbbc4d}
+\index{apps.\+h@{apps.\+h}!setup\+\_\+ui\+\_\+method@{setup\+\_\+ui\+\_\+method}}
+\index{setup\+\_\+ui\+\_\+method@{setup\+\_\+ui\+\_\+method}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{setup\+\_\+ui\+\_\+method(void)}{setup_ui_method(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int setup\+\_\+ui\+\_\+method (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a1c94279845094380ada09f2bf2c399f5}{}\label{apps_8h_a1c94279845094380ada09f2bf2c399f5}
+\index{apps.\+h@{apps.\+h}!destroy\+\_\+ui\+\_\+method@{destroy\+\_\+ui\+\_\+method}}
+\index{destroy\+\_\+ui\+\_\+method@{destroy\+\_\+ui\+\_\+method}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{destroy\+\_\+ui\+\_\+method(void)}{destroy_ui_method(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} destroy\+\_\+ui\+\_\+method (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a4c651a48294d988617febb00cbad6b7a}{}\label{apps_8h_a4c651a48294d988617febb00cbad6b7a}
+\index{apps.\+h@{apps.\+h}!should\+\_\+retry@{should\+\_\+retry}}
+\index{should\+\_\+retry@{should\+\_\+retry}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{should\+\_\+retry(int i)}{should_retry(int i)}}]{\setlength{\rightskip}{0pt plus 5cm}int should\+\_\+retry (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a47c2d30f3d5443ba9a3930369ca05257}{}\label{apps_8h_a47c2d30f3d5443ba9a3930369ca05257}
+\index{apps.\+h@{apps.\+h}!args\+\_\+from\+\_\+file@{args\+\_\+from\+\_\+file}}
+\index{args\+\_\+from\+\_\+file@{args\+\_\+from\+\_\+file}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{args\+\_\+from\+\_\+file(char $\ast$file, int $\ast$argc, char $\ast$$\ast$argv[])}{args_from_file(char *file, int *argc, char **argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}int args\+\_\+from\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file, }
+\item[{int $\ast$}]{argc, }
+\item[{char $\ast$$\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_abb255ce97120c43b56b18356421a1e62}{}\label{apps_8h_abb255ce97120c43b56b18356421a1e62}
+\index{apps.\+h@{apps.\+h}!str2fmt@{str2fmt}}
+\index{str2fmt@{str2fmt}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{str2fmt(char $\ast$s)}{str2fmt(char *s)}}]{\setlength{\rightskip}{0pt plus 5cm}int str2fmt (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a76b335b9a3dd89af63ea2a8b96c1691b}{}\label{apps_8h_a76b335b9a3dd89af63ea2a8b96c1691b}
+\index{apps.\+h@{apps.\+h}!program\+\_\+name@{program\+\_\+name}}
+\index{program\+\_\+name@{program\+\_\+name}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{program\+\_\+name(char $\ast$in, char $\ast$out, int size)}{program_name(char *in, char *out, int size)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} program\+\_\+name (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{in, }
+\item[{char $\ast$}]{out, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_aa2f2bee3856c23d554ccb8b7bd2160e4}{}\label{apps_8h_aa2f2bee3856c23d554ccb8b7bd2160e4}
+\index{apps.\+h@{apps.\+h}!chopup\+\_\+args@{chopup\+\_\+args}}
+\index{chopup\+\_\+args@{chopup\+\_\+args}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{chopup\+\_\+args(\+A\+R\+G\+S $\ast$arg, char $\ast$buf, int $\ast$argc, char $\ast$$\ast$argv[])}{chopup_args(ARGS *arg, char *buf, int *argc, char **argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}int chopup\+\_\+args (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+R\+GS} $\ast$}]{arg, }
+\item[{char $\ast$}]{buf, }
+\item[{int $\ast$}]{argc, }
+\item[{char $\ast$$\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a02b292bc03693c475d46674fd7c06535}{}\label{apps_8h_a02b292bc03693c475d46674fd7c06535}
+\index{apps.\+h@{apps.\+h}!set\+\_\+cert\+\_\+ex@{set\+\_\+cert\+\_\+ex}}
+\index{set\+\_\+cert\+\_\+ex@{set\+\_\+cert\+\_\+ex}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{set\+\_\+cert\+\_\+ex(unsigned long $\ast$flags, const char $\ast$arg)}{set_cert_ex(unsigned long *flags, const char *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}int set\+\_\+cert\+\_\+ex (
+\begin{DoxyParamCaption}
+\item[{unsigned long $\ast$}]{flags, }
+\item[{const char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ae1f7a352429233fe472da552b2b3c05f}{}\label{apps_8h_ae1f7a352429233fe472da552b2b3c05f}
+\index{apps.\+h@{apps.\+h}!set\+\_\+name\+\_\+ex@{set\+\_\+name\+\_\+ex}}
+\index{set\+\_\+name\+\_\+ex@{set\+\_\+name\+\_\+ex}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{set\+\_\+name\+\_\+ex(unsigned long $\ast$flags, const char $\ast$arg)}{set_name_ex(unsigned long *flags, const char *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}int set\+\_\+name\+\_\+ex (
+\begin{DoxyParamCaption}
+\item[{unsigned long $\ast$}]{flags, }
+\item[{const char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a31d9a132c305b9378fea1760c9aac674}{}\label{apps_8h_a31d9a132c305b9378fea1760c9aac674}
+\index{apps.\+h@{apps.\+h}!set\+\_\+ext\+\_\+copy@{set\+\_\+ext\+\_\+copy}}
+\index{set\+\_\+ext\+\_\+copy@{set\+\_\+ext\+\_\+copy}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{set\+\_\+ext\+\_\+copy(int $\ast$copy\+\_\+type, const char $\ast$arg)}{set_ext_copy(int *copy_type, const char *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}int set\+\_\+ext\+\_\+copy (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{copy\+\_\+type, }
+\item[{const char $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_aec5fd8a8839d13606b9c51669f9a7979}{}\label{apps_8h_aec5fd8a8839d13606b9c51669f9a7979}
+\index{apps.\+h@{apps.\+h}!copy\+\_\+extensions@{copy\+\_\+extensions}}
+\index{copy\+\_\+extensions@{copy\+\_\+extensions}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{copy\+\_\+extensions(\+X509 $\ast$x, X509\+\_\+\+R\+E\+Q $\ast$req, int copy\+\_\+type)}{copy_extensions(X509 *x, X509_REQ *req, int copy_type)}}]{\setlength{\rightskip}{0pt plus 5cm}int copy\+\_\+extensions (
+\begin{DoxyParamCaption}
+\item[{{\bf X509} $\ast$}]{x, }
+\item[{{\bf X509\+\_\+\+R\+EQ} $\ast$}]{req, }
+\item[{int}]{copy\+\_\+type}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a6e23e3507ef7948d1fcc33b861efcc4f}{}\label{apps_8h_a6e23e3507ef7948d1fcc33b861efcc4f}
+\index{apps.\+h@{apps.\+h}!app\+\_\+passwd@{app\+\_\+passwd}}
+\index{app\+\_\+passwd@{app\+\_\+passwd}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+passwd(\+B\+I\+O $\ast$err, char $\ast$arg1, char $\ast$arg2, char $\ast$$\ast$pass1, char $\ast$$\ast$pass2)}{app_passwd(BIO *err, char *arg1, char *arg2, char **pass1, char **pass2)}}]{\setlength{\rightskip}{0pt plus 5cm}int app\+\_\+passwd (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{char $\ast$}]{arg1, }
+\item[{char $\ast$}]{arg2, }
+\item[{char $\ast$$\ast$}]{pass1, }
+\item[{char $\ast$$\ast$}]{pass2}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a2583cf8fb6844da21bdbc2f18fe32d98}{}\label{apps_8h_a2583cf8fb6844da21bdbc2f18fe32d98}
+\index{apps.\+h@{apps.\+h}!add\+\_\+oid\+\_\+section@{add\+\_\+oid\+\_\+section}}
+\index{add\+\_\+oid\+\_\+section@{add\+\_\+oid\+\_\+section}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{add\+\_\+oid\+\_\+section(\+B\+I\+O $\ast$err, C\+O\+N\+F $\ast$conf)}{add_oid_section(BIO *err, CONF *conf)}}]{\setlength{\rightskip}{0pt plus 5cm}int add\+\_\+oid\+\_\+section (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf C\+O\+NF} $\ast$}]{conf}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a3714476163f119dfb5c968b334aed77e}{}\label{apps_8h_a3714476163f119dfb5c968b334aed77e}
+\index{apps.\+h@{apps.\+h}!load\+\_\+cert@{load\+\_\+cert}}
+\index{load\+\_\+cert@{load\+\_\+cert}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+cert(\+B\+I\+O $\ast$err, const char $\ast$file, int format, const char $\ast$pass, E\+N\+G\+I\+N\+E $\ast$e, const char $\ast$cert\+\_\+descrip)}{load_cert(BIO *err, const char *file, int format, const char *pass, ENGINE *e, const char *cert_descrip)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf X509}$\ast$ load\+\_\+cert (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{const char $\ast$}]{file, }
+\item[{int}]{format, }
+\item[{const char $\ast$}]{pass, }
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{e, }
+\item[{const char $\ast$}]{cert\+\_\+descrip}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a7d4dfe3f45e998275b510ef291ef2daa}{}\label{apps_8h_a7d4dfe3f45e998275b510ef291ef2daa}
+\index{apps.\+h@{apps.\+h}!load\+\_\+crl@{load\+\_\+crl}}
+\index{load\+\_\+crl@{load\+\_\+crl}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+crl(const char $\ast$infile, int format)}{load_crl(const char *infile, int format)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf X509\+\_\+\+C\+RL}$\ast$ load\+\_\+crl (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{infile, }
+\item[{int}]{format}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a7510bb0b0d7de793fc9a1ae0a028f187}{}\label{apps_8h_a7510bb0b0d7de793fc9a1ae0a028f187}
+\index{apps.\+h@{apps.\+h}!load\+\_\+cert\+\_\+crl\+\_\+http@{load\+\_\+cert\+\_\+crl\+\_\+http}}
+\index{load\+\_\+cert\+\_\+crl\+\_\+http@{load\+\_\+cert\+\_\+crl\+\_\+http}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+cert\+\_\+crl\+\_\+http(const char $\ast$url, B\+I\+O $\ast$err, X509 $\ast$$\ast$pcert, X509\+\_\+\+C\+R\+L $\ast$$\ast$pcrl)}{load_cert_crl_http(const char *url, BIO *err, X509 **pcert, X509_CRL **pcrl)}}]{\setlength{\rightskip}{0pt plus 5cm}int load\+\_\+cert\+\_\+crl\+\_\+http (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{url, }
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf X509} $\ast$$\ast$}]{pcert, }
+\item[{{\bf X509\+\_\+\+C\+RL} $\ast$$\ast$}]{pcrl}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a1364cdf4f402c783c1d108a35efc5238}{}\label{apps_8h_a1364cdf4f402c783c1d108a35efc5238}
+\index{apps.\+h@{apps.\+h}!load\+\_\+key@{load\+\_\+key}}
+\index{load\+\_\+key@{load\+\_\+key}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+key(\+B\+I\+O $\ast$err, const char $\ast$file, int format, int maybe\+\_\+stdin, const char $\ast$pass, E\+N\+G\+I\+N\+E $\ast$e, const char $\ast$key\+\_\+descrip)}{load_key(BIO *err, const char *file, int format, int maybe_stdin, const char *pass, ENGINE *e, const char *key_descrip)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf E\+V\+P\+\_\+\+P\+K\+EY}$\ast$ load\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{const char $\ast$}]{file, }
+\item[{int}]{format, }
+\item[{int}]{maybe\+\_\+stdin, }
+\item[{const char $\ast$}]{pass, }
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{e, }
+\item[{const char $\ast$}]{key\+\_\+descrip}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a249483de1c7d6584ba02b632efa1108b}{}\label{apps_8h_a249483de1c7d6584ba02b632efa1108b}
+\index{apps.\+h@{apps.\+h}!load\+\_\+pubkey@{load\+\_\+pubkey}}
+\index{load\+\_\+pubkey@{load\+\_\+pubkey}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+pubkey(\+B\+I\+O $\ast$err, const char $\ast$file, int format, int maybe\+\_\+stdin, const char $\ast$pass, E\+N\+G\+I\+N\+E $\ast$e, const char $\ast$key\+\_\+descrip)}{load_pubkey(BIO *err, const char *file, int format, int maybe_stdin, const char *pass, ENGINE *e, const char *key_descrip)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf E\+V\+P\+\_\+\+P\+K\+EY}$\ast$ load\+\_\+pubkey (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{const char $\ast$}]{file, }
+\item[{int}]{format, }
+\item[{int}]{maybe\+\_\+stdin, }
+\item[{const char $\ast$}]{pass, }
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{e, }
+\item[{const char $\ast$}]{key\+\_\+descrip}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ac844255c0c91a2d11083a21907ae11f6}{}\label{apps_8h_ac844255c0c91a2d11083a21907ae11f6}
+\index{apps.\+h@{apps.\+h}!S\+T\+A\+C\+K\+\_\+\+OF@{S\+T\+A\+C\+K\+\_\+\+OF}}
+\index{S\+T\+A\+C\+K\+\_\+\+OF@{S\+T\+A\+C\+K\+\_\+\+OF}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{S\+T\+A\+C\+K\+\_\+\+O\+F(\+X509)$\ast$load\+\_\+certs(\+B\+I\+O $\ast$err}{STACK_OF(X509)*load_certs(BIO *err}}]{\setlength{\rightskip}{0pt plus 5cm}S\+T\+A\+C\+K\+\_\+\+OF (
+\begin{DoxyParamCaption}
+\item[{{\bf X509}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a98c15588f0eaf83288bb7bc34899edc3}{}\label{apps_8h_a98c15588f0eaf83288bb7bc34899edc3}
+\index{apps.\+h@{apps.\+h}!S\+T\+A\+C\+K\+\_\+\+OF@{S\+T\+A\+C\+K\+\_\+\+OF}}
+\index{S\+T\+A\+C\+K\+\_\+\+OF@{S\+T\+A\+C\+K\+\_\+\+OF}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{S\+T\+A\+C\+K\+\_\+\+O\+F(\+X509\+\_\+\+C\+R\+L)$\ast$load\+\_\+crls(\+B\+I\+O $\ast$err}{STACK_OF(X509_CRL)*load_crls(BIO *err}}]{\setlength{\rightskip}{0pt plus 5cm}S\+T\+A\+C\+K\+\_\+\+OF (
+\begin{DoxyParamCaption}
+\item[{{\bf X509\+\_\+\+C\+RL}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a42ba9734dd64d9f54856d29a5e96817b}{}\label{apps_8h_a42ba9734dd64d9f54856d29a5e96817b}
+\index{apps.\+h@{apps.\+h}!setup\+\_\+verify@{setup\+\_\+verify}}
+\index{setup\+\_\+verify@{setup\+\_\+verify}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{setup\+\_\+verify(\+B\+I\+O $\ast$bp, char $\ast$\+C\+Afile, char $\ast$\+C\+Apath)}{setup_verify(BIO *bp, char *CAfile, char *CApath)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf X509\+\_\+\+S\+T\+O\+RE}$\ast$ setup\+\_\+verify (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{bp, }
+\item[{char $\ast$}]{C\+Afile, }
+\item[{char $\ast$}]{C\+Apath}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_accb48c5f1eb3bd7d88220227d83b2fe6}{}\label{apps_8h_accb48c5f1eb3bd7d88220227d83b2fe6}
+\index{apps.\+h@{apps.\+h}!setup\+\_\+engine@{setup\+\_\+engine}}
+\index{setup\+\_\+engine@{setup\+\_\+engine}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{setup\+\_\+engine(\+B\+I\+O $\ast$err, const char $\ast$engine, int debug)}{setup_engine(BIO *err, const char *engine, int debug)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf E\+N\+G\+I\+NE}$\ast$ setup\+\_\+engine (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{const char $\ast$}]{engine, }
+\item[{int}]{debug}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a3ee57f9b101171a5e9d09a57ce803aa3}{}\label{apps_8h_a3ee57f9b101171a5e9d09a57ce803aa3}
+\index{apps.\+h@{apps.\+h}!process\+\_\+responder@{process\+\_\+responder}}
+\index{process\+\_\+responder@{process\+\_\+responder}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{process\+\_\+responder(\+B\+I\+O $\ast$err, O\+C\+S\+P\+\_\+\+R\+E\+Q\+U\+E\+S\+T $\ast$req, const char $\ast$host, const char $\ast$path, const char $\ast$port, int use\+\_\+ssl, const S\+T\+A\+C\+K\+\_\+\+O\+F(\+C\+O\+N\+F\+\_\+\+V\+A\+L\+U\+E)$\ast$headers, int req\+\_\+timeout)}{process_responder(BIO *err, OCSP_REQUEST *req, const char *host, const char *path, const char *port, int use_ssl, const STACK_OF(CONF_VALUE)*headers, int req_timeout)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf O\+C\+S\+P\+\_\+\+R\+E\+S\+P\+O\+N\+SE}$\ast$ process\+\_\+responder (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf O\+C\+S\+P\+\_\+\+R\+E\+Q\+U\+E\+ST} $\ast$}]{req, }
+\item[{const char $\ast$}]{host, }
+\item[{const char $\ast$}]{path, }
+\item[{const char $\ast$}]{port, }
+\item[{int}]{use\+\_\+ssl, }
+\item[{const {\bf S\+T\+A\+C\+K\+\_\+\+OF}({\bf C\+O\+N\+F\+\_\+\+V\+A\+L\+UE})$\ast$}]{headers, }
+\item[{int}]{req\+\_\+timeout}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a1c737061d17e87d58afd7510054ac56c}{}\label{apps_8h_a1c737061d17e87d58afd7510054ac56c}
+\index{apps.\+h@{apps.\+h}!load\+\_\+config@{load\+\_\+config}}
+\index{load\+\_\+config@{load\+\_\+config}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+config(\+B\+I\+O $\ast$err, C\+O\+N\+F $\ast$cnf)}{load_config(BIO *err, CONF *cnf)}}]{\setlength{\rightskip}{0pt plus 5cm}int load\+\_\+config (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf C\+O\+NF} $\ast$}]{cnf}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a96d153d79d368ec6f8fcf24db7a551f2}{}\label{apps_8h_a96d153d79d368ec6f8fcf24db7a551f2}
+\index{apps.\+h@{apps.\+h}!make\+\_\+config\+\_\+name@{make\+\_\+config\+\_\+name}}
+\index{make\+\_\+config\+\_\+name@{make\+\_\+config\+\_\+name}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{make\+\_\+config\+\_\+name(void)}{make_config_name(void)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ make\+\_\+config\+\_\+name (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a9353bf09c6c613f03808a132c0f4bc8d}{}\label{apps_8h_a9353bf09c6c613f03808a132c0f4bc8d}
+\index{apps.\+h@{apps.\+h}!unpack\+\_\+revinfo@{unpack\+\_\+revinfo}}
+\index{unpack\+\_\+revinfo@{unpack\+\_\+revinfo}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{unpack\+\_\+revinfo(\+A\+S\+N1\+\_\+\+T\+I\+M\+E $\ast$$\ast$prevtm, int $\ast$preason, A\+S\+N1\+\_\+\+O\+B\+J\+E\+C\+T $\ast$$\ast$phold, A\+S\+N1\+\_\+\+G\+E\+N\+E\+R\+A\+L\+I\+Z\+E\+D\+T\+I\+M\+E $\ast$$\ast$pinvtm, const char $\ast$str)}{unpack_revinfo(ASN1_TIME **prevtm, int *preason, ASN1_OBJECT **phold, ASN1_GENERALIZEDTIME **pinvtm, const char *str)}}]{\setlength{\rightskip}{0pt plus 5cm}int unpack\+\_\+revinfo (
+\begin{DoxyParamCaption}
+\item[{{\bf A\+S\+N1\+\_\+\+T\+I\+ME} $\ast$$\ast$}]{prevtm, }
+\item[{int $\ast$}]{preason, }
+\item[{{\bf A\+S\+N1\+\_\+\+O\+B\+J\+E\+CT} $\ast$$\ast$}]{phold, }
+\item[{{\bf A\+S\+N1\+\_\+\+G\+E\+N\+E\+R\+A\+L\+I\+Z\+E\+D\+T\+I\+ME} $\ast$$\ast$}]{pinvtm, }
+\item[{const char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ae33923e202de958b271c0dcf76030141}{}\label{apps_8h_ae33923e202de958b271c0dcf76030141}
+\index{apps.\+h@{apps.\+h}!load\+\_\+serial@{load\+\_\+serial}}
+\index{load\+\_\+serial@{load\+\_\+serial}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+serial(char $\ast$serialfile, int create, A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+E\+R $\ast$$\ast$retai)}{load_serial(char *serialfile, int create, ASN1_INTEGER **retai)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\+I\+G\+N\+UM}$\ast$ load\+\_\+serial (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{serialfile, }
+\item[{int}]{create, }
+\item[{{\bf A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+ER} $\ast$$\ast$}]{retai}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_afdf97050afbe49be3a0339460fa9f164}{}\label{apps_8h_afdf97050afbe49be3a0339460fa9f164}
+\index{apps.\+h@{apps.\+h}!save\+\_\+serial@{save\+\_\+serial}}
+\index{save\+\_\+serial@{save\+\_\+serial}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{save\+\_\+serial(char $\ast$serialfile, char $\ast$suffix, B\+I\+G\+N\+U\+M $\ast$serial, A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+E\+R $\ast$$\ast$retai)}{save_serial(char *serialfile, char *suffix, BIGNUM *serial, ASN1_INTEGER **retai)}}]{\setlength{\rightskip}{0pt plus 5cm}int save\+\_\+serial (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{serialfile, }
+\item[{char $\ast$}]{suffix, }
+\item[{{\bf B\+I\+G\+N\+UM} $\ast$}]{serial, }
+\item[{{\bf A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+ER} $\ast$$\ast$}]{retai}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_adec9b49d091cc462722d8158ffe7b0c1}{}\label{apps_8h_adec9b49d091cc462722d8158ffe7b0c1}
+\index{apps.\+h@{apps.\+h}!rotate\+\_\+serial@{rotate\+\_\+serial}}
+\index{rotate\+\_\+serial@{rotate\+\_\+serial}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{rotate\+\_\+serial(char $\ast$serialfile, char $\ast$new\+\_\+suffix, char $\ast$old\+\_\+suffix)}{rotate_serial(char *serialfile, char *new_suffix, char *old_suffix)}}]{\setlength{\rightskip}{0pt plus 5cm}int rotate\+\_\+serial (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{serialfile, }
+\item[{char $\ast$}]{new\+\_\+suffix, }
+\item[{char $\ast$}]{old\+\_\+suffix}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a875b2aa05f768e0ce3ae93ea5545275a}{}\label{apps_8h_a875b2aa05f768e0ce3ae93ea5545275a}
+\index{apps.\+h@{apps.\+h}!rand\+\_\+serial@{rand\+\_\+serial}}
+\index{rand\+\_\+serial@{rand\+\_\+serial}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{rand\+\_\+serial(\+B\+I\+G\+N\+U\+M $\ast$b, A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+E\+R $\ast$ai)}{rand_serial(BIGNUM *b, ASN1_INTEGER *ai)}}]{\setlength{\rightskip}{0pt plus 5cm}int rand\+\_\+serial (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+I\+G\+N\+UM} $\ast$}]{b, }
+\item[{{\bf A\+S\+N1\+\_\+\+I\+N\+T\+E\+G\+ER} $\ast$}]{ai}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a7a139be7a11cb7f35aef619c2fadd815}{}\label{apps_8h_a7a139be7a11cb7f35aef619c2fadd815}
+\index{apps.\+h@{apps.\+h}!load\+\_\+index@{load\+\_\+index}}
+\index{load\+\_\+index@{load\+\_\+index}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+index(char $\ast$dbfile, D\+B\+\_\+\+A\+T\+T\+R $\ast$dbattr)}{load_index(char *dbfile, DB_ATTR *dbattr)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+A\+\_\+\+DB}$\ast$ load\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dbfile, }
+\item[{{\bf D\+B\+\_\+\+A\+T\+TR} $\ast$}]{dbattr}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_aae8e6543b3f82bd56f333a781491e905}{}\label{apps_8h_aae8e6543b3f82bd56f333a781491e905}
+\index{apps.\+h@{apps.\+h}!index\+\_\+index@{index\+\_\+index}}
+\index{index\+\_\+index@{index\+\_\+index}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{index\+\_\+index(\+C\+A\+\_\+\+D\+B $\ast$db)}{index_index(CA_DB *db)}}]{\setlength{\rightskip}{0pt plus 5cm}int index\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+A\+\_\+\+DB} $\ast$}]{db}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_aad07092b35be9449e7b4c16a32266abe}{}\label{apps_8h_aad07092b35be9449e7b4c16a32266abe}
+\index{apps.\+h@{apps.\+h}!save\+\_\+index@{save\+\_\+index}}
+\index{save\+\_\+index@{save\+\_\+index}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{save\+\_\+index(const char $\ast$dbfile, const char $\ast$suffix, C\+A\+\_\+\+D\+B $\ast$db)}{save_index(const char *dbfile, const char *suffix, CA_DB *db)}}]{\setlength{\rightskip}{0pt plus 5cm}int save\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{dbfile, }
+\item[{const char $\ast$}]{suffix, }
+\item[{{\bf C\+A\+\_\+\+DB} $\ast$}]{db}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a45e7098c598df7ac40ec5f32e0d02938}{}\label{apps_8h_a45e7098c598df7ac40ec5f32e0d02938}
+\index{apps.\+h@{apps.\+h}!rotate\+\_\+index@{rotate\+\_\+index}}
+\index{rotate\+\_\+index@{rotate\+\_\+index}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{rotate\+\_\+index(const char $\ast$dbfile, const char $\ast$new\+\_\+suffix, const char $\ast$old\+\_\+suffix)}{rotate_index(const char *dbfile, const char *new_suffix, const char *old_suffix)}}]{\setlength{\rightskip}{0pt plus 5cm}int rotate\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{dbfile, }
+\item[{const char $\ast$}]{new\+\_\+suffix, }
+\item[{const char $\ast$}]{old\+\_\+suffix}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a9b07c274846aa358da94ead85b3f0ec2}{}\label{apps_8h_a9b07c274846aa358da94ead85b3f0ec2}
+\index{apps.\+h@{apps.\+h}!free\+\_\+index@{free\+\_\+index}}
+\index{free\+\_\+index@{free\+\_\+index}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{free\+\_\+index(\+C\+A\+\_\+\+D\+B $\ast$db)}{free_index(CA_DB *db)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} free\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+A\+\_\+\+DB} $\ast$}]{db}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a8d5c34535244e547830747a78c523a58}{}\label{apps_8h_a8d5c34535244e547830747a78c523a58}
+\index{apps.\+h@{apps.\+h}!index\+\_\+name\+\_\+cmp@{index\+\_\+name\+\_\+cmp}}
+\index{index\+\_\+name\+\_\+cmp@{index\+\_\+name\+\_\+cmp}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{index\+\_\+name\+\_\+cmp(const O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+S\+T\+R\+I\+N\+G $\ast$a, const O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+S\+T\+R\+I\+N\+G $\ast$b)}{index_name_cmp(const OPENSSL_CSTRING *a, const OPENSSL_CSTRING *b)}}]{\setlength{\rightskip}{0pt plus 5cm}int index\+\_\+name\+\_\+cmp (
+\begin{DoxyParamCaption}
+\item[{const {\bf O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+S\+T\+R\+I\+NG} $\ast$}]{a, }
+\item[{const {\bf O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+S\+T\+R\+I\+NG} $\ast$}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a6e0e96807c0b98fff46c75ff030a809b}{}\label{apps_8h_a6e0e96807c0b98fff46c75ff030a809b}
+\index{apps.\+h@{apps.\+h}!parse\+\_\+yesno@{parse\+\_\+yesno}}
+\index{parse\+\_\+yesno@{parse\+\_\+yesno}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{parse\+\_\+yesno(const char $\ast$str, int def)}{parse_yesno(const char *str, int def)}}]{\setlength{\rightskip}{0pt plus 5cm}int parse\+\_\+yesno (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{str, }
+\item[{int}]{def}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_aeb726cf8e5c7a5624b90d267410c5b47}{}\label{apps_8h_aeb726cf8e5c7a5624b90d267410c5b47}
+\index{apps.\+h@{apps.\+h}!parse\+\_\+name@{parse\+\_\+name}}
+\index{parse\+\_\+name@{parse\+\_\+name}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{parse\+\_\+name(char $\ast$str, long chtype, int multirdn)}{parse_name(char *str, long chtype, int multirdn)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf X509\+\_\+\+N\+A\+ME}$\ast$ parse\+\_\+name (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str, }
+\item[{long}]{chtype, }
+\item[{int}]{multirdn}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ab11182fa1a07bf1e0d6919c3d0d92fe2}{}\label{apps_8h_ab11182fa1a07bf1e0d6919c3d0d92fe2}
+\index{apps.\+h@{apps.\+h}!args\+\_\+verify@{args\+\_\+verify}}
+\index{args\+\_\+verify@{args\+\_\+verify}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{args\+\_\+verify(char $\ast$$\ast$$\ast$pargs, int $\ast$pargc, int $\ast$badarg, B\+I\+O $\ast$err, X509\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+P\+A\+R\+A\+M $\ast$$\ast$pm)}{args_verify(char ***pargs, int *pargc, int *badarg, BIO *err, X509_VERIFY_PARAM **pm)}}]{\setlength{\rightskip}{0pt plus 5cm}int args\+\_\+verify (
+\begin{DoxyParamCaption}
+\item[{char $\ast$$\ast$$\ast$}]{pargs, }
+\item[{int $\ast$}]{pargc, }
+\item[{int $\ast$}]{badarg, }
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf X509\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+P\+A\+R\+AM} $\ast$$\ast$}]{pm}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a018f138d4e07a4b8d4d5155c3cbbfcf1}{}\label{apps_8h_a018f138d4e07a4b8d4d5155c3cbbfcf1}
+\index{apps.\+h@{apps.\+h}!policies\+\_\+print@{policies\+\_\+print}}
+\index{policies\+\_\+print@{policies\+\_\+print}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{policies\+\_\+print(\+B\+I\+O $\ast$out, X509\+\_\+\+S\+T\+O\+R\+E\+\_\+\+C\+T\+X $\ast$ctx)}{policies_print(BIO *out, X509_STORE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} policies\+\_\+print (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{out, }
+\item[{{\bf X509\+\_\+\+S\+T\+O\+R\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a1d24cae36e9ef4b4fdf610737c741233}{}\label{apps_8h_a1d24cae36e9ef4b4fdf610737c741233}
+\index{apps.\+h@{apps.\+h}!bio\+\_\+to\+\_\+mem@{bio\+\_\+to\+\_\+mem}}
+\index{bio\+\_\+to\+\_\+mem@{bio\+\_\+to\+\_\+mem}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{bio\+\_\+to\+\_\+mem(unsigned char $\ast$$\ast$out, int maxlen, B\+I\+O $\ast$in)}{bio_to_mem(unsigned char **out, int maxlen, BIO *in)}}]{\setlength{\rightskip}{0pt plus 5cm}int bio\+\_\+to\+\_\+mem (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$$\ast$}]{out, }
+\item[{int}]{maxlen, }
+\item[{{\bf B\+IO} $\ast$}]{in}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a7d27e4cf1e1b142471d24c11f279934e}{}\label{apps_8h_a7d27e4cf1e1b142471d24c11f279934e}
+\index{apps.\+h@{apps.\+h}!pkey\+\_\+ctrl\+\_\+string@{pkey\+\_\+ctrl\+\_\+string}}
+\index{pkey\+\_\+ctrl\+\_\+string@{pkey\+\_\+ctrl\+\_\+string}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{pkey\+\_\+ctrl\+\_\+string(\+E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X $\ast$ctx, const char $\ast$value)}{pkey_ctrl_string(EVP_PKEY_CTX *ctx, const char *value)}}]{\setlength{\rightskip}{0pt plus 5cm}int pkey\+\_\+ctrl\+\_\+string (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const char $\ast$}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ab78a2169907276477976d8d2a4df7b3e}{}\label{apps_8h_ab78a2169907276477976d8d2a4df7b3e}
+\index{apps.\+h@{apps.\+h}!init\+\_\+gen\+\_\+str@{init\+\_\+gen\+\_\+str}}
+\index{init\+\_\+gen\+\_\+str@{init\+\_\+gen\+\_\+str}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{init\+\_\+gen\+\_\+str(\+B\+I\+O $\ast$err, E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X $\ast$$\ast$pctx, const char $\ast$algname, E\+N\+G\+I\+N\+E $\ast$e, int do\+\_\+param)}{init_gen_str(BIO *err, EVP_PKEY_CTX **pctx, const char *algname, ENGINE *e, int do_param)}}]{\setlength{\rightskip}{0pt plus 5cm}int init\+\_\+gen\+\_\+str (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+TX} $\ast$$\ast$}]{pctx, }
+\item[{const char $\ast$}]{algname, }
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{e, }
+\item[{int}]{do\+\_\+param}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a7380b8149fdf2c11647161e73de1840a}{}\label{apps_8h_a7380b8149fdf2c11647161e73de1840a}
+\index{apps.\+h@{apps.\+h}!do\+\_\+\+X509\+\_\+sign@{do\+\_\+\+X509\+\_\+sign}}
+\index{do\+\_\+\+X509\+\_\+sign@{do\+\_\+\+X509\+\_\+sign}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{do\+\_\+\+X509\+\_\+sign(\+B\+I\+O $\ast$err, X509 $\ast$x, E\+V\+P\+\_\+\+P\+K\+E\+Y $\ast$pkey, const E\+V\+P\+\_\+\+M\+D $\ast$md, S\+T\+A\+C\+K\+\_\+\+O\+F(\+O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+N\+G)$\ast$sigopts)}{do_X509_sign(BIO *err, X509 *x, EVP_PKEY *pkey, const EVP_MD *md, STACK_OF(OPENSSL_STRING)*sigopts)}}]{\setlength{\rightskip}{0pt plus 5cm}int do\+\_\+\+X509\+\_\+sign (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf X509} $\ast$}]{x, }
+\item[{{\bf E\+V\+P\+\_\+\+P\+K\+EY} $\ast$}]{pkey, }
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{md, }
+\item[{{\bf S\+T\+A\+C\+K\+\_\+\+OF}({\bf O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+NG})$\ast$}]{sigopts}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ad7eeb100a025b4b8e866630af52acacf}{}\label{apps_8h_ad7eeb100a025b4b8e866630af52acacf}
+\index{apps.\+h@{apps.\+h}!do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign@{do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign}}
+\index{do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign@{do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign(\+B\+I\+O $\ast$err, X509\+\_\+\+R\+E\+Q $\ast$x, E\+V\+P\+\_\+\+P\+K\+E\+Y $\ast$pkey, const E\+V\+P\+\_\+\+M\+D $\ast$md, S\+T\+A\+C\+K\+\_\+\+O\+F(\+O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+N\+G)$\ast$sigopts)}{do_X509_REQ_sign(BIO *err, X509_REQ *x, EVP_PKEY *pkey, const EVP_MD *md, STACK_OF(OPENSSL_STRING)*sigopts)}}]{\setlength{\rightskip}{0pt plus 5cm}int do\+\_\+\+X509\+\_\+\+R\+E\+Q\+\_\+sign (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf X509\+\_\+\+R\+EQ} $\ast$}]{x, }
+\item[{{\bf E\+V\+P\+\_\+\+P\+K\+EY} $\ast$}]{pkey, }
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{md, }
+\item[{{\bf S\+T\+A\+C\+K\+\_\+\+OF}({\bf O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+NG})$\ast$}]{sigopts}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a185eb9cdd7e02dcbb8ab3eebee333120}{}\label{apps_8h_a185eb9cdd7e02dcbb8ab3eebee333120}
+\index{apps.\+h@{apps.\+h}!do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign@{do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign}}
+\index{do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign@{do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign(\+B\+I\+O $\ast$err, X509\+\_\+\+C\+R\+L $\ast$x, E\+V\+P\+\_\+\+P\+K\+E\+Y $\ast$pkey, const E\+V\+P\+\_\+\+M\+D $\ast$md, S\+T\+A\+C\+K\+\_\+\+O\+F(\+O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+N\+G)$\ast$sigopts)}{do_X509_CRL_sign(BIO *err, X509_CRL *x, EVP_PKEY *pkey, const EVP_MD *md, STACK_OF(OPENSSL_STRING)*sigopts)}}]{\setlength{\rightskip}{0pt plus 5cm}int do\+\_\+\+X509\+\_\+\+C\+R\+L\+\_\+sign (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf X509\+\_\+\+C\+RL} $\ast$}]{x, }
+\item[{{\bf E\+V\+P\+\_\+\+P\+K\+EY} $\ast$}]{pkey, }
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{md, }
+\item[{{\bf S\+T\+A\+C\+K\+\_\+\+OF}({\bf O\+P\+E\+N\+S\+S\+L\+\_\+\+S\+T\+R\+I\+NG})$\ast$}]{sigopts}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_afed5a9b055cd73e25daea18d02c0c56d}{}\label{apps_8h_afed5a9b055cd73e25daea18d02c0c56d}
+\index{apps.\+h@{apps.\+h}!jpake\+\_\+client\+\_\+auth@{jpake\+\_\+client\+\_\+auth}}
+\index{jpake\+\_\+client\+\_\+auth@{jpake\+\_\+client\+\_\+auth}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{jpake\+\_\+client\+\_\+auth(\+B\+I\+O $\ast$out, B\+I\+O $\ast$conn, const char $\ast$secret)}{jpake_client_auth(BIO *out, BIO *conn, const char *secret)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} jpake\+\_\+client\+\_\+auth (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{out, }
+\item[{{\bf B\+IO} $\ast$}]{conn, }
+\item[{const char $\ast$}]{secret}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_afbffdcb9af23ba9d42541b9aeeec6e95}{}\label{apps_8h_afbffdcb9af23ba9d42541b9aeeec6e95}
+\index{apps.\+h@{apps.\+h}!jpake\+\_\+server\+\_\+auth@{jpake\+\_\+server\+\_\+auth}}
+\index{jpake\+\_\+server\+\_\+auth@{jpake\+\_\+server\+\_\+auth}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{jpake\+\_\+server\+\_\+auth(\+B\+I\+O $\ast$out, B\+I\+O $\ast$conn, const char $\ast$secret)}{jpake_server_auth(BIO *out, BIO *conn, const char *secret)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} jpake\+\_\+server\+\_\+auth (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{out, }
+\item[{{\bf B\+IO} $\ast$}]{conn, }
+\item[{const char $\ast$}]{secret}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a468af4d9f3df52e972a484815ff3902a}{}\label{apps_8h_a468af4d9f3df52e972a484815ff3902a}
+\index{apps.\+h@{apps.\+h}!next\+\_\+protos\+\_\+parse@{next\+\_\+protos\+\_\+parse}}
+\index{next\+\_\+protos\+\_\+parse@{next\+\_\+protos\+\_\+parse}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{next\+\_\+protos\+\_\+parse(unsigned short $\ast$outlen, const char $\ast$in)}{next_protos_parse(unsigned short *outlen, const char *in)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ next\+\_\+protos\+\_\+parse (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{outlen, }
+\item[{const char $\ast$}]{in}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a7744c6943bfb61a32f66f14931ef0970}{}\label{apps_8h_a7744c6943bfb61a32f66f14931ef0970}
+\index{apps.\+h@{apps.\+h}!print\+\_\+cert\+\_\+checks@{print\+\_\+cert\+\_\+checks}}
+\index{print\+\_\+cert\+\_\+checks@{print\+\_\+cert\+\_\+checks}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+cert\+\_\+checks(\+B\+I\+O $\ast$bio, X509 $\ast$x, const char $\ast$checkhost, const char $\ast$checkemail, const char $\ast$checkip)}{print_cert_checks(BIO *bio, X509 *x, const char *checkhost, const char *checkemail, const char *checkip)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} print\+\_\+cert\+\_\+checks (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{bio, }
+\item[{{\bf X509} $\ast$}]{x, }
+\item[{const char $\ast$}]{checkhost, }
+\item[{const char $\ast$}]{checkemail, }
+\item[{const char $\ast$}]{checkip}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ace45478dd4024d5e42f085a37b81342f}{}\label{apps_8h_ace45478dd4024d5e42f085a37b81342f}
+\index{apps.\+h@{apps.\+h}!store\+\_\+setup\+\_\+crl\+\_\+download@{store\+\_\+setup\+\_\+crl\+\_\+download}}
+\index{store\+\_\+setup\+\_\+crl\+\_\+download@{store\+\_\+setup\+\_\+crl\+\_\+download}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{store\+\_\+setup\+\_\+crl\+\_\+download(\+X509\+\_\+\+S\+T\+O\+R\+E $\ast$st)}{store_setup_crl_download(X509_STORE *st)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} store\+\_\+setup\+\_\+crl\+\_\+download (
+\begin{DoxyParamCaption}
+\item[{{\bf X509\+\_\+\+S\+T\+O\+RE} $\ast$}]{st}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a764ce5a4f48fa0e815d43c912992bc44}{}\label{apps_8h_a764ce5a4f48fa0e815d43c912992bc44}
+\index{apps.\+h@{apps.\+h}!app\+\_\+isdir@{app\+\_\+isdir}}
+\index{app\+\_\+isdir@{app\+\_\+isdir}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+isdir(const char $\ast$)}{app_isdir(const char *)}}]{\setlength{\rightskip}{0pt plus 5cm}int app\+\_\+isdir (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a250e19d3e20f467469c5ded510cf3c8c}{}\label{apps_8h_a250e19d3e20f467469c5ded510cf3c8c}
+\index{apps.\+h@{apps.\+h}!raw\+\_\+read\+\_\+stdin@{raw\+\_\+read\+\_\+stdin}}
+\index{raw\+\_\+read\+\_\+stdin@{raw\+\_\+read\+\_\+stdin}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{raw\+\_\+read\+\_\+stdin(void $\ast$, int)}{raw_read_stdin(void *, int)}}]{\setlength{\rightskip}{0pt plus 5cm}int raw\+\_\+read\+\_\+stdin (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a9704b724f3d7a3109e551a9c8b73c1dc}{}\label{apps_8h_a9704b724f3d7a3109e551a9c8b73c1dc}
+\index{apps.\+h@{apps.\+h}!raw\+\_\+write\+\_\+stdout@{raw\+\_\+write\+\_\+stdout}}
+\index{raw\+\_\+write\+\_\+stdout@{raw\+\_\+write\+\_\+stdout}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{raw\+\_\+write\+\_\+stdout(const void $\ast$, int)}{raw_write_stdout(const void *, int)}}]{\setlength{\rightskip}{0pt plus 5cm}int raw\+\_\+write\+\_\+stdout (
+\begin{DoxyParamCaption}
+\item[{const {\bf void} $\ast$}]{, }
+\item[{int}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_ac622c9c17c506689dfe425991718868d}{}\label{apps_8h_ac622c9c17c506689dfe425991718868d}
+\index{apps.\+h@{apps.\+h}!app\+\_\+tminterval@{app\+\_\+tminterval}}
+\index{app\+\_\+tminterval@{app\+\_\+tminterval}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{app\+\_\+tminterval(int stop, int usertime)}{app_tminterval(int stop, int usertime)}}]{\setlength{\rightskip}{0pt plus 5cm}double app\+\_\+tminterval (
+\begin{DoxyParamCaption}
+\item[{int}]{stop, }
+\item[{int}]{usertime}
+\end{DoxyParamCaption}
+)}\hypertarget{apps_8h_a0189f01b3f21c71f989cfb58cc1e480c}{}\label{apps_8h_a0189f01b3f21c71f989cfb58cc1e480c}
+
+
+\subsection{Variable Documentation}
+\index{apps.\+h@{apps.\+h}!config@{config}}
+\index{config@{config}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{config}{config}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+O\+NF}$\ast$ config = N\+U\+LL}\hypertarget{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{}\label{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}
+
+
+Definition at line 146 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!bio\+\_\+err@{bio\+\_\+err}}
+\index{bio\+\_\+err@{bio\+\_\+err}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{bio\+\_\+err}{bio_err}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\+IO}$\ast$ bio\+\_\+err = N\+U\+LL}\hypertarget{apps_8h_a4903f4ea946648d18bd6a32f4fd35361}{}\label{apps_8h_a4903f4ea946648d18bd6a32f4fd35361}
+
+
+Definition at line 147 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!file@{file}}
+\index{file@{file}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{file}{file}}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ file}\hypertarget{apps_8h_a29e8a72bd9d3020e517d381df2eab3cb}{}\label{apps_8h_a29e8a72bd9d3020e517d381df2eab3cb}
+
+
+Definition at line 255 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!format@{format}}
+\index{format@{format}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{format}{format}}]{\setlength{\rightskip}{0pt plus 5cm}const char int format}\hypertarget{apps_8h_a8e159f1305e0dce59e64274f52634fe6}{}\label{apps_8h_a8e159f1305e0dce59e64274f52634fe6}
+
+
+Definition at line 255 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!pass@{pass}}
+\index{pass@{pass}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{pass}{pass}}]{\setlength{\rightskip}{0pt plus 5cm}const char int const char $\ast$ pass}\hypertarget{apps_8h_a883ea4511569b63d8e1dff36305b4ea4}{}\label{apps_8h_a883ea4511569b63d8e1dff36305b4ea4}
+
+
+Definition at line 255 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!e@{e}}
+\index{e@{e}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{e}{e}}]{\setlength{\rightskip}{0pt plus 5cm}const char int const char {\bf E\+N\+G\+I\+NE} $\ast$ e}\hypertarget{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{}\label{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}
+
+
+Definition at line 255 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!cert\+\_\+descrip@{cert\+\_\+descrip}}
+\index{cert\+\_\+descrip@{cert\+\_\+descrip}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{cert\+\_\+descrip}{cert_descrip}}]{\setlength{\rightskip}{0pt plus 5cm}const char int const char {\bf E\+N\+G\+I\+NE} const char $\ast$ cert\+\_\+descrip}\hypertarget{apps_8h_a392469603ac80832cec5a50b94cce346}{}\label{apps_8h_a392469603ac80832cec5a50b94cce346}
+
+
+Definition at line 255 of file apps.\+h.
+
+\index{apps.\+h@{apps.\+h}!psk\+\_\+key@{psk\+\_\+key}}
+\index{psk\+\_\+key@{psk\+\_\+key}!apps.\+h@{apps.\+h}}
+\subsubsection[{\texorpdfstring{psk\+\_\+key}{psk_key}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ psk\+\_\+key}\hypertarget{apps_8h_a953c645675598422cbde37a08d4161c8}{}\label{apps_8h_a953c645675598422cbde37a08d4161c8}

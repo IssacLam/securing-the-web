@@ -1,0 +1,116 @@
+\hypertarget{class_c_randomizer}{}\section{C\+Randomizer Class Reference}
+\label{class_c_randomizer}\index{C\+Randomizer@{C\+Randomizer}}
+
+
+{\ttfamily \#include $<$Randomizer.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_randomizer_aa8dc31b3b29a91c87f1ead33bce7aa22}{C\+Randomizer} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{class_c_randomizer_a106ea95e959a42130d3098ff0238327b}{Periodic\+Action} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 7 of file Randomizer.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{C\+Randomizer@{C\+Randomizer}!C\+Randomizer@{C\+Randomizer}}
+\index{C\+Randomizer@{C\+Randomizer}!C\+Randomizer@{C\+Randomizer}}
+\subsubsection[{\texorpdfstring{C\+Randomizer(void)}{CRandomizer(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+Randomizer} (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_c_randomizer_aa8dc31b3b29a91c87f1ead33bce7aa22}{}\label{class_c_randomizer_aa8dc31b3b29a91c87f1ead33bce7aa22}
+
+
+Definition at line 216 of file Randomizer.\+cpp.
+
+
+\begin{DoxyCode}
+217 \{
+218     \textcolor{keywordtype}{long}    result;
+219     
+220     mSupportsLargeVolumes =
+221         (Gestalt(gestaltFSAttr, &result) == noErr) &&
+222         ((result & (1L << gestaltFSSupports2TBVols)) != 0);
+223     
+224     \textcolor{keywordflow}{if} (Gestalt (gestaltNativeCPUtype, &result) != noErr)
+225     \{
+226         mIsPowerPC = \textcolor{keyword}{false};
+227         mIs601 = \textcolor{keyword}{false};
+228     \}
+229     \textcolor{keywordflow}{else}
+230     \{
+231         mIs601 = (result == gestaltCPU601);
+232         mIsPowerPC = (result >= gestaltCPU601);
+233     \}
+234     mLastMouse.h = mLastMouse.v = -10;  \textcolor{comment}{// First mouse will}
+235                         \textcolor{comment}{// always be recorded}
+236     mLastPeriodicTicks = TickCount();
+237     GetTimeBaseResolution ();
+238     
+239     \textcolor{comment}{// Add initial entropy}
+240     AddTimeSinceMachineStartup ();
+241     AddAbsoluteSystemStartupTime ();
+242     AddStartupVolumeInfo ();
+243     AddFiller ();
+244 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{C\+Randomizer@{C\+Randomizer}!Periodic\+Action@{Periodic\+Action}}
+\index{Periodic\+Action@{Periodic\+Action}!C\+Randomizer@{C\+Randomizer}}
+\subsubsection[{\texorpdfstring{Periodic\+Action(void)}{PeriodicAction(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} Periodic\+Action (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_c_randomizer_a106ea95e959a42130d3098ff0238327b}{}\label{class_c_randomizer_a106ea95e959a42130d3098ff0238327b}
+
+
+Definition at line 246 of file Randomizer.\+cpp.
+
+
+\begin{DoxyCode}
+247 \{
+248     AddCurrentMouse ();
+249     AddNow (0.0);   \textcolor{comment}{// Should have a better entropy estimate here}
+250     mLastPeriodicTicks = TickCount();
+251 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{class_c_randomizer_a106ea95e959a42130d3098ff0238327b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_randomizer_a106ea95e959a42130d3098ff0238327b_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\hyperlink{_randomizer_8h}{Randomizer.\+h}\item 
+s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\hyperlink{_randomizer_8cpp}{Randomizer.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,85 @@
+\hypertarget{s2n__client__key__exchange_8c}{}\section{s2n-\/master/tls/s2n\+\_\+client\+\_\+key\+\_\+exchange.c File Reference}
+\label{s2n__client__key__exchange_8c}\index{s2n-\/master/tls/s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c@{s2n-\/master/tls/s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c}}
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+resume.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+dhe.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+rsa.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__client__key__exchange_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__client__key__exchange_8c_a5d0b0b0a8964b40aff5e3562bf65a9e1}{s2n\+\_\+client\+\_\+key\+\_\+recv} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__client__key__exchange_8c_a59294a875b6596b8dd5ad02a58e77c94}{s2n\+\_\+client\+\_\+key\+\_\+send} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c@{s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c}!s2n\+\_\+client\+\_\+key\+\_\+recv@{s2n\+\_\+client\+\_\+key\+\_\+recv}}
+\index{s2n\+\_\+client\+\_\+key\+\_\+recv@{s2n\+\_\+client\+\_\+key\+\_\+recv}!s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c@{s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+client\+\_\+key\+\_\+recv(struct s2n\+\_\+connection $\ast$conn)}{s2n_client_key_recv(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+client\+\_\+key\+\_\+recv (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__client__key__exchange_8c_a5d0b0b0a8964b40aff5e3562bf65a9e1}{}\label{s2n__client__key__exchange_8c_a5d0b0b0a8964b40aff5e3562bf65a9e1}
+
+
+Definition at line 127 of file s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c.
+
+
+\begin{DoxyCode}
+128 \{
+129     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite}->\hyperlink{structs2n__cipher__suite_aaf88ce0be23d983d21bbbecfce1c293d}{key\_exchange\_alg}->
+      \hyperlink{structs2n__key__exchange__algorithm_a1e87af3c18a2fd36c61faf89949bdc3f}{flags} & \hyperlink{s2n__cipher__suites_8h_af4ba4603e445c3767469486093d99598}{S2N\_KEY\_EXCHANGE\_DH}) \{
+130         \textcolor{keywordflow}{return} s2n\_dhe\_client\_key\_recv(conn);
+131     \} \textcolor{keywordflow}{else} \{
+132         \textcolor{keywordflow}{return} \hyperlink{s2n__server__fuzz__test__overrides_8c_a4894ba367df6cc84ab8907adde93178c}{s2n\_rsa\_client\_key\_recv}(conn);
+133     \}
+134 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__client__key__exchange_8c_a5d0b0b0a8964b40aff5e3562bf65a9e1_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c@{s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c}!s2n\+\_\+client\+\_\+key\+\_\+send@{s2n\+\_\+client\+\_\+key\+\_\+send}}
+\index{s2n\+\_\+client\+\_\+key\+\_\+send@{s2n\+\_\+client\+\_\+key\+\_\+send}!s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c@{s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+client\+\_\+key\+\_\+send(struct s2n\+\_\+connection $\ast$conn)}{s2n_client_key_send(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+client\+\_\+key\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__client__key__exchange_8c_a59294a875b6596b8dd5ad02a58e77c94}{}\label{s2n__client__key__exchange_8c_a59294a875b6596b8dd5ad02a58e77c94}
+
+
+Definition at line 224 of file s2n\+\_\+client\+\_\+key\+\_\+exchange.\+c.
+
+
+\begin{DoxyCode}
+225 \{
+226     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite}->\hyperlink{structs2n__cipher__suite_aaf88ce0be23d983d21bbbecfce1c293d}{key\_exchange\_alg}->
+      \hyperlink{structs2n__key__exchange__algorithm_a1e87af3c18a2fd36c61faf89949bdc3f}{flags} & \hyperlink{s2n__cipher__suites_8h_af4ba4603e445c3767469486093d99598}{S2N\_KEY\_EXCHANGE\_DH}) \{
+227         \textcolor{keywordflow}{return} s2n\_dhe\_client\_key\_send(conn);
+228     \} \textcolor{keywordflow}{else} \{
+229         \textcolor{keywordflow}{return} s2n\_rsa\_client\_key\_send(conn);
+230     \}
+231 \}
+\end{DoxyCode}

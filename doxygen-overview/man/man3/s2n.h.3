@@ -1,0 +1,1479 @@
+.TH "s2n-master/api/s2n.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/api/s2n.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_SSLv2\fP   20"
+.br
+.ti -1c
+.RI "#define \fBS2N_SSLv3\fP   30"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS10\fP   31"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS11\fP   32"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS12\fP   33"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBs2n_error_type\fP { \fBS2N_ERR_T_OK\fP =0, \fBS2N_ERR_T_IO\fP, \fBS2N_ERR_T_CLOSED\fP, \fBS2N_ERR_T_BLOCKED\fP, \fBS2N_ERR_T_ALERT\fP, \fBS2N_ERR_T_PROTO\fP, \fBS2N_ERR_T_INTERNAL\fP, \fBS2N_ERR_T_USAGE\fP }"
+.br
+.ti -1c
+.RI "enum \fBs2n_status_request_type\fP { \fBS2N_STATUS_REQUEST_NONE\fP = 0, \fBS2N_STATUS_REQUEST_OCSP\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBs2n_mode\fP { \fBS2N_SERVER\fP, \fBS2N_CLIENT\fP }"
+.br
+.ti -1c
+.RI "enum \fBs2n_blinding\fP { \fBS2N_BUILT_IN_BLINDING\fP, \fBS2N_SELF_SERVICE_BLINDING\fP }"
+.br
+.ti -1c
+.RI "enum \fBs2n_blocked_status\fP { \fBS2N_NOT_BLOCKED\fP = 0, \fBS2N_BLOCKED_ON_READ\fP, \fBS2N_BLOCKED_ON_WRITE\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_error_get_type\fP (int error)"
+.br
+.ti -1c
+.RI "int \fBs2n_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "struct \fBs2n_config\fP * \fBs2n_config_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free_dhparams\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free_cert_chain_and_key\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_nanoseconds_since_epoch_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*nanoseconds_since_epoch)(\fBvoid\fP *, uint64_t *), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_strerror\fP (int error, const char *lang)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cache_store_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*\fBcache_store\fP)(\fBvoid\fP *, uint64_t ttl_in_seconds, const \fBvoid\fP *key, uint64_t key_size, const \fBvoid\fP *value, uint64_t value_size), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cache_retrieve_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*\fBcache_retrieve\fP)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size, \fBvoid\fP *value, uint64_t *value_size), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cache_delete_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*\fBcache_delete\fP)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_cert_chain_and_key\fP (struct \fBs2n_config\fP *\fBconfig\fP, char *cert_chain_pem, char *private_key_pem)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_cert_chain_and_key_with_status\fP (struct \fBs2n_config\fP *\fBconfig\fP, char *cert_chain_pem, char *private_key_pem, const uint8_t *status, uint32_t \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_dhparams\fP (struct \fBs2n_config\fP *\fBconfig\fP, char *dhparams_pem)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cipher_preferences\fP (struct \fBs2n_config\fP *\fBconfig\fP, const char *\fBversion\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_protocol_preferences\fP (struct \fBs2n_config\fP *\fBconfig\fP, const char *const *protocols, int protocol_count)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_status_request_type\fP (struct \fBs2n_config\fP *\fBconfig\fP, \fBs2n_status_request_type\fP \fBtype\fP)"
+.br
+.ti -1c
+.RI "struct \fBs2n_connection\fP * \fBs2n_connection_new\fP (\fBs2n_mode\fP mode)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_config\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_fd\fP (struct \fBs2n_connection\fP *conn, int readfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_read_fd\fP (struct \fBs2n_connection\fP *conn, int readfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_write_fd\fP (struct \fBs2n_connection\fP *conn, int readfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_throughput\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_low_latency\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_blinding\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blinding\fP blinding)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_connection_get_delay\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_set_server_name\fP (struct \fBs2n_connection\fP *conn, const char *server_name)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_server_name\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_application_protocol\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const uint8_t * \fBs2n_connection_get_ocsp_response\fP (struct \fBs2n_connection\fP *conn, uint32_t *\fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_negotiate\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "ssize_t \fBs2n_send\fP (struct \fBs2n_connection\fP *conn, \fBvoid\fP *buf, ssize_t size, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "ssize_t \fBs2n_recv\fP (struct \fBs2n_connection\fP *conn, \fBvoid\fP *buf, ssize_t size, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_wipe\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_free\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_shutdown\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_in\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_out\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_server_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_actual_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_hello_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_connection_get_cipher\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_alert\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "__thread int \fBs2n_errno\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_SSLv2   20"
+
+.PP
+Definition at line 25 of file s2n\&.h\&.
+.SS "#define S2N_SSLv3   30"
+
+.PP
+Definition at line 26 of file s2n\&.h\&.
+.SS "#define S2N_TLS10   31"
+
+.PP
+Definition at line 27 of file s2n\&.h\&.
+.SS "#define S2N_TLS11   32"
+
+.PP
+Definition at line 28 of file s2n\&.h\&.
+.SS "#define S2N_TLS12   33"
+
+.PP
+Definition at line 29 of file s2n\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBs2n_error_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_ERR_T_OK \fP\fP
+.TP
+\fB\fIS2N_ERR_T_IO \fP\fP
+.TP
+\fB\fIS2N_ERR_T_CLOSED \fP\fP
+.TP
+\fB\fIS2N_ERR_T_BLOCKED \fP\fP
+.TP
+\fB\fIS2N_ERR_T_ALERT \fP\fP
+.TP
+\fB\fIS2N_ERR_T_PROTO \fP\fP
+.TP
+\fB\fIS2N_ERR_T_INTERNAL \fP\fP
+.TP
+\fB\fIS2N_ERR_T_USAGE \fP\fP
+.PP
+Definition at line 33 of file s2n\&.h\&.
+.PP
+.nf
+33              {
+34     S2N_ERR_T_OK=0,
+35     S2N_ERR_T_IO,
+36     S2N_ERR_T_CLOSED,
+37     S2N_ERR_T_BLOCKED,
+38     S2N_ERR_T_ALERT,
+39     S2N_ERR_T_PROTO,
+40     S2N_ERR_T_INTERNAL,
+41     S2N_ERR_T_USAGE
+42 } s2n_error_type;
+.fi
+.SS "enum \fBs2n_status_request_type\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_STATUS_REQUEST_NONE \fP\fP
+.TP
+\fB\fIS2N_STATUS_REQUEST_OCSP \fP\fP
+.PP
+Definition at line 67 of file s2n\&.h\&.
+.PP
+.nf
+67 { S2N_STATUS_REQUEST_NONE = 0, S2N_STATUS_REQUEST_OCSP = 1 } s2n_status_request_type;
+.fi
+.SS "enum \fBs2n_mode\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_SERVER \fP\fP
+.TP
+\fB\fIS2N_CLIENT \fP\fP
+.PP
+Definition at line 71 of file s2n\&.h\&.
+.PP
+.nf
+71 { S2N_SERVER, S2N_CLIENT } s2n_mode;
+.fi
+.SS "enum \fBs2n_blinding\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_BUILT_IN_BLINDING \fP\fP
+.TP
+\fB\fIS2N_SELF_SERVICE_BLINDING \fP\fP
+.PP
+Definition at line 82 of file s2n\&.h\&.
+.PP
+.nf
+82 { S2N_BUILT_IN_BLINDING, S2N_SELF_SERVICE_BLINDING } s2n_blinding;
+.fi
+.SS "enum \fBs2n_blocked_status\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIS2N_NOT_BLOCKED \fP\fP
+.TP
+\fB\fIS2N_BLOCKED_ON_READ \fP\fP
+.TP
+\fB\fIS2N_BLOCKED_ON_WRITE \fP\fP
+.PP
+Definition at line 91 of file s2n\&.h\&.
+.PP
+.nf
+91 { S2N_NOT_BLOCKED = 0, S2N_BLOCKED_ON_READ, S2N_BLOCKED_ON_WRITE } s2n_blocked_status;
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_error_get_type (int error)"
+
+.PP
+Definition at line 132 of file s2n_errno\&.c\&.
+.PP
+.nf
+133 {
+134     return (error >> S2N_ERR_NUM_VALUE_BITS);
+135 }
+.fi
+.SS "int s2n_init (\fBvoid\fP)"
+
+.PP
+Definition at line 195 of file s2n_random\&.c\&.
+.PP
+.nf
+196 {
+197     GUARD(s2n_mem_init());
+198 
+199   OPEN:
+200     entropy_fd = open(ENTROPY_SOURCE, O_RDONLY);
+201     if (entropy_fd == -1) {
+202         if (errno == EINTR) {
+203             goto OPEN;
+204         }
+205         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+206     }
+207 #if defined(MAP_INHERIT_ZERO)
+208     zero_if_forked_ptr = mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+209     if (zero_if_forked_ptr == MAP_FAILED) {
+210         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+211     }
+212 
+213     if (minherit(zero_if_forked_ptr, sizeof(int), MAP_INHERIT_ZERO) == -1) {
+214         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+215     }
+216 #else
+217 
+218     if (pthread_atfork(NULL, NULL, s2n_on_fork) != 0) {
+219         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+220     }
+221 #endif
+222 
+223     GUARD(s2n_defend_if_forked());
+224 
+225 #if !defined(OPENSSL_IS_BORINGSSL) && !defined(OPENSSL_FIPS) && !defined(LIBRESSL_VERSION_NUMBER)
+226     /* Create an engine */
+227     ENGINE *e = ENGINE_new();
+228     if (e == NULL ||
+229         ENGINE_set_id(e, "s2n") != 1 ||
+230         ENGINE_set_name(e, "s2n entropy generator") != 1 ||
+231         ENGINE_set_flags(e, ENGINE_FLAGS_NO_REGISTER_ALL) != 1 ||
+232         ENGINE_set_init_function(e, s2n_openssl_compat_init) != 1 || ENGINE_set_RAND(e, &s2n_openssl_rand_method) != 1 || ENGINE_add(e) != 1 || ENGINE_free(e) != 1) {
+233         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+234     }
+235 
+236     /* Use that engine for rand() */
+237     e = ENGINE_by_id("s2n");
+238     if (e == NULL || ENGINE_init(e) != 1 || ENGINE_set_default(e, ENGINE_METHOD_RAND) != 1) {
+239         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+240     }
+241 #endif
+242 
+243     return 0;
+244 }
+.fi
+.SS "int s2n_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 246 of file s2n_random\&.c\&.
+.PP
+.nf
+247 {
+248     if (entropy_fd == -1) {
+249         S2N_ERROR(S2N_ERR_NOT_INITIALIZED);
+250     }
+251 
+252     GUARD(s2n_drbg_wipe(&per_thread_private_drbg));
+253     GUARD(s2n_drbg_wipe(&per_thread_public_drbg));
+254     GUARD(close(entropy_fd));
+255     entropy_fd = -1;
+256 
+257     return 0;
+258 }
+.fi
+.SS "struct \fBs2n_config\fP* s2n_config_new (\fBvoid\fP)"
+
+.PP
+Definition at line 217 of file s2n_config\&.c\&.
+.PP
+.nf
+218 {
+219     struct s2n_blob allocator;
+220     struct s2n_config *new_config;
+221 
+222     GUARD_PTR(s2n_alloc(&allocator, sizeof(struct s2n_config)));
+223 
+224     new_config = (struct s2n_config *)(void *)allocator\&.data;
+225     new_config->cert_and_key_pairs = NULL;
+226     new_config->dhparams = NULL;
+227     new_config->application_protocols\&.data = NULL;
+228     new_config->application_protocols\&.size = 0;
+229     new_config->status_request_type = S2N_STATUS_REQUEST_NONE;
+230     new_config->nanoseconds_since_epoch = get_nanoseconds_since_epoch;
+231     new_config->cache_store = NULL;
+232     new_config->cache_store_data = NULL;
+233     new_config->cache_retrieve = NULL;
+234     new_config->cache_retrieve_data = NULL;
+235     new_config->cache_delete = NULL;
+236     new_config->cache_delete_data = NULL;
+237 
+238     GUARD_PTR(s2n_config_set_cipher_preferences(new_config, "default"));
+239 
+240     return new_config;
+241 }
+.fi
+.SS "int s2n_config_free (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 288 of file s2n_config\&.c\&.
+.PP
+.nf
+289 {
+290     struct s2n_blob b = {\&.data = (uint8_t *) config,\&.size = sizeof(struct s2n_config) };
+291 
+292     GUARD(s2n_config_free_cert_chain_and_key(config));
+293     GUARD(s2n_config_free_dhparams(config));
+294     GUARD(s2n_free(&config->application_protocols));
+295 
+296     GUARD(s2n_free(&b));
+297     return 0;
+298 }
+.fi
+.SS "int s2n_config_free_dhparams (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 273 of file s2n_config\&.c\&.
+.PP
+.nf
+274 {
+275     struct s2n_blob b = {
+276         \&.data = (uint8_t *) config->dhparams,
+277         \&.size = sizeof(struct s2n_dh_params)
+278     };
+279 
+280     if (config->dhparams) {
+281         GUARD(s2n_dh_params_free(config->dhparams));
+282     }
+283 
+284     GUARD(s2n_free(&b));
+285     return 0;
+286 }
+.fi
+.SS "int s2n_config_free_cert_chain_and_key (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 243 of file s2n_config\&.c\&.
+.PP
+.nf
+244 {
+245     struct s2n_blob b = {
+246         \&.data = (uint8_t *) config->cert_and_key_pairs,
+247         \&.size = sizeof(struct s2n_cert_chain_and_key)
+248     };
+249 
+250     /* If there were cert and key pairs set, walk the chain and free the certs */
+251     if (config->cert_and_key_pairs) {
+252         struct s2n_cert_chain *node = config->cert_and_key_pairs->head;
+253         while (node) {
+254             struct s2n_blob n = {
+255                 \&.data = (uint8_t *) node,
+256                 \&.size = sizeof(struct s2n_cert_chain)
+257             };
+258             /* Free the cert */
+259             GUARD(s2n_free(&node->cert));
+260             /* Advance to next */
+261             node = node->next;
+262             /* Free the node */
+263             GUARD(s2n_free(&n));
+264         }
+265         GUARD(s2n_rsa_private_key_free(&config->cert_and_key_pairs->private_key));
+266         GUARD(s2n_free(&config->cert_and_key_pairs->ocsp_status));
+267     }
+268 
+269     GUARD(s2n_free(&b));
+270     return 0;
+271 }
+.fi
+.SS "int s2n_config_set_nanoseconds_since_epoch_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, uint64_t *) nanoseconds_since_epoch, \fBvoid\fP * data)"
+
+.PP
+Definition at line 455 of file s2n_config\&.c\&.
+.PP
+.nf
+456 {
+457     notnull_check(nanoseconds_since_epoch);
+458 
+459     config->nanoseconds_since_epoch = nanoseconds_since_epoch;
+460     config->data_for_nanoseconds_since_epoch = data;
+461 
+462     return 0;
+463 }
+.fi
+.SS "const char* s2n_strerror (int error, const char * lang)"
+
+.PP
+Definition at line 110 of file s2n_errno\&.c\&.
+.PP
+.nf
+111 {
+112     const char *no_such_language = "Language is not supported for error translation";
+113     const char *no_such_error = "Internal s2n error";
+114 
+115     if (lang == NULL) {
+116         lang = "EN";
+117     }
+118 
+119     if (strcasecmp(lang, "EN")) {
+120         return no_such_language;
+121     }
+122 
+123     for (int i = 0; i < (sizeof(EN) / sizeof(struct s2n_error_translation)); i++) {
+124         if (EN[i]\&.errno_value == error) {
+125             return EN[i]\&.str;
+126         }
+127     }
+128 
+129     return no_such_error;
+130 }
+.fi
+.SS "int s2n_config_set_cache_store_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, uint64_t ttl_in_seconds, const \fBvoid\fP *key, uint64_t key_size, const \fBvoid\fP *value, uint64_t value_size) cache_store, \fBvoid\fP * data)"
+
+.PP
+Definition at line 465 of file s2n_config\&.c\&.
+.PP
+.nf
+468 {
+469     notnull_check(cache_store);
+470 
+471     config->cache_store = cache_store;
+472     config->cache_store_data = data;
+473 
+474     return 0;
+475 }
+.fi
+.SS "int s2n_config_set_cache_retrieve_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size, \fBvoid\fP *value, uint64_t *value_size) cache_retrieve, \fBvoid\fP * data)"
+
+.PP
+Definition at line 477 of file s2n_config\&.c\&.
+.PP
+.nf
+479 {
+480     notnull_check(cache_retrieve);
+481 
+482     config->cache_retrieve = cache_retrieve;
+483     config->cache_retrieve_data = data;
+484 
+485     return 0;
+486 }
+.fi
+.SS "int s2n_config_set_cache_delete_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size) cache_delete, \fBvoid\fP * data)"
+
+.PP
+Definition at line 488 of file s2n_config\&.c\&.
+.PP
+.nf
+489 {
+490     notnull_check(cache_delete);
+491 
+492     config->cache_delete = cache_delete;
+493     config->cache_delete_data = data;
+494 
+495     return 0;
+496 }
+.fi
+.SS "int s2n_config_add_cert_chain_and_key (struct \fBs2n_config\fP * config, char * cert_chain_pem, char * private_key_pem)"
+
+.PP
+Definition at line 419 of file s2n_config\&.c\&.
+.PP
+.nf
+420 {
+421     GUARD(s2n_config_add_cert_chain_and_key_with_status(config, cert_chain_pem, private_key_pem, NULL, 0));
+422 
+423     return 0;
+424 }
+.fi
+.SS "int s2n_config_add_cert_chain_and_key_with_status (struct \fBs2n_config\fP * config, char * cert_chain_pem, char * private_key_pem, const uint8_t * status, uint32_t length)"
+
+.PP
+Definition at line 352 of file s2n_config\&.c\&.
+.PP
+.nf
+353 {
+354     struct s2n_stuffer chain_in_stuffer, cert_out_stuffer, key_in_stuffer, key_out_stuffer;
+355     struct s2n_blob key_blob;
+356     struct s2n_blob mem;
+357 
+358     /* Allocate the memory for the chain and key struct */
+359     GUARD(s2n_alloc(&mem, sizeof(struct s2n_cert_chain_and_key)));
+360     config->cert_and_key_pairs = (struct s2n_cert_chain_and_key *)(void *)mem\&.data;
+361     config->cert_and_key_pairs->ocsp_status\&.data = NULL;
+362     config->cert_and_key_pairs->ocsp_status\&.size = 0;
+363 
+364     /* Put the private key pem in a stuffer */
+365     GUARD(s2n_stuffer_alloc_ro_from_string(&key_in_stuffer, private_key_pem));
+366     GUARD(s2n_stuffer_growable_alloc(&key_out_stuffer, strlen(private_key_pem)));
+367 
+368     /* Convert pem to asn1 and asn1 to the private key */
+369     GUARD(s2n_stuffer_rsa_private_key_from_pem(&key_in_stuffer, &key_out_stuffer));
+370     GUARD(s2n_stuffer_free(&key_in_stuffer));
+371     key_blob\&.size = s2n_stuffer_data_available(&key_out_stuffer);
+372     key_blob\&.data = s2n_stuffer_raw_read(&key_out_stuffer, key_blob\&.size);
+373     notnull_check(key_blob\&.data);
+374     GUARD(s2n_asn1der_to_rsa_private_key(&config->cert_and_key_pairs->private_key, &key_blob));
+375     GUARD(s2n_stuffer_free(&key_out_stuffer));
+376 
+377     /* Turn the chain into a stuffer */
+378     GUARD(s2n_stuffer_alloc_ro_from_string(&chain_in_stuffer, cert_chain_pem));
+379     GUARD(s2n_stuffer_growable_alloc(&cert_out_stuffer, 2048));
+380 
+381     struct s2n_cert_chain **insert = &config->cert_and_key_pairs->head;
+382     uint32_t chain_size = 0;
+383     do {
+384         struct s2n_cert_chain *new_node;
+385 
+386         if (s2n_stuffer_certificate_from_pem(&chain_in_stuffer, &cert_out_stuffer) < 0) {
+387             if (chain_size == 0) {
+388                 S2N_ERROR(S2N_ERR_NO_CERTIFICATE_IN_PEM);
+389             }
+390             break;
+391         }
+392 
+393         GUARD(s2n_alloc(&mem, sizeof(struct s2n_cert_chain)));
+394         new_node = (struct s2n_cert_chain *)(void *)mem\&.data;
+395 
+396         GUARD(s2n_alloc(&new_node->cert, s2n_stuffer_data_available(&cert_out_stuffer)));
+397         GUARD(s2n_stuffer_read(&cert_out_stuffer, &new_node->cert));
+398 
+399         /* Additional 3 bytes for the length field in the protocol */
+400         chain_size += new_node->cert\&.size + 3;
+401         new_node->next = NULL;
+402         *insert = new_node;
+403         insert = &new_node->next;
+404     } while (s2n_stuffer_data_available(&chain_in_stuffer));
+405 
+406     GUARD(s2n_stuffer_free(&chain_in_stuffer));
+407     GUARD(s2n_stuffer_free(&cert_out_stuffer));
+408 
+409     config->cert_and_key_pairs->chain_size = chain_size;
+410 
+411     if (status && length > 0) {
+412         GUARD(s2n_alloc(&config->cert_and_key_pairs->ocsp_status, length));
+413         memcpy_check(config->cert_and_key_pairs->ocsp_status\&.data, status, length);
+414     }
+415 
+416     return 0;
+417 }
+.fi
+.SS "int s2n_config_add_dhparams (struct \fBs2n_config\fP * config, char * dhparams_pem)"
+
+.PP
+Definition at line 426 of file s2n_config\&.c\&.
+.PP
+.nf
+427 {
+428     struct s2n_stuffer dhparams_in_stuffer, dhparams_out_stuffer;
+429     struct s2n_blob dhparams_blob;
+430     struct s2n_blob mem;
+431 
+432     /* Allocate the memory for the chain and key struct */
+433     GUARD(s2n_alloc(&mem, sizeof(struct s2n_dh_params)));
+434     config->dhparams = (struct s2n_dh_params *)(void *)mem\&.data;
+435 
+436     GUARD(s2n_stuffer_alloc_ro_from_string(&dhparams_in_stuffer, dhparams_pem));
+437     GUARD(s2n_stuffer_growable_alloc(&dhparams_out_stuffer, strlen(dhparams_pem)));
+438 
+439     /* Convert pem to asn1 and asn1 to the private key */
+440     GUARD(s2n_stuffer_dhparams_from_pem(&dhparams_in_stuffer, &dhparams_out_stuffer));
+441 
+442     GUARD(s2n_stuffer_free(&dhparams_in_stuffer));
+443 
+444     dhparams_blob\&.size = s2n_stuffer_data_available(&dhparams_out_stuffer);
+445     dhparams_blob\&.data = s2n_stuffer_raw_read(&dhparams_out_stuffer, dhparams_blob\&.size);
+446     notnull_check(dhparams_blob\&.data);
+447 
+448     GUARD(s2n_pkcs3_to_dh_params(config->dhparams, &dhparams_blob));
+449 
+450     GUARD(s2n_free(&dhparams_blob));
+451 
+452     return 0;
+453 }
+.fi
+.SS "int s2n_config_set_cipher_preferences (struct \fBs2n_config\fP * config, const char * version)"
+
+.PP
+Definition at line 300 of file s2n_config\&.c\&.
+.PP
+.nf
+301 {
+302     for (int i = 0; selection[i]\&.version != NULL; i++) {
+303         if (!strcasecmp(version, selection[i]\&.version)) {
+304             config->cipher_preferences = selection[i]\&.preferences;
+305             return 0;
+306         }
+307     }
+308 
+309     S2N_ERROR(S2N_ERR_INVALID_CIPHER_PREFERENCES);
+310 }
+.fi
+.SS "int s2n_config_set_protocol_preferences (struct \fBs2n_config\fP * config, const char *const * protocols, int protocol_count)"
+
+.PP
+Definition at line 312 of file s2n_config\&.c\&.
+.PP
+.nf
+313 {
+314     struct s2n_stuffer protocol_stuffer;
+315 
+316     GUARD(s2n_free(&config->application_protocols));
+317 
+318     if (protocols == NULL || protocol_count == 0) {
+319         /* NULL value indicates no prference, so nothing to do */
+320         return 0;
+321     }
+322 
+323     GUARD(s2n_stuffer_growable_alloc(&protocol_stuffer, 256));
+324     for (int i = 0; i < protocol_count; i++) {
+325         size_t length = strlen(protocols[i]);
+326         uint8_t protocol[255];
+327 
+328         if (length > 255 || (s2n_stuffer_data_available(&protocol_stuffer) + length + 1) > 65535) {
+329             return S2N_ERR_APPLICATION_PROTOCOL_TOO_LONG;
+330         }
+331         memcpy_check(protocol, protocols[i], length);
+332         GUARD(s2n_stuffer_write_uint8(&protocol_stuffer, length));
+333         GUARD(s2n_stuffer_write_bytes(&protocol_stuffer, protocol, length));
+334     }
+335 
+336     uint32_t size = s2n_stuffer_data_available(&protocol_stuffer);
+337     /* config->application_protocols blob now owns this data */
+338     config->application_protocols\&.size = size;
+339     config->application_protocols\&.data = s2n_stuffer_raw_read(&protocol_stuffer, size);
+340     notnull_check(config->application_protocols\&.data);
+341 
+342     return 0;
+343 }
+.fi
+.SS "int s2n_config_set_status_request_type (struct \fBs2n_config\fP * config, \fBs2n_status_request_type\fP type)"
+
+.PP
+Definition at line 345 of file s2n_config\&.c\&.
+.PP
+.nf
+346 {
+347     config->status_request_type = type;
+348 
+349     return 0;
+350 }
+.fi
+.SS "struct \fBs2n_connection\fP* s2n_connection_new (\fBs2n_mode\fP mode)"
+
+.PP
+Definition at line 45 of file s2n_connection\&.c\&.
+.PP
+.nf
+46 {
+47     struct s2n_blob blob;
+48     struct s2n_connection *conn;
+49 
+50     GUARD_PTR(s2n_alloc(&blob, sizeof(struct s2n_connection)));
+51 
+52     GUARD_PTR(s2n_blob_zero(&blob));
+53 
+54     if (mode == S2N_CLIENT) {
+55         /* At present s2n is not suitable for use in client mode, as it
+56          * does not perform any certificate validation\&. However it is useful
+57          * to use S2N in client mode for testing purposes\&. An environment
+58          * variable is required to be set for the client mode to work\&.
+59          */
+60         if (getenv("S2N_ENABLE_CLIENT_MODE") == NULL) {
+61             GUARD_PTR(s2n_free(&blob));
+62             S2N_ERROR_PTR(S2N_ERR_CLIENT_MODE_DISABLED);
+63         }
+64     }
+65 
+66     /* Cast 'through' void to acknowledge that we are changing alignment,
+67      * which is ok, as blob\&.data is always aligned\&.
+68      */
+69     conn = (struct s2n_connection *)(void *)blob\&.data;
+70     conn->mode = mode;
+71     conn->blinding = S2N_BUILT_IN_BLINDING;
+72     conn->config = &s2n_default_config;
+73     conn->close_notify_queued = 0;
+74     conn->session_id_len = 0;
+75 
+76     /* Allocate the fixed-size stuffers */
+77     blob\&.data = conn->alert_in_data;
+78     blob\&.size = S2N_ALERT_LENGTH;
+79 
+80     GUARD_PTR(s2n_stuffer_init(&conn->alert_in, &blob));
+81 
+82     blob\&.data = conn->reader_alert_out_data;
+83     blob\&.size = S2N_ALERT_LENGTH;
+84 
+85     GUARD_PTR(s2n_stuffer_init(&conn->reader_alert_out, &blob));
+86 
+87     blob\&.data = conn->writer_alert_out_data;
+88     blob\&.size = S2N_ALERT_LENGTH;
+89 
+90     GUARD_PTR(s2n_stuffer_init(&conn->writer_alert_out, &blob));
+91     GUARD_PTR(s2n_stuffer_alloc(&conn->out, S2N_LARGE_RECORD_LENGTH));
+92 
+93     /* Initialize the growable stuffers\&. Zero length at first, but the resize
+94      * in _wipe will fix that 
+95      */
+96     blob\&.data = conn->header_in_data;
+97     blob\&.size = S2N_TLS_RECORD_HEADER_LENGTH;
+98 
+99     GUARD_PTR(s2n_stuffer_init(&conn->header_in, &blob));
+100     GUARD_PTR(s2n_stuffer_growable_alloc(&conn->in, 0));
+101     GUARD_PTR(s2n_stuffer_growable_alloc(&conn->handshake\&.io, 0));
+102     GUARD_PTR(s2n_connection_wipe(conn));
+103     GUARD_PTR(s2n_timer_start(conn->config, &conn->write_timer));
+104 
+105     return conn;
+106 }
+.fi
+.SS "int s2n_connection_set_config (struct \fBs2n_connection\fP * conn, struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 146 of file s2n_connection\&.c\&.
+.PP
+.nf
+147 {
+148     conn->config = config;
+149     return 0;
+150 }
+.fi
+.SS "int s2n_connection_set_fd (struct \fBs2n_connection\fP * conn, int readfd)"
+
+.PP
+Definition at line 251 of file s2n_connection\&.c\&.
+.PP
+.nf
+252 {
+253     GUARD(s2n_connection_set_read_fd(conn, fd));
+254     GUARD(s2n_connection_set_write_fd(conn, fd));
+255     return 0;
+256 }
+.fi
+.SS "int s2n_connection_set_read_fd (struct \fBs2n_connection\fP * conn, int readfd)"
+
+.PP
+Definition at line 239 of file s2n_connection\&.c\&.
+.PP
+.nf
+240 {
+241     conn->readfd = rfd;
+242     return 0;
+243 }
+.fi
+.SS "int s2n_connection_set_write_fd (struct \fBs2n_connection\fP * conn, int readfd)"
+
+.PP
+Definition at line 245 of file s2n_connection\&.c\&.
+.PP
+.nf
+246 {
+247     conn->writefd = wfd;
+248     return 0;
+249 }
+.fi
+.SS "int s2n_connection_prefer_throughput (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 401 of file s2n_connection\&.c\&.
+.PP
+.nf
+402 {
+403     conn->max_fragment_length = S2N_LARGE_FRAGMENT_LENGTH;
+404 
+405     return 0;
+406 }
+.fi
+.SS "int s2n_connection_prefer_low_latency (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 408 of file s2n_connection\&.c\&.
+.PP
+.nf
+409 {
+410     conn->max_fragment_length = S2N_SMALL_FRAGMENT_LENGTH;
+411 
+412     return 0;
+413 }
+.fi
+.SS "int s2n_connection_set_blinding (struct \fBs2n_connection\fP * conn, \fBs2n_blinding\fP blinding)"
+
+.PP
+Definition at line 340 of file s2n_connection\&.c\&.
+.PP
+.nf
+341 {
+342     conn->blinding = blinding;
+343     return 0;
+344 }
+.fi
+.SS "int64_t s2n_connection_get_delay (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 349 of file s2n_connection\&.c\&.
+.PP
+.nf
+350 {
+351     if (!conn->delay) {
+352         return 0;
+353     }
+354 
+355     uint64_t elapsed;
+356     GUARD(s2n_timer_elapsed(conn->config, &conn->write_timer, &elapsed));
+357 
+358     if (elapsed > conn->delay) {
+359         return 0;
+360     }
+361 
+362     return conn->delay - elapsed;
+363 }
+.fi
+.SS "int s2n_set_server_name (struct \fBs2n_connection\fP * conn, const char * server_name)"
+
+.PP
+Definition at line 306 of file s2n_connection\&.c\&.
+.PP
+.nf
+307 {
+308     if (conn->mode != S2N_CLIENT) {
+309         S2N_ERROR(S2N_ERR_CLIENT_MODE);
+310     }
+311 
+312     int len = strlen(server_name);
+313     if (len > 255) {
+314         S2N_ERROR(S2N_ERR_SERVER_NAME_TOO_LONG);
+315     }
+316 
+317     memcpy_check(conn->server_name, server_name, len);
+318 
+319     return 0;
+320 }
+.fi
+.SS "const char* s2n_get_server_name (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 322 of file s2n_connection\&.c\&.
+.PP
+.nf
+323 {
+324     if (strlen(conn->server_name) == 0) {
+325         return NULL;
+326     }
+327 
+328     return conn->server_name;
+329 }
+.fi
+.SS "const char* s2n_get_application_protocol (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 331 of file s2n_connection\&.c\&.
+.PP
+.nf
+332 {
+333     if (strlen(conn->application_protocol) == 0) {
+334         return NULL;
+335     }
+336 
+337     return conn->application_protocol;
+338 }
+.fi
+.SS "const uint8_t* s2n_connection_get_ocsp_response (struct \fBs2n_connection\fP * conn, uint32_t * length)"
+
+.PP
+Definition at line 391 of file s2n_connection\&.c\&.
+.PP
+.nf
+392 {
+393     if (!length) {
+394         return NULL;
+395     }
+396 
+397     *length = conn->status_response\&.size;
+398     return conn->status_response\&.data;
+399 }
+.fi
+.SS "int s2n_negotiate (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 395 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+396 {
+397     char this = 'S';
+398     if (conn->mode == S2N_CLIENT) {
+399         this = 'C';
+400     }
+401 
+402     while (ACTIVE_STATE(conn)\&.writer != 'B') {
+403 
+404         /* Flush any pending I/O or alert messages */
+405         GUARD(s2n_flush(conn, blocked));
+406 
+407         if (ACTIVE_STATE(conn)\&.writer == this) {
+408             *blocked = S2N_BLOCKED_ON_WRITE;
+409             GUARD(handshake_write_io(conn));
+410         } else {
+411             *blocked = S2N_BLOCKED_ON_READ;
+412             if (handshake_read_io(conn) < 0) {
+413                 if (s2n_errno != S2N_ERR_BLOCKED && s2n_is_caching_enabled(conn->config) && conn->session_id_len) {
+414                     conn->config->cache_delete(conn->config->cache_delete_data, conn->session_id, conn->session_id_len);
+415                 }
+416 
+417                 return -1;
+418             }
+419         }
+420 
+421         /* If the handshake has just ended, free up memory */
+422         if (ACTIVE_STATE(conn)\&.writer == 'B') {
+423             GUARD(s2n_stuffer_resize(&conn->handshake\&.io, 0));
+424         }
+425     }
+426 
+427     *blocked = S2N_NOT_BLOCKED;
+428 
+429     return 0;
+430 }
+.fi
+.SS "ssize_t s2n_send (struct \fBs2n_connection\fP * conn, \fBvoid\fP * buf, ssize_t size, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 92 of file s2n_send\&.c\&.
+.PP
+.nf
+93 {
+94     struct s2n_blob in = {\&.data = buf };
+95     ssize_t bytes_written = 0;
+96     int max_payload_size;
+97     int w;
+98 
+99     if (conn->closed) {
+100         S2N_ERROR(S2N_ERR_CLOSED);
+101     }
+102 
+103     /* Flush any pending I/O */
+104     GUARD(s2n_flush(conn, blocked));
+105 
+106     *blocked = S2N_BLOCKED_ON_WRITE;
+107 
+108     GUARD((max_payload_size = s2n_record_max_write_payload_size(conn)));
+109 
+110     /* TLS 1\&.0 and SSLv3 are vulnerable to the so-called Beast attack\&. Work
+111      * around this by splitting messages into one byte records, and then
+112      * the remainder can follow as usual\&.
+113      */
+114     int cbcHackUsed = 0;
+115 
+116     struct s2n_crypto_parameters *writer = conn->server;
+117     if (conn->mode == S2N_CLIENT) {
+118         writer = conn->client;
+119     }
+120 
+121     /* Now write the data we were asked to send this round */
+122     while (size) {
+123         in\&.size = MIN(size, max_payload_size);
+124 
+125         /* Don't split messages in server mode for interoperability with naive clients\&.
+126          * Some clients may have expectations based on the amount of content in the first record\&.
+127          */
+128         if (conn->actual_protocol_version < S2N_TLS11 && writer->cipher_suite->cipher->type == S2N_CBC && conn->mode != S2N_SERVER) {
+129             if (in\&.size > 1 && cbcHackUsed == 0) {
+130                 in\&.size = 1;
+131                 cbcHackUsed = 1;
+132             }
+133         }
+134 
+135         /* Write and encrypt the record */
+136         GUARD(s2n_stuffer_rewrite(&conn->out));
+137         GUARD(s2n_record_write(conn, TLS_APPLICATION_DATA, &in));
+138 
+139         bytes_written += in\&.size;
+140 
+141         /* Send it */
+142         while (s2n_stuffer_data_available(&conn->out)) {
+143             errno = 0;
+144             w = s2n_stuffer_send_to_fd(&conn->out, conn->writefd, s2n_stuffer_data_available(&conn->out));
+145             if (w < 0) {
+146                 if (errno == EWOULDBLOCK) {
+147                     if (bytes_written) {
+148                         return bytes_written;
+149                     }
+150                     S2N_ERROR(S2N_ERR_BLOCKED);
+151                 }
+152                 S2N_ERROR(S2N_ERR_IO);
+153             }
+154             conn->wire_bytes_out += w;
+155         }
+156 
+157         in\&.data += in\&.size;
+158         size -= in\&.size;
+159     }
+160 
+161     *blocked = S2N_NOT_BLOCKED;
+162 
+163     return bytes_written;
+164 }
+.fi
+.SS "ssize_t s2n_recv (struct \fBs2n_connection\fP * conn, \fBvoid\fP * buf, ssize_t size, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 113 of file s2n_recv\&.c\&.
+.PP
+.nf
+114 {
+115     ssize_t bytes_read = 0;
+116     struct s2n_blob out = {\&.data = (uint8_t *) buf };
+117 
+118     if (conn->closed) {
+119         GUARD(s2n_connection_wipe(conn));
+120         return 0;
+121     }
+122 
+123     *blocked = S2N_BLOCKED_ON_READ;
+124 
+125     while (size && !conn->closed) {
+126         int isSSLv2 = 0;
+127         uint8_t record_type;
+128         int r = s2n_read_full_record(conn, &record_type, &isSSLv2);
+129         if (r < 0) {
+130             if (s2n_errno == S2N_ERR_CLOSED) {
+131                 *blocked = S2N_NOT_BLOCKED;
+132                 if (!bytes_read) {
+133                     GUARD(s2n_connection_wipe(conn));
+134                     return 0;
+135                 } else {
+136                     return bytes_read;
+137                 }
+138             }
+139 
+140             /* Don't propogate the error if we already read some bytes */
+141             if (s2n_errno == S2N_ERR_BLOCKED && bytes_read) {
+142                 s2n_errno = S2N_ERR_OK;
+143                 return bytes_read;
+144             }
+145 
+146             /* If we get here, it's an error condition */
+147             if (s2n_errno != S2N_ERR_BLOCKED && s2n_is_caching_enabled(conn->config) && conn->session_id_len) {
+148                 conn->config->cache_delete(conn->config->cache_delete_data, conn->session_id, conn->session_id_len);
+149             }
+150 
+151             return -1;
+152         }
+153 
+154         if (isSSLv2) {
+155             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+156         }
+157 
+158         if (record_type != TLS_APPLICATION_DATA) {
+159             if (record_type == TLS_ALERT) {
+160                 GUARD(s2n_process_alert_fragment(conn));
+161                 GUARD(s2n_flush(conn, blocked));
+162             }
+163 
+164             GUARD(s2n_stuffer_wipe(&conn->header_in));
+165             GUARD(s2n_stuffer_wipe(&conn->in));
+166             conn->in_status = ENCRYPTED;
+167             continue;
+168         }
+169 
+170         out\&.size = MIN(size, s2n_stuffer_data_available(&conn->in));
+171 
+172         GUARD(s2n_stuffer_erase_and_read(&conn->in, &out));
+173         bytes_read += out\&.size;
+174 
+175         out\&.data += out\&.size;
+176         size -= out\&.size;
+177 
+178         /* Are we ready for more encrypted data? */
+179         if (s2n_stuffer_data_available(&conn->in) == 0) {
+180             GUARD(s2n_stuffer_wipe(&conn->header_in));
+181             GUARD(s2n_stuffer_wipe(&conn->in));
+182             conn->in_status = ENCRYPTED;
+183         }
+184 
+185         /* If we've read some data, return it */
+186         if (bytes_read) {
+187             break;
+188         }
+189     }
+190 
+191     if (s2n_stuffer_data_available(&conn->in) == 0) {
+192         *blocked = S2N_NOT_BLOCKED;
+193     }
+194 
+195     return bytes_read;
+196 }
+.fi
+.SS "int s2n_connection_wipe (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 152 of file s2n_connection\&.c\&.
+.PP
+.nf
+153 {
+154     /* First make a copy of everything we'd like to save, which isn't very
+155      * much\&.
+156      */
+157     int mode = conn->mode;
+158     struct s2n_config *config = conn->config;
+159     struct s2n_stuffer alert_in;
+160     struct s2n_stuffer reader_alert_out;
+161     struct s2n_stuffer writer_alert_out;
+162     struct s2n_stuffer handshake_io;
+163     struct s2n_stuffer header_in;
+164     struct s2n_stuffer in;
+165     struct s2n_stuffer out;
+166 
+167     /* Wipe all of the sensitive stuff */
+168     GUARD(s2n_connection_free_keys(conn));
+169     GUARD(s2n_stuffer_wipe(&conn->alert_in));
+170     GUARD(s2n_stuffer_wipe(&conn->reader_alert_out));
+171     GUARD(s2n_stuffer_wipe(&conn->writer_alert_out));
+172     GUARD(s2n_stuffer_wipe(&conn->handshake\&.io));
+173     GUARD(s2n_stuffer_wipe(&conn->header_in));
+174     GUARD(s2n_stuffer_wipe(&conn->in));
+175     GUARD(s2n_stuffer_wipe(&conn->out));
+176 
+177     /* Allocate or resize to their original sizes */
+178     GUARD(s2n_stuffer_resize(&conn->in, S2N_LARGE_FRAGMENT_LENGTH));
+179 
+180     /* Allocate memory for handling handshakes */
+181     GUARD(s2n_stuffer_resize(&conn->handshake\&.io, S2N_LARGE_RECORD_LENGTH));
+182 
+183     /* Clone the stuffers */
+184     /* ignore gcc 4\&.7 address warnings because dest is allocated on the stack */
+185     /* pragma gcc diagnostic was added in gcc 4\&.6 */
+186 #if defined(__GNUC__) && GCC_VERSION >= 40600
+187 #pragma GCC diagnostic push
+188 #pragma GCC diagnostic ignored "-Waddress"
+189 #endif
+190     memcpy_check(&alert_in, &conn->alert_in, sizeof(struct s2n_stuffer));
+191     memcpy_check(&reader_alert_out, &conn->reader_alert_out, sizeof(struct s2n_stuffer));
+192     memcpy_check(&writer_alert_out, &conn->writer_alert_out, sizeof(struct s2n_stuffer));
+193     memcpy_check(&handshake_io, &conn->handshake\&.io, sizeof(struct s2n_stuffer));
+194     memcpy_check(&header_in, &conn->header_in, sizeof(struct s2n_stuffer));
+195     memcpy_check(&in, &conn->in, sizeof(struct s2n_stuffer));
+196     memcpy_check(&out, &conn->out, sizeof(struct s2n_stuffer));
+197 #if defined(__GNUC__) && GCC_VERSION >= 40600
+198 #pragma GCC diagnostic pop
+199 #endif
+200 
+201     /* Zero the whole connection structure */
+202     memset_check(conn, 0, sizeof(struct s2n_connection));
+203 
+204     conn->readfd = -1;
+205     conn->writefd = -1;
+206     conn->mode = mode;
+207     conn->config = config;
+208     conn->close_notify_queued = 0;
+209     conn->initial\&.cipher_suite = &s2n_null_cipher_suite;
+210     conn->secure\&.cipher_suite = &s2n_null_cipher_suite;
+211     conn->server = &conn->initial;
+212     conn->client = &conn->initial;
+213     conn->max_fragment_length = S2N_SMALL_FRAGMENT_LENGTH;
+214     conn->handshake\&.handshake_type = INITIAL;
+215     conn->handshake\&.message_number = 0;
+216     GUARD(s2n_hash_init(&conn->handshake\&.md5, S2N_HASH_MD5));
+217     GUARD(s2n_hash_init(&conn->handshake\&.sha1, S2N_HASH_SHA1));
+218     GUARD(s2n_hash_init(&conn->handshake\&.sha256, S2N_HASH_SHA256));
+219     GUARD(s2n_hash_init(&conn->handshake\&.sha384, S2N_HASH_SHA384));
+220     GUARD(s2n_hmac_init(&conn->client->client_record_mac, S2N_HMAC_NONE, NULL, 0));
+221     GUARD(s2n_hmac_init(&conn->server->server_record_mac, S2N_HMAC_NONE, NULL, 0));
+222 
+223     memcpy_check(&conn->alert_in, &alert_in, sizeof(struct s2n_stuffer));
+224     memcpy_check(&conn->reader_alert_out, &reader_alert_out, sizeof(struct s2n_stuffer));
+225     memcpy_check(&conn->writer_alert_out, &writer_alert_out, sizeof(struct s2n_stuffer));
+226     memcpy_check(&conn->handshake\&.io, &handshake_io, sizeof(struct s2n_stuffer));
+227     memcpy_check(&conn->header_in, &header_in, sizeof(struct s2n_stuffer));
+228     memcpy_check(&conn->in, &in, sizeof(struct s2n_stuffer));
+229     memcpy_check(&conn->out, &out, sizeof(struct s2n_stuffer));
+230 
+231     /* Set everything to the highest version at first */
+232     conn->server_protocol_version = s2n_highest_protocol_version;
+233     conn->client_protocol_version = s2n_highest_protocol_version;
+234     conn->actual_protocol_version = s2n_highest_protocol_version;
+235 
+236     return 0;
+237 }
+.fi
+.SS "int s2n_connection_free (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 129 of file s2n_connection\&.c\&.
+.PP
+.nf
+130 {
+131     struct s2n_blob blob;
+132 
+133     GUARD(s2n_connection_free_keys(conn));
+134 
+135     GUARD(s2n_stuffer_free(&conn->in));
+136     GUARD(s2n_stuffer_free(&conn->out));
+137     GUARD(s2n_stuffer_free(&conn->handshake\&.io));
+138 
+139     blob\&.data = (uint8_t *) conn;
+140     blob\&.size = sizeof(struct s2n_connection);
+141 
+142     GUARD(s2n_free(&blob));
+143     return 0;
+144 }
+.fi
+.SS "int s2n_shutdown (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 24 of file s2n_shutdown\&.c\&.
+.PP
+.nf
+25 {
+26     notnull_check(conn);
+27     notnull_check(more);
+28 
+29     /* Treat this call as a no-op if already wiped */
+30     if (conn->readfd == -1 && conn->writefd == -1) {
+31         return 0;
+32     }
+33 
+34     uint64_t elapsed;
+35     GUARD(s2n_timer_elapsed(conn->config, &conn->write_timer, &elapsed));
+36     if (elapsed < conn->delay) {
+37         S2N_ERROR(S2N_ERR_SHUTDOWN_PAUSED);
+38     }
+39 
+40     /* Queue our close notify, once\&. Use warning level so clients don't give up */
+41     GUARD(s2n_queue_writer_close_alert_warning(conn));
+42 
+43     /* Write it */
+44     GUARD(s2n_flush(conn, more));
+45 
+46     /* Assume caller isn't interested in pending incoming data */
+47     if (conn->in_status == PLAINTEXT) {
+48         GUARD(s2n_stuffer_wipe(&conn->header_in));
+49         GUARD(s2n_stuffer_wipe(&conn->in));
+50         conn->in_status = ENCRYPTED;
+51     }
+52 
+53     /* Fails with S2N_ERR_SHUTDOWN_RECORD_TYPE or S2N_ERR_ALERT on receipt of anything but a close_notify */
+54     GUARD(s2n_recv_close_notify(conn, more));
+55 
+56     /* Wipe the connection */
+57     GUARD(s2n_connection_wipe(conn));
+58 
+59     return 0;
+60 }
+.fi
+.SS "uint64_t s2n_connection_get_wire_bytes_in (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 258 of file s2n_connection\&.c\&.
+.PP
+.nf
+259 {
+260     return conn->wire_bytes_in;
+261 }
+.fi
+.SS "uint64_t s2n_connection_get_wire_bytes_out (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 263 of file s2n_connection\&.c\&.
+.PP
+.nf
+264 {
+265     return conn->wire_bytes_out;
+266 }
+.fi
+.SS "int s2n_connection_get_client_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 273 of file s2n_connection\&.c\&.
+.PP
+.nf
+274 {
+275     return conn->client_protocol_version;
+276 }
+.fi
+.SS "int s2n_connection_get_server_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 278 of file s2n_connection\&.c\&.
+.PP
+.nf
+279 {
+280     return conn->server_protocol_version;
+281 }
+.fi
+.SS "int s2n_connection_get_actual_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 283 of file s2n_connection\&.c\&.
+.PP
+.nf
+284 {
+285     return conn->actual_protocol_version;
+286 }
+.fi
+.SS "int s2n_connection_get_client_hello_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 288 of file s2n_connection\&.c\&.
+.PP
+.nf
+289 {
+290     return conn->client_hello_version;
+291 }
+.fi
+.SS "const char* s2n_connection_get_cipher (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 268 of file s2n_connection\&.c\&.
+.PP
+.nf
+269 {
+270     return conn->secure\&.cipher_suite->name;
+271 }
+.fi
+.SS "int s2n_connection_get_alert (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 293 of file s2n_connection\&.c\&.
+.PP
+.nf
+294 {
+295     if (s2n_stuffer_data_available(&conn->alert_in) != 2) {
+296         S2N_ERROR(S2N_ERR_NO_ALERT);
+297     }
+298 
+299     uint8_t alert_code = 0;
+300     GUARD(s2n_stuffer_read_uint8(&conn->alert_in, &alert_code));
+301     GUARD(s2n_stuffer_read_uint8(&conn->alert_in, &alert_code));
+302 
+303     return alert_code;
+304 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "__thread int s2n_errno"
+
+.PP
+Definition at line 23 of file s2n_errno\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,645 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/dsa/dsa.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/dsa/dsa.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBDSA_SIG_st\fP"
+.br
+.ti -1c
+.RI "struct \fBdsa_method\fP"
+.br
+.ti -1c
+.RI "struct \fBdsa_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOPENSSL_DSA_MAX_MODULUS_BITS\fP   10000"
+.br
+.ti -1c
+.RI "#define \fBDSA_FLAG_CACHE_MONT_P\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBDSA_FLAG_NO_EXP_CONSTTIME\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBDSA_FLAG_FIPS_METHOD\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBDSA_FLAG_NON_FIPS_ALLOW\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBd2i_DSAparams_fp\fP(\fBfp\fP,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBi2d_DSAparams_fp\fP(\fBfp\fP,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBd2i_DSAparams_bio\fP(\fBbp\fP,  \fBx\fP)   \fBASN1_d2i_bio_of\fP(\fBDSA\fP,\fBDSA_new\fP,\fBd2i_DSAparams\fP,\fBbp\fP,\fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBi2d_DSAparams_bio\fP(\fBbp\fP,  \fBx\fP)   \fBASN1_i2d_bio_of_const\fP(\fBDSA\fP,\fBi2d_DSAparams\fP,\fBbp\fP,\fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBDSS_prime_checks\fP   50"
+.br
+.ti -1c
+.RI "#define \fBDSA_is_prime\fP(n,  callback,  cb_arg)   \fBBN_is_prime\fP(n, \fBDSS_prime_checks\fP, callback, NULL, cb_arg)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dsa_paramgen_bits\fP(ctx,  nbits)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DSA_PARAMGEN_BITS\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 1)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DSA_PARAMGEN_Q_BITS\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 2)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DSA_PARAMGEN_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 3)"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_D2I_DSA_SIG\fP   110"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DO_DSA_PRINT\fP   104"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSAPARAMS_PRINT\fP   100"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSAPARAMS_PRINT_FP\fP   101"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_BUILTIN_PARAMGEN2\fP   126"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_DO_SIGN\fP   112"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_DO_VERIFY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_GENERATE_KEY\fP   124"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_GENERATE_PARAMETERS_EX\fP   123"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_NEW_METHOD\fP   103"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_PARAM_DECODE\fP   119"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_PRINT_FP\fP   105"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_PRIV_DECODE\fP   115"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_PRIV_ENCODE\fP   116"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_PUB_DECODE\fP   117"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_PUB_ENCODE\fP   118"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_SIGN\fP   106"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_SIGN_SETUP\fP   107"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_SIG_NEW\fP   109"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_SIG_PRINT\fP   125"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_DSA_VERIFY\fP   108"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_I2D_DSA_SIG\fP   111"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_OLD_DSA_PRIV_DECODE\fP   122"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_PKEY_DSA_CTRL\fP   120"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_PKEY_DSA_KEYGEN\fP   121"
+.br
+.ti -1c
+.RI "#define \fBDSA_F_SIG_CB\fP   114"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_BAD_Q_VALUE\fP   102"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_BN_DECODE_ERROR\fP   108"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_BN_ERROR\fP   109"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_DATA_TOO_LARGE_FOR_KEY_SIZE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_DECODE_ERROR\fP   104"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_INVALID_DIGEST_TYPE\fP   106"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_INVALID_PARAMETERS\fP   112"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_MISSING_PARAMETERS\fP   101"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_MODULUS_TOO_LARGE\fP   103"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_NEED_NEW_SETUP_VALUES\fP   110"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_NON_FIPS_DSA_METHOD\fP   111"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_NO_PARAMETERS_SET\fP   107"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_PARAMETER_ENCODING_ERROR\fP   105"
+.br
+.ti -1c
+.RI "#define \fBDSA_R_Q_NOT_PRIME\fP   113"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBDSA_SIG_st\fP \fBDSA_SIG\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDSA\fP * \fBDSAparams_dup\fP (\fBDSA\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBDSA_SIG\fP * \fBDSA_SIG_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDSA_SIG_free\fP (\fBDSA_SIG\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSA_SIG\fP (const \fBDSA_SIG\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBDSA_SIG\fP * \fBd2i_DSA_SIG\fP (\fBDSA_SIG\fP **v, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBDSA_SIG\fP * \fBDSA_do_sign\fP (const unsigned char *dgst, int dlen, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBDSA_do_verify\fP (const unsigned char *dgst, int dgst_len, \fBDSA_SIG\fP *sig, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "const \fBDSA_METHOD\fP * \fBDSA_OpenSSL\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDSA_set_default_method\fP (const \fBDSA_METHOD\fP *)"
+.br
+.ti -1c
+.RI "const \fBDSA_METHOD\fP * \fBDSA_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBDSA_set_method\fP (\fBDSA\fP *dsa, const \fBDSA_METHOD\fP *)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBDSA_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBDSA_new_method\fP (\fBENGINE\fP *engine)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDSA_free\fP (\fBDSA\fP *r)"
+.br
+.ti -1c
+.RI "int \fBDSA_up_ref\fP (\fBDSA\fP *r)"
+.br
+.ti -1c
+.RI "int \fBDSA_size\fP (const \fBDSA\fP *)"
+.br
+.ti -1c
+.RI "int \fBDSA_sign_setup\fP (\fBDSA\fP *dsa, \fBBN_CTX\fP *ctx_in, \fBBIGNUM\fP **kinvp, \fBBIGNUM\fP **rp)"
+.br
+.ti -1c
+.RI "int \fBDSA_sign\fP (int \fBtype\fP, const unsigned char *dgst, int dlen, unsigned char *sig, unsigned int *siglen, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBDSA_verify\fP (int \fBtype\fP, const unsigned char *dgst, int dgst_len, const unsigned char *sigbuf, int siglen, \fBDSA\fP *dsa)"
+.br
+.ti -1c
+.RI "int \fBDSA_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBDSA_set_ex_data\fP (\fBDSA\fP *d, int idx, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBDSA_get_ex_data\fP (\fBDSA\fP *d, int idx)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAPublicKey\fP (\fBDSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAPrivateKey\fP (\fBDSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBd2i_DSAparams\fP (\fBDSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBDSA_generate_parameters\fP (int \fBbits\fP, unsigned char *seed, int seed_len, int *counter_ret, unsigned long *h_ret, \fBvoid\fP(*callback)(int, int, \fBvoid\fP *), \fBvoid\fP *cb_arg)"
+.br
+.ti -1c
+.RI "int \fBDSA_generate_parameters_ex\fP (\fBDSA\fP *dsa, int \fBbits\fP, const unsigned char *seed, int seed_len, int *counter_ret, unsigned long *h_ret, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBDSA_generate_key\fP (\fBDSA\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAPublicKey\fP (const \fBDSA\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAPrivateKey\fP (const \fBDSA\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DSAparams\fP (const \fBDSA\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "int \fBDSAparams_print\fP (\fBBIO\fP *\fBbp\fP, const \fBDSA\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBDSA_print\fP (\fBBIO\fP *\fBbp\fP, const \fBDSA\fP *\fBx\fP, int off)"
+.br
+.ti -1c
+.RI "int \fBDSAparams_print_fp\fP (FILE *\fBfp\fP, const \fBDSA\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBDSA_print_fp\fP (FILE *\fBbp\fP, const \fBDSA\fP *\fBx\fP, int off)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDSA_dup_DH\fP (const \fBDSA\fP *r)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_DSA_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define OPENSSL_DSA_MAX_MODULUS_BITS   10000"
+
+.PP
+Definition at line 88 of file dsa\&.h\&.
+.SS "#define DSA_FLAG_CACHE_MONT_P   0x01"
+
+.PP
+Definition at line 91 of file dsa\&.h\&.
+.SS "#define DSA_FLAG_NO_EXP_CONSTTIME   0x02"
+
+.PP
+Definition at line 97 of file dsa\&.h\&.
+.SS "#define DSA_FLAG_FIPS_METHOD   0x0400"
+
+.PP
+Definition at line 106 of file dsa\&.h\&.
+.SS "#define DSA_FLAG_NON_FIPS_ALLOW   0x0400"
+
+.PP
+Definition at line 114 of file dsa\&.h\&.
+.SS "#define d2i_DSAparams_fp(\fBfp\fP, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+(DSA *)ASN1_d2i_fp((char *(*)())DSA_new, \
+                (char *(*)())d2i_DSAparams,(fp),(unsigned char **)(x))
+.fi
+.PP
+Definition at line 180 of file dsa\&.h\&.
+.SS "#define i2d_DSAparams_fp(\fBfp\fP, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_i2d_fp(i2d_DSAparams,(fp), \
+                (unsigned char *)(x))
+.fi
+.PP
+Definition at line 182 of file dsa\&.h\&.
+.SS "#define d2i_DSAparams_bio(\fBbp\fP, \fBx\fP)   \fBASN1_d2i_bio_of\fP(\fBDSA\fP,\fBDSA_new\fP,\fBd2i_DSAparams\fP,\fBbp\fP,\fBx\fP)"
+
+.PP
+Definition at line 184 of file dsa\&.h\&.
+.SS "#define i2d_DSAparams_bio(\fBbp\fP, \fBx\fP)   \fBASN1_i2d_bio_of_const\fP(\fBDSA\fP,\fBi2d_DSAparams\fP,\fBbp\fP,\fBx\fP)"
+
+.PP
+Definition at line 185 of file dsa\&.h\&.
+.SS "#define DSS_prime_checks   50"
+
+.PP
+Definition at line 252 of file dsa\&.h\&.
+.SS "#define DSA_is_prime(n, callback, cb_arg)   \fBBN_is_prime\fP(n, \fBDSS_prime_checks\fP, callback, NULL, cb_arg)"
+
+.PP
+Definition at line 257 of file dsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dsa_paramgen_bits(ctx, nbits)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DSA, EVP_PKEY_OP_PARAMGEN, \
+                                EVP_PKEY_CTRL_DSA_PARAMGEN_BITS, nbits, NULL)
+.fi
+.PP
+Definition at line 268 of file dsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DSA_PARAMGEN_BITS   (\fBEVP_PKEY_ALG_CTRL\fP + 1)"
+
+.PP
+Definition at line 272 of file dsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DSA_PARAMGEN_Q_BITS   (\fBEVP_PKEY_ALG_CTRL\fP + 2)"
+
+.PP
+Definition at line 273 of file dsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DSA_PARAMGEN_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 3)"
+
+.PP
+Definition at line 274 of file dsa\&.h\&.
+.SS "#define DSA_F_D2I_DSA_SIG   110"
+
+.PP
+Definition at line 286 of file dsa\&.h\&.
+.SS "#define DSA_F_DO_DSA_PRINT   104"
+
+.PP
+Definition at line 287 of file dsa\&.h\&.
+.SS "#define DSA_F_DSAPARAMS_PRINT   100"
+
+.PP
+Definition at line 288 of file dsa\&.h\&.
+.SS "#define DSA_F_DSAPARAMS_PRINT_FP   101"
+
+.PP
+Definition at line 289 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_BUILTIN_PARAMGEN2   126"
+
+.PP
+Definition at line 290 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_DO_SIGN   112"
+
+.PP
+Definition at line 291 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_DO_VERIFY   113"
+
+.PP
+Definition at line 292 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_GENERATE_KEY   124"
+
+.PP
+Definition at line 293 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_GENERATE_PARAMETERS_EX   123"
+
+.PP
+Definition at line 294 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_NEW_METHOD   103"
+
+.PP
+Definition at line 295 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_PARAM_DECODE   119"
+
+.PP
+Definition at line 296 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_PRINT_FP   105"
+
+.PP
+Definition at line 297 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_PRIV_DECODE   115"
+
+.PP
+Definition at line 298 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_PRIV_ENCODE   116"
+
+.PP
+Definition at line 299 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_PUB_DECODE   117"
+
+.PP
+Definition at line 300 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_PUB_ENCODE   118"
+
+.PP
+Definition at line 301 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_SIGN   106"
+
+.PP
+Definition at line 302 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_SIGN_SETUP   107"
+
+.PP
+Definition at line 303 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_SIG_NEW   109"
+
+.PP
+Definition at line 304 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_SIG_PRINT   125"
+
+.PP
+Definition at line 305 of file dsa\&.h\&.
+.SS "#define DSA_F_DSA_VERIFY   108"
+
+.PP
+Definition at line 306 of file dsa\&.h\&.
+.SS "#define DSA_F_I2D_DSA_SIG   111"
+
+.PP
+Definition at line 307 of file dsa\&.h\&.
+.SS "#define DSA_F_OLD_DSA_PRIV_DECODE   122"
+
+.PP
+Definition at line 308 of file dsa\&.h\&.
+.SS "#define DSA_F_PKEY_DSA_CTRL   120"
+
+.PP
+Definition at line 309 of file dsa\&.h\&.
+.SS "#define DSA_F_PKEY_DSA_KEYGEN   121"
+
+.PP
+Definition at line 310 of file dsa\&.h\&.
+.SS "#define DSA_F_SIG_CB   114"
+
+.PP
+Definition at line 311 of file dsa\&.h\&.
+.SS "#define DSA_R_BAD_Q_VALUE   102"
+
+.PP
+Definition at line 314 of file dsa\&.h\&.
+.SS "#define DSA_R_BN_DECODE_ERROR   108"
+
+.PP
+Definition at line 315 of file dsa\&.h\&.
+.SS "#define DSA_R_BN_ERROR   109"
+
+.PP
+Definition at line 316 of file dsa\&.h\&.
+.SS "#define DSA_R_DATA_TOO_LARGE_FOR_KEY_SIZE   100"
+
+.PP
+Definition at line 317 of file dsa\&.h\&.
+.SS "#define DSA_R_DECODE_ERROR   104"
+
+.PP
+Definition at line 318 of file dsa\&.h\&.
+.SS "#define DSA_R_INVALID_DIGEST_TYPE   106"
+
+.PP
+Definition at line 319 of file dsa\&.h\&.
+.SS "#define DSA_R_INVALID_PARAMETERS   112"
+
+.PP
+Definition at line 320 of file dsa\&.h\&.
+.SS "#define DSA_R_MISSING_PARAMETERS   101"
+
+.PP
+Definition at line 321 of file dsa\&.h\&.
+.SS "#define DSA_R_MODULUS_TOO_LARGE   103"
+
+.PP
+Definition at line 322 of file dsa\&.h\&.
+.SS "#define DSA_R_NEED_NEW_SETUP_VALUES   110"
+
+.PP
+Definition at line 323 of file dsa\&.h\&.
+.SS "#define DSA_R_NON_FIPS_DSA_METHOD   111"
+
+.PP
+Definition at line 324 of file dsa\&.h\&.
+.SS "#define DSA_R_NO_PARAMETERS_SET   107"
+
+.PP
+Definition at line 325 of file dsa\&.h\&.
+.SS "#define DSA_R_PARAMETER_ENCODING_ERROR   105"
+
+.PP
+Definition at line 326 of file dsa\&.h\&.
+.SS "#define DSA_R_Q_NOT_PRIME   113"
+
+.PP
+Definition at line 327 of file dsa\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBDSA_SIG_st\fP  \fBDSA_SIG\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBDSA\fP* DSAparams_dup (\fBDSA\fP * x)"
+
+.SS "\fBDSA_SIG\fP* DSA_SIG_new (\fBvoid\fP)"
+
+.SS "\fBvoid\fP DSA_SIG_free (\fBDSA_SIG\fP * a)"
+
+.SS "int i2d_DSA_SIG (const \fBDSA_SIG\fP * a, unsigned char ** pp)"
+
+.SS "\fBDSA_SIG\fP* d2i_DSA_SIG (\fBDSA_SIG\fP ** v, const unsigned char ** pp, long length)"
+
+.SS "\fBDSA_SIG\fP* DSA_do_sign (const unsigned char * dgst, int dlen, \fBDSA\fP * dsa)"
+
+.SS "int DSA_do_verify (const unsigned char * dgst, int dgst_len, \fBDSA_SIG\fP * sig, \fBDSA\fP * dsa)"
+
+.SS "const \fBDSA_METHOD\fP* DSA_OpenSSL (\fBvoid\fP)"
+
+.SS "\fBvoid\fP DSA_set_default_method (const \fBDSA_METHOD\fP *)"
+
+.SS "const \fBDSA_METHOD\fP* DSA_get_default_method (\fBvoid\fP)"
+
+.SS "int DSA_set_method (\fBDSA\fP * dsa, const \fBDSA_METHOD\fP *)"
+
+.SS "\fBDSA\fP* DSA_new (\fBvoid\fP)"
+
+.SS "\fBDSA\fP* DSA_new_method (\fBENGINE\fP * engine)"
+
+.SS "\fBvoid\fP DSA_free (\fBDSA\fP * r)"
+
+.SS "int DSA_up_ref (\fBDSA\fP * r)"
+
+.SS "int DSA_size (const \fBDSA\fP *)"
+
+.SS "int DSA_sign_setup (\fBDSA\fP * dsa, \fBBN_CTX\fP * ctx_in, \fBBIGNUM\fP ** kinvp, \fBBIGNUM\fP ** rp)"
+
+.SS "int DSA_sign (int type, const unsigned char * dgst, int dlen, unsigned char * sig, unsigned int * siglen, \fBDSA\fP * dsa)"
+
+.SS "int DSA_verify (int type, const unsigned char * dgst, int dgst_len, const unsigned char * sigbuf, int siglen, \fBDSA\fP * dsa)"
+
+.SS "int DSA_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int DSA_set_ex_data (\fBDSA\fP * d, int idx, \fBvoid\fP * arg)"
+
+.SS "\fBvoid\fP* DSA_get_ex_data (\fBDSA\fP * d, int idx)"
+
+.SS "\fBDSA\fP* d2i_DSAPublicKey (\fBDSA\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBDSA\fP* d2i_DSAPrivateKey (\fBDSA\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBDSA\fP* d2i_DSAparams (\fBDSA\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBDSA\fP* DSA_generate_parameters (int bits, unsigned char * seed, int seed_len, int * counter_ret, unsigned long * h_ret, \fBvoid\fP(*)(int, int, \fBvoid\fP *) callback, \fBvoid\fP * cb_arg)"
+
+.SS "int DSA_generate_parameters_ex (\fBDSA\fP * dsa, int bits, const unsigned char * seed, int seed_len, int * counter_ret, unsigned long * h_ret, \fBBN_GENCB\fP * cb)"
+
+.SS "int DSA_generate_key (\fBDSA\fP * a)"
+
+.SS "int i2d_DSAPublicKey (const \fBDSA\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_DSAPrivateKey (const \fBDSA\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_DSAparams (const \fBDSA\fP * a, unsigned char ** pp)"
+
+.SS "int DSAparams_print (\fBBIO\fP * bp, const \fBDSA\fP * x)"
+
+.SS "int DSA_print (\fBBIO\fP * bp, const \fBDSA\fP * x, int off)"
+
+.SS "int DSAparams_print_fp (FILE * fp, const \fBDSA\fP * x)"
+
+.SS "int DSA_print_fp (FILE * bp, const \fBDSA\fP * x, int off)"
+
+.SS "\fBDH\fP* DSA_dup_DH (const \fBDSA\fP * r)"
+
+.SS "\fBvoid\fP ERR_load_DSA_strings (\fBvoid\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

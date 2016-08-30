@@ -1,0 +1,79 @@
+.TH "CRandomizer" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+CRandomizer \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Randomizer\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCRandomizer\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPeriodicAction\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 7 of file Randomizer\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "\fBCRandomizer\fP (\fBvoid\fP)"
+
+.PP
+Definition at line 216 of file Randomizer\&.cpp\&.
+.PP
+.nf
+217 {
+218     long    result;
+219     
+220     mSupportsLargeVolumes =
+221         (Gestalt(gestaltFSAttr, &result) == noErr) &&
+222         ((result & (1L << gestaltFSSupports2TBVols)) != 0);
+223     
+224     if (Gestalt (gestaltNativeCPUtype, &result) != noErr)
+225     {
+226         mIsPowerPC = false;
+227         mIs601 = false;
+228     }
+229     else
+230     {
+231         mIs601 = (result == gestaltCPU601);
+232         mIsPowerPC = (result >= gestaltCPU601);
+233     }
+234     mLastMouse\&.h = mLastMouse\&.v = -10;    // First mouse will
+235                         // always be recorded
+236     mLastPeriodicTicks = TickCount();
+237     GetTimeBaseResolution ();
+238     
+239     // Add initial entropy
+240     AddTimeSinceMachineStartup ();
+241     AddAbsoluteSystemStartupTime ();
+242     AddStartupVolumeInfo ();
+243     AddFiller ();
+244 }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBvoid\fP PeriodicAction (\fBvoid\fP)"
+
+.PP
+Definition at line 246 of file Randomizer\&.cpp\&.
+.PP
+.nf
+247 {
+248     AddCurrentMouse ();
+249     AddNow (0\&.0);    // Should have a better entropy estimate here
+250     mLastPeriodicTicks = TickCount();
+251 }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

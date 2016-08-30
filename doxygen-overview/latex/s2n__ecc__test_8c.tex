@@ -1,0 +1,95 @@
+\hypertarget{s2n__ecc__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+ecc\+\_\+test.c File Reference}
+\label{s2n__ecc__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+ecc\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+ecc\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+ecc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+ecc\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__ecc__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+ecc\+\_\+test.\+c@{s2n\+\_\+ecc\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+ecc\+\_\+test.\+c@{s2n\+\_\+ecc\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__ecc__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 23 of file s2n\+\_\+ecc\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+24 \{
+25     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+26 
+27     \textcolor{comment}{/* Test generate->write->read->compute\_shared with all supported curves */}
+28     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \textcolor{keyword}{sizeof}(\hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\_ecc\_supported\_curves}) / \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\_ecc\_supported\_curves}[0]); i++) \{
+29         \textcolor{keyword}{struct }\hyperlink{structs2n__ecc__params}{s2n\_ecc\_params} server\_params, client\_params;
+30         \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} wire;
+31         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} server\_shared, client\_shared, ecdh\_params\_sent, ecdh\_params\_received;
+32 
+33         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_aba979c37cd169d15368bcdf473360073}{s2n\_stuffer\_growable\_alloc}(&wire, 1024));
+34 
+35         \textcolor{comment}{/* Server generates a key for a given curve */}
+36         server\_params.negotiated\_curve = &\hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\_ecc\_supported\_curves}[i];
+37         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_aeec802fc7158ae21261d4601d559cf8f}{s2n\_ecc\_generate\_ephemeral\_key}(&
+      server\_params));
+38         \textcolor{comment}{/* Server sends the public */}
+39         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_a22f487d2899e677ff0567f080c25cdd8}{s2n\_ecc\_write\_ecc\_params}(&server\_params, &wire
+      , &ecdh\_params\_sent));
+40         \textcolor{comment}{/* Client reads the public */}
+41         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_a5e4d1afa56f139f9e455415fa3abc4b2}{s2n\_ecc\_read\_ecc\_params}(&client\_params, &wire, 
+      &ecdh\_params\_received));
+42         \textcolor{comment}{/* The client got the curve */}
+43         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(client\_params.negotiated\_curve, server\_params.negotiated\_curve);
+44 
+45         \textcolor{comment}{/* Client sends its public */}
+46         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_adf5f203c386c47c234efb85287401f7f}{s2n\_ecc\_compute\_shared\_secret\_as\_client}
+      (&client\_params, &wire, &client\_shared));
+47         \textcolor{comment}{/* Server receives it */}
+48         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_a11a83b6df21bca2cffecea1e80b2583f}{s2n\_ecc\_compute\_shared\_secret\_as\_server}
+      (&server\_params, &wire, &server\_shared));
+49         \textcolor{comment}{/* Shared is the same for the client and the server */}
+50         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(client\_shared.size, server\_shared.size);
+51         \hyperlink{s2n__test_8h_aad4c7abb254c4d6db9f9076687a2251c}{EXPECT\_BYTEARRAY\_EQUAL}(client\_shared.data, server\_shared.data, client\_shared.
+      size);
+52 
+53         \textcolor{comment}{/* Clean up */}
+54         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&wire));
+55         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__memory__leak__negative__test__overrides_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(&server\_shared));
+56         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__memory__leak__negative__test__overrides_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(&client\_shared));
+57         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d}{s2n\_ecc\_params\_free}(&server\_params));
+58         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d}{s2n\_ecc\_params\_free}(&client\_params));
+59     \}
+60 
+61     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+62     \textcolor{keywordflow}{return} 0;
+63 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

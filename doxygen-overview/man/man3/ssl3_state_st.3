@@ -1,0 +1,629 @@
+.TH "ssl3_state_st" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl3_state_st \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ssl3\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "long \fBflags\fP"
+.br
+.ti -1c
+.RI "int \fBdelay_buf_pop_ret\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBread_sequence\fP [8]"
+.br
+.ti -1c
+.RI "int \fBread_mac_secret_size\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBread_mac_secret\fP [\fBEVP_MAX_MD_SIZE\fP]"
+.br
+.ti -1c
+.RI "unsigned char \fBwrite_sequence\fP [8]"
+.br
+.ti -1c
+.RI "int \fBwrite_mac_secret_size\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBwrite_mac_secret\fP [\fBEVP_MAX_MD_SIZE\fP]"
+.br
+.ti -1c
+.RI "unsigned char \fBserver_random\fP [\fBSSL3_RANDOM_SIZE\fP]"
+.br
+.ti -1c
+.RI "unsigned char \fBclient_random\fP [\fBSSL3_RANDOM_SIZE\fP]"
+.br
+.ti -1c
+.RI "int \fBneed_empty_fragments\fP"
+.br
+.ti -1c
+.RI "int \fBempty_fragment_done\fP"
+.br
+.ti -1c
+.RI "int \fBinit_extra\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_BUFFER\fP \fBrbuf\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_BUFFER\fP \fBwbuf\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_RECORD\fP \fBrrec\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_RECORD\fP \fBwrec\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBalert_fragment\fP [2]"
+.br
+.ti -1c
+.RI "unsigned int \fBalert_fragment_len\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBhandshake_fragment\fP [4]"
+.br
+.ti -1c
+.RI "unsigned int \fBhandshake_fragment_len\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBwnum\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_tot\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_type\fP"
+.br
+.ti -1c
+.RI "int \fBwpend_ret\fP"
+.br
+.ti -1c
+.RI "const unsigned char * \fBwpend_buf\fP"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBhandshake_buffer\fP"
+.br
+.ti -1c
+.RI "\fBEVP_MD_CTX\fP ** \fBhandshake_dgst\fP"
+.br
+.ti -1c
+.RI "int \fBchange_cipher_spec\fP"
+.br
+.ti -1c
+.RI "int \fBwarn_alert\fP"
+.br
+.ti -1c
+.RI "int \fBfatal_alert\fP"
+.br
+.ti -1c
+.RI "int \fBalert_dispatch\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBsend_alert\fP [2]"
+.br
+.ti -1c
+.RI "int \fBrenegotiate\fP"
+.br
+.ti -1c
+.RI "int \fBtotal_renegotiations\fP"
+.br
+.ti -1c
+.RI "int \fBnum_renegotiations\fP"
+.br
+.ti -1c
+.RI "int \fBin_read_app_data\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBclient_opaque_prf_input\fP"
+.br
+.ti -1c
+.RI "size_t \fBclient_opaque_prf_input_len\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBserver_opaque_prf_input\fP"
+.br
+.ti -1c
+.RI "size_t \fBserver_opaque_prf_input_len\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   unsigned char \fBcert_verify_md\fP [\fBEVP_MAX_MD_SIZE\fP *2]"
+.br
+.ti -1c
+.RI "   unsigned char \fBfinish_md\fP [\fBEVP_MAX_MD_SIZE\fP *2]"
+.br
+.ti -1c
+.RI "   int \fBfinish_md_len\fP"
+.br
+.ti -1c
+.RI "   unsigned char \fBpeer_finish_md\fP [\fBEVP_MAX_MD_SIZE\fP *2]"
+.br
+.ti -1c
+.RI "   int \fBpeer_finish_md_len\fP"
+.br
+.ti -1c
+.RI "   unsigned long \fBmessage_size\fP"
+.br
+.ti -1c
+.RI "   int \fBmessage_type\fP"
+.br
+.ti -1c
+.RI "   const \fBSSL_CIPHER\fP * \fBnew_cipher\fP"
+.br
+.ti -1c
+.RI "   \fBDH\fP * \fBdh\fP"
+.br
+.ti -1c
+.RI "   \fBEC_KEY\fP * \fBecdh\fP"
+.br
+.ti -1c
+.RI "   int \fBnext_state\fP"
+.br
+.ti -1c
+.RI "   int \fBreuse_message\fP"
+.br
+.ti -1c
+.RI "   int \fBcert_req\fP"
+.br
+.ti -1c
+.RI "   int \fBctype_num\fP"
+.br
+.ti -1c
+.RI "   char \fBctype\fP [\fBSSL3_CT_NUMBER\fP]"
+.br
+.ti -1c
+.RI "   int \fBuse_rsa_tmp\fP"
+.br
+.ti -1c
+.RI "   int \fBkey_block_length\fP"
+.br
+.ti -1c
+.RI "   unsigned char * \fBkey_block\fP"
+.br
+.ti -1c
+.RI "   const \fBEVP_CIPHER\fP * \fBnew_sym_enc\fP"
+.br
+.ti -1c
+.RI "   const \fBEVP_MD\fP * \fBnew_hash\fP"
+.br
+.ti -1c
+.RI "   int \fBnew_mac_pkey_type\fP"
+.br
+.ti -1c
+.RI "   int \fBnew_mac_secret_size\fP"
+.br
+.ti -1c
+.RI "   const \fBSSL_COMP\fP * \fBnew_compression\fP"
+.br
+.ti -1c
+.RI "   int \fBcert_request\fP"
+.br
+.ti -1c
+.RI "} \fBtmp\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBprevious_client_finished\fP [\fBEVP_MAX_MD_SIZE\fP]"
+.br
+.ti -1c
+.RI "unsigned char \fBprevious_client_finished_len\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBprevious_server_finished\fP [\fBEVP_MAX_MD_SIZE\fP]"
+.br
+.ti -1c
+.RI "unsigned char \fBprevious_server_finished_len\fP"
+.br
+.ti -1c
+.RI "int \fBsend_connection_binding\fP"
+.br
+.ti -1c
+.RI "int \fBnext_proto_neg_seen\fP"
+.br
+.ti -1c
+.RI "char \fBis_probably_safari\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBalpn_selected\fP"
+.br
+.ti -1c
+.RI "unsigned \fBalpn_selected_len\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   unsigned char \fBcert_verify_md\fP [\fBEVP_MAX_MD_SIZE\fP *2]"
+.br
+.ti -1c
+.RI "   unsigned char \fBfinish_md\fP [\fBEVP_MAX_MD_SIZE\fP *2]"
+.br
+.ti -1c
+.RI "   int \fBfinish_md_len\fP"
+.br
+.ti -1c
+.RI "   unsigned char \fBpeer_finish_md\fP [\fBEVP_MAX_MD_SIZE\fP *2]"
+.br
+.ti -1c
+.RI "   int \fBpeer_finish_md_len\fP"
+.br
+.ti -1c
+.RI "   unsigned long \fBmessage_size\fP"
+.br
+.ti -1c
+.RI "   int \fBmessage_type\fP"
+.br
+.ti -1c
+.RI "   const \fBSSL_CIPHER\fP * \fBnew_cipher\fP"
+.br
+.ti -1c
+.RI "   \fBDH\fP * \fBdh\fP"
+.br
+.ti -1c
+.RI "   \fBEC_KEY\fP * \fBecdh\fP"
+.br
+.ti -1c
+.RI "   int \fBnext_state\fP"
+.br
+.ti -1c
+.RI "   int \fBreuse_message\fP"
+.br
+.ti -1c
+.RI "   int \fBcert_req\fP"
+.br
+.ti -1c
+.RI "   int \fBctype_num\fP"
+.br
+.ti -1c
+.RI "   char \fBctype\fP [\fBSSL3_CT_NUMBER\fP]"
+.br
+.ti -1c
+.RI "   int \fBuse_rsa_tmp\fP"
+.br
+.ti -1c
+.RI "   int \fBkey_block_length\fP"
+.br
+.ti -1c
+.RI "   unsigned char * \fBkey_block\fP"
+.br
+.ti -1c
+.RI "   const \fBEVP_CIPHER\fP * \fBnew_sym_enc\fP"
+.br
+.ti -1c
+.RI "   const \fBEVP_MD\fP * \fBnew_hash\fP"
+.br
+.ti -1c
+.RI "   int \fBnew_mac_pkey_type\fP"
+.br
+.ti -1c
+.RI "   int \fBnew_mac_secret_size\fP"
+.br
+.ti -1c
+.RI "   const \fBSSL_COMP\fP * \fBnew_compression\fP"
+.br
+.ti -1c
+.RI "   int \fBcert_request\fP"
+.br
+.ti -1c
+.RI "} \fBtmp\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 481 of file ssl3\&.h\&.
+.SH "Field Documentation"
+.PP 
+.SS "long flags"
+
+.PP
+Definition at line 482 of file ssl3\&.h\&.
+.SS "int delay_buf_pop_ret"
+
+.PP
+Definition at line 483 of file ssl3\&.h\&.
+.SS "unsigned char read_sequence"
+
+.PP
+Definition at line 484 of file ssl3\&.h\&.
+.SS "int read_mac_secret_size"
+
+.PP
+Definition at line 485 of file ssl3\&.h\&.
+.SS "unsigned char read_mac_secret"
+
+.PP
+Definition at line 486 of file ssl3\&.h\&.
+.SS "unsigned char write_sequence"
+
+.PP
+Definition at line 487 of file ssl3\&.h\&.
+.SS "int write_mac_secret_size"
+
+.PP
+Definition at line 488 of file ssl3\&.h\&.
+.SS "unsigned char write_mac_secret"
+
+.PP
+Definition at line 489 of file ssl3\&.h\&.
+.SS "unsigned char server_random"
+
+.PP
+Definition at line 490 of file ssl3\&.h\&.
+.SS "unsigned char client_random"
+
+.PP
+Definition at line 491 of file ssl3\&.h\&.
+.SS "int need_empty_fragments"
+
+.PP
+Definition at line 493 of file ssl3\&.h\&.
+.SS "int empty_fragment_done"
+
+.PP
+Definition at line 494 of file ssl3\&.h\&.
+.SS "int init_extra"
+
+.PP
+Definition at line 496 of file ssl3\&.h\&.
+.SS "\fBSSL3_BUFFER\fP rbuf"
+
+.PP
+Definition at line 497 of file ssl3\&.h\&.
+.SS "\fBSSL3_BUFFER\fP wbuf"
+
+.PP
+Definition at line 498 of file ssl3\&.h\&.
+.SS "\fBSSL3_RECORD\fP rrec"
+
+.PP
+Definition at line 499 of file ssl3\&.h\&.
+.SS "\fBSSL3_RECORD\fP wrec"
+
+.PP
+Definition at line 500 of file ssl3\&.h\&.
+.SS "unsigned char alert_fragment"
+
+.PP
+Definition at line 505 of file ssl3\&.h\&.
+.SS "unsigned int alert_fragment_len"
+
+.PP
+Definition at line 506 of file ssl3\&.h\&.
+.SS "unsigned char handshake_fragment"
+
+.PP
+Definition at line 507 of file ssl3\&.h\&.
+.SS "unsigned int handshake_fragment_len"
+
+.PP
+Definition at line 508 of file ssl3\&.h\&.
+.SS "unsigned int wnum"
+
+.PP
+Definition at line 510 of file ssl3\&.h\&.
+.SS "int wpend_tot"
+
+.PP
+Definition at line 511 of file ssl3\&.h\&.
+.SS "int wpend_type"
+
+.PP
+Definition at line 512 of file ssl3\&.h\&.
+.SS "int wpend_ret"
+
+.PP
+Definition at line 513 of file ssl3\&.h\&.
+.SS "const unsigned char * wpend_buf"
+
+.PP
+Definition at line 514 of file ssl3\&.h\&.
+.SS "\fBBIO\fP * handshake_buffer"
+
+.PP
+Definition at line 516 of file ssl3\&.h\&.
+.SS "\fBEVP_MD_CTX\fP ** handshake_dgst"
+
+.PP
+Definition at line 521 of file ssl3\&.h\&.
+.SS "int change_cipher_spec"
+
+.PP
+Definition at line 527 of file ssl3\&.h\&.
+.SS "int warn_alert"
+
+.PP
+Definition at line 528 of file ssl3\&.h\&.
+.SS "int fatal_alert"
+
+.PP
+Definition at line 529 of file ssl3\&.h\&.
+.SS "int alert_dispatch"
+
+.PP
+Definition at line 534 of file ssl3\&.h\&.
+.SS "unsigned char send_alert"
+
+.PP
+Definition at line 535 of file ssl3\&.h\&.
+.SS "int renegotiate"
+
+.PP
+Definition at line 540 of file ssl3\&.h\&.
+.SS "int total_renegotiations"
+
+.PP
+Definition at line 541 of file ssl3\&.h\&.
+.SS "int num_renegotiations"
+
+.PP
+Definition at line 542 of file ssl3\&.h\&.
+.SS "int in_read_app_data"
+
+.PP
+Definition at line 543 of file ssl3\&.h\&.
+.SS "\fBvoid\fP * client_opaque_prf_input"
+
+.PP
+Definition at line 549 of file ssl3\&.h\&.
+.SS "size_t client_opaque_prf_input_len"
+
+.PP
+Definition at line 550 of file ssl3\&.h\&.
+.SS "\fBvoid\fP * server_opaque_prf_input"
+
+.PP
+Definition at line 551 of file ssl3\&.h\&.
+.SS "size_t server_opaque_prf_input_len"
+
+.PP
+Definition at line 552 of file ssl3\&.h\&.
+.SS "unsigned char cert_verify_md[\fBEVP_MAX_MD_SIZE\fP *2]"
+
+.PP
+Definition at line 555 of file ssl3\&.h\&.
+.SS "unsigned char finish_md[\fBEVP_MAX_MD_SIZE\fP *2]"
+
+.PP
+Definition at line 557 of file ssl3\&.h\&.
+.SS "int finish_md_len"
+
+.PP
+Definition at line 558 of file ssl3\&.h\&.
+.SS "unsigned char peer_finish_md[\fBEVP_MAX_MD_SIZE\fP *2]"
+
+.PP
+Definition at line 559 of file ssl3\&.h\&.
+.SS "int peer_finish_md_len"
+
+.PP
+Definition at line 560 of file ssl3\&.h\&.
+.SS "unsigned long message_size"
+
+.PP
+Definition at line 561 of file ssl3\&.h\&.
+.SS "int message_type"
+
+.PP
+Definition at line 562 of file ssl3\&.h\&.
+.SS "const \fBSSL_CIPHER\fP* new_cipher"
+
+.PP
+Definition at line 564 of file ssl3\&.h\&.
+.SS "\fBDH\fP* dh"
+
+.PP
+Definition at line 566 of file ssl3\&.h\&.
+.SS "\fBEC_KEY\fP* ecdh"
+
+.PP
+Definition at line 569 of file ssl3\&.h\&.
+.SS "int next_state"
+
+.PP
+Definition at line 572 of file ssl3\&.h\&.
+.SS "int reuse_message"
+
+.PP
+Definition at line 573 of file ssl3\&.h\&.
+.SS "int cert_req"
+
+.PP
+Definition at line 575 of file ssl3\&.h\&.
+.SS "int ctype_num"
+
+.PP
+Definition at line 576 of file ssl3\&.h\&.
+.SS "char ctype[\fBSSL3_CT_NUMBER\fP]"
+
+.PP
+Definition at line 577 of file ssl3\&.h\&.
+.SS "int use_rsa_tmp"
+
+.PP
+Definition at line 579 of file ssl3\&.h\&.
+.SS "int key_block_length"
+
+.PP
+Definition at line 580 of file ssl3\&.h\&.
+.SS "unsigned char* key_block"
+
+.PP
+Definition at line 581 of file ssl3\&.h\&.
+.SS "const \fBEVP_CIPHER\fP* new_sym_enc"
+
+.PP
+Definition at line 582 of file ssl3\&.h\&.
+.SS "const \fBEVP_MD\fP* new_hash"
+
+.PP
+Definition at line 583 of file ssl3\&.h\&.
+.SS "int new_mac_pkey_type"
+
+.PP
+Definition at line 584 of file ssl3\&.h\&.
+.SS "int new_mac_secret_size"
+
+.PP
+Definition at line 585 of file ssl3\&.h\&.
+.SS "const \fBSSL_COMP\fP* new_compression"
+
+.PP
+Definition at line 587 of file ssl3\&.h\&.
+.SS "int cert_request"
+
+.PP
+Definition at line 591 of file ssl3\&.h\&.
+.SS "struct { \&.\&.\&. }   tmp"
+
+.SS "unsigned char previous_client_finished"
+
+.PP
+Definition at line 595 of file ssl3\&.h\&.
+.SS "unsigned char previous_client_finished_len"
+
+.PP
+Definition at line 596 of file ssl3\&.h\&.
+.SS "unsigned char previous_server_finished"
+
+.PP
+Definition at line 597 of file ssl3\&.h\&.
+.SS "unsigned char previous_server_finished_len"
+
+.PP
+Definition at line 598 of file ssl3\&.h\&.
+.SS "int send_connection_binding"
+
+.PP
+Definition at line 599 of file ssl3\&.h\&.
+.SS "int next_proto_neg_seen"
+
+.PP
+Definition at line 605 of file ssl3\&.h\&.
+.SS "char is_probably_safari"
+
+.PP
+Definition at line 615 of file ssl3\&.h\&.
+.SS "unsigned char * alpn_selected"
+
+.PP
+Definition at line 628 of file ssl3\&.h\&.
+.SS "unsigned alpn_selected_len"
+
+.PP
+Definition at line 629 of file ssl3\&.h\&.
+.SS "struct { \&.\&.\&. }   tmp"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

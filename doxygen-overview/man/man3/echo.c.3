@@ -1,0 +1,192 @@
+.TH "s2n-master/bin/echo.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/bin/echo.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/socket\&.h>\fP
+.br
+\fC#include <sys/ioctl\&.h>\fP
+.br
+\fC#include <sys/poll\&.h>\fP
+.br
+\fC#include <netdb\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBnegotiate\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBecho\fP (struct \fBs2n_connection\fP *conn, int sockfd)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int negotiate (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 31 of file echo\&.c\&.
+.PP
+.nf
+32 {
+33     s2n_blocked_status blocked;
+34     do {
+35         if (s2n_negotiate(conn, &blocked) < 0) {
+36             fprintf(stderr, "Failed to negotiate: '%s' %d\n", s2n_strerror(s2n_errno, "EN"), s2n_connection_get_alert(conn));
+37             return -1;
+38         }
+39     } while (blocked);
+40 
+41     /* Now that we've negotiated, print some parameters */
+42     int client_hello_version;
+43     int client_protocol_version;
+44     int server_protocol_version;
+45     int actual_protocol_version;
+46 
+47     if ((client_hello_version = s2n_connection_get_client_hello_version(conn)) < 0) {
+48         fprintf(stderr, "Could not get client hello version\n");
+49         return -1;
+50     }
+51     if ((client_protocol_version = s2n_connection_get_client_protocol_version(conn)) < 0) {
+52         fprintf(stderr, "Could not get client protocol version\n");
+53         return -1;
+54     }
+55     if ((server_protocol_version = s2n_connection_get_server_protocol_version(conn)) < 0) {
+56         fprintf(stderr, "Could not get server protocol version\n");
+57         return -1;
+58     }
+59     if ((actual_protocol_version = s2n_connection_get_actual_protocol_version(conn)) < 0) {
+60         fprintf(stderr, "Could not get actual protocol version\n");
+61         return -1;
+62     }
+63     printf("Client hello version: %d\n", client_hello_version);
+64     printf("Client protocol version: %d\n", client_protocol_version);
+65     printf("Server protocol version: %d\n", server_protocol_version);
+66     printf("Actual protocol version: %d\n", actual_protocol_version);
+67 
+68     if (s2n_get_server_name(conn)) {
+69         printf("Server name: %s\n", s2n_get_server_name(conn));
+70     }
+71 
+72     if (s2n_get_application_protocol(conn)) {
+73         printf("Application protocol: %s\n", s2n_get_application_protocol(conn));
+74     }
+75 
+76     uint32_t length;
+77     const uint8_t *status = s2n_connection_get_ocsp_response(conn, &length);
+78     if (status && length > 0) {
+79         fprintf(stderr, "OCSP response received, length %d\n", length);
+80     }
+81 
+82     printf("Cipher negotiated: %s\n", s2n_connection_get_cipher(conn));
+83 
+84     return 0;
+85 }
+.fi
+.SS "int echo (struct \fBs2n_connection\fP * conn, int sockfd)"
+
+.PP
+Definition at line 87 of file echo\&.c\&.
+.PP
+.nf
+88 {
+89     struct pollfd readers[2];
+90 
+91     readers[0]\&.fd = sockfd;
+92     readers[0]\&.events = POLLIN;
+93     readers[1]\&.fd = STDIN_FILENO;
+94     readers[1]\&.events = POLLIN;
+95 
+96     /* Act as a simple proxy between stdin and the SSL connection */
+97     int p;
+98     s2n_blocked_status blocked;
+99   POLL:
+100     while ((p = poll(readers, 2, -1)) > 0) {
+101         char buffer[10240];
+102         int bytes_read, bytes_written;
+103 
+104         if (readers[0]\&.revents & POLLIN) {
+105             do {
+106                 bytes_read = s2n_recv(conn, buffer, 10240, &blocked);
+107                 if (bytes_read == 0) {
+108                     /* Connection has been closed */
+109                     s2n_connection_wipe(conn);
+110                     return 0;
+111                 }
+112                 if (bytes_read < 0) {
+113                     fprintf(stderr, "Error reading from connection: '%s' %d\n", s2n_strerror(s2n_errno, "EN"), s2n_connection_get_alert(conn));
+114                     exit(1);
+115                 }
+116                 bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
+117                 if (bytes_written <= 0) {
+118                     fprintf(stderr, "Error writing to stdout\n");
+119                     exit(1);
+120                 }
+121             } while (blocked);
+122         }
+123         if (readers[1]\&.revents & POLLIN) {
+124             int bytes_available;
+125             if (ioctl(STDIN_FILENO, FIONREAD, &bytes_available) < 0) {
+126                 bytes_available = 1;
+127             }
+128             if (bytes_available > sizeof(buffer)) {
+129                 bytes_available = sizeof(buffer);
+130             }
+131 
+132             /* Read as many bytes as we think we can */
+133           READ:
+134             bytes_read = read(STDIN_FILENO, buffer, bytes_available);
+135             if (bytes_read < 0) {
+136                 if (errno == EINTR) {
+137                     goto READ;
+138                 }
+139                 fprintf(stderr, "Error reading from stdin\n");
+140                 exit(1);
+141             }
+142             if (bytes_read == 0) {
+143                 /* Exit on EOF */
+144                 return 0;
+145             }
+146 
+147             char *buf_ptr = buffer;
+148             do {
+149                 bytes_written = s2n_send(conn, buf_ptr, bytes_available, &blocked);
+150                 if (bytes_written < 0) {
+151                     fprintf(stderr, "Error writing to connection: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+152                     exit(1);
+153                 }
+154 
+155                 bytes_available -= bytes_written;
+156                 buf_ptr += bytes_written;
+157             } while (bytes_available || blocked);
+158         }
+159     }
+160     if (p < 0 && errno == EINTR) {
+161         goto POLL;
+162     }
+163 
+164     return 0;
+165 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

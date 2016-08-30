@@ -1,0 +1,81 @@
+.TH "s2n-master/tests/unit/s2n_timer_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_timer_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'utils/s2n_timer\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmock_clock\fP (\fBvoid\fP *in, uint64_t *out)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int mock_clock (\fBvoid\fP * in, uint64_t * out)"
+
+.PP
+Definition at line 23 of file s2n_timer_test\&.c\&.
+.PP
+.nf
+24 {
+25     *out = *(uint64_t *)in;
+26 
+27     return 0;
+28 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 30 of file s2n_timer_test\&.c\&.
+.PP
+.nf
+31 {
+32     struct s2n_config *config;
+33     struct s2n_timer timer;
+34     uint64_t nanoseconds;
+35     uint64_t mock_time;
+36 
+37     BEGIN_TEST();
+38 
+39     EXPECT_NOT_NULL(config = s2n_config_new());
+40     EXPECT_SUCCESS(s2n_config_set_nanoseconds_since_epoch_callback(config, mock_clock, &mock_time));
+41 
+42     mock_time = 0;
+43     EXPECT_SUCCESS(s2n_timer_start(config, &timer));
+44 
+45     mock_time = 10;
+46     EXPECT_SUCCESS(s2n_timer_reset(config, &timer, &nanoseconds));
+47     EXPECT_EQUAL(nanoseconds, 10);
+48 
+49     mock_time = 20;
+50     EXPECT_SUCCESS(s2n_timer_elapsed(config, &timer, &nanoseconds));
+51     EXPECT_EQUAL(nanoseconds, 10);
+52 
+53     mock_time = 30;
+54     EXPECT_SUCCESS(s2n_timer_reset(config, &timer, &nanoseconds));
+55     EXPECT_EQUAL(nanoseconds, 20);
+56 
+57     mock_time = 40;
+58     EXPECT_SUCCESS(s2n_timer_elapsed(config, &timer, &nanoseconds));
+59     EXPECT_EQUAL(nanoseconds, 10);
+60 
+61     END_TEST();
+62 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

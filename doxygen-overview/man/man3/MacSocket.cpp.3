@@ -1,0 +1,1112 @@
+.TH "s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/MacSocket.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/MacSocket.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'MacSocket\&.h'\fP
+.br
+\fC#include <Threads\&.h>\fP
+.br
+\fC#include <OpenTransport\&.h>\fP
+.br
+\fC#include <OpenTpTInternet\&.h>\fP
+.br
+\fC#include <OpenTptClient\&.h>\fP
+.br
+\fC#include 'CPStringUtils\&.hpp'\fP
+.br
+\fC#include 'ErrorHandling\&.hpp'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSocketStruct\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBkMaxNumSockets\fP   4"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBSocketStruct\fP \fBSocketStruct\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBMacSocket_GetSocketErrorInfo\fP (const int inSocketNum, int *outSocketErrCode, char *outSocketErrString, const int inSocketErrStringMaxLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBMacSocket_SetUserRefPtr\fP (const int inSocketNum, \fBvoid\fP *inNewRefPtr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBMacSocket_GetLocalIPAndPort\fP (const int inSocketNum, char *outIPAndPort, const int inIPAndPortLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBMacSocket_GetRemoteIPAndPort\fP (const int inSocketNum, char *outIPAndPort, const int inIPAndPortLength)"
+.br
+.ti -1c
+.RI "Boolean \fBMacSocket_RemoteEndIsClosing\fP (const int inSocketNum)"
+.br
+.ti -1c
+.RI "Boolean \fBMacSocket_ListenCompleted\fP (const int inSocketNum)"
+.br
+.ti -1c
+.RI "Boolean \fBMacSocket_RemoteEndIsOpen\fP (const int inSocketNum)"
+.br
+.ti -1c
+.RI "Boolean \fBMacSocket_LocalEndIsOpen\fP (const int inSocketNum)"
+.br
+.ti -1c
+.RI "OSErr \fBMacSocket_Startup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "OSErr \fBMacSocket_Shutdown\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "OSErr \fBMacSocket_socket\fP (int *outSocketNum, const Boolean inDoThreadSwitching, const long inTimeoutTicks, \fBMacSocket_IdleWaitCallback\fP inIdleWaitCallback, \fBvoid\fP *inUserRefPtr)"
+.br
+.ti -1c
+.RI "OSErr \fBMacSocket_listen\fP (const int inSocketNum, const int inPortNum)"
+.br
+.ti -1c
+.RI "OSErr \fBMacSocket_connect\fP (const int inSocketNum, char *inTargetAddressAndPort)"
+.br
+.ti -1c
+.RI "OSErr \fBMacSocket_close\fP (const int inSocketNum)"
+.br
+.ti -1c
+.RI "int \fBMacSocket_recv\fP (const int inSocketNum, \fBvoid\fP *outBuff, int outBuffLength, const Boolean inBlock)"
+.br
+.ti -1c
+.RI "int \fBMacSocket_send\fP (const int inSocketNum, const \fBvoid\fP *inBuff, int inBuffLength)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBerrno\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define kMaxNumSockets   4"
+
+.PP
+Definition at line 96 of file MacSocket\&.cpp\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBSocketStruct\fP \fBSocketStruct\fP"
+
+.PP
+Definition at line 141 of file MacSocket\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP MacSocket_GetSocketErrorInfo (const int inSocketNum, int * outSocketErrCode, char * outSocketErrString, const int inSocketErrStringMaxLength)"
+
+.PP
+Definition at line 166 of file MacSocket\&.cpp\&.
+.PP
+.nf
+167 {
+168     if (outSocketErrCode != nil)
+169     {
+170         *outSocketErrCode = -1;
+171     }
+172     
+173     if (outSocketErrString != nil)
+174     {
+175         CopyCStrToCStr("",outSocketErrString,inSocketErrStringMaxLength);
+176     }
+177     
+178     
+179     if (SocketIndexIsValid(inSocketNum))
+180     {
+181     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+182     
+183         
+184         if (outSocketErrCode != nil)
+185         {
+186             *outSocketErrCode = theSocketStruct->mLastError;
+187         }
+188 
+189         if (outSocketErrString != nil)
+190         {
+191             CopyCStrToCStr(theSocketStruct->mErrMessage,outSocketErrString,inSocketErrStringMaxLength);
+192         }
+193     }
+194 }
+.fi
+.SS "\fBvoid\fP MacSocket_SetUserRefPtr (const int inSocketNum, \fBvoid\fP * inNewRefPtr)"
+
+.PP
+Definition at line 197 of file MacSocket\&.cpp\&.
+.PP
+.nf
+198 {
+199     if (SocketIndexIsValid(inSocketNum))
+200     {
+201     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+202 
+203         theSocketStruct->mUserRefPtr = inNewRefPtr;
+204     }
+205 }
+.fi
+.SS "\fBvoid\fP MacSocket_GetLocalIPAndPort (const int inSocketNum, char * outIPAndPort, const int inIPAndPortLength)"
+
+.PP
+Definition at line 209 of file MacSocket\&.cpp\&.
+.PP
+.nf
+210 {
+211     if (outIPAndPort != nil && SocketIndexIsValid(inSocketNum))
+212     {
+213     char            tempString[256];
+214     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+215     
+216         
+217         CopyCStrToCStr("",tempString,sizeof(tempString));
+218 
+219         if (theSocketStruct->mAssignedAddrInfo != nil)
+220         {
+221         InetAddress     *theInetAddress = (InetAddress *) theSocketStruct->mAssignedAddrInfo->addr\&.buf;
+222         InetHost        theInetHost = theInetAddress->fHost;
+223             
+224             if (theInetHost == 0)
+225             {
+226             InetInterfaceInfo   theInetInterfaceInfo;
+227                 
+228                 if (::OTInetGetInterfaceInfo(&theInetInterfaceInfo,kDefaultInetInterface) == noErr)
+229                 {
+230                     theInetHost = theInetInterfaceInfo\&.fAddress;
+231                 }
+232             }
+233         
+234             ::OTInetHostToString(theInetHost,tempString);
+235             
+236             ConcatCStrToCStr(":",tempString,sizeof(tempString));
+237             ConcatLongIntToCStr(theInetAddress->fPort,tempString,sizeof(tempString));
+238         }
+239         
+240         CopyCStrToCStr(tempString,outIPAndPort,inIPAndPortLength);
+241     }
+242 }
+.fi
+.SS "\fBvoid\fP MacSocket_GetRemoteIPAndPort (const int inSocketNum, char * outIPAndPort, const int inIPAndPortLength)"
+
+.PP
+Definition at line 246 of file MacSocket\&.cpp\&.
+.PP
+.nf
+247 {
+248     if (outIPAndPort != nil && SocketIndexIsValid(inSocketNum))
+249     {
+250     char            tempString[256];
+251     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+252     
+253         
+254         CopyCStrToCStr("",tempString,sizeof(tempString));
+255 
+256         if (theSocketStruct->mRemoteAddrInfo != nil)
+257         {
+258         InetAddress     *theInetAddress = (InetAddress *) theSocketStruct->mRemoteAddrInfo->addr\&.buf;
+259         InetHost        theInetHost = theInetAddress->fHost;
+260             
+261             if (theInetHost == 0)
+262             {
+263             InetInterfaceInfo   theInetInterfaceInfo;
+264                 
+265                 if (::OTInetGetInterfaceInfo(&theInetInterfaceInfo,kDefaultInetInterface) == noErr)
+266                 {
+267                     theInetHost = theInetInterfaceInfo\&.fAddress;
+268                 }
+269             }
+270         
+271             ::OTInetHostToString(theInetHost,tempString);
+272             
+273             ConcatCStrToCStr(":",tempString,sizeof(tempString));
+274             ConcatLongIntToCStr(theInetAddress->fPort,tempString,sizeof(tempString));
+275         }
+276         
+277         CopyCStrToCStr(tempString,outIPAndPort,inIPAndPortLength);
+278     }
+279 }
+.fi
+.SS "Boolean MacSocket_RemoteEndIsClosing (const int inSocketNum)"
+
+.PP
+Definition at line 283 of file MacSocket\&.cpp\&.
+.PP
+.nf
+284 {
+285 Boolean     theResult = false;
+286 
+287     if (SocketIndexIsValid(inSocketNum))
+288     {
+289     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+290 
+291         theResult = theSocketStruct->mReceivedTOrdRel;
+292     }
+293 
+294     return(theResult);
+295 }
+.fi
+.SS "Boolean MacSocket_ListenCompleted (const int inSocketNum)"
+
+.PP
+Definition at line 299 of file MacSocket\&.cpp\&.
+.PP
+.nf
+300 {
+301 Boolean     theResult = false;
+302 
+303     if (SocketIndexIsValid(inSocketNum))
+304     {
+305     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+306 
+307         theResult = theSocketStruct->mReceivedTPassCon;
+308     }
+309 
+310     return(theResult);
+311 }
+.fi
+.SS "Boolean MacSocket_RemoteEndIsOpen (const int inSocketNum)"
+
+.PP
+Definition at line 315 of file MacSocket\&.cpp\&.
+.PP
+.nf
+316 {
+317     if (SocketIndexIsValid(inSocketNum))
+318     {
+319     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+320     
+321         return(theSocketStruct->mRemoteEndIsConnected);
+322     }
+323     
+324     else
+325     {
+326         return(false);
+327     }
+328 }
+.fi
+.SS "Boolean MacSocket_LocalEndIsOpen (const int inSocketNum)"
+
+.PP
+Definition at line 332 of file MacSocket\&.cpp\&.
+.PP
+.nf
+333 {
+334     if (SocketIndexIsValid(inSocketNum))
+335     {
+336     SocketStruct    *theSocketStruct = &(sSockets[inSocketNum]);
+337     
+338         return(theSocketStruct->mLocalEndIsConnected);
+339     }
+340     
+341     else
+342     {
+343         return(false);
+344     }
+345 }
+.fi
+.SS "OSErr MacSocket_Startup (\fBvoid\fP)"
+
+.PP
+Definition at line 622 of file MacSocket\&.cpp\&.
+.PP
+.nf
+623 {
+624     if (!sSocketsSetup)
+625     {
+626         for (int i = 0;i < kMaxNumSockets;i++)
+627         {
+628             InitSocket(&(sSockets[i]));
+629         }
+630 
+631         ::InitOpenTransport();
+632         
+633         sSocketsSetup = true;
+634     }
+635     
+636     
+637     return(noErr);
+638 }
+.fi
+.SS "OSErr MacSocket_Shutdown (\fBvoid\fP)"
+
+.PP
+Definition at line 644 of file MacSocket\&.cpp\&.
+.PP
+.nf
+645 {
+646     if (sSocketsSetup)
+647     {
+648         for (int i = 0;i < kMaxNumSockets;i++)
+649         {
+650         SocketStruct *theSocketStruct = &(sSockets[i]);
+651         
+652             if (theSocketStruct->mIsInUse)
+653             {
+654                 if (theSocketStruct->mEndPointRef != kOTInvalidEndpointRef)
+655                 {
+656                 OTResult    theOTResult;
+657                 
+658                 
+659                     //  Since we're killing the endpoint, I don't bother to send the disconnect (sorry!)
+660 
+661 /*
+662                     if (theSocketStruct->mLocalEndIsConnected)
+663                     {
+664                         //  This is an abortive action, so we do a hard disconnect instead of an OTSndOrderlyDisconnect
+665                         
+666                         theOTResult = ::OTSndDisconnect(theSocketStruct->mEndPointRef, nil);
+667                         
+668                         //  Now we have to watch for T_DISCONNECTCOMPLETE event
+669                         
+670                         theSocketStruct->mLocalEndIsConnected = false;
+671                     }
+672 */                  
+673                     
+674                     theOTResult = ::OTCloseProvider(theSocketStruct->mEndPointRef);
+675                     
+676                     
+677                     theSocketStruct->mEndPointRef = kOTInvalidEndpointRef;
+678                 }
+679                 
+680                 if (theSocketStruct->mBindRequestedAddrInfo != nil)
+681                 {
+682                     ::OTFree((void *) theSocketStruct->mBindRequestedAddrInfo,T_BIND);
+683                     
+684                     theSocketStruct->mBindRequestedAddrInfo = nil;
+685                 }
+686                 
+687                 if (theSocketStruct->mAssignedAddrInfo != nil)
+688                 {
+689                     ::OTFree((void *) theSocketStruct->mAssignedAddrInfo,T_BIND);
+690                     
+691                     theSocketStruct->mAssignedAddrInfo = nil;
+692                 }
+693                 
+694                 if (theSocketStruct->mRemoteAddrInfo != nil)
+695                 {
+696                     ::OTFree((void *) theSocketStruct->mRemoteAddrInfo,T_CALL);
+697                     
+698                     theSocketStruct->mRemoteAddrInfo = nil;
+699                 }
+700                 
+701                 
+702             }
+703         }
+704         
+705         ::CloseOpenTransport();
+706 
+707         sSocketsSetup = false;
+708     }
+709     
+710     return(noErr);
+711 }
+.fi
+.SS "OSErr MacSocket_socket (int * outSocketNum, const Boolean inDoThreadSwitching, const long inTimeoutTicks, \fBMacSocket_IdleWaitCallback\fP inIdleWaitCallback, \fBvoid\fP * inUserRefPtr)"
+
+.PP
+Definition at line 720 of file MacSocket\&.cpp\&.
+.PP
+.nf
+721 {
+722 //  Gotta roll support back in for threads eventually\&.\&.\&.\&.\&.
+723 
+724 #pragma unused(inDoThreadSwitching)
+725 
+726 
+727 OSErr   errCode = noErr;
+728 
+729     
+730     SetErrorMessageAndBailIfNil(outSocketNum,"MacSocket_socket: Bad parameter, outSocketNum == nil");
+731     
+732     *outSocketNum = -1;
+733     
+734     
+735     //  Find an unused socket
+736     
+737     for (int i = 0;i < kMaxNumSockets;i++)
+738     {
+739         if (sSockets[i]\&.mIsInUse == false)
+740         {
+741         OTResult        theOTResult;
+742         SocketStruct    *theSocketStruct = &(sSockets[i]);
+743         
+744             
+745             InitSocket(theSocketStruct);
+746             
+747             theSocketStruct->mIdleWaitCallback = inIdleWaitCallback;
+748             theSocketStruct->mUserRefPtr = inUserRefPtr;
+749             
+750             theSocketStruct->mTimeoutTicks = inTimeoutTicks;
+751             
+752 
+753             //  Set up OT endpoint
+754             
+755             PrepareForAsyncOperation(theSocketStruct,T_OPENCOMPLETE);
+756             
+757             theOTResult = ::OTAsyncOpenEndpoint(OTCreateConfiguration(kTCPName),0,nil,OTNonYieldingNotifier,(void *) theSocketStruct);
+758             
+759             SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_socket: Can't create OT endpoint, OTAsyncOpenEndpoint() = ",theOTResult);
+760             
+761             BailIfError(MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTOpenComplete)));
+762                                                                                         
+763             SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_socket: Can't create OT endpoint, OTAsyncOpenEndpoint() = ",theOTResult);
+764             
+765             
+766             *outSocketNum = i;
+767             
+768             errCode = noErr;
+769             
+770             theSocketStruct->mIsInUse = true;
+771             
+772             break;
+773         }
+774         
+775         else if (i == kMaxNumSockets - 1)
+776         {
+777             SetErrorMessageAndBail("MacSocket_socket: No sockets available");
+778         }
+779     }
+780 
+781 
+782 EXITPOINT:
+783     
+784     errno = errCode;
+785     
+786     return(errCode);
+787 }
+.fi
+.SS "OSErr MacSocket_listen (const int inSocketNum, const int inPortNum)"
+
+.PP
+Definition at line 792 of file MacSocket\&.cpp\&.
+.PP
+.nf
+793 {
+794 OSErr           errCode = noErr;
+795 SocketStruct    *theSocketStruct = nil;
+796 
+797 
+798     if (!SocketIndexIsValid(inSocketNum))
+799     {
+800         SetErrorMessageAndBail("MacSocket_listen: Invalid socket number specified");
+801     }
+802 
+803 
+804     theSocketStruct = &(sSockets[inSocketNum]);
+805 
+806 
+807 OTResult        theOTResult;
+808     
+809     
+810     if (theSocketStruct->mBindRequestedAddrInfo == nil)
+811     {
+812         theSocketStruct->mBindRequestedAddrInfo = (TBind *) ::OTAlloc(theSocketStruct->mEndPointRef,T_BIND,T_ADDR,&theOTResult);
+813                                                                                     
+814         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't allocate OT T_BIND structure, OTAlloc() = ",theOTResult);
+815         SetErrorMessageAndBailIfNil(theSocketStruct->mBindRequestedAddrInfo,"MacSocket_listen: Can't allocate OT T_BIND structure, OTAlloc() returned nil");
+816     }
+817     
+818     if (theSocketStruct->mAssignedAddrInfo == nil)
+819     {
+820         theSocketStruct->mAssignedAddrInfo = (TBind *) ::OTAlloc(theSocketStruct->mEndPointRef,T_BIND,T_ADDR,&theOTResult);
+821                                                                                     
+822         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't allocate OT T_BIND structure, OTAlloc() = ",theOTResult);
+823         SetErrorMessageAndBailIfNil(theSocketStruct->mAssignedAddrInfo,"MacSocket_listen: Can't allocate OT T_BIND structure, OTAlloc() returned nil");
+824     }
+825     
+826     if (theSocketStruct->mRemoteAddrInfo == nil)
+827     {
+828         theSocketStruct->mRemoteAddrInfo = (TCall *) ::OTAlloc(theSocketStruct->mEndPointRef,T_CALL,T_ADDR,&theOTResult);
+829                                                                                     
+830         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't allocate OT T_CALL structure, OTAlloc() = ",theOTResult);
+831         SetErrorMessageAndBailIfNil(theSocketStruct->mRemoteAddrInfo,"MacSocket_listen: Can't allocate OT T_CALL structure, OTAlloc() returned nil");
+832     }
+833     
+834 
+835     if (!theSocketStruct->mEndpointIsBound)
+836     {
+837     InetInterfaceInfo   theInetInterfaceInfo;
+838         
+839         theOTResult = ::OTInetGetInterfaceInfo(&theInetInterfaceInfo,kDefaultInetInterface);
+840                                                                                     
+841         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't determine OT interface info, OTInetGetInterfaceInfo() = ",theOTResult);
+842 
+843 
+844     InetAddress *theInetAddress = (InetAddress *) theSocketStruct->mBindRequestedAddrInfo->addr\&.buf;
+845         
+846 //      theInetAddress->fAddressType = AF_INET;
+847 //      theInetAddress->fPort = inPortNum;
+848 //      theInetAddress->fHost = theInetInterfaceInfo\&.fAddress;
+849         
+850         ::OTInitInetAddress(theInetAddress,inPortNum,theInetInterfaceInfo\&.fAddress);
+851 
+852         theSocketStruct->mBindRequestedAddrInfo->addr\&.len = sizeof(InetAddress);
+853         
+854         theSocketStruct->mBindRequestedAddrInfo->qlen = 1;
+855         
+856         
+857         theOTResult = ::OTSetSynchronous(theSocketStruct->mEndPointRef);
+858                                                                                     
+859         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't set OT endpoint mode, OTSetSynchronous() = ",theOTResult);
+860         
+861         theOTResult = NegotiateIPReuseAddrOption(theSocketStruct->mEndPointRef,true);
+862                                                                                     
+863         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't set OT IP address reuse flag, NegotiateIPReuseAddrOption() = ",theOTResult);
+864         
+865         theOTResult = ::OTSetAsynchronous(theSocketStruct->mEndPointRef);
+866                                                                                     
+867         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't set OT endpoint mode, OTSetAsynchronous() = ",theOTResult);
+868 
+869         
+870         PrepareForAsyncOperation(theSocketStruct,T_BINDCOMPLETE);
+871                 
+872         theOTResult = ::OTBind(theSocketStruct->mEndPointRef,theSocketStruct->mBindRequestedAddrInfo,theSocketStruct->mAssignedAddrInfo);
+873                                                                                     
+874         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't bind OT endpoint, OTBind() = ",theOTResult);
+875         
+876         BailIfError(MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTBindComplete)));
+877                                                                                     
+878         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't bind OT endpoint, OTBind() = ",theOTResult);
+879         
+880         
+881         theSocketStruct->mEndpointIsBound = true;
+882     }
+883 
+884 
+885     PrepareForAsyncOperation(theSocketStruct,T_LISTEN);
+886 
+887     theOTResult = ::OTListen(theSocketStruct->mEndPointRef,theSocketStruct->mRemoteAddrInfo);
+888     
+889     if (theOTResult == noErr)
+890     {
+891         PrepareForAsyncOperation(theSocketStruct,T_PASSCON);
+892         
+893         theOTResult = ::OTAccept(theSocketStruct->mEndPointRef,theSocketStruct->mEndPointRef,theSocketStruct->mRemoteAddrInfo);
+894         
+895         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't begin OT accept, OTAccept() = ",theOTResult);
+896         
+897         BailIfError(MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTPassCon)));
+898                                                                                     
+899         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_listen: Can't accept OT connection, OTAccept() = ",theOTResult);
+900     }
+901     
+902     else if (theOTResult == kOTNoDataErr)
+903     {
+904         theOTResult = noErr;
+905     }
+906     
+907     else
+908     {
+909         SetErrorMessageAndLongIntAndBail("MacSocket_listen: Can't begin OT listen, OTListen() = ",theOTResult);
+910     }
+911 
+912 
+913     errCode = noErr;
+914 
+915 
+916 EXITPOINT:
+917     
+918     if (theSocketStruct != nil)
+919     {
+920         theSocketStruct->mLastError = noErr;
+921         
+922         CopyCStrToCStr("",theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+923 
+924         if (errCode != noErr)
+925         {
+926             theSocketStruct->mLastError = errCode;
+927             
+928             CopyCStrToCStr(GetErrorMessage(),theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+929         }
+930     }
+931     
+932     errno = errCode;
+933     
+934     return(errCode);
+935 }
+.fi
+.SS "OSErr MacSocket_connect (const int inSocketNum, char * inTargetAddressAndPort)"
+
+.PP
+Definition at line 940 of file MacSocket\&.cpp\&.
+.PP
+.nf
+941 {
+942 OSErr           errCode = noErr;
+943 SocketStruct    *theSocketStruct = nil;
+944 
+945 
+946     if (!SocketIndexIsValid(inSocketNum))
+947     {
+948         SetErrorMessageAndBail("MacSocket_connect: Invalid socket number specified");
+949     }
+950 
+951     theSocketStruct = &(sSockets[inSocketNum]);
+952 
+953     if (theSocketStruct->mEndpointIsBound)
+954     {
+955         SetErrorMessageAndBail("MacSocket_connect: Socket previously bound");
+956     }
+957 
+958     
+959 OTResult        theOTResult;
+960 
+961     theSocketStruct->mBindRequestedAddrInfo = (TBind *) ::OTAlloc(theSocketStruct->mEndPointRef,T_BIND,T_ADDR,&theOTResult);
+962                                                                                 
+963     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't allocate OT T_BIND structure, OTAlloc() = ",theOTResult);
+964     SetErrorMessageAndBailIfNil(theSocketStruct->mBindRequestedAddrInfo,"MacSocket_connect: Can't allocate OT T_BIND structure, OTAlloc() returned nil");
+965     
+966 
+967     theSocketStruct->mAssignedAddrInfo = (TBind *) ::OTAlloc(theSocketStruct->mEndPointRef,T_BIND,T_ADDR,&theOTResult);
+968                                                                                 
+969     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't allocate OT T_BIND structure, OTAlloc() = ",theOTResult);
+970     SetErrorMessageAndBailIfNil(theSocketStruct->mAssignedAddrInfo,"MacSocket_connect: Can't allocate OT T_BIND structure, OTAlloc() returned nil");
+971 
+972 
+973     theSocketStruct->mRemoteAddrInfo = (TCall *) ::OTAlloc(theSocketStruct->mEndPointRef,T_CALL,T_ADDR,&theOTResult);
+974                                                                                 
+975     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't allocate OT T_CALL structure, OTAlloc() = ",theOTResult);
+976     SetErrorMessageAndBailIfNil(theSocketStruct->mRemoteAddrInfo,"MacSocket_connect: Can't allocate OT T_CALL structure, OTAlloc() returned nil");
+977 
+978     
+979     PrepareForAsyncOperation(theSocketStruct,T_BINDCOMPLETE);
+980 
+981     theOTResult = ::OTBind(theSocketStruct->mEndPointRef,nil,theSocketStruct->mAssignedAddrInfo);
+982                                                                                 
+983     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't bind OT endpoint, OTBind() = ",theOTResult);
+984     
+985     BailIfError(MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTBindComplete)));
+986                                                                                 
+987     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't bind OT endpoint, OTBind() = ",theOTResult);
+988     
+989     theSocketStruct->mEndpointIsBound = true;
+990     
+991 
+992 TCall       sndCall;
+993 DNSAddress  hostDNSAddress;
+994     
+995     //  Set up target address
+996     
+997     sndCall\&.addr\&.buf = (UInt8 *) &hostDNSAddress;
+998     sndCall\&.addr\&.len = ::OTInitDNSAddress(&hostDNSAddress,inTargetAddressAndPort);
+999     sndCall\&.opt\&.buf = nil;
+1000     sndCall\&.opt\&.len = 0;
+1001     sndCall\&.udata\&.buf = nil;
+1002     sndCall\&.udata\&.len = 0;
+1003     sndCall\&.sequence = 0;
+1004         
+1005     //  Connect!
+1006     
+1007     PrepareForAsyncOperation(theSocketStruct,T_CONNECT);
+1008 
+1009     theOTResult = ::OTConnect(theSocketStruct->mEndPointRef,&sndCall,nil);
+1010     
+1011     if (theOTResult == kOTNoDataErr)
+1012     {
+1013         theOTResult = noErr;
+1014     }
+1015                                                 
+1016     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't connect OT endpoint, OTConnect() = ",theOTResult);
+1017     
+1018     BailIfError(MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTConnect)));
+1019     
+1020     if (theOTResult == kMacSocket_TimeoutErr)
+1021     {
+1022         SetErrorMessageAndBail("MacSocket_connect: Can't connect OT endpoint, OTConnect() = kMacSocket_TimeoutErr");
+1023     }
+1024     
+1025     else
+1026     {
+1027         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't connect OT endpoint, OTConnect() = ",theOTResult);
+1028     }
+1029 
+1030     theOTResult = ::OTRcvConnect(theSocketStruct->mEndPointRef,nil);
+1031                                                 
+1032     SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_connect: Can't complete connect on OT endpoint, OTRcvConnect() = ",theOTResult);
+1033 
+1034 
+1035     errCode = noErr;
+1036 
+1037 
+1038 #ifdef MACSOCKET_DEBUG
+1039     printf("MacSocket_connect: connect completed\n");
+1040 #endif
+1041 
+1042 EXITPOINT:
+1043     
+1044     if (theSocketStruct != nil)
+1045     {
+1046         theSocketStruct->mLastError = noErr;
+1047         
+1048         CopyCStrToCStr("",theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1049 
+1050         if (errCode != noErr)
+1051         {
+1052             theSocketStruct->mLastError = errCode;
+1053             
+1054             CopyCStrToCStr(GetErrorMessage(),theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1055         }
+1056     }
+1057     
+1058     errno = errCode;
+1059     
+1060     return(errCode);
+1061 }
+.fi
+.SS "OSErr MacSocket_close (const int inSocketNum)"
+
+.PP
+Definition at line 1068 of file MacSocket\&.cpp\&.
+.PP
+.nf
+1069 {
+1070 OSErr           errCode = noErr;
+1071 SocketStruct    *theSocketStruct = nil;
+1072 
+1073 
+1074     if (!SocketIndexIsValid(inSocketNum))
+1075     {
+1076         SetErrorMessageAndBail("MacSocket_close: Invalid socket number specified");
+1077     }
+1078 
+1079 
+1080     theSocketStruct = &(sSockets[inSocketNum]);
+1081     
+1082     if (theSocketStruct->mEndPointRef != kOTInvalidEndpointRef)
+1083     {
+1084     OTResult        theOTResult = noErr;
+1085     
+1086         //  Try to play nice
+1087         
+1088         if (theSocketStruct->mReceivedTOrdRel)
+1089         {
+1090             //  Already did an OTRcvOrderlyDisconnect() in the notifier
+1091         
+1092             if (theSocketStruct->mLocalEndIsConnected)
+1093             {
+1094                 theOTResult = ::OTSndOrderlyDisconnect(theSocketStruct->mEndPointRef);
+1095                 
+1096                 theSocketStruct->mLocalEndIsConnected = false;
+1097             }
+1098         }
+1099         
+1100         else if (theSocketStruct->mLocalEndIsConnected)
+1101         {
+1102             theOTResult = ::OTSndOrderlyDisconnect(theSocketStruct->mEndPointRef);
+1103             
+1104             theSocketStruct->mLocalEndIsConnected = false;
+1105             
+1106             //  Wait for other end to hang up too!
+1107             
+1108 //          PrepareForAsyncOperation(theSocketStruct,T_ORDREL);
+1109 //
+1110 //          errCode = MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTOrdRel));
+1111         }
+1112         
+1113         
+1114         if (theOTResult != noErr)
+1115         {
+1116             ::OTCloseProvider(theSocketStruct->mEndPointRef);
+1117         }
+1118         
+1119         else
+1120         {
+1121             theOTResult = ::OTCloseProvider(theSocketStruct->mEndPointRef);
+1122         }
+1123 
+1124         theSocketStruct->mEndPointRef = kOTInvalidEndpointRef;
+1125         
+1126         errCode = theOTResult;
+1127     }
+1128 
+1129 
+1130     theSocketStruct->mIsInUse = false;
+1131 
+1132     
+1133 EXITPOINT:
+1134     
+1135     if (theSocketStruct != nil)
+1136     {
+1137         theSocketStruct->mLastError = noErr;
+1138         
+1139         CopyCStrToCStr("",theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1140 
+1141         if (errCode != noErr)
+1142         {
+1143             theSocketStruct->mLastError = errCode;
+1144             
+1145             CopyCStrToCStr(GetErrorMessage(),theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1146         }
+1147     }
+1148 
+1149     errno = errCode;
+1150         
+1151     return(errCode);
+1152 }
+.fi
+.SS "int MacSocket_recv (const int inSocketNum, \fBvoid\fP * outBuff, int outBuffLength, const Boolean inBlock)"
+
+.PP
+Definition at line 1159 of file MacSocket\&.cpp\&.
+.PP
+.nf
+1160 {
+1161 OSErr           errCode = noErr;
+1162 int             totalBytesRead = 0;
+1163 SocketStruct    *theSocketStruct = nil;
+1164 
+1165     
+1166     SetErrorMessageAndBailIfNil(outBuff,"MacSocket_recv: Bad parameter, outBuff = nil");
+1167     
+1168     if (outBuffLength <= 0)
+1169     {
+1170         SetErrorMessageAndBail("MacSocket_recv: Bad parameter, outBuffLength <= 0");
+1171     }
+1172     
+1173     if (!SocketIndexIsValid(inSocketNum))
+1174     {
+1175         SetErrorMessageAndBail("MacSocket_recv: Invalid socket number specified");
+1176     }
+1177 
+1178     theSocketStruct = &(sSockets[inSocketNum]);
+1179 
+1180     if (!theSocketStruct->mLocalEndIsConnected)
+1181     {
+1182         SetErrorMessageAndBail("MacSocket_recv: Socket not connected");
+1183     }
+1184 
+1185     if (theSocketStruct->mReceivedTOrdRel)
+1186     {
+1187         totalBytesRead = 0;
+1188         
+1189         goto EXITPOINT;
+1190     }
+1191 
+1192     
+1193     PrepareForAsyncOperation(theSocketStruct,0);
+1194     
+1195     for (;;)
+1196     {
+1197     int         bytesRead;
+1198     OTResult    theOTResult;
+1199     
+1200     
+1201         theOTResult = ::OTRcv(theSocketStruct->mEndPointRef,(void *) ((unsigned long) outBuff + (unsigned long) totalBytesRead),outBuffLength - totalBytesRead,nil);
+1202         
+1203         if (theOTResult >= 0)
+1204         {
+1205             bytesRead = theOTResult;
+1206             
+1207 #ifdef MACSOCKET_DEBUG
+1208     printf("MacSocket_recv: read %d bytes in part\n",bytesRead);
+1209 #endif
+1210         }
+1211         
+1212         else if (theOTResult == kOTNoDataErr)
+1213         {
+1214             bytesRead = 0;
+1215         }
+1216         
+1217         else
+1218         {
+1219             SetErrorMessageAndLongIntAndBail("MacSocket_recv: Can't receive OT data, OTRcv() = ",theOTResult);
+1220         }
+1221         
+1222         
+1223         totalBytesRead += bytesRead;
+1224         
+1225         
+1226         if (totalBytesRead <= 0)
+1227         {
+1228             if (theSocketStruct->mReceivedTOrdRel)
+1229             {
+1230                 break;
+1231             }
+1232             
+1233             //  This seems pretty stupid to me now\&.  Maybe I'll delete this blocking garbage\&.
+1234             
+1235             if (inBlock)
+1236             {
+1237                 if (TimeoutElapsed(theSocketStruct))
+1238                 {
+1239                     SetErrorCodeAndMessageAndBail(kMacSocket_TimeoutErr,"MacSocket_recv: Receive operation timed-out");
+1240                 }
+1241                 
+1242                 if (theSocketStruct->mIdleWaitCallback != nil)
+1243                 {
+1244                     theOTResult = (*(theSocketStruct->mIdleWaitCallback))(theSocketStruct->mUserRefPtr);
+1245                     
+1246                     SetErrorMessageAndBailIfError(theOTResult,"MacSocket_recv: User cancelled operation");
+1247                 }
+1248                 
+1249                 continue;
+1250             }
+1251         }
+1252         
+1253         
+1254         break;
+1255     }
+1256     
+1257     errCode = noErr;
+1258 
+1259 
+1260 #ifdef MACSOCKET_DEBUG
+1261     printf("MacSocket_recv: read %d bytes in total\n",totalBytesRead);
+1262 #endif
+1263     
+1264     
+1265 EXITPOINT:
+1266     
+1267     if (theSocketStruct != nil)
+1268     {
+1269         theSocketStruct->mLastError = noErr;
+1270         
+1271         CopyCStrToCStr("",theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1272 
+1273         if (errCode != noErr)
+1274         {
+1275             theSocketStruct->mLastError = errCode;
+1276             
+1277             CopyCStrToCStr(GetErrorMessage(),theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1278         }
+1279     }
+1280 
+1281     errno = errCode;
+1282     
+1283     return(totalBytesRead);
+1284 }
+.fi
+.SS "int MacSocket_send (const int inSocketNum, const \fBvoid\fP * inBuff, int inBuffLength)"
+
+.PP
+Definition at line 1290 of file MacSocket\&.cpp\&.
+.PP
+.nf
+1291 {
+1292 OSErr           errCode = noErr;
+1293 int             bytesSent = 0;
+1294 SocketStruct    *theSocketStruct = nil;
+1295 
+1296 
+1297     SetErrorMessageAndBailIfNil(inBuff,"MacSocket_send: Bad parameter, inBuff = nil");
+1298     
+1299     if (inBuffLength <= 0)
+1300     {
+1301         SetErrorMessageAndBail("MacSocket_send: Bad parameter, inBuffLength <= 0");
+1302     }
+1303 
+1304     if (!SocketIndexIsValid(inSocketNum))
+1305     {
+1306         SetErrorMessageAndBail("MacSocket_send: Invalid socket number specified");
+1307     }
+1308     
+1309 
+1310     theSocketStruct = &(sSockets[inSocketNum]);
+1311     
+1312     if (!theSocketStruct->mLocalEndIsConnected)
+1313     {
+1314         SetErrorMessageAndBail("MacSocket_send: Socket not connected");
+1315     }
+1316 
+1317 
+1318 OTResult        theOTResult;
+1319     
+1320 
+1321     PrepareForAsyncOperation(theSocketStruct,0);
+1322 
+1323     while (bytesSent < inBuffLength)
+1324     {
+1325         if (theSocketStruct->mIdleWaitCallback != nil)
+1326         {
+1327             theOTResult = (*(theSocketStruct->mIdleWaitCallback))(theSocketStruct->mUserRefPtr);
+1328             
+1329             SetErrorMessageAndBailIfError(theOTResult,"MacSocket_send: User cancelled");
+1330         }
+1331 
+1332 
+1333         theOTResult = ::OTSnd(theSocketStruct->mEndPointRef,(void *) ((unsigned long) inBuff + bytesSent),inBuffLength - bytesSent,0);
+1334         
+1335         if (theOTResult >= 0)
+1336         {
+1337             bytesSent += theOTResult;
+1338             
+1339             theOTResult = noErr;
+1340             
+1341             //  Reset timer\&.\&.\&.\&.
+1342             
+1343             PrepareForAsyncOperation(theSocketStruct,0);
+1344         }
+1345         
+1346         if (theOTResult == kOTFlowErr)
+1347         {
+1348             if (TimeoutElapsed(theSocketStruct))
+1349             {
+1350                 SetErrorCodeAndMessageAndBail(kMacSocket_TimeoutErr,"MacSocket_send: Send timed-out")
+1351             }
+1352 
+1353             theOTResult = noErr;
+1354         }
+1355                                                     
+1356         SetErrorMessageAndLongIntAndBailIfError(theOTResult,"MacSocket_send: Can't send OT data, OTSnd() = ",theOTResult);
+1357     }
+1358 
+1359     
+1360     errCode = noErr;
+1361 
+1362 #ifdef MACSOCKET_DEBUG
+1363     printf("MacSocket_send: sent %d bytes\n",bytesSent);
+1364 #endif
+1365     
+1366     
+1367 EXITPOINT:
+1368     
+1369     if (theSocketStruct != nil)
+1370     {
+1371         theSocketStruct->mLastError = noErr;
+1372         
+1373         CopyCStrToCStr("",theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1374 
+1375         if (errCode != noErr)
+1376         {
+1377             theSocketStruct->mLastError = errCode;
+1378             
+1379             CopyCStrToCStr(GetErrorMessage(),theSocketStruct->mErrMessage,sizeof(theSocketStruct->mErrMessage));
+1380         }
+1381     }
+1382     
+1383     if (errCode != noErr)
+1384     {
+1385         ::SysBeep(1);
+1386     }
+1387     
+1388     errno = errCode;
+1389     
+1390     return(bytesSent);
+1391 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "int errno"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

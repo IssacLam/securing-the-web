@@ -1,0 +1,72 @@
+.TH "s2n-master/tls/s2n_client_key_exchange.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_client_key_exchange.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_resume\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_dhe\&.h'\fP
+.br
+\fC#include 'crypto/s2n_rsa\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_client_key_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_key_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_client_key_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 127 of file s2n_client_key_exchange\&.c\&.
+.PP
+.nf
+128 {
+129     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_DH) {
+130         return s2n_dhe_client_key_recv(conn);
+131     } else {
+132         return s2n_rsa_client_key_recv(conn);
+133     }
+134 }
+.fi
+.SS "int s2n_client_key_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 224 of file s2n_client_key_exchange\&.c\&.
+.PP
+.nf
+225 {
+226     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_DH) {
+227         return s2n_dhe_client_key_send(conn);
+228     } else {
+229         return s2n_rsa_client_key_send(conn);
+230     }
+231 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

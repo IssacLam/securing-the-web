@@ -1,0 +1,267 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/jpake/jpake.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/jpake/jpake.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBJPAKE_ZKP\fP"
+.br
+.ti -1c
+.RI "struct \fBJPAKE_STEP_PART\fP"
+.br
+.ti -1c
+.RI "struct \fBJPAKE_STEP1\fP"
+.br
+.ti -1c
+.RI "struct \fBJPAKE_STEP3A\fP"
+.br
+.ti -1c
+.RI "struct \fBJPAKE_STEP3B\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBJPAKE_F_JPAKE_STEP1_PROCESS\fP   101"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_F_JPAKE_STEP2_PROCESS\fP   102"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_F_JPAKE_STEP3A_PROCESS\fP   103"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_F_JPAKE_STEP3B_PROCESS\fP   104"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_F_VERIFY_ZKP\fP   100"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_G_TO_THE_X3_IS_NOT_LEGAL\fP   108"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_G_TO_THE_X4_IS_NOT_LEGAL\fP   109"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_G_TO_THE_X4_IS_ONE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_HASH_OF_HASH_OF_KEY_MISMATCH\fP   106"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_HASH_OF_KEY_MISMATCH\fP   107"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_VERIFY_B_FAILED\fP   102"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_VERIFY_X3_FAILED\fP   103"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_VERIFY_X4_FAILED\fP   104"
+.br
+.ti -1c
+.RI "#define \fBJPAKE_R_ZKP_VERIFY_FAILED\fP   100"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBJPAKE_CTX\fP \fBJPAKE_CTX\fP"
+.br
+.ti -1c
+.RI "typedef \fBJPAKE_STEP_PART\fP \fBJPAKE_STEP2\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBJPAKE_CTX\fP * \fBJPAKE_CTX_new\fP (const char *name, const char *peer_name, const \fBBIGNUM\fP *\fBp\fP, const \fBBIGNUM\fP *g, const \fBBIGNUM\fP *q, const \fBBIGNUM\fP *secret)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_CTX_free\fP (\fBJPAKE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP1_init\fP (\fBJPAKE_STEP1\fP *s1)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP1_generate\fP (\fBJPAKE_STEP1\fP *send, \fBJPAKE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP1_process\fP (\fBJPAKE_CTX\fP *ctx, const \fBJPAKE_STEP1\fP *received)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP1_release\fP (\fBJPAKE_STEP1\fP *s1)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP2_init\fP (\fBJPAKE_STEP2\fP *s2)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP2_generate\fP (\fBJPAKE_STEP2\fP *send, \fBJPAKE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP2_process\fP (\fBJPAKE_CTX\fP *ctx, const \fBJPAKE_STEP2\fP *received)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP2_release\fP (\fBJPAKE_STEP2\fP *s2)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP3A_init\fP (\fBJPAKE_STEP3A\fP *s3a)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP3A_generate\fP (\fBJPAKE_STEP3A\fP *send, \fBJPAKE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP3A_process\fP (\fBJPAKE_CTX\fP *ctx, const \fBJPAKE_STEP3A\fP *received)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP3A_release\fP (\fBJPAKE_STEP3A\fP *s3a)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP3B_init\fP (\fBJPAKE_STEP3B\fP *s3b)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP3B_generate\fP (\fBJPAKE_STEP3B\fP *send, \fBJPAKE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBJPAKE_STEP3B_process\fP (\fBJPAKE_CTX\fP *ctx, const \fBJPAKE_STEP3B\fP *received)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBJPAKE_STEP3B_release\fP (\fBJPAKE_STEP3B\fP *s3b)"
+.br
+.ti -1c
+.RI "const \fBBIGNUM\fP * \fBJPAKE_get_shared_key\fP (\fBJPAKE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_JPAKE_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define JPAKE_F_JPAKE_STEP1_PROCESS   101"
+
+.PP
+Definition at line 108 of file jpake\&.h\&.
+.SS "#define JPAKE_F_JPAKE_STEP2_PROCESS   102"
+
+.PP
+Definition at line 109 of file jpake\&.h\&.
+.SS "#define JPAKE_F_JPAKE_STEP3A_PROCESS   103"
+
+.PP
+Definition at line 110 of file jpake\&.h\&.
+.SS "#define JPAKE_F_JPAKE_STEP3B_PROCESS   104"
+
+.PP
+Definition at line 111 of file jpake\&.h\&.
+.SS "#define JPAKE_F_VERIFY_ZKP   100"
+
+.PP
+Definition at line 112 of file jpake\&.h\&.
+.SS "#define JPAKE_R_G_TO_THE_X3_IS_NOT_LEGAL   108"
+
+.PP
+Definition at line 115 of file jpake\&.h\&.
+.SS "#define JPAKE_R_G_TO_THE_X4_IS_NOT_LEGAL   109"
+
+.PP
+Definition at line 116 of file jpake\&.h\&.
+.SS "#define JPAKE_R_G_TO_THE_X4_IS_ONE   105"
+
+.PP
+Definition at line 117 of file jpake\&.h\&.
+.SS "#define JPAKE_R_HASH_OF_HASH_OF_KEY_MISMATCH   106"
+
+.PP
+Definition at line 118 of file jpake\&.h\&.
+.SS "#define JPAKE_R_HASH_OF_KEY_MISMATCH   107"
+
+.PP
+Definition at line 119 of file jpake\&.h\&.
+.SS "#define JPAKE_R_VERIFY_B_FAILED   102"
+
+.PP
+Definition at line 120 of file jpake\&.h\&.
+.SS "#define JPAKE_R_VERIFY_X3_FAILED   103"
+
+.PP
+Definition at line 121 of file jpake\&.h\&.
+.SS "#define JPAKE_R_VERIFY_X4_FAILED   104"
+
+.PP
+Definition at line 122 of file jpake\&.h\&.
+.SS "#define JPAKE_R_ZKP_VERIFY_FAILED   100"
+
+.PP
+Definition at line 123 of file jpake\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBJPAKE_CTX\fP \fBJPAKE_CTX\fP"
+
+.PP
+Definition at line 24 of file jpake\&.h\&.
+.SS "typedef \fBJPAKE_STEP_PART\fP \fBJPAKE_STEP2\fP"
+
+.PP
+Definition at line 43 of file jpake\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBJPAKE_CTX\fP* JPAKE_CTX_new (const char * name, const char * peer_name, const \fBBIGNUM\fP * p, const \fBBIGNUM\fP * g, const \fBBIGNUM\fP * q, const \fBBIGNUM\fP * secret)"
+
+.SS "\fBvoid\fP JPAKE_CTX_free (\fBJPAKE_CTX\fP * ctx)"
+
+.SS "\fBvoid\fP JPAKE_STEP1_init (\fBJPAKE_STEP1\fP * s1)"
+
+.SS "int JPAKE_STEP1_generate (\fBJPAKE_STEP1\fP * send, \fBJPAKE_CTX\fP * ctx)"
+
+.SS "int JPAKE_STEP1_process (\fBJPAKE_CTX\fP * ctx, const \fBJPAKE_STEP1\fP * received)"
+
+.SS "\fBvoid\fP JPAKE_STEP1_release (\fBJPAKE_STEP1\fP * s1)"
+
+.SS "\fBvoid\fP JPAKE_STEP2_init (\fBJPAKE_STEP2\fP * s2)"
+
+.SS "int JPAKE_STEP2_generate (\fBJPAKE_STEP2\fP * send, \fBJPAKE_CTX\fP * ctx)"
+
+.SS "int JPAKE_STEP2_process (\fBJPAKE_CTX\fP * ctx, const \fBJPAKE_STEP2\fP * received)"
+
+.SS "\fBvoid\fP JPAKE_STEP2_release (\fBJPAKE_STEP2\fP * s2)"
+
+.SS "\fBvoid\fP JPAKE_STEP3A_init (\fBJPAKE_STEP3A\fP * s3a)"
+
+.SS "int JPAKE_STEP3A_generate (\fBJPAKE_STEP3A\fP * send, \fBJPAKE_CTX\fP * ctx)"
+
+.SS "int JPAKE_STEP3A_process (\fBJPAKE_CTX\fP * ctx, const \fBJPAKE_STEP3A\fP * received)"
+
+.SS "\fBvoid\fP JPAKE_STEP3A_release (\fBJPAKE_STEP3A\fP * s3a)"
+
+.SS "\fBvoid\fP JPAKE_STEP3B_init (\fBJPAKE_STEP3B\fP * s3b)"
+
+.SS "int JPAKE_STEP3B_generate (\fBJPAKE_STEP3B\fP * send, \fBJPAKE_CTX\fP * ctx)"
+
+.SS "int JPAKE_STEP3B_process (\fBJPAKE_CTX\fP * ctx, const \fBJPAKE_STEP3B\fP * received)"
+
+.SS "\fBvoid\fP JPAKE_STEP3B_release (\fBJPAKE_STEP3B\fP * s3b)"
+
+.SS "const \fBBIGNUM\fP* JPAKE_get_shared_key (\fBJPAKE_CTX\fP * ctx)"
+
+.SS "\fBvoid\fP ERR_load_JPAKE_strings (\fBvoid\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

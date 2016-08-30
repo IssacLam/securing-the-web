@@ -1,0 +1,744 @@
+\hypertarget{s2n__random_8c}{}\section{s2n-\/master/utils/s2n\+\_\+random.c File Reference}
+\label{s2n__random_8c}\index{s2n-\/master/utils/s2n\+\_\+random.\+c@{s2n-\/master/utils/s2n\+\_\+random.\+c}}
+{\ttfamily \#include $<$openssl/engine.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/stat.\+h$>$}\\*
+{\ttfamily \#include $<$sys/param.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$limits.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$cpuid.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+drbg.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$openssl/rand.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+random.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__random_8c_ae4dd015063d5f0e931d2fed286b15078}{E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE}~\char`\"{}/dev/urandom\char`\"{}
+\item 
+\#define \hyperlink{s2n__random_8c_a7ff88d8422b1ba3a921d20844008fe33}{R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG}~0x40000000
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2n__random_8c_a8b545fe8f117de1d7017091b7c62af0e}{s2n\+\_\+on\+\_\+fork} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int \hyperlink{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int \hyperlink{s2n__random_8c_ad938aae887615bb174644a34d01c662d}{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8c_acfa5dd5fea029277b9439895122a3489}{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\+\_\+get\+\_\+urandom\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int64\+\_\+t \hyperlink{s2n__random_8c_a8aabcb071120a9849d4615358000a8a6}{s2n\+\_\+public\+\_\+random} (int64\+\_\+t max)
+\item 
+int \hyperlink{s2n__random_8c_a5f8ea92e82578faa78e77cff67f4038a}{s2n\+\_\+openssl\+\_\+compat\+\_\+rand} (unsigned char $\ast$buf, int \hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num})
+\item 
+int \hyperlink{s2n__random_8c_a9a0060bad207cae55b010073cfb1e1d5}{s2n\+\_\+openssl\+\_\+compat\+\_\+status} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8c_ae703703219d258928fd51a5078b5df88}{s2n\+\_\+openssl\+\_\+compat\+\_\+init} (\hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$unused)
+\item 
+int \hyperlink{s2n__random_8c_abc620f8194383c6fcddd911edcf7d692}{s2n\+\_\+init} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8c_a907fdf445e5fb1752f1b18f0ddf935b3}{s2n\+\_\+cleanup} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8c_a3d5fc4d21639fe086400e7337bc82666}{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand} ()
+\item 
+int \hyperlink{s2n__random_8c_aeee853dca0be2d4cda8be3be4e6e0b63}{s2n\+\_\+get\+\_\+rdrand\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$out)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{crypto_2ossl__typ_8h_aec8248984ce6fa1856c2c53f82ba44e2}{R\+A\+N\+D\+\_\+\+M\+E\+T\+H\+OD} \hyperlink{s2n__random_8c_af78777d18f15218183f96f16760973f9}{s2n\+\_\+openssl\+\_\+rand\+\_\+method}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE@{E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE}}
+\index{E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE@{E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE}{ENTROPY_SOURCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+N\+T\+R\+O\+P\+Y\+\_\+\+S\+O\+U\+R\+CE~\char`\"{}/dev/urandom\char`\"{}}\hypertarget{s2n__random_8c_ae4dd015063d5f0e931d2fed286b15078}{}\label{s2n__random_8c_ae4dd015063d5f0e931d2fed286b15078}
+
+
+Definition at line 42 of file s2n\+\_\+random.\+c.
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG@{R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG}}
+\index{R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG@{R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG}{RDRAND_ECX_FLAG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+D\+R\+A\+N\+D\+\_\+\+E\+C\+X\+\_\+\+F\+L\+AG~0x40000000}\hypertarget{s2n__random_8c_a7ff88d8422b1ba3a921d20844008fe33}{}\label{s2n__random_8c_a7ff88d8422b1ba3a921d20844008fe33}
+
+
+Definition at line 45 of file s2n\+\_\+random.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+on\+\_\+fork@{s2n\+\_\+on\+\_\+fork}}
+\index{s2n\+\_\+on\+\_\+fork@{s2n\+\_\+on\+\_\+fork}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+on\+\_\+fork(void)}{s2n_on_fork(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} s2n\+\_\+on\+\_\+fork (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a8b545fe8f117de1d7017091b7c62af0e}{}\label{s2n__random_8c_a8b545fe8f117de1d7017091b7c62af0e}
+
+
+Definition at line 55 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+56 \{
+57     zero\_if\_forked = 0;
+58 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a8b545fe8f117de1d7017091b7c62af0e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a8b545fe8f117de1d7017091b7c62af0e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_public_random_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{}\label{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}
+
+
+Definition at line 83 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+84 \{
+85     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_defend\_if\_forked());
+86     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&per\_thread\_public\_drbg, blob));
+87 
+88     \textcolor{keywordflow}{return} 0;
+89 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_private_random_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{}\label{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}
+
+
+Definition at line 91 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+92 \{
+93     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_defend\_if\_forked());
+94     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&per\_thread\_private\_drbg, blob));
+95 
+96     \textcolor{keywordflow}{return} 0;
+97 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used}}
+\index{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used(void)}{s2n_get_public_random_bytes_used(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_ad938aae887615bb174644a34d01c662d}{}\label{s2n__random_8c_ad938aae887615bb174644a34d01c662d}
+
+
+Definition at line 99 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+100 \{
+101     \textcolor{keywordflow}{return} \hyperlink{s2n__drbg_8c_ae4f4d541d1e3dbb9ed3d8716091ad250}{s2n\_drbg\_bytes\_used}(&per\_thread\_public\_drbg);
+102 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_ad938aae887615bb174644a34d01c662d_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used}}
+\index{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used(void)}{s2n_get_private_random_bytes_used(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_acfa5dd5fea029277b9439895122a3489}{}\label{s2n__random_8c_acfa5dd5fea029277b9439895122a3489}
+
+
+Definition at line 104 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+105 \{
+106     \textcolor{keywordflow}{return} \hyperlink{s2n__drbg_8c_ae4f4d541d1e3dbb9ed3d8716091ad250}{s2n\_drbg\_bytes\_used}(&per\_thread\_private\_drbg);
+107 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_acfa5dd5fea029277b9439895122a3489_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{s2n__random_8c_acfa5dd5fea029277b9439895122a3489_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+get\+\_\+urandom\+\_\+data@{s2n\+\_\+get\+\_\+urandom\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+urandom\+\_\+data@{s2n\+\_\+get\+\_\+urandom\+\_\+data}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+urandom\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_urandom_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+urandom\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a803d79131d0fb9d77393aae0cdc2c169}{}\label{s2n__random_8c_a803d79131d0fb9d77393aae0cdc2c169}
+
+
+Definition at line 109 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+110 \{
+111     uint32\_t n = blob->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+112     uint8\_t *data = blob->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+113 
+114     \textcolor{keywordflow}{if} (\hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd} == -1) \{
+115         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374af004c642762f48560f1aff9537eb2074}{S2N\_ERR\_RANDOM\_UNITIALIZED});
+116     \}
+117 
+118     \textcolor{keywordflow}{while} (n) \{
+119         \textcolor{keywordtype}{int} r = read(\hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd}, data, n);
+120         \textcolor{keywordflow}{if} (r <= 0) \{
+121             sleep(1);
+122             \textcolor{keywordflow}{continue};
+123         \}
+124 
+125         data += r;
+126         n -= r;
+127     \}
+128 
+129     \textcolor{keywordflow}{return} 0;
+130 \}
+\end{DoxyCode}
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+public\+\_\+random@{s2n\+\_\+public\+\_\+random}}
+\index{s2n\+\_\+public\+\_\+random@{s2n\+\_\+public\+\_\+random}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+public\+\_\+random(int64\+\_\+t max)}{s2n_public_random(int64_t max)}}]{\setlength{\rightskip}{0pt plus 5cm}int64\+\_\+t s2n\+\_\+public\+\_\+random (
+\begin{DoxyParamCaption}
+\item[{int64\+\_\+t}]{max}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a8aabcb071120a9849d4615358000a8a6}{}\label{s2n__random_8c_a8aabcb071120a9849d4615358000a8a6}
+
+
+Definition at line 132 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+133 \{
+134     uint64\_t r;
+135 
+136     \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\_check}(max, 0);
+137 
+138     \textcolor{keywordflow}{while} (1) \{
+139         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} blob = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = (\textcolor{keywordtype}{void} *)&r, \textcolor{keyword}{sizeof}(r) \};
+140         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+141 
+142         \textcolor{comment}{/* Imagine an int was one byte and UINT\_MAX was 256. If the}
+143 \textcolor{comment}{         * caller asked for s2n\_random(129, ...) we'd end up in}
+144 \textcolor{comment}{         * trouble. Each number in the range 0...127 would be twice}
+145 \textcolor{comment}{         * as likely as 128. That's because r == 0 % 129 -> 0, and}
+146 \textcolor{comment}{         * r == 129 % 129 -> 0, but only r == 128 returns 128,}
+147 \textcolor{comment}{         * r == 257 is out of range.}
+148 \textcolor{comment}{         *}
+149 \textcolor{comment}{         * To de-bias the dice, we discard values of r that are higher}
+150 \textcolor{comment}{         * that the highest multiple of 'max' an int can support. If}
+151 \textcolor{comment}{         * max is a uint, then in the worst case we discard 50% - 1 r's.}
+152 \textcolor{comment}{         * But since 'max' is an int and INT\_MAX is <= UINT\_MAX / 2,}
+153 \textcolor{comment}{         * in the worst case we discard 25% - 1 r's.}
+154 \textcolor{comment}{         */}
+155         \textcolor{keywordflow}{if} (r < (UINT64\_MAX - (UINT64\_MAX % max))) \{
+156             \textcolor{keywordflow}{return} r % max;
+157         \}
+158     \}
+159 
+160     \textcolor{keywordflow}{return} -1;
+161 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a8aabcb071120a9849d4615358000a8a6_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a8aabcb071120a9849d4615358000a8a6_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+openssl\+\_\+compat\+\_\+rand@{s2n\+\_\+openssl\+\_\+compat\+\_\+rand}}
+\index{s2n\+\_\+openssl\+\_\+compat\+\_\+rand@{s2n\+\_\+openssl\+\_\+compat\+\_\+rand}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+openssl\+\_\+compat\+\_\+rand(unsigned char $\ast$buf, int num)}{s2n_openssl_compat_rand(unsigned char *buf, int num)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+openssl\+\_\+compat\+\_\+rand (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{buf, }
+\item[{int}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a5f8ea92e82578faa78e77cff67f4038a}{}\label{s2n__random_8c_a5f8ea92e82578faa78e77cff67f4038a}
+
+
+Definition at line 165 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+166 \{
+167     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} out = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = buf,.size = \hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num} \};
+168 
+169     \textcolor{keywordflow}{if} (\hyperlink{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\_get\_private\_random\_data}(&out) < 0) \{
+170         \textcolor{keywordflow}{return} 0;
+171     \}
+172     \textcolor{keywordflow}{return} 1;
+173 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a5f8ea92e82578faa78e77cff67f4038a_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+openssl\+\_\+compat\+\_\+status@{s2n\+\_\+openssl\+\_\+compat\+\_\+status}}
+\index{s2n\+\_\+openssl\+\_\+compat\+\_\+status@{s2n\+\_\+openssl\+\_\+compat\+\_\+status}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+openssl\+\_\+compat\+\_\+status(void)}{s2n_openssl_compat_status(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+openssl\+\_\+compat\+\_\+status (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a9a0060bad207cae55b010073cfb1e1d5}{}\label{s2n__random_8c_a9a0060bad207cae55b010073cfb1e1d5}
+
+
+Definition at line 175 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+176 \{
+177     \textcolor{keywordflow}{return} 1;
+178 \}
+\end{DoxyCode}
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+openssl\+\_\+compat\+\_\+init@{s2n\+\_\+openssl\+\_\+compat\+\_\+init}}
+\index{s2n\+\_\+openssl\+\_\+compat\+\_\+init@{s2n\+\_\+openssl\+\_\+compat\+\_\+init}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+openssl\+\_\+compat\+\_\+init(\+E\+N\+G\+I\+N\+E $\ast$unused)}{s2n_openssl_compat_init(ENGINE *unused)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+openssl\+\_\+compat\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{unused}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_ae703703219d258928fd51a5078b5df88}{}\label{s2n__random_8c_ae703703219d258928fd51a5078b5df88}
+
+
+Definition at line 180 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+181 \{
+182     \textcolor{keywordflow}{return} 1;
+183 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_ae703703219d258928fd51a5078b5df88_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+init@{s2n\+\_\+init}}
+\index{s2n\+\_\+init@{s2n\+\_\+init}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+init(void)}{s2n_init(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_abc620f8194383c6fcddd911edcf7d692}{}\label{s2n__random_8c_abc620f8194383c6fcddd911edcf7d692}
+
+
+Definition at line 195 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+196 \{
+197     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a81a78b9679f38bdf48cc544f6268599d}{s2n\_mem\_init}());
+198 
+199   OPEN:
+200     \hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd} = open(\hyperlink{s2n__random_8c_ae4dd015063d5f0e931d2fed286b15078}{ENTROPY\_SOURCE}, O\_RDONLY);
+201     \textcolor{keywordflow}{if} (\hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd} == -1) \{
+202         \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+203             \textcolor{keywordflow}{goto} OPEN;
+204         \}
+205         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a3775b7d21a1f01da2b7c97a07bdf34e3}{S2N\_ERR\_OPEN\_RANDOM});
+206     \}
+207 \textcolor{preprocessor}{#if defined(MAP\_INHERIT\_ZERO)}
+208     zero\_if\_forked\_ptr = mmap(NULL, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}), PROT\_READ | PROT\_WRITE, MAP\_ANON | MAP\_PRIVATE, -1, 0);
+209     \textcolor{keywordflow}{if} (zero\_if\_forked\_ptr == MAP\_FAILED) \{
+210         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a3775b7d21a1f01da2b7c97a07bdf34e3}{S2N\_ERR\_OPEN\_RANDOM});
+211     \}
+212 
+213     \textcolor{keywordflow}{if} (minherit(zero\_if\_forked\_ptr, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}), MAP\_INHERIT\_ZERO) == -1) \{
+214         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a3775b7d21a1f01da2b7c97a07bdf34e3}{S2N\_ERR\_OPEN\_RANDOM});
+215     \}
+216 \textcolor{preprocessor}{#else}
+217 
+218     \textcolor{keywordflow}{if} (pthread\_atfork(NULL, NULL, \hyperlink{s2n__random_8c_a8b545fe8f117de1d7017091b7c62af0e}{s2n\_on\_fork}) != 0) \{
+219         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a3775b7d21a1f01da2b7c97a07bdf34e3}{S2N\_ERR\_OPEN\_RANDOM});
+220     \}
+221 \textcolor{preprocessor}{#endif}
+222 
+223     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_defend\_if\_forked());
+224 
+225 \textcolor{preprocessor}{#if !defined(OPENSSL\_IS\_BORINGSSL) && !defined(OPENSSL\_FIPS) && !defined(LIBRESSL\_VERSION\_NUMBER)}
+226     \textcolor{comment}{/* Create an engine */}
+227     \hyperlink{structengine__st}{ENGINE} *\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e} = \hyperlink{crypto_2engine_2engine_8h_aab1082b9f35a8a4ad67076250afee1f8}{ENGINE\_new}();
+228     \textcolor{keywordflow}{if} (e == NULL ||
+229         \hyperlink{crypto_2engine_2engine_8h_a7794d1463610ee98b09352320d810fee}{ENGINE\_set\_id}(e, \textcolor{stringliteral}{"s2n"}) != 1 ||
+230         \hyperlink{crypto_2engine_2engine_8h_adc177f858ed0f15223fb517cd8ebdaf6}{ENGINE\_set\_name}(e, \textcolor{stringliteral}{"s2n entropy generator"}) != 1 ||
+231         \hyperlink{crypto_2engine_2engine_8h_a644312cc9941fe9d8405042e6d51e26b}{ENGINE\_set\_flags}(e, \hyperlink{crypto_2engine_2engine_8h_a415460b9028b7841282b400c46bdb477}{ENGINE\_FLAGS\_NO\_REGISTER\_ALL}) != 1 
+      ||
+232         \hyperlink{crypto_2engine_2engine_8h_ae3fab0d50bef05837f0dc2947b16ff5a}{ENGINE\_set\_init\_function}(e, 
+      \hyperlink{s2n__random_8c_ae703703219d258928fd51a5078b5df88}{s2n\_openssl\_compat\_init}) != 1 || \hyperlink{crypto_2engine_2engine_8h_a38d2b948c16bd179824554df829ae113}{ENGINE\_set\_RAND}(e, &
+      \hyperlink{s2n__random_8c_af78777d18f15218183f96f16760973f9}{s2n\_openssl\_rand\_method}) != 1 || \hyperlink{crypto_2engine_2engine_8h_ae8e458c34f720ac959bf95f576181797}{ENGINE\_add}(e) != 1 || 
+      \hyperlink{crypto_2engine_2engine_8h_af1ed15ac480cec888dbc05e8f779c6a2}{ENGINE\_free}(e) != 1) \{
+233         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a3775b7d21a1f01da2b7c97a07bdf34e3}{S2N\_ERR\_OPEN\_RANDOM});
+234     \}
+235 
+236     \textcolor{comment}{/* Use that engine for rand() */}
+237     e = \hyperlink{crypto_2engine_2engine_8h_a3477259861a506347c6dcfe3e83daaaa}{ENGINE\_by\_id}(\textcolor{stringliteral}{"s2n"});
+238     \textcolor{keywordflow}{if} (e == NULL || \hyperlink{crypto_2engine_2engine_8h_a6979fffdbb8d8e53c5e24f5c2d56765b}{ENGINE\_init}(e) != 1 || \hyperlink{crypto_2engine_2engine_8h_adcf4dd4486469bed026516ebdeb2bbbc}{ENGINE\_set\_default}(e, 
+      \hyperlink{crypto_2engine_2engine_8h_a25b25fbb22d4a16cd3d7544503011614}{ENGINE\_METHOD\_RAND}) != 1) \{
+239         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a3775b7d21a1f01da2b7c97a07bdf34e3}{S2N\_ERR\_OPEN\_RANDOM});
+240     \}
+241 \textcolor{preprocessor}{#endif}
+242 
+243     \textcolor{keywordflow}{return} 0;
+244 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_abc620f8194383c6fcddd911edcf7d692_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=275pt]{s2n__random_8c_abc620f8194383c6fcddd911edcf7d692_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+cleanup@{s2n\+\_\+cleanup}}
+\index{s2n\+\_\+cleanup@{s2n\+\_\+cleanup}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cleanup(void)}{s2n_cleanup(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+cleanup (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a907fdf445e5fb1752f1b18f0ddf935b3}{}\label{s2n__random_8c_a907fdf445e5fb1752f1b18f0ddf935b3}
+
+
+Definition at line 246 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+247 \{
+248     \textcolor{keywordflow}{if} (\hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd} == -1) \{
+249         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374adecf0d429d255afc70afd5c1606cfa43}{S2N\_ERR\_NOT\_INITIALIZED});
+250     \}
+251 
+252     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__drbg_8c_a4ce9d0f91b5ddb06f136bd1029e88f15}{s2n\_drbg\_wipe}(&per\_thread\_private\_drbg));
+253     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__drbg_8c_a4ce9d0f91b5ddb06f136bd1029e88f15}{s2n\_drbg\_wipe}(&per\_thread\_public\_drbg));
+254     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(close(\hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd}));
+255     \hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd} = -1;
+256 
+257     \textcolor{keywordflow}{return} 0;
+258 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a907fdf445e5fb1752f1b18f0ddf935b3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{s2n__random_8c_a907fdf445e5fb1752f1b18f0ddf935b3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand@{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand}}
+\index{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand@{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand()}{s2n_cpu_supports_rdrand()}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_a3d5fc4d21639fe086400e7337bc82666}{}\label{s2n__random_8c_a3d5fc4d21639fe086400e7337bc82666}
+
+
+Definition at line 260 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+261 \{
+262 \textcolor{preprocessor}{#if defined(\_\_x86\_64\_\_)||defined(\_\_i386\_\_)}
+263     uint32\_t eax, ebx, ecx, edx;
+264     \textcolor{keywordflow}{if} (!\_\_get\_cpuid(1, &eax, &ebx, &ecx, &edx)) \{
+265         \textcolor{keywordflow}{return} 0;
+266     \}
+267 
+268     \textcolor{keywordflow}{if} (ecx & \hyperlink{s2n__random_8c_a7ff88d8422b1ba3a921d20844008fe33}{RDRAND\_ECX\_FLAG}) \{
+269         \textcolor{keywordflow}{return} 1;
+270     \}
+271 \textcolor{preprocessor}{#endif}
+272     \textcolor{keywordflow}{return} 0;
+273 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_a3d5fc4d21639fe086400e7337bc82666_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+get\+\_\+rdrand\+\_\+data@{s2n\+\_\+get\+\_\+rdrand\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+rdrand\+\_\+data@{s2n\+\_\+get\+\_\+rdrand\+\_\+data}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+rdrand\+\_\+data(struct s2n\+\_\+blob $\ast$out)}{s2n_get_rdrand_data(struct s2n_blob *out)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+rdrand\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8c_aeee853dca0be2d4cda8be3be4e6e0b63}{}\label{s2n__random_8c_aeee853dca0be2d4cda8be3be4e6e0b63}
+
+
+Definition at line 284 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+285 \{
+286 
+287 \textcolor{preprocessor}{#if defined(\_\_x86\_64\_\_)||defined(\_\_i386\_\_)}
+288     \textcolor{keywordtype}{int} space\_remaining = 0;
+289     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} stuffer;
+290     \textcolor{keyword}{union }\{
+291         uint64\_t \hyperlink{modes__lcl_8h_ad758b7a5c3f18ed79d2fcd23d9f16357}{u64};
+292         uint8\_t \hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8}[8];
+293     \} output;
+294 
+295     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&stuffer, out));
+296 
+297     \textcolor{keywordflow}{while} ((space\_remaining = \hyperlink{s2n__stuffer_8h_ac489043958bdc589bdad9b4fa5e83b93}{s2n\_stuffer\_space\_remaining}(&stuffer))) \{
+298         \textcolor{keywordtype}{int} success = 0;
+299 
+300         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} tries = 0; tries < 10; tries++) \{
+301             \_\_asm\_\_ \_\_volatile\_\_(\textcolor{stringliteral}{".byte 0x48;\(\backslash\)n"} \textcolor{stringliteral}{".byte 0x0f;\(\backslash\)n"} \textcolor{stringliteral}{".byte 0xc7;\(\backslash\)n"} \textcolor{stringliteral}{".byte 0xf0;\(\backslash\)n"} \textcolor{stringliteral}{"adcl
+       $0x00, %%ebx;\(\backslash\)n"}:\textcolor{stringliteral}{"=b"}(success), \textcolor{stringliteral}{"=a"}(output.u64)
+302                                  :\textcolor{stringliteral}{"b"}(0)
+303                                  :\textcolor{stringliteral}{"cc"});
+304 
+305             \textcolor{keywordflow}{if} (success) \{
+306                 \textcolor{keywordflow}{break};
+307             \}
+308         \}
+309 
+310         \textcolor{keywordflow}{if} (!success) \{
+311             \textcolor{keywordflow}{return} -1;
+312         \}
+313 
+314         \textcolor{keywordtype}{int} data\_to\_fill = MIN(\textcolor{keyword}{sizeof}(output), space\_remaining);
+315 
+316         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&stuffer, output.u8, data\_to\_fill));
+317     \}
+318 
+319     \textcolor{keywordflow}{return} 0;
+320 \textcolor{preprocessor}{#else}
+321     \textcolor{keywordflow}{return} -1;
+322 \textcolor{preprocessor}{#endif}
+323 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_aeee853dca0be2d4cda8be3be4e6e0b63_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8c_aeee853dca0be2d4cda8be3be4e6e0b63_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}!s2n\+\_\+openssl\+\_\+rand\+\_\+method@{s2n\+\_\+openssl\+\_\+rand\+\_\+method}}
+\index{s2n\+\_\+openssl\+\_\+rand\+\_\+method@{s2n\+\_\+openssl\+\_\+rand\+\_\+method}!s2n\+\_\+random.\+c@{s2n\+\_\+random.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+openssl\+\_\+rand\+\_\+method}{s2n_openssl_rand_method}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+A\+N\+D\+\_\+\+M\+E\+T\+H\+OD} s2n\+\_\+openssl\+\_\+rand\+\_\+method}\hypertarget{s2n__random_8c_af78777d18f15218183f96f16760973f9}{}\label{s2n__random_8c_af78777d18f15218183f96f16760973f9}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    .seed = NULL,
+    .bytes = \hyperlink{s2n__random_8c_a5f8ea92e82578faa78e77cff67f4038a}{s2n\_openssl\_compat\_rand},
+    .cleanup = NULL,
+    .add = NULL,
+    .pseudorand = \hyperlink{s2n__random_8c_a5f8ea92e82578faa78e77cff67f4038a}{s2n\_openssl\_compat\_rand},
+    .status = \hyperlink{s2n__random_8c_a9a0060bad207cae55b010073cfb1e1d5}{s2n\_openssl\_compat\_status}
+\}
+\end{DoxyCode}
+
+
+Definition at line 185 of file s2n\+\_\+random.\+c.
+

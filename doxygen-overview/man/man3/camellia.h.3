@@ -1,0 +1,140 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/camellia/camellia.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/camellia/camellia.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcamellia_key_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCAMELLIA_ENCRYPT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCAMELLIA_DECRYPT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCAMELLIA_BLOCK_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBCAMELLIA_TABLE_BYTE_LEN\fP   272"
+.br
+.ti -1c
+.RI "#define \fBCAMELLIA_TABLE_WORD_LEN\fP   (\fBCAMELLIA_TABLE_BYTE_LEN\fP / 4)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned int \fBKEY_TABLE_TYPE\fP[\fBCAMELLIA_TABLE_WORD_LEN\fP]"
+.br
+.ti -1c
+.RI "typedef struct \fBcamellia_key_st\fP \fBCAMELLIA_KEY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBCamellia_set_key\fP (const unsigned char *userKey, const int \fBbits\fP, \fBCAMELLIA_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_encrypt\fP (const unsigned char *in, unsigned char *out, const \fBCAMELLIA_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_decrypt\fP (const unsigned char *in, unsigned char *out, const \fBCAMELLIA_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_ecb_encrypt\fP (const unsigned char *in, unsigned char *out, const \fBCAMELLIA_KEY\fP *key, const int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_cbc_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBCAMELLIA_KEY\fP *key, unsigned char *ivec, const int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_cfb128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBCAMELLIA_KEY\fP *key, unsigned char *ivec, int *\fBnum\fP, const int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_cfb1_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBCAMELLIA_KEY\fP *key, unsigned char *ivec, int *\fBnum\fP, const int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_cfb8_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBCAMELLIA_KEY\fP *key, unsigned char *ivec, int *\fBnum\fP, const int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_ofb128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBCAMELLIA_KEY\fP *key, unsigned char *ivec, int *\fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCamellia_ctr128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBCAMELLIA_KEY\fP *key, unsigned char ivec[\fBCAMELLIA_BLOCK_SIZE\fP], unsigned char ecount_buf[\fBCAMELLIA_BLOCK_SIZE\fP], unsigned int *\fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CAMELLIA_ENCRYPT   1"
+
+.PP
+Definition at line 63 of file camellia\&.h\&.
+.SS "#define CAMELLIA_DECRYPT   0"
+
+.PP
+Definition at line 64 of file camellia\&.h\&.
+.SS "#define CAMELLIA_BLOCK_SIZE   16"
+
+.PP
+Definition at line 77 of file camellia\&.h\&.
+.SS "#define CAMELLIA_TABLE_BYTE_LEN   272"
+
+.PP
+Definition at line 78 of file camellia\&.h\&.
+.SS "#define CAMELLIA_TABLE_WORD_LEN   (\fBCAMELLIA_TABLE_BYTE_LEN\fP / 4)"
+
+.PP
+Definition at line 79 of file camellia\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned int KEY_TABLE_TYPE[\fBCAMELLIA_TABLE_WORD_LEN\fP]"
+
+.PP
+Definition at line 81 of file camellia\&.h\&.
+.SS "typedef struct \fBcamellia_key_st\fP \fBCAMELLIA_KEY\fP"
+
+.PP
+Definition at line 91 of file camellia\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int Camellia_set_key (const unsigned char * userKey, const int bits, \fBCAMELLIA_KEY\fP * key)"
+
+.SS "\fBvoid\fP Camellia_encrypt (const unsigned char * in, unsigned char * out, const \fBCAMELLIA_KEY\fP * key)"
+
+.SS "\fBvoid\fP Camellia_decrypt (const unsigned char * in, unsigned char * out, const \fBCAMELLIA_KEY\fP * key)"
+
+.SS "\fBvoid\fP Camellia_ecb_encrypt (const unsigned char * in, unsigned char * out, const \fBCAMELLIA_KEY\fP * key, const int enc)"
+
+.SS "\fBvoid\fP Camellia_cbc_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBCAMELLIA_KEY\fP * key, unsigned char * ivec, const int enc)"
+
+.SS "\fBvoid\fP Camellia_cfb128_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBCAMELLIA_KEY\fP * key, unsigned char * ivec, int * num, const int enc)"
+
+.SS "\fBvoid\fP Camellia_cfb1_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBCAMELLIA_KEY\fP * key, unsigned char * ivec, int * num, const int enc)"
+
+.SS "\fBvoid\fP Camellia_cfb8_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBCAMELLIA_KEY\fP * key, unsigned char * ivec, int * num, const int enc)"
+
+.SS "\fBvoid\fP Camellia_ofb128_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBCAMELLIA_KEY\fP * key, unsigned char * ivec, int * num)"
+
+.SS "\fBvoid\fP Camellia_ctr128_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBCAMELLIA_KEY\fP * key, unsigned char ivec[CAMELLIA_BLOCK_SIZE], unsigned char ecount_buf[CAMELLIA_BLOCK_SIZE], unsigned int * num)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

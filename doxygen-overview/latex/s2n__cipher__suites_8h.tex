@@ -1,0 +1,250 @@
+\hypertarget{s2n__cipher__suites_8h}{}\section{s2n-\/master/tls/s2n\+\_\+cipher\+\_\+suites.h File Reference}
+\label{s2n__cipher__suites_8h}\index{s2n-\/master/tls/s2n\+\_\+cipher\+\_\+suites.\+h@{s2n-\/master/tls/s2n\+\_\+cipher\+\_\+suites.\+h}}
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls\+\_\+parameters.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+cipher.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+hmac.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+cipher\+\_\+suites.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suites_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suites_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__cipher__preferences}{s2n\+\_\+cipher\+\_\+preferences}
+\item 
+struct \hyperlink{structs2n__key__exchange__algorithm}{s2n\+\_\+key\+\_\+exchange\+\_\+algorithm}
+\item 
+struct \hyperlink{structs2n__cipher__suite}{s2n\+\_\+cipher\+\_\+suite}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__cipher__suites_8h_af4ba4603e445c3767469486093d99598}{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH}~0x01  /$\ast$ Diffie–\+Hellman key exchange, including ephemeral $\ast$/
+\item 
+\#define \hyperlink{s2n__cipher__suites_8h_ac118df8a11153c01e071e6c95d15ba15}{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH}~0x02  /$\ast$ Ephemeral key exchange $\ast$/
+\item 
+\#define \hyperlink{s2n__cipher__suites_8h_a12019f7e03ca6cbe2075ef675d5e5dec}{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC}~0x04  /$\ast$ Elliptic curve cryptography $\ast$/
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__cipher__suites_8h_a1fde427e44c9343e87af779ca1666b9e}{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, uint8\+\_\+t wire\mbox{[}\hyperlink{tls_2s2n__crypto_8h_aad5e2a880d4b55cf5450393843a17cf8}{S2\+N\+\_\+\+T\+L\+S\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+T\+E\+\_\+\+L\+EN}\mbox{]})
+\item 
+int \hyperlink{s2n__cipher__suites_8h_a93d49c8f6f3f8a5f4b7e703a61421b7b}{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, uint8\+\_\+t $\ast$wire, uint16\+\_\+t count)
+\item 
+int \hyperlink{s2n__cipher__suites_8h_a786e7c2f58d929af6012129893c03e63}{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, uint8\+\_\+t $\ast$wire, uint16\+\_\+t count)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const struct \hyperlink{structs2n__key__exchange__algorithm}{s2n\+\_\+key\+\_\+exchange\+\_\+algorithm} \hyperlink{s2n__cipher__suites_8h_a613a9bfd4bc2d08b3c4bf076a6414cd7}{s2n\+\_\+rsa}
+\item 
+const struct \hyperlink{structs2n__key__exchange__algorithm}{s2n\+\_\+key\+\_\+exchange\+\_\+algorithm} \hyperlink{s2n__cipher__suites_8h_ae54c83d3e6c88f46035b61ca2a36420c}{s2n\+\_\+dhe}
+\item 
+const struct \hyperlink{structs2n__key__exchange__algorithm}{s2n\+\_\+key\+\_\+exchange\+\_\+algorithm} \hyperlink{s2n__cipher__suites_8h_a7c09044cf54f0fdfea5f59873a080950}{s2n\+\_\+ecdhe}
+\item 
+struct \hyperlink{structs2n__cipher__suite}{s2n\+\_\+cipher\+\_\+suite} \hyperlink{s2n__cipher__suites_8h_a961160365c54a2770d684943f033f4de}{s2n\+\_\+null\+\_\+cipher\+\_\+suite}
+\item 
+struct \hyperlink{structs2n__cipher__preferences}{s2n\+\_\+cipher\+\_\+preferences} $\ast$ \hyperlink{s2n__cipher__suites_8h_a780ec2390d8130868cee81678506bb19}{s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601}
+\item 
+struct \hyperlink{structs2n__cipher__preferences}{s2n\+\_\+cipher\+\_\+preferences} $\ast$ \hyperlink{s2n__cipher__suites_8h_a630ffd3fd2ece88d554e52f20544d82e}{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202}
+\item 
+struct \hyperlink{structs2n__cipher__preferences}{s2n\+\_\+cipher\+\_\+preferences} $\ast$ \hyperlink{s2n__cipher__suites_8h_acd13552accd4dfa5368f19fff72de1f4}{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214}
+\item 
+struct \hyperlink{structs2n__cipher__preferences}{s2n\+\_\+cipher\+\_\+preferences} $\ast$ \hyperlink{s2n__cipher__suites_8h_aa2e2a668cf61856be3c15dccb1ac95cb}{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306}
+\item 
+struct \hyperlink{structs2n__cipher__preferences}{s2n\+\_\+cipher\+\_\+preferences} $\ast$ \hyperlink{s2n__cipher__suites_8h_a7416ea6b89ed6d867237e9c0624ee852}{s2n\+\_\+cipher\+\_\+preferences\+\_\+default}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH@{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH}}
+\index{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH@{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH}{S2N_KEY_EXCHANGE_DH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+DH~0x01  /$\ast$ Diffie–\+Hellman key exchange, including ephemeral $\ast$/}\hypertarget{s2n__cipher__suites_8h_af4ba4603e445c3767469486093d99598}{}\label{s2n__cipher__suites_8h_af4ba4603e445c3767469486093d99598}
+
+
+Definition at line 33 of file s2n\+\_\+cipher\+\_\+suites.\+h.
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH@{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH}}
+\index{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH@{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH}{S2N_KEY_EXCHANGE_EPH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+PH~0x02  /$\ast$ Ephemeral key exchange $\ast$/}\hypertarget{s2n__cipher__suites_8h_ac118df8a11153c01e071e6c95d15ba15}{}\label{s2n__cipher__suites_8h_ac118df8a11153c01e071e6c95d15ba15}
+
+
+Definition at line 34 of file s2n\+\_\+cipher\+\_\+suites.\+h.
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC@{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC}}
+\index{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC@{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC}{S2N_KEY_EXCHANGE_ECC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E\+\_\+\+E\+CC~0x04  /$\ast$ Elliptic curve cryptography $\ast$/}\hypertarget{s2n__cipher__suites_8h_a12019f7e03ca6cbe2075ef675d5e5dec}{}\label{s2n__cipher__suites_8h_a12019f7e03ca6cbe2075ef675d5e5dec}
+
+
+Definition at line 35 of file s2n\+\_\+cipher\+\_\+suites.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client@{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client}}
+\index{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client@{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client(struct s2n\+\_\+connection $\ast$conn, uint8\+\_\+t wire[S2\+N\+\_\+\+T\+L\+S\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+T\+E\+\_\+\+L\+EN])}{s2n_set_cipher_as_client(struct s2n_connection *conn, uint8_t wire[S2N_TLS_CIPHER_SUITE_LEN])}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{uint8\+\_\+t}]{wire\mbox{[}\+S2\+N\+\_\+\+T\+L\+S\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+T\+E\+\_\+\+L\+E\+N\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__cipher__suites_8h_a1fde427e44c9343e87af779ca1666b9e}{}\label{s2n__cipher__suites_8h_a1fde427e44c9343e87af779ca1666b9e}
+
+
+Definition at line 88 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+
+\begin{DoxyCode}
+89 \{
+90     \textcolor{comment}{/* See if the cipher is one we support */}
+91     conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite} = \hyperlink{s2n__cipher__suites_8c_aaa51227c2ad71438bda77345819ce0cb}{s2n\_cipher\_suite\_match}(wire);
+92     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite} == NULL) \{
+93         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a24d9f899017e0ab819c0eccbe0d26625}{S2N\_ERR\_CIPHER\_NOT\_SUPPORTED});
+94     \}
+95 
+96     \textcolor{keywordflow}{return} 0;
+97 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suites_8h_a1fde427e44c9343e87af779ca1666b9e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suites_8h_a1fde427e44c9343e87af779ca1666b9e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server@{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server}}
+\index{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server@{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server(struct s2n\+\_\+connection $\ast$conn, uint8\+\_\+t $\ast$wire, uint16\+\_\+t count)}{s2n_set_cipher_as_sslv2_server(struct s2n_connection *conn, uint8_t *wire, uint16_t count)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+sslv2\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{uint8\+\_\+t $\ast$}]{wire, }
+\item[{uint16\+\_\+t}]{count}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__cipher__suites_8h_a93d49c8f6f3f8a5f4b7e703a61421b7b}{}\label{s2n__cipher__suites_8h_a93d49c8f6f3f8a5f4b7e703a61421b7b}
+
+
+Definition at line 176 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+
+\begin{DoxyCode}
+177 \{
+178     \textcolor{keywordflow}{return} s2n\_set\_cipher\_as\_server(conn, wire, count, 
+      \hyperlink{tls_2s2n__crypto_8h_a3949cc93dd4131fe3bcc6d11d2d43da4}{S2N\_SSLv2\_CIPHER\_SUITE\_LEN});
+179 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suites_8h_a93d49c8f6f3f8a5f4b7e703a61421b7b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server@{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server}}
+\index{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server@{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server(struct s2n\+\_\+connection $\ast$conn, uint8\+\_\+t $\ast$wire, uint16\+\_\+t count)}{s2n_set_cipher_as_tls_server(struct s2n_connection *conn, uint8_t *wire, uint16_t count)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+set\+\_\+cipher\+\_\+as\+\_\+tls\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{uint8\+\_\+t $\ast$}]{wire, }
+\item[{uint16\+\_\+t}]{count}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__cipher__suites_8h_a786e7c2f58d929af6012129893c03e63}{}\label{s2n__cipher__suites_8h_a786e7c2f58d929af6012129893c03e63}
+
+
+Definition at line 181 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+
+\begin{DoxyCode}
+182 \{
+183     \textcolor{keywordflow}{return} s2n\_set\_cipher\_as\_server(conn, wire, count, \hyperlink{tls_2s2n__crypto_8h_aad5e2a880d4b55cf5450393843a17cf8}{S2N\_TLS\_CIPHER\_SUITE\_LEN});
+184 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{s2n__cipher__suites_8h_a786e7c2f58d929af6012129893c03e63_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+rsa@{s2n\+\_\+rsa}}
+\index{s2n\+\_\+rsa@{s2n\+\_\+rsa}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa}{s2n_rsa}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf s2n\+\_\+key\+\_\+exchange\+\_\+algorithm} s2n\+\_\+rsa}\hypertarget{s2n__cipher__suites_8h_a613a9bfd4bc2d08b3c4bf076a6414cd7}{}\label{s2n__cipher__suites_8h_a613a9bfd4bc2d08b3c4bf076a6414cd7}
+
+
+Definition at line 24 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+dhe@{s2n\+\_\+dhe}}
+\index{s2n\+\_\+dhe@{s2n\+\_\+dhe}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+dhe}{s2n_dhe}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf s2n\+\_\+key\+\_\+exchange\+\_\+algorithm} s2n\+\_\+dhe}\hypertarget{s2n__cipher__suites_8h_ae54c83d3e6c88f46035b61ca2a36420c}{}\label{s2n__cipher__suites_8h_ae54c83d3e6c88f46035b61ca2a36420c}
+
+
+Definition at line 28 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+ecdhe@{s2n\+\_\+ecdhe}}
+\index{s2n\+\_\+ecdhe@{s2n\+\_\+ecdhe}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecdhe}{s2n_ecdhe}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf s2n\+\_\+key\+\_\+exchange\+\_\+algorithm} s2n\+\_\+ecdhe}\hypertarget{s2n__cipher__suites_8h_a7c09044cf54f0fdfea5f59873a080950}{}\label{s2n__cipher__suites_8h_a7c09044cf54f0fdfea5f59873a080950}
+
+
+Definition at line 32 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+null\+\_\+cipher\+\_\+suite@{s2n\+\_\+null\+\_\+cipher\+\_\+suite}}
+\index{s2n\+\_\+null\+\_\+cipher\+\_\+suite@{s2n\+\_\+null\+\_\+cipher\+\_\+suite}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+null\+\_\+cipher\+\_\+suite}{s2n_null_cipher_suite}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher\+\_\+suite} s2n\+\_\+null\+\_\+cipher\+\_\+suite}\hypertarget{s2n__cipher__suites_8h_a961160365c54a2770d684943f033f4de}{}\label{s2n__cipher__suites_8h_a961160365c54a2770d684943f033f4de}
+
+
+Definition at line 63 of file s2n\+\_\+cipher\+\_\+suites.\+c.
+
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601}}
+\index{s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601}{s2n_cipher_preferences_20140601}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher\+\_\+preferences}$\ast$ s2n\+\_\+cipher\+\_\+preferences\+\_\+20140601}\hypertarget{s2n__cipher__suites_8h_a780ec2390d8130868cee81678506bb19}{}\label{s2n__cipher__suites_8h_a780ec2390d8130868cee81678506bb19}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202}}
+\index{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202}{s2n_cipher_preferences_20150202}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher\+\_\+preferences}$\ast$ s2n\+\_\+cipher\+\_\+preferences\+\_\+20150202}\hypertarget{s2n__cipher__suites_8h_a630ffd3fd2ece88d554e52f20544d82e}{}\label{s2n__cipher__suites_8h_a630ffd3fd2ece88d554e52f20544d82e}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214}}
+\index{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214}{s2n_cipher_preferences_20150214}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher\+\_\+preferences}$\ast$ s2n\+\_\+cipher\+\_\+preferences\+\_\+20150214}\hypertarget{s2n__cipher__suites_8h_acd13552accd4dfa5368f19fff72de1f4}{}\label{s2n__cipher__suites_8h_acd13552accd4dfa5368f19fff72de1f4}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306}}
+\index{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306@{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306}{s2n_cipher_preferences_20150306}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher\+\_\+preferences}$\ast$ s2n\+\_\+cipher\+\_\+preferences\+\_\+20150306}\hypertarget{s2n__cipher__suites_8h_aa2e2a668cf61856be3c15dccb1ac95cb}{}\label{s2n__cipher__suites_8h_aa2e2a668cf61856be3c15dccb1ac95cb}
+\index{s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}!s2n\+\_\+cipher\+\_\+preferences\+\_\+default@{s2n\+\_\+cipher\+\_\+preferences\+\_\+default}}
+\index{s2n\+\_\+cipher\+\_\+preferences\+\_\+default@{s2n\+\_\+cipher\+\_\+preferences\+\_\+default}!s2n\+\_\+cipher\+\_\+suites.\+h@{s2n\+\_\+cipher\+\_\+suites.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cipher\+\_\+preferences\+\_\+default}{s2n_cipher_preferences_default}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher\+\_\+preferences}$\ast$ s2n\+\_\+cipher\+\_\+preferences\+\_\+default}\hypertarget{s2n__cipher__suites_8h_a7416ea6b89ed6d867237e9c0624ee852}{}\label{s2n__cipher__suites_8h_a7416ea6b89ed6d867237e9c0624ee852}

@@ -1,0 +1,629 @@
+\hypertarget{s2n__rsa_8c}{}\section{s2n-\/master/crypto/s2n\+\_\+rsa.c File Reference}
+\label{s2n__rsa_8c}\index{s2n-\/master/crypto/s2n\+\_\+rsa.\+c@{s2n-\/master/crypto/s2n\+\_\+rsa.\+c}}
+{\ttfamily \#include $<$openssl/rsa.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/x509.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+hash.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+rsa.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+rsa.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__rsa_8c_a4cd1d9d3c5bb5e42c5301366b38b361a}{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key} (struct \hyperlink{structs2n__rsa__public__key}{s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$asn1der)
+\item 
+int \hyperlink{s2n__rsa_8c_a5beba8f378b30af074ea1c6b18c71d33}{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key} (struct \hyperlink{structs2n__rsa__private__key}{s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$asn1der)
+\item 
+int \hyperlink{s2n__rsa_8c_a91a24681dfa755b5842d8f3157d4c7e9}{s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free} (struct \hyperlink{structs2n__rsa__public__key}{s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$key)
+\item 
+int \hyperlink{s2n__rsa_8c_aee63c702ec15d897ae85b976fd79c2b3}{s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free} (struct \hyperlink{structs2n__rsa__private__key}{s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$key)
+\item 
+int \hyperlink{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8}{s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size} (struct \hyperlink{structs2n__rsa__public__key}{s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$key)
+\item 
+int \hyperlink{s2n__rsa_8c_a7f7235a51c9e042f8be94d1f9af57799}{s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size} (struct \hyperlink{structs2n__rsa__private__key}{s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$key)
+\item 
+int \hyperlink{s2n__rsa_8c_a4d61a68eccd5b587339fe9d8726a9b9f}{s2n\+\_\+rsa\+\_\+sign} (struct \hyperlink{structs2n__rsa__private__key}{s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$key, struct \hyperlink{structs2n__hash__state}{s2n\+\_\+hash\+\_\+state} $\ast$digest, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$signature)
+\item 
+int \hyperlink{s2n__rsa_8c_a4c3db82f148a27d966bada97f3dbe45a}{s2n\+\_\+rsa\+\_\+verify} (struct \hyperlink{structs2n__rsa__public__key}{s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$key, struct \hyperlink{structs2n__hash__state}{s2n\+\_\+hash\+\_\+state} $\ast$digest, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$signature)
+\item 
+int \hyperlink{s2n__rsa_8c_a4898a688987344069449328892165a59}{s2n\+\_\+rsa\+\_\+encrypt} (struct \hyperlink{structs2n__rsa__public__key}{s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$in, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$out)
+\item 
+int \hyperlink{s2n__rsa_8c_a1be09e9268c9c6a36a1684aa5655eefb}{s2n\+\_\+rsa\+\_\+decrypt} (struct \hyperlink{structs2n__rsa__private__key}{s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$in, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$out)
+\item 
+int \hyperlink{s2n__rsa_8c_a880c38675f1897763d9e7a043b8c5983}{s2n\+\_\+rsa\+\_\+keys\+\_\+match} (struct \hyperlink{structs2n__rsa__public__key}{s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$pub, struct \hyperlink{structs2n__rsa__private__key}{s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$priv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key@{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key}}
+\index{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key@{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key(struct s2n\+\_\+rsa\+\_\+public\+\_\+key $\ast$key, struct s2n\+\_\+blob $\ast$asn1der)}{s2n_asn1der_to_rsa_public_key(struct s2n_rsa_public_key *key, struct s2n_blob *asn1der)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+public\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{asn1der}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a4cd1d9d3c5bb5e42c5301366b38b361a}{}\label{s2n__rsa_8c_a4cd1d9d3c5bb5e42c5301366b38b361a}
+
+
+Definition at line 31 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+32 \{
+33     uint8\_t *original\_ptr = asn1der->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+34     \hyperlink{structx509__st}{X509} *cert = d2i\_X509(NULL, (\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} **)(\textcolor{keywordtype}{void} *)&asn1der->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, asn1der->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+35     \textcolor{keywordflow}{if} (cert == NULL) \{
+36         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a46d2327df07ab8f6863716b825d9b944}{S2N\_ERR\_DECODE\_CERTIFICATE});
+37     \}
+38     \textcolor{keywordflow}{if} (asn1der->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} - original\_ptr != asn1der->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+39         X509\_free(cert);
+40         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a46d2327df07ab8f6863716b825d9b944}{S2N\_ERR\_DECODE\_CERTIFICATE});
+41     \}
+42     asn1der->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = original\_ptr;
+43 
+44     \hyperlink{structevp__pkey__st}{EVP\_PKEY} *public\_key = \hyperlink{crypto_2x509_2x509_8h_a97c3703b14a1f4a987c5d31cdf6cb205}{X509\_get\_pubkey}(cert);
+45     X509\_free(cert);
+46 
+47     \textcolor{keywordflow}{if} (public\_key == NULL) \{
+48         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a46d2327df07ab8f6863716b825d9b944}{S2N\_ERR\_DECODE\_CERTIFICATE});
+49     \}
+50 
+51     \textcolor{keywordflow}{if} (public\_key->\hyperlink{structevp__pkey__st_ac765329451135abec74c45e1897abf26}{type} != \hyperlink{crypto_2evp_2evp_8h_a8400e761b7679c04724232a9b8ffa8f4}{EVP\_PKEY\_RSA}) \{
+52         \hyperlink{crypto_2evp_2evp_8h_a448d9f9209a54694aff045d403850db7}{EVP\_PKEY\_free}(public\_key);
+53         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a46d2327df07ab8f6863716b825d9b944}{S2N\_ERR\_DECODE\_CERTIFICATE});
+54     \}
+55 
+56     key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa} = \hyperlink{crypto_2evp_2evp_8h_a099bf05b0933b7d7457dc5d74a29daf1}{EVP\_PKEY\_get1\_RSA}(public\_key);
+57     \textcolor{keywordflow}{if} (key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa} == NULL) \{
+58         \hyperlink{crypto_2evp_2evp_8h_a448d9f9209a54694aff045d403850db7}{EVP\_PKEY\_free}(public\_key);
+59         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a46d2327df07ab8f6863716b825d9b944}{S2N\_ERR\_DECODE\_CERTIFICATE});
+60     \}
+61 
+62     \hyperlink{crypto_2evp_2evp_8h_a448d9f9209a54694aff045d403850db7}{EVP\_PKEY\_free}(public\_key);
+63 
+64     \textcolor{keywordflow}{return} 0;
+65 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{s2n__rsa_8c_a4cd1d9d3c5bb5e42c5301366b38b361a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{s2n__rsa_8c_a4cd1d9d3c5bb5e42c5301366b38b361a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key@{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key}}
+\index{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key@{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key(struct s2n\+\_\+rsa\+\_\+private\+\_\+key $\ast$key, struct s2n\+\_\+blob $\ast$asn1der)}{s2n_asn1der_to_rsa_private_key(struct s2n_rsa_private_key *key, struct s2n_blob *asn1der)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+asn1der\+\_\+to\+\_\+rsa\+\_\+private\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{asn1der}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a5beba8f378b30af074ea1c6b18c71d33}{}\label{s2n__rsa_8c_a5beba8f378b30af074ea1c6b18c71d33}
+
+
+Definition at line 67 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+68 \{
+69     uint8\_t *original\_ptr = asn1der->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+70 
+71     key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa} = d2i\_RSAPrivateKey(NULL, (\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} **)(\textcolor{keywordtype}{void} *)&asn1der->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, asn1der->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+72     \textcolor{keywordflow}{if} (key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa} == NULL) \{
+73         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a1ddd7522c0c7db02818a534493847b60}{S2N\_ERR\_DECODE\_PRIVATE\_KEY});
+74     \}
+75     \textcolor{keywordflow}{if} (asn1der->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} - original\_ptr != asn1der->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+76         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a1ddd7522c0c7db02818a534493847b60}{S2N\_ERR\_DECODE\_PRIVATE\_KEY});
+77     \}
+78 
+79     \textcolor{keywordflow}{return} 0;
+80 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a5beba8f378b30af074ea1c6b18c71d33_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free@{s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free}}
+\index{s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free@{s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free(struct s2n\+\_\+rsa\+\_\+public\+\_\+key $\ast$key)}{s2n_rsa_public_key_free(struct s2n_rsa_public_key *key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+public\+\_\+key\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a91a24681dfa755b5842d8f3157d4c7e9}{}\label{s2n__rsa_8c_a91a24681dfa755b5842d8f3157d4c7e9}
+
+
+Definition at line 82 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+83 \{
+84     \hyperlink{crypto_2rsa_2rsa_8h_a024a38ff42a2e0b5456d733bc934e7dd}{RSA\_free}(key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa});
+85     key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa} = NULL;
+86     \textcolor{keywordflow}{return} 0;
+87 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=303pt]{s2n__rsa_8c_a91a24681dfa755b5842d8f3157d4c7e9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a91a24681dfa755b5842d8f3157d4c7e9_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free@{s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free}}
+\index{s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free@{s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free(struct s2n\+\_\+rsa\+\_\+private\+\_\+key $\ast$key)}{s2n_rsa_private_key_free(struct s2n_rsa_private_key *key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+private\+\_\+key\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_aee63c702ec15d897ae85b976fd79c2b3}{}\label{s2n__rsa_8c_aee63c702ec15d897ae85b976fd79c2b3}
+
+
+Definition at line 89 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+90 \{
+91     \hyperlink{crypto_2rsa_2rsa_8h_a024a38ff42a2e0b5456d733bc934e7dd}{RSA\_free}(key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa});
+92     key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa} = NULL;
+93     \textcolor{keywordflow}{return} 0;
+94 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{s2n__rsa_8c_aee63c702ec15d897ae85b976fd79c2b3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_aee63c702ec15d897ae85b976fd79c2b3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size@{s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size}}
+\index{s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size@{s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size(struct s2n\+\_\+rsa\+\_\+public\+\_\+key $\ast$key)}{s2n_rsa_public_encrypted_size(struct s2n_rsa_public_key *key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+public\+\_\+encrypted\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8}{}\label{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8}
+
+
+Definition at line 96 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+97 \{
+98     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa});
+99     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa}->\hyperlink{structrsa__st_ab3b67230e6d25749ea84508e84e3c708}{n});
+100 
+101     \textcolor{keywordflow}{return} \hyperlink{crypto_2rsa_2rsa_8h_af8cdf91fccaa56fa80cae55eece27d9d}{RSA\_size}(key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa});
+102 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size@{s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size}}
+\index{s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size@{s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size(struct s2n\+\_\+rsa\+\_\+private\+\_\+key $\ast$key)}{s2n_rsa_private_encrypted_size(struct s2n_rsa_private_key *key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+private\+\_\+encrypted\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a7f7235a51c9e042f8be94d1f9af57799}{}\label{s2n__rsa_8c_a7f7235a51c9e042f8be94d1f9af57799}
+
+
+Definition at line 104 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+105 \{
+106     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa});
+107     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa}->\hyperlink{structrsa__st_ab3b67230e6d25749ea84508e84e3c708}{n});
+108 
+109     \textcolor{keywordflow}{return} \hyperlink{crypto_2rsa_2rsa_8h_af8cdf91fccaa56fa80cae55eece27d9d}{RSA\_size}(key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa});
+110 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{s2n__rsa_8c_a7f7235a51c9e042f8be94d1f9af57799_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a7f7235a51c9e042f8be94d1f9af57799_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+sign@{s2n\+\_\+rsa\+\_\+sign}}
+\index{s2n\+\_\+rsa\+\_\+sign@{s2n\+\_\+rsa\+\_\+sign}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+sign(struct s2n\+\_\+rsa\+\_\+private\+\_\+key $\ast$key, struct s2n\+\_\+hash\+\_\+state $\ast$digest, struct s2n\+\_\+blob $\ast$signature)}{s2n_rsa_sign(struct s2n_rsa_private_key *key, struct s2n_hash_state *digest, struct s2n_blob *signature)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+sign (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+hash\+\_\+state} $\ast$}]{digest, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{signature}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a4d61a68eccd5b587339fe9d8726a9b9f}{}\label{s2n__rsa_8c_a4d61a68eccd5b587339fe9d8726a9b9f}
+
+
+Definition at line 112 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+113 \{
+114     uint8\_t digest\_out[\hyperlink{crypto_2md5_2md5_8h_a09a4f4b2f28cbe522d9b80153666029c}{MD5\_DIGEST\_LENGTH} + \hyperlink{crypto_2sha_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{SHA\_DIGEST\_LENGTH}];
+115 
+116     \textcolor{keywordtype}{int} \hyperlink{crypto_2x509_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type}, digest\_length;
+117     \textcolor{keywordflow}{if} (digest->\hyperlink{structs2n__hash__state_a06fad91533b24fb9c9fa94c5a207546e}{alg} == \hyperlink{s2n__hash_8h_a45fca4e9152a9bfb4b15f8d9f1a074e5ac0f7f343aebed483dfa89ad357fa6419}{S2N\_HASH\_MD5\_SHA1}) \{
+118         type = \hyperlink{crypto_2objects_2obj__mac_8h_a4caa8cc9375f6af3d02f6f25f68524d3}{NID\_md5\_sha1};
+119         digest\_length = \hyperlink{crypto_2md5_2md5_8h_a09a4f4b2f28cbe522d9b80153666029c}{MD5\_DIGEST\_LENGTH} + \hyperlink{crypto_2sha_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{SHA\_DIGEST\_LENGTH};
+120     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (digest->\hyperlink{structs2n__hash__state_a06fad91533b24fb9c9fa94c5a207546e}{alg} == \hyperlink{s2n__hash_8h_a45fca4e9152a9bfb4b15f8d9f1a074e5aa460f813770b3e8d9678b19a6dc39627}{S2N\_HASH\_SHA1}) \{
+121         type = \hyperlink{crypto_2objects_2obj__mac_8h_aa6c0a6515dbae596c4906cf5429bf450}{NID\_sha1};
+122         digest\_length = \hyperlink{crypto_2sha_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{SHA\_DIGEST\_LENGTH};
+123     \} \textcolor{keywordflow}{else} \{
+124         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a715f2e3454809e6ff16921af3c6aff2d}{S2N\_ERR\_HASH\_INVALID\_ALGORITHM});
+125     \}
+126 
+127     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hash_8c_ac0a5e6f9f981a0e473bfb9dba9c3d7c9}{s2n\_hash\_digest}(digest, digest\_out, digest\_length));
+128 
+129     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} signature\_size = signature->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+130     \textcolor{keywordflow}{if} (\hyperlink{crypto_2rsa_2rsa_8h_a381db3f60450984caceebb01035fe62e}{RSA\_sign}(type, digest\_out, digest\_length, signature->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, &signature\_size, key->
+      \hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa}) == 0) \{
+131         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a2e35fce779150b5c8db2cd5b2e1c0950}{S2N\_ERR\_SIGN});
+132     \}
+133     \textcolor{keywordflow}{if} (signature\_size > signature->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+134         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a602cb5165e354dd39c49af50bbbc1cb9}{S2N\_ERR\_SIZE\_MISMATCH});
+135     \}
+136     signature->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = signature\_size;
+137 
+138     \textcolor{keywordflow}{return} 0;
+139 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a4d61a68eccd5b587339fe9d8726a9b9f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{s2n__rsa_8c_a4d61a68eccd5b587339fe9d8726a9b9f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+verify@{s2n\+\_\+rsa\+\_\+verify}}
+\index{s2n\+\_\+rsa\+\_\+verify@{s2n\+\_\+rsa\+\_\+verify}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+verify(struct s2n\+\_\+rsa\+\_\+public\+\_\+key $\ast$key, struct s2n\+\_\+hash\+\_\+state $\ast$digest, struct s2n\+\_\+blob $\ast$signature)}{s2n_rsa_verify(struct s2n_rsa_public_key *key, struct s2n_hash_state *digest, struct s2n_blob *signature)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+verify (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+hash\+\_\+state} $\ast$}]{digest, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{signature}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a4c3db82f148a27d966bada97f3dbe45a}{}\label{s2n__rsa_8c_a4c3db82f148a27d966bada97f3dbe45a}
+
+
+Definition at line 141 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+142 \{
+143     uint8\_t digest\_out[\hyperlink{crypto_2md5_2md5_8h_a09a4f4b2f28cbe522d9b80153666029c}{MD5\_DIGEST\_LENGTH} + \hyperlink{crypto_2sha_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{SHA\_DIGEST\_LENGTH}];
+144 
+145     \textcolor{keywordtype}{int} \hyperlink{crypto_2x509_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type}, digest\_length;
+146     \textcolor{keywordflow}{if} (digest->\hyperlink{structs2n__hash__state_a06fad91533b24fb9c9fa94c5a207546e}{alg} == \hyperlink{s2n__hash_8h_a45fca4e9152a9bfb4b15f8d9f1a074e5ac0f7f343aebed483dfa89ad357fa6419}{S2N\_HASH\_MD5\_SHA1}) \{
+147         type = \hyperlink{crypto_2objects_2obj__mac_8h_a4caa8cc9375f6af3d02f6f25f68524d3}{NID\_md5\_sha1};
+148         digest\_length = \hyperlink{crypto_2md5_2md5_8h_a09a4f4b2f28cbe522d9b80153666029c}{MD5\_DIGEST\_LENGTH} + \hyperlink{crypto_2sha_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{SHA\_DIGEST\_LENGTH};
+149     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (digest->\hyperlink{structs2n__hash__state_a06fad91533b24fb9c9fa94c5a207546e}{alg} == \hyperlink{s2n__hash_8h_a45fca4e9152a9bfb4b15f8d9f1a074e5aa460f813770b3e8d9678b19a6dc39627}{S2N\_HASH\_SHA1}) \{
+150         type = \hyperlink{crypto_2objects_2obj__mac_8h_aa6c0a6515dbae596c4906cf5429bf450}{NID\_sha1};
+151         digest\_length = \hyperlink{crypto_2sha_2sha_8h_a1a715db7b4403fe6c165e49a32f5fe3d}{SHA\_DIGEST\_LENGTH};
+152     \} \textcolor{keywordflow}{else} \{
+153         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a715f2e3454809e6ff16921af3c6aff2d}{S2N\_ERR\_HASH\_INVALID\_ALGORITHM});
+154     \}
+155 
+156     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hash_8c_ac0a5e6f9f981a0e473bfb9dba9c3d7c9}{s2n\_hash\_digest}(digest, digest\_out, digest\_length));
+157 
+158     \textcolor{keywordflow}{if} (\hyperlink{crypto_2rsa_2rsa_8h_add5f2bc9baaff5469270f286e16fe232}{RSA\_verify}(type, digest\_out, digest\_length, signature->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, signature->
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa}) == 0) \{
+159         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374aad4bf04b3c6e0c5cef4973424d195099}{S2N\_ERR\_VERIFY\_SIGNATURE});
+160     \}
+161 
+162     \textcolor{keywordflow}{return} 0;
+163 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a4c3db82f148a27d966bada97f3dbe45a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=308pt]{s2n__rsa_8c_a4c3db82f148a27d966bada97f3dbe45a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+encrypt@{s2n\+\_\+rsa\+\_\+encrypt}}
+\index{s2n\+\_\+rsa\+\_\+encrypt@{s2n\+\_\+rsa\+\_\+encrypt}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+encrypt(struct s2n\+\_\+rsa\+\_\+public\+\_\+key $\ast$key, struct s2n\+\_\+blob $\ast$in, struct s2n\+\_\+blob $\ast$out)}{s2n_rsa_encrypt(struct s2n_rsa_public_key *key, struct s2n_blob *in, struct s2n_blob *out)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+encrypt (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{in, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a4898a688987344069449328892165a59}{}\label{s2n__rsa_8c_a4898a688987344069449328892165a59}
+
+
+Definition at line 165 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+166 \{
+167     \textcolor{keywordflow}{if} (out->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} < \hyperlink{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8}{s2n\_rsa\_public\_encrypted\_size}(key)) \{
+168         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a62eafb08bfa7ff987c91a1e8c4149b69}{S2N\_ERR\_NOMEM});
+169     \}
+170 
+171     \textcolor{keywordtype}{int} r = \hyperlink{crypto_2rsa_2rsa_8h_a227edb1157b70bbd92ba213ae0f00171}{RSA\_public\_encrypt}(in->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)in->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)out->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, key->\hyperlink{structs2n__rsa__public__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa}, \hyperlink{crypto_2rsa_2rsa_8h_a956e098e06febab7fd7d835f59675d4d}{RSA\_PKCS1\_PADDING});
+172     \textcolor{keywordflow}{if} (r != out->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+173         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a602cb5165e354dd39c49af50bbbc1cb9}{S2N\_ERR\_SIZE\_MISMATCH});
+174     \}
+175 
+176     \textcolor{keywordflow}{return} 0;
+177 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a4898a688987344069449328892165a59_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a4898a688987344069449328892165a59_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+decrypt@{s2n\+\_\+rsa\+\_\+decrypt}}
+\index{s2n\+\_\+rsa\+\_\+decrypt@{s2n\+\_\+rsa\+\_\+decrypt}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+decrypt(struct s2n\+\_\+rsa\+\_\+private\+\_\+key $\ast$key, struct s2n\+\_\+blob $\ast$in, struct s2n\+\_\+blob $\ast$out)}{s2n_rsa_decrypt(struct s2n_rsa_private_key *key, struct s2n_blob *in, struct s2n_blob *out)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+decrypt (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{in, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a1be09e9268c9c6a36a1684aa5655eefb}{}\label{s2n__rsa_8c_a1be09e9268c9c6a36a1684aa5655eefb}
+
+
+Definition at line 179 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+180 \{
+181     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} intermediate[4096];
+182     \textcolor{keywordflow}{if} (\hyperlink{s2n__rsa_8c_a7f7235a51c9e042f8be94d1f9af57799}{s2n\_rsa\_private\_encrypted\_size}(key) > \textcolor{keyword}{sizeof}(intermediate)) \{
+183         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a62eafb08bfa7ff987c91a1e8c4149b69}{S2N\_ERR\_NOMEM});
+184     \}
+185 
+186     \textcolor{keywordflow}{if} (out->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} > \textcolor{keyword}{sizeof}(intermediate)) \{
+187         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a62eafb08bfa7ff987c91a1e8c4149b69}{S2N\_ERR\_NOMEM});
+188     \}
+189 
+190     \textcolor{keywordtype}{int} r = \hyperlink{crypto_2rsa_2rsa_8h_a44021161b84fae29b44230fa4554a00f}{RSA\_private\_decrypt}(in->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)in->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, intermediate, key->\hyperlink{structs2n__rsa__private__key_abe5e4dd8049eff80d7e599d751f143f8}{rsa}, \hyperlink{crypto_2rsa_2rsa_8h_a956e098e06febab7fd7d835f59675d4d}{RSA\_PKCS1\_PADDING});
+191     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6}{s2n\_constant\_time\_copy\_or\_dont}(out->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, intermediate, out->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, r != out->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+192     \textcolor{keywordflow}{if} (r != out->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+193         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a602cb5165e354dd39c49af50bbbc1cb9}{S2N\_ERR\_SIZE\_MISMATCH});
+194     \}
+195 
+196     \textcolor{keywordflow}{return} 0;
+197 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a1be09e9268c9c6a36a1684aa5655eefb_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a1be09e9268c9c6a36a1684aa5655eefb_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}!s2n\+\_\+rsa\+\_\+keys\+\_\+match@{s2n\+\_\+rsa\+\_\+keys\+\_\+match}}
+\index{s2n\+\_\+rsa\+\_\+keys\+\_\+match@{s2n\+\_\+rsa\+\_\+keys\+\_\+match}!s2n\+\_\+rsa.\+c@{s2n\+\_\+rsa.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+keys\+\_\+match(struct s2n\+\_\+rsa\+\_\+public\+\_\+key $\ast$pub, struct s2n\+\_\+rsa\+\_\+private\+\_\+key $\ast$priv)}{s2n_rsa_keys_match(struct s2n_rsa_public_key *pub, struct s2n_rsa_private_key *priv)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+keys\+\_\+match (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+public\+\_\+key} $\ast$}]{pub, }
+\item[{struct {\bf s2n\+\_\+rsa\+\_\+private\+\_\+key} $\ast$}]{priv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__rsa_8c_a880c38675f1897763d9e7a043b8c5983}{}\label{s2n__rsa_8c_a880c38675f1897763d9e7a043b8c5983}
+
+
+Definition at line 199 of file s2n\+\_\+rsa.\+c.
+
+
+\begin{DoxyCode}
+200 \{
+201     uint8\_t plain\_inpad[36], plain\_outpad[36], encpad[8192];
+202     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} plain\_in, plain\_out, enc;
+203 
+204     plain\_in.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = plain\_inpad;
+205     plain\_in.size = \textcolor{keyword}{sizeof}(plain\_inpad);
+206     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\_get\_private\_random\_data}(&plain\_in));
+207 
+208     enc.data = encpad;
+209     enc.size = \hyperlink{s2n__rsa_8c_a1d525d434e1ba38bc8100155fe2d54f8}{s2n\_rsa\_public\_encrypted\_size}(pub);
+210     \hyperlink{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{lte\_check}(enc.size, \textcolor{keyword}{sizeof}(encpad));
+211     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__rsa_8c_a4898a688987344069449328892165a59}{s2n\_rsa\_encrypt}(pub, &plain\_in, &enc));
+212 
+213     plain\_out.data = plain\_outpad;
+214     plain\_out.size = \textcolor{keyword}{sizeof}(plain\_outpad);
+215     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__rsa_8c_a1be09e9268c9c6a36a1684aa5655eefb}{s2n\_rsa\_decrypt}(priv, &enc, &plain\_out));
+216 
+217     \textcolor{keywordflow}{if} (memcmp(plain\_in.data, plain\_out.data, plain\_in.size)) \{
+218         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ae6514507be52111cd6ff29ff8cd66492}{S2N\_ERR\_KEY\_MISMATCH});
+219     \}
+220 
+221     \textcolor{keywordflow}{return} 0;
+222 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__rsa_8c_a880c38675f1897763d9e7a043b8c5983_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{s2n__rsa_8c_a880c38675f1897763d9e7a043b8c5983_icgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,172 @@
+.TH "s2n-master/tls/s2n_cipher_suites.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_cipher_suites.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_key_exchange_algorithm\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_suite\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_KEY_EXCHANGE_DH\fP   0x01  /* Diffie–Hellman key exchange, including ephemeral */"
+.br
+.ti -1c
+.RI "#define \fBS2N_KEY_EXCHANGE_EPH\fP   0x02  /* Ephemeral key exchange */"
+.br
+.ti -1c
+.RI "#define \fBS2N_KEY_EXCHANGE_ECC\fP   0x04  /* Elliptic curve cryptography */"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_set_cipher_as_client\fP (struct \fBs2n_connection\fP *conn, uint8_t wire[\fBS2N_TLS_CIPHER_SUITE_LEN\fP])"
+.br
+.ti -1c
+.RI "int \fBs2n_set_cipher_as_sslv2_server\fP (struct \fBs2n_connection\fP *conn, uint8_t *wire, uint16_t count)"
+.br
+.ti -1c
+.RI "int \fBs2n_set_cipher_as_tls_server\fP (struct \fBs2n_connection\fP *conn, uint8_t *wire, uint16_t count)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const struct \fBs2n_key_exchange_algorithm\fP \fBs2n_rsa\fP"
+.br
+.ti -1c
+.RI "const struct \fBs2n_key_exchange_algorithm\fP \fBs2n_dhe\fP"
+.br
+.ti -1c
+.RI "const struct \fBs2n_key_exchange_algorithm\fP \fBs2n_ecdhe\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_suite\fP \fBs2n_null_cipher_suite\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP * \fBs2n_cipher_preferences_20140601\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP * \fBs2n_cipher_preferences_20150202\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP * \fBs2n_cipher_preferences_20150214\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP * \fBs2n_cipher_preferences_20150306\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP * \fBs2n_cipher_preferences_default\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_KEY_EXCHANGE_DH   0x01  /* Diffie–Hellman key exchange, including ephemeral */"
+
+.PP
+Definition at line 33 of file s2n_cipher_suites\&.h\&.
+.SS "#define S2N_KEY_EXCHANGE_EPH   0x02  /* Ephemeral key exchange */"
+
+.PP
+Definition at line 34 of file s2n_cipher_suites\&.h\&.
+.SS "#define S2N_KEY_EXCHANGE_ECC   0x04  /* Elliptic curve cryptography */"
+
+.PP
+Definition at line 35 of file s2n_cipher_suites\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_set_cipher_as_client (struct \fBs2n_connection\fP * conn, uint8_t wire[S2N_TLS_CIPHER_SUITE_LEN])"
+
+.PP
+Definition at line 88 of file s2n_cipher_suites\&.c\&.
+.PP
+.nf
+89 {
+90     /* See if the cipher is one we support */
+91     conn->secure\&.cipher_suite = s2n_cipher_suite_match(wire);
+92     if (conn->secure\&.cipher_suite == NULL) {
+93         S2N_ERROR(S2N_ERR_CIPHER_NOT_SUPPORTED);
+94     }
+95 
+96     return 0;
+97 }
+.fi
+.SS "int s2n_set_cipher_as_sslv2_server (struct \fBs2n_connection\fP * conn, uint8_t * wire, uint16_t count)"
+
+.PP
+Definition at line 176 of file s2n_cipher_suites\&.c\&.
+.PP
+.nf
+177 {
+178     return s2n_set_cipher_as_server(conn, wire, count, S2N_SSLv2_CIPHER_SUITE_LEN);
+179 }
+.fi
+.SS "int s2n_set_cipher_as_tls_server (struct \fBs2n_connection\fP * conn, uint8_t * wire, uint16_t count)"
+
+.PP
+Definition at line 181 of file s2n_cipher_suites\&.c\&.
+.PP
+.nf
+182 {
+183     return s2n_set_cipher_as_server(conn, wire, count, S2N_TLS_CIPHER_SUITE_LEN);
+184 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "const struct \fBs2n_key_exchange_algorithm\fP s2n_rsa"
+
+.PP
+Definition at line 24 of file s2n_cipher_suites\&.c\&.
+.SS "const struct \fBs2n_key_exchange_algorithm\fP s2n_dhe"
+
+.PP
+Definition at line 28 of file s2n_cipher_suites\&.c\&.
+.SS "const struct \fBs2n_key_exchange_algorithm\fP s2n_ecdhe"
+
+.PP
+Definition at line 32 of file s2n_cipher_suites\&.c\&.
+.SS "struct \fBs2n_cipher_suite\fP s2n_null_cipher_suite"
+
+.PP
+Definition at line 63 of file s2n_cipher_suites\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP* s2n_cipher_preferences_20140601"
+
+.SS "struct \fBs2n_cipher_preferences\fP* s2n_cipher_preferences_20150202"
+
+.SS "struct \fBs2n_cipher_preferences\fP* s2n_cipher_preferences_20150214"
+
+.SS "struct \fBs2n_cipher_preferences\fP* s2n_cipher_preferences_20150306"
+
+.SS "struct \fBs2n_cipher_preferences\fP* s2n_cipher_preferences_default"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,141 @@
+\hypertarget{s2n__tls__record__stuffer__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.c File Reference}
+\label{s2n__tls__record__stuffer__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+record.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__tls__record__stuffer__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__tls__record__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c@{s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c@{s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__tls__record__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__tls__record__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 22 of file s2n\+\_\+tls\+\_\+record\+\_\+stuffer\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+23 \{
+24 \textcolor{preprocessor}{#if 0}
+25     uint8\_t plaintext\_pad[\hyperlink{s2n__tls__parameters_8h_af950c1e9c49e962ef7d1f371a332ea1b}{S2N\_TLS\_MAXIMUM\_RECORD\_LENGTH} + 1];
+26     uint8\_t encrypted\_pad[\hyperlink{s2n__tls__parameters_8h_af950c1e9c49e962ef7d1f371a332ea1b}{S2N\_TLS\_MAXIMUM\_RECORD\_LENGTH} + 1];
+27     uint8\_t entropy[\hyperlink{s2n__tls__parameters_8h_af950c1e9c49e962ef7d1f371a332ea1b}{S2N\_TLS\_MAXIMUM\_RECORD\_LENGTH} + 1];
+28     \textcolor{keyword}{struct }s2n\_record\_stuffer writer;
+29     uint8\_t protocol\_version[2] = \{ 3, 0 \};
+30 
+31     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+32 
+33     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(s2n\_tls\_record\_stuffer\_init(&writer, plaintext\_pad, encrypted\_pad, 
+      \hyperlink{s2n__tls__parameters_8h_af950c1e9c49e962ef7d1f371a332ea1b}{S2N\_TLS\_MAXIMUM\_RECORD\_LENGTH} - 1, &error\_message));
+34     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_tls\_record\_stuffer\_init(&writer, plaintext\_pad, encrypted\_pad, 
+      \hyperlink{s2n__tls__parameters_8h_af950c1e9c49e962ef7d1f371a332ea1b}{S2N\_TLS\_MAXIMUM\_RECORD\_LENGTH} + 1, &error\_message));
+35 
+36     \textcolor{comment}{/* Record is too short */}
+37     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(s2n\_tls\_record\_finalize(&writer, &error\_message));
+38 
+39     \textcolor{comment}{/* Add a header */}
+40     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_tls\_record\_write\_header(&writer, 1, protocol\_version, &error\_message))
+      ;
+41     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&writer.plaintext\_stuffer
+      ), S2N\_TLS\_MINIMUM\_RECORD\_LENGTH);
+42 
+43     \textcolor{comment}{/* Should now be finalizable */}
+44     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_tls\_record\_finalize(&writer, &error\_message));
+45 
+46     uint8\_t expected[] = \{ 1, 3, 0, 0, 0 \};
+47     \hyperlink{s2n__test_8h_aad4c7abb254c4d6db9f9076687a2251c}{EXPECT\_BYTEARRAY\_EQUAL}(plaintext\_pad, expected, 5);
+48 
+49     \textcolor{comment}{/* Get some Random data */}
+50     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_get\_random\_data(entropy, \textcolor{keyword}{sizeof}(entropy), &error\_message));
+51 
+52     \textcolor{comment}{/* Write our maximum record payload */}
+53     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&writer.plaintext\_stuffer, entropy, 
+      \hyperlink{s2n__tls__parameters_8h_a02c22136e61e8cdf2189079f485cdaf8}{S2N\_TLS\_MAXIMUM\_FRAGMENT\_LENGTH}, &error\_message));
+54     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_tls\_record\_finalize(&writer, &error\_message));
+55     uint8\_t expected2[] = \{ 1, 3, 0, 0x48, 0x00 \};
+56     \hyperlink{s2n__test_8h_aad4c7abb254c4d6db9f9076687a2251c}{EXPECT\_BYTEARRAY\_EQUAL}(plaintext\_pad, expected2, 5);
+57 
+58     \textcolor{comment}{/* Try one higher, make sure it fails */}
+59     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&writer.plaintext\_stuffer, entropy, 1, 
+      &error\_message));
+60     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(s2n\_tls\_record\_finalize(&writer, &error\_message));
+61 
+62     \textcolor{comment}{/* Try SSL2 now ... */}
+63     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_tls\_record\_stuffer\_init(&writer, plaintext\_pad, encrypted\_pad, 
+      \hyperlink{s2n__tls__parameters_8h_af950c1e9c49e962ef7d1f371a332ea1b}{S2N\_TLS\_MAXIMUM\_RECORD\_LENGTH} + 1, &error\_message));
+64 
+65     \textcolor{comment}{/* Record is too short */}
+66     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(s2n\_ssl2\_record\_finalize(&writer, &error\_message));
+67 
+68     \textcolor{comment}{/* Add a header */}
+69     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_ssl2\_record\_write\_header(&writer, 1, protocol\_version, &error\_message)
+      );
+70     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&writer.plaintext\_stuffer
+      ), 5);
+71 
+72     \textcolor{comment}{/* Still not finalizeable */}
+73     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(s2n\_ssl2\_record\_finalize(&writer, &error\_message));
+74 
+75     \textcolor{comment}{/* Add the 22 bytes of mandatory header data */}
+76     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(&writer.plaintext\_stuffer
+      , 0, &error\_message));
+77     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(&writer.plaintext\_stuffer
+      , 0, &error\_message));
+78     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(&writer.plaintext\_stuffer
+      , 16, &error\_message));
+79     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&writer.plaintext\_stuffer, entropy, 16,
+       &error\_message));
+80 
+81     \textcolor{comment}{/* Now we can finalize */}
+82     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_ssl2\_record\_finalize(&writer, &error\_message));
+83 
+84     uint8\_t expected3[] = \{ 0x80, 0x19, 1, 3, 0, 0, 0, 0, 0, 0, 16 \};
+85     \hyperlink{s2n__test_8h_aad4c7abb254c4d6db9f9076687a2251c}{EXPECT\_BYTEARRAY\_EQUAL}(plaintext\_pad, expected3, 11);
+86 
+87     \textcolor{comment}{/* Write our maximum record payload */}
+88     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&writer.plaintext\_stuffer, entropy, 
+      \hyperlink{s2n__tls__parameters_8h_ad331843fadf30f3ac27384cbfbfe23ba}{S2N\_SSL2\_MAXIMUM\_MESSAGE\_LENGTH}, &error\_message));
+89     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(s2n\_ssl2\_record\_finalize(&writer, &error\_message));
+90 
+91     uint8\_t expected4[] = \{ 0xbf, 0xfd, 1, 3, 0, 0, 0, 0, 0, 0, 16 \};
+92     \hyperlink{s2n__test_8h_aad4c7abb254c4d6db9f9076687a2251c}{EXPECT\_BYTEARRAY\_EQUAL}(plaintext\_pad, expected4, 11);
+93 
+94     \textcolor{comment}{/* Try one higher, make sure it fails */}
+95     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&writer.plaintext\_stuffer, entropy, 1, 
+      &error\_message));
+96     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(s2n\_ssl2\_record\_finalize(&writer, &error\_message));
+97 
+98     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+99 \textcolor{preprocessor}{#endif}
+100     \textcolor{keywordflow}{return} 0;
+101 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__tls__record__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

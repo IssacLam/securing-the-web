@@ -1,0 +1,1175 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/asn1_mac.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/asn1_mac.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/asn1\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBASN1_MAC_ERR_LIB\fP   \fBERR_LIB_ASN1\fP"
+.br
+.ti -1c
+.RI "#define \fBASN1_MAC_H_err\fP(f,  r,  line)   \fBERR_PUT_error\fP(\fBASN1_MAC_ERR_LIB\fP,(f),(r),__FILE__,(line))"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_vars\fP(\fBa\fP,  \fBtype\fP,  func)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_Init\fP()"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_Finish_2\fP(\fBa\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_Finish\fP(\fBa\fP,  func,  \fBe\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_start_sequence\fP()"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_begin\fP()   c\&.slen = \fBlength\fP;"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_Finish_nolen\fP(\fBa\fP,  func,  \fBe\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_end_sequence\fP()"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get\fP(b,  func)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_x\fP(\fBtype\fP,  b,  func)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_int\fP(b,  func)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_opt\fP(b,  func,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_int_opt\fP(b,  func,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_imp\fP(b,  func,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_IMP_opt\fP(b,  func,  tag,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_set\fP(r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_set_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_set_opt\fP(r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_set_opt_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SET_opt\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SET_opt\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SEQUENCE_opt\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SEQUENCE_opt_type\fP(\fBtype\fP,  \fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_IMP_set_opt\fP(b,  func,  \fBfree_func\fP,  tag)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_IMP_set_opt_type\fP(\fBtype\fP,  b,  func,  \fBfree_func\fP,  tag)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_seq\fP(r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_seq_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_seq_opt\fP(r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_seq_opt_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_IMP_set\fP(r,  func,  \fBfree_func\fP,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_IMP_set_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_imp_set\fP(r,  func,  \fBfree_func\fP,  \fBa\fP,  b)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_imp_set_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP,  \fBa\fP,  b)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_set_strings\fP(r,  func,  \fBa\fP,  b)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_EXP_opt\fP(r,  func,  tag)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_EXP_set_opt\fP(r,  func,  \fBfree_func\fP,  tag,  b)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_D2I_get_EXP_set_opt_type\fP(\fBtype\fP,  r,  func,  \fBfree_func\fP,  tag,  b)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_New_Malloc\fP(ret,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_New\fP(arg,  func)   if (((arg)=func()) == NULL) return(NULL)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_New_Error\fP(\fBa\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_next\fP   (*((unsigned char *)(\fBc\&.p\fP)))"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_next_prev\fP   (*((unsigned char *)(c\&.q)))"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_vars\fP(\fBa\fP)        "
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len\fP(\fBa\fP,  f)         ret+=f(\fBa\fP,NULL)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_opt\fP(\fBa\fP,  f)         if (\fBa\fP != NULL) \fBM_ASN1_I2D_len\fP(\fBa\fP,f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SET\fP(\fBa\fP,  f)   ret+=\fBi2d_ASN1_SET\fP(\fBa\fP,NULL,f,\fBV_ASN1_SET\fP,\fBV_ASN1_UNIVERSAL\fP,\fBIS_SET\fP);"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SET_type\fP(\fBtype\fP,  \fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SEQUENCE\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SEQUENCE_type\fP(\fBtype\fP,  \fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SEQUENCE_opt\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_SEQUENCE_opt_type\fP(\fBtype\fP,  \fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SET\fP(\fBa\fP,  f,  \fBx\fP)   ret+=\fBi2d_ASN1_SET\fP(\fBa\fP,NULL,f,\fBx\fP,\fBV_ASN1_CONTEXT_SPECIFIC\fP,\fBIS_SET\fP);"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SET_type\fP(\fBtype\fP,  \fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SET_opt\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SET_opt_type\fP(\fBtype\fP,  \fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SEQUENCE\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SEQUENCE_opt\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_IMP_SEQUENCE_opt_type\fP(\fBtype\fP,  \fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_EXP_opt\fP(\fBa\fP,  f,  mtag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_EXP_SET_opt\fP(\fBa\fP,  f,  mtag,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_EXP_SEQUENCE_opt\fP(\fBa\fP,  f,  mtag,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_len_EXP_SEQUENCE_opt_type\fP(\fBtype\fP,  \fBa\fP,  f,  mtag,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put\fP(\fBa\fP,  f)         f(\fBa\fP,&\fBp\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_opt\fP(\fBa\fP,  f,  \fBt\fP)  "
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SET\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SET_type\fP(\fBtype\fP,  \fBa\fP,  f)   i2d_ASN1_SET_OF_##\fBtype\fP(\fBa\fP,&\fBp\fP,f,\fBV_ASN1_SET\fP,\fBV_ASN1_UNIVERSAL\fP,\fBIS_SET\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SET\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SET_type\fP(\fBtype\fP,  \fBa\fP,  f,  \fBx\fP)   i2d_ASN1_SET_OF_##\fBtype\fP(\fBa\fP,&\fBp\fP,f,\fBx\fP,\fBV_ASN1_CONTEXT_SPECIFIC\fP,\fBIS_SET\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SEQUENCE\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SEQUENCE\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SEQUENCE_type\fP(\fBtype\fP,  \fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_SEQUENCE_opt\fP(\fBa\fP,  f)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SET_opt\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SET_opt_type\fP(\fBtype\fP,  \fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SEQUENCE_opt\fP(\fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_IMP_SEQUENCE_opt_type\fP(\fBtype\fP,  \fBa\fP,  f,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_EXP_opt\fP(\fBa\fP,  f,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_EXP_SET_opt\fP(\fBa\fP,  f,  mtag,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_EXP_SEQUENCE_opt\fP(\fBa\fP,  f,  mtag,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_put_EXP_SEQUENCE_opt_type\fP(\fBtype\fP,  \fBa\fP,  f,  mtag,  tag,  v)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_seq_total\fP()"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_INF_seq_start\fP(tag,  ctx)"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_INF_seq_end\fP()   *(\fBp\fP++)=0x00; *(p++)=0x00"
+.br
+.ti -1c
+.RI "#define \fBM_ASN1_I2D_finish\fP()      "
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBasn1_GetSequence\fP (\fBASN1_const_CTX\fP *\fBc\fP, long *\fBlength\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBasn1_add_error\fP (const unsigned char *address, int offset)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ASN1_MAC_ERR_LIB   \fBERR_LIB_ASN1\fP"
+
+.PP
+Definition at line 69 of file asn1_mac\&.h\&.
+.SS "#define ASN1_MAC_H_err(f, r, line)   \fBERR_PUT_error\fP(\fBASN1_MAC_ERR_LIB\fP,(f),(r),__FILE__,(line))"
+
+.PP
+Definition at line 72 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_vars(\fBa\fP, \fBtype\fP, func)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_const_CTX c; \
+        type ret=NULL; \
+        \
+        c\&.pp=(const unsigned char **)pp; \
+        c\&.q= *(const unsigned char **)pp; \
+        c\&.error=ERR_R_NESTED_ASN1_ERROR; \
+        if ((a == NULL) || ((*a) == NULL)) \
+                { if ((ret=(type)func()) == NULL) \
+                        { c\&.line=__LINE__; goto err; } } \
+        else    ret=(*a);
+.fi
+.PP
+Definition at line 75 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_Init()"
+\fBValue:\fP
+.PP
+.nf
+c\&.p= *(const unsigned char **)pp; \
+        c\&.max=(length == 0)?0:(c\&.p+length);
+.fi
+.PP
+Definition at line 87 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_Finish_2(\fBa\fP)"
+\fBValue:\fP
+.PP
+.nf
+if (!asn1_const_Finish(&c)) \
+                { c\&.line=__LINE__; goto err; } \
+        *(const unsigned char **)pp=c\&.p; \
+        if (a != NULL) (*a)=ret; \
+        return(ret);
+.fi
+.PP
+Definition at line 91 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_Finish(\fBa\fP, func, \fBe\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_Finish_2(a); \
+err:\
+        ASN1_MAC_H_err((e),c\&.error,c\&.line); \
+        asn1_add_error(*(const unsigned char **)pp,(int)(c\&.q- *pp)); \
+        if ((ret != NULL) && ((a == NULL) || (*a != ret))) func(ret); \
+        return(NULL)
+.fi
+.PP
+Definition at line 98 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_start_sequence()"
+\fBValue:\fP
+.PP
+.nf
+if (!asn1_GetSequence(&c,&length)) \
+                { c\&.line=__LINE__; goto err; }
+.fi
+.PP
+Definition at line 106 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_begin()   c\&.slen = \fBlength\fP;"
+
+.PP
+Definition at line 110 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_Finish_nolen(\fBa\fP, func, \fBe\fP)"
+\fBValue:\fP
+.PP
+.nf
+*pp=c\&.p; \
+        if (a != NULL) (*a)=ret; \
+        return(ret); \
+err:\
+        ASN1_MAC_H_err((e),c\&.error,c\&.line); \
+        asn1_add_error(*pp,(int)(c\&.q- *pp)); \
+        if ((ret != NULL) && ((a == NULL) || (*a != ret))) func(ret); \
+        return(NULL)
+.fi
+.PP
+Definition at line 114 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_end_sequence()"
+\fBValue:\fP
+.PP
+.nf
+(((c\&.inf&1) == 0)?(c\&.slen <= 0): \
+                (c\&.eos=ASN1_const_check_infinite_end(&c\&.p,c\&.slen)))
+.fi
+.PP
+Definition at line 124 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get(b, func)"
+\fBValue:\fP
+.PP
+.nf
+c\&.q=c\&.p; \
+        if (func(&(b),&c\&.p,c\&.slen) == NULL) \
+                {c\&.line=__LINE__; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);
+.fi
+.PP
+Definition at line 129 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_x(\fBtype\fP, b, func)"
+\fBValue:\fP
+.PP
+.nf
+c\&.q=c\&.p; \
+        if (((D2I_OF(type))func)(&(b),&c\&.p,c\&.slen) == NULL) \
+                {c\&.line=__LINE__; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);
+.fi
+.PP
+Definition at line 136 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_int(b, func)"
+\fBValue:\fP
+.PP
+.nf
+c\&.q=c\&.p; \
+        if (func(&(b),&c\&.p,c\&.slen) < 0) \
+                {c\&.line=__LINE__; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);
+.fi
+.PP
+Definition at line 143 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_opt(b, func, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && ((M_ASN1_next & (~V_ASN1_CONSTRUCTED)) \
+                == (V_ASN1_UNIVERSAL|(type)))) \
+                { \
+                M_ASN1_D2I_get(b,func); \
+                }
+.fi
+.PP
+Definition at line 149 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_int_opt(b, func, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && ((M_ASN1_next & (~V_ASN1_CONSTRUCTED)) \
+                == (V_ASN1_UNIVERSAL|(type)))) \
+                { \
+                M_ASN1_D2I_get_int(b,func); \
+                }
+.fi
+.PP
+Definition at line 156 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_imp(b, func, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_next=(_tmp& V_ASN1_CONSTRUCTED)|type; \
+        c\&.q=c\&.p; \
+        if (func(&(b),&c\&.p,c\&.slen) == NULL) \
+                {c\&.line=__LINE__; M_ASN1_next_prev = _tmp; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);\
+        M_ASN1_next_prev=_tmp;
+.fi
+.PP
+Definition at line 163 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_IMP_opt(b, func, tag, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && ((M_ASN1_next & (~V_ASN1_CONSTRUCTED)) == \
+                (V_ASN1_CONTEXT_SPECIFIC|(tag)))) \
+                { \
+                unsigned char _tmp = M_ASN1_next; \
+                M_ASN1_D2I_get_imp(b,func, type);\
+                }
+.fi
+.PP
+Definition at line 171 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_set(r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_get_imp_set(r,func,free_func, \
+                        V_ASN1_SET,V_ASN1_UNIVERSAL);
+.fi
+.PP
+Definition at line 179 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_set_type(\fBtype\fP, r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_get_imp_set_type(type,r,func,free_func, \
+                        V_ASN1_SET,V_ASN1_UNIVERSAL);
+.fi
+.PP
+Definition at line 183 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_set_opt(r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && (M_ASN1_next == (V_ASN1_UNIVERSAL| \
+                V_ASN1_CONSTRUCTED|V_ASN1_SET)))\
+                { M_ASN1_D2I_get_set(r,func,free_func); }
+.fi
+.PP
+Definition at line 187 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_set_opt_type(\fBtype\fP, r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && (M_ASN1_next == (V_ASN1_UNIVERSAL| \
+                V_ASN1_CONSTRUCTED|V_ASN1_SET)))\
+                { M_ASN1_D2I_get_set_type(type,r,func,free_func); }
+.fi
+.PP
+Definition at line 192 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SET_opt(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                M_ASN1_I2D_len_SET(a,f);
+.fi
+.PP
+Definition at line 197 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SET_opt(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                M_ASN1_I2D_put_SET(a,f);
+.fi
+.PP
+Definition at line 201 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SEQUENCE_opt(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                M_ASN1_I2D_put_SEQUENCE(a,f);
+.fi
+.PP
+Definition at line 503 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SEQUENCE_opt_type(\fBtype\fP, \fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                M_ASN1_I2D_put_SEQUENCE_type(type,a,f);
+.fi
+.PP
+Definition at line 209 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_IMP_set_opt(b, func, \fBfree_func\fP, tag)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && \
+                (M_ASN1_next == \
+                (V_ASN1_CONTEXT_SPECIFIC|V_ASN1_CONSTRUCTED|(tag))))\
+                { \
+                M_ASN1_D2I_get_imp_set(b,func,free_func,\
+                        tag,V_ASN1_CONTEXT_SPECIFIC); \
+                }
+.fi
+.PP
+Definition at line 213 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_IMP_set_opt_type(\fBtype\fP, b, func, \fBfree_func\fP, tag)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && \
+                (M_ASN1_next == \
+                (V_ASN1_CONTEXT_SPECIFIC|V_ASN1_CONSTRUCTED|(tag))))\
+                { \
+                M_ASN1_D2I_get_imp_set_type(type,b,func,free_func,\
+                        tag,V_ASN1_CONTEXT_SPECIFIC); \
+                }
+.fi
+.PP
+Definition at line 222 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_seq(r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_get_imp_set(r,func,free_func,\
+                        V_ASN1_SEQUENCE,V_ASN1_UNIVERSAL);
+.fi
+.PP
+Definition at line 231 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_seq_type(\fBtype\fP, r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_get_imp_set_type(type,r,func,free_func,\
+                                            V_ASN1_SEQUENCE,V_ASN1_UNIVERSAL)
+.fi
+.PP
+Definition at line 235 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_seq_opt(r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && (M_ASN1_next == (V_ASN1_UNIVERSAL| \
+                V_ASN1_CONSTRUCTED|V_ASN1_SEQUENCE)))\
+                { M_ASN1_D2I_get_seq(r,func,free_func); }
+.fi
+.PP
+Definition at line 239 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_seq_opt_type(\fBtype\fP, r, func, \fBfree_func\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && (M_ASN1_next == (V_ASN1_UNIVERSAL| \
+                V_ASN1_CONSTRUCTED|V_ASN1_SEQUENCE)))\
+                { M_ASN1_D2I_get_seq_type(type,r,func,free_func); }
+.fi
+.PP
+Definition at line 244 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_IMP_set(r, func, \fBfree_func\fP, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_get_imp_set(r,func,free_func,\
+                        x,V_ASN1_CONTEXT_SPECIFIC);
+.fi
+.PP
+Definition at line 249 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_IMP_set_type(\fBtype\fP, r, func, \fBfree_func\fP, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+M_ASN1_D2I_get_imp_set_type(type,r,func,free_func,\
+                        x,V_ASN1_CONTEXT_SPECIFIC);
+.fi
+.PP
+Definition at line 253 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_imp_set(r, func, \fBfree_func\fP, \fBa\fP, b)"
+\fBValue:\fP
+.PP
+.nf
+c\&.q=c\&.p; \
+        if (d2i_ASN1_SET(&(r),&c\&.p,c\&.slen,(char *(*)())func,\
+                (void (*)())free_func,a,b) == NULL) \
+                { c\&.line=__LINE__; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);
+.fi
+.PP
+Definition at line 257 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_imp_set_type(\fBtype\fP, r, func, \fBfree_func\fP, \fBa\fP, b)"
+\fBValue:\fP
+.PP
+.nf
+c\&.q=c\&.p; \
+        if (d2i_ASN1_SET_OF_##type(&(r),&c\&.p,c\&.slen,func,\
+                                   free_func,a,b) == NULL) \
+                { c\&.line=__LINE__; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);
+.fi
+.PP
+Definition at line 264 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_set_strings(r, func, \fBa\fP, b)"
+\fBValue:\fP
+.PP
+.nf
+c\&.q=c\&.p; \
+        if (d2i_ASN1_STRING_SET(&(r),&c\&.p,c\&.slen,a,b) == NULL) \
+                { c\&.line=__LINE__; goto err; } \
+        c\&.slen-=(c\&.p-c\&.q);
+.fi
+.PP
+Definition at line 271 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_EXP_opt(r, func, tag)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0L) && (M_ASN1_next == \
+                (V_ASN1_CONSTRUCTED|V_ASN1_CONTEXT_SPECIFIC|tag))) \
+                { \
+                int Tinf,Ttag,Tclass; \
+                long Tlen; \
+                \
+                c\&.q=c\&.p; \
+                Tinf=ASN1_get_object(&c\&.p,&Tlen,&Ttag,&Tclass,c\&.slen); \
+                if (Tinf & 0x80) \
+                        { c\&.error=ERR_R_BAD_ASN1_OBJECT_HEADER; \
+                        c\&.line=__LINE__; goto err; } \
+                if (Tinf == (V_ASN1_CONSTRUCTED+1)) \
+                                        Tlen = c\&.slen - (c\&.p - c\&.q) - 2; \
+                if (func(&(r),&c\&.p,Tlen) == NULL) \
+                        { c\&.line=__LINE__; goto err; } \
+                if (Tinf == (V_ASN1_CONSTRUCTED+1)) { \
+                        Tlen = c\&.slen - (c\&.p - c\&.q); \
+                        if(!ASN1_const_check_infinite_end(&c\&.p, Tlen)) \
+                                { c\&.error=ERR_R_MISSING_ASN1_EOS; \
+                                c\&.line=__LINE__; goto err; } \
+                }\
+                c\&.slen-=(c\&.p-c\&.q); \
+                }
+.fi
+.PP
+Definition at line 277 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_EXP_set_opt(r, func, \fBfree_func\fP, tag, b)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && (M_ASN1_next == \
+                (V_ASN1_CONSTRUCTED|V_ASN1_CONTEXT_SPECIFIC|tag))) \
+                { \
+                int Tinf,Ttag,Tclass; \
+                long Tlen; \
+                \
+                c\&.q=c\&.p; \
+                Tinf=ASN1_get_object(&c\&.p,&Tlen,&Ttag,&Tclass,c\&.slen); \
+                if (Tinf & 0x80) \
+                        { c\&.error=ERR_R_BAD_ASN1_OBJECT_HEADER; \
+                        c\&.line=__LINE__; goto err; } \
+                if (Tinf == (V_ASN1_CONSTRUCTED+1)) \
+                                        Tlen = c\&.slen - (c\&.p - c\&.q) - 2; \
+                if (d2i_ASN1_SET(&(r),&c\&.p,Tlen,(char *(*)())func, \
+                        (void (*)())free_func, \
+                        b,V_ASN1_UNIVERSAL) == NULL) \
+                        { c\&.line=__LINE__; goto err; } \
+                if (Tinf == (V_ASN1_CONSTRUCTED+1)) { \
+                        Tlen = c\&.slen - (c\&.p - c\&.q); \
+                        if(!ASN1_check_infinite_end(&c\&.p, Tlen)) \
+                                { c\&.error=ERR_R_MISSING_ASN1_EOS; \
+                                c\&.line=__LINE__; goto err; } \
+                }\
+                c\&.slen-=(c\&.p-c\&.q); \
+                }
+.fi
+.PP
+Definition at line 302 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_D2I_get_EXP_set_opt_type(\fBtype\fP, r, func, \fBfree_func\fP, tag, b)"
+\fBValue:\fP
+.PP
+.nf
+if ((c\&.slen != 0) && (M_ASN1_next == \
+                (V_ASN1_CONSTRUCTED|V_ASN1_CONTEXT_SPECIFIC|tag))) \
+                { \
+                int Tinf,Ttag,Tclass; \
+                long Tlen; \
+                \
+                c\&.q=c\&.p; \
+                Tinf=ASN1_get_object(&c\&.p,&Tlen,&Ttag,&Tclass,c\&.slen); \
+                if (Tinf & 0x80) \
+                        { c\&.error=ERR_R_BAD_ASN1_OBJECT_HEADER; \
+                        c\&.line=__LINE__; goto err; } \
+                if (Tinf == (V_ASN1_CONSTRUCTED+1)) \
+                                        Tlen = c\&.slen - (c\&.p - c\&.q) - 2; \
+                if (d2i_ASN1_SET_OF_##type(&(r),&c\&.p,Tlen,func, \
+                        free_func,b,V_ASN1_UNIVERSAL) == NULL) \
+                        { c\&.line=__LINE__; goto err; } \
+                if (Tinf == (V_ASN1_CONSTRUCTED+1)) { \
+                        Tlen = c\&.slen - (c\&.p - c\&.q); \
+                        if(!ASN1_check_infinite_end(&c\&.p, Tlen)) \
+                                { c\&.error=ERR_R_MISSING_ASN1_EOS; \
+                                c\&.line=__LINE__; goto err; } \
+                }\
+                c\&.slen-=(c\&.p-c\&.q); \
+                }
+.fi
+.PP
+Definition at line 329 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_New_Malloc(ret, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((ret=(type *)OPENSSL_malloc(sizeof(type))) == NULL) \
+                { c\&.line=__LINE__; goto err2; }
+.fi
+.PP
+Definition at line 356 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_New(arg, func)   if (((arg)=func()) == NULL) return(NULL)"
+
+.PP
+Definition at line 360 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_New_Error(\fBa\fP)"
+\fBValue:\fP
+.PP
+.nf
+/*-     err:    ASN1_MAC_H_err((a),ERR_R_NESTED_ASN1_ERROR,c\&.line); \
+                return(NULL);*/ \
+        err2:   ASN1_MAC_H_err((a),ERR_R_MALLOC_FAILURE,c\&.line); \
+                return(NULL)
+.fi
+.PP
+Definition at line 363 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_next   (*((unsigned char *)(\fBc\&.p\fP)))"
+
+.PP
+Definition at line 375 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_next_prev   (*((unsigned char *)(c\&.q)))"
+
+.PP
+Definition at line 376 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_vars(\fBa\fP)"
+\fBValue:\fP
+.PP
+.nf
+int r=0,ret=0; \
+                                unsigned char *p; \
+                                if (a == NULL) return(0)
+.fi
+.PP
+Definition at line 380 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len(\fBa\fP, f)   ret+=f(\fBa\fP,NULL)"
+
+.PP
+Definition at line 385 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_opt(\fBa\fP, f)   if (\fBa\fP != NULL) \fBM_ASN1_I2D_len\fP(\fBa\fP,f)"
+
+.PP
+Definition at line 386 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SET(\fBa\fP, f)   ret+=\fBi2d_ASN1_SET\fP(\fBa\fP,NULL,f,\fBV_ASN1_SET\fP,\fBV_ASN1_UNIVERSAL\fP,\fBIS_SET\fP);"
+
+.PP
+Definition at line 388 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SET_type(\fBtype\fP, \fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+ret+=i2d_ASN1_SET_OF_##type(a,NULL,f,V_ASN1_SET, \
+                                            V_ASN1_UNIVERSAL,IS_SET);
+.fi
+.PP
+Definition at line 391 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SEQUENCE(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+ret+=i2d_ASN1_SET(a,NULL,f,V_ASN1_SEQUENCE,V_ASN1_UNIVERSAL, \
+                                  IS_SEQUENCE);
+.fi
+.PP
+Definition at line 395 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SEQUENCE_type(\fBtype\fP, \fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+ret+=i2d_ASN1_SET_OF_##type(a,NULL,f,V_ASN1_SEQUENCE, \
+                                            V_ASN1_UNIVERSAL,IS_SEQUENCE)
+.fi
+.PP
+Definition at line 399 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SEQUENCE_opt(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        M_ASN1_I2D_len_SEQUENCE(a,f);
+.fi
+.PP
+Definition at line 403 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_SEQUENCE_opt_type(\fBtype\fP, \fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                        M_ASN1_I2D_len_SEQUENCE_type(type,a,f);
+.fi
+.PP
+Definition at line 407 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SET(\fBa\fP, f, \fBx\fP)   ret+=\fBi2d_ASN1_SET\fP(\fBa\fP,NULL,f,\fBx\fP,\fBV_ASN1_CONTEXT_SPECIFIC\fP,\fBIS_SET\fP);"
+
+.PP
+Definition at line 411 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SET_type(\fBtype\fP, \fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+ret+=i2d_ASN1_SET_OF_##type(a,NULL,f,x, \
+                                            V_ASN1_CONTEXT_SPECIFIC,IS_SET);
+.fi
+.PP
+Definition at line 414 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SET_opt(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        ret+=i2d_ASN1_SET(a,NULL,f,x,V_ASN1_CONTEXT_SPECIFIC, \
+                                          IS_SET);
+.fi
+.PP
+Definition at line 418 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SET_opt_type(\fBtype\fP, \fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                        ret+=i2d_ASN1_SET_OF_##type(a,NULL,f,x, \
+                                               V_ASN1_CONTEXT_SPECIFIC,IS_SET);
+.fi
+.PP
+Definition at line 423 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SEQUENCE(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+ret+=i2d_ASN1_SET(a,NULL,f,x,V_ASN1_CONTEXT_SPECIFIC, \
+                                  IS_SEQUENCE);
+.fi
+.PP
+Definition at line 428 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SEQUENCE_opt(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        ret+=i2d_ASN1_SET(a,NULL,f,x,V_ASN1_CONTEXT_SPECIFIC, \
+                                          IS_SEQUENCE);
+.fi
+.PP
+Definition at line 432 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_IMP_SEQUENCE_opt_type(\fBtype\fP, \fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                        ret+=i2d_ASN1_SET_OF_##type(a,NULL,f,x, \
+                                                    V_ASN1_CONTEXT_SPECIFIC, \
+                                                    IS_SEQUENCE);
+.fi
+.PP
+Definition at line 437 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_EXP_opt(\fBa\fP, f, mtag, v)"
+\fBValue:\fP
+.PP
+.nf
+if (a != NULL)\
+                        { \
+                        v=f(a,NULL); \
+                        ret+=ASN1_object_size(1,v,mtag); \
+                        }
+.fi
+.PP
+Definition at line 443 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_EXP_SET_opt(\fBa\fP, f, mtag, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0))\
+                        { \
+                        v=i2d_ASN1_SET(a,NULL,f,tag,V_ASN1_UNIVERSAL,IS_SET); \
+                        ret+=ASN1_object_size(1,v,mtag); \
+                        }
+.fi
+.PP
+Definition at line 450 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_EXP_SEQUENCE_opt(\fBa\fP, f, mtag, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0))\
+                        { \
+                        v=i2d_ASN1_SET(a,NULL,f,tag,V_ASN1_UNIVERSAL, \
+                                       IS_SEQUENCE); \
+                        ret+=ASN1_object_size(1,v,mtag); \
+                        }
+.fi
+.PP
+Definition at line 457 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_len_EXP_SEQUENCE_opt_type(\fBtype\fP, \fBa\fP, f, mtag, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0))\
+                        { \
+                        v=i2d_ASN1_SET_OF_##type(a,NULL,f,tag, \
+                                                 V_ASN1_UNIVERSAL, \
+                                                 IS_SEQUENCE); \
+                        ret+=ASN1_object_size(1,v,mtag); \
+                        }
+.fi
+.PP
+Definition at line 465 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put(\fBa\fP, f)   f(\fBa\fP,&\fBp\fP)"
+
+.PP
+Definition at line 475 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_opt(\fBa\fP, f, \fBt\fP)"
+\fBValue:\fP
+.PP
+.nf
+if (a != NULL) \
+                        { \
+                        unsigned char *q=p; \
+                        f(a,&p); \
+                        *q=(V_ASN1_CONTEXT_SPECIFIC|t|(*q&V_ASN1_CONSTRUCTED));\
+                        }
+.fi
+.PP
+Definition at line 477 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SET(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+i2d_ASN1_SET(a,&p,f,V_ASN1_SET,\
+                        V_ASN1_UNIVERSAL,IS_SET)
+.fi
+.PP
+Definition at line 485 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SET_type(\fBtype\fP, \fBa\fP, f)   i2d_ASN1_SET_OF_##\fBtype\fP(\fBa\fP,&\fBp\fP,f,\fBV_ASN1_SET\fP,\fBV_ASN1_UNIVERSAL\fP,\fBIS_SET\fP)"
+
+.PP
+Definition at line 487 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SET(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+i2d_ASN1_SET(a,&p,f,x,\
+                        V_ASN1_CONTEXT_SPECIFIC,IS_SET)
+.fi
+.PP
+Definition at line 489 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SET_type(\fBtype\fP, \fBa\fP, f, \fBx\fP)   i2d_ASN1_SET_OF_##\fBtype\fP(\fBa\fP,&\fBp\fP,f,\fBx\fP,\fBV_ASN1_CONTEXT_SPECIFIC\fP,\fBIS_SET\fP)"
+
+.PP
+Definition at line 491 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SEQUENCE(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+i2d_ASN1_SET(a,&p,f,x,\
+                        V_ASN1_CONTEXT_SPECIFIC,IS_SEQUENCE)
+.fi
+.PP
+Definition at line 493 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SEQUENCE(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+i2d_ASN1_SET(a,&p,f,V_ASN1_SEQUENCE,\
+                                             V_ASN1_UNIVERSAL,IS_SEQUENCE)
+.fi
+.PP
+Definition at line 496 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SEQUENCE_type(\fBtype\fP, \fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+i2d_ASN1_SET_OF_##type(a,&p,f,V_ASN1_SEQUENCE,V_ASN1_UNIVERSAL, \
+                            IS_SEQUENCE)
+.fi
+.PP
+Definition at line 499 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_SEQUENCE_opt(\fBa\fP, f)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        M_ASN1_I2D_put_SEQUENCE(a,f);
+.fi
+.PP
+Definition at line 503 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SET_opt(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        { i2d_ASN1_SET(a,&p,f,x,V_ASN1_CONTEXT_SPECIFIC, \
+                                       IS_SET); }
+.fi
+.PP
+Definition at line 507 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SET_opt_type(\fBtype\fP, \fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                        { i2d_ASN1_SET_OF_##type(a,&p,f,x, \
+                                                 V_ASN1_CONTEXT_SPECIFIC, \
+                                                 IS_SET); }
+.fi
+.PP
+Definition at line 512 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SEQUENCE_opt(\fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        { i2d_ASN1_SET(a,&p,f,x,V_ASN1_CONTEXT_SPECIFIC, \
+                                       IS_SEQUENCE); }
+.fi
+.PP
+Definition at line 518 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_IMP_SEQUENCE_opt_type(\fBtype\fP, \fBa\fP, f, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                        { i2d_ASN1_SET_OF_##type(a,&p,f,x, \
+                                                 V_ASN1_CONTEXT_SPECIFIC, \
+                                                 IS_SEQUENCE); }
+.fi
+.PP
+Definition at line 523 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_EXP_opt(\fBa\fP, f, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if (a != NULL) \
+                        { \
+                        ASN1_put_object(&p,1,v,tag,V_ASN1_CONTEXT_SPECIFIC); \
+                        f(a,&p); \
+                        }
+.fi
+.PP
+Definition at line 529 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_EXP_SET_opt(\fBa\fP, f, mtag, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        { \
+                        ASN1_put_object(&p,1,v,mtag,V_ASN1_CONTEXT_SPECIFIC); \
+                        i2d_ASN1_SET(a,&p,f,tag,V_ASN1_UNIVERSAL,IS_SET); \
+                        }
+.fi
+.PP
+Definition at line 536 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_EXP_SEQUENCE_opt(\fBa\fP, f, mtag, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_num(a) != 0)) \
+                        { \
+                        ASN1_put_object(&p,1,v,mtag,V_ASN1_CONTEXT_SPECIFIC); \
+                        i2d_ASN1_SET(a,&p,f,tag,V_ASN1_UNIVERSAL,IS_SEQUENCE); \
+                        }
+.fi
+.PP
+Definition at line 543 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_put_EXP_SEQUENCE_opt_type(\fBtype\fP, \fBa\fP, f, mtag, tag, v)"
+\fBValue:\fP
+.PP
+.nf
+if ((a != NULL) && (sk_##type##_num(a) != 0)) \
+                        { \
+                        ASN1_put_object(&p,1,v,mtag,V_ASN1_CONTEXT_SPECIFIC); \
+                        i2d_ASN1_SET_OF_##type(a,&p,f,tag,V_ASN1_UNIVERSAL, \
+                                               IS_SEQUENCE); \
+                        }
+.fi
+.PP
+Definition at line 550 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_seq_total()"
+\fBValue:\fP
+.PP
+.nf
+r=ASN1_object_size(1,ret,V_ASN1_SEQUENCE); \
+                if (pp == NULL) return(r); \
+                p= *pp; \
+                ASN1_put_object(&p,1,ret,V_ASN1_SEQUENCE,V_ASN1_UNIVERSAL)
+.fi
+.PP
+Definition at line 558 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_INF_seq_start(tag, ctx)"
+\fBValue:\fP
+.PP
+.nf
+*(p++)=(V_ASN1_CONSTRUCTED|(tag)|(ctx)); \
+                *(p++)=0x80
+.fi
+.PP
+Definition at line 564 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_INF_seq_end()   *(\fBp\fP++)=0x00; *(p++)=0x00"
+
+.PP
+Definition at line 568 of file asn1_mac\&.h\&.
+.SS "#define M_ASN1_I2D_finish()"
+\fBValue:\fP
+.PP
+.nf
+*pp=p; \
+                                return(r);
+.fi
+.PP
+Definition at line 570 of file asn1_mac\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int asn1_GetSequence (\fBASN1_const_CTX\fP * c, long * length)"
+
+.SS "\fBvoid\fP asn1_add_error (const unsigned char * address, int offset)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

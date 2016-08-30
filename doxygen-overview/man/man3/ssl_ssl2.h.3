@@ -1,0 +1,728 @@
+.TH "ssl2.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl2.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBssl2_state_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSSL2_VERSION\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBSSL2_VERSION_MAJOR\fP   0x00"
+.br
+.ti -1c
+.RI "#define \fBSSL2_VERSION_MINOR\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_ERROR\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_CLIENT_HELLO\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_CLIENT_MASTER_KEY\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_CLIENT_FINISHED\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_SERVER_HELLO\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_SERVER_VERIFY\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_SERVER_FINISHED\fP   6"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_REQUEST_CERTIFICATE\fP   7"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MT_CLIENT_CERTIFICATE\fP   8"
+.br
+.ti -1c
+.RI "#define \fBSSL2_PE_UNDEFINED_ERROR\fP   0x0000"
+.br
+.ti -1c
+.RI "#define \fBSSL2_PE_NO_CIPHER\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBSSL2_PE_NO_CERTIFICATE\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBSSL2_PE_BAD_CERTIFICATE\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBSSL2_PE_UNSUPPORTED_CERTIFICATE_TYPE\fP   0x0006"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_NULL_WITH_MD5\fP   0x02000000/* v3 */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_RC4_128_WITH_MD5\fP   0x02010080"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_RC4_128_EXPORT40_WITH_MD5\fP   0x02020080"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_RC2_128_CBC_WITH_MD5\fP   0x02030080"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_RC2_128_CBC_EXPORT40_WITH_MD5\fP   0x02040080"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_IDEA_128_CBC_WITH_MD5\fP   0x02050080"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_DES_64_CBC_WITH_MD5\fP   0x02060040"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_DES_64_CBC_WITH_SHA\fP   0x02060140/* v3 */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_DES_192_EDE3_CBC_WITH_MD5\fP   0x020700c0"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_DES_192_EDE3_CBC_WITH_SHA\fP   0x020701c0/* v3 */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_RC4_64_WITH_MD5\fP   0x02080080/* MS hack */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_DES_64_CFB64_WITH_MD5_1\fP   0x02ff0800/* SSLeay */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CK_NULL\fP   0x02ff0810/* SSLeay */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_DES_64_CFB64_WITH_MD5_1\fP   'DES\-CFB\-M1'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_NULL_WITH_MD5\fP   'NULL\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_RC4_128_WITH_MD5\fP   'RC4\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_RC4_128_EXPORT40_WITH_MD5\fP   'EXP\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_RC2_128_CBC_WITH_MD5\fP   'RC2\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_RC2_128_CBC_EXPORT40_WITH_MD5\fP   'EXP\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_IDEA_128_CBC_WITH_MD5\fP   'IDEA\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_DES_64_CBC_WITH_MD5\fP   'DES\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_DES_64_CBC_WITH_SHA\fP   'DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_DES_192_EDE3_CBC_WITH_MD5\fP   'DES\-CBC3\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_DES_192_EDE3_CBC_WITH_SHA\fP   'DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_RC4_64_WITH_MD5\fP   'RC4\-64\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_TXT_NULL\fP   'NULL'"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CF_5_BYTE_ENC\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CF_8_BYTE_ENC\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CT_X509_CERTIFICATE\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBSSL2_AT_MD5_WITH_RSA_ENCRYPTION\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_SSL_SESSION_ID_LENGTH\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_MASTER_KEY_LENGTH_IN_BITS\fP   256"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_RECORD_LENGTH_2_BYTE_HEADER\fP   32767u"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_RECORD_LENGTH_3_BYTE_HEADER\fP   16383/* 2^14\-1 */"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CHALLENGE_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MIN_CHALLENGE_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_CHALLENGE_LENGTH\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL2_CONNECTION_ID_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_CONNECTION_ID_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL2_SSL_SESSION_ID_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_CERT_CHALLENGE_LENGTH\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MIN_CERT_CHALLENGE_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL2_MAX_KEY_MATERIAL_LENGTH\fP   24"
+.br
+.ti -1c
+.RI "#define \fBCERT\fP   char"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_HELLO_A\fP   (0x10|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_HELLO_B\fP   (0x11|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_SERVER_HELLO_A\fP   (0x20|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_SERVER_HELLO_B\fP   (0x21|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_MASTER_KEY_A\fP   (0x30|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_MASTER_KEY_B\fP   (0x31|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_FINISHED_A\fP   (0x40|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_FINISHED_B\fP   (0x41|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_CERTIFICATE_A\fP   (0x50|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_CERTIFICATE_B\fP   (0x51|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_CERTIFICATE_C\fP   (0x52|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_CLIENT_CERTIFICATE_D\fP   (0x53|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_SERVER_VERIFY_A\fP   (0x60|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_SERVER_VERIFY_B\fP   (0x61|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_SERVER_FINISHED_A\fP   (0x70|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_SERVER_FINISHED_B\fP   (0x71|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_CLIENT_START_ENCRYPTION\fP   (0x80|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_X509_GET_CLIENT_CERTIFICATE\fP   (0x90|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_HELLO_A\fP   (0x10|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_HELLO_B\fP   (0x11|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_HELLO_C\fP   (0x12|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_HELLO_A\fP   (0x20|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_HELLO_B\fP   (0x21|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_MASTER_KEY_A\fP   (0x30|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_MASTER_KEY_B\fP   (0x31|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_VERIFY_A\fP   (0x40|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_VERIFY_B\fP   (0x41|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_VERIFY_C\fP   (0x42|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_FINISHED_A\fP   (0x50|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_GET_CLIENT_FINISHED_B\fP   (0x51|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_FINISHED_A\fP   (0x60|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_SERVER_FINISHED_B\fP   (0x61|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_REQUEST_CERTIFICATE_A\fP   (0x70|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_REQUEST_CERTIFICATE_B\fP   (0x71|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_REQUEST_CERTIFICATE_C\fP   (0x72|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SEND_REQUEST_CERTIFICATE_D\fP   (0x73|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_SERVER_START_ENCRYPTION\fP   (0x80|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL2_ST_X509_GET_SERVER_CERTIFICATE\fP   (0x90|SSL_ST_ACCEPT)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBssl2_state_st\fP \fBSSL2_STATE\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define \fBCERT\fP   char"
+
+.PP
+Definition at line 158 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_AT_MD5_WITH_RSA_ENCRYPTION   0x01"
+
+.PP
+Definition at line 130 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CF_5_BYTE_ENC   0x01"
+
+.PP
+Definition at line 123 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CF_8_BYTE_ENC   0x02"
+
+.PP
+Definition at line 124 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CHALLENGE_LENGTH   16"
+
+.PP
+Definition at line 144 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_DES_192_EDE3_CBC_WITH_MD5   0x020700c0"
+
+.PP
+Definition at line 100 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_DES_192_EDE3_CBC_WITH_SHA   0x020701c0/* v3 */"
+
+.PP
+Definition at line 101 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_DES_64_CBC_WITH_MD5   0x02060040"
+
+.PP
+Definition at line 98 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_DES_64_CBC_WITH_SHA   0x02060140/* v3 */"
+
+.PP
+Definition at line 99 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_DES_64_CFB64_WITH_MD5_1   0x02ff0800/* SSLeay */"
+
+.PP
+Definition at line 104 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_IDEA_128_CBC_WITH_MD5   0x02050080"
+
+.PP
+Definition at line 97 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_NULL   0x02ff0810/* SSLeay */"
+
+.PP
+Definition at line 105 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_NULL_WITH_MD5   0x02000000/* v3 */"
+
+.PP
+Definition at line 92 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_RC2_128_CBC_EXPORT40_WITH_MD5   0x02040080"
+
+.PP
+Definition at line 96 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_RC2_128_CBC_WITH_MD5   0x02030080"
+
+.PP
+Definition at line 95 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_RC4_128_EXPORT40_WITH_MD5   0x02020080"
+
+.PP
+Definition at line 94 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_RC4_128_WITH_MD5   0x02010080"
+
+.PP
+Definition at line 93 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CK_RC4_64_WITH_MD5   0x02080080/* MS hack */"
+
+.PP
+Definition at line 102 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CONNECTION_ID_LENGTH   16"
+
+.PP
+Definition at line 150 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_CT_X509_CERTIFICATE   0x01"
+
+.PP
+Definition at line 127 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_CERT_CHALLENGE_LENGTH   32"
+
+.PP
+Definition at line 153 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_CHALLENGE_LENGTH   32"
+
+.PP
+Definition at line 149 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_CONNECTION_ID_LENGTH   16"
+
+.PP
+Definition at line 151 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_KEY_MATERIAL_LENGTH   24"
+
+.PP
+Definition at line 155 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_MASTER_KEY_LENGTH_IN_BITS   256"
+
+.PP
+Definition at line 135 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_RECORD_LENGTH_2_BYTE_HEADER   32767u"
+
+.PP
+Definition at line 139 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_RECORD_LENGTH_3_BYTE_HEADER   16383/* 2^14\-1 */"
+
+.PP
+Definition at line 142 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MAX_SSL_SESSION_ID_LENGTH   32"
+
+.PP
+Definition at line 132 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MIN_CERT_CHALLENGE_LENGTH   16"
+
+.PP
+Definition at line 154 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MIN_CHALLENGE_LENGTH   16"
+
+.PP
+Definition at line 148 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_CLIENT_CERTIFICATE   8"
+
+.PP
+Definition at line 82 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_CLIENT_FINISHED   3"
+
+.PP
+Definition at line 77 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_CLIENT_HELLO   1"
+
+.PP
+Definition at line 75 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_CLIENT_MASTER_KEY   2"
+
+.PP
+Definition at line 76 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_ERROR   0"
+
+.PP
+Definition at line 74 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_REQUEST_CERTIFICATE   7"
+
+.PP
+Definition at line 81 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_SERVER_FINISHED   6"
+
+.PP
+Definition at line 80 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_SERVER_HELLO   4"
+
+.PP
+Definition at line 78 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_MT_SERVER_VERIFY   5"
+
+.PP
+Definition at line 79 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_PE_BAD_CERTIFICATE   0x0004"
+
+.PP
+Definition at line 88 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_PE_NO_CERTIFICATE   0x0002"
+
+.PP
+Definition at line 87 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_PE_NO_CIPHER   0x0001"
+
+.PP
+Definition at line 86 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_PE_UNDEFINED_ERROR   0x0000"
+
+.PP
+Definition at line 85 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_PE_UNSUPPORTED_CERTIFICATE_TYPE   0x0006"
+
+.PP
+Definition at line 89 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_SSL_SESSION_ID_LENGTH   16"
+
+.PP
+Definition at line 152 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_CLIENT_START_ENCRYPTION   (0x80|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 238 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_FINISHED_A   (0x50|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 251 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_FINISHED_B   (0x51|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 252 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_HELLO_A   (0x10|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 241 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_HELLO_B   (0x11|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 242 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_HELLO_C   (0x12|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 243 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_MASTER_KEY_A   (0x30|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 246 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_CLIENT_MASTER_KEY_B   (0x31|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 247 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_SERVER_FINISHED_A   (0x70|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 236 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_SERVER_FINISHED_B   (0x71|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 237 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_SERVER_HELLO_A   (0x20|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 224 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_SERVER_HELLO_B   (0x21|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 225 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_SERVER_VERIFY_A   (0x60|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 234 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_GET_SERVER_VERIFY_B   (0x61|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 235 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_CERTIFICATE_A   (0x50|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 230 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_CERTIFICATE_B   (0x51|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 231 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_CERTIFICATE_C   (0x52|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 232 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_CERTIFICATE_D   (0x53|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 233 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_FINISHED_A   (0x40|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 228 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_FINISHED_B   (0x41|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 229 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_HELLO_A   (0x10|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 222 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_HELLO_B   (0x11|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 223 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_MASTER_KEY_A   (0x30|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 226 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_CLIENT_MASTER_KEY_B   (0x31|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 227 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_REQUEST_CERTIFICATE_A   (0x70|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 255 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_REQUEST_CERTIFICATE_B   (0x71|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 256 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_REQUEST_CERTIFICATE_C   (0x72|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 257 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_REQUEST_CERTIFICATE_D   (0x73|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 258 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_FINISHED_A   (0x60|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 253 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_FINISHED_B   (0x61|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 254 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_HELLO_A   (0x20|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 244 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_HELLO_B   (0x21|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 245 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_VERIFY_A   (0x40|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 248 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_VERIFY_B   (0x41|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 249 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SEND_SERVER_VERIFY_C   (0x42|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 250 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_SERVER_START_ENCRYPTION   (0x80|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 259 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_X509_GET_CLIENT_CERTIFICATE   (0x90|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 239 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_ST_X509_GET_SERVER_CERTIFICATE   (0x90|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 260 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_DES_192_EDE3_CBC_WITH_MD5   'DES\-CBC3\-\fBMD5\fP'"
+
+.PP
+Definition at line 116 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_DES_192_EDE3_CBC_WITH_SHA   'DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 117 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_DES_64_CBC_WITH_MD5   'DES\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 114 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_DES_64_CBC_WITH_SHA   'DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 115 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_DES_64_CFB64_WITH_MD5_1   'DES\-CFB\-M1'"
+
+.PP
+Definition at line 107 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_IDEA_128_CBC_WITH_MD5   'IDEA\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 113 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_NULL   'NULL'"
+
+.PP
+Definition at line 120 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_NULL_WITH_MD5   'NULL\-\fBMD5\fP'"
+
+.PP
+Definition at line 108 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_RC2_128_CBC_EXPORT40_WITH_MD5   'EXP\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 112 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_RC2_128_CBC_WITH_MD5   'RC2\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 111 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_RC4_128_EXPORT40_WITH_MD5   'EXP\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 110 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_RC4_128_WITH_MD5   'RC4\-\fBMD5\fP'"
+
+.PP
+Definition at line 109 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_TXT_RC4_64_WITH_MD5   'RC4\-64\-\fBMD5\fP'"
+
+.PP
+Definition at line 118 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_VERSION   0x0002"
+
+.PP
+Definition at line 67 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_VERSION_MAJOR   0x00"
+
+.PP
+Definition at line 68 of file ssl/ssl2\&.h\&.
+.SS "#define SSL2_VERSION_MINOR   0x02"
+
+.PP
+Definition at line 69 of file ssl/ssl2\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBssl2_state_st\fP  \fBSSL2_STATE\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

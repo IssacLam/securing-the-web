@@ -1,0 +1,344 @@
+\hypertarget{s2n__drbg__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+drbg\+\_\+test.c File Reference}
+\label{s2n__drbg__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+drbg\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+drbg\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$inttypes.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/aes.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+drbg.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+timer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}testlib/s2n\+\_\+testlib.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+drbg\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__drbg__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__drbg__test_8c_a032011c033730c5314a41d8ca005d80f}{nist\+\_\+fake\+\_\+urandom\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int \hyperlink{s2n__drbg__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{s2n__drbg__test_8c_ad7a4bdff564c2f74ca22439861c7e8c4}{nist\+\_\+reference\+\_\+entropy}
+\item 
+const char \hyperlink{s2n__drbg__test_8c_aacadbfe787042733a6593222502016d6}{nist\+\_\+reference\+\_\+entropy\+\_\+hex} \mbox{[}$\,$\mbox{]}
+\item 
+int \hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\+\_\+fd} = -\/1
+\item 
+const char \hyperlink{s2n__drbg__test_8c_ad944804b86cab1ce12e3a3a283436225}{nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex} \mbox{[}$\,$\mbox{]}
+\item 
+const char \hyperlink{s2n__drbg__test_8c_abb9ac592a38901d21d45593043073239}{nist\+\_\+reference\+\_\+values\+\_\+hex} \mbox{[}$\,$\mbox{]}
+\item 
+const char \hyperlink{s2n__drbg__test_8c_acdbc774bda863de8f9d27ae0b0257754}{nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!nist\+\_\+fake\+\_\+urandom\+\_\+data@{nist\+\_\+fake\+\_\+urandom\+\_\+data}}
+\index{nist\+\_\+fake\+\_\+urandom\+\_\+data@{nist\+\_\+fake\+\_\+urandom\+\_\+data}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{nist\+\_\+fake\+\_\+urandom\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{nist_fake_urandom_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int nist\+\_\+fake\+\_\+urandom\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__drbg__test_8c_a032011c033730c5314a41d8ca005d80f}{}\label{s2n__drbg__test_8c_a032011c033730c5314a41d8ca005d80f}
+
+
+Definition at line 149 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+150 \{
+151     \textcolor{comment}{/* At first, we use entropy data provided by the NIST test vectors */}
+152     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a49bb9749c055c6fb6f713cebeaa14cb5}{s2n\_stuffer\_read}(&\hyperlink{s2n__drbg__test_8c_ad7a4bdff564c2f74ca22439861c7e8c4}{nist\_reference\_entropy}, blob));
+153 
+154     \textcolor{keywordflow}{return} 0;
+155 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__drbg__test_8c_a032011c033730c5314a41d8ca005d80f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{s2n__drbg__test_8c_a032011c033730c5314a41d8ca005d80f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__drbg__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__drbg__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 157 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+158 \{
+159     uint8\_t data[256] = \{ 0 \};
+160     \textcolor{keyword}{struct }\hyperlink{structs2n__drbg}{s2n\_drbg} drbg = \{\{ 0 \}\};
+161     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} blob = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, .size = 64 \};
+162     \textcolor{keyword}{struct }\hyperlink{structs2n__timer}{s2n\_timer} timer;
+163     uint64\_t drbg\_nanoseconds;
+164     uint64\_t urandom\_nanoseconds;
+165     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} nist\_reference\_personalization\_strings;
+166     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} nist\_reference\_returned\_bits;
+167     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} nist\_reference\_values;
+168     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config};
+169 
+170     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+171 
+172     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(config = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}())
+173 
+174     \textcolor{comment}{/* Open /dev/urandom */}
+175     \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(\hyperlink{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{entropy\_fd} = open("/dev/urandom", O\_RDONLY));
+176 
+177     \textcolor{comment}{/* Convert the hex entropy data into binary */}
+178     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a1c990dcff5ccd1778a80bdcdd0034719}{s2n\_stuffer\_alloc\_ro\_from\_hex\_string}(&
+      \hyperlink{s2n__drbg__test_8c_ad7a4bdff564c2f74ca22439861c7e8c4}{nist\_reference\_entropy}, \hyperlink{s2n__drbg__test_8c_aacadbfe787042733a6593222502016d6}{nist\_reference\_entropy\_hex}));
+179     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a1c990dcff5ccd1778a80bdcdd0034719}{s2n\_stuffer\_alloc\_ro\_from\_hex\_string}(&
+      nist\_reference\_personalization\_strings, 
+      \hyperlink{s2n__drbg__test_8c_ad944804b86cab1ce12e3a3a283436225}{nist\_reference\_personalization\_strings\_hex}));
+180     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a1c990dcff5ccd1778a80bdcdd0034719}{s2n\_stuffer\_alloc\_ro\_from\_hex\_string}(&
+      nist\_reference\_returned\_bits, \hyperlink{s2n__drbg__test_8c_acdbc774bda863de8f9d27ae0b0257754}{nist\_reference\_returned\_bits\_hex}));
+181     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a1c990dcff5ccd1778a80bdcdd0034719}{s2n\_stuffer\_alloc\_ro\_from\_hex\_string}(&
+      nist\_reference\_values, \hyperlink{s2n__drbg__test_8c_abb9ac592a38901d21d45593043073239}{nist\_reference\_values\_hex}));
+182 
+183     \textcolor{comment}{/* Check everything against the NIST vectors */}
+184     for (\textcolor{keywordtype}{int} i = 0; i < 14; i++) \{
+185         uint8\_t ps[32];
+186         \textcolor{keyword}{struct }\hyperlink{structs2n__drbg}{s2n\_drbg} nist\_drbg = \{ .\hyperlink{structs2n__drbg_a1da47f15436224ab1f799cf4869471e2}{entropy\_generator} = 
+      \hyperlink{s2n__drbg__test_8c_a032011c033730c5314a41d8ca005d80f}{nist\_fake\_urandom\_data} \};
+187         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} personalization\_string = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = ps, .size = 32\};
+188         \textcolor{comment}{/* Read the next personalization string */}
+189         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a49bb9749c055c6fb6f713cebeaa14cb5}{s2n\_stuffer\_read}(&
+      nist\_reference\_personalization\_strings, &personalization\_string));
+190 
+191         \textcolor{comment}{/* Instantiate the DRBG */}
+192         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_aa941b4970fd903b50f70a7b850ca19d4}{s2n\_drbg\_instantiate}(&nist\_drbg, &
+      personalization\_string));
+193 
+194         uint8\_t nist\_v[16];
+195 
+196         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ab84cff8edd5b5f264afe261f093f894b}{s2n\_stuffer\_read\_bytes}(&nist\_reference\_values, nist\_v, \textcolor{keyword}{sizeof}(
+      nist\_v)));
+197         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(memcmp(nist\_v, nist\_drbg.\hyperlink{structs2n__drbg_a8fb0f890ca029f9724fc198f115c05f3}{v}, \textcolor{keyword}{sizeof}(nist\_drbg.\hyperlink{structs2n__drbg_a8fb0f890ca029f9724fc198f115c05f3}{v})) == 0);
+198 
+199         \textcolor{comment}{/* Generate 512 bits (FIRST CALL) */}
+200         uint8\_t out[64];
+201         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} generated = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = out, .size = 64 \};
+202         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&nist\_drbg, &generated));
+203 
+204         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ab84cff8edd5b5f264afe261f093f894b}{s2n\_stuffer\_read\_bytes}(&nist\_reference\_values, nist\_v, \textcolor{keyword}{sizeof}(
+      nist\_v)));
+205         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(memcmp(nist\_v, nist\_drbg.\hyperlink{structs2n__drbg_a8fb0f890ca029f9724fc198f115c05f3}{v}, \textcolor{keyword}{sizeof}(nist\_drbg.\hyperlink{structs2n__drbg_a8fb0f890ca029f9724fc198f115c05f3}{v})) == 0);
+206 
+207         \textcolor{comment}{/* Generate another 512 bits (SECOND CALL) */}
+208         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&nist\_drbg, &generated));
+209 
+210         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ab84cff8edd5b5f264afe261f093f894b}{s2n\_stuffer\_read\_bytes}(&nist\_reference\_values, nist\_v, \textcolor{keyword}{sizeof}(
+      nist\_v)));
+211         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(memcmp(nist\_v, nist\_drbg.\hyperlink{structs2n__drbg_a8fb0f890ca029f9724fc198f115c05f3}{v}, \textcolor{keyword}{sizeof}(nist\_drbg.\hyperlink{structs2n__drbg_a8fb0f890ca029f9724fc198f115c05f3}{v})) == 0);
+212 
+213         uint8\_t nist\_returned\_bits[64];
+214         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ab84cff8edd5b5f264afe261f093f894b}{s2n\_stuffer\_read\_bytes}(&nist\_reference\_returned\_bits, 
+      nist\_returned\_bits, \textcolor{keyword}{sizeof}(nist\_returned\_bits)));
+215         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(memcmp(nist\_returned\_bits, out, \textcolor{keyword}{sizeof}(nist\_returned\_bits)) == 0);
+216 
+217         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_a4ce9d0f91b5ddb06f136bd1029e88f15}{s2n\_drbg\_wipe}(&nist\_drbg));
+218     \}
+219 
+220     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_aa941b4970fd903b50f70a7b850ca19d4}{s2n\_drbg\_instantiate}(&drbg, &blob));
+221 
+222     \textcolor{comment}{/* Use the DRBG for 32MB of data */}
+223     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}{s2n\_timer\_start}(config, &timer));
+224     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 500000; i++) \{
+225         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&drbg, &blob));
+226     \}
+227     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}{s2n\_timer\_reset}(config, &timer, &drbg\_nanoseconds));
+228 
+229     \textcolor{comment}{/* Use urandom for 32MB of data */}
+230     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}{s2n\_timer\_start}(config, &timer));
+231     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 500000; i++) \{
+232         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\_get\_urandom\_data}(&blob));
+233     \}
+234     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}{s2n\_timer\_reset}(config, &timer, &urandom\_nanoseconds));
+235 
+236     \textcolor{comment}{/* Confirm that the DRBG is faster than urandom when rdrand is enabled */}
+237     \textcolor{keywordflow}{if} (\hyperlink{s2n__random_8c_a3d5fc4d21639fe086400e7337bc82666}{s2n\_cpu\_supports\_rdrand}()) \{
+238         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(drbg\_nanoseconds < urandom\_nanoseconds);
+239     \}
+240 
+241     \textcolor{comment}{/* NOTE: s2n\_random\_test also includes monobit tests for this DRBG */}
+242 
+243     \textcolor{comment}{/* the DRBG state is 128 bytes, test that we can get more than that */}
+244     blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 129;
+245     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 10; i++) \{
+246         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&drbg, &blob));
+247     \}
+248 
+249     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__drbg_8c_a4ce9d0f91b5ddb06f136bd1029e88f15}{s2n\_drbg\_wipe}(&drbg));
+250 
+251     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&nist\_reference\_entropy));
+252     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&nist\_reference\_personalization\_strings))
+      ;
+253     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&nist\_reference\_returned\_bits));
+254     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&nist\_reference\_values));
+255 
+256     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+257 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__drbg__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!nist\+\_\+reference\+\_\+entropy@{nist\+\_\+reference\+\_\+entropy}}
+\index{nist\+\_\+reference\+\_\+entropy@{nist\+\_\+reference\+\_\+entropy}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{nist\+\_\+reference\+\_\+entropy}{nist_reference_entropy}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} nist\+\_\+reference\+\_\+entropy}\hypertarget{s2n__drbg__test_8c_ad7a4bdff564c2f74ca22439861c7e8c4}{}\label{s2n__drbg__test_8c_ad7a4bdff564c2f74ca22439861c7e8c4}
+
+
+Definition at line 46 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!nist\+\_\+reference\+\_\+entropy\+\_\+hex@{nist\+\_\+reference\+\_\+entropy\+\_\+hex}}
+\index{nist\+\_\+reference\+\_\+entropy\+\_\+hex@{nist\+\_\+reference\+\_\+entropy\+\_\+hex}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{nist\+\_\+reference\+\_\+entropy\+\_\+hex}{nist_reference_entropy_hex}}]{\setlength{\rightskip}{0pt plus 5cm}const char nist\+\_\+reference\+\_\+entropy\+\_\+hex\mbox{[}$\,$\mbox{]}}\hypertarget{s2n__drbg__test_8c_aacadbfe787042733a6593222502016d6}{}\label{s2n__drbg__test_8c_aacadbfe787042733a6593222502016d6}
+
+
+Definition at line 47 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!entropy\+\_\+fd@{entropy\+\_\+fd}}
+\index{entropy\+\_\+fd@{entropy\+\_\+fd}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{entropy\+\_\+fd}{entropy_fd}}]{\setlength{\rightskip}{0pt plus 5cm}int entropy\+\_\+fd = -\/1}\hypertarget{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}{}\label{s2n__drbg__test_8c_aae5a9ff3d37dc461cb2ffef5ba923851}
+
+
+Definition at line 94 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex@{nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex}}
+\index{nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex@{nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex}{nist_reference_personalization_strings_hex}}]{\setlength{\rightskip}{0pt plus 5cm}const char nist\+\_\+reference\+\_\+personalization\+\_\+strings\+\_\+hex\mbox{[}$\,$\mbox{]}}\hypertarget{s2n__drbg__test_8c_ad944804b86cab1ce12e3a3a283436225}{}\label{s2n__drbg__test_8c_ad944804b86cab1ce12e3a3a283436225}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\textcolor{stringliteral}{"07ca7a007b53f014d7f10461d6c97b5c8b0c502d3461d583f99efec69f121cd2"}
+\textcolor{stringliteral}{"99f2d501dd183f5657d8b8061bf4f0988de3bc2719f41281cf08d9bcc99f0dcb"}
+\textcolor{stringliteral}{"617d6463eaf3849e13b89a7f9805edff3ea1f0aa7ad71e7de7af3481bfeba7f5"}
+\textcolor{stringliteral}{"7f7d81a5c72f9e3498de183329d6b2291792ac8c81e690200387305aba8987c7"}
+\textcolor{stringliteral}{"0c70a20b690bf5d586b284aa752ec73055e039233089a30efdd6218a1e49f548"}
+\textcolor{stringliteral}{"1fe2b0ce3a1896017e30753064e1c0e1341b673569c739a199cd218fe64665d0"}
+\textcolor{stringliteral}{"2703e1dca9926995705229cc8a8c9d958bcdbfd5f3e09eeb349b5135686aeed1"}
+\textcolor{stringliteral}{"9ca4b8e6cdec1ecd9546508542c84936ff2aa1a4dab969613139c01e35f36d71"}
+\textcolor{stringliteral}{"0f533937857dc9f97fefa142c95445b484e1f259a488e9fa38a46e49d693c4b6"}
+\textcolor{stringliteral}{"950472ba4b3b6979ba4d2a1ad51db7732eb3337b28270fdb7f99018144734f72"}
+\textcolor{stringliteral}{"06bd36977e09cc13d7c9edc9a285043f7c00575610e9b95fd3754a4b7c561fb7"}
+\textcolor{stringliteral}{"6dacec09cc407ddf545c4d54c77efd712f65be8ba5ecbc9fa6bdf29243eed72e"}
+\textcolor{stringliteral}{"85facc571d2c6eb257437e1d3b77b5fba4a125606440181b8387f9a4fb1a7fbf"}
+\textcolor{stringliteral}{"2c4e73ad2597b027dd04c6056db1189b7a0d8e9fece52237cb7fc2511509c4eb"}
+\textcolor{stringliteral}{"717c4de30c0ac7b831807cb1fcf4ab37f1734683a723d183fcfe5fc8a4c6c7e5"}
+\end{DoxyCode}
+
+
+Definition at line 96 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!nist\+\_\+reference\+\_\+values\+\_\+hex@{nist\+\_\+reference\+\_\+values\+\_\+hex}}
+\index{nist\+\_\+reference\+\_\+values\+\_\+hex@{nist\+\_\+reference\+\_\+values\+\_\+hex}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{nist\+\_\+reference\+\_\+values\+\_\+hex}{nist_reference_values_hex}}]{\setlength{\rightskip}{0pt plus 5cm}const char nist\+\_\+reference\+\_\+values\+\_\+hex\mbox{[}$\,$\mbox{]}}\hypertarget{s2n__drbg__test_8c_abb9ac592a38901d21d45593043073239}{}\label{s2n__drbg__test_8c_abb9ac592a38901d21d45593043073239}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\textcolor{stringliteral}{"462eaef2ff6d82aec55f451776700e4c"} \textcolor{stringliteral}{"010cd7c293306adbe9798f2f65bdfb01"} \textcolor{stringliteral}{"f6f808dd7e199b3ce8497d63515092df"}
+\textcolor{stringliteral}{"1e574e0a9b220668776a109ecec959f5"} \textcolor{stringliteral}{"f47380b9e6d8ce485a5bb9f890331f89"} \textcolor{stringliteral}{"f2b475b29ed8aca7f3a69477212153e3"}
+\textcolor{stringliteral}{"d63aa6ddf10dfb6934b7a745456f2056"} \textcolor{stringliteral}{"29c05402d0dd6ff1d171c523e6066b3d"} \textcolor{stringliteral}{"fb15e2dfd607439797e29f9ea9a24788"}
+\textcolor{stringliteral}{"601d313b010af1930132417697d9e27e"} \textcolor{stringliteral}{"b17422b4a74cc83de34c7196cd232355"} \textcolor{stringliteral}{"b63cf4e0894e185eb7ef572c2adacf98"}
+\textcolor{stringliteral}{"a7ec1f62b063acd9904d2ca4b26e755c"} \textcolor{stringliteral}{"b98e1a708027be7d5f0ff46f775ceece"} \textcolor{stringliteral}{"5b5adf71f7d8c85a011acc778c4e3d6f"}
+\textcolor{stringliteral}{"6536d316f19bd244ca1a2deba572face"} \textcolor{stringliteral}{"0ce6ba1487b38261f306c84642338b53"} \textcolor{stringliteral}{"a19af0020f46085ca3caf34b2cb4f1f5"}
+\textcolor{stringliteral}{"cac724dc3e214ff8d0ac4f60ee2dfded"} \textcolor{stringliteral}{"67138c2c7a488b2f4449b03192aa54f8"} \textcolor{stringliteral}{"d10073624d73847284c91b46e28b83c3"}
+\textcolor{stringliteral}{"edadadc2ad451ea48ab9619d6c89cdcb"} \textcolor{stringliteral}{"24f64c09499b4803a03aadf0e34240ca"} \textcolor{stringliteral}{"8ac5b02284cac91bb39e14bd3d38ae2b"}
+\textcolor{stringliteral}{"31f21cce9f11c7e9047e3ebad7c23a1b"} \textcolor{stringliteral}{"6b59014f0e7e8df5f7456017841e9c63"} \textcolor{stringliteral}{"4cfc026d6bc19e9674ec7002bf0baf62"}
+\textcolor{stringliteral}{"d871c3f06cdf34c0cebb8b405aa79be7"} \textcolor{stringliteral}{"6af76a8c51f305b88249af9db4eacfe4"} \textcolor{stringliteral}{"ff77327ab3761736e40f79ca0a6660e2"}
+\textcolor{stringliteral}{"9eedbc9923b20434c175c066ed3584ba"} \textcolor{stringliteral}{"06ebe4bd2ea20c39ef8f4f66796816bb"} \textcolor{stringliteral}{"497b437274f3d7cee04b163c10233aec"}
+\textcolor{stringliteral}{"7fca6267fd42102de5baacb7b4409565"} \textcolor{stringliteral}{"1310719710bd2c3468f8000fad5b6f4c"} \textcolor{stringliteral}{"34e5d8e0f7e6c28718a5f27ac086516b"}
+\textcolor{stringliteral}{"9948b0263f2c91756050fad1f5d7876f"} \textcolor{stringliteral}{"9aff44fbc0f539186d13e81a9b233786"} \textcolor{stringliteral}{"0a86ad5766efe6d3fa01a9ac4ec9090d"}
+\textcolor{stringliteral}{"a022dfed4c805b8f2c15d81693edfb53"} \textcolor{stringliteral}{"9d4f527ab03ff0c4abe7e442572fc0bb"} \textcolor{stringliteral}{"5fc9cb9e3cd694c6b08bb99256062814"}
+\textcolor{stringliteral}{"faa46432da44e336bd782edd85ccfa83"} \textcolor{stringliteral}{"c17b86c7fd8e5a2131f515fb0ab62c9b"} \textcolor{stringliteral}{"619ff6d15579a1cb4bc9c96f6be8f4e5"}
+\end{DoxyCode}
+
+
+Definition at line 113 of file s2n\+\_\+drbg\+\_\+test.\+c.
+
+\index{s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}!nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex@{nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex}}
+\index{nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex@{nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex}!s2n\+\_\+drbg\+\_\+test.\+c@{s2n\+\_\+drbg\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex}{nist_reference_returned_bits_hex}}]{\setlength{\rightskip}{0pt plus 5cm}const char nist\+\_\+reference\+\_\+returned\+\_\+bits\+\_\+hex\mbox{[}$\,$\mbox{]}}\hypertarget{s2n__drbg__test_8c_acdbc774bda863de8f9d27ae0b0257754}{}\label{s2n__drbg__test_8c_acdbc774bda863de8f9d27ae0b0257754}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\textcolor{stringliteral}{"
+      bba1ef50b4bad288897f02ac2706ee1e01488dcbe9b3d8a637921f5e788faed3b23db63d590ceaa7607a2179192bea9aeaa85d048e7e108fee666dc646af5f0e"}
+\textcolor{stringliteral}{"
+      b9ecf5521d38f9212578f9dd32af38089b45812ca96e661fc8e1be0b2f4b54215f52c9c93a6f76efee4521cb316378403108a6bf2724fdc93bc4d2db60a2de83"}
+\textcolor{stringliteral}{"
+      ce4bec8241dd1ce12d7fa18bd1a3188b43892392b7dcae7228a851afef9c9728c587167b6df28c895a67af35b6fd84ad076efcd70d1c59c49fa7c0f7ed87bc82"}
+\textcolor{stringliteral}{"
+      94001b011830bc6a911fa23bc1fd0dac8c0acd0e856ab4497ad072e54fe3b47bc06890e7e7babd4912af1e7da96e90523b75dd86d9a4ba4d88107de607e52534"}
+\textcolor{stringliteral}{"
+      d0619996c88423a740f04dfdad3bfc131bf3601fc43022e89957bf8b9a1ad8702bc8fbb2004e7ab02550777818e11f03fab48458424ae5c8cc8cb73436657292"}
+\textcolor{stringliteral}{"
+      a2613ddb75107ef3fe9fc392061a52ea2304af7aed6dedec3aee626e1ab2bf989ce7d6484555941e9a4013036c4605c564f17d4d1369e1e12d28b877d2125d99"}
+\textcolor{stringliteral}{"
+      48460543d08b3331f0c7bcf786be06a276efc757bedce0f428323d54206931f18c3c7c606c0ff8e673f3d1367c7d50db2ed002120ff05623d2deddd037c125a4"}
+\textcolor{stringliteral}{"
+      037a0305532b6bd2a51057962f23dbfd4660be8e5b7a448b1168be3bf8598a301fb517a4714b7826162fc0fcdae08800e967f638ff1ad1da39282d3454d93075"}
+\textcolor{stringliteral}{"
+      035c19396d603b52222c16af6c6bc1c07a1a518f578b59943ffad73ca14948b7a8dde117e5c571506d57fd08e3a067a2ae3bde2240c2399f160c5cc5a2f5d582"}
+\textcolor{stringliteral}{"
+      e17674172397369025d6b7811b69b6e62dfb8ab94852cc96bde1371fcedbe5fe31a11589f4e57183fb46883d93c647e36f70f8d5a536f8fb0d428dcfd7722e4e"}
+\textcolor{stringliteral}{"
+      cbedccaa88b22e39fb0e14bf15dc05e4e1b7002fa0cffe7803e3f6bcf6a03f3faa51ce5b3ccb0d341533d335e20f9f71e90f83fef06ecfe93ed056f5d6851306"}
+\textcolor{stringliteral}{"
+      116bd7ab4030379cd6f50e85a04182775292fa9619c38b7418a19b8e7855f29efffdf7a2b8b1d9d3d96ea85a6d56302014dd3bcbe401ada5b0e3cf2f66dce9cd"}
+\textcolor{stringliteral}{"
+      51e0b54c109884baecd1884f7bafc846ace216b6fd97eb1ca70b563e62c4a2f22b55561152f379326ef2999e9746f25043a02402d3e47b4a58e747c222b7a081"}
+\textcolor{stringliteral}{"
+      7c41adf941656cfb9f24409d6cc4d578d43930b3e23ec801a59c53d999401bc0cb3e5b8797b2770a8a8f51ff594b7b17d9e694d5e36644508d16cb2554057adc"}
+\textcolor{stringliteral}{"
+      ac054570b081cf53b39b0a2faa21ee9b554c05ff9055843ac0eb9031d1de324701ad4cf2875623e0bf4184de4aea20070be1cb586880ac87fbb7e414b4b128d0"}
+\end{DoxyCode}
+
+
+Definition at line 130 of file s2n\+\_\+drbg\+\_\+test.\+c.
+

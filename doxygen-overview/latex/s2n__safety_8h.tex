@@ -1,0 +1,290 @@
+\hypertarget{s2n__safety_8h}{}\section{s2n-\/master/utils/s2n\+\_\+safety.h File Reference}
+\label{s2n__safety_8h}\index{s2n-\/master/utils/s2n\+\_\+safety.\+h@{s2n-\/master/utils/s2n\+\_\+safety.\+h}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+safety.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{s2n__safety_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__safety_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\+\_\+check}(ptr)                  ~do \{ if ( (ptr) == N\+U\+LL ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374aa855b2076e4277d53c6a4197e124f541}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+N\+U\+LL}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}{memcpy\+\_\+check}(d,  s,  n)      ~do \{ if ( (n) ) \{ \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\+\_\+check}( (d) ); memcpy( (d), (s), (n)); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_ac8a7c6aaf1d67eeb681b00e9d271dfbe}{memset\+\_\+check}(d,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  n)      ~do \{ if ( (n) ) \{ \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\+\_\+check}( (d) ); memset( (d), (\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}), (n)); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\+\_\+check}(n,  min)~do \{ if ( (n) $<$ min ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4069426741d8e86dcb3b20cacf4ca256}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{lte\+\_\+check}(n,  max)~do \{ if ( (n) $>$ max ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4069426741d8e86dcb3b20cacf4ca256}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\+\_\+check}(n,  min)~do \{ if ( (n) $<$= min ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4069426741d8e86dcb3b20cacf4ca256}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_a8a85f821edb7daccb2d8338ba8a3de25}{lt\+\_\+check}(n,  max)~do \{ if ( (n) $>$= max ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4069426741d8e86dcb3b20cacf4ca256}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_a286ad9b0d46f4af176671cda1ed6f58a}{eq\+\_\+check}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b)~do \{ if ( (\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}) != (b) ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4069426741d8e86dcb3b20cacf4ca256}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_afe97d76b660ce1f4bf3a02a648e93c68}{ne\+\_\+check}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b)~do \{ if ( (\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}) == (b) ) \{ \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+OR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a4069426741d8e86dcb3b20cacf4ca256}{S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)
+\item 
+\#define \hyperlink{s2n__safety_8h_a5857e90829be713d210d1a089fce784b}{inclusive\+\_\+range\+\_\+check}(low,  n,  high)~\hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\+\_\+check}(n, low); \hyperlink{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{lte\+\_\+check}(n, high)
+\item 
+\#define \hyperlink{s2n__safety_8h_ae3b302d60c4024273555cd2001b97606}{exclusive\+\_\+range\+\_\+check}(low,  n,  high)~\hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\+\_\+check}(n, low); \hyperlink{s2n__safety_8h_a8a85f821edb7daccb2d8338ba8a3de25}{lt\+\_\+check}(n, high)
+\item 
+\#define \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{G\+U\+A\+RD}(\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})        ~if ( (\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}) $<$ 0 ) return -\/1
+\item 
+\#define \hyperlink{s2n__safety_8h_a52ca1a16034decd9cf2d0024d98be2ef}{G\+U\+A\+R\+D\+\_\+\+P\+TR}(\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})~if ( (\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}) $<$ 0 ) return N\+U\+LL
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+pid\+\_\+t \hyperlink{s2n__safety_8h_a0f60ded5620e91b547970661d673096b}{s2n\+\_\+actual\+\_\+getpid} ()
+\item 
+int \hyperlink{s2n__safety_8h_a407f3056ab784369c0ccb3359532669a}{s2n\+\_\+constant\+\_\+time\+\_\+equals} (const uint8\+\_\+t $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const uint8\+\_\+t $\ast$b, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{s2n__safety_8h_a28840ed6433ba02c7e18fdb43d0b2007}{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont} (const uint8\+\_\+t $\ast$dst, const uint8\+\_\+t $\ast$src, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, uint8\+\_\+t dont)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!notnull\+\_\+check@{notnull\+\_\+check}}
+\index{notnull\+\_\+check@{notnull\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{notnull\+\_\+check}{notnull_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define notnull\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{ptr}
+\end{DoxyParamCaption}
+)~do \{ if ( (ptr) == N\+U\+LL ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+N\+U\+LL}); \} \} while(0)}\hypertarget{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{}\label{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}
+
+
+Definition at line 25 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!memcpy\+\_\+check@{memcpy\+\_\+check}}
+\index{memcpy\+\_\+check@{memcpy\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{memcpy\+\_\+check}{memcpy_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define memcpy\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{d, }
+\item[{}]{s, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~do \{ if ( (n) ) \{ {\bf notnull\+\_\+check}( (d) ); memcpy( (d), (s), (n)); \} \} while(0)}\hypertarget{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}{}\label{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}
+
+
+Definition at line 29 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!memset\+\_\+check@{memset\+\_\+check}}
+\index{memset\+\_\+check@{memset\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{memset\+\_\+check}{memset_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define memset\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{d, }
+\item[{}]{{\bf c}, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~do \{ if ( (n) ) \{ {\bf notnull\+\_\+check}( (d) ); memset( (d), ({\bf c}), (n)); \} \} while(0)}\hypertarget{s2n__safety_8h_ac8a7c6aaf1d67eeb681b00e9d271dfbe}{}\label{s2n__safety_8h_ac8a7c6aaf1d67eeb681b00e9d271dfbe}
+
+
+Definition at line 30 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!gte\+\_\+check@{gte\+\_\+check}}
+\index{gte\+\_\+check@{gte\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{gte\+\_\+check}{gte_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define gte\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{n, }
+\item[{}]{min}
+\end{DoxyParamCaption}
+)~do \{ if ( (n) $<$ min ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)}\hypertarget{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{}\label{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}
+
+
+Definition at line 33 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!lte\+\_\+check@{lte\+\_\+check}}
+\index{lte\+\_\+check@{lte\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{lte\+\_\+check}{lte_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define lte\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{n, }
+\item[{}]{max}
+\end{DoxyParamCaption}
+)~do \{ if ( (n) $>$ max ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)}\hypertarget{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{}\label{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}
+
+
+Definition at line 34 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!gt\+\_\+check@{gt\+\_\+check}}
+\index{gt\+\_\+check@{gt\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{gt\+\_\+check}{gt_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define gt\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{n, }
+\item[{}]{min}
+\end{DoxyParamCaption}
+)~do \{ if ( (n) $<$= min ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)}\hypertarget{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{}\label{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}
+
+
+Definition at line 35 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!lt\+\_\+check@{lt\+\_\+check}}
+\index{lt\+\_\+check@{lt\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{lt\+\_\+check}{lt_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define lt\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{n, }
+\item[{}]{max}
+\end{DoxyParamCaption}
+)~do \{ if ( (n) $>$= max ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)}\hypertarget{s2n__safety_8h_a8a85f821edb7daccb2d8338ba8a3de25}{}\label{s2n__safety_8h_a8a85f821edb7daccb2d8338ba8a3de25}
+
+
+Definition at line 36 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!eq\+\_\+check@{eq\+\_\+check}}
+\index{eq\+\_\+check@{eq\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{eq\+\_\+check}{eq_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define eq\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~do \{ if ( ({\bf a}) != (b) ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)}\hypertarget{s2n__safety_8h_a286ad9b0d46f4af176671cda1ed6f58a}{}\label{s2n__safety_8h_a286ad9b0d46f4af176671cda1ed6f58a}
+
+
+Definition at line 37 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!ne\+\_\+check@{ne\+\_\+check}}
+\index{ne\+\_\+check@{ne\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{ne\+\_\+check}{ne_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define ne\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b}
+\end{DoxyParamCaption}
+)~do \{ if ( ({\bf a}) == (b) ) \{ {\bf S2\+N\+\_\+\+E\+R\+R\+OR}({\bf S2\+N\+\_\+\+E\+R\+R\+\_\+\+S\+A\+F\+E\+TY}); \} \} while(0)}\hypertarget{s2n__safety_8h_afe97d76b660ce1f4bf3a02a648e93c68}{}\label{s2n__safety_8h_afe97d76b660ce1f4bf3a02a648e93c68}
+
+
+Definition at line 38 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!inclusive\+\_\+range\+\_\+check@{inclusive\+\_\+range\+\_\+check}}
+\index{inclusive\+\_\+range\+\_\+check@{inclusive\+\_\+range\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{inclusive\+\_\+range\+\_\+check}{inclusive_range_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define inclusive\+\_\+range\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{low, }
+\item[{}]{n, }
+\item[{}]{high}
+\end{DoxyParamCaption}
+)~{\bf gte\+\_\+check}(n, low); {\bf lte\+\_\+check}(n, high)}\hypertarget{s2n__safety_8h_a5857e90829be713d210d1a089fce784b}{}\label{s2n__safety_8h_a5857e90829be713d210d1a089fce784b}
+
+
+Definition at line 39 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!exclusive\+\_\+range\+\_\+check@{exclusive\+\_\+range\+\_\+check}}
+\index{exclusive\+\_\+range\+\_\+check@{exclusive\+\_\+range\+\_\+check}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{exclusive\+\_\+range\+\_\+check}{exclusive_range_check}}]{\setlength{\rightskip}{0pt plus 5cm}\#define exclusive\+\_\+range\+\_\+check(
+\begin{DoxyParamCaption}
+\item[{}]{low, }
+\item[{}]{n, }
+\item[{}]{high}
+\end{DoxyParamCaption}
+)~{\bf gt\+\_\+check}(n, low); {\bf lt\+\_\+check}(n, high)}\hypertarget{s2n__safety_8h_ae3b302d60c4024273555cd2001b97606}{}\label{s2n__safety_8h_ae3b302d60c4024273555cd2001b97606}
+
+
+Definition at line 40 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!G\+U\+A\+RD@{G\+U\+A\+RD}}
+\index{G\+U\+A\+RD@{G\+U\+A\+RD}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{G\+U\+A\+RD}{GUARD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+U\+A\+RD(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~if ( ({\bf x}) $<$ 0 ) return -\/1}\hypertarget{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{}\label{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}
+
+
+Definition at line 42 of file s2n\+\_\+safety.\+h.
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!G\+U\+A\+R\+D\+\_\+\+P\+TR@{G\+U\+A\+R\+D\+\_\+\+P\+TR}}
+\index{G\+U\+A\+R\+D\+\_\+\+P\+TR@{G\+U\+A\+R\+D\+\_\+\+P\+TR}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{G\+U\+A\+R\+D\+\_\+\+P\+TR}{GUARD_PTR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+U\+A\+R\+D\+\_\+\+P\+TR(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~if ( ({\bf x}) $<$ 0 ) return N\+U\+LL}\hypertarget{s2n__safety_8h_a52ca1a16034decd9cf2d0024d98be2ef}{}\label{s2n__safety_8h_a52ca1a16034decd9cf2d0024d98be2ef}
+
+
+Definition at line 43 of file s2n\+\_\+safety.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!s2n\+\_\+actual\+\_\+getpid@{s2n\+\_\+actual\+\_\+getpid}}
+\index{s2n\+\_\+actual\+\_\+getpid@{s2n\+\_\+actual\+\_\+getpid}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+actual\+\_\+getpid()}{s2n_actual_getpid()}}]{\setlength{\rightskip}{0pt plus 5cm}pid\+\_\+t s2n\+\_\+actual\+\_\+getpid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety_8h_a0f60ded5620e91b547970661d673096b}{}\label{s2n__safety_8h_a0f60ded5620e91b547970661d673096b}
+Get the process id
+
+Returns\+: The process ID of the current process 
+
+Definition at line 30 of file s2n\+\_\+safety.\+c.
+
+
+\begin{DoxyCode}
+31 \{
+32 \textcolor{preprocessor}{#if defined(\_\_GNUC\_\_) && defined(SYS\_getpid)}
+33     \textcolor{comment}{/* http://yarchive.net/comp/linux/getpid\_caching.html */}
+34     \textcolor{keywordflow}{return} (pid\_t) syscall(SYS\_getpid);
+35 \textcolor{preprocessor}{#else}
+36     \textcolor{keywordflow}{return} getpid();
+37 \textcolor{preprocessor}{#endif}
+38 \}
+\end{DoxyCode}
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!s2n\+\_\+constant\+\_\+time\+\_\+equals@{s2n\+\_\+constant\+\_\+time\+\_\+equals}}
+\index{s2n\+\_\+constant\+\_\+time\+\_\+equals@{s2n\+\_\+constant\+\_\+time\+\_\+equals}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+constant\+\_\+time\+\_\+equals(const uint8\+\_\+t $\ast$a, const uint8\+\_\+t $\ast$b, uint32\+\_\+t len)}{s2n_constant_time_equals(const uint8_t *a, const uint8_t *b, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+constant\+\_\+time\+\_\+equals (
+\begin{DoxyParamCaption}
+\item[{const uint8\+\_\+t $\ast$}]{a, }
+\item[{const uint8\+\_\+t $\ast$}]{b, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety_8h_a407f3056ab784369c0ccb3359532669a}{}\label{s2n__safety_8h_a407f3056ab784369c0ccb3359532669a}
+
+
+Definition at line 42 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+43 \{
+44     \textcolor{comment}{/* Allow all signatures checked with s2n\_constant\_time\_equals to always pass verification even if they
+       are invalid}
+45 \textcolor{comment}{     * in order to aid code coverage with server fuzz test.}
+46 \textcolor{comment}{     */}
+47     \textcolor{keywordflow}{return} !0;
+48 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__safety_8h_a407f3056ab784369c0ccb3359532669a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}!s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont@{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont}}
+\index{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont@{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont}!s2n\+\_\+safety.\+h@{s2n\+\_\+safety.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont(const uint8\+\_\+t $\ast$dst, const uint8\+\_\+t $\ast$src, uint32\+\_\+t len, uint8\+\_\+t dont)}{s2n_constant_time_copy_or_dont(const uint8_t *dst, const uint8_t *src, uint32_t len, uint8_t dont)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont (
+\begin{DoxyParamCaption}
+\item[{const uint8\+\_\+t $\ast$}]{dst, }
+\item[{const uint8\+\_\+t $\ast$}]{src, }
+\item[{uint32\+\_\+t}]{len, }
+\item[{uint8\+\_\+t}]{dont}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety_8h_a28840ed6433ba02c7e18fdb43d0b2007}{}\label{s2n__safety_8h_a28840ed6433ba02c7e18fdb43d0b2007}

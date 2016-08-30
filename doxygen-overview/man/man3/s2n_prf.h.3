@@ -1,0 +1,313 @@
+.TH "s2n-master/tls/s2n_prf.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_prf.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "union \fBs2n_prf_working_space\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_MAX_DIGEST_LEN\fP   \fBSHA512_DIGEST_LENGTH\fP"
+.br
+.ti -1c
+.RI "#define \fBS2N_MAX_KEY_BLOCK_LEN\fP   160"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_prf_master_secret\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_blob\fP *premaster_secret)"
+.br
+.ti -1c
+.RI "int \fBs2n_prf_key_expansion\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_prf_server_finished\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_prf_client_finished\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_MAX_DIGEST_LEN   \fBSHA512_DIGEST_LENGTH\fP"
+
+.PP
+Definition at line 25 of file s2n_prf\&.h\&.
+.SS "#define S2N_MAX_KEY_BLOCK_LEN   160"
+
+.PP
+Definition at line 28 of file s2n_prf\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_prf_master_secret (struct \fBs2n_connection\fP * conn, struct \fBs2n_blob\fP * premaster_secret)"
+
+.PP
+Definition at line 157 of file s2n_prf\&.c\&.
+.PP
+.nf
+158 {
+159     struct s2n_blob client_random, server_random, master_secret;
+160     struct s2n_blob label;
+161     uint8_t master_secret_label[] = "master secret";
+162 
+163     client_random\&.data = conn->secure\&.client_random;
+164     client_random\&.size = sizeof(conn->secure\&.client_random);
+165     server_random\&.data = conn->secure\&.server_random;
+166     server_random\&.size = sizeof(conn->secure\&.server_random);
+167     master_secret\&.data = conn->secure\&.master_secret;
+168     master_secret\&.size = sizeof(conn->secure\&.master_secret);
+169     label\&.data = master_secret_label;
+170     label\&.size = sizeof(master_secret_label) - 1;
+171 
+172     return s2n_prf(conn, premaster_secret, &label, &client_random, &server_random, &master_secret);
+173 }
+.fi
+.SS "int s2n_prf_key_expansion (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 349 of file s2n_prf\&.c\&.
+.PP
+.nf
+350 {
+351     struct s2n_blob client_random = {\&.data = conn->secure\&.client_random,\&.size = sizeof(conn->secure\&.client_random) };
+352     struct s2n_blob server_random = {\&.data = conn->secure\&.server_random,\&.size = sizeof(conn->secure\&.server_random) };
+353     struct s2n_blob master_secret = {\&.data = conn->secure\&.master_secret,\&.size = sizeof(conn->secure\&.master_secret) };
+354     struct s2n_blob label, out;
+355     uint8_t key_expansion_label[] = "key expansion";
+356     uint8_t key_block[S2N_MAX_KEY_BLOCK_LEN];
+357 
+358     label\&.data = key_expansion_label;
+359     label\&.size = sizeof(key_expansion_label) - 1;
+360     out\&.data = key_block;
+361     out\&.size = sizeof(key_block);
+362 
+363     struct s2n_stuffer key_material;
+364     GUARD(s2n_prf(conn, &master_secret, &label, &server_random, &client_random, &out));
+365     GUARD(s2n_stuffer_init(&key_material, &out));
+366     GUARD(s2n_stuffer_write(&key_material, &out));
+367 
+368     GUARD(conn->secure\&.cipher_suite->cipher->init(&conn->secure\&.client_key));
+369     GUARD(conn->secure\&.cipher_suite->cipher->init(&conn->secure\&.server_key));
+370 
+371     /* What's our hmac algorithm? */
+372     s2n_hmac_algorithm hmac_alg = conn->secure\&.cipher_suite->hmac_alg;
+373     if (conn->actual_protocol_version == S2N_SSLv3) {
+374         if (hmac_alg == S2N_HMAC_SHA1) {
+375             hmac_alg = S2N_HMAC_SSLv3_SHA1;
+376         } else if (hmac_alg == S2N_HMAC_MD5) {
+377             hmac_alg = S2N_HMAC_SSLv3_MD5;
+378         } else {
+379             S2N_ERROR(S2N_ERR_HMAC_INVALID_ALGORITHM);
+380         }
+381     }
+382 
+383     /* Check that we have a valid MAC and key size */
+384     int mac_size;
+385     GUARD((mac_size = s2n_hmac_digest_size(hmac_alg)));
+386 
+387     /* Seed the client MAC */
+388     uint8_t *client_write_mac_key = s2n_stuffer_raw_read(&key_material, mac_size);
+389     notnull_check(client_write_mac_key);
+390     GUARD(s2n_hmac_init(&conn->secure\&.client_record_mac, hmac_alg, client_write_mac_key, mac_size));
+391 
+392     /* Seed the server MAC */
+393     uint8_t *server_write_mac_key = s2n_stuffer_raw_read(&key_material, mac_size);
+394     notnull_check(server_write_mac_key);
+395     GUARD(s2n_hmac_init(&conn->secure\&.server_record_mac, hmac_alg, server_write_mac_key, mac_size));
+396 
+397     /* Make the client key */
+398     struct s2n_blob client_key;
+399     client_key\&.size = conn->secure\&.cipher_suite->cipher->key_material_size;
+400     client_key\&.data = s2n_stuffer_raw_read(&key_material, client_key\&.size);
+401     notnull_check(client_key\&.data);
+402     if (conn->mode == S2N_CLIENT) {
+403         GUARD(conn->secure\&.cipher_suite->cipher->get_encryption_key(&conn->secure\&.client_key, &client_key));
+404     } else {
+405         GUARD(conn->secure\&.cipher_suite->cipher->get_decryption_key(&conn->secure\&.client_key, &client_key));
+406     }
+407 
+408     /* Make the server key */
+409     struct s2n_blob server_key;
+410     server_key\&.size = conn->secure\&.cipher_suite->cipher->key_material_size;
+411     server_key\&.data = s2n_stuffer_raw_read(&key_material, server_key\&.size);
+412     notnull_check(server_key\&.data);
+413     if (conn->mode == S2N_SERVER) {
+414         GUARD(conn->secure\&.cipher_suite->cipher->get_encryption_key(&conn->secure\&.server_key, &server_key));
+415     } else {
+416         GUARD(conn->secure\&.cipher_suite->cipher->get_decryption_key(&conn->secure\&.server_key, &server_key));
+417     }
+418 
+419     /* TLS >= 1\&.1 has no implicit IVs for non AEAD ciphers */
+420     if (conn->actual_protocol_version > S2N_TLS10 && conn->secure\&.cipher_suite->cipher->type != S2N_AEAD) {
+421         return 0;
+422     }
+423 
+424     uint32_t implicit_iv_size = 0;
+425     switch (conn->secure\&.cipher_suite->cipher->type) {
+426     case S2N_AEAD:
+427         implicit_iv_size = conn->secure\&.cipher_suite->cipher->io\&.aead\&.fixed_iv_size;
+428         break;
+429     case S2N_CBC:
+430         implicit_iv_size = conn->secure\&.cipher_suite->cipher->io\&.cbc\&.block_size;
+431         break;
+432         /* No-op for stream ciphers */
+433     default:
+434         break;
+435     }
+436 
+437     struct s2n_blob client_implicit_iv = {\&.data = conn->secure\&.client_implicit_iv,\&.size = implicit_iv_size };
+438     struct s2n_blob server_implicit_iv = {\&.data = conn->secure\&.server_implicit_iv,\&.size = implicit_iv_size };
+439     GUARD(s2n_stuffer_read(&key_material, &client_implicit_iv));
+440     GUARD(s2n_stuffer_read(&key_material, &server_implicit_iv));
+441 
+442     return 0;
+443 }
+.fi
+.SS "int s2n_prf_server_finished (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 293 of file s2n_prf\&.c\&.
+.PP
+.nf
+294 {
+295     struct s2n_blob master_secret, md5, sha;
+296     uint8_t md5_digest[MD5_DIGEST_LENGTH];
+297     uint8_t sha_digest[SHA384_DIGEST_LENGTH];
+298     uint8_t server_finished_label[] = "server finished";
+299     struct s2n_blob server_finished;
+300     struct s2n_blob label;
+301 
+302     if (conn->actual_protocol_version == S2N_SSLv3) {
+303         return s2n_sslv3_server_finished(conn);
+304     }
+305 
+306     server_finished\&.data = conn->handshake\&.server_finished;
+307     server_finished\&.size = S2N_TLS_FINISHED_LEN;
+308     label\&.data = server_finished_label;
+309     label\&.size = sizeof(server_finished_label) - 1;
+310 
+311     master_secret\&.data = conn->secure\&.master_secret;
+312     master_secret\&.size = sizeof(conn->secure\&.master_secret);
+313     if (conn->actual_protocol_version == S2N_TLS12) {
+314         switch (conn->secure\&.cipher_suite->tls12_prf_alg) {
+315             struct s2n_hash_state hash_state;
+316 
+317         case S2N_HMAC_SHA256:
+318             GUARD(s2n_hash_copy(&hash_state, &conn->handshake\&.sha256));
+319             GUARD(s2n_hash_digest(&hash_state, sha_digest, SHA256_DIGEST_LENGTH));
+320             sha\&.size = SHA256_DIGEST_LENGTH;
+321             break;
+322         case S2N_HMAC_SHA384:
+323             GUARD(s2n_hash_copy(&hash_state, &conn->handshake\&.sha384));
+324             GUARD(s2n_hash_digest(&hash_state, sha_digest, SHA384_DIGEST_LENGTH));
+325             sha\&.size = SHA384_DIGEST_LENGTH;
+326             break;
+327         default:
+328             S2N_ERROR(S2N_ERR_PRF_INVALID_ALGORITHM);
+329         }
+330 
+331         sha\&.data = sha_digest;
+332         return s2n_prf(conn, &master_secret, &label, &sha, NULL, &server_finished);
+333     }
+334 
+335     struct s2n_hash_state md5_state, sha1_state;
+336     GUARD(s2n_hash_copy(&md5_state, &conn->handshake\&.md5));
+337     GUARD(s2n_hash_copy(&sha1_state, &conn->handshake\&.sha1));
+338 
+339     GUARD(s2n_hash_digest(&md5_state, md5_digest, MD5_DIGEST_LENGTH));
+340     GUARD(s2n_hash_digest(&sha1_state, sha_digest, SHA_DIGEST_LENGTH));
+341     md5\&.data = md5_digest;
+342     md5\&.size = MD5_DIGEST_LENGTH;
+343     sha\&.data = sha_digest;
+344     sha\&.size = SHA_DIGEST_LENGTH;
+345 
+346     return s2n_prf(conn, &master_secret, &label, &md5, &sha, &server_finished);
+347 }
+.fi
+.SS "int s2n_prf_client_finished (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 237 of file s2n_prf\&.c\&.
+.PP
+.nf
+238 {
+239     struct s2n_blob master_secret, md5, sha;
+240     uint8_t md5_digest[MD5_DIGEST_LENGTH];
+241     uint8_t sha_digest[SHA384_DIGEST_LENGTH];
+242     uint8_t client_finished_label[] = "client finished";
+243     struct s2n_blob client_finished;
+244     struct s2n_blob label;
+245 
+246     if (conn->actual_protocol_version == S2N_SSLv3) {
+247         return s2n_sslv3_client_finished(conn);
+248     }
+249 
+250     client_finished\&.data = conn->handshake\&.client_finished;
+251     client_finished\&.size = S2N_TLS_FINISHED_LEN;
+252     label\&.data = client_finished_label;
+253     label\&.size = sizeof(client_finished_label) - 1;
+254 
+255     master_secret\&.data = conn->secure\&.master_secret;
+256     master_secret\&.size = sizeof(conn->secure\&.master_secret);
+257     if (conn->actual_protocol_version == S2N_TLS12) {
+258         switch (conn->secure\&.cipher_suite->tls12_prf_alg) {
+259             struct s2n_hash_state hash_state;
+260 
+261         case S2N_HMAC_SHA256:
+262             GUARD(s2n_hash_copy(&hash_state, &conn->handshake\&.sha256));
+263             GUARD(s2n_hash_digest(&hash_state, sha_digest, SHA256_DIGEST_LENGTH));
+264             sha\&.size = SHA256_DIGEST_LENGTH;
+265             break;
+266         case S2N_HMAC_SHA384:
+267             GUARD(s2n_hash_copy(&hash_state, &conn->handshake\&.sha384));
+268             GUARD(s2n_hash_digest(&hash_state, sha_digest, SHA384_DIGEST_LENGTH));
+269             sha\&.size = SHA384_DIGEST_LENGTH;
+270             break;
+271         default:
+272             S2N_ERROR(S2N_ERR_PRF_INVALID_ALGORITHM);
+273         }
+274 
+275         sha\&.data = sha_digest;
+276         return s2n_prf(conn, &master_secret, &label, &sha, NULL, &client_finished);
+277     }
+278 
+279     struct s2n_hash_state md5_state, sha1_state;
+280     GUARD(s2n_hash_copy(&md5_state, &conn->handshake\&.md5));
+281     GUARD(s2n_hash_copy(&sha1_state, &conn->handshake\&.sha1));
+282 
+283     GUARD(s2n_hash_digest(&md5_state, md5_digest, MD5_DIGEST_LENGTH));
+284     GUARD(s2n_hash_digest(&sha1_state, sha_digest, SHA_DIGEST_LENGTH));
+285     md5\&.data = md5_digest;
+286     md5\&.size = MD5_DIGEST_LENGTH;
+287     sha\&.data = sha_digest;
+288     sha\&.size = SHA_DIGEST_LENGTH;
+289 
+290     return s2n_prf(conn, &master_secret, &label, &md5, &sha, &client_finished);
+291 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

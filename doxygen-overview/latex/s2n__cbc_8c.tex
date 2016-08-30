@@ -1,0 +1,118 @@
+\hypertarget{s2n__cbc_8c}{}\section{s2n-\/master/tls/s2n\+\_\+cbc.c File Reference}
+\label{s2n__cbc_8c}\index{s2n-\/master/tls/s2n\+\_\+cbc.\+c@{s2n-\/master/tls/s2n\+\_\+cbc.\+c}}
+{\ttfamily \#include $<$sys/param.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+hmac.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+record.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+prf.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+cbc.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cbc_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__cbc_8c_a49a0a2c5708c690625b2474555727b80}{s2n\+\_\+verify\+\_\+cbc} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, struct \hyperlink{structs2n__hmac__state}{s2n\+\_\+hmac\+\_\+state} $\ast$hmac, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$decrypted)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+cbc.\+c@{s2n\+\_\+cbc.\+c}!s2n\+\_\+verify\+\_\+cbc@{s2n\+\_\+verify\+\_\+cbc}}
+\index{s2n\+\_\+verify\+\_\+cbc@{s2n\+\_\+verify\+\_\+cbc}!s2n\+\_\+cbc.\+c@{s2n\+\_\+cbc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+verify\+\_\+cbc(struct s2n\+\_\+connection $\ast$conn, struct s2n\+\_\+hmac\+\_\+state $\ast$hmac, struct s2n\+\_\+blob $\ast$decrypted)}{s2n_verify_cbc(struct s2n_connection *conn, struct s2n_hmac_state *hmac, struct s2n_blob *decrypted)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+verify\+\_\+cbc (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{struct {\bf s2n\+\_\+hmac\+\_\+state} $\ast$}]{hmac, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{decrypted}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__cbc_8c_a49a0a2c5708c690625b2474555727b80}{}\label{s2n__cbc_8c_a49a0a2c5708c690625b2474555727b80}
+
+
+Definition at line 49 of file s2n\+\_\+cbc.\+c.
+
+
+\begin{DoxyCode}
+50 \{
+51     \textcolor{keyword}{struct }\hyperlink{structs2n__hmac__state}{s2n\_hmac\_state} copy;
+52 
+53     \textcolor{keywordtype}{int} mac\_digest\_size = \hyperlink{s2n__hmac_8c_ad9e0cc00ac39458cba7a9b1792429dbd}{s2n\_hmac\_digest\_size}(hmac->\hyperlink{structs2n__hmac__state_ae2daecd156006e6cf5c5800a7293628c}{alg});
+54 
+55     \textcolor{comment}{/* The record has to be at least big enough to contain the MAC,}
+56 \textcolor{comment}{     * plus the padding length byte */}
+57     \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\_check}(decrypted->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}, mac\_digest\_size);
+58 
+59     \textcolor{keywordtype}{int} payload\_and\_padding\_size = decrypted->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} - mac\_digest\_size;
+60 
+61     \textcolor{comment}{/* Determine what the padding length is */}
+62     uint8\_t padding\_length = decrypted->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[decrypted->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} - 1];
+63 
+64     \textcolor{keywordtype}{int} payload\_length = MAX(payload\_and\_padding\_size - padding\_length - 1, 0);
+65 
+66     \textcolor{comment}{/* Update the MAC */}
+67     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(hmac, decrypted->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, payload\_length));
+68     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a6007599a9ecbe64464dc464093931f6a}{s2n\_hmac\_copy}(&copy, hmac));
+69 
+70     \textcolor{comment}{/* Check the MAC */}
+71     uint8\_t check\_digest[\hyperlink{s2n__prf_8h_a6e72344ee5c9fe106257b029521e675e}{S2N\_MAX\_DIGEST\_LEN}];
+72     \hyperlink{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{lte\_check}(mac\_digest\_size, \textcolor{keyword}{sizeof}(check\_digest));
+73     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a2afcf63a3b7f8fc08957f53b820ad39f}{s2n\_hmac\_digest\_two\_compression\_rounds}(hmac, 
+      check\_digest, mac\_digest\_size));
+74 
+75     \textcolor{keywordtype}{int} mismatches = \hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(decrypted->
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} + payload\_length, check\_digest, mac\_digest\_size) ^ 1;
+76 
+77     \textcolor{comment}{/* Compute a MAC on the rest of the data so that we perform the same number of hash operations */}
+78     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(&copy, decrypted->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} + payload\_length + mac\_digest\_size
+      , decrypted->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} - payload\_length - mac\_digest\_size - 1));
+79 
+80     \textcolor{comment}{/* SSLv3 doesn't specify what the padding should actually be */}
+81     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} == \hyperlink{s2n_8h_a457805749bd152786e9e344a5b22ab67}{S2N\_SSLv3}) \{
+82         \textcolor{keywordflow}{return} 0 - mismatches;
+83     \}
+84 
+85     \textcolor{comment}{/* Check the maximum amount that could theoritically be padding */}
+86     \textcolor{keywordtype}{int} check = MIN(255, (payload\_and\_padding\_size - 1));
+87 
+88     \textcolor{keywordtype}{int} cutoff = check - padding\_length;
+89     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0, j = decrypted->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} - 1 - check; i < check && j < decrypted->size; i++, j++) \{
+90         uint8\_t mask = ~(0xff << ((i >= cutoff) * 8));
+91         mismatches |= (decrypted->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[j] ^ padding\_length) & mask;
+92     \}
+93 
+94     \textcolor{keywordflow}{if} (mismatches) \{
+95         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a0afdacaa8f5d3e7ea6251cd45c64f823}{S2N\_ERR\_CBC\_VERIFY});
+96     \}
+97 
+98     \textcolor{keywordflow}{return} 0;
+99 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cbc_8c_a49a0a2c5708c690625b2474555727b80_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cbc_8c_a49a0a2c5708c690625b2474555727b80_icgraph}
+\end{center}
+\end{figure}
+
+

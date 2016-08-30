@@ -1,0 +1,468 @@
+\hypertarget{s2n__self__talk__alpn__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.c File Reference}
+\label{s2n__self__talk__alpn__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/wait.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+handshake.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__self__talk__alpn__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__self__talk__alpn__test_8c_a62bc7b79bd7a3529c7c93fb6f80e9fac}{mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$data, uint64\+\_\+t $\ast$nanoseconds)
+\item 
+int \hyperlink{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}{mock\+\_\+client} (int writefd, int readfd, const char $\ast$$\ast$protocols, int count, const char $\ast$expected)
+\item 
+int \hyperlink{s2n__self__talk__alpn__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}!mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch@{mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch}}
+\index{mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch@{mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch}!s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch(void $\ast$data, uint64\+\_\+t $\ast$nanoseconds)}{mock_nanoseconds_since_epoch(void *data, uint64_t *nanoseconds)}}]{\setlength{\rightskip}{0pt plus 5cm}int mock\+\_\+nanoseconds\+\_\+since\+\_\+epoch (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{data, }
+\item[{uint64\+\_\+t $\ast$}]{nanoseconds}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__self__talk__alpn__test_8c_a62bc7b79bd7a3529c7c93fb6f80e9fac}{}\label{s2n__self__talk__alpn__test_8c_a62bc7b79bd7a3529c7c93fb6f80e9fac}
+
+
+Definition at line 83 of file s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+84 \{
+85     \textcolor{keyword}{static} \textcolor{keywordtype}{int} called = 0;
+86 
+87     \textcolor{comment}{/* When first called return 0 seconds */}
+88     *nanoseconds = 0;
+89 
+90     \textcolor{comment}{/* When next called return 31 seconds */}
+91     \textcolor{keywordflow}{if} (called) \{
+92         *nanoseconds += (uint64\_t) 31 * 1000000000;
+93     \}
+94 
+95     called = 1;
+96 
+97     \textcolor{keywordflow}{return} 0;
+98 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{s2n__self__talk__alpn__test_8c_a62bc7b79bd7a3529c7c93fb6f80e9fac_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}!mock\+\_\+client@{mock\+\_\+client}}
+\index{mock\+\_\+client@{mock\+\_\+client}!s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{mock\+\_\+client(int writefd, int readfd, const char $\ast$$\ast$protocols, int count, const char $\ast$expected)}{mock_client(int writefd, int readfd, const char **protocols, int count, const char *expected)}}]{\setlength{\rightskip}{0pt plus 5cm}int mock\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{int}]{writefd, }
+\item[{int}]{readfd, }
+\item[{const char $\ast$$\ast$}]{protocols, }
+\item[{int}]{count, }
+\item[{const char $\ast$}]{expected}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}{}\label{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}
+
+
+Definition at line 100 of file s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+101 \{
+102     \textcolor{keywordtype}{char} buffer[0xffff];
+103     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+104     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config};
+105     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+106     \textcolor{keywordtype}{int} result = 0;
+107 
+108     \textcolor{comment}{/* Give the server a chance to listen */}
+109     sleep(1);
+110 
+111     conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(\hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT});
+112     config = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}();
+113     \hyperlink{s2n_8h_a9f5f2fca97444f9c039a3681c2351fb0}{s2n\_config\_set\_protocol\_preferences}(config, protocols, count);
+114     \hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config);
+115 
+116     \hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, readfd);
+117     \hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, writefd);
+118 
+119     result = \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked);
+120     \textcolor{keywordflow}{if} (result < 0) \{
+121         result = 1;
+122     \}
+123 
+124     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *got = \hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn);
+125     \textcolor{keywordflow}{if} ((got != NULL && expected == NULL) ||
+126         (got == NULL && expected != NULL) ||
+127         (got != NULL && expected != NULL && strcmp(expected, got) != 0)) \{
+128         result = 2;
+129     \}
+130 
+131     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 0xffff; i += 100) \{
+132         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+133             buffer[j] = 33;
+134         \}
+135         
+136         \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, buffer, i, &blocked);
+137     \}
+138     
+139     \textcolor{keywordtype}{int} shutdown\_rc= -1;
+140     \textcolor{keywordflow}{do} \{
+141         shutdown\_rc = \hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked);
+142     \} \textcolor{keywordflow}{while}(shutdown\_rc != 0);
+143 
+144     \hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn);
+145 
+146     \textcolor{comment}{/* Give the server a chance to a void a sigpipe */}
+147     sleep(1);
+148 
+149     \_exit(result);
+150 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__self__talk__alpn__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__self__talk__alpn__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+Test no client A\+L\+PN request 
+
+Definition at line 152 of file s2n\+\_\+self\+\_\+talk\+\_\+alpn\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+153 \{
+154     \textcolor{keywordtype}{char} buffer[0xffff];
+155     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+156     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config};
+157     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+158     \textcolor{keywordtype}{int} status;
+159     pid\_t pid;
+160     \textcolor{keywordtype}{int} server\_to\_client[2];
+161     \textcolor{keywordtype}{int} client\_to\_server[2];
+162 
+163     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *protocols[] = \{ \textcolor{stringliteral}{"http/1.1"}, \textcolor{stringliteral}{"spdy/3.1"} \};
+164     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *mismatch\_protocols[] = \{ \textcolor{stringliteral}{"spdy/2"} \};
+165 
+166     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+167 
+168     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(setenv(\textcolor{stringliteral}{"S2N\_ENABLE\_CLIENT\_MODE"}, \textcolor{stringliteral}{"1"}, 0));
+169 
+170     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(config = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}());
+171     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a9f5f2fca97444f9c039a3681c2351fb0}{s2n\_config\_set\_protocol\_preferences}(
+      config, protocols, 2));
+172     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(config,
+       certificate, private\_key));
+173     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a82513564c95dc7a4174c3d04eb043564}{s2n\_config\_add\_dhparams}(config, 
+      \hyperlink{structs2n__config_abdbd12d9095df20e7e63ef00b353db7c}{dhparams}));
+174     
+176     \textcolor{comment}{/* Create a pipe */}
+177     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(server\_to\_client));
+178     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(client\_to\_server));
+179 
+180     \textcolor{comment}{/* Create a child process */}
+181     pid = fork();
+182     \textcolor{keywordflow}{if} (pid == 0) \{
+183         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+184         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[0]));
+185         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[1]));
+186 
+187         \textcolor{comment}{/* Send the client hello with no ALPN extensions, and validate we didn't}
+188 \textcolor{comment}{         * negotiate an application protocol */}
+189         \hyperlink{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}{mock\_client}(client\_to\_server[1], server\_to\_client[0], NULL, 0, NULL);
+190     \}
+191 
+192     \textcolor{comment}{/* This is the parent */}
+193     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[1]));
+194     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[0]));
+195 
+196     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+197     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config));
+198 
+199     \textcolor{comment}{/* Set up the connection to read from the fd */}
+200     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, 
+      client\_to\_server[0]));
+201     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, 
+      server\_to\_client[1]));
+202 
+203     \textcolor{comment}{/* Negotiate the handshake. */}
+204     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+205 
+206     \textcolor{comment}{/* Expect NULL negotiated protocol */}
+207     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn), NULL);
+208 
+209     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 0xffff; i += 100) \{
+210         \textcolor{keywordtype}{char} * ptr = buffer;
+211         \textcolor{keywordtype}{int} bytes\_read = 0;
+212         \textcolor{keywordtype}{int} size = i;
+213 
+214         \textcolor{keywordflow}{do} \{
+215             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(bytes\_read = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, ptr, size, &blocked));
+216 
+217             size -= bytes\_read;
+218             ptr += bytes\_read;
+219         \} \textcolor{keywordflow}{while}(size);
+220 
+221         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+222             \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(buffer[j], 33);
+223         \}
+224     \}
+225 
+226     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked));
+227     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+228 
+229     \textcolor{comment}{/* Clean up */}
+230     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(-1, &status, 0), pid);
+231     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+232 
+233     \textcolor{comment}{/* Test a matching ALPN request */}
+234     \textcolor{comment}{/* Create a pipe */}
+235     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(server\_to\_client));
+236     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(client\_to\_server));
+237 
+238     \textcolor{comment}{/* Create a child process */}
+239     pid = fork();
+240     \textcolor{keywordflow}{if} (pid == 0) \{
+241         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+242         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[0]));
+243         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[1]));
+244 
+245         \textcolor{comment}{/* Clients ALPN preferences match our preferences, so we pick the}
+246 \textcolor{comment}{         * most preffered server one */}
+247         \hyperlink{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}{mock\_client}(client\_to\_server[1], server\_to\_client[0], protocols, 2, protocols[0]);
+248     \}
+249 
+250     \textcolor{comment}{/* This is the parent */}
+251     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[1]));
+252     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[0]));
+253 
+254     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+255     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config));
+256 
+257     \textcolor{comment}{/* Set up the connection to read from the fd */}
+258     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, 
+      client\_to\_server[0]));
+259     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, 
+      server\_to\_client[1]));
+260 
+261     \textcolor{comment}{/* Negotiate the handshake. */}
+262     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+263 
+264     \textcolor{comment}{/* Expect our most prefered negotiated protocol */}
+265     \hyperlink{s2n__test_8h_adefc37a13c6e62b8b5a100f9faed92e0}{EXPECT\_STRING\_EQUAL}(\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn), 
+      protocols[0]);
+266 
+267     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 0xffff; i += 100) \{
+268         \textcolor{keywordtype}{char} * ptr = buffer;
+269         \textcolor{keywordtype}{int} bytes\_read = 0;
+270         \textcolor{keywordtype}{int} size = i;
+271 
+272         \textcolor{keywordflow}{do} \{
+273             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(bytes\_read = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, ptr, size, &blocked));
+274 
+275             size -= bytes\_read;
+276             ptr += bytes\_read;
+277         \} \textcolor{keywordflow}{while}(size);
+278 
+279         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+280             \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(buffer[j], 33);
+281         \}
+282     \}
+283 
+284     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked));
+285     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+286 
+287     \textcolor{comment}{/* Clean up */}
+288     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(-1, &status, 0), pid);
+289     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+290 
+291     \textcolor{comment}{/* Test a lower prefered matching ALPN request */}
+292     \textcolor{comment}{/* Create a pipe */}
+293     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(server\_to\_client));
+294     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(client\_to\_server));
+295 
+296     \textcolor{comment}{/* Create a child process */}
+297     pid = fork();
+298     \textcolor{keywordflow}{if} (pid == 0) \{
+299         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+300         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[0]));
+301         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[1]));
+302 
+303         \textcolor{comment}{/* Client only advertises our second choice, so we should negotiate it */}
+304         \hyperlink{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}{mock\_client}(client\_to\_server[1], server\_to\_client[0], &protocols[1], 1, protocols[1]);
+305     \}
+306 
+307     \textcolor{comment}{/* This is the parent */}
+308     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[1]));
+309     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[0]));
+310 
+311     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+312     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config));
+313 
+314     \textcolor{comment}{/* Set up the connection to read from the fd */}
+315     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, 
+      client\_to\_server[0]));
+316     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, 
+      server\_to\_client[1]));
+317 
+318     \textcolor{comment}{/* Negotiate the handshake. */}
+319 
+320     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+321 
+322     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 0xffff; i += 100) \{
+323         \textcolor{keywordtype}{char} * ptr = buffer;
+324         \textcolor{keywordtype}{int} bytes\_read = 0;
+325         \textcolor{keywordtype}{int} size = i;
+326 
+327         \textcolor{keywordflow}{do} \{
+328             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(bytes\_read = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, ptr, size, &blocked));
+329 
+330             size -= bytes\_read;
+331             ptr += bytes\_read;
+332         \} \textcolor{keywordflow}{while}(size);
+333 
+334         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+335             \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(buffer[j], 33);
+336         \}
+337     \}
+338 
+339     \textcolor{comment}{/* Expect our least prefered negotiated protocol */}
+340     \hyperlink{s2n__test_8h_adefc37a13c6e62b8b5a100f9faed92e0}{EXPECT\_STRING\_EQUAL}(\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn), 
+      protocols[1]);
+341 
+342     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked));
+343     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+344 
+345     \textcolor{comment}{/* Clean up */}
+346     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(-1, &status, 0), pid);
+347     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+348 
+349     \textcolor{comment}{/* Test a non-matching ALPN request */}
+350     \textcolor{comment}{/* Create a pipe */}
+351     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(server\_to\_client));
+352     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(client\_to\_server));
+353     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 2; i++) \{
+354         \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(fcntl(server\_to\_client[i], F\_SETFL, fcntl(server\_to\_client[i], 
+      F\_GETFL) | O\_NONBLOCK), -1);
+355         \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(fcntl(client\_to\_server[i], F\_SETFL, fcntl(client\_to\_server[i], 
+      F\_GETFL) | O\_NONBLOCK), -1);
+356     \}
+357 
+358     \textcolor{comment}{/* Create a child process */}
+359     pid = fork();
+360     \textcolor{keywordflow}{if} (pid == 0) \{
+361         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+362         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[0]));
+363         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[1]));
+364 
+365         \textcolor{comment}{/* Client doesn't support any of our protocols, so we shouldn't complete}
+366 \textcolor{comment}{         * the handshake */}
+367         \hyperlink{s2n__self__talk__alpn__test_8c_af4ff368c1e25033d38a42be5a63e3ff9}{mock\_client}(client\_to\_server[1], server\_to\_client[0], mismatch\_protocols, 1, NULL);
+368     \}
+369 
+370     \textcolor{comment}{/* This is the parent */}
+371     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[1]));
+372     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[0]));
+373 
+374     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+375     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config));
+376 
+377     \textcolor{comment}{/* Set up the connection to read from the fd */}
+378     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, 
+      client\_to\_server[0]));
+379     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, 
+      server\_to\_client[1]));
+380 
+381     \textcolor{comment}{/* s2n\_negotiate will fail, which ordinarily would delay with a sleep. }
+382 \textcolor{comment}{     * Remove the sleep and fake the delay with a mock time routine */}
+383     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+384     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a55f4687b7def930a7ac41335d35d72ef}{s2n\_config\_set\_nanoseconds\_since\_epoch\_callback}
+      (config, \hyperlink{s2n__self__talk__alpn__test_8c_a62bc7b79bd7a3529c7c93fb6f80e9fac}{mock\_nanoseconds\_since\_epoch}, NULL));
+385 
+386     \textcolor{comment}{/* Negotiate the handshake. */}
+387     \textcolor{keywordtype}{int} negotiate\_rc;
+388     \textcolor{keywordflow}{do} \{
+389         negotiate\_rc = \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked);
+390     \} \textcolor{keywordflow}{while}(\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EAGAIN && blocked);
+391     \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(negotiate\_rc == -1 && \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno} == 
+      \hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a0dbaa6408e4de7b8a1c384037460c9a6}{S2N\_ERR\_NO\_APPLICATION\_PROTOCOL});
+392 
+393     \textcolor{comment}{/* Expect NULL negotiated protocol */}
+394     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn), NULL);
+395 
+396     \textcolor{comment}{/* Negotiation failed. Free the connection without shutdown */}
+397     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+398 
+399     \textcolor{comment}{/* Close the pipes */}
+400     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[0]));
+401     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[1]));
+402 
+403     \textcolor{comment}{/* Clean up */}
+404     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(-1, &status, 0), pid);
+405     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(status, 0);
+406 
+407     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a25b7d82e94f572b657be3936196222c3}{s2n\_config\_free}(config));
+408     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+409 
+410     \textcolor{keywordflow}{return} 0;
+411 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__self__talk__alpn__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

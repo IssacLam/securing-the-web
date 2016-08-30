@@ -1,0 +1,84 @@
+\hypertarget{s2n__override__openssl__random__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.c File Reference}
+\label{s2n__override__openssl__random__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+dhe.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$openssl/engine.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/dh.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__override__openssl__random__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__override__openssl__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c@{s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c@{s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__override__openssl__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__override__openssl__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 37 of file s2n\+\_\+override\+\_\+openssl\+\_\+random\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+38 \{
+39     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} dhparams\_in, dhparams\_out;
+40     \textcolor{keyword}{struct }\hyperlink{structs2n__dh__params}{s2n\_dh\_params} dh\_params;
+41     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} b;
+42 
+43     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+44 
+45     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__random_8c_acfa5dd5fea029277b9439895122a3489}{s2n\_get\_private\_random\_bytes\_used}(), 0);
+46 
+47     \textcolor{comment}{/* Parse the DH params */}
+48     b.data = dhparams;
+49     b.size = \textcolor{keyword}{sizeof}(dhparams);
+50     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&dhparams\_in, \textcolor{keyword}{sizeof}(dhparams)));
+51     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&dhparams\_out, \textcolor{keyword}{sizeof}(dhparams)));
+52     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&dhparams\_in, &b));
+53     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_acc09d820f511dde4633ecad55f062a87}{s2n\_stuffer\_dhparams\_from\_pem}(&dhparams\_in, &
+      dhparams\_out));
+54     b.size = \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&dhparams\_out);
+55     b.data = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&dhparams\_out, b.size);
+56     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__dhe_8c_a2a588f9f6c78190225878f36cfb98ae8}{s2n\_pkcs3\_to\_dh\_params}(&dh\_params, &b));
+57 
+58     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__dhe_8c_a52481b6c08da550c51db7be50445c54a}{s2n\_dh\_generate\_ephemeral\_key}(&dh\_params));
+59     
+60     \textcolor{comment}{/* Verify that our DRBG is called and that over-riding works */}
+61     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(\hyperlink{s2n__random_8c_acfa5dd5fea029277b9439895122a3489}{s2n\_get\_private\_random\_bytes\_used}(), 
+      0);
+62 
+63     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__dhe_8c_ad31b1e9b035a2f883bd9e8338e2e61de}{s2n\_dh\_params\_free}(&dh\_params));
+64     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&dhparams\_out));
+65     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&dhparams\_in));
+66 
+67     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+68 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__override__openssl__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

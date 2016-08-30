@@ -1,0 +1,265 @@
+.TH "s2n-master/tls/s2n_recv.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_recv.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/param\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_resume\&.h'\fP
+.br
+\fC#include 'tls/s2n_alerts\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_XOPEN_SOURCE\fP   500"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_read_full_record\fP (struct \fBs2n_connection\fP *conn, uint8_t *record_type, int *isSSLv2)"
+.br
+.ti -1c
+.RI "ssize_t \fBs2n_recv\fP (struct \fBs2n_connection\fP *conn, \fBvoid\fP *buf, ssize_t size, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "int \fBs2n_recv_close_notify\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _XOPEN_SOURCE   500"
+
+.PP
+Definition at line 19 of file s2n_recv\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_read_full_record (struct \fBs2n_connection\fP * conn, uint8_t * record_type, int * isSSLv2)"
+
+.PP
+Definition at line 39 of file s2n_recv\&.c\&.
+.PP
+.nf
+40 {
+41     int r;
+42 
+43     *isSSLv2 = 0;
+44 
+45     /* If the record has already been decrypted, then leave it alone */
+46     if (conn->in_status == PLAINTEXT) {
+47         /* Only application data packets count as plaintext */
+48         *record_type = TLS_APPLICATION_DATA;
+49         return 0;
+50     }
+51 
+52     /* Read the record until we at least have a header */
+53     while (s2n_stuffer_data_available(&conn->header_in) < S2N_TLS_RECORD_HEADER_LENGTH) {
+54         r = s2n_stuffer_recv_from_fd(&conn->header_in, conn->readfd, S2N_TLS_RECORD_HEADER_LENGTH - s2n_stuffer_data_available(&conn->header_in));
+55         if (r == 0) {
+56             conn->closed = 1;
+57             S2N_ERROR(S2N_ERR_CLOSED);
+58         } else if (r < 0) {
+59             if (errno == EWOULDBLOCK) {
+60                 S2N_ERROR(S2N_ERR_BLOCKED);
+61             }
+62             S2N_ERROR(S2N_ERR_IO);
+63         }
+64         conn->wire_bytes_in += r;
+65     }
+66     uint16_t fragment_length;
+67 
+68     /* If the first bit is set then this is an SSLv2 record */
+69     if (conn->header_in\&.blob\&.data[0] & 0x80) {
+70         conn->header_in\&.blob\&.data[0] &= 0x7f;
+71         *isSSLv2 = 1;
+72 
+73         if (s2n_sslv2_record_header_parse(conn, record_type, &conn->client_protocol_version, &fragment_length) < 0) {
+74             GUARD(s2n_connection_kill(conn));
+75             return -1;
+76         }
+77     } else {
+78         if (s2n_record_header_parse(conn, record_type, &fragment_length) < 0) {
+79             GUARD(s2n_connection_kill(conn));
+80             return -1;
+81         }
+82     }
+83 
+84     /* Read enough to have the whole record */
+85     while (s2n_stuffer_data_available(&conn->in) < fragment_length) {
+86         r = s2n_stuffer_recv_from_fd(&conn->in, conn->readfd, fragment_length - s2n_stuffer_data_available(&conn->in));
+87         if (r == 0) {
+88             conn->closed = 1;
+89             S2N_ERROR(S2N_ERR_CLOSED);
+90         } else if (r < 0) {
+91             if (errno == EWOULDBLOCK) {
+92                 S2N_ERROR(S2N_ERR_BLOCKED);
+93             }
+94             S2N_ERROR(S2N_ERR_IO);
+95         }
+96         conn->wire_bytes_in += r;
+97     }
+98 
+99     if (*isSSLv2) {
+100         return 0;
+101     }
+102 
+103     /* Decrypt and parse the record */
+104     if (s2n_record_parse(conn) < 0) {
+105         GUARD(s2n_connection_kill(conn));
+106 
+107         return -1;
+108     }
+109 
+110     return 0;
+111 }
+.fi
+.SS "ssize_t s2n_recv (struct \fBs2n_connection\fP * conn, \fBvoid\fP * buf, ssize_t size, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 113 of file s2n_recv\&.c\&.
+.PP
+.nf
+114 {
+115     ssize_t bytes_read = 0;
+116     struct s2n_blob out = {\&.data = (uint8_t *) buf };
+117 
+118     if (conn->closed) {
+119         GUARD(s2n_connection_wipe(conn));
+120         return 0;
+121     }
+122 
+123     *blocked = S2N_BLOCKED_ON_READ;
+124 
+125     while (size && !conn->closed) {
+126         int isSSLv2 = 0;
+127         uint8_t record_type;
+128         int r = s2n_read_full_record(conn, &record_type, &isSSLv2);
+129         if (r < 0) {
+130             if (s2n_errno == S2N_ERR_CLOSED) {
+131                 *blocked = S2N_NOT_BLOCKED;
+132                 if (!bytes_read) {
+133                     GUARD(s2n_connection_wipe(conn));
+134                     return 0;
+135                 } else {
+136                     return bytes_read;
+137                 }
+138             }
+139 
+140             /* Don't propogate the error if we already read some bytes */
+141             if (s2n_errno == S2N_ERR_BLOCKED && bytes_read) {
+142                 s2n_errno = S2N_ERR_OK;
+143                 return bytes_read;
+144             }
+145 
+146             /* If we get here, it's an error condition */
+147             if (s2n_errno != S2N_ERR_BLOCKED && s2n_is_caching_enabled(conn->config) && conn->session_id_len) {
+148                 conn->config->cache_delete(conn->config->cache_delete_data, conn->session_id, conn->session_id_len);
+149             }
+150 
+151             return -1;
+152         }
+153 
+154         if (isSSLv2) {
+155             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+156         }
+157 
+158         if (record_type != TLS_APPLICATION_DATA) {
+159             if (record_type == TLS_ALERT) {
+160                 GUARD(s2n_process_alert_fragment(conn));
+161                 GUARD(s2n_flush(conn, blocked));
+162             }
+163 
+164             GUARD(s2n_stuffer_wipe(&conn->header_in));
+165             GUARD(s2n_stuffer_wipe(&conn->in));
+166             conn->in_status = ENCRYPTED;
+167             continue;
+168         }
+169 
+170         out\&.size = MIN(size, s2n_stuffer_data_available(&conn->in));
+171 
+172         GUARD(s2n_stuffer_erase_and_read(&conn->in, &out));
+173         bytes_read += out\&.size;
+174 
+175         out\&.data += out\&.size;
+176         size -= out\&.size;
+177 
+178         /* Are we ready for more encrypted data? */
+179         if (s2n_stuffer_data_available(&conn->in) == 0) {
+180             GUARD(s2n_stuffer_wipe(&conn->header_in));
+181             GUARD(s2n_stuffer_wipe(&conn->in));
+182             conn->in_status = ENCRYPTED;
+183         }
+184 
+185         /* If we've read some data, return it */
+186         if (bytes_read) {
+187             break;
+188         }
+189     }
+190 
+191     if (s2n_stuffer_data_available(&conn->in) == 0) {
+192         *blocked = S2N_NOT_BLOCKED;
+193     }
+194 
+195     return bytes_read;
+196 }
+.fi
+.SS "int s2n_recv_close_notify (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 198 of file s2n_recv\&.c\&.
+.PP
+.nf
+199 {
+200     uint8_t record_type;
+201     int isSSLv2;
+202     *blocked = S2N_BLOCKED_ON_READ;
+203 
+204     GUARD(s2n_read_full_record(conn, &record_type, &isSSLv2));
+205 
+206     if (isSSLv2) {
+207         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+208     }
+209 
+210     if (record_type != TLS_ALERT) {
+211         S2N_ERROR(S2N_ERR_SHUTDOWN_RECORD_TYPE);
+212     }
+213 
+214     /* Only succeds for an incoming close_notify alert */
+215     GUARD(s2n_process_alert_fragment(conn));
+216 
+217     *blocked = S2N_NOT_BLOCKED;
+218     return 0;
+219 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

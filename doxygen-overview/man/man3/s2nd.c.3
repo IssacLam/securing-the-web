@@ -1,0 +1,561 @@
+.TH "s2n-master/bin/s2nd.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/bin/s2nd.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <netinet/tcp\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/socket\&.h>\fP
+.br
+\fC#include <sys/ioctl\&.h>\fP
+.br
+\fC#include <sys/poll\&.h>\fP
+.br
+\fC#include <netdb\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <signal\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <getopt\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBsession_cache_entry\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_KEY_LEN\fP   32"
+.br
+.ti -1c
+.RI "#define \fBMAX_VAL_LEN\fP   255"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcache_store\fP (\fBvoid\fP *ctx, uint64_t ttl, const \fBvoid\fP *key, uint64_t key_size, const \fBvoid\fP *value, uint64_t value_size)"
+.br
+.ti -1c
+.RI "int \fBcache_retrieve\fP (\fBvoid\fP *ctx, const \fBvoid\fP *key, uint64_t key_size, \fBvoid\fP *value, uint64_t *value_size)"
+.br
+.ti -1c
+.RI "int \fBcache_delete\fP (\fBvoid\fP *ctx, const \fBvoid\fP *key, uint64_t key_size)"
+.br
+.ti -1c
+.RI "int \fBecho\fP (struct \fBs2n_connection\fP *conn, int sockfd)"
+.br
+.ti -1c
+.RI "int \fBnegotiate\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBusage\fP ()"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char *const *argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBsession_cache_entry\fP \fBsession_cache\fP [256]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_KEY_LEN   32"
+
+.PP
+Definition at line 90 of file s2nd\&.c\&.
+.SS "#define MAX_VAL_LEN   255"
+
+.PP
+Definition at line 91 of file s2nd\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int cache_store (\fBvoid\fP * ctx, uint64_t ttl, const \fBvoid\fP * key, uint64_t key_size, const \fBvoid\fP * value, uint64_t value_size)"
+
+.PP
+Definition at line 102 of file s2nd\&.c\&.
+.PP
+.nf
+103 {
+104     struct session_cache_entry *cache = ctx;
+105 
+106     if (key_size == 0 || key_size > MAX_KEY_LEN) {
+107         return -1;
+108     }
+109     if (value_size == 0 || value_size > MAX_VAL_LEN) {
+110         return -1;
+111     }
+112 
+113     uint8_t index = ((const uint8_t *)key)[0];
+114 
+115     memcpy(cache[index]\&.key, key, key_size);
+116     memcpy(cache[index]\&.value, value, value_size);
+117 
+118     cache[index]\&.key_len = key_size;
+119     cache[index]\&.value_len = value_size;
+120 
+121     return 0;
+122 }
+.fi
+.SS "int cache_retrieve (\fBvoid\fP * ctx, const \fBvoid\fP * key, uint64_t key_size, \fBvoid\fP * value, uint64_t * value_size)"
+
+.PP
+Definition at line 124 of file s2nd\&.c\&.
+.PP
+.nf
+125 {
+126     struct session_cache_entry *cache = ctx;
+127 
+128     if (key_size == 0 || key_size > MAX_KEY_LEN) {
+129         return -1;
+130     }
+131 
+132     uint8_t index = ((const uint8_t *)key)[0];
+133 
+134     if (cache[index]\&.key_len != key_size) {
+135         return -1;
+136     }
+137 
+138     if (memcmp(cache[index]\&.key, key, key_size)) {
+139         return -1;
+140     }
+141 
+142     if (*value_size < cache[index]\&.value_len) {
+143         return -1;
+144     }
+145 
+146     *value_size = cache[index]\&.value_len;
+147     memcpy(value, cache[index]\&.value, cache[index]\&.value_len);
+148 
+149     printf("Resumed session ");
+150     for (int i = 0; i < key_size; i++) {
+151         printf("%02x", ((const uint8_t *)key)[i]);
+152     }
+153     printf("\n");
+154 
+155     return 0;
+156 }
+.fi
+.SS "int cache_delete (\fBvoid\fP * ctx, const \fBvoid\fP * key, uint64_t key_size)"
+
+.PP
+Definition at line 158 of file s2nd\&.c\&.
+.PP
+.nf
+159 {
+160     struct session_cache_entry *cache = ctx;
+161 
+162     if (key_size == 0 || key_size > MAX_KEY_LEN) {
+163         return -1;
+164     }
+165 
+166     uint8_t index = ((const uint8_t *)key)[0];
+167 
+168     if (cache[index]\&.key_len != key_size) {
+169         return -1;
+170     }
+171 
+172     if (memcmp(cache[index]\&.key, key, key_size)) {
+173         return -1;
+174     }
+175 
+176     cache[index]\&.key_len = 0;
+177     cache[index]\&.value_len = 0;
+178 
+179     return 0;
+180 }
+.fi
+.SS "int echo (struct \fBs2n_connection\fP * conn, int sockfd)"
+
+.PP
+Definition at line 87 of file echo\&.c\&.
+.PP
+.nf
+88 {
+89     struct pollfd readers[2];
+90 
+91     readers[0]\&.fd = sockfd;
+92     readers[0]\&.events = POLLIN;
+93     readers[1]\&.fd = STDIN_FILENO;
+94     readers[1]\&.events = POLLIN;
+95 
+96     /* Act as a simple proxy between stdin and the SSL connection */
+97     int p;
+98     s2n_blocked_status blocked;
+99   POLL:
+100     while ((p = poll(readers, 2, -1)) > 0) {
+101         char buffer[10240];
+102         int bytes_read, bytes_written;
+103 
+104         if (readers[0]\&.revents & POLLIN) {
+105             do {
+106                 bytes_read = s2n_recv(conn, buffer, 10240, &blocked);
+107                 if (bytes_read == 0) {
+108                     /* Connection has been closed */
+109                     s2n_connection_wipe(conn);
+110                     return 0;
+111                 }
+112                 if (bytes_read < 0) {
+113                     fprintf(stderr, "Error reading from connection: '%s' %d\n", s2n_strerror(s2n_errno, "EN"), s2n_connection_get_alert(conn));
+114                     exit(1);
+115                 }
+116                 bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
+117                 if (bytes_written <= 0) {
+118                     fprintf(stderr, "Error writing to stdout\n");
+119                     exit(1);
+120                 }
+121             } while (blocked);
+122         }
+123         if (readers[1]\&.revents & POLLIN) {
+124             int bytes_available;
+125             if (ioctl(STDIN_FILENO, FIONREAD, &bytes_available) < 0) {
+126                 bytes_available = 1;
+127             }
+128             if (bytes_available > sizeof(buffer)) {
+129                 bytes_available = sizeof(buffer);
+130             }
+131 
+132             /* Read as many bytes as we think we can */
+133           READ:
+134             bytes_read = read(STDIN_FILENO, buffer, bytes_available);
+135             if (bytes_read < 0) {
+136                 if (errno == EINTR) {
+137                     goto READ;
+138                 }
+139                 fprintf(stderr, "Error reading from stdin\n");
+140                 exit(1);
+141             }
+142             if (bytes_read == 0) {
+143                 /* Exit on EOF */
+144                 return 0;
+145             }
+146 
+147             char *buf_ptr = buffer;
+148             do {
+149                 bytes_written = s2n_send(conn, buf_ptr, bytes_available, &blocked);
+150                 if (bytes_written < 0) {
+151                     fprintf(stderr, "Error writing to connection: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+152                     exit(1);
+153                 }
+154 
+155                 bytes_available -= bytes_written;
+156                 buf_ptr += bytes_written;
+157             } while (bytes_available || blocked);
+158         }
+159     }
+160     if (p < 0 && errno == EINTR) {
+161         goto POLL;
+162     }
+163 
+164     return 0;
+165 }
+.fi
+.SS "int negotiate (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 31 of file echo\&.c\&.
+.PP
+.nf
+32 {
+33     s2n_blocked_status blocked;
+34     do {
+35         if (s2n_negotiate(conn, &blocked) < 0) {
+36             fprintf(stderr, "Failed to negotiate: '%s' %d\n", s2n_strerror(s2n_errno, "EN"), s2n_connection_get_alert(conn));
+37             return -1;
+38         }
+39     } while (blocked);
+40 
+41     /* Now that we've negotiated, print some parameters */
+42     int client_hello_version;
+43     int client_protocol_version;
+44     int server_protocol_version;
+45     int actual_protocol_version;
+46 
+47     if ((client_hello_version = s2n_connection_get_client_hello_version(conn)) < 0) {
+48         fprintf(stderr, "Could not get client hello version\n");
+49         return -1;
+50     }
+51     if ((client_protocol_version = s2n_connection_get_client_protocol_version(conn)) < 0) {
+52         fprintf(stderr, "Could not get client protocol version\n");
+53         return -1;
+54     }
+55     if ((server_protocol_version = s2n_connection_get_server_protocol_version(conn)) < 0) {
+56         fprintf(stderr, "Could not get server protocol version\n");
+57         return -1;
+58     }
+59     if ((actual_protocol_version = s2n_connection_get_actual_protocol_version(conn)) < 0) {
+60         fprintf(stderr, "Could not get actual protocol version\n");
+61         return -1;
+62     }
+63     printf("Client hello version: %d\n", client_hello_version);
+64     printf("Client protocol version: %d\n", client_protocol_version);
+65     printf("Server protocol version: %d\n", server_protocol_version);
+66     printf("Actual protocol version: %d\n", actual_protocol_version);
+67 
+68     if (s2n_get_server_name(conn)) {
+69         printf("Server name: %s\n", s2n_get_server_name(conn));
+70     }
+71 
+72     if (s2n_get_application_protocol(conn)) {
+73         printf("Application protocol: %s\n", s2n_get_application_protocol(conn));
+74     }
+75 
+76     uint32_t length;
+77     const uint8_t *status = s2n_connection_get_ocsp_response(conn, &length);
+78     if (status && length > 0) {
+79         fprintf(stderr, "OCSP response received, length %d\n", length);
+80     }
+81 
+82     printf("Cipher negotiated: %s\n", s2n_connection_get_cipher(conn));
+83 
+84     return 0;
+85 }
+.fi
+.SS "\fBvoid\fP usage ()"
+
+.PP
+Definition at line 185 of file s2nd\&.c\&.
+.PP
+.nf
+186 {
+187     fprintf(stderr, "usage: s2nd [options] host port\n");
+188     fprintf(stderr, " host: hostname or IP address to listen on\n");
+189     fprintf(stderr, " port: port to listen on\n");
+190     fprintf(stderr, "\n Options:\n\n");
+191     fprintf(stderr, "  -c [version_string]\n");
+192     fprintf(stderr, "  --ciphers [version_string]\n");
+193     fprintf(stderr, "    Set the cipher prefence version string\&. Defaults to \"default\"\&. See USAGE-GUIDE\&.md\n");
+194     fprintf(stderr, "  -n\n");
+195     fprintf(stderr, "  --negotiate\n");
+196     fprintf(stderr, "    Only perform tls handshake and then shutdown the connection\n");
+197     fprintf(stderr, "  -h,--help\n");
+198     fprintf(stderr, "    Display this message and quit\&.\n");
+199 
+200     exit(1);
+201 }
+.fi
+.SS "int main (int argc, char *const * argv)"
+
+.PP
+Definition at line 203 of file s2nd\&.c\&.
+.PP
+.nf
+204 {
+205     struct addrinfo hints, *ai;
+206     int r, sockfd = 0;
+207 
+208     /* required args */
+209     const char *host = NULL;
+210     const char *port = NULL;
+211 
+212     const char *cipher_prefs = "default";
+213     int only_negotiate = 0;
+214 
+215     static struct option long_options[] = {
+216         {"help", no_argument, 0, 'h'},
+217         {"ciphers", required_argument, 0, 'c'},
+218     };
+219     while (1) {
+220         int option_index = 0;
+221         int c = getopt_long(argc, argv, "c:hn", long_options, &option_index);
+222         if (c == -1) {
+223             break;
+224         }
+225         switch (c) {
+226         case 'c':
+227             cipher_prefs = optarg;
+228             break;
+229         case 'h':
+230             usage();
+231             break;
+232         case 'n':
+233             only_negotiate = 1;
+234             break;
+235         case '?':
+236         default:
+237             usage();
+238             break;
+239         }
+240     }
+241 
+242     if (optind < argc) {
+243         host = argv[optind++];
+244     }
+245     if (optind < argc) {
+246         port = argv[optind++];
+247     }
+248 
+249     if (!host || !port) {
+250         usage();
+251     }
+252 
+253     if (setvbuf(stdin, NULL, _IONBF, 0) < 0) {
+254         fprintf(stderr, "Error disabling buffering for stdin\n");
+255         exit(1);
+256     }
+257 
+258     if (setvbuf(stdout, NULL, _IONBF, 0) < 0) {
+259         fprintf(stderr, "Error disabling buffering for stdout\n");
+260         exit(1);
+261     }
+262 
+263     memset(&hints, 0, sizeof(hints));
+264 
+265     hints\&.ai_family = AF_UNSPEC;
+266     hints\&.ai_socktype = SOCK_STREAM;
+267 
+268     if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
+269         fprintf(stderr, "Error disabling SIGPIPE\n");
+270         exit(1);
+271     }
+272 
+273     if ((r = getaddrinfo(host, port, &hints, &ai)) < 0) {
+274         fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(r));
+275         exit(1);
+276     }
+277 
+278     if ((sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol)) == -1) {
+279         fprintf(stderr, "socket error: %s\n", strerror(errno));
+280         exit(1);
+281     }
+282 
+283     r = 1;
+284     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &r, sizeof(int)) < 0) {
+285         fprintf(stderr, "setsockopt error: %s\n", strerror(errno));
+286         exit(1);
+287     }
+288 
+289     if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+290         fprintf(stderr, "bind error: %s\n", strerror(errno));
+291         exit(1);
+292     }
+293 
+294     if (listen(sockfd, 1) == -1) {
+295         fprintf(stderr, "listen error: %s\n", strerror(errno));
+296         exit(1);
+297     }
+298 
+299     if (s2n_init() < 0) {
+300         fprintf(stderr, "Error running s2n_init(): '%s'\n", s2n_strerror(s2n_errno, "EN"));
+301     }
+302 
+303     printf("Listening on %s:%s\n", host, port);
+304 
+305     struct s2n_config *config = s2n_config_new();
+306     if (!config) {
+307         fprintf(stderr, "Error getting new s2n config: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+308         exit(1);
+309     }
+310 
+311     if (s2n_config_add_cert_chain_and_key(config, certificate, private_key) < 0) {
+312         fprintf(stderr, "Error getting certificate/key: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+313         exit(1);
+314     }
+315 
+316     if (s2n_config_add_dhparams(config, dhparams) < 0) {
+317         fprintf(stderr, "Error adding DH parameters: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+318         exit(1);
+319     }
+320 
+321     if (s2n_config_set_cipher_preferences(config, cipher_prefs) < 0) {
+322         fprintf(stderr, "Error setting cipher prefs: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+323         exit(1);
+324     }
+325 
+326     if (s2n_config_set_cache_store_callback(config, cache_store, session_cache) < 0) {
+327         fprintf(stderr, "Error setting cache store callback: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+328         exit(1);
+329     }
+330 
+331     if (s2n_config_set_cache_retrieve_callback(config, cache_retrieve, session_cache) < 0) {
+332         fprintf(stderr, "Error setting cache retrieve callback: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+333         exit(1);
+334     }
+335 
+336     if (s2n_config_set_cache_delete_callback(config, cache_delete, session_cache) < 0) {
+337         fprintf(stderr, "Error setting cache retrieve callback: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+338         exit(1);
+339     }
+340 
+341     struct s2n_connection *conn = s2n_connection_new(S2N_SERVER);
+342     if (!conn) {
+343         fprintf(stderr, "Error getting new s2n connection: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+344         exit(1);
+345     }
+346 
+347     if (s2n_connection_set_config(conn, config) < 0) {
+348         fprintf(stderr, "Error setting configuration: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+349         exit(1);
+350     }
+351 
+352     int fd;
+353     while ((fd = accept(sockfd, ai->ai_addr, &ai->ai_addrlen)) > 0) {
+354         if (s2n_connection_set_fd(conn, fd) < 0) {
+355             fprintf(stderr, "Error setting file descriptor: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+356             exit(1);
+357         }
+358 
+359         negotiate(conn);
+360 
+361         if (!only_negotiate) {
+362             echo(conn, fd);
+363         }
+364 
+365         s2n_blocked_status blocked;
+366         s2n_shutdown(conn, &blocked);
+367 
+368         close(fd);
+369 
+370         if (s2n_connection_wipe(conn) < 0) {
+371             fprintf(stderr, "Error wiping connection: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+372             exit(1);
+373         }
+374     }
+375 
+376     if (s2n_connection_free(conn) < 0) {
+377         fprintf(stderr, "Error freeing connection: '%s'\n", s2n_strerror(s2n_errno, "EN"));
+378         exit(1);
+379     }
+380 
+381     if (s2n_cleanup() < 0) {
+382         fprintf(stderr, "Error running s2n_cleanup(): '%s'\n", s2n_strerror(s2n_errno, "EN"));
+383     }
+384 
+385     return 0;
+386 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBsession_cache_entry\fP session_cache[256]"
+
+.PP
+Definition at line 100 of file s2nd\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

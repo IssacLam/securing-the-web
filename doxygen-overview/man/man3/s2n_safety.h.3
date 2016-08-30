@@ -1,0 +1,164 @@
+.TH "s2n-master/utils/s2n_safety.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/utils/s2n_safety.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBnotnull_check\fP(ptr)                     do { if ( (ptr) == NULL ) { \fBS2N_ERROR\fP(\fBS2N_ERR_NULL\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBmemcpy_check\fP(d,  s,  n)         do { if ( (n) ) { \fBnotnull_check\fP( (d) ); memcpy( (d), (s), (n)); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBmemset_check\fP(d,  \fBc\fP,  n)         do { if ( (n) ) { \fBnotnull_check\fP( (d) ); memset( (d), (\fBc\fP), (n)); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBgte_check\fP(n,  min)   do { if ( (n) < min ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBlte_check\fP(n,  max)   do { if ( (n) > max ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBgt_check\fP(n,  min)   do { if ( (n) <= min ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBlt_check\fP(n,  max)   do { if ( (n) >= max ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBeq_check\fP(\fBa\fP,  b)   do { if ( (\fBa\fP) != (b) ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBne_check\fP(\fBa\fP,  b)   do { if ( (\fBa\fP) == (b) ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+.br
+.ti -1c
+.RI "#define \fBinclusive_range_check\fP(low,  n,  high)   \fBgte_check\fP(n, low); \fBlte_check\fP(n, high)"
+.br
+.ti -1c
+.RI "#define \fBexclusive_range_check\fP(low,  n,  high)   \fBgt_check\fP(n, low); \fBlt_check\fP(n, high)"
+.br
+.ti -1c
+.RI "#define \fBGUARD\fP(\fBx\fP)           if ( (\fBx\fP) < 0 ) return \-1"
+.br
+.ti -1c
+.RI "#define \fBGUARD_PTR\fP(\fBx\fP)   if ( (\fBx\fP) < 0 ) return NULL"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "pid_t \fBs2n_actual_getpid\fP ()"
+.br
+.ti -1c
+.RI "int \fBs2n_constant_time_equals\fP (const uint8_t *\fBa\fP, const uint8_t *b, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_constant_time_copy_or_dont\fP (const uint8_t *dst, const uint8_t *src, uint32_t \fBlen\fP, uint8_t dont)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define notnull_check(ptr)   do { if ( (ptr) == NULL ) { \fBS2N_ERROR\fP(\fBS2N_ERR_NULL\fP); } } while(0)"
+
+.PP
+Definition at line 25 of file s2n_safety\&.h\&.
+.SS "#define memcpy_check(d, s, n)   do { if ( (n) ) { \fBnotnull_check\fP( (d) ); memcpy( (d), (s), (n)); } } while(0)"
+
+.PP
+Definition at line 29 of file s2n_safety\&.h\&.
+.SS "#define memset_check(d, \fBc\fP, n)   do { if ( (n) ) { \fBnotnull_check\fP( (d) ); memset( (d), (\fBc\fP), (n)); } } while(0)"
+
+.PP
+Definition at line 30 of file s2n_safety\&.h\&.
+.SS "#define gte_check(n, min)   do { if ( (n) < min ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+
+.PP
+Definition at line 33 of file s2n_safety\&.h\&.
+.SS "#define lte_check(n, max)   do { if ( (n) > max ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+
+.PP
+Definition at line 34 of file s2n_safety\&.h\&.
+.SS "#define gt_check(n, min)   do { if ( (n) <= min ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+
+.PP
+Definition at line 35 of file s2n_safety\&.h\&.
+.SS "#define lt_check(n, max)   do { if ( (n) >= max ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+
+.PP
+Definition at line 36 of file s2n_safety\&.h\&.
+.SS "#define eq_check(\fBa\fP, b)   do { if ( (\fBa\fP) != (b) ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+
+.PP
+Definition at line 37 of file s2n_safety\&.h\&.
+.SS "#define ne_check(\fBa\fP, b)   do { if ( (\fBa\fP) == (b) ) { \fBS2N_ERROR\fP(\fBS2N_ERR_SAFETY\fP); } } while(0)"
+
+.PP
+Definition at line 38 of file s2n_safety\&.h\&.
+.SS "#define inclusive_range_check(low, n, high)   \fBgte_check\fP(n, low); \fBlte_check\fP(n, high)"
+
+.PP
+Definition at line 39 of file s2n_safety\&.h\&.
+.SS "#define exclusive_range_check(low, n, high)   \fBgt_check\fP(n, low); \fBlt_check\fP(n, high)"
+
+.PP
+Definition at line 40 of file s2n_safety\&.h\&.
+.SS "#define GUARD(\fBx\fP)   if ( (\fBx\fP) < 0 ) return \-1"
+
+.PP
+Definition at line 42 of file s2n_safety\&.h\&.
+.SS "#define GUARD_PTR(\fBx\fP)   if ( (\fBx\fP) < 0 ) return NULL"
+
+.PP
+Definition at line 43 of file s2n_safety\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "pid_t s2n_actual_getpid ()"
+Get the process id
+.PP
+Returns: The process ID of the current process 
+.PP
+Definition at line 30 of file s2n_safety\&.c\&.
+.PP
+.nf
+31 {
+32 #if defined(__GNUC__) && defined(SYS_getpid)
+33     /* http://yarchive\&.net/comp/linux/getpid_caching\&.html */
+34     return (pid_t) syscall(SYS_getpid);
+35 #else
+36     return getpid();
+37 #endif
+38 }
+.fi
+.SS "int s2n_constant_time_equals (const uint8_t * a, const uint8_t * b, uint32_t len)"
+
+.PP
+Definition at line 42 of file s2n_server_fuzz_test_overrides\&.c\&.
+.PP
+.nf
+43 {
+44     /* Allow all signatures checked with s2n_constant_time_equals to always pass verification even if they are invalid
+45      * in order to aid code coverage with server fuzz test\&.
+46      */
+47     return !0;
+48 }
+.fi
+.SS "int s2n_constant_time_copy_or_dont (const uint8_t * dst, const uint8_t * src, uint32_t len, uint8_t dont)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

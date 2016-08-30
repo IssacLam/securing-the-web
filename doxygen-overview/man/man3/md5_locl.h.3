@@ -1,0 +1,203 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/md5/md5_locl.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/md5/md5_locl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/md5\&.h>\fP
+.br
+\fC#include 'md32_common\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMD5_LONG_LOG2\fP   2        /* default to 32 \fBbits\fP */"
+.br
+.ti -1c
+.RI "#define \fBDATA_ORDER_IS_LITTLE_ENDIAN\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_LONG\fP   \fBMD5_LONG\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_CTX\fP   \fBMD5_CTX\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_CBLOCK\fP   \fBMD5_CBLOCK\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_UPDATE\fP   \fBMD5_Update\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_TRANSFORM\fP   \fBMD5_Transform\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_FINAL\fP   \fBMD5_Final\fP"
+.br
+.ti -1c
+.RI "#define \fBHASH_MAKE_STRING\fP(\fBc\fP,  s)  "
+.br
+.ti -1c
+.RI "#define \fBHASH_BLOCK_DATA_ORDER\fP   \fBmd5_block_data_order\fP"
+.br
+.ti -1c
+.RI "#define \fBF\fP(b,  \fBc\fP,  d)               ((((\fBc\fP) ^ (d)) & (b)) ^ (d))"
+.br
+.ti -1c
+.RI "#define \fBG\fP(b,  \fBc\fP,  d)               ((((b) ^ (\fBc\fP)) & (d)) ^ (\fBc\fP))"
+.br
+.ti -1c
+.RI "#define \fBH\fP(b,  \fBc\fP,  d)               ((b) ^ (\fBc\fP) ^ (d))"
+.br
+.ti -1c
+.RI "#define \fBI\fP(b,  \fBc\fP,  d)               (((~(d)) | (b)) ^ (\fBc\fP))"
+.br
+.ti -1c
+.RI "#define \fBR0\fP(\fBa\fP,  b,  \fBc\fP,  d,  k,  s,  \fBt\fP)"
+.br
+.ti -1c
+.RI "#define \fBR1\fP(\fBa\fP,  b,  \fBc\fP,  d,  k,  s,  \fBt\fP)"
+.br
+.ti -1c
+.RI "#define \fBR2\fP(\fBa\fP,  b,  \fBc\fP,  d,  k,  s,  \fBt\fP)"
+.br
+.ti -1c
+.RI "#define \fBR3\fP(\fBa\fP,  b,  \fBc\fP,  d,  k,  s,  \fBt\fP)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmd5_block_data_order\fP (\fBMD5_CTX\fP *\fBc\fP, const \fBvoid\fP *\fBp\fP, size_t \fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MD5_LONG_LOG2   2        /* default to 32 \fBbits\fP */"
+
+.PP
+Definition at line 65 of file md5_locl\&.h\&.
+.SS "#define DATA_ORDER_IS_LITTLE_ENDIAN"
+
+.PP
+Definition at line 81 of file md5_locl\&.h\&.
+.SS "#define HASH_LONG   \fBMD5_LONG\fP"
+
+.PP
+Definition at line 83 of file md5_locl\&.h\&.
+.SS "#define HASH_CTX   \fBMD5_CTX\fP"
+
+.PP
+Definition at line 84 of file md5_locl\&.h\&.
+.SS "#define HASH_CBLOCK   \fBMD5_CBLOCK\fP"
+
+.PP
+Definition at line 85 of file md5_locl\&.h\&.
+.SS "#define HASH_UPDATE   \fBMD5_Update\fP"
+
+.PP
+Definition at line 86 of file md5_locl\&.h\&.
+.SS "#define HASH_TRANSFORM   \fBMD5_Transform\fP"
+
+.PP
+Definition at line 87 of file md5_locl\&.h\&.
+.SS "#define HASH_FINAL   \fBMD5_Final\fP"
+
+.PP
+Definition at line 88 of file md5_locl\&.h\&.
+.SS "#define HASH_MAKE_STRING(\fBc\fP, s)"
+\fBValue:\fP
+.PP
+.nf
+do {    \
+        unsigned long ll;               \
+        ll=(c)->A; (void)HOST_l2c(ll,(s));      \
+        ll=(c)->B; (void)HOST_l2c(ll,(s));      \
+        ll=(c)->C; (void)HOST_l2c(ll,(s));      \
+        ll=(c)->D; (void)HOST_l2c(ll,(s));      \
+        } while (0)
+.fi
+.PP
+Definition at line 89 of file md5_locl\&.h\&.
+.SS "#define HASH_BLOCK_DATA_ORDER   \fBmd5_block_data_order\fP"
+
+.PP
+Definition at line 96 of file md5_locl\&.h\&.
+.SS "#define F(b, \fBc\fP, d)   ((((\fBc\fP) ^ (d)) & (b)) ^ (d))"
+
+.PP
+Definition at line 110 of file md5_locl\&.h\&.
+.SS "#define G(b, \fBc\fP, d)   ((((b) ^ (\fBc\fP)) & (d)) ^ (\fBc\fP))"
+
+.PP
+Definition at line 111 of file md5_locl\&.h\&.
+.SS "#define H(b, \fBc\fP, d)   ((b) ^ (\fBc\fP) ^ (d))"
+
+.PP
+Definition at line 112 of file md5_locl\&.h\&.
+.SS "#define I(b, \fBc\fP, d)   (((~(d)) | (b)) ^ (\fBc\fP))"
+
+.PP
+Definition at line 113 of file md5_locl\&.h\&.
+.SS "#define R0(\fBa\fP, b, \fBc\fP, d, k, s, \fBt\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        a+=((k)+(t)+F((b),(c),(d))); \
+        a=ROTATE(a,s); \
+        a+=b; };\
+.fi
+.PP
+Definition at line 115 of file md5_locl\&.h\&.
+.SS "#define R1(\fBa\fP, b, \fBc\fP, d, k, s, \fBt\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        a+=((k)+(t)+G((b),(c),(d))); \
+        a=ROTATE(a,s); \
+        a+=b; };
+.fi
+.PP
+Definition at line 120 of file md5_locl\&.h\&.
+.SS "#define R2(\fBa\fP, b, \fBc\fP, d, k, s, \fBt\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        a+=((k)+(t)+H((b),(c),(d))); \
+        a=ROTATE(a,s); \
+        a+=b; };
+.fi
+.PP
+Definition at line 125 of file md5_locl\&.h\&.
+.SS "#define R3(\fBa\fP, b, \fBc\fP, d, k, s, \fBt\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        a+=((k)+(t)+I((b),(c),(d))); \
+        a=ROTATE(a,s); \
+        a+=b; };
+.fi
+.PP
+Definition at line 130 of file md5_locl\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP md5_block_data_order (\fBMD5_CTX\fP * c, const \fBvoid\fP * p, size_t num)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

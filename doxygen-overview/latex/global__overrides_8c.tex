@@ -1,0 +1,167 @@
+\hypertarget{global__overrides_8c}{}\section{s2n-\/master/tests/fuzz/\+L\+D\+\_\+\+P\+R\+E\+L\+O\+A\+D/global\+\_\+overrides.c File Reference}
+\label{global__overrides_8c}\index{s2n-\/master/tests/fuzz/\+L\+D\+\_\+\+P\+R\+E\+L\+O\+A\+D/global\+\_\+overrides.\+c@{s2n-\/master/tests/fuzz/\+L\+D\+\_\+\+P\+R\+E\+L\+O\+A\+D/global\+\_\+overrides.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$dlfcn.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+drbg.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for global\+\_\+overrides.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{global__overrides_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{global__overrides_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{global__overrides_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\+\_\+drbg\+\_\+generate} (struct \hyperlink{structs2n__drbg}{s2n\+\_\+drbg} $\ast$drbg, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int \hyperlink{global__overrides_8c_a40bf61bc8745a2d894dd558a2885a66b}{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, int wfd, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\+\_\+get\+\_\+urandom\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}!\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}}
+\index{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}!global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}{_GNU_SOURCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}\hypertarget{global__overrides_8c_a369266c24eacffb87046522897a570d5}{}\label{global__overrides_8c_a369266c24eacffb87046522897a570d5}
+
+
+Definition at line 16 of file global\+\_\+overrides.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}!s2n\+\_\+drbg\+\_\+generate@{s2n\+\_\+drbg\+\_\+generate}}
+\index{s2n\+\_\+drbg\+\_\+generate@{s2n\+\_\+drbg\+\_\+generate}!global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+drbg\+\_\+generate(struct s2n\+\_\+drbg $\ast$drbg, struct s2n\+\_\+blob $\ast$blob)}{s2n_drbg_generate(struct s2n_drbg *drbg, struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+drbg\+\_\+generate (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+drbg} $\ast$}]{drbg, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{global__overrides_8c_a9fad975e364d5a398330eb937745f0e6}{}\label{global__overrides_8c_a9fad975e364d5a398330eb937745f0e6}
+
+
+Definition at line 28 of file global\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+28                                                                     \{
+29 
+30     \textcolor{comment}{/* If fuzzing, only generate "fake" random numbers in order to ensure that fuzz tests are deterministic
+       and repeatable.}
+31 \textcolor{comment}{     * This function should generate non-zero values since this function may be called repeatedly at
+       startup until a}
+32 \textcolor{comment}{     * non-zero value is generated.}
+33 \textcolor{comment}{     */}
+34     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\_get\_urandom\_data}(blob));
+35     drbg->\hyperlink{structs2n__drbg_a7c90d12780b79aa1cf6b15efa0c03106}{bytes\_used} += blob->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+36     \textcolor{keywordflow}{return} 0;
+37 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{global__overrides_8c_a9fad975e364d5a398330eb937745f0e6_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}!s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd@{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd}}
+\index{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd@{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd}!global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd(struct s2n\+\_\+stuffer $\ast$stuffer, int wfd, uint32\+\_\+t len)}{s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer, int wfd, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{int}]{wfd, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{global__overrides_8c_a40bf61bc8745a2d894dd558a2885a66b}{}\label{global__overrides_8c_a40bf61bc8745a2d894dd558a2885a66b}
+
+
+Definition at line 39 of file global\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+40 \{
+41     \textcolor{comment}{/* Override the original s2n\_stuffer\_send\_to\_fd to check if the write file descriptor is -1, and if so,
+       skip}
+42 \textcolor{comment}{     * writing anything. This is to speed up fuzz tests that write unnecessary data that is never actually
+       read.}
+43 \textcolor{comment}{     */}
+44     \textcolor{keywordflow}{if}(wfd == -1)\{
+45        stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} += \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len};
+46        \textcolor{keywordflow}{return} \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len};
+47     \}
+48 
+49     \textcolor{comment}{/* Otherwise, call the original s2n\_stuffer\_send\_to\_fd() */}
+50     \textcolor{keyword}{typedef} int (*orig\_s2n\_stuffer\_send\_to\_fd\_func\_type)(\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, \textcolor{keywordtype}{int} wfd, 
+      uint32\_t \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len});
+51     orig\_s2n\_stuffer\_send\_to\_fd\_func\_type orig\_s2n\_stuffer\_send\_to\_fd;
+52     orig\_s2n\_stuffer\_send\_to\_fd = (orig\_s2n\_stuffer\_send\_to\_fd\_func\_type) dlsym(RTLD\_NEXT, \textcolor{stringliteral}{"
+      s2n\_stuffer\_send\_to\_fd"});
+53     \textcolor{keywordflow}{return} orig\_s2n\_stuffer\_send\_to\_fd(stuffer, wfd, \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len});
+54 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{global__overrides_8c_a40bf61bc8745a2d894dd558a2885a66b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}!s2n\+\_\+get\+\_\+urandom\+\_\+data@{s2n\+\_\+get\+\_\+urandom\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+urandom\+\_\+data@{s2n\+\_\+get\+\_\+urandom\+\_\+data}!global\+\_\+overrides.\+c@{global\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+urandom\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_urandom_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+urandom\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{}\label{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}
+
+
+Definition at line 56 of file global\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+56                                                \{
+57 
+58     \textcolor{comment}{/* If fuzzing, only generate "fake" random numbers in order to ensure that fuzz tests are deterministic
+       and repeatable.}
+59 \textcolor{comment}{     * This function should generate non-zero values since this function may be called repeatedly at
+       startup until a}
+60 \textcolor{comment}{     * non-zero value is generated.}
+61 \textcolor{comment}{     */}
+62     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i < blob->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}; i++)\{
+63        blob->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[i] = 4; \textcolor{comment}{/* Fake RNG. Chosen by fair dice roll. https://xkcd.com/221/ */}
+64     \}
+65     \textcolor{keywordflow}{return} 0;
+66 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169_icgraph}
+\end{center}
+\end{figure}
+
+

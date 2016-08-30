@@ -1,0 +1,1345 @@
+.TH "ocsp.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ocsp.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/x509v3\&.h>\fP
+.br
+\fC#include <openssl/safestack\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBocsp_cert_id_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_one_request_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_req_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_signature_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_request_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_resp_bytes_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_response_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_responder_id_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_revoked_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_cert_status_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_single_response_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_response_data_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_basic_response_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_crl_id_st\fP"
+.br
+.ti -1c
+.RI "struct \fBocsp_service_locator_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOCSP_DEFAULT_NONCE_LENGTH\fP   16"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOCERTS\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOINTERN\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOSIGS\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOCHAIN\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOVERIFY\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOEXPLICIT\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOCASIGN\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NODELEGATED\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOCHECKS\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBOCSP_TRUSTOTHER\fP   0x200"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPID_KEY\fP   0x400"
+.br
+.ti -1c
+.RI "#define \fBOCSP_NOTIME\fP   0x800"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPONSE_STATUS_SUCCESSFUL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPONSE_STATUS_MALFORMEDREQUEST\fP   1"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPONSE_STATUS_INTERNALERROR\fP   2"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPONSE_STATUS_TRYLATER\fP   3"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPONSE_STATUS_SIGREQUIRED\fP   5"
+.br
+.ti -1c
+.RI "#define \fBOCSP_RESPONSE_STATUS_UNAUTHORIZED\fP   6"
+.br
+.ti -1c
+.RI "#define \fBV_OCSP_RESPID_NAME\fP   0"
+.br
+.ti -1c
+.RI "#define \fBV_OCSP_RESPID_KEY\fP   1"
+.br
+.ti -1c
+.RI "#define \fBV_OCSP_CERTSTATUS_GOOD\fP   0"
+.br
+.ti -1c
+.RI "#define \fBV_OCSP_CERTSTATUS_REVOKED\fP   1"
+.br
+.ti -1c
+.RI "#define \fBV_OCSP_CERTSTATUS_UNKNOWN\fP   2"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_NOSTATUS\fP   \-1"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_UNSPECIFIED\fP   0"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_KEYCOMPROMISE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_CACOMPROMISE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_AFFILIATIONCHANGED\fP   3"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_SUPERSEDED\fP   4"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_CESSATIONOFOPERATION\fP   5"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_CERTIFICATEHOLD\fP   6"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REVOKED_STATUS_REMOVEFROMCRL\fP   8"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_OCSP_REQUEST\fP   'OCSP REQUEST'"
+.br
+.ti -1c
+.RI "#define \fBPEM_STRING_OCSP_RESPONSE\fP   'OCSP RESPONSE'"
+.br
+.ti -1c
+.RI "#define \fBd2i_OCSP_REQUEST_bio\fP(\fBbp\fP,  \fBp\fP)   \fBASN1_d2i_bio_of\fP(\fBOCSP_REQUEST\fP,OCSP_REQUEST_new,d2i_OCSP_REQUEST,\fBbp\fP,\fBp\fP)"
+.br
+.ti -1c
+.RI "#define \fBd2i_OCSP_RESPONSE_bio\fP(\fBbp\fP,  \fBp\fP)   \fBASN1_d2i_bio_of\fP(\fBOCSP_RESPONSE\fP,OCSP_RESPONSE_new,d2i_OCSP_RESPONSE,\fBbp\fP,\fBp\fP)"
+.br
+.ti -1c
+.RI "#define \fBPEM_read_bio_OCSP_REQUEST\fP(\fBbp\fP,  \fBx\fP,  \fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBPEM_read_bio_OCSP_RESPONSE\fP(\fBbp\fP,  \fBx\fP,  \fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBPEM_write_bio_OCSP_REQUEST\fP(\fBbp\fP,  o)"
+.br
+.ti -1c
+.RI "#define \fBPEM_write_bio_OCSP_RESPONSE\fP(\fBbp\fP,  o)"
+.br
+.ti -1c
+.RI "#define \fBi2d_OCSP_RESPONSE_bio\fP(\fBbp\fP,  o)   \fBASN1_i2d_bio_of\fP(\fBOCSP_RESPONSE\fP,i2d_OCSP_RESPONSE,\fBbp\fP,o)"
+.br
+.ti -1c
+.RI "#define \fBi2d_OCSP_REQUEST_bio\fP(\fBbp\fP,  o)   \fBASN1_i2d_bio_of\fP(\fBOCSP_REQUEST\fP,i2d_OCSP_REQUEST,\fBbp\fP,o)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REQUEST_sign\fP(o,  pkey,  md)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_BASICRESP_sign\fP(o,  pkey,  md,  d)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_REQUEST_verify\fP(\fBa\fP,  r)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_BASICRESP_verify\fP(\fBa\fP,  r,  d)"
+.br
+.ti -1c
+.RI "#define \fBASN1_BIT_STRING_digest\fP(data,  \fBtype\fP,  md,  \fBlen\fP)   \fBASN1_item_digest\fP(\fBASN1_ITEM_rptr\fP(\fBASN1_BIT_STRING\fP),\fBtype\fP,data,md,\fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_CERTSTATUS_dup\fP(cs)"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_ASN1_STRING_ENCODE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_D2I_OCSP_NONCE\fP   102"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_BASIC_ADD1_STATUS\fP   103"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_BASIC_SIGN\fP   104"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_BASIC_VERIFY\fP   105"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_CERT_ID_NEW\fP   101"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_CHECK_DELEGATED\fP   106"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_CHECK_IDS\fP   107"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_CHECK_ISSUER\fP   108"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_CHECK_VALIDITY\fP   115"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_MATCH_ISSUERID\fP   109"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_PARSE_URL\fP   114"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_REQUEST_SIGN\fP   110"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_REQUEST_VERIFY\fP   116"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_RESPONSE_GET1_BASIC\fP   111"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_SENDREQ_BIO\fP   112"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_OCSP_SENDREQ_NBIO\fP   117"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_PARSE_HTTP_LINE1\fP   118"
+.br
+.ti -1c
+.RI "#define \fBOCSP_F_REQUEST_VERIFY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_BAD_DATA\fP   100"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_CERTIFICATE_VERIFY_ERROR\fP   101"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_DIGEST_ERR\fP   102"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_ERROR_IN_NEXTUPDATE_FIELD\fP   122"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_ERROR_IN_THISUPDATE_FIELD\fP   123"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_ERROR_PARSING_URL\fP   121"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_MISSING_OCSPSIGNING_USAGE\fP   103"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NEXTUPDATE_BEFORE_THISUPDATE\fP   124"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NOT_BASIC_RESPONSE\fP   104"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NO_CERTIFICATES_IN_CHAIN\fP   105"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NO_CONTENT\fP   106"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NO_PUBLIC_KEY\fP   107"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NO_RESPONSE_DATA\fP   108"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_NO_REVOKED_TIME\fP   109"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_PRIVATE_KEY_DOES_NOT_MATCH_CERTIFICATE\fP   110"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_REQUEST_NOT_SIGNED\fP   128"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_RESPONSE_CONTAINS_NO_REVOCATION_DATA\fP   111"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_ROOT_CA_NOT_TRUSTED\fP   112"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_SERVER_READ_ERROR\fP   113"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_SERVER_RESPONSE_ERROR\fP   114"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_SERVER_RESPONSE_PARSE_ERROR\fP   115"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_SERVER_WRITE_ERROR\fP   116"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_SIGNATURE_FAILURE\fP   117"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_SIGNER_CERTIFICATE_NOT_FOUND\fP   118"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_STATUS_EXPIRED\fP   125"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_STATUS_NOT_YET_VALID\fP   126"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_STATUS_TOO_OLD\fP   127"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_UNKNOWN_MESSAGE_DIGEST\fP   119"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_UNKNOWN_NID\fP   120"
+.br
+.ti -1c
+.RI "#define \fBOCSP_R_UNSUPPORTED_REQUESTORNAME_TYPE\fP   129"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBocsp_cert_id_st\fP \fBOCSP_CERTID\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_one_request_st\fP \fBOCSP_ONEREQ\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_req_info_st\fP \fBOCSP_REQINFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_signature_st\fP \fBOCSP_SIGNATURE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_request_st\fP \fBOCSP_REQUEST\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_resp_bytes_st\fP \fBOCSP_RESPBYTES\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_revoked_info_st\fP \fBOCSP_REVOKEDINFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_cert_status_st\fP \fBOCSP_CERTSTATUS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_single_response_st\fP \fBOCSP_SINGLERESP\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_response_data_st\fP \fBOCSP_RESPDATA\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_basic_response_st\fP \fBOCSP_BASICRESP\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_crl_id_st\fP \fBOCSP_CRLID\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBocsp_service_locator_st\fP \fBOCSP_SERVICELOC\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBOCSP_CERTID\fP * \fBOCSP_CERTID_dup\fP (\fBOCSP_CERTID\fP *id)"
+.br
+.ti -1c
+.RI "\fBOCSP_RESPONSE\fP * \fBOCSP_sendreq_bio\fP (\fBBIO\fP *b, const char *path, \fBOCSP_REQUEST\fP *req)"
+.br
+.ti -1c
+.RI "\fBOCSP_REQ_CTX\fP * \fBOCSP_sendreq_new\fP (\fBBIO\fP *io, const char *path, \fBOCSP_REQUEST\fP *req, int maxline)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_nbio\fP (\fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_sendreq_nbio\fP (\fBOCSP_RESPONSE\fP **presp, \fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "\fBOCSP_REQ_CTX\fP * \fBOCSP_REQ_CTX_new\fP (\fBBIO\fP *io, int maxline)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOCSP_REQ_CTX_free\fP (\fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBOCSP_set_max_response_length\fP (\fBOCSP_REQ_CTX\fP *rctx, unsigned long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_i2d\fP (\fBOCSP_REQ_CTX\fP *rctx, const \fBASN1_ITEM\fP *it, \fBASN1_VALUE\fP *val)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_nbio_d2i\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBOCSP_REQ_CTX_get0_mem_bio\fP (\fBOCSP_REQ_CTX\fP *rctx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_http\fP (\fBOCSP_REQ_CTX\fP *rctx, const char *op, const char *path)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_set1_req\fP (\fBOCSP_REQ_CTX\fP *rctx, \fBOCSP_REQUEST\fP *req)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQ_CTX_add1_header\fP (\fBOCSP_REQ_CTX\fP *rctx, const char *name, const char *value)"
+.br
+.ti -1c
+.RI "\fBOCSP_CERTID\fP * \fBOCSP_cert_to_id\fP (const \fBEVP_MD\fP *dgst, \fBX509\fP *subject, \fBX509\fP *issuer)"
+.br
+.ti -1c
+.RI "\fBOCSP_CERTID\fP * \fBOCSP_cert_id_new\fP (const \fBEVP_MD\fP *dgst, \fBX509_NAME\fP *issuerName, \fBASN1_BIT_STRING\fP *issuerKey, \fBASN1_INTEGER\fP *serialNumber)"
+.br
+.ti -1c
+.RI "\fBOCSP_ONEREQ\fP * \fBOCSP_request_add0_id\fP (\fBOCSP_REQUEST\fP *req, \fBOCSP_CERTID\fP *cid)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_add1_nonce\fP (\fBOCSP_REQUEST\fP *req, unsigned char *val, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_basic_add1_nonce\fP (\fBOCSP_BASICRESP\fP *resp, unsigned char *val, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_check_nonce\fP (\fBOCSP_REQUEST\fP *req, \fBOCSP_BASICRESP\fP *bs)"
+.br
+.ti -1c
+.RI "int \fBOCSP_copy_nonce\fP (\fBOCSP_BASICRESP\fP *resp, \fBOCSP_REQUEST\fP *req)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_set1_name\fP (\fBOCSP_REQUEST\fP *req, \fBX509_NAME\fP *\fBnm\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_add1_cert\fP (\fBOCSP_REQUEST\fP *req, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_sign\fP (\fBOCSP_REQUEST\fP *req, \fBX509\fP *signer, \fBEVP_PKEY\fP *key, const \fBEVP_MD\fP *dgst, \fBSTACK_OF\fP(\fBX509\fP)*certs, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_response_status\fP (\fBOCSP_RESPONSE\fP *resp)"
+.br
+.ti -1c
+.RI "\fBOCSP_BASICRESP\fP * \fBOCSP_response_get1_basic\fP (\fBOCSP_RESPONSE\fP *resp)"
+.br
+.ti -1c
+.RI "int \fBOCSP_resp_count\fP (\fBOCSP_BASICRESP\fP *bs)"
+.br
+.ti -1c
+.RI "\fBOCSP_SINGLERESP\fP * \fBOCSP_resp_get0\fP (\fBOCSP_BASICRESP\fP *bs, int idx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_resp_find\fP (\fBOCSP_BASICRESP\fP *bs, \fBOCSP_CERTID\fP *id, int last)"
+.br
+.ti -1c
+.RI "int \fBOCSP_single_get0_status\fP (\fBOCSP_SINGLERESP\fP *single, int *reason, \fBASN1_GENERALIZEDTIME\fP **revtime, \fBASN1_GENERALIZEDTIME\fP **thisupd, \fBASN1_GENERALIZEDTIME\fP **nextupd)"
+.br
+.ti -1c
+.RI "int \fBOCSP_resp_find_status\fP (\fBOCSP_BASICRESP\fP *bs, \fBOCSP_CERTID\fP *id, int *status, int *reason, \fBASN1_GENERALIZEDTIME\fP **revtime, \fBASN1_GENERALIZEDTIME\fP **thisupd, \fBASN1_GENERALIZEDTIME\fP **nextupd)"
+.br
+.ti -1c
+.RI "int \fBOCSP_check_validity\fP (\fBASN1_GENERALIZEDTIME\fP *thisupd, \fBASN1_GENERALIZEDTIME\fP *nextupd, long sec, long maxsec)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_verify\fP (\fBOCSP_REQUEST\fP *req, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *store, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_parse_url\fP (const char *url, char **phost, char **pport, char **ppath, int *pssl)"
+.br
+.ti -1c
+.RI "int \fBOCSP_id_issuer_cmp\fP (\fBOCSP_CERTID\fP *\fBa\fP, \fBOCSP_CERTID\fP *b)"
+.br
+.ti -1c
+.RI "int \fBOCSP_id_cmp\fP (\fBOCSP_CERTID\fP *\fBa\fP, \fBOCSP_CERTID\fP *b)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_onereq_count\fP (\fBOCSP_REQUEST\fP *req)"
+.br
+.ti -1c
+.RI "\fBOCSP_ONEREQ\fP * \fBOCSP_request_onereq_get0\fP (\fBOCSP_REQUEST\fP *req, int i)"
+.br
+.ti -1c
+.RI "\fBOCSP_CERTID\fP * \fBOCSP_onereq_get0_id\fP (\fBOCSP_ONEREQ\fP *one)"
+.br
+.ti -1c
+.RI "int \fBOCSP_id_get0_info\fP (\fBASN1_OCTET_STRING\fP **piNameHash, \fBASN1_OBJECT\fP **pmd, \fBASN1_OCTET_STRING\fP **pikeyHash, \fBASN1_INTEGER\fP **pserial, \fBOCSP_CERTID\fP *cid)"
+.br
+.ti -1c
+.RI "int \fBOCSP_request_is_signed\fP (\fBOCSP_REQUEST\fP *req)"
+.br
+.ti -1c
+.RI "\fBOCSP_RESPONSE\fP * \fBOCSP_response_create\fP (int status, \fBOCSP_BASICRESP\fP *bs)"
+.br
+.ti -1c
+.RI "\fBOCSP_SINGLERESP\fP * \fBOCSP_basic_add1_status\fP (\fBOCSP_BASICRESP\fP *rsp, \fBOCSP_CERTID\fP *cid, int status, int reason, \fBASN1_TIME\fP *revtime, \fBASN1_TIME\fP *thisupd, \fBASN1_TIME\fP *nextupd)"
+.br
+.ti -1c
+.RI "int \fBOCSP_basic_add1_cert\fP (\fBOCSP_BASICRESP\fP *resp, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBOCSP_basic_sign\fP (\fBOCSP_BASICRESP\fP *brsp, \fBX509\fP *signer, \fBEVP_PKEY\fP *key, const \fBEVP_MD\fP *dgst, \fBSTACK_OF\fP(\fBX509\fP)*certs, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_crlID_new\fP (char *url, long *n, char *tim)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_accept_responses_new\fP (char **oids)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_archive_cutoff_new\fP (char *tim)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_url_svcloc_new\fP (\fBX509_NAME\fP *issuer, char **urls)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_get_ext_count\fP (\fBOCSP_REQUEST\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_get_ext_by_NID\fP (\fBOCSP_REQUEST\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_get_ext_by_OBJ\fP (\fBOCSP_REQUEST\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_get_ext_by_critical\fP (\fBOCSP_REQUEST\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_REQUEST_get_ext\fP (\fBOCSP_REQUEST\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_REQUEST_delete_ext\fP (\fBOCSP_REQUEST\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBOCSP_REQUEST_get1_ext_d2i\fP (\fBOCSP_REQUEST\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_add1_ext_i2d\fP (\fBOCSP_REQUEST\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_add_ext\fP (\fBOCSP_REQUEST\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_ONEREQ_get_ext_count\fP (\fBOCSP_ONEREQ\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_ONEREQ_get_ext_by_NID\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_ONEREQ_get_ext_by_OBJ\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_ONEREQ_get_ext_by_critical\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_ONEREQ_get_ext\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_ONEREQ_delete_ext\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBOCSP_ONEREQ_get1_ext_d2i\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_ONEREQ_add1_ext_i2d\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_ONEREQ_add_ext\fP (\fBOCSP_ONEREQ\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_BASICRESP_get_ext_count\fP (\fBOCSP_BASICRESP\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_BASICRESP_get_ext_by_NID\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_BASICRESP_get_ext_by_OBJ\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_BASICRESP_get_ext_by_critical\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_BASICRESP_get_ext\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_BASICRESP_delete_ext\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBOCSP_BASICRESP_get1_ext_d2i\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_BASICRESP_add1_ext_i2d\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_BASICRESP_add_ext\fP (\fBOCSP_BASICRESP\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_SINGLERESP_get_ext_count\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_SINGLERESP_get_ext_by_NID\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_SINGLERESP_get_ext_by_OBJ\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBOCSP_SINGLERESP_get_ext_by_critical\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, int crit, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_SINGLERESP_get_ext\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_EXTENSION\fP * \fBOCSP_SINGLERESP_delete_ext\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBOCSP_SINGLERESP_get1_ext_d2i\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, int \fBnid\fP, int *crit, int *idx)"
+.br
+.ti -1c
+.RI "int \fBOCSP_SINGLERESP_add1_ext_i2d\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, int \fBnid\fP, \fBvoid\fP *value, int crit, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_SINGLERESP_add_ext\fP (\fBOCSP_SINGLERESP\fP *\fBx\fP, \fBX509_EXTENSION\fP *\fBex\fP, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "const char * \fBOCSP_response_status_str\fP (long s)"
+.br
+.ti -1c
+.RI "const char * \fBOCSP_cert_status_str\fP (long s)"
+.br
+.ti -1c
+.RI "const char * \fBOCSP_crl_reason_str\fP (long s)"
+.br
+.ti -1c
+.RI "int \fBOCSP_REQUEST_print\fP (\fBBIO\fP *\fBbp\fP, \fBOCSP_REQUEST\fP *\fBa\fP, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_RESPONSE_print\fP (\fBBIO\fP *\fBbp\fP, \fBOCSP_RESPONSE\fP *o, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBOCSP_basic_verify\fP (\fBOCSP_BASICRESP\fP *bs, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *st, unsigned long \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_OCSP_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ASN1_BIT_STRING_digest(data, \fBtype\fP, md, \fBlen\fP)   \fBASN1_item_digest\fP(\fBASN1_ITEM_rptr\fP(\fBASN1_BIT_STRING\fP),\fBtype\fP,data,md,\fBlen\fP)"
+
+.PP
+Definition at line 388 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define d2i_OCSP_REQUEST_bio(\fBbp\fP, \fBp\fP)   \fBASN1_d2i_bio_of\fP(\fBOCSP_REQUEST\fP,OCSP_REQUEST_new,d2i_OCSP_REQUEST,\fBbp\fP,\fBp\fP)"
+
+.PP
+Definition at line 350 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define d2i_OCSP_RESPONSE_bio(\fBbp\fP, \fBp\fP)   \fBASN1_d2i_bio_of\fP(\fBOCSP_RESPONSE\fP,OCSP_RESPONSE_new,d2i_OCSP_RESPONSE,\fBbp\fP,\fBp\fP)"
+
+.PP
+Definition at line 352 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define i2d_OCSP_REQUEST_bio(\fBbp\fP, o)   \fBASN1_i2d_bio_of\fP(\fBOCSP_REQUEST\fP,i2d_OCSP_REQUEST,\fBbp\fP,o)"
+
+.PP
+Definition at line 370 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define i2d_OCSP_RESPONSE_bio(\fBbp\fP, o)   \fBASN1_i2d_bio_of\fP(\fBOCSP_RESPONSE\fP,i2d_OCSP_RESPONSE,\fBbp\fP,o)"
+
+.PP
+Definition at line 368 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_BASICRESP_sign(o, pkey, md, d)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_item_sign(ASN1_ITEM_rptr(OCSP_RESPDATA),o->signatureAlgorithm,NULL,\
+                o->signature,o->tbsResponseData,pkey,md)
+.fi
+.PP
+Definition at line 377 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_BASICRESP_verify(\fBa\fP, r, d)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_item_verify(ASN1_ITEM_rptr(OCSP_RESPDATA),\
+        a->signatureAlgorithm,a->signature,a->tbsResponseData,r)
+.fi
+.PP
+Definition at line 385 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_CERTSTATUS_dup(cs)"
+\fBValue:\fP
+.PP
+.nf
+(OCSP_CERTSTATUS*)ASN1_dup((int(*)())i2d_OCSP_CERTSTATUS,\
+                (char *(*)())d2i_OCSP_CERTSTATUS,(char *)(cs))
+.fi
+.PP
+Definition at line 391 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_DEFAULT_NONCE_LENGTH   16"
+
+.PP
+Definition at line 81 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_ASN1_STRING_ENCODE   100"
+
+.PP
+Definition at line 582 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_D2I_OCSP_NONCE   102"
+
+.PP
+Definition at line 583 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_BASIC_ADD1_STATUS   103"
+
+.PP
+Definition at line 584 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_BASIC_SIGN   104"
+
+.PP
+Definition at line 585 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_BASIC_VERIFY   105"
+
+.PP
+Definition at line 586 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_CERT_ID_NEW   101"
+
+.PP
+Definition at line 587 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_CHECK_DELEGATED   106"
+
+.PP
+Definition at line 588 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_CHECK_IDS   107"
+
+.PP
+Definition at line 589 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_CHECK_ISSUER   108"
+
+.PP
+Definition at line 590 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_CHECK_VALIDITY   115"
+
+.PP
+Definition at line 591 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_MATCH_ISSUERID   109"
+
+.PP
+Definition at line 592 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_PARSE_URL   114"
+
+.PP
+Definition at line 593 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_REQUEST_SIGN   110"
+
+.PP
+Definition at line 594 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_REQUEST_VERIFY   116"
+
+.PP
+Definition at line 595 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_RESPONSE_GET1_BASIC   111"
+
+.PP
+Definition at line 596 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_SENDREQ_BIO   112"
+
+.PP
+Definition at line 597 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_OCSP_SENDREQ_NBIO   117"
+
+.PP
+Definition at line 598 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_PARSE_HTTP_LINE1   118"
+
+.PP
+Definition at line 599 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_F_REQUEST_VERIFY   113"
+
+.PP
+Definition at line 600 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOCASIGN   0x40"
+
+.PP
+Definition at line 89 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOCERTS   0x1"
+
+.PP
+Definition at line 83 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOCHAIN   0x8"
+
+.PP
+Definition at line 86 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOCHECKS   0x100"
+
+.PP
+Definition at line 91 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NODELEGATED   0x80"
+
+.PP
+Definition at line 90 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOEXPLICIT   0x20"
+
+.PP
+Definition at line 88 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOINTERN   0x2"
+
+.PP
+Definition at line 84 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOSIGS   0x4"
+
+.PP
+Definition at line 85 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOTIME   0x800"
+
+.PP
+Definition at line 94 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_NOVERIFY   0x10"
+
+.PP
+Definition at line 87 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_BAD_DATA   100"
+
+.PP
+Definition at line 603 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_CERTIFICATE_VERIFY_ERROR   101"
+
+.PP
+Definition at line 604 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_DIGEST_ERR   102"
+
+.PP
+Definition at line 605 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_ERROR_IN_NEXTUPDATE_FIELD   122"
+
+.PP
+Definition at line 606 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_ERROR_IN_THISUPDATE_FIELD   123"
+
+.PP
+Definition at line 607 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_ERROR_PARSING_URL   121"
+
+.PP
+Definition at line 608 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_MISSING_OCSPSIGNING_USAGE   103"
+
+.PP
+Definition at line 609 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NEXTUPDATE_BEFORE_THISUPDATE   124"
+
+.PP
+Definition at line 610 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NO_CERTIFICATES_IN_CHAIN   105"
+
+.PP
+Definition at line 612 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NO_CONTENT   106"
+
+.PP
+Definition at line 613 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NO_PUBLIC_KEY   107"
+
+.PP
+Definition at line 614 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NO_RESPONSE_DATA   108"
+
+.PP
+Definition at line 615 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NO_REVOKED_TIME   109"
+
+.PP
+Definition at line 616 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_NOT_BASIC_RESPONSE   104"
+
+.PP
+Definition at line 611 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_PRIVATE_KEY_DOES_NOT_MATCH_CERTIFICATE   110"
+
+.PP
+Definition at line 617 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_REQUEST_NOT_SIGNED   128"
+
+.PP
+Definition at line 618 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_RESPONSE_CONTAINS_NO_REVOCATION_DATA   111"
+
+.PP
+Definition at line 619 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_ROOT_CA_NOT_TRUSTED   112"
+
+.PP
+Definition at line 620 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_SERVER_READ_ERROR   113"
+
+.PP
+Definition at line 621 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_SERVER_RESPONSE_ERROR   114"
+
+.PP
+Definition at line 622 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_SERVER_RESPONSE_PARSE_ERROR   115"
+
+.PP
+Definition at line 623 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_SERVER_WRITE_ERROR   116"
+
+.PP
+Definition at line 624 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_SIGNATURE_FAILURE   117"
+
+.PP
+Definition at line 625 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_SIGNER_CERTIFICATE_NOT_FOUND   118"
+
+.PP
+Definition at line 626 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_STATUS_EXPIRED   125"
+
+.PP
+Definition at line 627 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_STATUS_NOT_YET_VALID   126"
+
+.PP
+Definition at line 628 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_STATUS_TOO_OLD   127"
+
+.PP
+Definition at line 629 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_UNKNOWN_MESSAGE_DIGEST   119"
+
+.PP
+Definition at line 630 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_UNKNOWN_NID   120"
+
+.PP
+Definition at line 631 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_R_UNSUPPORTED_REQUESTORNAME_TYPE   129"
+
+.PP
+Definition at line 632 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REQUEST_sign(o, pkey, md)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_item_sign(ASN1_ITEM_rptr(OCSP_REQINFO),\
+                o->optionalSignature->signatureAlgorithm,NULL,\
+                o->optionalSignature->signature,o->tbsRequest,pkey,md)
+.fi
+.PP
+Definition at line 372 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REQUEST_verify(\fBa\fP, r)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_item_verify(ASN1_ITEM_rptr(OCSP_REQINFO),\
+        a->optionalSignature->signatureAlgorithm,\
+        a->optionalSignature->signature,a->tbsRequest,r)
+.fi
+.PP
+Definition at line 381 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPID_KEY   0x400"
+
+.PP
+Definition at line 93 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPONSE_STATUS_INTERNALERROR   2"
+
+.PP
+Definition at line 168 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPONSE_STATUS_MALFORMEDREQUEST   1"
+
+.PP
+Definition at line 167 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPONSE_STATUS_SIGREQUIRED   5"
+
+.PP
+Definition at line 170 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPONSE_STATUS_SUCCESSFUL   0"
+
+.PP
+Definition at line 166 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPONSE_STATUS_TRYLATER   3"
+
+.PP
+Definition at line 169 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_RESPONSE_STATUS_UNAUTHORIZED   6"
+
+.PP
+Definition at line 171 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_AFFILIATIONCHANGED   3"
+
+.PP
+Definition at line 319 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_CACOMPROMISE   2"
+
+.PP
+Definition at line 318 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_CERTIFICATEHOLD   6"
+
+.PP
+Definition at line 322 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_CESSATIONOFOPERATION   5"
+
+.PP
+Definition at line 321 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_KEYCOMPROMISE   1"
+
+.PP
+Definition at line 317 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_NOSTATUS   \-1"
+
+.PP
+Definition at line 315 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_REMOVEFROMCRL   8"
+
+.PP
+Definition at line 323 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_SUPERSEDED   4"
+
+.PP
+Definition at line 320 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_REVOKED_STATUS_UNSPECIFIED   0"
+
+.PP
+Definition at line 316 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define OCSP_TRUSTOTHER   0x200"
+
+.PP
+Definition at line 92 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define PEM_read_bio_OCSP_REQUEST(\fBbp\fP, \fBx\fP, \fBcb\fP)"
+\fBValue:\fP
+.PP
+.nf
+(OCSP_REQUEST *)PEM_ASN1_read_bio( \
+     (char *(*)())d2i_OCSP_REQUEST,PEM_STRING_OCSP_REQUEST,bp,(char **)x,cb,NULL)
+.fi
+.PP
+Definition at line 354 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define PEM_read_bio_OCSP_RESPONSE(\fBbp\fP, \fBx\fP, \fBcb\fP)"
+\fBValue:\fP
+.PP
+.nf
+(OCSP_RESPONSE *)PEM_ASN1_read_bio(\
+     (char *(*)())d2i_OCSP_RESPONSE,PEM_STRING_OCSP_RESPONSE,bp,(char **)x,cb,NULL)
+.fi
+.PP
+Definition at line 357 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define PEM_STRING_OCSP_REQUEST   'OCSP REQUEST'"
+
+.PP
+Definition at line 347 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define PEM_STRING_OCSP_RESPONSE   'OCSP RESPONSE'"
+
+.PP
+Definition at line 348 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define PEM_write_bio_OCSP_REQUEST(\fBbp\fP, o)"
+\fBValue:\fP
+.PP
+.nf
+PEM_ASN1_write_bio((int (*)())i2d_OCSP_REQUEST,PEM_STRING_OCSP_REQUEST,\
+                        bp,(char *)o, NULL,NULL,0,NULL,NULL)
+.fi
+.PP
+Definition at line 360 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define PEM_write_bio_OCSP_RESPONSE(\fBbp\fP, o)"
+\fBValue:\fP
+.PP
+.nf
+PEM_ASN1_write_bio((int (*)())i2d_OCSP_RESPONSE,PEM_STRING_OCSP_RESPONSE,\
+                        bp,(char *)o, NULL,NULL,0,NULL,NULL)
+.fi
+.PP
+Definition at line 364 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define V_OCSP_CERTSTATUS_GOOD   0"
+
+.PP
+Definition at line 226 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define V_OCSP_CERTSTATUS_REVOKED   1"
+
+.PP
+Definition at line 227 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define V_OCSP_CERTSTATUS_UNKNOWN   2"
+
+.PP
+Definition at line 228 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define V_OCSP_RESPID_KEY   1"
+
+.PP
+Definition at line 196 of file crypto/ocsp/ocsp\&.h\&.
+.SS "#define V_OCSP_RESPID_NAME   0"
+
+.PP
+Definition at line 195 of file crypto/ocsp/ocsp\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBocsp_basic_response_st\fP  \fBOCSP_BASICRESP\fP"
+
+.SS "typedef struct \fBocsp_cert_id_st\fP  \fBOCSP_CERTID\fP"
+
+.SS "typedef struct \fBocsp_cert_status_st\fP  \fBOCSP_CERTSTATUS\fP"
+
+.SS "typedef struct \fBocsp_crl_id_st\fP  \fBOCSP_CRLID\fP"
+
+.SS "typedef struct \fBocsp_one_request_st\fP  \fBOCSP_ONEREQ\fP"
+
+.SS "typedef struct \fBocsp_req_info_st\fP  \fBOCSP_REQINFO\fP"
+
+.SS "typedef struct \fBocsp_request_st\fP  \fBOCSP_REQUEST\fP"
+
+.SS "typedef struct \fBocsp_resp_bytes_st\fP  \fBOCSP_RESPBYTES\fP"
+
+.SS "typedef struct \fBocsp_response_data_st\fP  \fBOCSP_RESPDATA\fP"
+
+.SS "typedef struct \fBocsp_revoked_info_st\fP  \fBOCSP_REVOKEDINFO\fP"
+
+.SS "typedef struct \fBocsp_service_locator_st\fP  \fBOCSP_SERVICELOC\fP"
+
+.SS "typedef struct \fBocsp_signature_st\fP  \fBOCSP_SIGNATURE\fP"
+
+.SS "typedef struct \fBocsp_single_response_st\fP  \fBOCSP_SINGLERESP\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ERR_load_OCSP_strings (\fBvoid\fP)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_accept_responses_new (char ** oids)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_archive_cutoff_new (char * tim)"
+
+.SS "int OCSP_basic_add1_cert (\fBOCSP_BASICRESP\fP * resp, \fBX509\fP * cert)"
+
+.SS "int OCSP_basic_add1_nonce (\fBOCSP_BASICRESP\fP * resp, unsigned char * val, int len)"
+
+.SS "\fBOCSP_SINGLERESP\fP* OCSP_basic_add1_status (\fBOCSP_BASICRESP\fP * rsp, \fBOCSP_CERTID\fP * cid, int status, int reason, \fBASN1_TIME\fP * revtime, \fBASN1_TIME\fP * thisupd, \fBASN1_TIME\fP * nextupd)"
+
+.SS "int OCSP_basic_sign (\fBOCSP_BASICRESP\fP * brsp, \fBX509\fP * signer, \fBEVP_PKEY\fP * key, const \fBEVP_MD\fP * dgst, \fBSTACK_OF\fP(\fBX509\fP)* certs, unsigned long flags)"
+
+.SS "int OCSP_basic_verify (\fBOCSP_BASICRESP\fP * bs, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * st, unsigned long flags)"
+
+.SS "int OCSP_BASICRESP_add1_ext_i2d (\fBOCSP_BASICRESP\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.SS "int OCSP_BASICRESP_add_ext (\fBOCSP_BASICRESP\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_BASICRESP_delete_ext (\fBOCSP_BASICRESP\fP * x, int loc)"
+
+.SS "\fBvoid\fP* OCSP_BASICRESP_get1_ext_d2i (\fBOCSP_BASICRESP\fP * x, int nid, int * crit, int * idx)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_BASICRESP_get_ext (\fBOCSP_BASICRESP\fP * x, int loc)"
+
+.SS "int OCSP_BASICRESP_get_ext_by_critical (\fBOCSP_BASICRESP\fP * x, int crit, int lastpos)"
+
+.SS "int OCSP_BASICRESP_get_ext_by_NID (\fBOCSP_BASICRESP\fP * x, int nid, int lastpos)"
+
+.SS "int OCSP_BASICRESP_get_ext_by_OBJ (\fBOCSP_BASICRESP\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.SS "int OCSP_BASICRESP_get_ext_count (\fBOCSP_BASICRESP\fP * x)"
+
+.SS "\fBOCSP_CERTID\fP* OCSP_cert_id_new (const \fBEVP_MD\fP * dgst, \fBX509_NAME\fP * issuerName, \fBASN1_BIT_STRING\fP * issuerKey, \fBASN1_INTEGER\fP * serialNumber)"
+
+.SS "const char* OCSP_cert_status_str (long s)"
+
+.SS "\fBOCSP_CERTID\fP* OCSP_cert_to_id (const \fBEVP_MD\fP * dgst, \fBX509\fP * subject, \fBX509\fP * issuer)"
+
+.SS "\fBOCSP_CERTID\fP* OCSP_CERTID_dup (\fBOCSP_CERTID\fP * id)"
+
+.SS "int OCSP_check_nonce (\fBOCSP_REQUEST\fP * req, \fBOCSP_BASICRESP\fP * bs)"
+
+.SS "int OCSP_check_validity (\fBASN1_GENERALIZEDTIME\fP * thisupd, \fBASN1_GENERALIZEDTIME\fP * nextupd, long sec, long maxsec)"
+
+.SS "int OCSP_copy_nonce (\fBOCSP_BASICRESP\fP * resp, \fBOCSP_REQUEST\fP * req)"
+
+.SS "const char* OCSP_crl_reason_str (long s)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_crlID_new (char * url, long * n, char * tim)"
+
+.SS "int OCSP_id_cmp (\fBOCSP_CERTID\fP * a, \fBOCSP_CERTID\fP * b)"
+
+.SS "int OCSP_id_get0_info (\fBASN1_OCTET_STRING\fP ** piNameHash, \fBASN1_OBJECT\fP ** pmd, \fBASN1_OCTET_STRING\fP ** pikeyHash, \fBASN1_INTEGER\fP ** pserial, \fBOCSP_CERTID\fP * cid)"
+
+.SS "int OCSP_id_issuer_cmp (\fBOCSP_CERTID\fP * a, \fBOCSP_CERTID\fP * b)"
+
+.SS "int OCSP_ONEREQ_add1_ext_i2d (\fBOCSP_ONEREQ\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.SS "int OCSP_ONEREQ_add_ext (\fBOCSP_ONEREQ\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_ONEREQ_delete_ext (\fBOCSP_ONEREQ\fP * x, int loc)"
+
+.SS "\fBOCSP_CERTID\fP* OCSP_onereq_get0_id (\fBOCSP_ONEREQ\fP * one)"
+
+.SS "\fBvoid\fP* OCSP_ONEREQ_get1_ext_d2i (\fBOCSP_ONEREQ\fP * x, int nid, int * crit, int * idx)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_ONEREQ_get_ext (\fBOCSP_ONEREQ\fP * x, int loc)"
+
+.SS "int OCSP_ONEREQ_get_ext_by_critical (\fBOCSP_ONEREQ\fP * x, int crit, int lastpos)"
+
+.SS "int OCSP_ONEREQ_get_ext_by_NID (\fBOCSP_ONEREQ\fP * x, int nid, int lastpos)"
+
+.SS "int OCSP_ONEREQ_get_ext_by_OBJ (\fBOCSP_ONEREQ\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.SS "int OCSP_ONEREQ_get_ext_count (\fBOCSP_ONEREQ\fP * x)"
+
+.SS "int OCSP_parse_url (const char * url, char ** phost, char ** pport, char ** ppath, int * pssl)"
+
+.SS "int OCSP_REQ_CTX_add1_header (\fBOCSP_REQ_CTX\fP * rctx, const char * name, const char * value)"
+
+.SS "\fBvoid\fP OCSP_REQ_CTX_free (\fBOCSP_REQ_CTX\fP * rctx)"
+
+.SS "\fBBIO\fP* OCSP_REQ_CTX_get0_mem_bio (\fBOCSP_REQ_CTX\fP * rctx)"
+
+.SS "int OCSP_REQ_CTX_http (\fBOCSP_REQ_CTX\fP * rctx, const char * op, const char * path)"
+
+.SS "int OCSP_REQ_CTX_i2d (\fBOCSP_REQ_CTX\fP * rctx, const \fBASN1_ITEM\fP * it, \fBASN1_VALUE\fP * val)"
+
+.SS "int OCSP_REQ_CTX_nbio (\fBOCSP_REQ_CTX\fP * rctx)"
+
+.SS "int OCSP_REQ_CTX_nbio_d2i (\fBOCSP_REQ_CTX\fP * rctx, \fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "\fBOCSP_REQ_CTX\fP* OCSP_REQ_CTX_new (\fBBIO\fP * io, int maxline)"
+
+.SS "int OCSP_REQ_CTX_set1_req (\fBOCSP_REQ_CTX\fP * rctx, \fBOCSP_REQUEST\fP * req)"
+
+.SS "\fBOCSP_ONEREQ\fP* OCSP_request_add0_id (\fBOCSP_REQUEST\fP * req, \fBOCSP_CERTID\fP * cid)"
+
+.SS "int OCSP_request_add1_cert (\fBOCSP_REQUEST\fP * req, \fBX509\fP * cert)"
+
+.SS "int OCSP_REQUEST_add1_ext_i2d (\fBOCSP_REQUEST\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.SS "int OCSP_request_add1_nonce (\fBOCSP_REQUEST\fP * req, unsigned char * val, int len)"
+
+.SS "int OCSP_REQUEST_add_ext (\fBOCSP_REQUEST\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_REQUEST_delete_ext (\fBOCSP_REQUEST\fP * x, int loc)"
+
+.SS "\fBvoid\fP* OCSP_REQUEST_get1_ext_d2i (\fBOCSP_REQUEST\fP * x, int nid, int * crit, int * idx)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_REQUEST_get_ext (\fBOCSP_REQUEST\fP * x, int loc)"
+
+.SS "int OCSP_REQUEST_get_ext_by_critical (\fBOCSP_REQUEST\fP * x, int crit, int lastpos)"
+
+.SS "int OCSP_REQUEST_get_ext_by_NID (\fBOCSP_REQUEST\fP * x, int nid, int lastpos)"
+
+.SS "int OCSP_REQUEST_get_ext_by_OBJ (\fBOCSP_REQUEST\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.SS "int OCSP_REQUEST_get_ext_count (\fBOCSP_REQUEST\fP * x)"
+
+.SS "int OCSP_request_is_signed (\fBOCSP_REQUEST\fP * req)"
+
+.SS "int OCSP_request_onereq_count (\fBOCSP_REQUEST\fP * req)"
+
+.SS "\fBOCSP_ONEREQ\fP* OCSP_request_onereq_get0 (\fBOCSP_REQUEST\fP * req, int i)"
+
+.SS "int OCSP_REQUEST_print (\fBBIO\fP * bp, \fBOCSP_REQUEST\fP * a, unsigned long flags)"
+
+.SS "int OCSP_request_set1_name (\fBOCSP_REQUEST\fP * req, \fBX509_NAME\fP * nm)"
+
+.SS "int OCSP_request_sign (\fBOCSP_REQUEST\fP * req, \fBX509\fP * signer, \fBEVP_PKEY\fP * key, const \fBEVP_MD\fP * dgst, \fBSTACK_OF\fP(\fBX509\fP)* certs, unsigned long flags)"
+
+.SS "int OCSP_request_verify (\fBOCSP_REQUEST\fP * req, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * store, unsigned long flags)"
+
+.SS "int OCSP_resp_count (\fBOCSP_BASICRESP\fP * bs)"
+
+.SS "int OCSP_resp_find (\fBOCSP_BASICRESP\fP * bs, \fBOCSP_CERTID\fP * id, int last)"
+
+.SS "int OCSP_resp_find_status (\fBOCSP_BASICRESP\fP * bs, \fBOCSP_CERTID\fP * id, int * status, int * reason, \fBASN1_GENERALIZEDTIME\fP ** revtime, \fBASN1_GENERALIZEDTIME\fP ** thisupd, \fBASN1_GENERALIZEDTIME\fP ** nextupd)"
+
+.SS "\fBOCSP_SINGLERESP\fP* OCSP_resp_get0 (\fBOCSP_BASICRESP\fP * bs, int idx)"
+
+.SS "\fBOCSP_RESPONSE\fP* OCSP_response_create (int status, \fBOCSP_BASICRESP\fP * bs)"
+
+.SS "\fBOCSP_BASICRESP\fP* OCSP_response_get1_basic (\fBOCSP_RESPONSE\fP * resp)"
+
+.SS "int OCSP_RESPONSE_print (\fBBIO\fP * bp, \fBOCSP_RESPONSE\fP * o, unsigned long flags)"
+
+.SS "int OCSP_response_status (\fBOCSP_RESPONSE\fP * resp)"
+
+.SS "const char* OCSP_response_status_str (long s)"
+
+.SS "\fBOCSP_RESPONSE\fP* OCSP_sendreq_bio (\fBBIO\fP * b, const char * path, \fBOCSP_REQUEST\fP * req)"
+
+.SS "int OCSP_sendreq_nbio (\fBOCSP_RESPONSE\fP ** presp, \fBOCSP_REQ_CTX\fP * rctx)"
+
+.SS "\fBOCSP_REQ_CTX\fP* OCSP_sendreq_new (\fBBIO\fP * io, const char * path, \fBOCSP_REQUEST\fP * req, int maxline)"
+
+.SS "\fBvoid\fP OCSP_set_max_response_length (\fBOCSP_REQ_CTX\fP * rctx, unsigned long len)"
+
+.SS "int OCSP_single_get0_status (\fBOCSP_SINGLERESP\fP * single, int * reason, \fBASN1_GENERALIZEDTIME\fP ** revtime, \fBASN1_GENERALIZEDTIME\fP ** thisupd, \fBASN1_GENERALIZEDTIME\fP ** nextupd)"
+
+.SS "int OCSP_SINGLERESP_add1_ext_i2d (\fBOCSP_SINGLERESP\fP * x, int nid, \fBvoid\fP * value, int crit, unsigned long flags)"
+
+.SS "int OCSP_SINGLERESP_add_ext (\fBOCSP_SINGLERESP\fP * x, \fBX509_EXTENSION\fP * ex, int loc)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_SINGLERESP_delete_ext (\fBOCSP_SINGLERESP\fP * x, int loc)"
+
+.SS "\fBvoid\fP* OCSP_SINGLERESP_get1_ext_d2i (\fBOCSP_SINGLERESP\fP * x, int nid, int * crit, int * idx)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_SINGLERESP_get_ext (\fBOCSP_SINGLERESP\fP * x, int loc)"
+
+.SS "int OCSP_SINGLERESP_get_ext_by_critical (\fBOCSP_SINGLERESP\fP * x, int crit, int lastpos)"
+
+.SS "int OCSP_SINGLERESP_get_ext_by_NID (\fBOCSP_SINGLERESP\fP * x, int nid, int lastpos)"
+
+.SS "int OCSP_SINGLERESP_get_ext_by_OBJ (\fBOCSP_SINGLERESP\fP * x, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.SS "int OCSP_SINGLERESP_get_ext_count (\fBOCSP_SINGLERESP\fP * x)"
+
+.SS "\fBX509_EXTENSION\fP* OCSP_url_svcloc_new (\fBX509_NAME\fP * issuer, char ** urls)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

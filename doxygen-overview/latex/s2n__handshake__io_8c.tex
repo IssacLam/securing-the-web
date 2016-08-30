@@ -1,0 +1,367 @@
+\hypertarget{s2n__handshake__io_8c}{}\section{s2n-\/master/tls/s2n\+\_\+handshake\+\_\+io.c File Reference}
+\label{s2n__handshake__io_8c}\index{s2n-\/master/tls/s2n\+\_\+handshake\+\_\+io.\+c@{s2n-\/master/tls/s2n\+\_\+handshake\+\_\+io.\+c}}
+{\ttfamily \#include $<$sys/param.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+record.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+resume.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+alerts.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+handshake\+\_\+io.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__handshake__io_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__handshake__action}{s2n\+\_\+handshake\+\_\+action}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a88b71c4bdbaa411fb576004c59ad3628}{T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST}~0
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a97bbcc3a3f636384bc16b898d90879ea}{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO}~1
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a048b49dbe4e0abcdaa5f50b2ecd91fc4}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO}~2
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a38cffd9bc0cc95a332e46519976d472f}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT}~11
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a9d3fa686a8b630798a5b93e4267937f2}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY}~12
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a1a7828d23227c0e93bc09824b18a46ae}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ}~13
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_ad4a7ea7191525f41bbdf0775c35eff6e}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE}~14
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_aaf660cd50e825aeb1b481c61862c4226}{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT}~11  /$\ast$ Same as \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca4fa0b8ef81392fad2cfb9dc57309edbd}{S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT} $\ast$/
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a0d1a6202ecebb1f9fd64cd8da6021249}{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY}~15
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a32b656089b312b746625119dce8119b3}{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY}~16
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_aab129406e117bb0c60df5ffda5596c34}{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED}~20
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a5bd625f2fac81aaad1575a65bffbfa71}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED}~20  /$\ast$ Same as \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557cab567f0940aaa3b7a15d127767c31fa19}{C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED} $\ast$/
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a68d1ea0f0de6b359d9c15d89f3095ef7}{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US}~22
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a38b7ad67505bd79bb3599c3a1504c51e}{A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE}(conn)~handshakes\mbox{[} (conn)-\/$>$handshake.\+handshake\+\_\+type \mbox{]}\mbox{[} (conn)-\/$>$handshake.\+message\+\_\+number \mbox{]}
+\item 
+\#define \hyperlink{s2n__handshake__io_8c_a02a3183aedc7e1310d00255ed20aa653}{A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE}(conn)~state\+\_\+machine\mbox{[} \hyperlink{s2n__handshake__io_8c_a38b7ad67505bd79bb3599c3a1504c51e}{A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE}( (conn) ) \mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557c}{message\+\_\+type\+\_\+t} \hyperlink{s2n__handshake__io_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__handshake__io_8c_a4406f29de6d52b587003368d656dab20}{s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__handshake__io_8c_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\+\_\+negotiate} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\+\_\+blocked\+\_\+status} $\ast$blocked)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST@{T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST}}
+\index{T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST@{T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST}{TLS_HELLO_REQUEST}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST~0}\hypertarget{s2n__handshake__io_8c_a88b71c4bdbaa411fb576004c59ad3628}{}\label{s2n__handshake__io_8c_a88b71c4bdbaa411fb576004c59ad3628}
+
+
+Definition at line 36 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO}}
+\index{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO}{TLS_CLIENT_HELLO}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO~1}\hypertarget{s2n__handshake__io_8c_a97bbcc3a3f636384bc16b898d90879ea}{}\label{s2n__handshake__io_8c_a97bbcc3a3f636384bc16b898d90879ea}
+
+
+Definition at line 37 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO}{TLS_SERVER_HELLO}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO~2}\hypertarget{s2n__handshake__io_8c_a048b49dbe4e0abcdaa5f50b2ecd91fc4}{}\label{s2n__handshake__io_8c_a048b49dbe4e0abcdaa5f50b2ecd91fc4}
+
+
+Definition at line 38 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT}{TLS_SERVER_CERT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT~11}\hypertarget{s2n__handshake__io_8c_a38cffd9bc0cc95a332e46519976d472f}{}\label{s2n__handshake__io_8c_a38cffd9bc0cc95a332e46519976d472f}
+
+
+Definition at line 39 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY}{TLS_SERVER_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+K\+EY~12}\hypertarget{s2n__handshake__io_8c_a9d3fa686a8b630798a5b93e4267937f2}{}\label{s2n__handshake__io_8c_a9d3fa686a8b630798a5b93e4267937f2}
+
+
+Definition at line 40 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ}{TLS_SERVER_CERT_REQ}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+R\+EQ~13}\hypertarget{s2n__handshake__io_8c_a1a7828d23227c0e93bc09824b18a46ae}{}\label{s2n__handshake__io_8c_a1a7828d23227c0e93bc09824b18a46ae}
+
+
+Definition at line 41 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE}{TLS_SERVER_HELLO_DONE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O\+\_\+\+D\+O\+NE~14}\hypertarget{s2n__handshake__io_8c_ad4a7ea7191525f41bbdf0775c35eff6e}{}\label{s2n__handshake__io_8c_ad4a7ea7191525f41bbdf0775c35eff6e}
+
+
+Definition at line 42 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT}}
+\index{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT}{TLS_CLIENT_CERT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+RT~11  /$\ast$ Same as {\bf S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+RT} $\ast$/}\hypertarget{s2n__handshake__io_8c_aaf660cd50e825aeb1b481c61862c4226}{}\label{s2n__handshake__io_8c_aaf660cd50e825aeb1b481c61862c4226}
+
+
+Definition at line 43 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY}}
+\index{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY}{TLS_CLIENT_CERT_VERIFY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+C\+E\+R\+T\+\_\+\+V\+E\+R\+I\+FY~15}\hypertarget{s2n__handshake__io_8c_a0d1a6202ecebb1f9fd64cd8da6021249}{}\label{s2n__handshake__io_8c_a0d1a6202ecebb1f9fd64cd8da6021249}
+
+
+Definition at line 44 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY}}
+\index{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY}{TLS_CLIENT_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+K\+EY~16}\hypertarget{s2n__handshake__io_8c_a32b656089b312b746625119dce8119b3}{}\label{s2n__handshake__io_8c_a32b656089b312b746625119dce8119b3}
+
+
+Definition at line 45 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED}}
+\index{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED@{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED}{TLS_CLIENT_FINISHED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED~20}\hypertarget{s2n__handshake__io_8c_aab129406e117bb0c60df5ffda5596c34}{}\label{s2n__handshake__io_8c_aab129406e117bb0c60df5ffda5596c34}
+
+
+Definition at line 46 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED}{TLS_SERVER_FINISHED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+F\+I\+N\+I\+S\+H\+ED~20  /$\ast$ Same as {\bf C\+L\+I\+E\+N\+T\+\_\+\+F\+I\+N\+I\+S\+H\+ED} $\ast$/}\hypertarget{s2n__handshake__io_8c_a5bd625f2fac81aaad1575a65bffbfa71}{}\label{s2n__handshake__io_8c_a5bd625f2fac81aaad1575a65bffbfa71}
+
+
+Definition at line 47 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US}}
+\index{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US@{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US}{TLS_SERVER_CERT_STATUS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+C\+E\+R\+T\+\_\+\+S\+T\+A\+T\+US~22}\hypertarget{s2n__handshake__io_8c_a68d1ea0f0de6b359d9c15d89f3095ef7}{}\label{s2n__handshake__io_8c_a68d1ea0f0de6b359d9c15d89f3095ef7}
+
+
+Definition at line 48 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE@{A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE}}
+\index{A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE@{A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE}{ACTIVE_MESSAGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE(
+\begin{DoxyParamCaption}
+\item[{}]{conn}
+\end{DoxyParamCaption}
+)~handshakes\mbox{[} (conn)-\/$>$handshake.\+handshake\+\_\+type \mbox{]}\mbox{[} (conn)-\/$>$handshake.\+message\+\_\+number \mbox{]}}\hypertarget{s2n__handshake__io_8c_a38b7ad67505bd79bb3599c3a1504c51e}{}\label{s2n__handshake__io_8c_a38b7ad67505bd79bb3599c3a1504c51e}
+
+
+Definition at line 109 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE@{A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE}}
+\index{A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE@{A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE}{ACTIVE_STATE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+C\+T\+I\+V\+E\+\_\+\+S\+T\+A\+TE(
+\begin{DoxyParamCaption}
+\item[{}]{conn}
+\end{DoxyParamCaption}
+)~state\+\_\+machine\mbox{[} {\bf A\+C\+T\+I\+V\+E\+\_\+\+M\+E\+S\+S\+A\+GE}( (conn) ) \mbox{]}}\hypertarget{s2n__handshake__io_8c_a02a3183aedc7e1310d00255ed20aa653}{}\label{s2n__handshake__io_8c_a02a3183aedc7e1310d00255ed20aa653}
+
+
+Definition at line 110 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type@{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type}}
+\index{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type@{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type(struct s2n\+\_\+connection $\ast$conn)}{s2n_conn_get_current_message_type(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf message\+\_\+type\+\_\+t} s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__handshake__io_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{}\label{s2n__handshake__io_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}
+
+
+Definition at line 113 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+
+\begin{DoxyCode}
+114 \{
+115     \textcolor{keywordflow}{return} \hyperlink{s2n__handshake__io_8c_a38b7ad67505bd79bb3599c3a1504c51e}{ACTIVE\_MESSAGE}(conn);
+116 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{s2n__handshake__io_8c_ad1a464c4f0d92cf0ac994ecd7693bd10_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type@{s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type}}
+\index{s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type@{s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type(struct s2n\+\_\+connection $\ast$conn)}{s2n_conn_set_handshake_type(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+conn\+\_\+set\+\_\+handshake\+\_\+type (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__handshake__io_8c_a4406f29de6d52b587003368d656dab20}{}\label{s2n__handshake__io_8c_a4406f29de6d52b587003368d656dab20}
+
+
+Definition at line 118 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+
+\begin{DoxyCode}
+119 \{
+120     \textcolor{keywordflow}{if} (\hyperlink{s2n__resume_8c_af0cd9536cbece4a1bcebb3d69f8d4fd1}{s2n\_is\_caching\_enabled}(conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config})) \{
+121         \textcolor{keywordflow}{if} (!\hyperlink{s2n__resume_8c_aef2e99be4e9b1782b9d208ce80f02842}{s2n\_resume\_from\_cache}(conn)) \{
+122             conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = RESUME;
+123             \textcolor{keywordflow}{return} 0;
+124         \}
+125 
+126         \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode} == \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}) \{
+127             \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} session\_id = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = conn->\hyperlink{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}{session\_id},.size = 
+      \hyperlink{tls_2s2n__crypto_8h_a29125d7c5bb81700b27164fbc9c92746}{S2N\_TLS\_SESSION\_ID\_MAX\_LEN} \};
+128 
+129             \textcolor{comment}{/* Generate a new session id */}
+130             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&session\_id));
+131             conn->\hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len} = \hyperlink{tls_2s2n__crypto_8h_a29125d7c5bb81700b27164fbc9c92746}{S2N\_TLS\_SESSION\_ID\_MAX\_LEN};
+132         \}
+133     \}
+134 
+135     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite}->\hyperlink{structs2n__cipher__suite_aaf88ce0be23d983d21bbbecfce1c293d}{key\_exchange\_alg}->
+      \hyperlink{structs2n__key__exchange__algorithm_a1e87af3c18a2fd36c61faf89949bdc3f}{flags} & \hyperlink{s2n__cipher__suites_8h_ac118df8a11153c01e071e6c95d15ba15}{S2N\_KEY\_EXCHANGE\_EPH}) \{
+136         conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_WITH\_PFS;
+137 
+138         \textcolor{keywordflow}{if} (\hyperlink{s2n__tls_8h_a20bacac680b48d51f2623a1d95e85ca8}{s2n\_server\_can\_send\_ocsp}(conn)) \{
+139             conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_WITH\_PFS\_WITH\_STATUS;
+140         \}
+141     \} \textcolor{keywordflow}{else} \{
+142         conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+143 
+144         \textcolor{keywordflow}{if} (\hyperlink{s2n__tls_8h_a20bacac680b48d51f2623a1d95e85ca8}{s2n\_server\_can\_send\_ocsp}(conn)) \{
+145             conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS\_WITH\_STATUS;
+146         \}
+147     \}
+148 
+149     \textcolor{keywordflow}{return} 0;
+150 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__handshake__io_8c_a4406f29de6d52b587003368d656dab20_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__handshake__io_8c_a4406f29de6d52b587003368d656dab20_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}!s2n\+\_\+negotiate@{s2n\+\_\+negotiate}}
+\index{s2n\+\_\+negotiate@{s2n\+\_\+negotiate}!s2n\+\_\+handshake\+\_\+io.\+c@{s2n\+\_\+handshake\+\_\+io.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+negotiate(struct s2n\+\_\+connection $\ast$conn, s2n\+\_\+blocked\+\_\+status $\ast$blocked)}{s2n_negotiate(struct s2n_connection *conn, s2n_blocked_status *blocked)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+negotiate (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{{\bf s2n\+\_\+blocked\+\_\+status} $\ast$}]{blocked}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__handshake__io_8c_a309d98d4c1adfd10c5dd62192f4c1051}{}\label{s2n__handshake__io_8c_a309d98d4c1adfd10c5dd62192f4c1051}
+
+
+Definition at line 395 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+
+\begin{DoxyCode}
+396 \{
+397     \textcolor{keywordtype}{char} \textcolor{keyword}{this} = \textcolor{charliteral}{'S'};
+398     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode} == \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT}) \{
+399         \textcolor{keyword}{this} = \textcolor{charliteral}{'C'};
+400     \}
+401 
+402     \textcolor{keywordflow}{while} (\hyperlink{s2n__handshake__io_8c_a02a3183aedc7e1310d00255ed20aa653}{ACTIVE\_STATE}(conn).writer != \textcolor{charliteral}{'B'}) \{
+403 
+404         \textcolor{comment}{/* Flush any pending I/O or alert messages */}
+405         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__send_8c_a76828dc199bf174409532010ccbf2a07}{s2n\_flush}(conn, blocked));
+406 
+407         \textcolor{keywordflow}{if} (\hyperlink{s2n__handshake__io_8c_a02a3183aedc7e1310d00255ed20aa653}{ACTIVE\_STATE}(conn).writer == \textcolor{keyword}{this}) \{
+408             *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15daefb6db9aaec431d69fc4c1249bc432e3}{S2N\_BLOCKED\_ON\_WRITE};
+409             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(handshake\_write\_io(conn));
+410         \} \textcolor{keywordflow}{else} \{
+411             *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15daf76a7c83e9548139b7b8d50bdd5ff323}{S2N\_BLOCKED\_ON\_READ};
+412             \textcolor{keywordflow}{if} (handshake\_read\_io(conn) < 0) \{
+413                 \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno} != \hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a440a0e3a40ff1c680a455803a9dd9dfc}{S2N\_ERR\_BLOCKED} && 
+      \hyperlink{s2n__resume_8c_af0cd9536cbece4a1bcebb3d69f8d4fd1}{s2n\_is\_caching\_enabled}(conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}) && conn->
+      \hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len}) \{
+414                     conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->\hyperlink{structs2n__config_aee07b55c829f3dc3917616e17ae65c53}{cache\_delete}(conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->
+      \hyperlink{structs2n__config_ac7bc331ca507124c1ef16e7d2321716b}{cache\_delete\_data}, conn->\hyperlink{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}{session\_id}, conn->
+      \hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len});
+415                 \}
+416 
+417                 \textcolor{keywordflow}{return} -1;
+418             \}
+419         \}
+420 
+421         \textcolor{comment}{/* If the handshake has just ended, free up memory */}
+422         \textcolor{keywordflow}{if} (\hyperlink{s2n__handshake__io_8c_a02a3183aedc7e1310d00255ed20aa653}{ACTIVE\_STATE}(conn).writer == \textcolor{charliteral}{'B'}) \{
+423             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af41b58c58039466284fb917802c9452b}{s2n\_stuffer\_resize}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, 0));
+424         \}
+425     \}
+426 
+427     *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED};
+428 
+429     \textcolor{keywordflow}{return} 0;
+430 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__handshake__io_8c_a309d98d4c1adfd10c5dd62192f4c1051_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__handshake__io_8c_a309d98d4c1adfd10c5dd62192f4c1051_icgraph}
+\end{center}
+\end{figure}
+
+

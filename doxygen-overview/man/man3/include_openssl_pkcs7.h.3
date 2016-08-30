@@ -1,0 +1,1384 @@
+.TH "pkcs7.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pkcs7.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBpkcs7_issuer_and_serial_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_signer_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_recip_info_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_signed_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_enc_content_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_enveloped_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_signedandenveloped_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_digest_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_encrypted_st\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs7_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPKCS7_S_HEADER\fP   0"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_S_BODY\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_S_TAIL\fP   2"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_OP_SET_DETACHED_SIGNATURE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_OP_GET_DETACHED_SIGNATURE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_get_signed_attributes\fP(si)   ((si)\->auth_attr)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_get_attributes\fP(si)               ((si)\->unauth_attr)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_type_is_signed\fP(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_signed\fP)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_type_is_encrypted\fP(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_encrypted\fP)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_type_is_enveloped\fP(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_enveloped\fP)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_type_is_signedAndEnveloped\fP(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_signedAndEnveloped\fP)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_type_is_data\fP(\fBa\fP)     (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_data\fP)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_type_is_digest\fP(\fBa\fP)     (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_digest\fP)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_set_detached\fP(\fBp\fP,  v)   \fBPKCS7_ctrl\fP(\fBp\fP,\fBPKCS7_OP_SET_DETACHED_SIGNATURE\fP,v,NULL)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_get_detached\fP(\fBp\fP)   \fBPKCS7_ctrl\fP(\fBp\fP,\fBPKCS7_OP_GET_DETACHED_SIGNATURE\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_is_detached\fP(p7)   (\fBPKCS7_type_is_signed\fP(p7) && \fBPKCS7_get_detached\fP(p7))"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_TEXT\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOCERTS\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOSIGS\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOCHAIN\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOINTERN\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOVERIFY\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_DETACHED\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_BINARY\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOATTR\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOSMIMECAP\fP   0x200"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOOLDMIMETYPE\fP   0x400"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_CRLFEOL\fP   0x800"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_STREAM\fP   0x1000"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_NOCRL\fP   0x2000"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_PARTIAL\fP   0x4000"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_REUSE_DIGEST\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBSMIME_TEXT\fP   \fBPKCS7_TEXT\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_NOCERTS\fP   \fBPKCS7_NOCERTS\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_NOSIGS\fP   \fBPKCS7_NOSIGS\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_NOCHAIN\fP   \fBPKCS7_NOCHAIN\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_NOINTERN\fP   \fBPKCS7_NOINTERN\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_NOVERIFY\fP   \fBPKCS7_NOVERIFY\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_DETACHED\fP   \fBPKCS7_DETACHED\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_BINARY\fP   \fBPKCS7_BINARY\fP"
+.br
+.ti -1c
+.RI "#define \fBSMIME_NOATTR\fP   \fBPKCS7_NOATTR\fP"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_B64_READ_PKCS7\fP   120"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_B64_WRITE_PKCS7\fP   121"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_DO_PKCS7_SIGNED_ATTRIB\fP   136"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_I2D_PKCS7_BIO_STREAM\fP   140"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD0_ATTRIB_SIGNING_TIME\fP   135"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD_ATTRIB_SMIMECAP\fP   118"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD_CERTIFICATE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD_CRL\fP   101"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD_RECIPIENT_INFO\fP   102"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD_SIGNATURE\fP   131"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ADD_SIGNER\fP   103"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_BIO_ADD_DIGEST\fP   125"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_COPY_EXISTING_DIGEST\fP   138"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_CTRL\fP   104"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DATADECODE\fP   112"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DATAFINAL\fP   128"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DATAINIT\fP   105"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DATASIGN\fP   106"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DATAVERIFY\fP   107"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DECRYPT\fP   114"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_DECRYPT_RINFO\fP   133"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ENCODE_RINFO\fP   132"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_ENCRYPT\fP   115"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_FINAL\fP   134"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_FIND_DIGEST\fP   127"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_GET0_SIGNERS\fP   124"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_RECIP_INFO_SET\fP   130"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SET_CIPHER\fP   108"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SET_CONTENT\fP   109"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SET_DIGEST\fP   126"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SET_TYPE\fP   110"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SIGN\fP   116"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SIGNATUREVERIFY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SIGNER_INFO_SET\fP   129"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SIGNER_INFO_SIGN\fP   139"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SIGN_ADD_SIGNER\fP   137"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_SIMPLE_SMIMECAP\fP   119"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_PKCS7_VERIFY\fP   117"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_SMIME_READ_PKCS7\fP   122"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_F_SMIME_TEXT\fP   123"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_CERTIFICATE_VERIFY_ERROR\fP   117"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_CIPHER_HAS_NO_OBJECT_IDENTIFIER\fP   144"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_CIPHER_NOT_INITIALIZED\fP   116"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_CONTENT_AND_DATA_PRESENT\fP   118"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_CTRL_ERROR\fP   152"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_DECODE_ERROR\fP   130"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_DECRYPTED_KEY_IS_WRONG_LENGTH\fP   100"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_DECRYPT_ERROR\fP   119"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_DIGEST_FAILURE\fP   101"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_ENCRYPTION_CTRL_FAILURE\fP   149"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_ENCRYPTION_NOT_SUPPORTED_FOR_THIS_KEY_TYPE\fP   150"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_ERROR_ADDING_RECIPIENT\fP   120"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_ERROR_SETTING_CIPHER\fP   121"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_INVALID_MIME_TYPE\fP   131"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_INVALID_NULL_POINTER\fP   143"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_INVALID_SIGNED_DATA_TYPE\fP   155"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_MIME_NO_CONTENT_TYPE\fP   132"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_MIME_PARSE_ERROR\fP   133"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_MIME_SIG_PARSE_ERROR\fP   134"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_MISSING_CERIPEND_INFO\fP   103"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_CONTENT\fP   122"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_CONTENT_TYPE\fP   135"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_DEFAULT_DIGEST\fP   151"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_MATCHING_DIGEST_TYPE_FOUND\fP   154"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_MULTIPART_BODY_FAILURE\fP   136"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_MULTIPART_BOUNDARY\fP   137"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_RECIPIENT_MATCHES_CERTIFICATE\fP   115"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_RECIPIENT_MATCHES_KEY\fP   146"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_SIGNATURES_ON_DATA\fP   123"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_SIGNERS\fP   142"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_NO_SIG_CONTENT_TYPE\fP   138"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_OPERATION_NOT_SUPPORTED_ON_THIS_TYPE\fP   104"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_ADD_SIGNATURE_ERROR\fP   124"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_ADD_SIGNER_ERROR\fP   153"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_DATAFINAL\fP   126"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_DATAFINAL_ERROR\fP   125"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_DATASIGN\fP   145"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_PARSE_ERROR\fP   139"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PKCS7_SIG_PARSE_ERROR\fP   140"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_PRIVATE_KEY_DOES_NOT_MATCH_CERTIFICATE\fP   127"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_SIGNATURE_FAILURE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_SIGNER_CERTIFICATE_NOT_FOUND\fP   128"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_SIGNING_CTRL_FAILURE\fP   147"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_SIGNING_NOT_SUPPORTED_FOR_THIS_KEY_TYPE\fP   148"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_SIG_INVALID_MIME_TYPE\fP   141"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_SMIME_TEXT_ERROR\fP   129"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNABLE_TO_FIND_CERTIFICATE\fP   106"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNABLE_TO_FIND_MEM_BIO\fP   107"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNABLE_TO_FIND_MESSAGE_DIGEST\fP   108"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNKNOWN_DIGEST_TYPE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNKNOWN_OPERATION\fP   110"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNSUPPORTED_CIPHER_TYPE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_UNSUPPORTED_CONTENT_TYPE\fP   112"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_WRONG_CONTENT_TYPE\fP   113"
+.br
+.ti -1c
+.RI "#define \fBPKCS7_R_WRONG_PKCS7_TYPE\fP   114"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBpkcs7_issuer_and_serial_st\fP \fBPKCS7_ISSUER_AND_SERIAL\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_signer_info_st\fP \fBPKCS7_SIGNER_INFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_recip_info_st\fP \fBPKCS7_RECIP_INFO\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_signed_st\fP \fBPKCS7_SIGNED\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_enc_content_st\fP \fBPKCS7_ENC_CONTENT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_enveloped_st\fP \fBPKCS7_ENVELOPE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_signedandenveloped_st\fP \fBPKCS7_SIGN_ENVELOPE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_digest_st\fP \fBPKCS7_DIGEST\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_encrypted_st\fP \fBPKCS7_ENCRYPT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpkcs7_st\fP \fBPKCS7\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBPKCS7_ISSUER_AND_SERIAL_digest\fP (\fBPKCS7_ISSUER_AND_SERIAL\fP *data, const \fBEVP_MD\fP *\fBtype\fP, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBd2i_PKCS7_fp\fP (FILE *\fBfp\fP, \fBPKCS7\fP **p7)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS7_fp\fP (FILE *\fBfp\fP, \fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS7_dup\fP (\fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBd2i_PKCS7_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS7\fP **p7)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS7_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS7_bio_stream\fP (\fBBIO\fP *out, \fBPKCS7\fP *p7, \fBBIO\fP *in, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio_PKCS7_stream\fP (\fBBIO\fP *out, \fBPKCS7\fP *p7, \fBBIO\fP *in, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "long \fBPKCS7_ctrl\fP (\fBPKCS7\fP *p7, int cmd, long larg, char *parg)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set_type\fP (\fBPKCS7\fP *p7, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set0_type_other\fP (\fBPKCS7\fP *p7, int \fBtype\fP, \fBASN1_TYPE\fP *other)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set_content\fP (\fBPKCS7\fP *p7, \fBPKCS7\fP *p7_data)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_SIGNER_INFO_set\fP (\fBPKCS7_SIGNER_INFO\fP *p7i, \fBX509\fP *x509, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *dgst)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_SIGNER_INFO_sign\fP (\fBPKCS7_SIGNER_INFO\fP *si)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_signer\fP (\fBPKCS7\fP *p7, \fBPKCS7_SIGNER_INFO\fP *p7i)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_certificate\fP (\fBPKCS7\fP *p7, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_crl\fP (\fBPKCS7\fP *p7, \fBX509_CRL\fP *x509)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_content_new\fP (\fBPKCS7\fP *p7, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_dataVerify\fP (\fBX509_STORE\fP *cert_store, \fBX509_STORE_CTX\fP *ctx, \fBBIO\fP *bio, \fBPKCS7\fP *p7, \fBPKCS7_SIGNER_INFO\fP *si)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_signatureVerify\fP (\fBBIO\fP *bio, \fBPKCS7\fP *p7, \fBPKCS7_SIGNER_INFO\fP *si, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBPKCS7_dataInit\fP (\fBPKCS7\fP *p7, \fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_dataFinal\fP (\fBPKCS7\fP *p7, \fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBPKCS7_dataDecode\fP (\fBPKCS7\fP *p7, \fBEVP_PKEY\fP *pkey, \fBBIO\fP *in_bio, \fBX509\fP *pcert)"
+.br
+.ti -1c
+.RI "\fBPKCS7_SIGNER_INFO\fP * \fBPKCS7_add_signature\fP (\fBPKCS7\fP *p7, \fBX509\fP *x509, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *dgst)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBPKCS7_cert_from_signer_info\fP (\fBPKCS7\fP *p7, \fBPKCS7_SIGNER_INFO\fP *si)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set_digest\fP (\fBPKCS7\fP *p7, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBPKCS7_SIGNER_INFO\fP)*PKCS7_get_signer_info(\fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBPKCS7_RECIP_INFO\fP * \fBPKCS7_add_recipient\fP (\fBPKCS7\fP *p7, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPKCS7_SIGNER_INFO_get0_algs\fP (\fBPKCS7_SIGNER_INFO\fP *si, \fBEVP_PKEY\fP **pk, \fBX509_ALGOR\fP **pdig, \fBX509_ALGOR\fP **psig)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPKCS7_RECIP_INFO_get0_alg\fP (\fBPKCS7_RECIP_INFO\fP *ri, \fBX509_ALGOR\fP **penc)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_recipient_info\fP (\fBPKCS7\fP *p7, \fBPKCS7_RECIP_INFO\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_RECIP_INFO_set\fP (\fBPKCS7_RECIP_INFO\fP *p7i, \fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set_cipher\fP (\fBPKCS7\fP *p7, const \fBEVP_CIPHER\fP *cipher)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_stream\fP (unsigned char ***boundary, \fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBPKCS7_ISSUER_AND_SERIAL\fP * \fBPKCS7_get_issuer_and_serial\fP (\fBPKCS7\fP *p7, int idx)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBPKCS7_digest_from_attributes\fP (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*sk)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_signed_attribute\fP (\fBPKCS7_SIGNER_INFO\fP *p7si, int \fBnid\fP, int \fBtype\fP, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_attribute\fP (\fBPKCS7_SIGNER_INFO\fP *p7si, int \fBnid\fP, int atrtype, \fBvoid\fP *value)"
+.br
+.ti -1c
+.RI "\fBASN1_TYPE\fP * \fBPKCS7_get_attribute\fP (\fBPKCS7_SIGNER_INFO\fP *si, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_TYPE\fP * \fBPKCS7_get_signed_attribute\fP (\fBPKCS7_SIGNER_INFO\fP *si, int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set_signed_attributes\fP (\fBPKCS7_SIGNER_INFO\fP *p7si, \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*sk)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_set_attributes\fP (\fBPKCS7_SIGNER_INFO\fP *p7si, \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*sk)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS7_sign\fP (\fBX509\fP *signcert, \fBEVP_PKEY\fP *pkey, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBBIO\fP *data, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS7_SIGNER_INFO\fP * \fBPKCS7_sign_add_signer\fP (\fBPKCS7\fP *p7, \fBX509\fP *signcert, \fBEVP_PKEY\fP *pkey, const \fBEVP_MD\fP *md, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_final\fP (\fBPKCS7\fP *p7, \fBBIO\fP *data, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_verify\fP (\fBPKCS7\fP *p7, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *store, \fBBIO\fP *indata, \fBBIO\fP *out, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*PKCS7_get0_signers(\fBPKCS7\fP *p7"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS7_encrypt\fP (\fBSTACK_OF\fP(\fBX509\fP)*certs, \fBBIO\fP *in, const \fBEVP_CIPHER\fP *cipher, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_decrypt\fP (\fBPKCS7\fP *p7, \fBEVP_PKEY\fP *pkey, \fBX509\fP *cert, \fBBIO\fP *data, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_attrib_smimecap\fP (\fBPKCS7_SIGNER_INFO\fP *si, \fBSTACK_OF\fP(\fBX509_ALGOR\fP)*cap)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_ALGOR\fP)*PKCS7_get_smimecap(\fBPKCS7_SIGNER_INFO\fP *si)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_simple_smimecap\fP (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)*sk, int \fBnid\fP, int arg)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add_attrib_content_type\fP (\fBPKCS7_SIGNER_INFO\fP *si, \fBASN1_OBJECT\fP *coid)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add0_attrib_signing_time\fP (\fBPKCS7_SIGNER_INFO\fP *si, \fBASN1_TIME\fP *\fBt\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS7_add1_attrib_digest\fP (\fBPKCS7_SIGNER_INFO\fP *si, const unsigned char *md, int mdlen)"
+.br
+.ti -1c
+.RI "int \fBSMIME_write_PKCS7\fP (\fBBIO\fP *bio, \fBPKCS7\fP *p7, \fBBIO\fP *data, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBSMIME_read_PKCS7\fP (\fBBIO\fP *bio, \fBBIO\fP **bcont)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_PKCS7\fP (\fBBIO\fP *out, \fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_PKCS7_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBflags\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define PKCS7_BINARY   0x80"
+
+.PP
+Definition at line 236 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_CRLFEOL   0x800"
+
+.PP
+Definition at line 240 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_DETACHED   0x40"
+
+.PP
+Definition at line 235 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_B64_READ_PKCS7   120"
+
+.PP
+Definition at line 380 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_B64_WRITE_PKCS7   121"
+
+.PP
+Definition at line 381 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_DO_PKCS7_SIGNED_ATTRIB   136"
+
+.PP
+Definition at line 382 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_I2D_PKCS7_BIO_STREAM   140"
+
+.PP
+Definition at line 383 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD0_ATTRIB_SIGNING_TIME   135"
+
+.PP
+Definition at line 384 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD_ATTRIB_SMIMECAP   118"
+
+.PP
+Definition at line 385 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD_CERTIFICATE   100"
+
+.PP
+Definition at line 386 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD_CRL   101"
+
+.PP
+Definition at line 387 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD_RECIPIENT_INFO   102"
+
+.PP
+Definition at line 388 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD_SIGNATURE   131"
+
+.PP
+Definition at line 389 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ADD_SIGNER   103"
+
+.PP
+Definition at line 390 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_BIO_ADD_DIGEST   125"
+
+.PP
+Definition at line 391 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_COPY_EXISTING_DIGEST   138"
+
+.PP
+Definition at line 392 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_CTRL   104"
+
+.PP
+Definition at line 393 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DATADECODE   112"
+
+.PP
+Definition at line 394 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DATAFINAL   128"
+
+.PP
+Definition at line 395 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DATAINIT   105"
+
+.PP
+Definition at line 396 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DATASIGN   106"
+
+.PP
+Definition at line 397 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DATAVERIFY   107"
+
+.PP
+Definition at line 398 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DECRYPT   114"
+
+.PP
+Definition at line 399 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_DECRYPT_RINFO   133"
+
+.PP
+Definition at line 400 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ENCODE_RINFO   132"
+
+.PP
+Definition at line 401 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_ENCRYPT   115"
+
+.PP
+Definition at line 402 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_FINAL   134"
+
+.PP
+Definition at line 403 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_FIND_DIGEST   127"
+
+.PP
+Definition at line 404 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_GET0_SIGNERS   124"
+
+.PP
+Definition at line 405 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_RECIP_INFO_SET   130"
+
+.PP
+Definition at line 406 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SET_CIPHER   108"
+
+.PP
+Definition at line 407 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SET_CONTENT   109"
+
+.PP
+Definition at line 408 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SET_DIGEST   126"
+
+.PP
+Definition at line 409 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SET_TYPE   110"
+
+.PP
+Definition at line 410 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SIGN   116"
+
+.PP
+Definition at line 411 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SIGN_ADD_SIGNER   137"
+
+.PP
+Definition at line 415 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SIGNATUREVERIFY   113"
+
+.PP
+Definition at line 412 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SIGNER_INFO_SET   129"
+
+.PP
+Definition at line 413 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SIGNER_INFO_SIGN   139"
+
+.PP
+Definition at line 414 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_SIMPLE_SMIMECAP   119"
+
+.PP
+Definition at line 416 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_PKCS7_VERIFY   117"
+
+.PP
+Definition at line 417 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_SMIME_READ_PKCS7   122"
+
+.PP
+Definition at line 418 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_F_SMIME_TEXT   123"
+
+.PP
+Definition at line 419 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_get_attributes(si)   ((si)\->unauth_attr)"
+
+.PP
+Definition at line 210 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_get_detached(\fBp\fP)   \fBPKCS7_ctrl\fP(\fBp\fP,\fBPKCS7_OP_GET_DETACHED_SIGNATURE\fP,0,NULL)"
+
+.PP
+Definition at line 222 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_get_signed_attributes(si)   ((si)\->auth_attr)"
+
+.PP
+Definition at line 209 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_is_detached(p7)   (\fBPKCS7_type_is_signed\fP(p7) && \fBPKCS7_get_detached\fP(p7))"
+
+.PP
+Definition at line 225 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOATTR   0x100"
+
+.PP
+Definition at line 237 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOCERTS   0x2"
+
+.PP
+Definition at line 230 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOCHAIN   0x8"
+
+.PP
+Definition at line 232 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOCRL   0x2000"
+
+.PP
+Definition at line 242 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOINTERN   0x10"
+
+.PP
+Definition at line 233 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOOLDMIMETYPE   0x400"
+
+.PP
+Definition at line 239 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOSIGS   0x4"
+
+.PP
+Definition at line 231 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOSMIMECAP   0x200"
+
+.PP
+Definition at line 238 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_NOVERIFY   0x20"
+
+.PP
+Definition at line 234 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_OP_GET_DETACHED_SIGNATURE   2"
+
+.PP
+Definition at line 207 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_OP_SET_DETACHED_SIGNATURE   1"
+
+.PP
+Definition at line 206 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_PARTIAL   0x4000"
+
+.PP
+Definition at line 243 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_CERTIFICATE_VERIFY_ERROR   117"
+
+.PP
+Definition at line 422 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_CIPHER_HAS_NO_OBJECT_IDENTIFIER   144"
+
+.PP
+Definition at line 423 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_CIPHER_NOT_INITIALIZED   116"
+
+.PP
+Definition at line 424 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_CONTENT_AND_DATA_PRESENT   118"
+
+.PP
+Definition at line 425 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_CTRL_ERROR   152"
+
+.PP
+Definition at line 426 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_DECODE_ERROR   130"
+
+.PP
+Definition at line 427 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_DECRYPT_ERROR   119"
+
+.PP
+Definition at line 429 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_DECRYPTED_KEY_IS_WRONG_LENGTH   100"
+
+.PP
+Definition at line 428 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_DIGEST_FAILURE   101"
+
+.PP
+Definition at line 430 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_ENCRYPTION_CTRL_FAILURE   149"
+
+.PP
+Definition at line 431 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_ENCRYPTION_NOT_SUPPORTED_FOR_THIS_KEY_TYPE   150"
+
+.PP
+Definition at line 432 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_ERROR_ADDING_RECIPIENT   120"
+
+.PP
+Definition at line 433 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_ERROR_SETTING_CIPHER   121"
+
+.PP
+Definition at line 434 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_INVALID_MIME_TYPE   131"
+
+.PP
+Definition at line 435 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_INVALID_NULL_POINTER   143"
+
+.PP
+Definition at line 436 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_INVALID_SIGNED_DATA_TYPE   155"
+
+.PP
+Definition at line 437 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_MIME_NO_CONTENT_TYPE   132"
+
+.PP
+Definition at line 438 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_MIME_PARSE_ERROR   133"
+
+.PP
+Definition at line 439 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_MIME_SIG_PARSE_ERROR   134"
+
+.PP
+Definition at line 440 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_MISSING_CERIPEND_INFO   103"
+
+.PP
+Definition at line 441 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_CONTENT   122"
+
+.PP
+Definition at line 442 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_CONTENT_TYPE   135"
+
+.PP
+Definition at line 443 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_DEFAULT_DIGEST   151"
+
+.PP
+Definition at line 444 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_MATCHING_DIGEST_TYPE_FOUND   154"
+
+.PP
+Definition at line 445 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_MULTIPART_BODY_FAILURE   136"
+
+.PP
+Definition at line 446 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_MULTIPART_BOUNDARY   137"
+
+.PP
+Definition at line 447 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_RECIPIENT_MATCHES_CERTIFICATE   115"
+
+.PP
+Definition at line 448 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_RECIPIENT_MATCHES_KEY   146"
+
+.PP
+Definition at line 449 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_SIG_CONTENT_TYPE   138"
+
+.PP
+Definition at line 452 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_SIGNATURES_ON_DATA   123"
+
+.PP
+Definition at line 450 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_NO_SIGNERS   142"
+
+.PP
+Definition at line 451 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_OPERATION_NOT_SUPPORTED_ON_THIS_TYPE   104"
+
+.PP
+Definition at line 453 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_ADD_SIGNATURE_ERROR   124"
+
+.PP
+Definition at line 454 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_ADD_SIGNER_ERROR   153"
+
+.PP
+Definition at line 455 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_DATAFINAL   126"
+
+.PP
+Definition at line 456 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_DATAFINAL_ERROR   125"
+
+.PP
+Definition at line 457 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_DATASIGN   145"
+
+.PP
+Definition at line 458 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_PARSE_ERROR   139"
+
+.PP
+Definition at line 459 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PKCS7_SIG_PARSE_ERROR   140"
+
+.PP
+Definition at line 460 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_PRIVATE_KEY_DOES_NOT_MATCH_CERTIFICATE   127"
+
+.PP
+Definition at line 461 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_SIG_INVALID_MIME_TYPE   141"
+
+.PP
+Definition at line 466 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_SIGNATURE_FAILURE   105"
+
+.PP
+Definition at line 462 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_SIGNER_CERTIFICATE_NOT_FOUND   128"
+
+.PP
+Definition at line 463 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_SIGNING_CTRL_FAILURE   147"
+
+.PP
+Definition at line 464 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_SIGNING_NOT_SUPPORTED_FOR_THIS_KEY_TYPE   148"
+
+.PP
+Definition at line 465 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_SMIME_TEXT_ERROR   129"
+
+.PP
+Definition at line 467 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNABLE_TO_FIND_CERTIFICATE   106"
+
+.PP
+Definition at line 468 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNABLE_TO_FIND_MEM_BIO   107"
+
+.PP
+Definition at line 469 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNABLE_TO_FIND_MESSAGE_DIGEST   108"
+
+.PP
+Definition at line 470 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNKNOWN_DIGEST_TYPE   109"
+
+.PP
+Definition at line 471 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNKNOWN_OPERATION   110"
+
+.PP
+Definition at line 472 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNSUPPORTED_CIPHER_TYPE   111"
+
+.PP
+Definition at line 473 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_UNSUPPORTED_CONTENT_TYPE   112"
+
+.PP
+Definition at line 474 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_WRONG_CONTENT_TYPE   113"
+
+.PP
+Definition at line 475 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_R_WRONG_PKCS7_TYPE   114"
+
+.PP
+Definition at line 476 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_REUSE_DIGEST   0x8000"
+
+.PP
+Definition at line 244 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_S_BODY   1"
+
+.PP
+Definition at line 173 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_S_HEADER   0"
+
+.PP
+Definition at line 172 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_S_TAIL   2"
+
+.PP
+Definition at line 174 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_set_detached(\fBp\fP, v)   \fBPKCS7_ctrl\fP(\fBp\fP,\fBPKCS7_OP_SET_DETACHED_SIGNATURE\fP,v,NULL)"
+
+.PP
+Definition at line 220 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_STREAM   0x1000"
+
+.PP
+Definition at line 241 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_TEXT   0x1"
+
+.PP
+Definition at line 229 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_type_is_data(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_data\fP)"
+
+.PP
+Definition at line 217 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_type_is_digest(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_digest\fP)"
+
+.PP
+Definition at line 218 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_type_is_encrypted(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_encrypted\fP)"
+
+.PP
+Definition at line 213 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_type_is_enveloped(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_enveloped\fP)"
+
+.PP
+Definition at line 214 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_type_is_signed(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_signed\fP)"
+
+.PP
+Definition at line 212 of file include/openssl/pkcs7\&.h\&.
+.SS "#define PKCS7_type_is_signedAndEnveloped(\fBa\fP)   (\fBOBJ_obj2nid\fP((\fBa\fP)\->\fBtype\fP) == \fBNID_pkcs7_signedAndEnveloped\fP)"
+
+.PP
+Definition at line 215 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_BINARY   \fBPKCS7_BINARY\fP"
+
+.PP
+Definition at line 255 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_DETACHED   \fBPKCS7_DETACHED\fP"
+
+.PP
+Definition at line 254 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_NOATTR   \fBPKCS7_NOATTR\fP"
+
+.PP
+Definition at line 256 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_NOCERTS   \fBPKCS7_NOCERTS\fP"
+
+.PP
+Definition at line 249 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_NOCHAIN   \fBPKCS7_NOCHAIN\fP"
+
+.PP
+Definition at line 251 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_NOINTERN   \fBPKCS7_NOINTERN\fP"
+
+.PP
+Definition at line 252 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_NOSIGS   \fBPKCS7_NOSIGS\fP"
+
+.PP
+Definition at line 250 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_NOVERIFY   \fBPKCS7_NOVERIFY\fP"
+
+.PP
+Definition at line 253 of file include/openssl/pkcs7\&.h\&.
+.SS "#define SMIME_TEXT   \fBPKCS7_TEXT\fP"
+
+.PP
+Definition at line 248 of file include/openssl/pkcs7\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBpkcs7_st\fP  \fBPKCS7\fP"
+
+.SS "typedef struct \fBpkcs7_digest_st\fP  \fBPKCS7_DIGEST\fP"
+
+.SS "typedef struct \fBpkcs7_enc_content_st\fP  \fBPKCS7_ENC_CONTENT\fP"
+
+.SS "typedef struct \fBpkcs7_encrypted_st\fP  \fBPKCS7_ENCRYPT\fP"
+
+.SS "typedef struct \fBpkcs7_enveloped_st\fP  \fBPKCS7_ENVELOPE\fP"
+
+.SS "typedef struct \fBpkcs7_issuer_and_serial_st\fP  \fBPKCS7_ISSUER_AND_SERIAL\fP"
+
+.SS "typedef struct \fBpkcs7_recip_info_st\fP  \fBPKCS7_RECIP_INFO\fP"
+
+.SS "typedef struct \fBpkcs7_signedandenveloped_st\fP  \fBPKCS7_SIGN_ENVELOPE\fP"
+
+.SS "typedef struct \fBpkcs7_signed_st\fP  \fBPKCS7_SIGNED\fP"
+
+.SS "typedef struct \fBpkcs7_signer_info_st\fP  \fBPKCS7_SIGNER_INFO\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBBIO\fP* BIO_new_PKCS7 (\fBBIO\fP * out, \fBPKCS7\fP * p7)"
+
+.SS "\fBPKCS7\fP* d2i_PKCS7_bio (\fBBIO\fP * bp, \fBPKCS7\fP ** p7)"
+
+.SS "\fBPKCS7\fP* d2i_PKCS7_fp (FILE * fp, \fBPKCS7\fP ** p7)"
+
+.SS "\fBvoid\fP ERR_load_PKCS7_strings (\fBvoid\fP)"
+
+.SS "int i2d_PKCS7_bio (\fBBIO\fP * bp, \fBPKCS7\fP * p7)"
+
+.SS "int i2d_PKCS7_bio_stream (\fBBIO\fP * out, \fBPKCS7\fP * p7, \fBBIO\fP * in, int flags)"
+
+.SS "int i2d_PKCS7_fp (FILE * fp, \fBPKCS7\fP * p7)"
+
+.SS "int PEM_write_bio_PKCS7_stream (\fBBIO\fP * out, \fBPKCS7\fP * p7, \fBBIO\fP * in, int flags)"
+
+.SS "int PKCS7_add0_attrib_signing_time (\fBPKCS7_SIGNER_INFO\fP * si, \fBASN1_TIME\fP * t)"
+
+.SS "int PKCS7_add1_attrib_digest (\fBPKCS7_SIGNER_INFO\fP * si, const unsigned char * md, int mdlen)"
+
+.SS "int PKCS7_add_attrib_content_type (\fBPKCS7_SIGNER_INFO\fP * si, \fBASN1_OBJECT\fP * coid)"
+
+.SS "int PKCS7_add_attrib_smimecap (\fBPKCS7_SIGNER_INFO\fP * si, \fBSTACK_OF\fP(\fBX509_ALGOR\fP)* cap)"
+
+.SS "int PKCS7_add_attribute (\fBPKCS7_SIGNER_INFO\fP * p7si, int nid, int atrtype, \fBvoid\fP * value)"
+
+.SS "int PKCS7_add_certificate (\fBPKCS7\fP * p7, \fBX509\fP * x509)"
+
+.SS "int PKCS7_add_crl (\fBPKCS7\fP * p7, \fBX509_CRL\fP * x509)"
+
+.SS "\fBPKCS7_RECIP_INFO\fP* PKCS7_add_recipient (\fBPKCS7\fP * p7, \fBX509\fP * x509)"
+
+.SS "int PKCS7_add_recipient_info (\fBPKCS7\fP * p7, \fBPKCS7_RECIP_INFO\fP * ri)"
+
+.SS "\fBPKCS7_SIGNER_INFO\fP* PKCS7_add_signature (\fBPKCS7\fP * p7, \fBX509\fP * x509, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * dgst)"
+
+.SS "int PKCS7_add_signed_attribute (\fBPKCS7_SIGNER_INFO\fP * p7si, int nid, int type, \fBvoid\fP * data)"
+
+.SS "int PKCS7_add_signer (\fBPKCS7\fP * p7, \fBPKCS7_SIGNER_INFO\fP * p7i)"
+
+.SS "\fBX509\fP* PKCS7_cert_from_signer_info (\fBPKCS7\fP * p7, \fBPKCS7_SIGNER_INFO\fP * si)"
+
+.SS "int PKCS7_content_new (\fBPKCS7\fP * p7, int nid)"
+
+.SS "long PKCS7_ctrl (\fBPKCS7\fP * p7, int cmd, long larg, char * parg)"
+
+.SS "\fBBIO\fP* PKCS7_dataDecode (\fBPKCS7\fP * p7, \fBEVP_PKEY\fP * pkey, \fBBIO\fP * in_bio, \fBX509\fP * pcert)"
+
+.SS "int PKCS7_dataFinal (\fBPKCS7\fP * p7, \fBBIO\fP * bio)"
+
+.SS "\fBBIO\fP* PKCS7_dataInit (\fBPKCS7\fP * p7, \fBBIO\fP * bio)"
+
+.SS "int PKCS7_dataVerify (\fBX509_STORE\fP * cert_store, \fBX509_STORE_CTX\fP * ctx, \fBBIO\fP * bio, \fBPKCS7\fP * p7, \fBPKCS7_SIGNER_INFO\fP * si)"
+
+.SS "int PKCS7_decrypt (\fBPKCS7\fP * p7, \fBEVP_PKEY\fP * pkey, \fBX509\fP * cert, \fBBIO\fP * data, int flags)"
+
+.SS "\fBASN1_OCTET_STRING\fP* PKCS7_digest_from_attributes (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* sk)"
+
+.SS "\fBPKCS7\fP* PKCS7_dup (\fBPKCS7\fP * p7)"
+
+.SS "\fBPKCS7\fP* PKCS7_encrypt (\fBSTACK_OF\fP(\fBX509\fP)* certs, \fBBIO\fP * in, const \fBEVP_CIPHER\fP * cipher, int flags)"
+
+.SS "int PKCS7_final (\fBPKCS7\fP * p7, \fBBIO\fP * data, int flags)"
+
+.SS "\fBASN1_TYPE\fP* PKCS7_get_attribute (\fBPKCS7_SIGNER_INFO\fP * si, int nid)"
+
+.SS "\fBPKCS7_ISSUER_AND_SERIAL\fP* PKCS7_get_issuer_and_serial (\fBPKCS7\fP * p7, int idx)"
+
+.SS "\fBASN1_TYPE\fP* PKCS7_get_signed_attribute (\fBPKCS7_SIGNER_INFO\fP * si, int nid)"
+
+.SS "int PKCS7_ISSUER_AND_SERIAL_digest (\fBPKCS7_ISSUER_AND_SERIAL\fP * data, const \fBEVP_MD\fP * type, unsigned char * md, unsigned int * len)"
+
+.SS "\fBvoid\fP PKCS7_RECIP_INFO_get0_alg (\fBPKCS7_RECIP_INFO\fP * ri, \fBX509_ALGOR\fP ** penc)"
+
+.SS "int PKCS7_RECIP_INFO_set (\fBPKCS7_RECIP_INFO\fP * p7i, \fBX509\fP * x509)"
+
+.SS "int PKCS7_set0_type_other (\fBPKCS7\fP * p7, int type, \fBASN1_TYPE\fP * other)"
+
+.SS "int PKCS7_set_attributes (\fBPKCS7_SIGNER_INFO\fP * p7si, \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* sk)"
+
+.SS "int PKCS7_set_cipher (\fBPKCS7\fP * p7, const \fBEVP_CIPHER\fP * cipher)"
+
+.SS "int PKCS7_set_content (\fBPKCS7\fP * p7, \fBPKCS7\fP * p7_data)"
+
+.SS "int PKCS7_set_digest (\fBPKCS7\fP * p7, const \fBEVP_MD\fP * md)"
+
+.SS "int PKCS7_set_signed_attributes (\fBPKCS7_SIGNER_INFO\fP * p7si, \fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* sk)"
+
+.SS "int PKCS7_set_type (\fBPKCS7\fP * p7, int type)"
+
+.SS "\fBPKCS7\fP* PKCS7_sign (\fBX509\fP * signcert, \fBEVP_PKEY\fP * pkey, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBBIO\fP * data, int flags)"
+
+.SS "\fBPKCS7_SIGNER_INFO\fP* PKCS7_sign_add_signer (\fBPKCS7\fP * p7, \fBX509\fP * signcert, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * md, int flags)"
+
+.SS "int PKCS7_signatureVerify (\fBBIO\fP * bio, \fBPKCS7\fP * p7, \fBPKCS7_SIGNER_INFO\fP * si, \fBX509\fP * x509)"
+
+.SS "\fBvoid\fP PKCS7_SIGNER_INFO_get0_algs (\fBPKCS7_SIGNER_INFO\fP * si, \fBEVP_PKEY\fP ** pk, \fBX509_ALGOR\fP ** pdig, \fBX509_ALGOR\fP ** psig)"
+
+.SS "int PKCS7_SIGNER_INFO_set (\fBPKCS7_SIGNER_INFO\fP * p7i, \fBX509\fP * x509, \fBEVP_PKEY\fP * pkey, const \fBEVP_MD\fP * dgst)"
+
+.SS "int PKCS7_SIGNER_INFO_sign (\fBPKCS7_SIGNER_INFO\fP * si)"
+
+.SS "int PKCS7_simple_smimecap (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)* sk, int nid, int arg)"
+
+.SS "int PKCS7_stream (unsigned char *** boundary, \fBPKCS7\fP * p7)"
+
+.SS "int PKCS7_verify (\fBPKCS7\fP * p7, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * store, \fBBIO\fP * indata, \fBBIO\fP * out, int flags)"
+
+.SS "\fBPKCS7\fP* SMIME_read_PKCS7 (\fBBIO\fP * bio, \fBBIO\fP ** bcont)"
+
+.SS "int SMIME_write_PKCS7 (\fBBIO\fP * bio, \fBPKCS7\fP * p7, \fBBIO\fP * data, int flags)"
+
+.SS "STACK_OF (\fBPKCS7_SIGNER_INFO\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBX509_ALGOR\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "int flags"
+
+.PP
+Definition at line 349 of file include/openssl/pkcs7\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

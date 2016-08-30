@@ -1,0 +1,127 @@
+.TH "s2n-master/tests/unit/s2n_stuffer_hex_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_stuffer_hex_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 22 of file s2n_stuffer_hex_test\&.c\&.
+.PP
+.nf
+23 {
+24     uint8_t pad[100];
+25     struct s2n_blob b = {\&.data = pad,\&.size = sizeof(pad) };
+26     struct s2n_stuffer stuffer;
+27     uint8_t u8;
+28     uint16_t u16;
+29     uint32_t u32;
+30     uint64_t u64;
+31 
+32     BEGIN_TEST();
+33 
+34     /* Create a 100 byte stuffer */
+35     EXPECT_SUCCESS(s2n_stuffer_init(&stuffer, &b));
+36 
+37     /* Try to write 51 1-byte ints bytes */
+38     for (uint8_t i = 0; i < 50; i++) {
+39         uint8_t value = i * (0xff / 50);
+40         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&stuffer, value));
+41     }
+42     EXPECT_FAILURE(s2n_stuffer_write_uint8_hex(&stuffer, 1));
+43 
+44     /* Read those back, and expect the same results */
+45     for (int8_t i = 0; i < 50; i++) {
+46         uint8_t value = i * (0xff / 50);
+47         EXPECT_SUCCESS(s2n_stuffer_read_uint8_hex(&stuffer, &u8));
+48         EXPECT_EQUAL(u8, value);
+49     }
+50     EXPECT_FAILURE(s2n_stuffer_read_uint8_hex(&stuffer, &u8));
+51 
+52     /* Try to write 26 2-byte ints bytes */
+53     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+54     for (uint16_t i = 0; i < 25; i++) {
+55         uint16_t value = i * (0xffff / 25);
+56         EXPECT_SUCCESS(s2n_stuffer_write_uint16_hex(&stuffer, value));
+57     }
+58     EXPECT_FAILURE(s2n_stuffer_write_uint16_hex(&stuffer, 1));
+59 
+60     /* Read those back, and expect the same results */
+61     for (uint16_t i = 0; i < 25; i++) {
+62         uint16_t value = i * (0xffff / 25);
+63         EXPECT_SUCCESS(s2n_stuffer_read_uint16_hex(&stuffer, &u16));
+64         EXPECT_EQUAL(value, u16);
+65     }
+66     EXPECT_FAILURE(s2n_stuffer_read_uint16_hex(&stuffer, &u16));
+67 
+68     /* Try to write 13 4-byte ints bytes */
+69     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+70     EXPECT_SUCCESS(s2n_stuffer_init(&stuffer, &b));
+71     for (uint32_t i = 0; i < 12; i++) {
+72         uint32_t value = i * (0xffffffff / 12);
+73         EXPECT_SUCCESS(s2n_stuffer_write_uint32_hex(&stuffer, value));
+74     }
+75     EXPECT_FAILURE(s2n_stuffer_write_uint32_hex(&stuffer, 1));
+76 
+77     /* Read those back, and expect the same results */
+78     for (uint32_t i = 0; i < 12; i++) {
+79         uint32_t value = i * (0xffffffff / 12);
+80         EXPECT_SUCCESS(s2n_stuffer_read_uint32_hex(&stuffer, &u32));
+81         EXPECT_EQUAL(value, u32);
+82     }
+83     EXPECT_FAILURE(s2n_stuffer_read_uint32_hex(&stuffer, &u32));
+84 
+85     /* Try to write 7 8-byte ints bytes */
+86     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+87     for (uint64_t i = 0; i < 6; i++) {
+88         uint64_t value = i * (0xffffffffffffffff / 6);
+89         EXPECT_SUCCESS(s2n_stuffer_write_uint64_hex(&stuffer, value));
+90     }
+91     EXPECT_FAILURE(s2n_stuffer_write_uint64_hex(&stuffer, 1));
+92 
+93     /* Read those back, and expect the same results */
+94     for (uint64_t i = 0; i < 6; i++) {
+95         uint64_t value = i * (0xffffffffffffffff / 6);
+96         EXPECT_SUCCESS(s2n_stuffer_read_uint64_hex(&stuffer, &u64));
+97         EXPECT_EQUAL(value, u64);
+98     }
+99     EXPECT_FAILURE(s2n_stuffer_read_uint64_hex(&stuffer, &u64));
+100 
+101     EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+102     uint8_t hex[] = "f0F0Zz";
+103     struct s2n_blob text = {\&.data = hex,\&.size = strlen((char *)hex) };
+104     EXPECT_SUCCESS(s2n_stuffer_write(&stuffer, &text));
+105 
+106     EXPECT_SUCCESS(s2n_stuffer_read_uint8_hex(&stuffer, &u8));
+107     EXPECT_EQUAL(u8, 240);
+108     EXPECT_SUCCESS(s2n_stuffer_read_uint8_hex(&stuffer, &u8));
+109     EXPECT_EQUAL(u8, 240);
+110     EXPECT_FAILURE(s2n_stuffer_read_uint8_hex(&stuffer, &u8));
+111 
+112     END_TEST();
+113 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

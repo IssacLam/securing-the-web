@@ -1,0 +1,117 @@
+.TH "s2n-master/stuffer/s2n_stuffer_text.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/stuffer/s2n_stuffer_text.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_stuffer_peek_char\fP (struct \fBs2n_stuffer\fP *\fBs2n_stuffer\fP, char *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_skip_whitespace\fP (struct \fBs2n_stuffer\fP *\fBs2n_stuffer\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_token\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_stuffer\fP *token, char delim)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_alloc_ro_from_string\fP (struct \fBs2n_stuffer\fP *stuffer, const char *str)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_stuffer_peek_char (struct \fBs2n_stuffer\fP * s2n_stuffer, char * c)"
+
+.PP
+Definition at line 23 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+24 {
+25     int r = s2n_stuffer_read_uint8(s2n_stuffer, (uint8_t *) c);
+26     if (r == 0) {
+27         s2n_stuffer->read_cursor--;
+28     }
+29     return r;
+30 }
+.fi
+.SS "int s2n_stuffer_skip_whitespace (struct \fBs2n_stuffer\fP * s2n_stuffer)"
+
+.PP
+Definition at line 32 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+33 {
+34     int skipped = 0;
+35     while (s2n_stuffer->read_cursor < s2n_stuffer->write_cursor) {
+36         switch (s2n_stuffer->blob\&.data[s2n_stuffer->read_cursor]) {
+37         case ' ':              /* We don't use isspace, because it changes under locales */
+38         case '\t':
+39         case '\n':
+40         case '\r':
+41             s2n_stuffer->read_cursor += 1;
+42             skipped += 1;
+43             break;
+44         default:
+45             return skipped;
+46         }
+47     }
+48 
+49     return skipped;
+50 }
+.fi
+.SS "int s2n_stuffer_read_token (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_stuffer\fP * token, char delim)"
+
+.PP
+Definition at line 52 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+53 {
+54     int token_size = 0;
+55 
+56     while ((stuffer->read_cursor + token_size) < stuffer->write_cursor) {
+57         if (stuffer->blob\&.data[stuffer->read_cursor + token_size] == delim) {
+58             break;
+59         }
+60 
+61         token_size++;
+62     }
+63 
+64     GUARD(s2n_stuffer_copy(stuffer, token, token_size));
+65 
+66     /* Consume the delimiter too */
+67     if (stuffer->read_cursor < stuffer->write_cursor) {
+68         stuffer->read_cursor++;
+69     }
+70 
+71     return 0;
+72 }
+.fi
+.SS "int s2n_stuffer_alloc_ro_from_string (struct \fBs2n_stuffer\fP * stuffer, const char * str)"
+
+.PP
+Definition at line 74 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+75 {
+76     uint32_t length = strlen(str);
+77 
+78     GUARD(s2n_stuffer_alloc(stuffer, length + 1));
+79     return s2n_stuffer_write_bytes(stuffer, (const uint8_t *)str, length);
+80 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

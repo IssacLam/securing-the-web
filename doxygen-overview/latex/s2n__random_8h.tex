@@ -1,0 +1,416 @@
+\hypertarget{s2n__random_8h}{}\section{s2n-\/master/utils/s2n\+\_\+random.h File Reference}
+\label{s2n__random_8h}\index{s2n-\/master/utils/s2n\+\_\+random.\+h@{s2n-\/master/utils/s2n\+\_\+random.\+h}}
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+random.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{s2n__random_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__random_8h_a5cfef84444cc08086a4098569c9f1fc8}{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int \hyperlink{s2n__random_8h_ad938aae887615bb174644a34d01c662d}{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8h_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int \hyperlink{s2n__random_8h_acfa5dd5fea029277b9439895122a3489}{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__random_8h_a803d79131d0fb9d77393aae0cdc2c169}{s2n\+\_\+get\+\_\+urandom\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$blob)
+\item 
+int64\+\_\+t \hyperlink{s2n__random_8h_a8aabcb071120a9849d4615358000a8a6}{s2n\+\_\+public\+\_\+random} (int64\+\_\+t max)
+\item 
+int \hyperlink{s2n__random_8h_a3d5fc4d21639fe086400e7337bc82666}{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand} ()
+\item 
+int \hyperlink{s2n__random_8h_aeee853dca0be2d4cda8be3be4e6e0b63}{s2n\+\_\+get\+\_\+rdrand\+\_\+data} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$out)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_public_random_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_a5cfef84444cc08086a4098569c9f1fc8}{}\label{s2n__random_8h_a5cfef84444cc08086a4098569c9f1fc8}
+
+
+Definition at line 83 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+84 \{
+85     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_defend\_if\_forked());
+86     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&per\_thread\_public\_drbg, blob));
+87 
+88     \textcolor{keywordflow}{return} 0;
+89 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_a5cfef84444cc08086a4098569c9f1fc8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_a5cfef84444cc08086a4098569c9f1fc8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used}}
+\index{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used(void)}{s2n_get_public_random_bytes_used(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+bytes\+\_\+used (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_ad938aae887615bb174644a34d01c662d}{}\label{s2n__random_8h_ad938aae887615bb174644a34d01c662d}
+
+
+Definition at line 99 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+100 \{
+101     \textcolor{keywordflow}{return} \hyperlink{s2n__drbg_8c_ae4f4d541d1e3dbb9ed3d8716091ad250}{s2n\_drbg\_bytes\_used}(&per\_thread\_public\_drbg);
+102 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_ad938aae887615bb174644a34d01c662d_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_private_random_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_aaad2cf7ed73ddf58358fb714b1abfb39}{}\label{s2n__random_8h_aaad2cf7ed73ddf58358fb714b1abfb39}
+
+
+Definition at line 91 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+92 \{
+93     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_defend\_if\_forked());
+94     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__drbg_8c_a9fad975e364d5a398330eb937745f0e6}{s2n\_drbg\_generate}(&per\_thread\_private\_drbg, blob));
+95 
+96     \textcolor{keywordflow}{return} 0;
+97 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_aaad2cf7ed73ddf58358fb714b1abfb39_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_aaad2cf7ed73ddf58358fb714b1abfb39_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used}}
+\index{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used@{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used(void)}{s2n_get_private_random_bytes_used(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+bytes\+\_\+used (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_acfa5dd5fea029277b9439895122a3489}{}\label{s2n__random_8h_acfa5dd5fea029277b9439895122a3489}
+
+
+Definition at line 104 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+105 \{
+106     \textcolor{keywordflow}{return} \hyperlink{s2n__drbg_8c_ae4f4d541d1e3dbb9ed3d8716091ad250}{s2n\_drbg\_bytes\_used}(&per\_thread\_private\_drbg);
+107 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_acfa5dd5fea029277b9439895122a3489_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{s2n__random_8h_acfa5dd5fea029277b9439895122a3489_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+get\+\_\+urandom\+\_\+data@{s2n\+\_\+get\+\_\+urandom\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+urandom\+\_\+data@{s2n\+\_\+get\+\_\+urandom\+\_\+data}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+urandom\+\_\+data(struct s2n\+\_\+blob $\ast$blob)}{s2n_get_urandom_data(struct s2n_blob *blob)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+urandom\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_a803d79131d0fb9d77393aae0cdc2c169}{}\label{s2n__random_8h_a803d79131d0fb9d77393aae0cdc2c169}
+
+
+Definition at line 56 of file global\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+56                                                \{
+57 
+58     \textcolor{comment}{/* If fuzzing, only generate "fake" random numbers in order to ensure that fuzz tests are deterministic
+       and repeatable.}
+59 \textcolor{comment}{     * This function should generate non-zero values since this function may be called repeatedly at
+       startup until a}
+60 \textcolor{comment}{     * non-zero value is generated.}
+61 \textcolor{comment}{     */}
+62     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i < blob->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}; i++)\{
+63        blob->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[i] = 4; \textcolor{comment}{/* Fake RNG. Chosen by fair dice roll. https://xkcd.com/221/ */}
+64     \}
+65     \textcolor{keywordflow}{return} 0;
+66 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_a803d79131d0fb9d77393aae0cdc2c169_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+public\+\_\+random@{s2n\+\_\+public\+\_\+random}}
+\index{s2n\+\_\+public\+\_\+random@{s2n\+\_\+public\+\_\+random}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+public\+\_\+random(int64\+\_\+t max)}{s2n_public_random(int64_t max)}}]{\setlength{\rightskip}{0pt plus 5cm}int64\+\_\+t s2n\+\_\+public\+\_\+random (
+\begin{DoxyParamCaption}
+\item[{int64\+\_\+t}]{max}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_a8aabcb071120a9849d4615358000a8a6}{}\label{s2n__random_8h_a8aabcb071120a9849d4615358000a8a6}
+
+
+Definition at line 132 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+133 \{
+134     uint64\_t r;
+135 
+136     \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\_check}(max, 0);
+137 
+138     \textcolor{keywordflow}{while} (1) \{
+139         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} blob = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = (\textcolor{keywordtype}{void} *)&r, \textcolor{keyword}{sizeof}(r) \};
+140         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+141 
+142         \textcolor{comment}{/* Imagine an int was one byte and UINT\_MAX was 256. If the}
+143 \textcolor{comment}{         * caller asked for s2n\_random(129, ...) we'd end up in}
+144 \textcolor{comment}{         * trouble. Each number in the range 0...127 would be twice}
+145 \textcolor{comment}{         * as likely as 128. That's because r == 0 % 129 -> 0, and}
+146 \textcolor{comment}{         * r == 129 % 129 -> 0, but only r == 128 returns 128,}
+147 \textcolor{comment}{         * r == 257 is out of range.}
+148 \textcolor{comment}{         *}
+149 \textcolor{comment}{         * To de-bias the dice, we discard values of r that are higher}
+150 \textcolor{comment}{         * that the highest multiple of 'max' an int can support. If}
+151 \textcolor{comment}{         * max is a uint, then in the worst case we discard 50% - 1 r's.}
+152 \textcolor{comment}{         * But since 'max' is an int and INT\_MAX is <= UINT\_MAX / 2,}
+153 \textcolor{comment}{         * in the worst case we discard 25% - 1 r's.}
+154 \textcolor{comment}{         */}
+155         \textcolor{keywordflow}{if} (r < (UINT64\_MAX - (UINT64\_MAX % max))) \{
+156             \textcolor{keywordflow}{return} r % max;
+157         \}
+158     \}
+159 
+160     \textcolor{keywordflow}{return} -1;
+161 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_a8aabcb071120a9849d4615358000a8a6_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_a8aabcb071120a9849d4615358000a8a6_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand@{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand}}
+\index{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand@{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand()}{s2n_cpu_supports_rdrand()}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+cpu\+\_\+supports\+\_\+rdrand (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_a3d5fc4d21639fe086400e7337bc82666}{}\label{s2n__random_8h_a3d5fc4d21639fe086400e7337bc82666}
+
+
+Definition at line 260 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+261 \{
+262 \textcolor{preprocessor}{#if defined(\_\_x86\_64\_\_)||defined(\_\_i386\_\_)}
+263     uint32\_t eax, ebx, ecx, edx;
+264     \textcolor{keywordflow}{if} (!\_\_get\_cpuid(1, &eax, &ebx, &ecx, &edx)) \{
+265         \textcolor{keywordflow}{return} 0;
+266     \}
+267 
+268     \textcolor{keywordflow}{if} (ecx & \hyperlink{s2n__random_8c_a7ff88d8422b1ba3a921d20844008fe33}{RDRAND\_ECX\_FLAG}) \{
+269         \textcolor{keywordflow}{return} 1;
+270     \}
+271 \textcolor{preprocessor}{#endif}
+272     \textcolor{keywordflow}{return} 0;
+273 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_a3d5fc4d21639fe086400e7337bc82666_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}!s2n\+\_\+get\+\_\+rdrand\+\_\+data@{s2n\+\_\+get\+\_\+rdrand\+\_\+data}}
+\index{s2n\+\_\+get\+\_\+rdrand\+\_\+data@{s2n\+\_\+get\+\_\+rdrand\+\_\+data}!s2n\+\_\+random.\+h@{s2n\+\_\+random.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+get\+\_\+rdrand\+\_\+data(struct s2n\+\_\+blob $\ast$out)}{s2n_get_rdrand_data(struct s2n_blob *out)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+get\+\_\+rdrand\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random_8h_aeee853dca0be2d4cda8be3be4e6e0b63}{}\label{s2n__random_8h_aeee853dca0be2d4cda8be3be4e6e0b63}
+
+
+Definition at line 284 of file s2n\+\_\+random.\+c.
+
+
+\begin{DoxyCode}
+285 \{
+286 
+287 \textcolor{preprocessor}{#if defined(\_\_x86\_64\_\_)||defined(\_\_i386\_\_)}
+288     \textcolor{keywordtype}{int} space\_remaining = 0;
+289     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} stuffer;
+290     \textcolor{keyword}{union }\{
+291         uint64\_t \hyperlink{modes__lcl_8h_ad758b7a5c3f18ed79d2fcd23d9f16357}{u64};
+292         uint8\_t \hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8}[8];
+293     \} output;
+294 
+295     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&stuffer, out));
+296 
+297     \textcolor{keywordflow}{while} ((space\_remaining = \hyperlink{s2n__stuffer_8h_ac489043958bdc589bdad9b4fa5e83b93}{s2n\_stuffer\_space\_remaining}(&stuffer))) \{
+298         \textcolor{keywordtype}{int} success = 0;
+299 
+300         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} tries = 0; tries < 10; tries++) \{
+301             \_\_asm\_\_ \_\_volatile\_\_(\textcolor{stringliteral}{".byte 0x48;\(\backslash\)n"} \textcolor{stringliteral}{".byte 0x0f;\(\backslash\)n"} \textcolor{stringliteral}{".byte 0xc7;\(\backslash\)n"} \textcolor{stringliteral}{".byte 0xf0;\(\backslash\)n"} \textcolor{stringliteral}{"adcl
+       $0x00, %%ebx;\(\backslash\)n"}:\textcolor{stringliteral}{"=b"}(success), \textcolor{stringliteral}{"=a"}(output.u64)
+302                                  :\textcolor{stringliteral}{"b"}(0)
+303                                  :\textcolor{stringliteral}{"cc"});
+304 
+305             \textcolor{keywordflow}{if} (success) \{
+306                 \textcolor{keywordflow}{break};
+307             \}
+308         \}
+309 
+310         \textcolor{keywordflow}{if} (!success) \{
+311             \textcolor{keywordflow}{return} -1;
+312         \}
+313 
+314         \textcolor{keywordtype}{int} data\_to\_fill = MIN(\textcolor{keyword}{sizeof}(output), space\_remaining);
+315 
+316         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&stuffer, output.u8, data\_to\_fill));
+317     \}
+318 
+319     \textcolor{keywordflow}{return} 0;
+320 \textcolor{preprocessor}{#else}
+321     \textcolor{keywordflow}{return} -1;
+322 \textcolor{preprocessor}{#endif}
+323 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_aeee853dca0be2d4cda8be3be4e6e0b63_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random_8h_aeee853dca0be2d4cda8be3be4e6e0b63_icgraph}
+\end{center}
+\end{figure}
+
+

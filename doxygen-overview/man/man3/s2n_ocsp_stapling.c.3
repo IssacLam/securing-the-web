@@ -1,0 +1,79 @@
+.TH "s2n-master/tls/s2n_ocsp_stapling.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_ocsp_stapling.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <strings\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_server_status_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_status_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_server_status_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 27 of file s2n_ocsp_stapling\&.c\&.
+.PP
+.nf
+28 {
+29     uint32_t length = conn->config->cert_and_key_pairs->ocsp_status\&.size + 4;
+30     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, length));
+31 
+32     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, (uint8_t) S2N_STATUS_REQUEST_OCSP));
+33     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, conn->config->cert_and_key_pairs->ocsp_status\&.size));
+34     GUARD(s2n_stuffer_write(&conn->handshake\&.io, &conn->config->cert_and_key_pairs->ocsp_status));
+35 
+36     return 0;
+37 }
+.fi
+.SS "int s2n_server_status_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 39 of file s2n_ocsp_stapling\&.c\&.
+.PP
+.nf
+40 {
+41     uint8_t type;
+42     struct s2n_blob status = {\&.data = NULL,\&.size = 0 };
+43 
+44     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, &type));
+45     GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, &status\&.size));
+46     status\&.data = s2n_stuffer_raw_read(&conn->handshake\&.io, status\&.size);
+47     notnull_check(status\&.data);
+48 
+49     if (type == S2N_STATUS_REQUEST_OCSP) {
+50         GUARD(s2n_alloc(&conn->status_response, status\&.size));
+51         memcpy_check(conn->status_response\&.data, status\&.data, status\&.size);
+52         conn->status_response\&.size = status\&.size;
+53     }
+54 
+55     return 0;
+56 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

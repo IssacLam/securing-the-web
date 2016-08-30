@@ -1,0 +1,173 @@
+.TH "stack.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+stack.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBstack_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBM_sk_num\fP(sk)                       ((sk) ? (sk)\->num:\-1)"
+.br
+.ti -1c
+.RI "#define \fBM_sk_value\fP(sk,  n)               ((sk) ? (sk)\->data[n] : NULL)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBstack_st\fP \fB_STACK\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBsk_num\fP (const \fB_STACK\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_value\fP (const \fB_STACK\fP *, int)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_set\fP (\fB_STACK\fP *, int, \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_new\fP (int(*cmp)(const \fBvoid\fP *, const \fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_new_null\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_free\fP (\fB_STACK\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_pop_free\fP (\fB_STACK\fP *st, \fBvoid\fP(*func)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_deep_copy\fP (\fB_STACK\fP *, \fBvoid\fP *(*)(\fBvoid\fP *), \fBvoid\fP(*)(\fBvoid\fP *))"
+.br
+.ti -1c
+.RI "int \fBsk_insert\fP (\fB_STACK\fP *sk, \fBvoid\fP *data, int where)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_delete\fP (\fB_STACK\fP *st, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_delete_ptr\fP (\fB_STACK\fP *st, \fBvoid\fP *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBsk_find\fP (\fB_STACK\fP *st, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBsk_find_ex\fP (\fB_STACK\fP *st, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBsk_push\fP (\fB_STACK\fP *st, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBsk_unshift\fP (\fB_STACK\fP *st, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_shift\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBsk_pop\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_zero\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fB_STACK\fP * \fBsk_dup\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBsk_sort\fP (\fB_STACK\fP *st)"
+.br
+.ti -1c
+.RI "int \fBsk_is_sorted\fP (const \fB_STACK\fP *st)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int(*)(const \fBvoid\fP *, const \fBvoid\fP *) \fBsk_set_cmp_func\fP (\fB_STACK\fP *sk, int(*\fBc\fP)(const \fBvoid\fP *, const \fBvoid\fP *))"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define M_sk_num(sk)   ((sk) ? (sk)\->num:\-1)"
+
+.PP
+Definition at line 74 of file include/openssl/stack\&.h\&.
+.SS "#define M_sk_value(sk, n)   ((sk) ? (sk)\->data[n] : NULL)"
+
+.PP
+Definition at line 75 of file include/openssl/stack\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBstack_st\fP  \fB_STACK\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fB_STACK\fP* sk_deep_copy (\fB_STACK\fP *, \fBvoid\fP **)(void *, \fBvoid\fP(*)(\fBvoid\fP *))"
+
+.SS "\fBvoid\fP* sk_delete (\fB_STACK\fP * st, int loc)"
+
+.SS "\fBvoid\fP* sk_delete_ptr (\fB_STACK\fP * st, \fBvoid\fP * p)"
+
+.SS "\fB_STACK\fP* sk_dup (\fB_STACK\fP * st)"
+
+.SS "int sk_find (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.SS "int sk_find_ex (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP sk_free (\fB_STACK\fP *)"
+
+.SS "int sk_insert (\fB_STACK\fP * sk, \fBvoid\fP * data, int where)"
+
+.SS "int sk_is_sorted (const \fB_STACK\fP * st)"
+
+.SS "\fB_STACK\fP* sk_new (int(*)(const \fBvoid\fP *, const \fBvoid\fP *) cmp)"
+
+.SS "\fB_STACK\fP* sk_new_null (\fBvoid\fP)"
+
+.SS "int sk_num (const \fB_STACK\fP *)"
+
+.SS "\fBvoid\fP* sk_pop (\fB_STACK\fP * st)"
+
+.SS "\fBvoid\fP sk_pop_free (\fB_STACK\fP * st, \fBvoid\fP(*)(\fBvoid\fP *) func)"
+
+.SS "int sk_push (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP* sk_set (\fB_STACK\fP *, int, \fBvoid\fP *)"
+
+.SS "\fBvoid\fP* sk_shift (\fB_STACK\fP * st)"
+
+.SS "\fBvoid\fP sk_sort (\fB_STACK\fP * st)"
+
+.SS "int sk_unshift (\fB_STACK\fP * st, \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP* sk_value (const \fB_STACK\fP *, int)"
+
+.SS "\fBvoid\fP sk_zero (\fB_STACK\fP * st)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "int(*)(const \fBvoid\fP *, const \fBvoid\fP *) sk_set_cmp_func(\fB_STACK\fP *sk, int(*\fBc\fP)(const \fBvoid\fP *, const \fBvoid\fP *))"
+
+.PP
+Definition at line 97 of file include/openssl/stack\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

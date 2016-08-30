@@ -1,0 +1,122 @@
+.TH "s2n-master/tls/s2n_alerts.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_alerts.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_process_alert_fragment\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_queue_writer_close_alert_warning\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_queue_reader_unsupported_protocol_version_alert\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_process_alert_fragment (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 59 of file s2n_alerts\&.c\&.
+.PP
+.nf
+60 {
+61     if (s2n_stuffer_data_available(&conn->alert_in) == 2) {
+62         S2N_ERROR(S2N_ERR_ALERT_PRESENT);
+63     }
+64 
+65     while (s2n_stuffer_data_available(&conn->in)) {
+66         uint8_t bytes_required = 2;
+67 
+68         /* Alerts are two bytes long, but can still be fragmented or coalesced */
+69         if (s2n_stuffer_data_available(&conn->alert_in) == 1) {
+70             bytes_required = 1;
+71         }
+72 
+73         int bytes_to_read = MIN(bytes_required, s2n_stuffer_data_available(&conn->in));
+74 
+75         GUARD(s2n_stuffer_copy(&conn->in, &conn->alert_in, bytes_to_read));
+76 
+77         if (s2n_stuffer_data_available(&conn->alert_in) == 2) {
+78             conn->closed = 1;
+79 
+80             /* Close notifications are handled as shutdowns */
+81             if (conn->alert_in_data[1] == S2N_TLS_ALERT_CLOSE_NOTIFY) {
+82                 return 0;
+83             }
+84 
+85             /* Expire any cached session on an error alert */
+86             if (s2n_is_caching_enabled(conn->config) && conn->session_id_len) {
+87                 conn->config->cache_delete(conn->config->cache_delete_data, conn->session_id, conn->session_id_len);
+88             }
+89 
+90             /* All other alerts are treated as fatal errors (even warnings) */
+91             S2N_ERROR(S2N_ERR_ALERT);
+92         }
+93     }
+94 
+95     return 0;
+96 }
+.fi
+.SS "int s2n_queue_writer_close_alert_warning (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 98 of file s2n_alerts\&.c\&.
+.PP
+.nf
+99 {
+100     uint8_t alert[2];
+101     struct s2n_blob out = {\&.data = alert,\&.size = sizeof(alert) };
+102 
+103     /* If there is an alert pending or we've already sent a close_notify, do nothing */
+104     if (s2n_stuffer_data_available(&conn->writer_alert_out) || conn->close_notify_queued) {
+105         return 0;
+106     }
+107 
+108     alert[0] = S2N_TLS_ALERT_LEVEL_WARNING;
+109     alert[1] = S2N_TLS_ALERT_CLOSE_NOTIFY;
+110 
+111     GUARD(s2n_stuffer_write(&conn->writer_alert_out, &out));
+112     conn->close_notify_queued = 1;
+113 
+114     return 0;
+115 }
+.fi
+.SS "int s2n_queue_reader_unsupported_protocol_version_alert (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 117 of file s2n_alerts\&.c\&.
+.PP
+.nf
+118 {
+119     uint8_t alert[2];
+120     struct s2n_blob out = {\&.data = alert,\&.size = sizeof(alert) };
+121 
+122     /* If there is an alert pending, do nothing */
+123     if (s2n_stuffer_data_available(&conn->reader_alert_out)) {
+124         return 0;
+125     }
+126 
+127     alert[0] = S2N_TLS_ALERT_LEVEL_FATAL;
+128     alert[1] = S2N_TLS_ALERT_PROTOCOL_VERSION;
+129 
+130     GUARD(s2n_stuffer_write(&conn->reader_alert_out, &out));
+131 
+132     return 0;
+133 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

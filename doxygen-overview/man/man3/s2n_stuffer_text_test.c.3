@@ -1,0 +1,101 @@
+.TH "s2n-master/tests/unit/s2n_stuffer_text_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_stuffer_text_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 23 of file s2n_stuffer_text_test\&.c\&.
+.PP
+.nf
+24 {
+25 #if 0
+26     char pad[5120];
+27     char text[] = "    This is some text\r\n\tmore text";
+28     char tokenpad[6];
+29     char fields[] = "one,two,three";
+30     char out[1024];
+31     char c;
+32     struct s2n_stuffer stuffer, token;
+33     struct s2n_blob pblob, tblob;
+34 
+35     BEGIN_TEST();
+36 
+37     /* Create a stuffer */
+38     EXPECT_SUCCESS(s2n_blob_init(&tblob, (uint8_t *)tokenpad, sizeof(tokenpad)));
+39     EXPECT_SUCCESS(s2n_stuffer_init(&token, &tblob));
+40     EXPECT_SUCCESS(s2n_blob_init(&pblob, (uint8_t *)pad, sizeof(pad)));
+41     EXPECT_SUCCESS(s2n_stuffer_init(&stuffer, &pblob));
+42     EXPECT_SUCCESS(s2n_stuffer_write_text(&stuffer, text, sizeof(text)));
+43 
+44     /* Skip 4 bytes of whitespace */
+45     EXPECT_EQUAL(s2n_stuffer_skip_whitespace(&stuffer), 4);
+46 
+47     /* Skip 4 bytes of whitespace */
+48     EXPECT_SUCCESS(s2n_stuffer_peek_char(&stuffer, &c));
+49     EXPECT_EQUAL(c, 'T');
+50 
+51     /* Read the next 17 chars */
+52     EXPECT_SUCCESS(s2n_stuffer_read_text(&stuffer, out, 17));
+53     EXPECT_EQUAL(memcmp(out, "This is some text", 17), 0);
+54 
+55     /* Skip 3 bytes of whitespace */
+56     EXPECT_EQUAL(s2n_stuffer_skip_whitespace(&stuffer), 3);
+57 
+58     /* Read the next 10 chars (including the terminating zero) */
+59     EXPECT_SUCCESS(s2n_stuffer_read_text(&stuffer, out, 10));
+60     EXPECT_EQUAL(memcmp(out, "more text", 10), 0);
+61 
+62     /* Test end of stream behaviour */
+63     EXPECT_SUCCESS(s2n_stuffer_skip_whitespace(&stuffer));
+64     EXPECT_FAILURE(s2n_stuffer_peek_char(&stuffer, &c));
+65     EXPECT_FAILURE(s2n_stuffer_read_char(&stuffer, &c));
+66 
+67     /* Start a new buffer */
+68     EXPECT_SUCCESS(s2n_stuffer_init(&stuffer, &pblob));
+69     EXPECT_SUCCESS(s2n_stuffer_write_text(&stuffer, fields, strlen(fields)));
+70 
+71     EXPECT_SUCCESS(s2n_stuffer_read_token(&stuffer, &token, ','));
+72     EXPECT_EQUAL(memcmp("one", token\&.blob\&.data, 3), 0);
+73 
+74     EXPECT_SUCCESS(s2n_stuffer_init(&token, &tblob));
+75     EXPECT_SUCCESS(s2n_stuffer_read_token(&stuffer, &token, ','));
+76     EXPECT_EQUAL(memcmp("two", token\&.blob\&.data, 3), 0);
+77 
+78     /* Check for end-of-stream termination */
+79     EXPECT_SUCCESS(s2n_stuffer_init(&token, &tblob));
+80     EXPECT_SUCCESS(s2n_stuffer_read_token(&stuffer, &token, ','));
+81     EXPECT_EQUAL(memcmp("three", token\&.blob\&.data, 5), 0);
+82 
+83     END_TEST();
+84 #endif
+85     return 0;
+86 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

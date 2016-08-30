@@ -1,0 +1,216 @@
+.TH "s2n-master/tests/unit/s2n_cbc_verify_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_cbc_verify_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <inttypes\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_prf\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 116 of file s2n_cbc_verify_test\&.c\&.
+.PP
+.nf
+117 {
+118     struct s2n_connection *conn;
+119     uint8_t mac_key[] = "sample mac key";
+120     uint8_t fragment[S2N_SMALL_FRAGMENT_LENGTH];
+121     uint8_t random_data[S2N_SMALL_FRAGMENT_LENGTH];
+122     struct s2n_hmac_state check_mac, record_mac;
+123     struct s2n_blob r = {\&.data = random_data, \&.size = sizeof(random_data)};
+124 
+125     BEGIN_TEST();
+126 
+127     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+128     EXPECT_SUCCESS(s2n_get_urandom_data(&r));
+129 
+130     /* Emulate TLS1\&.2 */
+131     conn->actual_protocol_version = S2N_TLS12;
+132 
+133     /* Try every 16 bytes to simulate block alignments */
+134     for (int i = 288; i < S2N_SMALL_FRAGMENT_LENGTH; i += 16) {
+135 
+136         EXPECT_SUCCESS(s2n_hmac_init(&record_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+137 
+138         memcpy(fragment, random_data, i - 20 - 1);
+139         EXPECT_SUCCESS(s2n_hmac_update(&record_mac, fragment, i - 20 - 1));
+140         EXPECT_SUCCESS(s2n_hmac_digest(&record_mac, fragment + (i - 20 - 1), 20));
+141 
+142         /* Start out with zero byte padding */
+143         fragment[i - 1] = 0;
+144         struct s2n_blob decrypted = { \&.data = fragment, \&.size = i};
+145 
+146         uint64_t timings[10001];
+147         for (int t = 0; t < 10001; t++) {
+148             EXPECT_SUCCESS(s2n_hmac_init(&check_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+149 
+150             uint64_t before = rdtsc();
+151             EXPECT_SUCCESS(s2n_verify_cbc(conn, &check_mac, &decrypted)); 
+152             uint64_t after = rdtsc();
+153 
+154             timings[ t ] = (after - before);
+155         }
+156 
+157         uint64_t good_median, good_avg, good_stddev, good_variance, good_count;
+158         summarize(timings, 10001, &good_count, &good_avg, &good_median, &good_stddev, &good_variance);
+159 
+160         for (int t = 0; t < 10001; t++) {
+161             EXPECT_SUCCESS(s2n_hmac_init(&check_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+162 
+163             uint64_t before = rdtsc();
+164             EXPECT_SUCCESS(s2n_verify_cbc(conn, &check_mac, &decrypted)); 
+165             uint64_t after = rdtsc();
+166 
+167             timings[ t ] = (after - before);
+168         }
+169 
+170         summarize(timings, 10001, &good_count, &good_avg, &good_median, &good_stddev, &good_variance);
+171 
+172         /* Set up a record so that the MAC fails */
+173         EXPECT_SUCCESS(s2n_hmac_init(&record_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+174 
+175         /* Set up 254 bytes of padding */
+176         for (int j = 1; j < 256; j++) {
+177             fragment[i - j] = 254;
+178         }
+179 
+180         memcpy(fragment, random_data, i - 20 - 255);
+181         EXPECT_SUCCESS(s2n_hmac_update(&record_mac, fragment, i - 20 - 255));
+182         EXPECT_SUCCESS(s2n_hmac_digest(&record_mac, fragment + (i - 20 - 255), 20));
+183 
+184         /* Verify that the record would pass: the MAC and padding are ok */
+185         EXPECT_SUCCESS(s2n_hmac_init(&check_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+186         EXPECT_SUCCESS(s2n_verify_cbc(conn, &check_mac, &decrypted)); 
+187 
+188         /* Corrupt a HMAC byte */
+189         fragment[i - 256]++;
+190 
+191         for (int t = 0; t < 10001; t++) {
+192             EXPECT_SUCCESS(s2n_hmac_init(&check_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+193 
+194             uint64_t before = rdtsc();
+195             EXPECT_FAILURE(s2n_verify_cbc(conn, &check_mac, &decrypted)); 
+196             uint64_t after = rdtsc();
+197 
+198             timings[ t ] = (after - before);
+199         }
+200         
+201         uint64_t mac_median, mac_avg, mac_stddev, mac_variance, mac_count;
+202         summarize(timings, 10001, &mac_count, &mac_avg, &mac_median, &mac_stddev, &mac_variance);
+203 
+204         /* Use a simple 3 sigma test for the median distance from the good */
+205         int64_t lo = good_median - (3 * good_stddev);
+206         int64_t hi = good_median + (3 * good_stddev);
+207 
+208         if ((int64_t) mac_median < lo || (int64_t) mac_median > hi) {
+209             printf("\n\nRecord size: %d\nGood Median: %" PRIu64 " (Avg: %" PRIu64 " Stddev: %" PRIu64 ")\n"
+210                    "Bad Median: %" PRIu64 " (Avg: %" PRIu64 " Stddev: %" PRIu64 ")\n\n", 
+211                     i, good_median, good_avg, good_stddev, mac_median, mac_avg, mac_stddev);
+212             FAIL();
+213         }
+214 
+215         /* Set up the record so that the HMAC passes, and the padding fails */
+216         EXPECT_SUCCESS(s2n_hmac_init(&record_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+217 
+218         /* Set up 15 bytes of padding */
+219         for (int j = 1; j < 17; j++) {
+220             fragment[i - j] = 15;
+221         }
+222 
+223         memcpy(fragment, random_data, i - 20 - 16);
+224         EXPECT_SUCCESS(s2n_hmac_update(&record_mac, fragment, i - 20 - 16));
+225         EXPECT_SUCCESS(s2n_hmac_digest(&record_mac, fragment + (i - 20 - 16), 20));
+226 
+227         /* Verify that the record would pass: the MAC and padding are ok */
+228         EXPECT_SUCCESS(s2n_hmac_init(&check_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+229         EXPECT_SUCCESS(s2n_verify_cbc(conn, &check_mac, &decrypted)); 
+230 
+231         /* Now corrupt a padding byte */
+232         fragment[i - 10]++;
+233 
+234         for (int t = 0; t < 10001; t++) {
+235             EXPECT_SUCCESS(s2n_hmac_init(&check_mac, S2N_HMAC_SHA1, mac_key, sizeof(mac_key)));
+236 
+237             uint64_t before = rdtsc();
+238             EXPECT_FAILURE(s2n_verify_cbc(conn, &check_mac, &decrypted)); 
+239             uint64_t after = rdtsc();
+240 
+241             timings[ t ] = (after - before);
+242         }
+243         
+244         uint64_t pad_median, pad_avg, pad_stddev, pad_variance, pad_count;
+245         summarize(timings, 10001, &pad_count, &pad_avg, &pad_median, &pad_stddev, &pad_variance);
+246 
+247         /* Use a simple 3 sigma test for the median from the good */
+248         lo = good_median - (good_stddev);
+249         hi = good_median + (good_stddev);
+250 
+251         if ((int64_t) pad_median < lo || (int64_t) pad_median > hi) {
+252             printf("\n\nRecord size: %d\nGood Median: %" PRIu64 " (Avg: %" PRIu64 " Stddev: %" PRIu64 ")\n"
+253                    "Bad Median: %" PRIu64 " (Avg: %" PRIu64 " Stddev: %" PRIu64 ")\n\n", 
+254                     i, good_median, good_avg, good_stddev, pad_median, pad_avg, pad_stddev);
+255             FAIL();
+256         }
+257  
+258         /* Use a more sensitive 0\&.5 sigma test for the MAC error from the padding error\&. This is the
+259          * the difference that attackers can exploit\&.
+260          */
+261         lo = mac_median - (mac_stddev / 2);
+262         hi = mac_median + (mac_stddev / 2);
+263 
+264         if ((int64_t) pad_median < lo || (int64_t) pad_median > hi) {
+265             printf("\n\nRecord size: %dMAC Median: %" PRIu64 " (Avg: %" PRIu64 " Stddev: %" PRIu64 ")\n"
+266                    "PAD Median: %" PRIu64 " (Avg: %" PRIu64 " Stddev: %" PRIu64 ")\n\n", 
+267                     i, mac_median, mac_avg, mac_stddev, pad_median, pad_avg, pad_stddev);
+268             FAIL();
+269         }
+270     }
+271     EXPECT_SUCCESS(s2n_connection_free(conn));
+272 
+273     END_TEST();
+274 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

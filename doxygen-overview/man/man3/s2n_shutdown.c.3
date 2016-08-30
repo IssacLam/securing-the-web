@@ -1,0 +1,74 @@
+.TH "s2n-master/tls/s2n_shutdown.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_shutdown.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_alerts\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_shutdown\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *more)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_shutdown (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * more)"
+
+.PP
+Definition at line 24 of file s2n_shutdown\&.c\&.
+.PP
+.nf
+25 {
+26     notnull_check(conn);
+27     notnull_check(more);
+28 
+29     /* Treat this call as a no-op if already wiped */
+30     if (conn->readfd == -1 && conn->writefd == -1) {
+31         return 0;
+32     }
+33 
+34     uint64_t elapsed;
+35     GUARD(s2n_timer_elapsed(conn->config, &conn->write_timer, &elapsed));
+36     if (elapsed < conn->delay) {
+37         S2N_ERROR(S2N_ERR_SHUTDOWN_PAUSED);
+38     }
+39 
+40     /* Queue our close notify, once\&. Use warning level so clients don't give up */
+41     GUARD(s2n_queue_writer_close_alert_warning(conn));
+42 
+43     /* Write it */
+44     GUARD(s2n_flush(conn, more));
+45 
+46     /* Assume caller isn't interested in pending incoming data */
+47     if (conn->in_status == PLAINTEXT) {
+48         GUARD(s2n_stuffer_wipe(&conn->header_in));
+49         GUARD(s2n_stuffer_wipe(&conn->in));
+50         conn->in_status = ENCRYPTED;
+51     }
+52 
+53     /* Fails with S2N_ERR_SHUTDOWN_RECORD_TYPE or S2N_ERR_ALERT on receipt of anything but a close_notify */
+54     GUARD(s2n_recv_close_notify(conn, more));
+55 
+56     /* Wipe the connection */
+57     GUARD(s2n_connection_wipe(conn));
+58 
+59     return 0;
+60 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

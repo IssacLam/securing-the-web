@@ -1,0 +1,238 @@
+.TH "s2n-master/tests/testlib/s2n_stuffer_hex.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/testlib/s2n_stuffer_hex.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_stuffer_read_hex\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_stuffer\fP *out, uint32_t n)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_hex\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_stuffer\fP *in, uint32_t n)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint64_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint64_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint32_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint32_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint16_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint16_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint8_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint8_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint64_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint64_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint32_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint32_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint16_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint16_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint8_hex\fP (struct \fBs2n_stuffer\fP *stuffer, uint8_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_alloc_ro_from_hex_string\fP (struct \fBs2n_stuffer\fP *stuffer, const char *str)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_stuffer_read_hex (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_stuffer\fP * out, uint32_t n)"
+
+.PP
+Definition at line 59 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+60 {
+61     gte_check(s2n_stuffer_space_remaining(out), n);
+62 
+63     for (int i = 0; i < n; i++) {
+64         uint8_t c;
+65         GUARD(s2n_stuffer_read_uint8_hex(stuffer, &c));
+66         GUARD(s2n_stuffer_write_uint8(out, c));
+67     }
+68 
+69     return 0;
+70 }
+.fi
+.SS "int s2n_stuffer_write_hex (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_stuffer\fP * in, uint32_t n)"
+
+.PP
+Definition at line 72 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+73 {
+74     gte_check(s2n_stuffer_space_remaining(stuffer), n * 2);
+75 
+76     for (int i = 0; i < n; i++) {
+77         uint8_t c;
+78         GUARD(s2n_stuffer_read_uint8(in, &c));
+79         GUARD(s2n_stuffer_write_uint8_hex(stuffer, c));
+80     }
+81 
+82     return 0;
+83 }
+.fi
+.SS "int s2n_stuffer_read_uint64_hex (struct \fBs2n_stuffer\fP * stuffer, uint64_t * u)"
+
+.PP
+Definition at line 85 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+86 {
+87     return s2n_stuffer_read_n_bits_hex(stuffer, 64, u);
+88 }
+.fi
+.SS "int s2n_stuffer_read_uint32_hex (struct \fBs2n_stuffer\fP * stuffer, uint32_t * u)"
+
+.PP
+Definition at line 90 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+91 {
+92     uint64_t u64;
+93 
+94     GUARD(s2n_stuffer_read_n_bits_hex(stuffer, 32, &u64));
+95 
+96     *u = u64 & 0xffffffff;
+97 
+98     return 0;
+99 }
+.fi
+.SS "int s2n_stuffer_read_uint16_hex (struct \fBs2n_stuffer\fP * stuffer, uint16_t * u)"
+
+.PP
+Definition at line 101 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+102 {
+103     uint64_t u64;
+104 
+105     GUARD(s2n_stuffer_read_n_bits_hex(stuffer, 16, &u64));
+106 
+107     *u = u64 & 0xffff;
+108 
+109     return 0;
+110 }
+.fi
+.SS "int s2n_stuffer_read_uint8_hex (struct \fBs2n_stuffer\fP * stuffer, uint8_t * u)"
+
+.PP
+Definition at line 112 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+113 {
+114     uint64_t u64;
+115 
+116     GUARD(s2n_stuffer_read_n_bits_hex(stuffer, 8, &u64));
+117 
+118     *u = u64 & 0xff;
+119 
+120     return 0;
+121 }
+.fi
+.SS "int s2n_stuffer_write_uint64_hex (struct \fBs2n_stuffer\fP * stuffer, uint64_t u)"
+
+.PP
+Definition at line 143 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+144 {
+145     return s2n_stuffer_write_n_bits_hex(stuffer, 64, u);
+146 }
+.fi
+.SS "int s2n_stuffer_write_uint32_hex (struct \fBs2n_stuffer\fP * stuffer, uint32_t u)"
+
+.PP
+Definition at line 148 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+149 {
+150     return s2n_stuffer_write_n_bits_hex(stuffer, 32, u);
+151 }
+.fi
+.SS "int s2n_stuffer_write_uint16_hex (struct \fBs2n_stuffer\fP * stuffer, uint16_t u)"
+
+.PP
+Definition at line 153 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+154 {
+155     return s2n_stuffer_write_n_bits_hex(stuffer, 16, u);
+156 }
+.fi
+.SS "int s2n_stuffer_write_uint8_hex (struct \fBs2n_stuffer\fP * stuffer, uint8_t u)"
+
+.PP
+Definition at line 158 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+159 {
+160     return s2n_stuffer_write_n_bits_hex(stuffer, 8, u);
+161 }
+.fi
+.SS "int s2n_stuffer_alloc_ro_from_hex_string (struct \fBs2n_stuffer\fP * stuffer, const char * str)"
+
+.PP
+Definition at line 163 of file s2n_stuffer_hex\&.c\&.
+.PP
+.nf
+164 {
+165     if (strlen(str) % 2) {
+166         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+167     }
+168 
+169     GUARD(s2n_stuffer_alloc(stuffer, strlen(str) / 2));
+170 
+171     for (int i = 0; i < strlen(str); i += 2) {
+172         uint8_t u = 0;
+173 
+174         if (str[i] >= '0' && str[i] <= '9') {
+175             u = str[i] - '0';
+176         } else if (str[i] >= 'a' && str[i] <= 'f') {
+177             u = str[i] - 'a' + 10;
+178         } else if (str[i] >= 'A' && str[i] <= 'F') {
+179             u = str[i] - 'A' + 10;
+180         } else {
+181             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+182         }
+183         u <<= 4;
+184 
+185         if (str[i + 1] >= '0' && str[i + 1] <= '9') {
+186             u |= str[i + 1] - '0';
+187         } else if (str[i + 1] >= 'a' && str[i + 1] <= 'f') {
+188             u |= str[i + 1] - 'a' + 10;
+189         } else if (str[i + 1] >= 'A' && str[i + 1] <= 'F') {
+190             u |= str[i + 1] - 'A' + 10;
+191         } else {
+192             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+193         }
+194 
+195         GUARD(s2n_stuffer_write_uint8(stuffer, u));
+196     }
+197 
+198     return 0;
+199 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

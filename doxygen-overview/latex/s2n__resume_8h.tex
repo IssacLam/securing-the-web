@@ -1,0 +1,249 @@
+\hypertarget{s2n__resume_8h}{}\section{s2n-\/master/tls/s2n\+\_\+resume.h File Reference}
+\label{s2n__resume_8h}\index{s2n-\/master/tls/s2n\+\_\+resume.\+h@{s2n-\/master/tls/s2n\+\_\+resume.\+h}}
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+resume.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__resume_8h_a412d8b03d50687fa6300095b01ef37d7}{S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON}~1
+\item 
+\#define \hyperlink{s2n__resume_8h_a4baad051707a9a9d0dc7ade0199d10af}{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS}~21600000000
+\item 
+\#define \hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES}~(1 + 8 + 1 + \hyperlink{tls_2s2n__crypto_8h_aad5e2a880d4b55cf5450393843a17cf8}{S2\+N\+\_\+\+T\+L\+S\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+T\+E\+\_\+\+L\+EN} + \hyperlink{tls_2s2n__crypto_8h_a3e2918bb353cd7e9f8bb6aab17214d98}{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+C\+R\+E\+T\+\_\+\+L\+EN})
+\item 
+\#define \hyperlink{s2n__resume_8h_a63cbc1e9b18658154ef48f5efc279e36}{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL}~(6 $\ast$ 60 $\ast$ 60)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__resume_8h_af0cd9536cbece4a1bcebb3d69f8d4fd1}{s2n\+\_\+is\+\_\+caching\+\_\+enabled} (struct \hyperlink{structs2n__config}{s2n\+\_\+config} $\ast$\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config})
+\item 
+int \hyperlink{s2n__resume_8h_aef2e99be4e9b1782b9d208ce80f02842}{s2n\+\_\+resume\+\_\+from\+\_\+cache} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__resume_8h_ad19683b9eb6d7635dc7d808d52744deb}{s2n\+\_\+store\+\_\+to\+\_\+cache} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON@{S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON@{S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON}{S2N_SERIALIZED_FORMAT_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+S\+E\+R\+I\+A\+L\+I\+Z\+E\+D\+\_\+\+F\+O\+R\+M\+A\+T\+\_\+\+V\+E\+R\+S\+I\+ON~1}\hypertarget{s2n__resume_8h_a412d8b03d50687fa6300095b01ef37d7}{}\label{s2n__resume_8h_a412d8b03d50687fa6300095b01ef37d7}
+
+
+Definition at line 22 of file s2n\+\_\+resume.\+h.
+
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS@{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS}}
+\index{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS@{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS}{S2N_STATE_LIFETIME_IN_NANOS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+I\+F\+E\+T\+I\+M\+E\+\_\+\+I\+N\+\_\+\+N\+A\+N\+OS~21600000000}\hypertarget{s2n__resume_8h_a4baad051707a9a9d0dc7ade0199d10af}{}\label{s2n__resume_8h_a4baad051707a9a9d0dc7ade0199d10af}
+
+
+Definition at line 23 of file s2n\+\_\+resume.\+h.
+
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES@{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES}}
+\index{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES@{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES}{S2N_STATE_SIZE_IN_BYTES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+S\+T\+A\+T\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+I\+N\+\_\+\+B\+Y\+T\+ES~(1 + 8 + 1 + {\bf S2\+N\+\_\+\+T\+L\+S\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+T\+E\+\_\+\+L\+EN} + {\bf S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+C\+R\+E\+T\+\_\+\+L\+EN})}\hypertarget{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{}\label{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}
+
+
+Definition at line 24 of file s2n\+\_\+resume.\+h.
+
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL@{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL}}
+\index{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL@{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL}{S2N_TLS_SESSION_CACHE_TTL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+C\+A\+C\+H\+E\+\_\+\+T\+TL~(6 $\ast$ 60 $\ast$ 60)}\hypertarget{s2n__resume_8h_a63cbc1e9b18658154ef48f5efc279e36}{}\label{s2n__resume_8h_a63cbc1e9b18658154ef48f5efc279e36}
+
+
+Definition at line 25 of file s2n\+\_\+resume.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!s2n\+\_\+is\+\_\+caching\+\_\+enabled@{s2n\+\_\+is\+\_\+caching\+\_\+enabled}}
+\index{s2n\+\_\+is\+\_\+caching\+\_\+enabled@{s2n\+\_\+is\+\_\+caching\+\_\+enabled}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+is\+\_\+caching\+\_\+enabled(struct s2n\+\_\+config $\ast$config)}{s2n_is_caching_enabled(struct s2n_config *config)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+is\+\_\+caching\+\_\+enabled (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+config} $\ast$}]{config}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__resume_8h_af0cd9536cbece4a1bcebb3d69f8d4fd1}{}\label{s2n__resume_8h_af0cd9536cbece4a1bcebb3d69f8d4fd1}
+
+
+Definition at line 25 of file s2n\+\_\+resume.\+c.
+
+
+\begin{DoxyCode}
+26 \{
+27     \textcolor{comment}{/* Caching is enabled iff all of the caching callbacks are set */}
+28     \textcolor{keywordflow}{return} config->\hyperlink{structs2n__config_a346cfdf0a283437f5de8ae4cf2aeec4e}{cache\_store} && config->\hyperlink{structs2n__config_a3dd5ba99f3a9a867c2fea78d660b114a}{cache\_retrieve} && config->
+      \hyperlink{structs2n__config_aee07b55c829f3dc3917616e17ae65c53}{cache\_delete};
+29 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h_af0cd9536cbece4a1bcebb3d69f8d4fd1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h_af0cd9536cbece4a1bcebb3d69f8d4fd1_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!s2n\+\_\+resume\+\_\+from\+\_\+cache@{s2n\+\_\+resume\+\_\+from\+\_\+cache}}
+\index{s2n\+\_\+resume\+\_\+from\+\_\+cache@{s2n\+\_\+resume\+\_\+from\+\_\+cache}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+resume\+\_\+from\+\_\+cache(struct s2n\+\_\+connection $\ast$conn)}{s2n_resume_from_cache(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+resume\+\_\+from\+\_\+cache (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__resume_8h_aef2e99be4e9b1782b9d208ce80f02842}{}\label{s2n__resume_8h_aef2e99be4e9b1782b9d208ce80f02842}
+
+
+Definition at line 94 of file s2n\+\_\+resume.\+c.
+
+
+\begin{DoxyCode}
+95 \{
+96     uint8\_t data[\hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2N\_STATE\_SIZE\_IN\_BYTES}];
+97     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} entry = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data},.size = 
+      \hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2N\_STATE\_SIZE\_IN\_BYTES} \};
+98     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} from;
+99     uint64\_t size;
+100 
+101     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len} == 0 || conn->\hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len} > 
+      \hyperlink{tls_2s2n__crypto_8h_a29125d7c5bb81700b27164fbc9c92746}{S2N\_TLS\_SESSION\_ID\_MAX\_LEN}) \{
+102         \textcolor{keywordflow}{return} -1;
+103     \}
+104 
+105     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&from, &entry));
+106     uint8\_t *state = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(&from, entry.
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+107     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(state);
+108 
+109     size = \hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2N\_STATE\_SIZE\_IN\_BYTES};
+110     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->\hyperlink{structs2n__config_a3dd5ba99f3a9a867c2fea78d660b114a}{cache\_retrieve}(conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->
+      \hyperlink{structs2n__config_a98a4dc336df5f8d09c3163968a61f6f2}{cache\_retrieve\_data}, conn->\hyperlink{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}{session\_id}, conn->
+      \hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len}, state, &size)) \{
+111         \textcolor{keywordflow}{return} -1;
+112     \}
+113 
+114     \textcolor{keywordflow}{if} (size != \hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2N\_STATE\_SIZE\_IN\_BYTES}) \{
+115         \textcolor{keywordflow}{return} -1;
+116     \}
+117 
+118     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_deserialize\_resumption\_state(conn, &from));
+119 
+120     \textcolor{keywordflow}{return} 0;
+121 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h_aef2e99be4e9b1782b9d208ce80f02842_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h_aef2e99be4e9b1782b9d208ce80f02842_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}!s2n\+\_\+store\+\_\+to\+\_\+cache@{s2n\+\_\+store\+\_\+to\+\_\+cache}}
+\index{s2n\+\_\+store\+\_\+to\+\_\+cache@{s2n\+\_\+store\+\_\+to\+\_\+cache}!s2n\+\_\+resume.\+h@{s2n\+\_\+resume.\+h}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+store\+\_\+to\+\_\+cache(struct s2n\+\_\+connection $\ast$conn)}{s2n_store_to_cache(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+store\+\_\+to\+\_\+cache (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__resume_8h_ad19683b9eb6d7635dc7d808d52744deb}{}\label{s2n__resume_8h_ad19683b9eb6d7635dc7d808d52744deb}
+
+
+Definition at line 123 of file s2n\+\_\+resume.\+c.
+
+
+\begin{DoxyCode}
+124 \{
+125     uint8\_t data[\hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2N\_STATE\_SIZE\_IN\_BYTES}];
+126     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} entry = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data},.size = 
+      \hyperlink{s2n__resume_8h_ab5cc5bca1c3300989b59893db51fb3bb}{S2N\_STATE\_SIZE\_IN\_BYTES} \};
+127     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} to;
+128 
+129     \textcolor{keywordflow}{if} (!\hyperlink{s2n__resume_8c_af0cd9536cbece4a1bcebb3d69f8d4fd1}{s2n\_is\_caching\_enabled}(conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config})) \{
+130         \textcolor{keywordflow}{return} -1;
+131     \}
+132 
+133     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len} == 0 || conn->\hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len} > 
+      \hyperlink{tls_2s2n__crypto_8h_a29125d7c5bb81700b27164fbc9c92746}{S2N\_TLS\_SESSION\_ID\_MAX\_LEN}) \{
+134         \textcolor{keywordflow}{return} -1;
+135     \}
+136 
+137     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&to, &entry));
+138     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_serialize\_resumption\_state(conn, &to));
+139 
+140     \textcolor{comment}{/* Store to the cache */}
+141     conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->\hyperlink{structs2n__config_a346cfdf0a283437f5de8ae4cf2aeec4e}{cache\_store}(conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->
+      \hyperlink{structs2n__config_a239fa5479daf6b4ec8ec1247e4d5d594}{cache\_store\_data}, \hyperlink{s2n__resume_8h_a63cbc1e9b18658154ef48f5efc279e36}{S2N\_TLS\_SESSION\_CACHE\_TTL}, conn->
+      \hyperlink{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}{session\_id}, conn->\hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\_id\_len}, entry.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, entry.
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+142 
+143     \textcolor{keywordflow}{return} 0;
+144 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__resume_8h_ad19683b9eb6d7635dc7d808d52744deb_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=329pt]{s2n__resume_8h_ad19683b9eb6d7635dc7d808d52744deb_icgraph}
+\end{center}
+\end{figure}
+
+

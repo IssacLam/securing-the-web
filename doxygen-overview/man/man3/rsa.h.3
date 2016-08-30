@@ -1,0 +1,1706 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/rsa.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/rsa.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/asn1\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBrsa_meth_st\fP"
+.br
+.ti -1c
+.RI "struct \fBrsa_st\fP"
+.br
+.ti -1c
+.RI "struct \fBrsa_pss_params_st\fP"
+.br
+.ti -1c
+.RI "struct \fBrsa_oaep_params_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOPENSSL_RSA_MAX_MODULUS_BITS\fP   16384"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_RSA_SMALL_MODULUS_BITS\fP   3072"
+.br
+.ti -1c
+.RI "#define \fBOPENSSL_RSA_MAX_PUBEXP_BITS\fP   64"
+.br
+.ti -1c
+.RI "#define \fBRSA_3\fP   0x3L"
+.br
+.ti -1c
+.RI "#define \fBRSA_F4\fP   0x10001L"
+.br
+.ti -1c
+.RI "#define \fBRSA_METHOD_FLAG_NO_CHECK\fP"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_CACHE_PUBLIC\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_CACHE_PRIVATE\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_BLINDING\fP   0x0008"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_THREAD_SAFE\fP   0x0010"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_EXT_PKEY\fP   0x0020"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_SIGN_VER\fP   0x0040"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_NO_BLINDING\fP   0x0080"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_NO_CONSTTIME\fP   0x0100"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_rsa_padding\fP(ctx,  pad)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_rsa_padding\fP(ctx,  ppad)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_rsa_pss_saltlen\fP(ctx,  \fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_rsa_pss_saltlen\fP(ctx,  plen)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_rsa_keygen_bits\fP(ctx,  \fBbits\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_rsa_keygen_pubexp\fP(ctx,  pubexp)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_rsa_mgf1_md\fP(ctx,  md)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_rsa_oaep_md\fP(ctx,  md)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_rsa_mgf1_md\fP(ctx,  pmd)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_rsa_oaep_md\fP(ctx,  pmd)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set0_rsa_oaep_label\fP(ctx,  l,  llen)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get0_rsa_oaep_label\fP(ctx,  l)          "
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_PADDING\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 1)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_PSS_SALTLEN\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 2)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_KEYGEN_BITS\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 3)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_KEYGEN_PUBEXP\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 4)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_MGF1_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 5)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_RSA_PADDING\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 6)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_RSA_PSS_SALTLEN\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 7)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_RSA_MGF1_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 8)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_OAEP_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 9)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_RSA_OAEP_LABEL\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 10)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_RSA_OAEP_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 11)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_RSA_OAEP_LABEL\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 12)"
+.br
+.ti -1c
+.RI "#define \fBRSA_PKCS1_PADDING\fP   1"
+.br
+.ti -1c
+.RI "#define \fBRSA_SSLV23_PADDING\fP   2"
+.br
+.ti -1c
+.RI "#define \fBRSA_NO_PADDING\fP   3"
+.br
+.ti -1c
+.RI "#define \fBRSA_PKCS1_OAEP_PADDING\fP   4"
+.br
+.ti -1c
+.RI "#define \fBRSA_X931_PADDING\fP   5"
+.br
+.ti -1c
+.RI "#define \fBRSA_PKCS1_PSS_PADDING\fP   6"
+.br
+.ti -1c
+.RI "#define \fBRSA_PKCS1_PADDING_SIZE\fP   11"
+.br
+.ti -1c
+.RI "#define \fBRSA_set_app_data\fP(s,  arg)                 \fBRSA_set_ex_data\fP(s,0,arg)"
+.br
+.ti -1c
+.RI "#define \fBRSA_get_app_data\fP(s)                         \fBRSA_get_ex_data\fP(s,0)"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_FIPS_METHOD\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_NON_FIPS_ALLOW\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBRSA_FLAG_CHECKED\fP   0x0800"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_CHECK_PADDING_MD\fP   140"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_DO_RSA_PRINT\fP   146"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_INT_RSA_VERIFY\fP   145"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_MEMORY_LOCK\fP   100"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_OLD_RSA_PRIV_DECODE\fP   147"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_PKEY_RSA_CTRL\fP   143"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_PKEY_RSA_CTRL_STR\fP   144"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_PKEY_RSA_SIGN\fP   142"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_PKEY_RSA_VERIFY\fP   154"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_PKEY_RSA_VERIFYRECOVER\fP   141"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_ALGOR_TO_MD\fP   157"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_BUILTIN_KEYGEN\fP   129"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_CHECK_KEY\fP   123"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_CMS_DECRYPT\fP   158"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_EAY_PRIVATE_DECRYPT\fP   101"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_EAY_PRIVATE_ENCRYPT\fP   102"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_EAY_PUBLIC_DECRYPT\fP   103"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_EAY_PUBLIC_ENCRYPT\fP   104"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_GENERATE_KEY\fP   105"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_GENERATE_KEY_EX\fP   155"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_ITEM_VERIFY\fP   156"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_MEMORY_LOCK\fP   130"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_MGF1_TO_MD\fP   159"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NEW_METHOD\fP   106"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NULL\fP   124"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NULL_MOD_EXP\fP   131"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NULL_PRIVATE_DECRYPT\fP   132"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NULL_PRIVATE_ENCRYPT\fP   133"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NULL_PUBLIC_DECRYPT\fP   134"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_NULL_PUBLIC_ENCRYPT\fP   135"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_NONE\fP   107"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_PKCS1_OAEP\fP   121"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_PKCS1_OAEP_MGF1\fP   160"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_PKCS1_PSS\fP   125"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_PKCS1_PSS_MGF1\fP   148"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_PKCS1_TYPE_1\fP   108"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_PKCS1_TYPE_2\fP   109"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_SSLV23\fP   110"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_ADD_X931\fP   127"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_NONE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_PKCS1_OAEP\fP   122"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_PKCS1_OAEP_MGF1\fP   161"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_PKCS1_TYPE_1\fP   112"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_PKCS1_TYPE_2\fP   113"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_SSLV23\fP   114"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PADDING_CHECK_X931\fP   128"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PRINT\fP   115"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PRINT_FP\fP   116"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PRIVATE_DECRYPT\fP   150"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PRIVATE_ENCRYPT\fP   151"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PRIV_DECODE\fP   137"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PRIV_ENCODE\fP   138"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PSS_TO_CTX\fP   162"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PUBLIC_DECRYPT\fP   152"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PUBLIC_ENCRYPT\fP   153"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_PUB_DECODE\fP   139"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_SETUP_BLINDING\fP   136"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_SIGN\fP   117"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_SIGN_ASN1_OCTET_STRING\fP   118"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_VERIFY\fP   119"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_VERIFY_ASN1_OCTET_STRING\fP   120"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_VERIFY_PKCS1_PSS\fP   126"
+.br
+.ti -1c
+.RI "#define \fBRSA_F_RSA_VERIFY_PKCS1_PSS_MGF1\fP   149"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_ALGORITHM_MISMATCH\fP   100"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_BAD_E_VALUE\fP   101"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_BAD_FIXED_HEADER_DECRYPT\fP   102"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_BAD_PAD_BYTE_COUNT\fP   103"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_BAD_SIGNATURE\fP   104"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_BLOCK_TYPE_IS_NOT_01\fP   106"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_BLOCK_TYPE_IS_NOT_02\fP   107"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DATA_GREATER_THAN_MOD_LEN\fP   108"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DATA_TOO_LARGE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DATA_TOO_LARGE_FOR_KEY_SIZE\fP   110"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DATA_TOO_LARGE_FOR_MODULUS\fP   132"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DATA_TOO_SMALL\fP   111"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DATA_TOO_SMALL_FOR_KEY_SIZE\fP   122"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DIGEST_DOES_NOT_MATCH\fP   166"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DIGEST_TOO_BIG_FOR_RSA_KEY\fP   112"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DMP1_NOT_CONGRUENT_TO_D\fP   124"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_DMQ1_NOT_CONGRUENT_TO_D\fP   125"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_D_E_NOT_CONGRUENT_TO_1\fP   123"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_FIRST_OCTET_INVALID\fP   133"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_ILLEGAL_OR_UNSUPPORTED_PADDING_MODE\fP   144"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_DIGEST\fP   160"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_DIGEST_LENGTH\fP   143"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_HEADER\fP   137"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_KEYBITS\fP   145"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_LABEL\fP   161"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_MESSAGE_LENGTH\fP   131"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_MGF1_MD\fP   156"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_OAEP_PARAMETERS\fP   162"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_PADDING\fP   138"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_PADDING_MODE\fP   141"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_PSS_PARAMETERS\fP   149"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_PSS_SALTLEN\fP   146"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_SALT_LENGTH\fP   150"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_TRAILER\fP   139"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_INVALID_X931_DIGEST\fP   142"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_IQMP_NOT_INVERSE_OF_Q\fP   126"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_KEY_SIZE_TOO_SMALL\fP   120"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_LAST_OCTET_INVALID\fP   134"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_MODULUS_TOO_LARGE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_NON_FIPS_RSA_METHOD\fP   157"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_NO_PUBLIC_EXPONENT\fP   140"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_NULL_BEFORE_BLOCK_MISSING\fP   113"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_N_DOES_NOT_EQUAL_P_Q\fP   127"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_OAEP_DECODING_ERROR\fP   121"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_OPERATION_NOT_ALLOWED_IN_FIPS_MODE\fP   158"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_OPERATION_NOT_SUPPORTED_FOR_THIS_KEYTYPE\fP   148"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_PADDING_CHECK_FAILED\fP   114"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_PKCS_DECODING_ERROR\fP   159"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_P_NOT_PRIME\fP   128"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_Q_NOT_PRIME\fP   129"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_RSA_OPERATIONS_NOT_SUPPORTED\fP   130"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_SLEN_CHECK_FAILED\fP   136"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_SLEN_RECOVERY_FAILED\fP   135"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_SSLV3_ROLLBACK_ATTACK\fP   115"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_THE_ASN1_OBJECT_IDENTIFIER_IS_NOT_KNOWN_FOR_THIS_MD\fP   116"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNKNOWN_ALGORITHM_TYPE\fP   117"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNKNOWN_DIGEST\fP   163"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNKNOWN_MASK_DIGEST\fP   151"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNKNOWN_PADDING_TYPE\fP   118"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNKNOWN_PSS_DIGEST\fP   152"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNSUPPORTED_ENCRYPTION_TYPE\fP   164"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNSUPPORTED_LABEL_SOURCE\fP   165"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNSUPPORTED_MASK_ALGORITHM\fP   153"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNSUPPORTED_MASK_PARAMETER\fP   154"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_UNSUPPORTED_SIGNATURE_TYPE\fP   155"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_VALUE_MISSING\fP   147"
+.br
+.ti -1c
+.RI "#define \fBRSA_R_WRONG_SIGNATURE_LENGTH\fP   119"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBRSAPrivateKey\fP struct \fBrsa_pss_params_st\fP \fBRSA_PSS_PARAMS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBrsa_oaep_params_st\fP \fBRSA_OAEP_PARAMS\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRSA\fP * \fBRSA_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBRSA_new_method\fP (\fBENGINE\fP *engine)"
+.br
+.ti -1c
+.RI "int \fBRSA_size\fP (const \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBRSA_generate_key\fP (int \fBbits\fP, unsigned long \fBe\fP, \fBvoid\fP(*callback)(int, int, \fBvoid\fP *), \fBvoid\fP *cb_arg)"
+.br
+.ti -1c
+.RI "int \fBRSA_generate_key_ex\fP (\fBRSA\fP *rsa, int \fBbits\fP, \fBBIGNUM\fP *\fBe\fP, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBRSA_check_key\fP (const \fBRSA\fP *)"
+.br
+.ti -1c
+.RI "int \fBRSA_public_encrypt\fP (int flen, const unsigned char *from, unsigned char *to, \fBRSA\fP *rsa, int padding)"
+.br
+.ti -1c
+.RI "int \fBRSA_private_encrypt\fP (int flen, const unsigned char *from, unsigned char *to, \fBRSA\fP *rsa, int padding)"
+.br
+.ti -1c
+.RI "int \fBRSA_public_decrypt\fP (int flen, const unsigned char *from, unsigned char *to, \fBRSA\fP *rsa, int padding)"
+.br
+.ti -1c
+.RI "int \fBRSA_private_decrypt\fP (int flen, const unsigned char *from, unsigned char *to, \fBRSA\fP *rsa, int padding)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRSA_free\fP (\fBRSA\fP *r)"
+.br
+.ti -1c
+.RI "int \fBRSA_up_ref\fP (\fBRSA\fP *r)"
+.br
+.ti -1c
+.RI "int \fBRSA_flags\fP (const \fBRSA\fP *r)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRSA_set_default_method\fP (const \fBRSA_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "const \fBRSA_METHOD\fP * \fBRSA_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBRSA_METHOD\fP * \fBRSA_get_method\fP (const \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBRSA_set_method\fP (\fBRSA\fP *rsa, const \fBRSA_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "int \fBRSA_memory_lock\fP (\fBRSA\fP *r)"
+.br
+.ti -1c
+.RI "const \fBRSA_METHOD\fP * \fBRSA_PKCS1_SSLeay\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBRSA_METHOD\fP * \fBRSA_null_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDECLARE_ASN1_ENCODE_FUNCTIONS_const\fP (\fBRSA\fP, RSAPublicKey) DECLARE_ASN1_ENCODE_FUNCTIONS_const(\fBRSA\fP"
+.br
+.ti -1c
+.RI "int \fBRSA_print_fp\fP (FILE *\fBfp\fP, const \fBRSA\fP *r, int offset)"
+.br
+.ti -1c
+.RI "int \fBRSA_print\fP (\fBBIO\fP *\fBbp\fP, const \fBRSA\fP *r, int offset)"
+.br
+.ti -1c
+.RI "int \fBi2d_RSA_NET\fP (const \fBRSA\fP *\fBa\fP, unsigned char **\fBpp\fP, int(*\fBcb\fP)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                   int verify), int sgckey)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_RSA_NET\fP (\fBRSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP, int(*\fBcb\fP)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                       int verify), int sgckey)"
+.br
+.ti -1c
+.RI "int \fBi2d_Netscape_RSA\fP (const \fBRSA\fP *\fBa\fP, unsigned char **\fBpp\fP, int(*\fBcb\fP)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                                       int verify))"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBd2i_Netscape_RSA\fP (\fBRSA\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP, int(*\fBcb\fP)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                                           int verify))"
+.br
+.ti -1c
+.RI "int \fBRSA_sign\fP (int \fBtype\fP, const unsigned char *m, unsigned int m_length, unsigned char *sigret, unsigned int *siglen, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBRSA_verify\fP (int \fBtype\fP, const unsigned char *m, unsigned int m_length, const unsigned char *sigbuf, unsigned int siglen, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBRSA_sign_ASN1_OCTET_STRING\fP (int \fBtype\fP, const unsigned char *m, unsigned int m_length, unsigned char *sigret, unsigned int *siglen, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBRSA_verify_ASN1_OCTET_STRING\fP (int \fBtype\fP, const unsigned char *m, unsigned int m_length, unsigned char *sigbuf, unsigned int siglen, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBRSA_blinding_on\fP (\fBRSA\fP *rsa, \fBBN_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRSA_blinding_off\fP (\fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBBN_BLINDING\fP * \fBRSA_setup_blinding\fP (\fBRSA\fP *rsa, \fBBN_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_PKCS1_type_1\fP (unsigned char *to, int tlen, const unsigned char *f, int fl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_PKCS1_type_1\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, int rsa_len)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_PKCS1_type_2\fP (unsigned char *to, int tlen, const unsigned char *f, int fl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_PKCS1_type_2\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, int rsa_len)"
+.br
+.ti -1c
+.RI "int \fBPKCS1_MGF1\fP (unsigned char *mask, long \fBlen\fP, const unsigned char *seed, long seedlen, const \fBEVP_MD\fP *dgst)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_PKCS1_OAEP\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, const unsigned char *\fBp\fP, int pl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_PKCS1_OAEP\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, int rsa_len, const unsigned char *\fBp\fP, int pl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_PKCS1_OAEP_mgf1\fP (unsigned char *to, int tlen, const unsigned char *from, int flen, const unsigned char *param, int plen, const \fBEVP_MD\fP *md, const \fBEVP_MD\fP *mgf1md)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_PKCS1_OAEP_mgf1\fP (unsigned char *to, int tlen, const unsigned char *from, int flen, int \fBnum\fP, const unsigned char *param, int plen, const \fBEVP_MD\fP *md, const \fBEVP_MD\fP *mgf1md)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_SSLv23\fP (unsigned char *to, int tlen, const unsigned char *f, int fl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_SSLv23\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, int rsa_len)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_none\fP (unsigned char *to, int tlen, const unsigned char *f, int fl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_none\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, int rsa_len)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_X931\fP (unsigned char *to, int tlen, const unsigned char *f, int fl)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_check_X931\fP (unsigned char *to, int tlen, const unsigned char *f, int fl, int rsa_len)"
+.br
+.ti -1c
+.RI "int \fBRSA_X931_hash_id\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBRSA_verify_PKCS1_PSS\fP (\fBRSA\fP *rsa, const unsigned char *mHash, const \fBEVP_MD\fP *Hash, const unsigned char *EM, int sLen)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_PKCS1_PSS\fP (\fBRSA\fP *rsa, unsigned char *EM, const unsigned char *mHash, const \fBEVP_MD\fP *Hash, int sLen)"
+.br
+.ti -1c
+.RI "int \fBRSA_verify_PKCS1_PSS_mgf1\fP (\fBRSA\fP *rsa, const unsigned char *mHash, const \fBEVP_MD\fP *Hash, const \fBEVP_MD\fP *mgf1Hash, const unsigned char *EM, int sLen)"
+.br
+.ti -1c
+.RI "int \fBRSA_padding_add_PKCS1_PSS_mgf1\fP (\fBRSA\fP *rsa, unsigned char *EM, const unsigned char *mHash, const \fBEVP_MD\fP *Hash, const \fBEVP_MD\fP *mgf1Hash, int sLen)"
+.br
+.ti -1c
+.RI "int \fBRSA_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBRSA_set_ex_data\fP (\fBRSA\fP *r, int idx, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBRSA_get_ex_data\fP (const \fBRSA\fP *r, int idx)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBRSAPublicKey_dup\fP (\fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBRSA\fP * \fBRSAPrivateKey_dup\fP (\fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_RSA_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define OPENSSL_RSA_MAX_MODULUS_BITS   16384"
+
+.PP
+Definition at line 168 of file rsa\&.h\&.
+.SS "#define OPENSSL_RSA_SMALL_MODULUS_BITS   3072"
+
+.PP
+Definition at line 172 of file rsa\&.h\&.
+.SS "#define OPENSSL_RSA_MAX_PUBEXP_BITS   64"
+
+.PP
+Definition at line 177 of file rsa\&.h\&.
+.SS "#define RSA_3   0x3L"
+
+.PP
+Definition at line 180 of file rsa\&.h\&.
+.SS "#define RSA_F4   0x10001L"
+
+.PP
+Definition at line 181 of file rsa\&.h\&.
+.SS "#define RSA_METHOD_FLAG_NO_CHECK"
+\fBValue:\fP
+.PP
+.nf
+0x0001/* don't check pub/private
+                                                * match */
+.fi
+.PP
+Definition at line 183 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_CACHE_PUBLIC   0x0002"
+
+.PP
+Definition at line 186 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_CACHE_PRIVATE   0x0004"
+
+.PP
+Definition at line 187 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_BLINDING   0x0008"
+
+.PP
+Definition at line 188 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_THREAD_SAFE   0x0010"
+
+.PP
+Definition at line 189 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_EXT_PKEY   0x0020"
+
+.PP
+Definition at line 196 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_SIGN_VER   0x0040"
+
+.PP
+Definition at line 202 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_NO_BLINDING   0x0080"
+
+.PP
+Definition at line 210 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_NO_CONSTTIME   0x0100"
+
+.PP
+Definition at line 222 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_rsa_padding(ctx, pad)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, -1, EVP_PKEY_CTRL_RSA_PADDING, \
+                                pad, NULL)
+.fi
+.PP
+Definition at line 236 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_rsa_padding(ctx, ppad)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, -1, \
+                                EVP_PKEY_CTRL_GET_RSA_PADDING, 0, ppad)
+.fi
+.PP
+Definition at line 240 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_rsa_pss_saltlen(ctx, \fBlen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, \
+                                (EVP_PKEY_OP_SIGN|EVP_PKEY_OP_VERIFY), \
+                                EVP_PKEY_CTRL_RSA_PSS_SALTLEN, \
+                                len, NULL)
+.fi
+.PP
+Definition at line 244 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_rsa_pss_saltlen(ctx, plen)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, \
+                                (EVP_PKEY_OP_SIGN|EVP_PKEY_OP_VERIFY), \
+                                EVP_PKEY_CTRL_GET_RSA_PSS_SALTLEN, \
+                                0, plen)
+.fi
+.PP
+Definition at line 250 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_rsa_keygen_bits(ctx, \fBbits\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_KEYGEN, \
+                                EVP_PKEY_CTRL_RSA_KEYGEN_BITS, bits, NULL)
+.fi
+.PP
+Definition at line 256 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_rsa_keygen_pubexp(ctx, pubexp)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_KEYGEN, \
+                                EVP_PKEY_CTRL_RSA_KEYGEN_PUBEXP, 0, pubexp)
+.fi
+.PP
+Definition at line 260 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_rsa_mgf1_md(ctx, md)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, \
+                        EVP_PKEY_OP_TYPE_SIG | EVP_PKEY_OP_TYPE_CRYPT, \
+                                EVP_PKEY_CTRL_RSA_MGF1_MD, 0, (void *)md)
+.fi
+.PP
+Definition at line 264 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_rsa_oaep_md(ctx, md)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_TYPE_CRYPT,  \
+                                EVP_PKEY_CTRL_RSA_OAEP_MD, 0, (void *)md)
+.fi
+.PP
+Definition at line 269 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_rsa_mgf1_md(ctx, pmd)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, \
+                        EVP_PKEY_OP_TYPE_SIG | EVP_PKEY_OP_TYPE_CRYPT, \
+                                EVP_PKEY_CTRL_GET_RSA_MGF1_MD, 0, (void *)pmd)
+.fi
+.PP
+Definition at line 273 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_rsa_oaep_md(ctx, pmd)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_TYPE_CRYPT,  \
+                                EVP_PKEY_CTRL_GET_RSA_OAEP_MD, 0, (void *)pmd)
+.fi
+.PP
+Definition at line 278 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_set0_rsa_oaep_label(ctx, l, llen)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_TYPE_CRYPT,  \
+                                EVP_PKEY_CTRL_RSA_OAEP_LABEL, llen, (void *)l)
+.fi
+.PP
+Definition at line 282 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTX_get0_rsa_oaep_label(ctx, l)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_RSA, EVP_PKEY_OP_TYPE_CRYPT,  \
+                                EVP_PKEY_CTRL_GET_RSA_OAEP_LABEL, 0, (void *)l)
+.fi
+.PP
+Definition at line 286 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_PADDING   (\fBEVP_PKEY_ALG_CTRL\fP + 1)"
+
+.PP
+Definition at line 290 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_PSS_SALTLEN   (\fBEVP_PKEY_ALG_CTRL\fP + 2)"
+
+.PP
+Definition at line 291 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_KEYGEN_BITS   (\fBEVP_PKEY_ALG_CTRL\fP + 3)"
+
+.PP
+Definition at line 293 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_KEYGEN_PUBEXP   (\fBEVP_PKEY_ALG_CTRL\fP + 4)"
+
+.PP
+Definition at line 294 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_MGF1_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 5)"
+
+.PP
+Definition at line 295 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_RSA_PADDING   (\fBEVP_PKEY_ALG_CTRL\fP + 6)"
+
+.PP
+Definition at line 297 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_RSA_PSS_SALTLEN   (\fBEVP_PKEY_ALG_CTRL\fP + 7)"
+
+.PP
+Definition at line 298 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_RSA_MGF1_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 8)"
+
+.PP
+Definition at line 299 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_OAEP_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 9)"
+
+.PP
+Definition at line 301 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_RSA_OAEP_LABEL   (\fBEVP_PKEY_ALG_CTRL\fP + 10)"
+
+.PP
+Definition at line 302 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_RSA_OAEP_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 11)"
+
+.PP
+Definition at line 304 of file rsa\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_RSA_OAEP_LABEL   (\fBEVP_PKEY_ALG_CTRL\fP + 12)"
+
+.PP
+Definition at line 305 of file rsa\&.h\&.
+.SS "#define RSA_PKCS1_PADDING   1"
+
+.PP
+Definition at line 307 of file rsa\&.h\&.
+.SS "#define RSA_SSLV23_PADDING   2"
+
+.PP
+Definition at line 308 of file rsa\&.h\&.
+.SS "#define RSA_NO_PADDING   3"
+
+.PP
+Definition at line 309 of file rsa\&.h\&.
+.SS "#define RSA_PKCS1_OAEP_PADDING   4"
+
+.PP
+Definition at line 310 of file rsa\&.h\&.
+.SS "#define RSA_X931_PADDING   5"
+
+.PP
+Definition at line 311 of file rsa\&.h\&.
+.SS "#define RSA_PKCS1_PSS_PADDING   6"
+
+.PP
+Definition at line 313 of file rsa\&.h\&.
+.SS "#define RSA_PKCS1_PADDING_SIZE   11"
+
+.PP
+Definition at line 315 of file rsa\&.h\&.
+.SS "#define RSA_set_app_data(s, arg)   \fBRSA_set_ex_data\fP(s,0,arg)"
+
+.PP
+Definition at line 317 of file rsa\&.h\&.
+.SS "#define RSA_get_app_data(s)   \fBRSA_get_ex_data\fP(s,0)"
+
+.PP
+Definition at line 318 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_FIPS_METHOD   0x0400"
+
+.PP
+Definition at line 503 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_NON_FIPS_ALLOW   0x0400"
+
+.PP
+Definition at line 511 of file rsa\&.h\&.
+.SS "#define RSA_FLAG_CHECKED   0x0800"
+
+.PP
+Definition at line 516 of file rsa\&.h\&.
+.SS "#define RSA_F_CHECK_PADDING_MD   140"
+
+.PP
+Definition at line 528 of file rsa\&.h\&.
+.SS "#define RSA_F_DO_RSA_PRINT   146"
+
+.PP
+Definition at line 529 of file rsa\&.h\&.
+.SS "#define RSA_F_INT_RSA_VERIFY   145"
+
+.PP
+Definition at line 530 of file rsa\&.h\&.
+.SS "#define RSA_F_MEMORY_LOCK   100"
+
+.PP
+Definition at line 531 of file rsa\&.h\&.
+.SS "#define RSA_F_OLD_RSA_PRIV_DECODE   147"
+
+.PP
+Definition at line 532 of file rsa\&.h\&.
+.SS "#define RSA_F_PKEY_RSA_CTRL   143"
+
+.PP
+Definition at line 533 of file rsa\&.h\&.
+.SS "#define RSA_F_PKEY_RSA_CTRL_STR   144"
+
+.PP
+Definition at line 534 of file rsa\&.h\&.
+.SS "#define RSA_F_PKEY_RSA_SIGN   142"
+
+.PP
+Definition at line 535 of file rsa\&.h\&.
+.SS "#define RSA_F_PKEY_RSA_VERIFY   154"
+
+.PP
+Definition at line 536 of file rsa\&.h\&.
+.SS "#define RSA_F_PKEY_RSA_VERIFYRECOVER   141"
+
+.PP
+Definition at line 537 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_ALGOR_TO_MD   157"
+
+.PP
+Definition at line 538 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_BUILTIN_KEYGEN   129"
+
+.PP
+Definition at line 539 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_CHECK_KEY   123"
+
+.PP
+Definition at line 540 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_CMS_DECRYPT   158"
+
+.PP
+Definition at line 541 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_EAY_PRIVATE_DECRYPT   101"
+
+.PP
+Definition at line 542 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_EAY_PRIVATE_ENCRYPT   102"
+
+.PP
+Definition at line 543 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_EAY_PUBLIC_DECRYPT   103"
+
+.PP
+Definition at line 544 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_EAY_PUBLIC_ENCRYPT   104"
+
+.PP
+Definition at line 545 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_GENERATE_KEY   105"
+
+.PP
+Definition at line 546 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_GENERATE_KEY_EX   155"
+
+.PP
+Definition at line 547 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_ITEM_VERIFY   156"
+
+.PP
+Definition at line 548 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_MEMORY_LOCK   130"
+
+.PP
+Definition at line 549 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_MGF1_TO_MD   159"
+
+.PP
+Definition at line 550 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NEW_METHOD   106"
+
+.PP
+Definition at line 551 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NULL   124"
+
+.PP
+Definition at line 552 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NULL_MOD_EXP   131"
+
+.PP
+Definition at line 553 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NULL_PRIVATE_DECRYPT   132"
+
+.PP
+Definition at line 554 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NULL_PRIVATE_ENCRYPT   133"
+
+.PP
+Definition at line 555 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NULL_PUBLIC_DECRYPT   134"
+
+.PP
+Definition at line 556 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_NULL_PUBLIC_ENCRYPT   135"
+
+.PP
+Definition at line 557 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_NONE   107"
+
+.PP
+Definition at line 558 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_PKCS1_OAEP   121"
+
+.PP
+Definition at line 559 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_PKCS1_OAEP_MGF1   160"
+
+.PP
+Definition at line 560 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_PKCS1_PSS   125"
+
+.PP
+Definition at line 561 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_PKCS1_PSS_MGF1   148"
+
+.PP
+Definition at line 562 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_PKCS1_TYPE_1   108"
+
+.PP
+Definition at line 563 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_PKCS1_TYPE_2   109"
+
+.PP
+Definition at line 564 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_SSLV23   110"
+
+.PP
+Definition at line 565 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_ADD_X931   127"
+
+.PP
+Definition at line 566 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_NONE   111"
+
+.PP
+Definition at line 567 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_PKCS1_OAEP   122"
+
+.PP
+Definition at line 568 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_PKCS1_OAEP_MGF1   161"
+
+.PP
+Definition at line 569 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_PKCS1_TYPE_1   112"
+
+.PP
+Definition at line 570 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_PKCS1_TYPE_2   113"
+
+.PP
+Definition at line 571 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_SSLV23   114"
+
+.PP
+Definition at line 572 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PADDING_CHECK_X931   128"
+
+.PP
+Definition at line 573 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PRINT   115"
+
+.PP
+Definition at line 574 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PRINT_FP   116"
+
+.PP
+Definition at line 575 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PRIVATE_DECRYPT   150"
+
+.PP
+Definition at line 576 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PRIVATE_ENCRYPT   151"
+
+.PP
+Definition at line 577 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PRIV_DECODE   137"
+
+.PP
+Definition at line 578 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PRIV_ENCODE   138"
+
+.PP
+Definition at line 579 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PSS_TO_CTX   162"
+
+.PP
+Definition at line 580 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PUBLIC_DECRYPT   152"
+
+.PP
+Definition at line 581 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PUBLIC_ENCRYPT   153"
+
+.PP
+Definition at line 582 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_PUB_DECODE   139"
+
+.PP
+Definition at line 583 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_SETUP_BLINDING   136"
+
+.PP
+Definition at line 584 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_SIGN   117"
+
+.PP
+Definition at line 585 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_SIGN_ASN1_OCTET_STRING   118"
+
+.PP
+Definition at line 586 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_VERIFY   119"
+
+.PP
+Definition at line 587 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_VERIFY_ASN1_OCTET_STRING   120"
+
+.PP
+Definition at line 588 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_VERIFY_PKCS1_PSS   126"
+
+.PP
+Definition at line 589 of file rsa\&.h\&.
+.SS "#define RSA_F_RSA_VERIFY_PKCS1_PSS_MGF1   149"
+
+.PP
+Definition at line 590 of file rsa\&.h\&.
+.SS "#define RSA_R_ALGORITHM_MISMATCH   100"
+
+.PP
+Definition at line 593 of file rsa\&.h\&.
+.SS "#define RSA_R_BAD_E_VALUE   101"
+
+.PP
+Definition at line 594 of file rsa\&.h\&.
+.SS "#define RSA_R_BAD_FIXED_HEADER_DECRYPT   102"
+
+.PP
+Definition at line 595 of file rsa\&.h\&.
+.SS "#define RSA_R_BAD_PAD_BYTE_COUNT   103"
+
+.PP
+Definition at line 596 of file rsa\&.h\&.
+.SS "#define RSA_R_BAD_SIGNATURE   104"
+
+.PP
+Definition at line 597 of file rsa\&.h\&.
+.SS "#define RSA_R_BLOCK_TYPE_IS_NOT_01   106"
+
+.PP
+Definition at line 598 of file rsa\&.h\&.
+.SS "#define RSA_R_BLOCK_TYPE_IS_NOT_02   107"
+
+.PP
+Definition at line 599 of file rsa\&.h\&.
+.SS "#define RSA_R_DATA_GREATER_THAN_MOD_LEN   108"
+
+.PP
+Definition at line 600 of file rsa\&.h\&.
+.SS "#define RSA_R_DATA_TOO_LARGE   109"
+
+.PP
+Definition at line 601 of file rsa\&.h\&.
+.SS "#define RSA_R_DATA_TOO_LARGE_FOR_KEY_SIZE   110"
+
+.PP
+Definition at line 602 of file rsa\&.h\&.
+.SS "#define RSA_R_DATA_TOO_LARGE_FOR_MODULUS   132"
+
+.PP
+Definition at line 603 of file rsa\&.h\&.
+.SS "#define RSA_R_DATA_TOO_SMALL   111"
+
+.PP
+Definition at line 604 of file rsa\&.h\&.
+.SS "#define RSA_R_DATA_TOO_SMALL_FOR_KEY_SIZE   122"
+
+.PP
+Definition at line 605 of file rsa\&.h\&.
+.SS "#define RSA_R_DIGEST_DOES_NOT_MATCH   166"
+
+.PP
+Definition at line 606 of file rsa\&.h\&.
+.SS "#define RSA_R_DIGEST_TOO_BIG_FOR_RSA_KEY   112"
+
+.PP
+Definition at line 607 of file rsa\&.h\&.
+.SS "#define RSA_R_DMP1_NOT_CONGRUENT_TO_D   124"
+
+.PP
+Definition at line 608 of file rsa\&.h\&.
+.SS "#define RSA_R_DMQ1_NOT_CONGRUENT_TO_D   125"
+
+.PP
+Definition at line 609 of file rsa\&.h\&.
+.SS "#define RSA_R_D_E_NOT_CONGRUENT_TO_1   123"
+
+.PP
+Definition at line 610 of file rsa\&.h\&.
+.SS "#define RSA_R_FIRST_OCTET_INVALID   133"
+
+.PP
+Definition at line 611 of file rsa\&.h\&.
+.SS "#define RSA_R_ILLEGAL_OR_UNSUPPORTED_PADDING_MODE   144"
+
+.PP
+Definition at line 612 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_DIGEST   160"
+
+.PP
+Definition at line 613 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_DIGEST_LENGTH   143"
+
+.PP
+Definition at line 614 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_HEADER   137"
+
+.PP
+Definition at line 615 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_KEYBITS   145"
+
+.PP
+Definition at line 616 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_LABEL   161"
+
+.PP
+Definition at line 617 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_MESSAGE_LENGTH   131"
+
+.PP
+Definition at line 618 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_MGF1_MD   156"
+
+.PP
+Definition at line 619 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_OAEP_PARAMETERS   162"
+
+.PP
+Definition at line 620 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_PADDING   138"
+
+.PP
+Definition at line 621 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_PADDING_MODE   141"
+
+.PP
+Definition at line 622 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_PSS_PARAMETERS   149"
+
+.PP
+Definition at line 623 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_PSS_SALTLEN   146"
+
+.PP
+Definition at line 624 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_SALT_LENGTH   150"
+
+.PP
+Definition at line 625 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_TRAILER   139"
+
+.PP
+Definition at line 626 of file rsa\&.h\&.
+.SS "#define RSA_R_INVALID_X931_DIGEST   142"
+
+.PP
+Definition at line 627 of file rsa\&.h\&.
+.SS "#define RSA_R_IQMP_NOT_INVERSE_OF_Q   126"
+
+.PP
+Definition at line 628 of file rsa\&.h\&.
+.SS "#define RSA_R_KEY_SIZE_TOO_SMALL   120"
+
+.PP
+Definition at line 629 of file rsa\&.h\&.
+.SS "#define RSA_R_LAST_OCTET_INVALID   134"
+
+.PP
+Definition at line 630 of file rsa\&.h\&.
+.SS "#define RSA_R_MODULUS_TOO_LARGE   105"
+
+.PP
+Definition at line 631 of file rsa\&.h\&.
+.SS "#define RSA_R_NON_FIPS_RSA_METHOD   157"
+
+.PP
+Definition at line 632 of file rsa\&.h\&.
+.SS "#define RSA_R_NO_PUBLIC_EXPONENT   140"
+
+.PP
+Definition at line 633 of file rsa\&.h\&.
+.SS "#define RSA_R_NULL_BEFORE_BLOCK_MISSING   113"
+
+.PP
+Definition at line 634 of file rsa\&.h\&.
+.SS "#define RSA_R_N_DOES_NOT_EQUAL_P_Q   127"
+
+.PP
+Definition at line 635 of file rsa\&.h\&.
+.SS "#define RSA_R_OAEP_DECODING_ERROR   121"
+
+.PP
+Definition at line 636 of file rsa\&.h\&.
+.SS "#define RSA_R_OPERATION_NOT_ALLOWED_IN_FIPS_MODE   158"
+
+.PP
+Definition at line 637 of file rsa\&.h\&.
+.SS "#define RSA_R_OPERATION_NOT_SUPPORTED_FOR_THIS_KEYTYPE   148"
+
+.PP
+Definition at line 638 of file rsa\&.h\&.
+.SS "#define RSA_R_PADDING_CHECK_FAILED   114"
+
+.PP
+Definition at line 639 of file rsa\&.h\&.
+.SS "#define RSA_R_PKCS_DECODING_ERROR   159"
+
+.PP
+Definition at line 640 of file rsa\&.h\&.
+.SS "#define RSA_R_P_NOT_PRIME   128"
+
+.PP
+Definition at line 641 of file rsa\&.h\&.
+.SS "#define RSA_R_Q_NOT_PRIME   129"
+
+.PP
+Definition at line 642 of file rsa\&.h\&.
+.SS "#define RSA_R_RSA_OPERATIONS_NOT_SUPPORTED   130"
+
+.PP
+Definition at line 643 of file rsa\&.h\&.
+.SS "#define RSA_R_SLEN_CHECK_FAILED   136"
+
+.PP
+Definition at line 644 of file rsa\&.h\&.
+.SS "#define RSA_R_SLEN_RECOVERY_FAILED   135"
+
+.PP
+Definition at line 645 of file rsa\&.h\&.
+.SS "#define RSA_R_SSLV3_ROLLBACK_ATTACK   115"
+
+.PP
+Definition at line 646 of file rsa\&.h\&.
+.SS "#define RSA_R_THE_ASN1_OBJECT_IDENTIFIER_IS_NOT_KNOWN_FOR_THIS_MD   116"
+
+.PP
+Definition at line 647 of file rsa\&.h\&.
+.SS "#define RSA_R_UNKNOWN_ALGORITHM_TYPE   117"
+
+.PP
+Definition at line 648 of file rsa\&.h\&.
+.SS "#define RSA_R_UNKNOWN_DIGEST   163"
+
+.PP
+Definition at line 649 of file rsa\&.h\&.
+.SS "#define RSA_R_UNKNOWN_MASK_DIGEST   151"
+
+.PP
+Definition at line 650 of file rsa\&.h\&.
+.SS "#define RSA_R_UNKNOWN_PADDING_TYPE   118"
+
+.PP
+Definition at line 651 of file rsa\&.h\&.
+.SS "#define RSA_R_UNKNOWN_PSS_DIGEST   152"
+
+.PP
+Definition at line 652 of file rsa\&.h\&.
+.SS "#define RSA_R_UNSUPPORTED_ENCRYPTION_TYPE   164"
+
+.PP
+Definition at line 653 of file rsa\&.h\&.
+.SS "#define RSA_R_UNSUPPORTED_LABEL_SOURCE   165"
+
+.PP
+Definition at line 654 of file rsa\&.h\&.
+.SS "#define RSA_R_UNSUPPORTED_MASK_ALGORITHM   153"
+
+.PP
+Definition at line 655 of file rsa\&.h\&.
+.SS "#define RSA_R_UNSUPPORTED_MASK_PARAMETER   154"
+
+.PP
+Definition at line 656 of file rsa\&.h\&.
+.SS "#define RSA_R_UNSUPPORTED_SIGNATURE_TYPE   155"
+
+.PP
+Definition at line 657 of file rsa\&.h\&.
+.SS "#define RSA_R_VALUE_MISSING   147"
+
+.PP
+Definition at line 658 of file rsa\&.h\&.
+.SS "#define RSA_R_WRONG_SIGNATURE_LENGTH   119"
+
+.PP
+Definition at line 659 of file rsa\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef \fBRSAPrivateKey\fP struct \fBrsa_pss_params_st\fP  \fBRSA_PSS_PARAMS\fP"
+
+.SS "typedef struct \fBrsa_oaep_params_st\fP  \fBRSA_OAEP_PARAMS\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBRSA\fP* RSA_new (\fBvoid\fP)"
+
+.SS "\fBRSA\fP* RSA_new_method (\fBENGINE\fP * engine)"
+
+.SS "int RSA_size (const \fBRSA\fP * rsa)"
+
+.SS "\fBRSA\fP* RSA_generate_key (int bits, unsigned long e, \fBvoid\fP(*)(int, int, \fBvoid\fP *) callback, \fBvoid\fP * cb_arg)"
+
+.SS "int RSA_generate_key_ex (\fBRSA\fP * rsa, int bits, \fBBIGNUM\fP * e, \fBBN_GENCB\fP * cb)"
+
+.SS "int RSA_check_key (const \fBRSA\fP *)"
+
+.SS "int RSA_public_encrypt (int flen, const unsigned char * from, unsigned char * to, \fBRSA\fP * rsa, int padding)"
+
+.SS "int RSA_private_encrypt (int flen, const unsigned char * from, unsigned char * to, \fBRSA\fP * rsa, int padding)"
+
+.SS "int RSA_public_decrypt (int flen, const unsigned char * from, unsigned char * to, \fBRSA\fP * rsa, int padding)"
+
+.SS "int RSA_private_decrypt (int flen, const unsigned char * from, unsigned char * to, \fBRSA\fP * rsa, int padding)"
+
+.SS "\fBvoid\fP RSA_free (\fBRSA\fP * r)"
+
+.SS "int RSA_up_ref (\fBRSA\fP * r)"
+
+.SS "int RSA_flags (const \fBRSA\fP * r)"
+
+.SS "\fBvoid\fP RSA_set_default_method (const \fBRSA_METHOD\fP * meth)"
+
+.SS "const \fBRSA_METHOD\fP* RSA_get_default_method (\fBvoid\fP)"
+
+.SS "const \fBRSA_METHOD\fP* RSA_get_method (const \fBRSA\fP * rsa)"
+
+.SS "int RSA_set_method (\fBRSA\fP * rsa, const \fBRSA_METHOD\fP * meth)"
+
+.SS "int RSA_memory_lock (\fBRSA\fP * r)"
+
+.SS "const \fBRSA_METHOD\fP* RSA_PKCS1_SSLeay (\fBvoid\fP)"
+
+.SS "const \fBRSA_METHOD\fP* RSA_null_method (\fBvoid\fP)"
+
+.SS "DECLARE_ASN1_ENCODE_FUNCTIONS_const (\fBRSA\fP, RSAPublicKey)"
+
+.SS "int RSA_print_fp (FILE * fp, const \fBRSA\fP * r, int offset)"
+
+.SS "int RSA_print (\fBBIO\fP * bp, const \fBRSA\fP * r, int offset)"
+
+.SS "int i2d_RSA_NET (const \fBRSA\fP * a, unsigned char ** pp, int(*)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                                                                                                                                                                                                                                                                                                                   int verify) cb, int sgckey)"
+
+.SS "\fBRSA\fP* d2i_RSA_NET (\fBRSA\fP ** a, const unsigned char ** pp, long length, int(*)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                                                                                                                                                                                                                                                                                                                                   int verify) cb, int sgckey)"
+
+.SS "int i2d_Netscape_RSA (const \fBRSA\fP * a, unsigned char ** pp, int(*)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   int verify) cb)"
+
+.SS "\fBRSA\fP* d2i_Netscape_RSA (\fBRSA\fP ** a, const unsigned char ** pp, long length, int(*)(char *buf, int \fBlen\fP, const char *prompt,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   int verify) cb)"
+
+.SS "int RSA_sign (int type, const unsigned char * m, unsigned int m_length, unsigned char * sigret, unsigned int * siglen, \fBRSA\fP * rsa)"
+
+.SS "int RSA_verify (int type, const unsigned char * m, unsigned int m_length, const unsigned char * sigbuf, unsigned int siglen, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 35 of file s2n_server_fuzz_test_overrides\&.c\&.
+.PP
+.nf
+37 {
+38     /* Always assume that the RSA_verify function passes */
+39     return 1;
+40 }
+.fi
+.SS "int RSA_sign_ASN1_OCTET_STRING (int type, const unsigned char * m, unsigned int m_length, unsigned char * sigret, unsigned int * siglen, \fBRSA\fP * rsa)"
+
+.SS "int RSA_verify_ASN1_OCTET_STRING (int type, const unsigned char * m, unsigned int m_length, unsigned char * sigbuf, unsigned int siglen, \fBRSA\fP * rsa)"
+
+.SS "int RSA_blinding_on (\fBRSA\fP * rsa, \fBBN_CTX\fP * ctx)"
+
+.SS "\fBvoid\fP RSA_blinding_off (\fBRSA\fP * rsa)"
+
+.SS "\fBBN_BLINDING\fP* RSA_setup_blinding (\fBRSA\fP * rsa, \fBBN_CTX\fP * ctx)"
+
+.SS "int RSA_padding_add_PKCS1_type_1 (unsigned char * to, int tlen, const unsigned char * f, int fl)"
+
+.SS "int RSA_padding_check_PKCS1_type_1 (unsigned char * to, int tlen, const unsigned char * f, int fl, int rsa_len)"
+
+.SS "int RSA_padding_add_PKCS1_type_2 (unsigned char * to, int tlen, const unsigned char * f, int fl)"
+
+.SS "int RSA_padding_check_PKCS1_type_2 (unsigned char * to, int tlen, const unsigned char * f, int fl, int rsa_len)"
+
+.SS "int PKCS1_MGF1 (unsigned char * mask, long len, const unsigned char * seed, long seedlen, const \fBEVP_MD\fP * dgst)"
+
+.SS "int RSA_padding_add_PKCS1_OAEP (unsigned char * to, int tlen, const unsigned char * f, int fl, const unsigned char * p, int pl)"
+
+.SS "int RSA_padding_check_PKCS1_OAEP (unsigned char * to, int tlen, const unsigned char * f, int fl, int rsa_len, const unsigned char * p, int pl)"
+
+.SS "int RSA_padding_add_PKCS1_OAEP_mgf1 (unsigned char * to, int tlen, const unsigned char * from, int flen, const unsigned char * param, int plen, const \fBEVP_MD\fP * md, const \fBEVP_MD\fP * mgf1md)"
+
+.SS "int RSA_padding_check_PKCS1_OAEP_mgf1 (unsigned char * to, int tlen, const unsigned char * from, int flen, int num, const unsigned char * param, int plen, const \fBEVP_MD\fP * md, const \fBEVP_MD\fP * mgf1md)"
+
+.SS "int RSA_padding_add_SSLv23 (unsigned char * to, int tlen, const unsigned char * f, int fl)"
+
+.SS "int RSA_padding_check_SSLv23 (unsigned char * to, int tlen, const unsigned char * f, int fl, int rsa_len)"
+
+.SS "int RSA_padding_add_none (unsigned char * to, int tlen, const unsigned char * f, int fl)"
+
+.SS "int RSA_padding_check_none (unsigned char * to, int tlen, const unsigned char * f, int fl, int rsa_len)"
+
+.SS "int RSA_padding_add_X931 (unsigned char * to, int tlen, const unsigned char * f, int fl)"
+
+.SS "int RSA_padding_check_X931 (unsigned char * to, int tlen, const unsigned char * f, int fl, int rsa_len)"
+
+.SS "int RSA_X931_hash_id (int nid)"
+
+.SS "int RSA_verify_PKCS1_PSS (\fBRSA\fP * rsa, const unsigned char * mHash, const \fBEVP_MD\fP * Hash, const unsigned char * EM, int sLen)"
+
+.SS "int RSA_padding_add_PKCS1_PSS (\fBRSA\fP * rsa, unsigned char * EM, const unsigned char * mHash, const \fBEVP_MD\fP * Hash, int sLen)"
+
+.SS "int RSA_verify_PKCS1_PSS_mgf1 (\fBRSA\fP * rsa, const unsigned char * mHash, const \fBEVP_MD\fP * Hash, const \fBEVP_MD\fP * mgf1Hash, const unsigned char * EM, int sLen)"
+
+.SS "int RSA_padding_add_PKCS1_PSS_mgf1 (\fBRSA\fP * rsa, unsigned char * EM, const unsigned char * mHash, const \fBEVP_MD\fP * Hash, const \fBEVP_MD\fP * mgf1Hash, int sLen)"
+
+.SS "int RSA_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int RSA_set_ex_data (\fBRSA\fP * r, int idx, \fBvoid\fP * arg)"
+
+.SS "\fBvoid\fP* RSA_get_ex_data (const \fBRSA\fP * r, int idx)"
+
+.SS "\fBRSA\fP* RSAPublicKey_dup (\fBRSA\fP * rsa)"
+
+.SS "\fBRSA\fP* RSAPrivateKey_dup (\fBRSA\fP * rsa)"
+
+.SS "\fBvoid\fP ERR_load_RSA_strings (\fBvoid\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

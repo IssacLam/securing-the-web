@@ -1,0 +1,220 @@
+\hypertarget{s2n__self__talk__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+self\+\_\+talk\+\_\+test.c File Reference}
+\label{s2n__self__talk__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+self\+\_\+talk\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+self\+\_\+talk\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/wait.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+handshake.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+self\+\_\+talk\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__self__talk__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2n__self__talk__test_8c_a929797506088ff65dd7d5a74a0077445}{mock\+\_\+client} (int writefd, int readfd)
+\item 
+int \hyperlink{s2n__self__talk__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+self\+\_\+talk\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+test.\+c}!mock\+\_\+client@{mock\+\_\+client}}
+\index{mock\+\_\+client@{mock\+\_\+client}!s2n\+\_\+self\+\_\+talk\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{mock\+\_\+client(int writefd, int readfd)}{mock_client(int writefd, int readfd)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} mock\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{int}]{writefd, }
+\item[{int}]{readfd}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__self__talk__test_8c_a929797506088ff65dd7d5a74a0077445}{}\label{s2n__self__talk__test_8c_a929797506088ff65dd7d5a74a0077445}
+
+
+Definition at line 88 of file s2n\+\_\+self\+\_\+talk\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+89 \{
+90     \textcolor{keywordtype}{char} buffer[0xffff];
+91     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+92     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+93 
+94     \textcolor{comment}{/* Give the server a chance to listen */}
+95     sleep(1);
+96 
+97     conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(\hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT});
+98 
+99     \hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd});
+100     \hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, \hyperlink{structs2n__connection_abb118879baad1066df4d078fdb2da908}{writefd});
+101 
+102     \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked);
+103 
+104     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 0xffff; i += 100) \{
+105         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+106             buffer[j] = 33;
+107         \}
+108 
+109         \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, buffer, i, &blocked);
+110     \}
+111 
+112     \textcolor{keywordtype}{int} shutdown\_rc = -1;
+113     \textcolor{keywordflow}{while}(shutdown\_rc != 0) \{
+114         shutdown\_rc = \hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked);
+115     \}
+116 
+117     \hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn);
+118 
+119     \textcolor{comment}{/* Give the server a chance to a void a sigpipe */}
+120     sleep(1);
+121 
+122     \_exit(0);
+123 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__self__talk__test_8c_a929797506088ff65dd7d5a74a0077445_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{s2n__self__talk__test_8c_a929797506088ff65dd7d5a74a0077445_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+self\+\_\+talk\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+self\+\_\+talk\+\_\+test.\+c@{s2n\+\_\+self\+\_\+talk\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__self__talk__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__self__talk__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 125 of file s2n\+\_\+self\+\_\+talk\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+126 \{
+127     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+128     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config};
+129     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+130     \textcolor{keywordtype}{int} status;
+131     pid\_t pid;
+132     \textcolor{keywordtype}{int} server\_to\_client[2];
+133     \textcolor{keywordtype}{int} client\_to\_server[2];
+134 
+135     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+136 
+137     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(setenv(\textcolor{stringliteral}{"S2N\_ENABLE\_CLIENT\_MODE"}, \textcolor{stringliteral}{"1"}, 0));
+138 
+139     \textcolor{comment}{/* Create a pipe */}
+140 
+141     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} is\_dh\_key\_exchange = 0; is\_dh\_key\_exchange <= 1; is\_dh\_key\_exchange++) \{
+142         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(server\_to\_client));
+143         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(client\_to\_server));
+144 
+145 
+146 
+147         \textcolor{comment}{/* Create a child process */}
+148         pid = fork();
+149         \textcolor{keywordflow}{if} (pid == 0) \{
+150             \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+151             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[0]));
+152             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[1]));
+153 
+154             \textcolor{comment}{/* Write the fragmented hello message */}
+155             \hyperlink{s2n__self__talk__test_8c_a929797506088ff65dd7d5a74a0077445}{mock\_client}(client\_to\_server[1], server\_to\_client[0]);
+156         \}
+157 
+158         \textcolor{comment}{/* This is the parent */}
+159         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(client\_to\_server[1]));
+160         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(server\_to\_client[0]));
+161 
+162         \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+163         \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(config = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}());
+164 
+165         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(
+      config, certificate, private\_key));
+166         \textcolor{keywordflow}{if} (is\_dh\_key\_exchange) \{
+167             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a82513564c95dc7a4174c3d04eb043564}{s2n\_config\_add\_dhparams}(config, 
+      \hyperlink{structs2n__config_abdbd12d9095df20e7e63ef00b353db7c}{dhparams}));
+168         \}
+169 
+170         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config));
+171 
+172         \textcolor{comment}{/* Set up the connection to read from the fd */}
+173         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, 
+      client\_to\_server[0]));
+174         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(conn, 
+      server\_to\_client[1]));
+175 
+176         \textcolor{comment}{/* Negotiate the handshake. */}
+177         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+178 
+179         \textcolor{keywordtype}{char} buffer[0xffff];
+180         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 0xffff; i += 100) \{
+181             \textcolor{keywordtype}{char} * ptr = buffer;
+182             \textcolor{keywordtype}{int} bytes\_read = 0;
+183             \textcolor{keywordtype}{int} size = i;
+184 
+185             \textcolor{keywordflow}{do} \{
+186                 \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(bytes\_read = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, ptr, size, &blocked));
+187 
+188                 size -= bytes\_read;
+189                 ptr += bytes\_read;
+190             \} \textcolor{keywordflow}{while}(size);
+191 
+192             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+193                 \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(buffer[j], 33);
+194             \}
+195         \}
+196 
+197         \textcolor{keywordtype}{int} shutdown\_rc = -1;
+198         \textcolor{keywordflow}{do} \{
+199             shutdown\_rc = \hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked);
+200             \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(shutdown\_rc == 0 || (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EAGAIN && blocked));
+201         \} \textcolor{keywordflow}{while}(shutdown\_rc != 0);
+202 
+203         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+204 
+205         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a25b7d82e94f572b657be3936196222c3}{s2n\_config\_free}(config));
+206 
+207         \textcolor{comment}{/* Clean up */}
+208         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(-1, &status, 0), pid);
+209         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+210     \}
+211 
+212     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+213     \textcolor{keywordflow}{return} 0;
+214 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__self__talk__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

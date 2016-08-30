@@ -1,0 +1,219 @@
+\hypertarget{rc5_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/rc5/rc5.h File Reference}
+\label{rc5_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/rc5/rc5.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/rc5/rc5.\+h}}
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+Include dependency graph for rc5.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{rc5_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structrc5__key__st}{rc5\+\_\+key\+\_\+st}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rc5_8h_a1d98ce22693e44179490dfb287bfab5f}{R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT}~1
+\item 
+\#define \hyperlink{rc5_8h_a8629756455f8fce4365105a6c4c7ba4a}{R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT}~0
+\item 
+\#define \hyperlink{rc5_8h_ab62e736162fb3319500365b7773caf16}{R\+C5\+\_\+32\+\_\+\+I\+NT}~unsigned long
+\item 
+\#define \hyperlink{rc5_8h_ad69fd5e1a9110fa1bde8acb7cf431fd6}{R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK}~8
+\item 
+\#define \hyperlink{rc5_8h_a6b96293baeac16776420022f1d41df6b}{R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH}~16/$\ast$ This is \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a} default, max is 255 $\ast$/
+\item 
+\#define \hyperlink{rc5_8h_ae8716dd108455874bd83e972d7b5f2ca}{R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS}~8
+\item 
+\#define \hyperlink{rc5_8h_ad9fb2b1a86651679b54093bb0f393d5e}{R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS}~12
+\item 
+\#define \hyperlink{rc5_8h_a815213e70b830624d01e9da4954e835d}{R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS}~16
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structrc5__key__st}{rc5\+\_\+key\+\_\+st} \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_a6daf54d3aa2118e239c17595774951b8}{R\+C5\+\_\+32\+\_\+set\+\_\+key} (\hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$key, int \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, const unsigned char $\ast$data, int rounds)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_ab46c7026cc4daa4852f45a386254cb7b}{R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt} (const unsigned char $\ast$in, unsigned char $\ast$out, \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$key, int enc)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{R\+C5\+\_\+32\+\_\+encrypt} (unsigned long $\ast$data, \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$key)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_ada1fc8b824554c7338f67db471f1c252}{R\+C5\+\_\+32\+\_\+decrypt} (unsigned long $\ast$data, \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$key)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_a97ea721529ce40ba7f59de586ebd6d6d}{R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt} (const unsigned char $\ast$in, unsigned char $\ast$out, long \hyperlink{include_2openssl_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length}, \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$ks, unsigned char $\ast$iv, int enc)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_aff135f3870048e67376384edc4154db5}{R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt} (const unsigned char $\ast$in, unsigned char $\ast$out, long \hyperlink{include_2openssl_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length}, \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$schedule, unsigned char $\ast$ivec, int $\ast$\hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num}, int enc)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5_8h_a614d0ec9684ac138f96c7b57c0cef28b}{R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt} (const unsigned char $\ast$in, unsigned char $\ast$out, long \hyperlink{include_2openssl_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length}, \hyperlink{rc5_8h_ad74e939041e2db739770b2239b31a8da}{R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$schedule, unsigned char $\ast$ivec, int $\ast$\hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT@{R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT}}
+\index{R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT@{R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT}{RC5_ENCRYPT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+\+E\+N\+C\+R\+Y\+PT~1}\hypertarget{rc5_8h_a1d98ce22693e44179490dfb287bfab5f}{}\label{rc5_8h_a1d98ce22693e44179490dfb287bfab5f}
+
+
+Definition at line 72 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT@{R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT}}
+\index{R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT@{R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT}{RC5_DECRYPT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+\+D\+E\+C\+R\+Y\+PT~0}\hypertarget{rc5_8h_a8629756455f8fce4365105a6c4c7ba4a}{}\label{rc5_8h_a8629756455f8fce4365105a6c4c7ba4a}
+
+
+Definition at line 73 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+\+I\+NT@{R\+C5\+\_\+32\+\_\+\+I\+NT}}
+\index{R\+C5\+\_\+32\+\_\+\+I\+NT@{R\+C5\+\_\+32\+\_\+\+I\+NT}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+\+I\+NT}{RC5_32_INT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+32\+\_\+\+I\+NT~unsigned long}\hypertarget{rc5_8h_ab62e736162fb3319500365b7773caf16}{}\label{rc5_8h_ab62e736162fb3319500365b7773caf16}
+
+
+Definition at line 76 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK@{R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK}}
+\index{R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK@{R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK}{RC5_32_BLOCK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+32\+\_\+\+B\+L\+O\+CK~8}\hypertarget{rc5_8h_ad69fd5e1a9110fa1bde8acb7cf431fd6}{}\label{rc5_8h_ad69fd5e1a9110fa1bde8acb7cf431fd6}
+
+
+Definition at line 78 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH@{R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH}}
+\index{R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH@{R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH}{RC5_32_KEY_LENGTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+32\+\_\+\+K\+E\+Y\+\_\+\+L\+E\+N\+G\+TH~16/$\ast$ This is {\bf a} default, max is 255 $\ast$/}\hypertarget{rc5_8h_a6b96293baeac16776420022f1d41df6b}{}\label{rc5_8h_a6b96293baeac16776420022f1d41df6b}
+
+
+Definition at line 79 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS@{R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS}}
+\index{R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS@{R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS}{RC5_8_ROUNDS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+8\+\_\+\+R\+O\+U\+N\+DS~8}\hypertarget{rc5_8h_ae8716dd108455874bd83e972d7b5f2ca}{}\label{rc5_8h_ae8716dd108455874bd83e972d7b5f2ca}
+
+
+Definition at line 85 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS@{R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS}}
+\index{R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS@{R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS}{RC5_12_ROUNDS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+12\+\_\+\+R\+O\+U\+N\+DS~12}\hypertarget{rc5_8h_ad9fb2b1a86651679b54093bb0f393d5e}{}\label{rc5_8h_ad9fb2b1a86651679b54093bb0f393d5e}
+
+
+Definition at line 86 of file rc5.\+h.
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS@{R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS}}
+\index{R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS@{R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS}{RC5_16_ROUNDS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+C5\+\_\+16\+\_\+\+R\+O\+U\+N\+DS~16}\hypertarget{rc5_8h_a815213e70b830624d01e9da4954e835d}{}\label{rc5_8h_a815213e70b830624d01e9da4954e835d}
+
+
+Definition at line 87 of file rc5.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+\+K\+EY@{R\+C5\+\_\+32\+\_\+\+K\+EY}}
+\index{R\+C5\+\_\+32\+\_\+\+K\+EY@{R\+C5\+\_\+32\+\_\+\+K\+EY}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+\+K\+EY}{RC5_32_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf rc5\+\_\+key\+\_\+st}  {\bf R\+C5\+\_\+32\+\_\+\+K\+EY}}\hypertarget{rc5_8h_ad74e939041e2db739770b2239b31a8da}{}\label{rc5_8h_ad74e939041e2db739770b2239b31a8da}
+
+
+\subsection{Function Documentation}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+set\+\_\+key@{R\+C5\+\_\+32\+\_\+set\+\_\+key}}
+\index{R\+C5\+\_\+32\+\_\+set\+\_\+key@{R\+C5\+\_\+32\+\_\+set\+\_\+key}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+set\+\_\+key(\+R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$key, int len, const unsigned char $\ast$data, int rounds)}{RC5_32_set_key(RC5_32_KEY *key, int len, const unsigned char *data, int rounds)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+set\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{key, }
+\item[{int}]{len, }
+\item[{const unsigned char $\ast$}]{data, }
+\item[{int}]{rounds}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_a6daf54d3aa2118e239c17595774951b8}{}\label{rc5_8h_a6daf54d3aa2118e239c17595774951b8}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{rc5_8h_a6daf54d3aa2118e239c17595774951b8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt}}
+\index{R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt(const unsigned char $\ast$in, unsigned char $\ast$out, R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$key, int enc)}{RC5_32_ecb_encrypt(const unsigned char *in, unsigned char *out, RC5_32_KEY *key, int enc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+ecb\+\_\+encrypt (
+\begin{DoxyParamCaption}
+\item[{const unsigned char $\ast$}]{in, }
+\item[{unsigned char $\ast$}]{out, }
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{key, }
+\item[{int}]{enc}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_ab46c7026cc4daa4852f45a386254cb7b}{}\label{rc5_8h_ab46c7026cc4daa4852f45a386254cb7b}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+encrypt}}
+\index{R\+C5\+\_\+32\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+encrypt}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+encrypt(unsigned long $\ast$data, R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$key)}{RC5_32_encrypt(unsigned long *data, RC5_32_KEY *key)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+encrypt (
+\begin{DoxyParamCaption}
+\item[{unsigned long $\ast$}]{data, }
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{}\label{rc5_8h_ad52ba6858c3047927ac4031394fd4637}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=245pt]{rc5_8h_ad52ba6858c3047927ac4031394fd4637_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+decrypt@{R\+C5\+\_\+32\+\_\+decrypt}}
+\index{R\+C5\+\_\+32\+\_\+decrypt@{R\+C5\+\_\+32\+\_\+decrypt}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+decrypt(unsigned long $\ast$data, R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$key)}{RC5_32_decrypt(unsigned long *data, RC5_32_KEY *key)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+decrypt (
+\begin{DoxyParamCaption}
+\item[{unsigned long $\ast$}]{data, }
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_ada1fc8b824554c7338f67db471f1c252}{}\label{rc5_8h_ada1fc8b824554c7338f67db471f1c252}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt}}
+\index{R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt(const unsigned char $\ast$in, unsigned char $\ast$out, long length, R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$ks, unsigned char $\ast$iv, int enc)}{RC5_32_cbc_encrypt(const unsigned char *in, unsigned char *out, long length, RC5_32_KEY *ks, unsigned char *iv, int enc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+cbc\+\_\+encrypt (
+\begin{DoxyParamCaption}
+\item[{const unsigned char $\ast$}]{in, }
+\item[{unsigned char $\ast$}]{out, }
+\item[{long}]{length, }
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{ks, }
+\item[{unsigned char $\ast$}]{iv, }
+\item[{int}]{enc}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_a97ea721529ce40ba7f59de586ebd6d6d}{}\label{rc5_8h_a97ea721529ce40ba7f59de586ebd6d6d}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt}}
+\index{R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt(const unsigned char $\ast$in, unsigned char $\ast$out, long length, R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$schedule, unsigned char $\ast$ivec, int $\ast$num, int enc)}{RC5_32_cfb64_encrypt(const unsigned char *in, unsigned char *out, long length, RC5_32_KEY *schedule, unsigned char *ivec, int *num, int enc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+cfb64\+\_\+encrypt (
+\begin{DoxyParamCaption}
+\item[{const unsigned char $\ast$}]{in, }
+\item[{unsigned char $\ast$}]{out, }
+\item[{long}]{length, }
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{schedule, }
+\item[{unsigned char $\ast$}]{ivec, }
+\item[{int $\ast$}]{num, }
+\item[{int}]{enc}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_aff135f3870048e67376384edc4154db5}{}\label{rc5_8h_aff135f3870048e67376384edc4154db5}
+\index{rc5.\+h@{rc5.\+h}!R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt}}
+\index{R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt@{R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt}!rc5.\+h@{rc5.\+h}}
+\subsubsection[{\texorpdfstring{R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt(const unsigned char $\ast$in, unsigned char $\ast$out, long length, R\+C5\+\_\+32\+\_\+\+K\+E\+Y $\ast$schedule, unsigned char $\ast$ivec, int $\ast$num)}{RC5_32_ofb64_encrypt(const unsigned char *in, unsigned char *out, long length, RC5_32_KEY *schedule, unsigned char *ivec, int *num)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} R\+C5\+\_\+32\+\_\+ofb64\+\_\+encrypt (
+\begin{DoxyParamCaption}
+\item[{const unsigned char $\ast$}]{in, }
+\item[{unsigned char $\ast$}]{out, }
+\item[{long}]{length, }
+\item[{{\bf R\+C5\+\_\+32\+\_\+\+K\+EY} $\ast$}]{schedule, }
+\item[{unsigned char $\ast$}]{ivec, }
+\item[{int $\ast$}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5_8h_a614d0ec9684ac138f96c7b57c0cef28b}{}\label{rc5_8h_a614d0ec9684ac138f96c7b57c0cef28b}

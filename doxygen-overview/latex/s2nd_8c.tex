@@ -1,0 +1,747 @@
+\hypertarget{s2nd_8c}{}\section{s2n-\/master/bin/s2nd.c File Reference}
+\label{s2nd_8c}\index{s2n-\/master/bin/s2nd.\+c@{s2n-\/master/bin/s2nd.\+c}}
+{\ttfamily \#include $<$netinet/tcp.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\+h$>$}\\*
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\\*
+{\ttfamily \#include $<$sys/poll.\+h$>$}\\*
+{\ttfamily \#include $<$netdb.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$getopt.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for s2nd.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsession__cache__entry}{session\+\_\+cache\+\_\+entry}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2nd_8c_ad91bfaf106e42aa552f1605c5b8a9ef2}{M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN}~32
+\item 
+\#define \hyperlink{s2nd_8c_a282b0f9613da7596a04d4d8d4279d2a1}{M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN}~255
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2nd_8c_a9415451f8ae94353430b3e0890ad6196}{cache\+\_\+store} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$ctx, uint64\+\_\+t ttl, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$key, uint64\+\_\+t key\+\_\+size, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$value, uint64\+\_\+t value\+\_\+size)
+\item 
+int \hyperlink{s2nd_8c_a0153b562f602987e5668497ccb285868}{cache\+\_\+retrieve} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$ctx, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$key, uint64\+\_\+t key\+\_\+size, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$value, uint64\+\_\+t $\ast$value\+\_\+size)
+\item 
+int \hyperlink{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce}{cache\+\_\+delete} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$ctx, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$key, uint64\+\_\+t key\+\_\+size)
+\item 
+int \hyperlink{s2nd_8c_adc37832656c6aa5548ab17e981176dab}{echo} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, int sockfd)
+\item 
+int \hyperlink{s2nd_8c_a0c3aa10760d5a237f447120b0968ff99}{negotiate} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage} ()
+\item 
+int \hyperlink{s2nd_8c_ad1835a0a190dc5fe4f925bb69443c770}{main} (int argc, char $\ast$const $\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsession__cache__entry}{session\+\_\+cache\+\_\+entry} \hyperlink{s2nd_8c_a64abc607d19fe2165bd1f364a25ee35e}{session\+\_\+cache} \mbox{[}256\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2nd.\+c@{s2nd.\+c}!M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN@{M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN}}
+\index{M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN@{M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN}{MAX_KEY_LEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+K\+E\+Y\+\_\+\+L\+EN~32}\hypertarget{s2nd_8c_ad91bfaf106e42aa552f1605c5b8a9ef2}{}\label{s2nd_8c_ad91bfaf106e42aa552f1605c5b8a9ef2}
+
+
+Definition at line 90 of file s2nd.\+c.
+
+\index{s2nd.\+c@{s2nd.\+c}!M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN@{M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN}}
+\index{M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN@{M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN}{MAX_VAL_LEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+V\+A\+L\+\_\+\+L\+EN~255}\hypertarget{s2nd_8c_a282b0f9613da7596a04d4d8d4279d2a1}{}\label{s2nd_8c_a282b0f9613da7596a04d4d8d4279d2a1}
+
+
+Definition at line 91 of file s2nd.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2nd.\+c@{s2nd.\+c}!cache\+\_\+store@{cache\+\_\+store}}
+\index{cache\+\_\+store@{cache\+\_\+store}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{cache\+\_\+store(void $\ast$ctx, uint64\+\_\+t ttl, const void $\ast$key, uint64\+\_\+t key\+\_\+size, const void $\ast$value, uint64\+\_\+t value\+\_\+size)}{cache_store(void *ctx, uint64_t ttl, const void *key, uint64_t key_size, const void *value, uint64_t value_size)}}]{\setlength{\rightskip}{0pt plus 5cm}int cache\+\_\+store (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{ctx, }
+\item[{uint64\+\_\+t}]{ttl, }
+\item[{const {\bf void} $\ast$}]{key, }
+\item[{uint64\+\_\+t}]{key\+\_\+size, }
+\item[{const {\bf void} $\ast$}]{value, }
+\item[{uint64\+\_\+t}]{value\+\_\+size}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_a9415451f8ae94353430b3e0890ad6196}{}\label{s2nd_8c_a9415451f8ae94353430b3e0890ad6196}
+
+
+Definition at line 102 of file s2nd.\+c.
+
+
+\begin{DoxyCode}
+103 \{
+104     \textcolor{keyword}{struct }\hyperlink{structsession__cache__entry}{session\_cache\_entry} *cache = ctx;
+105 
+106     \textcolor{keywordflow}{if} (key\_size == 0 || key\_size > \hyperlink{s2nd_8c_ad91bfaf106e42aa552f1605c5b8a9ef2}{MAX\_KEY\_LEN}) \{
+107         \textcolor{keywordflow}{return} -1;
+108     \}
+109     \textcolor{keywordflow}{if} (value\_size == 0 || value\_size > \hyperlink{s2nd_8c_a282b0f9613da7596a04d4d8d4279d2a1}{MAX\_VAL\_LEN}) \{
+110         \textcolor{keywordflow}{return} -1;
+111     \}
+112 
+113     uint8\_t index = ((\textcolor{keyword}{const} uint8\_t *)\hyperlink{structsession__cache__entry_adb93d13e245f8373dac16ec300fe8c1d}{key})[0];
+114 
+115     memcpy(cache[index].\hyperlink{structsession__cache__entry_adb93d13e245f8373dac16ec300fe8c1d}{key}, key, key\_size);
+116     memcpy(cache[index].\hyperlink{structsession__cache__entry_af8b1b26a770e1882441830cadd6b94e7}{value}, value, value\_size);
+117 
+118     cache[index].\hyperlink{structsession__cache__entry_a81d756c926cde8076992a83a9b3ea657}{key\_len} = key\_size;
+119     cache[index].\hyperlink{structsession__cache__entry_ae02b3e5d161799d5639f0f0b9877997c}{value\_len} = value\_size;
+120 
+121     \textcolor{keywordflow}{return} 0;
+122 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_a9415451f8ae94353430b3e0890ad6196_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nd.\+c@{s2nd.\+c}!cache\+\_\+retrieve@{cache\+\_\+retrieve}}
+\index{cache\+\_\+retrieve@{cache\+\_\+retrieve}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{cache\+\_\+retrieve(void $\ast$ctx, const void $\ast$key, uint64\+\_\+t key\+\_\+size, void $\ast$value, uint64\+\_\+t $\ast$value\+\_\+size)}{cache_retrieve(void *ctx, const void *key, uint64_t key_size, void *value, uint64_t *value_size)}}]{\setlength{\rightskip}{0pt plus 5cm}int cache\+\_\+retrieve (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{ctx, }
+\item[{const {\bf void} $\ast$}]{key, }
+\item[{uint64\+\_\+t}]{key\+\_\+size, }
+\item[{{\bf void} $\ast$}]{value, }
+\item[{uint64\+\_\+t $\ast$}]{value\+\_\+size}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_a0153b562f602987e5668497ccb285868}{}\label{s2nd_8c_a0153b562f602987e5668497ccb285868}
+
+
+Definition at line 124 of file s2nd.\+c.
+
+
+\begin{DoxyCode}
+125 \{
+126     \textcolor{keyword}{struct }\hyperlink{structsession__cache__entry}{session\_cache\_entry} *cache = ctx;
+127 
+128     \textcolor{keywordflow}{if} (key\_size == 0 || key\_size > \hyperlink{s2nd_8c_ad91bfaf106e42aa552f1605c5b8a9ef2}{MAX\_KEY\_LEN}) \{
+129         \textcolor{keywordflow}{return} -1;
+130     \}
+131 
+132     uint8\_t index = ((\textcolor{keyword}{const} uint8\_t *)\hyperlink{structsession__cache__entry_adb93d13e245f8373dac16ec300fe8c1d}{key})[0];
+133 
+134     \textcolor{keywordflow}{if} (cache[index].\hyperlink{structsession__cache__entry_a81d756c926cde8076992a83a9b3ea657}{key\_len} != key\_size) \{
+135         \textcolor{keywordflow}{return} -1;
+136     \}
+137 
+138     \textcolor{keywordflow}{if} (memcmp(cache[index].\hyperlink{structsession__cache__entry_adb93d13e245f8373dac16ec300fe8c1d}{key}, key, key\_size)) \{
+139         \textcolor{keywordflow}{return} -1;
+140     \}
+141 
+142     \textcolor{keywordflow}{if} (*value\_size < cache[index].\hyperlink{structsession__cache__entry_ae02b3e5d161799d5639f0f0b9877997c}{value\_len}) \{
+143         \textcolor{keywordflow}{return} -1;
+144     \}
+145 
+146     *value\_size = cache[index].\hyperlink{structsession__cache__entry_ae02b3e5d161799d5639f0f0b9877997c}{value\_len};
+147     memcpy(\hyperlink{structsession__cache__entry_af8b1b26a770e1882441830cadd6b94e7}{value}, cache[index].\hyperlink{structsession__cache__entry_af8b1b26a770e1882441830cadd6b94e7}{value}, cache[index].value\_len);
+148 
+149     printf(\textcolor{stringliteral}{"Resumed session "});
+150     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < key\_size; i++) \{
+151         printf(\textcolor{stringliteral}{"%02x"}, ((\textcolor{keyword}{const} uint8\_t *)key)[i]);
+152     \}
+153     printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+154 
+155     \textcolor{keywordflow}{return} 0;
+156 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_a0153b562f602987e5668497ccb285868_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nd.\+c@{s2nd.\+c}!cache\+\_\+delete@{cache\+\_\+delete}}
+\index{cache\+\_\+delete@{cache\+\_\+delete}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{cache\+\_\+delete(void $\ast$ctx, const void $\ast$key, uint64\+\_\+t key\+\_\+size)}{cache_delete(void *ctx, const void *key, uint64_t key_size)}}]{\setlength{\rightskip}{0pt plus 5cm}int cache\+\_\+delete (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{ctx, }
+\item[{const {\bf void} $\ast$}]{key, }
+\item[{uint64\+\_\+t}]{key\+\_\+size}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce}{}\label{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce}
+
+
+Definition at line 158 of file s2nd.\+c.
+
+
+\begin{DoxyCode}
+159 \{
+160     \textcolor{keyword}{struct }\hyperlink{structsession__cache__entry}{session\_cache\_entry} *cache = ctx;
+161 
+162     \textcolor{keywordflow}{if} (key\_size == 0 || key\_size > \hyperlink{s2nd_8c_ad91bfaf106e42aa552f1605c5b8a9ef2}{MAX\_KEY\_LEN}) \{
+163         \textcolor{keywordflow}{return} -1;
+164     \}
+165 
+166     uint8\_t index = ((\textcolor{keyword}{const} uint8\_t *)\hyperlink{structsession__cache__entry_adb93d13e245f8373dac16ec300fe8c1d}{key})[0];
+167 
+168     \textcolor{keywordflow}{if} (cache[index].\hyperlink{structsession__cache__entry_a81d756c926cde8076992a83a9b3ea657}{key\_len} != key\_size) \{
+169         \textcolor{keywordflow}{return} -1;
+170     \}
+171 
+172     \textcolor{keywordflow}{if} (memcmp(cache[index].\hyperlink{structsession__cache__entry_adb93d13e245f8373dac16ec300fe8c1d}{key}, key, key\_size)) \{
+173         \textcolor{keywordflow}{return} -1;
+174     \}
+175 
+176     cache[index].\hyperlink{structsession__cache__entry_a81d756c926cde8076992a83a9b3ea657}{key\_len} = 0;
+177     cache[index].\hyperlink{structsession__cache__entry_ae02b3e5d161799d5639f0f0b9877997c}{value\_len} = 0;
+178 
+179     \textcolor{keywordflow}{return} 0;
+180 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nd.\+c@{s2nd.\+c}!echo@{echo}}
+\index{echo@{echo}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{echo(struct s2n\+\_\+connection $\ast$conn, int sockfd)}{echo(struct s2n_connection *conn, int sockfd)}}]{\setlength{\rightskip}{0pt plus 5cm}int echo (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{int}]{sockfd}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_adc37832656c6aa5548ab17e981176dab}{}\label{s2nd_8c_adc37832656c6aa5548ab17e981176dab}
+
+
+Definition at line 87 of file echo.\+c.
+
+
+\begin{DoxyCode}
+88 \{
+89     \textcolor{keyword}{struct }pollfd readers[2];
+90 
+91     readers[0].fd = sockfd;
+92     readers[0].events = POLLIN;
+93     readers[1].fd = STDIN\_FILENO;
+94     readers[1].events = POLLIN;
+95 
+96     \textcolor{comment}{/* Act as a simple proxy between stdin and the SSL connection */}
+97     \textcolor{keywordtype}{int} \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p};
+98     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+99   POLL:
+100     \textcolor{keywordflow}{while} ((p = poll(readers, 2, -1)) > 0) \{
+101         \textcolor{keywordtype}{char} buffer[10240];
+102         \textcolor{keywordtype}{int} bytes\_read, bytes\_written;
+103 
+104         \textcolor{keywordflow}{if} (readers[0].revents & POLLIN) \{
+105             \textcolor{keywordflow}{do} \{
+106                 bytes\_read = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, buffer, 10240, &blocked);
+107                 \textcolor{keywordflow}{if} (bytes\_read == 0) \{
+108                     \textcolor{comment}{/* Connection has been closed */}
+109                     \hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn);
+110                     \textcolor{keywordflow}{return} 0;
+111                 \}
+112                 \textcolor{keywordflow}{if} (bytes\_read < 0) \{
+113                     fprintf(stderr, \textcolor{stringliteral}{"Error reading from connection: '%s' %d\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}), \hyperlink{s2n_8h_a6726a1cbae275671f2751ac610dc5f0f}{s2n\_connection\_get\_alert}(conn))
+      ;
+114                     exit(1);
+115                 \}
+116                 bytes\_written = write(STDOUT\_FILENO, buffer, bytes\_read);
+117                 \textcolor{keywordflow}{if} (bytes\_written <= 0) \{
+118                     fprintf(stderr, \textcolor{stringliteral}{"Error writing to stdout\(\backslash\)n"});
+119                     exit(1);
+120                 \}
+121             \} \textcolor{keywordflow}{while} (blocked);
+122         \}
+123         \textcolor{keywordflow}{if} (readers[1].revents & POLLIN) \{
+124             \textcolor{keywordtype}{int} bytes\_available;
+125             \textcolor{keywordflow}{if} (ioctl(STDIN\_FILENO, FIONREAD, &bytes\_available) < 0) \{
+126                 bytes\_available = 1;
+127             \}
+128             \textcolor{keywordflow}{if} (bytes\_available > \textcolor{keyword}{sizeof}(buffer)) \{
+129                 bytes\_available = \textcolor{keyword}{sizeof}(buffer);
+130             \}
+131 
+132             \textcolor{comment}{/* Read as many bytes as we think we can */}
+133           READ:
+134             bytes\_read = read(STDIN\_FILENO, buffer, bytes\_available);
+135             \textcolor{keywordflow}{if} (bytes\_read < 0) \{
+136                 \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+137                     \textcolor{keywordflow}{goto} READ;
+138                 \}
+139                 fprintf(stderr, \textcolor{stringliteral}{"Error reading from stdin\(\backslash\)n"});
+140                 exit(1);
+141             \}
+142             \textcolor{keywordflow}{if} (bytes\_read == 0) \{
+143                 \textcolor{comment}{/* Exit on EOF */}
+144                 \textcolor{keywordflow}{return} 0;
+145             \}
+146 
+147             \textcolor{keywordtype}{char} *buf\_ptr = buffer;
+148             \textcolor{keywordflow}{do} \{
+149                 bytes\_written = \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, buf\_ptr, bytes\_available, &blocked);
+150                 \textcolor{keywordflow}{if} (bytes\_written < 0) \{
+151                     fprintf(stderr, \textcolor{stringliteral}{"Error writing to connection: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+152                     exit(1);
+153                 \}
+154 
+155                 bytes\_available -= bytes\_written;
+156                 buf\_ptr += bytes\_written;
+157             \} \textcolor{keywordflow}{while} (bytes\_available || blocked);
+158         \}
+159     \}
+160     \textcolor{keywordflow}{if} (p < 0 && \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+161         \textcolor{keywordflow}{goto} POLL;
+162     \}
+163 
+164     \textcolor{keywordflow}{return} 0;
+165 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_adc37832656c6aa5548ab17e981176dab_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_adc37832656c6aa5548ab17e981176dab_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nd.\+c@{s2nd.\+c}!negotiate@{negotiate}}
+\index{negotiate@{negotiate}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{negotiate(struct s2n\+\_\+connection $\ast$conn)}{negotiate(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int negotiate (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_a0c3aa10760d5a237f447120b0968ff99}{}\label{s2nd_8c_a0c3aa10760d5a237f447120b0968ff99}
+
+
+Definition at line 31 of file echo.\+c.
+
+
+\begin{DoxyCode}
+32 \{
+33     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+34     \textcolor{keywordflow}{do} \{
+35         \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked) < 0) \{
+36             fprintf(stderr, \textcolor{stringliteral}{"Failed to negotiate: '%s' %d\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}), \hyperlink{s2n_8h_a6726a1cbae275671f2751ac610dc5f0f}{s2n\_connection\_get\_alert}(conn));
+37             \textcolor{keywordflow}{return} -1;
+38         \}
+39     \} \textcolor{keywordflow}{while} (blocked);
+40 
+41     \textcolor{comment}{/* Now that we've negotiated, print some parameters */}
+42     \textcolor{keywordtype}{int} client\_hello\_version;
+43     \textcolor{keywordtype}{int} client\_protocol\_version;
+44     \textcolor{keywordtype}{int} server\_protocol\_version;
+45     \textcolor{keywordtype}{int} actual\_protocol\_version;
+46 
+47     \textcolor{keywordflow}{if} ((client\_hello\_version = \hyperlink{s2n_8h_a3d4e8c095c40ea7689f14022567cd3e9}{s2n\_connection\_get\_client\_hello\_version}
+      (conn)) < 0) \{
+48         fprintf(stderr, \textcolor{stringliteral}{"Could not get client hello version\(\backslash\)n"});
+49         \textcolor{keywordflow}{return} -1;
+50     \}
+51     \textcolor{keywordflow}{if} ((client\_protocol\_version = \hyperlink{s2n_8h_af15303e1d72a95320b6138edeef7a6ab}{s2n\_connection\_get\_client\_protocol\_version}
+      (conn)) < 0) \{
+52         fprintf(stderr, \textcolor{stringliteral}{"Could not get client protocol version\(\backslash\)n"});
+53         \textcolor{keywordflow}{return} -1;
+54     \}
+55     \textcolor{keywordflow}{if} ((server\_protocol\_version = \hyperlink{s2n_8h_ae2ea6a2e6468883f56459431f2024b0f}{s2n\_connection\_get\_server\_protocol\_version}
+      (conn)) < 0) \{
+56         fprintf(stderr, \textcolor{stringliteral}{"Could not get server protocol version\(\backslash\)n"});
+57         \textcolor{keywordflow}{return} -1;
+58     \}
+59     \textcolor{keywordflow}{if} ((actual\_protocol\_version = \hyperlink{s2n_8h_a4cb9df94e1fe137f10040fbfc1ad98f9}{s2n\_connection\_get\_actual\_protocol\_version}
+      (conn)) < 0) \{
+60         fprintf(stderr, \textcolor{stringliteral}{"Could not get actual protocol version\(\backslash\)n"});
+61         \textcolor{keywordflow}{return} -1;
+62     \}
+63     printf(\textcolor{stringliteral}{"Client hello version: %d\(\backslash\)n"}, client\_hello\_version);
+64     printf(\textcolor{stringliteral}{"Client protocol version: %d\(\backslash\)n"}, client\_protocol\_version);
+65     printf(\textcolor{stringliteral}{"Server protocol version: %d\(\backslash\)n"}, server\_protocol\_version);
+66     printf(\textcolor{stringliteral}{"Actual protocol version: %d\(\backslash\)n"}, actual\_protocol\_version);
+67 
+68     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a541a5e22fc8b6295e4c6bb1692cdd850}{s2n\_get\_server\_name}(conn)) \{
+69         printf(\textcolor{stringliteral}{"Server name: %s\(\backslash\)n"}, \hyperlink{s2n_8h_a541a5e22fc8b6295e4c6bb1692cdd850}{s2n\_get\_server\_name}(conn));
+70     \}
+71 
+72     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn)) \{
+73         printf(\textcolor{stringliteral}{"Application protocol: %s\(\backslash\)n"}, \hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn)
+      );
+74     \}
+75 
+76     uint32\_t \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length};
+77     \textcolor{keyword}{const} uint8\_t *status = \hyperlink{s2n_8h_a2b18cd3437636a7a21e10f3d5d09ff9d}{s2n\_connection\_get\_ocsp\_response}(conn, &length)
+      ;
+78     \textcolor{keywordflow}{if} (status && length > 0) \{
+79         fprintf(stderr, \textcolor{stringliteral}{"OCSP response received, length %d\(\backslash\)n"}, length);
+80     \}
+81 
+82     printf(\textcolor{stringliteral}{"Cipher negotiated: %s\(\backslash\)n"}, \hyperlink{s2n_8h_a119c0252cf7edde4d4a5c65f8cd23721}{s2n\_connection\_get\_cipher}(conn));
+83 
+84     \textcolor{keywordflow}{return} 0;
+85 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_a0c3aa10760d5a237f447120b0968ff99_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_a0c3aa10760d5a237f447120b0968ff99_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nd.\+c@{s2nd.\+c}!usage@{usage}}
+\index{usage@{usage}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{usage()}{usage()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} usage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{}\label{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}
+
+
+Definition at line 185 of file s2nd.\+c.
+
+
+\begin{DoxyCode}
+186 \{
+187     fprintf(stderr, \textcolor{stringliteral}{"usage: s2nd [options] host port\(\backslash\)n"});
+188     fprintf(stderr, \textcolor{stringliteral}{" host: hostname or IP address to listen on\(\backslash\)n"});
+189     fprintf(stderr, \textcolor{stringliteral}{" port: port to listen on\(\backslash\)n"});
+190     fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n Options:\(\backslash\)n\(\backslash\)n"});
+191     fprintf(stderr, \textcolor{stringliteral}{"  -c [version\_string]\(\backslash\)n"});
+192     fprintf(stderr, \textcolor{stringliteral}{"  --ciphers [version\_string]\(\backslash\)n"});
+193     fprintf(stderr, \textcolor{stringliteral}{"    Set the cipher prefence version string. Defaults to \(\backslash\)"default\(\backslash\)". See
+       USAGE-GUIDE.md\(\backslash\)n"});
+194     fprintf(stderr, \textcolor{stringliteral}{"  -n\(\backslash\)n"});
+195     fprintf(stderr, \textcolor{stringliteral}{"  --negotiate\(\backslash\)n"});
+196     fprintf(stderr, \textcolor{stringliteral}{"    Only perform tls handshake and then shutdown the connection\(\backslash\)n"});
+197     fprintf(stderr, \textcolor{stringliteral}{"  -h,--help\(\backslash\)n"});
+198     fprintf(stderr, \textcolor{stringliteral}{"    Display this message and quit.\(\backslash\)n"});
+199 
+200     exit(1);
+201 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=197pt]{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nd.\+c@{s2nd.\+c}!main@{main}}
+\index{main@{main}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$const $\ast$argv)}{main(int argc, char *const *argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$const $\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nd_8c_ad1835a0a190dc5fe4f925bb69443c770}{}\label{s2nd_8c_ad1835a0a190dc5fe4f925bb69443c770}
+
+
+Definition at line 203 of file s2nd.\+c.
+
+
+\begin{DoxyCode}
+204 \{
+205     \textcolor{keyword}{struct }addrinfo hints, *ai;
+206     \textcolor{keywordtype}{int} r, sockfd = 0;
+207 
+208     \textcolor{comment}{/* required args */}
+209     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *host = NULL;
+210     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *port = NULL;
+211 
+212     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *cipher\_prefs = \textcolor{stringliteral}{"default"};
+213     \textcolor{keywordtype}{int} only\_negotiate = 0;
+214 
+215     \textcolor{keyword}{static} \textcolor{keyword}{struct }option long\_options[] = \{
+216         \{\textcolor{stringliteral}{"help"}, no\_argument, 0, \textcolor{charliteral}{'h'}\},
+217         \{\textcolor{stringliteral}{"ciphers"}, required\_argument, 0, \textcolor{charliteral}{'c'}\},
+218     \};
+219     \textcolor{keywordflow}{while} (1) \{
+220         \textcolor{keywordtype}{int} option\_index = 0;
+221         \textcolor{keywordtype}{int} \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c} = getopt\_long(argc, argv, \textcolor{stringliteral}{"c:hn"}, long\_options, &option\_index);
+222         \textcolor{keywordflow}{if} (c == -1) \{
+223             \textcolor{keywordflow}{break};
+224         \}
+225         \textcolor{keywordflow}{switch} (c) \{
+226         \textcolor{keywordflow}{case} \textcolor{charliteral}{'c'}:
+227             cipher\_prefs = optarg;
+228             \textcolor{keywordflow}{break};
+229         \textcolor{keywordflow}{case} \textcolor{charliteral}{'h'}:
+230             \hyperlink{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage}();
+231             \textcolor{keywordflow}{break};
+232         \textcolor{keywordflow}{case} \textcolor{charliteral}{'n'}:
+233             only\_negotiate = 1;
+234             \textcolor{keywordflow}{break};
+235         \textcolor{keywordflow}{case} \textcolor{charliteral}{'?'}:
+236         \textcolor{keywordflow}{default}:
+237             \hyperlink{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage}();
+238             \textcolor{keywordflow}{break};
+239         \}
+240     \}
+241 
+242     \textcolor{keywordflow}{if} (optind < argc) \{
+243         host = argv[optind++];
+244     \}
+245     \textcolor{keywordflow}{if} (optind < argc) \{
+246         port = argv[optind++];
+247     \}
+248 
+249     \textcolor{keywordflow}{if} (!host || !port) \{
+250         \hyperlink{s2nd_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage}();
+251     \}
+252 
+253     \textcolor{keywordflow}{if} (setvbuf(stdin, NULL, \_IONBF, 0) < 0) \{
+254         fprintf(stderr, \textcolor{stringliteral}{"Error disabling buffering for stdin\(\backslash\)n"});
+255         exit(1);
+256     \}
+257 
+258     \textcolor{keywordflow}{if} (setvbuf(stdout, NULL, \_IONBF, 0) < 0) \{
+259         fprintf(stderr, \textcolor{stringliteral}{"Error disabling buffering for stdout\(\backslash\)n"});
+260         exit(1);
+261     \}
+262 
+263     memset(&hints, 0, \textcolor{keyword}{sizeof}(hints));
+264 
+265     hints.ai\_family = AF\_UNSPEC;
+266     hints.ai\_socktype = SOCK\_STREAM;
+267 
+268     \textcolor{keywordflow}{if} (signal(SIGPIPE, SIG\_IGN) == SIG\_ERR) \{
+269         fprintf(stderr, \textcolor{stringliteral}{"Error disabling SIGPIPE\(\backslash\)n"});
+270         exit(1);
+271     \}
+272 
+273     \textcolor{keywordflow}{if} ((r = getaddrinfo(host, port, &hints, &ai)) < 0) \{
+274         fprintf(stderr, \textcolor{stringliteral}{"getaddrinfo error: %s\(\backslash\)n"}, gai\_strerror(r));
+275         exit(1);
+276     \}
+277 
+278     \textcolor{keywordflow}{if} ((sockfd = socket(ai->ai\_family, ai->ai\_socktype, ai->ai\_protocol)) == -1) \{
+279         fprintf(stderr, \textcolor{stringliteral}{"socket error: %s\(\backslash\)n"}, strerror(\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}));
+280         exit(1);
+281     \}
+282 
+283     r = 1;
+284     \textcolor{keywordflow}{if} (setsockopt(sockfd, SOL\_SOCKET, SO\_REUSEADDR, &r, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int})) < 0) \{
+285         fprintf(stderr, \textcolor{stringliteral}{"setsockopt error: %s\(\backslash\)n"}, strerror(\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}));
+286         exit(1);
+287     \}
+288 
+289     \textcolor{keywordflow}{if} (bind(sockfd, ai->ai\_addr, ai->ai\_addrlen) < 0) \{
+290         fprintf(stderr, \textcolor{stringliteral}{"bind error: %s\(\backslash\)n"}, strerror(\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}));
+291         exit(1);
+292     \}
+293 
+294     \textcolor{keywordflow}{if} (listen(sockfd, 1) == -1) \{
+295         fprintf(stderr, \textcolor{stringliteral}{"listen error: %s\(\backslash\)n"}, strerror(\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}));
+296         exit(1);
+297     \}
+298 
+299     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_abc620f8194383c6fcddd911edcf7d692}{s2n\_init}() < 0) \{
+300         fprintf(stderr, \textcolor{stringliteral}{"Error running s2n\_init(): '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+301     \}
+302 
+303     printf(\textcolor{stringliteral}{"Listening on %s:%s\(\backslash\)n"}, host, port);
+304 
+305     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config} = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}();
+306     \textcolor{keywordflow}{if} (!config) \{
+307         fprintf(stderr, \textcolor{stringliteral}{"Error getting new s2n config: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+308         exit(1);
+309     \}
+310 
+311     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(config, certificate, private\_key
+      ) < 0) \{
+312         fprintf(stderr, \textcolor{stringliteral}{"Error getting certificate/key: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+313         exit(1);
+314     \}
+315 
+316     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a82513564c95dc7a4174c3d04eb043564}{s2n\_config\_add\_dhparams}(config, \hyperlink{structs2n__config_abdbd12d9095df20e7e63ef00b353db7c}{dhparams}) < 0) \{
+317         fprintf(stderr, \textcolor{stringliteral}{"Error adding DH parameters: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+318         exit(1);
+319     \}
+320 
+321     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a21b09fcd09e2d33e8ed9389a109f2ab2}{s2n\_config\_set\_cipher\_preferences}(config, cipher\_prefs) < 0) \{
+322         fprintf(stderr, \textcolor{stringliteral}{"Error setting cipher prefs: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+323         exit(1);
+324     \}
+325 
+326     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a2b4ec043b39d8a0e3f4f5113e941c338}{s2n\_config\_set\_cache\_store\_callback}(config, 
+      \hyperlink{s2nd_8c_a9415451f8ae94353430b3e0890ad6196}{cache\_store}, \hyperlink{s2nd_8c_a64abc607d19fe2165bd1f364a25ee35e}{session\_cache}) < 0) \{
+327         fprintf(stderr, \textcolor{stringliteral}{"Error setting cache store callback: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+328         exit(1);
+329     \}
+330 
+331     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_ab1cd3ada52e3854db427d219a7183de2}{s2n\_config\_set\_cache\_retrieve\_callback}(config, 
+      \hyperlink{s2nd_8c_a0153b562f602987e5668497ccb285868}{cache\_retrieve}, \hyperlink{s2nd_8c_a64abc607d19fe2165bd1f364a25ee35e}{session\_cache}) < 0) \{
+332         fprintf(stderr, \textcolor{stringliteral}{"Error setting cache retrieve callback: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+333         exit(1);
+334     \}
+335 
+336     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a5a13d9dc1fefcdd6c08c329e47f84e9e}{s2n\_config\_set\_cache\_delete\_callback}(config, 
+      \hyperlink{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce}{cache\_delete}, \hyperlink{s2nd_8c_a64abc607d19fe2165bd1f364a25ee35e}{session\_cache}) < 0) \{
+337         fprintf(stderr, \textcolor{stringliteral}{"Error setting cache retrieve callback: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+338         exit(1);
+339     \}
+340 
+341     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER});
+342     \textcolor{keywordflow}{if} (!conn) \{
+343         fprintf(stderr, \textcolor{stringliteral}{"Error getting new s2n connection: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+344         exit(1);
+345     \}
+346 
+347     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config) < 0) \{
+348         fprintf(stderr, \textcolor{stringliteral}{"Error setting configuration: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+349         exit(1);
+350     \}
+351 
+352     \textcolor{keywordtype}{int} fd;
+353     \textcolor{keywordflow}{while} ((fd = accept(sockfd, ai->ai\_addr, &ai->ai\_addrlen)) > 0) \{
+354         \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a80776ecf7e726f52165cdec5e2652d1e}{s2n\_connection\_set\_fd}(conn, fd) < 0) \{
+355             fprintf(stderr, \textcolor{stringliteral}{"Error setting file descriptor: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+356             exit(1);
+357         \}
+358 
+359         \hyperlink{s2nd_8c_a0c3aa10760d5a237f447120b0968ff99}{negotiate}(conn);
+360 
+361         \textcolor{keywordflow}{if} (!only\_negotiate) \{
+362             \hyperlink{s2nd_8c_adc37832656c6aa5548ab17e981176dab}{echo}(conn, fd);
+363         \}
+364 
+365         \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+366         \hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked);
+367 
+368         close(fd);
+369 
+370         \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn) < 0) \{
+371             fprintf(stderr, \textcolor{stringliteral}{"Error wiping connection: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+372             exit(1);
+373         \}
+374     \}
+375 
+376     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn) < 0) \{
+377         fprintf(stderr, \textcolor{stringliteral}{"Error freeing connection: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+378         exit(1);
+379     \}
+380 
+381     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a907fdf445e5fb1752f1b18f0ddf935b3}{s2n\_cleanup}() < 0) \{
+382         fprintf(stderr, \textcolor{stringliteral}{"Error running s2n\_cleanup(): '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+383     \}
+384 
+385     \textcolor{keywordflow}{return} 0;
+386 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nd_8c_ad1835a0a190dc5fe4f925bb69443c770_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2nd.\+c@{s2nd.\+c}!session\+\_\+cache@{session\+\_\+cache}}
+\index{session\+\_\+cache@{session\+\_\+cache}!s2nd.\+c@{s2nd.\+c}}
+\subsubsection[{\texorpdfstring{session\+\_\+cache}{session_cache}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf session\+\_\+cache\+\_\+entry} session\+\_\+cache\mbox{[}256\mbox{]}}\hypertarget{s2nd_8c_a64abc607d19fe2165bd1f364a25ee35e}{}\label{s2nd_8c_a64abc607d19fe2165bd1f364a25ee35e}
+
+
+Definition at line 100 of file s2nd.\+c.
+

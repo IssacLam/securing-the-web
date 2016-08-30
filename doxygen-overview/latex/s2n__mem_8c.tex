@@ -1,0 +1,236 @@
+\hypertarget{s2n__mem_8c}{}\section{s2n-\/master/utils/s2n\+\_\+mem.c File Reference}
+\label{s2n__mem_8c}\index{s2n-\/master/utils/s2n\+\_\+mem.\+c@{s2n-\/master/utils/s2n\+\_\+mem.\+c}}
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$sys/mman.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+mem.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__mem_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__mem_8c_a81a78b9679f38bdf48cc544f6268599d}{s2n\+\_\+mem\+\_\+init} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f}{s2n\+\_\+alloc} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$b, uint32\+\_\+t size)
+\item 
+int \hyperlink{s2n__mem_8c_a68cfc787c141730f4f602d509dd58a39}{s2n\+\_\+realloc} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$b, uint32\+\_\+t size)
+\item 
+int \hyperlink{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\+\_\+free} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$b)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}!s2n\+\_\+mem\+\_\+init@{s2n\+\_\+mem\+\_\+init}}
+\index{s2n\+\_\+mem\+\_\+init@{s2n\+\_\+mem\+\_\+init}!s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+mem\+\_\+init(void)}{s2n_mem_init(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+mem\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__mem_8c_a81a78b9679f38bdf48cc544f6268599d}{}\label{s2n__mem_8c_a81a78b9679f38bdf48cc544f6268599d}
+
+
+Definition at line 30 of file s2n\+\_\+mem.\+c.
+
+
+\begin{DoxyCode}
+31 \{
+32     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(page\_size = sysconf(\_SC\_PAGESIZE));
+33     \textcolor{keywordflow}{if} (getenv(\textcolor{stringliteral}{"S2N\_DONT\_MLOCK"})) \{
+34         use\_mlock = 0;
+35     \}
+36 
+37     \textcolor{keywordflow}{return} 0;
+38 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__mem_8c_a81a78b9679f38bdf48cc544f6268599d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}!s2n\+\_\+alloc@{s2n\+\_\+alloc}}
+\index{s2n\+\_\+alloc@{s2n\+\_\+alloc}!s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+alloc(struct s2n\+\_\+blob $\ast$b, uint32\+\_\+t size)}{s2n_alloc(struct s2n_blob *b, uint32_t size)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+alloc (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{b, }
+\item[{uint32\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f}{}\label{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f}
+
+
+Definition at line 40 of file s2n\+\_\+mem.\+c.
+
+
+\begin{DoxyCode}
+41 \{
+42     b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = NULL;
+43     b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 0;
+44     b->\hyperlink{structs2n__blob_a9ffa331535fe886bb8208ccee04393db}{allocated} = 0;
+45     b->\hyperlink{structs2n__blob_aadc4831179870523e92ff16734a830ea}{mlocked} = 0;
+46     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a68cfc787c141730f4f602d509dd58a39}{s2n\_realloc}(b, size));
+47     \textcolor{keywordflow}{return} 0;
+48 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}!s2n\+\_\+realloc@{s2n\+\_\+realloc}}
+\index{s2n\+\_\+realloc@{s2n\+\_\+realloc}!s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+realloc(struct s2n\+\_\+blob $\ast$b, uint32\+\_\+t size)}{s2n_realloc(struct s2n_blob *b, uint32_t size)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+realloc (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{b, }
+\item[{uint32\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__mem_8c_a68cfc787c141730f4f602d509dd58a39}{}\label{s2n__mem_8c_a68cfc787c141730f4f602d509dd58a39}
+
+
+Definition at line 50 of file s2n\+\_\+mem.\+c.
+
+
+\begin{DoxyCode}
+51 \{
+52     \textcolor{keywordflow}{if} (size == 0) \{
+53         \textcolor{keywordflow}{return} \hyperlink{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(b);
+54     \}
+55 
+56     \textcolor{keywordflow}{if} (size < b->allocated) \{
+57         b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = size;
+58         \textcolor{keywordflow}{return} 0;
+59     \}
+60 
+61     uint32\_t allocate = page\_size * ((size + (page\_size - 1)) / page\_size);
+62 
+63     \textcolor{keywordtype}{void} *data;
+64     \textcolor{keywordflow}{if} (posix\_memalign(&data, page\_size, allocate)) \{
+65         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374abc633cc681982dbcae6a882d6e440b59}{S2N\_ERR\_ALLOC});
+66     \}
+67 
+68     \textcolor{keywordflow}{if} (b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}) \{
+69         \hyperlink{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}{memcpy\_check}(data, b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+70         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(b));
+71     \}
+72 
+73     b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = data;
+74     b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = size;
+75     b->\hyperlink{structs2n__blob_a9ffa331535fe886bb8208ccee04393db}{allocated} = allocate;
+76 
+77 \textcolor{preprocessor}{#ifdef MADV\_DONTDUMP}
+78     \textcolor{keywordflow}{if} (madvise(b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, size, MADV\_DONTDUMP) < 0) \{
+79         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(b));
+80         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a964bdab8630956318e5cc0fdcbd3a62e}{S2N\_ERR\_MADVISE});
+81     \}
+82 \textcolor{preprocessor}{#endif}
+83     \textcolor{keywordflow}{if} (use\_mlock == 0) \{
+84         \textcolor{keywordflow}{return} 0;
+85     \}
+86 
+87     \textcolor{keywordflow}{if} (mlock(b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, size) < 0) \{
+88         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}{s2n\_free}(b));
+89         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a7c451062808e1e9103be90527371fcf1}{S2N\_ERR\_MLOCK});
+90     \}
+91     b->\hyperlink{structs2n__blob_aadc4831179870523e92ff16734a830ea}{mlocked} = 1;
+92 
+93     \textcolor{keywordflow}{return} 0;
+94 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{s2n__mem_8c_a68cfc787c141730f4f602d509dd58a39_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__mem_8c_a68cfc787c141730f4f602d509dd58a39_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}!s2n\+\_\+free@{s2n\+\_\+free}}
+\index{s2n\+\_\+free@{s2n\+\_\+free}!s2n\+\_\+mem.\+c@{s2n\+\_\+mem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+free(struct s2n\+\_\+blob $\ast$b)}{s2n_free(struct s2n_blob *b)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}{}\label{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994}
+
+
+Definition at line 96 of file s2n\+\_\+mem.\+c.
+
+
+\begin{DoxyCode}
+97 \{
+98     \textcolor{keywordtype}{int} munlock\_rc = 0;
+99     \textcolor{keywordflow}{if} (b->\hyperlink{structs2n__blob_aadc4831179870523e92ff16734a830ea}{mlocked}) \{
+100         munlock\_rc = munlock(b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+101     \}
+102 
+103     free(b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data});
+104     b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = NULL;
+105     b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 0;
+106     b->\hyperlink{structs2n__blob_a9ffa331535fe886bb8208ccee04393db}{allocated} = 0;
+107 
+108     \textcolor{keywordflow}{if} (munlock\_rc < 0) \{
+109         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374accf79bfdaea22b93ddce06b768a2ede5}{S2N\_ERR\_MUNLOCK});
+110     \}
+111     b->\hyperlink{structs2n__blob_aadc4831179870523e92ff16734a830ea}{mlocked} = 0;
+112 
+113     \textcolor{keywordflow}{return} 0;
+114 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__mem_8c_a1474cb5dc54584b8e108acf1070bc994_icgraph}
+\end{center}
+\end{figure}
+
+

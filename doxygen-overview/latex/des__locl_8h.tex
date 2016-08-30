@@ -1,0 +1,407 @@
+\hypertarget{des__locl_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/des/des\+\_\+locl.h File Reference}
+\label{des__locl_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/des/des\+\_\+locl.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/des/des\+\_\+locl.\+h}}
+{\ttfamily \#include $<$openssl/e\+\_\+os2.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/des.\+h$>$}\\*
+Include dependency graph for des\+\_\+locl.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{des__locl_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{des__locl_8h_aa9cc087d076e4fa101f8794a947bd01a}{I\+T\+E\+R\+A\+T\+I\+O\+NS}~16
+\item 
+\#define \hyperlink{des__locl_8h_a931b0fcbd488d46a03f05da437ed1379}{H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS}~8
+\item 
+\#define \hyperlink{des__locl_8h_a5edd042823eb6ccf8097788588a301d8}{M\+A\+X\+W\+R\+I\+TE}~(1024$\ast$16)
+\item 
+\#define \hyperlink{des__locl_8h_a403cf3149c084cea115b85c90721039a}{B\+S\+I\+ZE}~(\hyperlink{des__locl_8h_a5edd042823eb6ccf8097788588a301d8}{M\+A\+X\+W\+R\+I\+TE}+4)
+\item 
+\#define \hyperlink{des__locl_8h_a051821f93fbe2e488c389870a3e8dde4}{c2l}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l)            
+\item 
+\#define \hyperlink{des__locl_8h_a44097aaa9c60a18f029941bd6b0885ba}{c2ln}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l1,  l2,  n)
+\item 
+\#define \hyperlink{des__locl_8h_a0e628ee046442978b78ef2fa1cdee0eb}{l2c}(l,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})            
+\item 
+\#define \hyperlink{des__locl_8h_a9246ccc15f3d6dd1dbc93cf4f1b277a0}{H\+D\+R\+S\+I\+ZE}~4
+\item 
+\#define \hyperlink{des__locl_8h_a4354a7c769f81d16cf56c43f43dadcb9}{n2l}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l)            
+\item 
+\#define \hyperlink{des__locl_8h_af1a7e80365b16e784429764931644b85}{l2n}(l,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})            
+\item 
+\#define \hyperlink{des__locl_8h_ade9b2d14ab67918b1a7fa357a8cd9c64}{l2cn}(l1,  l2,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  n)
+\item 
+\#define \hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{R\+O\+T\+A\+TE}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  n)      ~(((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a})$>$$>$(n))+((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a})$<$$<$(32-\/(n))))
+\item 
+\#define \hyperlink{des__locl_8h_a7e18fcdea269a29349448b251a930270}{L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f)~\hyperlink{des__locl_8h_a496e8841f69a8645b023af6d20dfbb9f}{L\+O\+A\+D\+\_\+\+D\+A\+TA}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},b,\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},d,\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},f,g)
+\item 
+\#define \hyperlink{des__locl_8h_a496e8841f69a8645b023af6d20dfbb9f}{L\+O\+A\+D\+\_\+\+D\+A\+TA}(R,  S,  \hyperlink{include_2openssl_2pem_8h_a122e5153d6dcf7684d5e2aa3bd89fa82}{u},  \hyperlink{include_2openssl_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t},  E0,  E1,  tmp)
+\item 
+\#define \hyperlink{des__locl_8h_a18a901a1741829d87b45689a849d79a4}{D\+\_\+\+E\+N\+C\+R\+Y\+PT}(LL,  R,  S)
+\item 
+\#define \hyperlink{des__locl_8h_a1e887c25c8f65ca867e9bc17e6f0e836}{P\+E\+R\+M\+\_\+\+OP}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{include_2openssl_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t},  n,  m)
+\item 
+\#define \hyperlink{des__locl_8h_af1dd2f84047ca682325fc64bb2124b34}{IP}(l,  r)
+\item 
+\#define \hyperlink{des__locl_8h_ac62d62f12d7cd2301c85a2ef328d22ef}{FP}(l,  r)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{des__locl_8h_a58b4bb2ee2951c848f51b9983349a536}{fcrypt\+\_\+body} (D\+E\+S\+\_\+\+L\+O\+NG $\ast$out, \hyperlink{crypto_2des_2des_8h_a524e0ff852070682aced151c7cfbfd83}{D\+E\+S\+\_\+key\+\_\+schedule} $\ast$ks, D\+E\+S\+\_\+\+L\+O\+NG Eswap0, D\+E\+S\+\_\+\+L\+O\+NG Eswap1)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const D\+E\+S\+\_\+\+L\+O\+NG \hyperlink{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}{D\+E\+S\+\_\+\+S\+Ptrans} \mbox{[}8\mbox{]}\mbox{[}64\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!I\+T\+E\+R\+A\+T\+I\+O\+NS@{I\+T\+E\+R\+A\+T\+I\+O\+NS}}
+\index{I\+T\+E\+R\+A\+T\+I\+O\+NS@{I\+T\+E\+R\+A\+T\+I\+O\+NS}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{I\+T\+E\+R\+A\+T\+I\+O\+NS}{ITERATIONS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+T\+E\+R\+A\+T\+I\+O\+NS~16}\hypertarget{des__locl_8h_aa9cc087d076e4fa101f8794a947bd01a}{}\label{des__locl_8h_aa9cc087d076e4fa101f8794a947bd01a}
+
+
+Definition at line 101 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS@{H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS}}
+\index{H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS@{H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS}{HALF_ITERATIONS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+L\+F\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+NS~8}\hypertarget{des__locl_8h_a931b0fcbd488d46a03f05da437ed1379}{}\label{des__locl_8h_a931b0fcbd488d46a03f05da437ed1379}
+
+
+Definition at line 102 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!M\+A\+X\+W\+R\+I\+TE@{M\+A\+X\+W\+R\+I\+TE}}
+\index{M\+A\+X\+W\+R\+I\+TE@{M\+A\+X\+W\+R\+I\+TE}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+W\+R\+I\+TE}{MAXWRITE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+W\+R\+I\+TE~(1024$\ast$16)}\hypertarget{des__locl_8h_a5edd042823eb6ccf8097788588a301d8}{}\label{des__locl_8h_a5edd042823eb6ccf8097788588a301d8}
+
+
+Definition at line 105 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!B\+S\+I\+ZE@{B\+S\+I\+ZE}}
+\index{B\+S\+I\+ZE@{B\+S\+I\+ZE}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+S\+I\+ZE}{BSIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+S\+I\+ZE~({\bf M\+A\+X\+W\+R\+I\+TE}+4)}\hypertarget{des__locl_8h_a403cf3149c084cea115b85c90721039a}{}\label{des__locl_8h_a403cf3149c084cea115b85c90721039a}
+
+
+Definition at line 106 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!c2l@{c2l}}
+\index{c2l@{c2l}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{c2l}{c2l}}]{\setlength{\rightskip}{0pt plus 5cm}\#define c2l(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a051821f93fbe2e488c389870a3e8dde4}{}\label{des__locl_8h_a051821f93fbe2e488c389870a3e8dde4}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(l =((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))    , \(\backslash\)
+                         l|=((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<< 8L, \(\backslash\)
+                         l|=((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<16L, \(\backslash\)
+                         l|=((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<24L)
+\end{DoxyCode}
+
+
+Definition at line 108 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!c2ln@{c2ln}}
+\index{c2ln@{c2ln}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{c2ln}{c2ln}}]{\setlength{\rightskip}{0pt plus 5cm}\#define c2ln(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l1, }
+\item[{}]{l2, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a44097aaa9c60a18f029941bd6b0885ba}{}\label{des__locl_8h_a44097aaa9c60a18f029941bd6b0885ba}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+                        c+=n; \(\backslash\)
+                        l1=l2=0; \(\backslash\)
+                        switch (n) \{ \(\backslash\)
+                        case 8: l2 =((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<24L; \(\backslash\)
+                        case 7: l2|=((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<16L; \(\backslash\)
+                        case 6: l2|=((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<< 8L; \(\backslash\)
+                        case 5: l2|=((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))));     \(\backslash\)
+                        case 4: l1 =((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<24L; \(\backslash\)
+                        case 3: l1|=((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<16L; \(\backslash\)
+                        case 2: l1|=((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<< 8L; \(\backslash\)
+                        case 1: l1|=((DES\_LONG)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))));     \(\backslash\)
+                                \} \(\backslash\)
+                        \}
+\end{DoxyCode}
+
+
+Definition at line 114 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!l2c@{l2c}}
+\index{l2c@{l2c}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2c}{l2c}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2c(
+\begin{DoxyParamCaption}
+\item[{}]{l, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a0e628ee046442978b78ef2fa1cdee0eb}{}\label{des__locl_8h_a0e628ee046442978b78ef2fa1cdee0eb}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)     )&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>> 8L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>16L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>24L)&0xff))
+\end{DoxyCode}
+
+
+Definition at line 129 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!H\+D\+R\+S\+I\+ZE@{H\+D\+R\+S\+I\+ZE}}
+\index{H\+D\+R\+S\+I\+ZE@{H\+D\+R\+S\+I\+ZE}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+D\+R\+S\+I\+ZE}{HDRSIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+D\+R\+S\+I\+ZE~4}\hypertarget{des__locl_8h_a9246ccc15f3d6dd1dbc93cf4f1b277a0}{}\label{des__locl_8h_a9246ccc15f3d6dd1dbc93cf4f1b277a0}
+
+
+Definition at line 138 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!n2l@{n2l}}
+\index{n2l@{n2l}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{n2l}{n2l}}]{\setlength{\rightskip}{0pt plus 5cm}\#define n2l(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a4354a7c769f81d16cf56c43f43dadcb9}{}\label{des__locl_8h_a4354a7c769f81d16cf56c43f43dadcb9}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(l =((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<24L, \(\backslash\)
+                         l|=((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<16L, \(\backslash\)
+                         l|=((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<< 8L, \(\backslash\)
+                         l|=((DES\_LONG)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++))))
+\end{DoxyCode}
+
+
+Definition at line 140 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!l2n@{l2n}}
+\index{l2n@{l2n}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2n}{l2n}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2n(
+\begin{DoxyParamCaption}
+\item[{}]{l, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_af1a7e80365b16e784429764931644b85}{}\label{des__locl_8h_af1a7e80365b16e784429764931644b85}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>24L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>16L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>> 8L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)     )&0xff))
+\end{DoxyCode}
+
+
+Definition at line 145 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!l2cn@{l2cn}}
+\index{l2cn@{l2cn}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2cn}{l2cn}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2cn(
+\begin{DoxyParamCaption}
+\item[{}]{l1, }
+\item[{}]{l2, }
+\item[{}]{{\bf c}, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_ade9b2d14ab67918b1a7fa357a8cd9c64}{}\label{des__locl_8h_ade9b2d14ab67918b1a7fa357a8cd9c64}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+                        c+=n; \(\backslash\)
+                        switch (n) \{ \(\backslash\)
+                        case 8: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>>24L)&0xff); \(\backslash\)
+                        case 7: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>>16L)&0xff); \(\backslash\)
+                        case 6: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>> 8L)&0xff); \(\backslash\)
+                        case 5: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)     )&0xff); \(\backslash\)
+                        case 4: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>>24L)&0xff); \(\backslash\)
+                        case 3: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>>16L)&0xff); \(\backslash\)
+                        case 2: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>> 8L)&0xff); \(\backslash\)
+                        case 1: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)     )&0xff); \(\backslash\)
+                                \} \(\backslash\)
+                        \}
+\end{DoxyCode}
+
+
+Definition at line 151 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!R\+O\+T\+A\+TE@{R\+O\+T\+A\+TE}}
+\index{R\+O\+T\+A\+TE@{R\+O\+T\+A\+TE}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{R\+O\+T\+A\+TE}{ROTATE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+O\+T\+A\+TE(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~((({\bf a})$>$$>$(n))+(({\bf a})$<$$<$(32-\/(n))))}\hypertarget{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{}\label{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}
+
+
+Definition at line 181 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp@{L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp}}
+\index{L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp@{L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp}{LOAD_DATA_tmp}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+tmp(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f}
+\end{DoxyParamCaption}
+)~{\bf L\+O\+A\+D\+\_\+\+D\+A\+TA}({\bf a},b,{\bf c},d,{\bf e},f,g)}\hypertarget{des__locl_8h_a7e18fcdea269a29349448b251a930270}{}\label{des__locl_8h_a7e18fcdea269a29349448b251a930270}
+
+
+Definition at line 200 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!L\+O\+A\+D\+\_\+\+D\+A\+TA@{L\+O\+A\+D\+\_\+\+D\+A\+TA}}
+\index{L\+O\+A\+D\+\_\+\+D\+A\+TA@{L\+O\+A\+D\+\_\+\+D\+A\+TA}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{L\+O\+A\+D\+\_\+\+D\+A\+TA}{LOAD_DATA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+A\+D\+\_\+\+D\+A\+TA(
+\begin{DoxyParamCaption}
+\item[{}]{R, }
+\item[{}]{S, }
+\item[{}]{{\bf u}, }
+\item[{}]{{\bf t}, }
+\item[{}]{E0, }
+\item[{}]{E1, }
+\item[{}]{tmp}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a496e8841f69a8645b023af6d20dfbb9f}{}\label{des__locl_8h_a496e8841f69a8645b023af6d20dfbb9f}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u}=R^s[S  ]; \(\backslash\)
+        t=R^s[S+1]
+\end{DoxyCode}
+
+
+Definition at line 201 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!D\+\_\+\+E\+N\+C\+R\+Y\+PT@{D\+\_\+\+E\+N\+C\+R\+Y\+PT}}
+\index{D\+\_\+\+E\+N\+C\+R\+Y\+PT@{D\+\_\+\+E\+N\+C\+R\+Y\+PT}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{D\+\_\+\+E\+N\+C\+R\+Y\+PT}{D_ENCRYPT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+\_\+\+E\+N\+C\+R\+Y\+PT(
+\begin{DoxyParamCaption}
+\item[{}]{LL, }
+\item[{}]{R, }
+\item[{}]{S}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a18a901a1741829d87b45689a849d79a4}{}\label{des__locl_8h_a18a901a1741829d87b45689a849d79a4}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{\(\backslash\)
+        LOAD\_DATA\_tmp(R,S,\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u},\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t},E0,E1); \(\backslash\)
+        t=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t},4); \(\backslash\)
+        LL^=\(\backslash\)
+                DES\_SPtrans[0][(\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u}>> 2L)&0x3f]^ \(\backslash\)
+                \hyperlink{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}{DES\_SPtrans}[2][(\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u}>>10L)&0x3f]^ \(\backslash\)
+                DES\_SPtrans[4][(\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u}>>18L)&0x3f]^ \(\backslash\)
+                \hyperlink{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}{DES\_SPtrans}[6][(\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u}>>26L)&0x3f]^ \(\backslash\)
+                DES\_SPtrans[1][(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}>> 2L)&0x3f]^ \(\backslash\)
+                \hyperlink{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}{DES\_SPtrans}[3][(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}>>10L)&0x3f]^ \(\backslash\)
+                DES\_SPtrans[5][(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}>>18L)&0x3f]^ \(\backslash\)
+                \hyperlink{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}{DES\_SPtrans}[7][(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}>>26L)&0x3f]; \}
+\end{DoxyCode}
+
+
+Definition at line 358 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!P\+E\+R\+M\+\_\+\+OP@{P\+E\+R\+M\+\_\+\+OP}}
+\index{P\+E\+R\+M\+\_\+\+OP@{P\+E\+R\+M\+\_\+\+OP}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{P\+E\+R\+M\+\_\+\+OP}{PERM_OP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+E\+R\+M\+\_\+\+OP(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf t}, }
+\item[{}]{n, }
+\item[{}]{m}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a1e887c25c8f65ca867e9bc17e6f0e836}{}\label{des__locl_8h_a1e887c25c8f65ca867e9bc17e6f0e836}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+((\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})=((((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a})>>(n))^(b))&(m)),\(\backslash\)
+        (b)^=(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}),\(\backslash\)
+        (\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a})^=((\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})<<(n)))
+\end{DoxyCode}
+
+
+Definition at line 411 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!IP@{IP}}
+\index{IP@{IP}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{IP}{IP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define IP(
+\begin{DoxyParamCaption}
+\item[{}]{l, }
+\item[{}]{r}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_af1dd2f84047ca682325fc64bb2124b34}{}\label{des__locl_8h_af1dd2f84047ca682325fc64bb2124b34}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+        register DES\_LONG tt; \(\backslash\)
+        PERM\_OP(r,l,tt, 4,0x0f0f0f0fL); \(\backslash\)
+        PERM\_OP(l,r,tt,16,0x0000ffffL); \(\backslash\)
+        PERM\_OP(r,l,tt, 2,0x33333333L); \(\backslash\)
+        PERM\_OP(l,r,tt, 8,0x00ff00ffL); \(\backslash\)
+        PERM\_OP(r,l,tt, 1,0x55555555L); \(\backslash\)
+        \}
+\end{DoxyCode}
+
+
+Definition at line 415 of file des\+\_\+locl.\+h.
+
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!FP@{FP}}
+\index{FP@{FP}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{FP}{FP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define FP(
+\begin{DoxyParamCaption}
+\item[{}]{l, }
+\item[{}]{r}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_ac62d62f12d7cd2301c85a2ef328d22ef}{}\label{des__locl_8h_ac62d62f12d7cd2301c85a2ef328d22ef}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+        register DES\_LONG tt; \(\backslash\)
+        PERM\_OP(l,r,tt, 1,0x55555555L); \(\backslash\)
+        PERM\_OP(r,l,tt, 8,0x00ff00ffL); \(\backslash\)
+        PERM\_OP(l,r,tt, 2,0x33333333L); \(\backslash\)
+        PERM\_OP(r,l,tt,16,0x0000ffffL); \(\backslash\)
+        PERM\_OP(l,r,tt, 4,0x0f0f0f0fL); \(\backslash\)
+        \}
+\end{DoxyCode}
+
+
+Definition at line 425 of file des\+\_\+locl.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!fcrypt\+\_\+body@{fcrypt\+\_\+body}}
+\index{fcrypt\+\_\+body@{fcrypt\+\_\+body}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{fcrypt\+\_\+body(\+D\+E\+S\+\_\+\+L\+O\+N\+G $\ast$out, D\+E\+S\+\_\+key\+\_\+schedule $\ast$ks, D\+E\+S\+\_\+\+L\+O\+N\+G Eswap0, D\+E\+S\+\_\+\+L\+O\+N\+G Eswap1)}{fcrypt_body(DES_LONG *out, DES_key_schedule *ks, DES_LONG Eswap0, DES_LONG Eswap1)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} fcrypt\+\_\+body (
+\begin{DoxyParamCaption}
+\item[{D\+E\+S\+\_\+\+L\+O\+NG $\ast$}]{out, }
+\item[{{\bf D\+E\+S\+\_\+key\+\_\+schedule} $\ast$}]{ks, }
+\item[{D\+E\+S\+\_\+\+L\+O\+NG}]{Eswap0, }
+\item[{D\+E\+S\+\_\+\+L\+O\+NG}]{Eswap1}
+\end{DoxyParamCaption}
+)}\hypertarget{des__locl_8h_a58b4bb2ee2951c848f51b9983349a536}{}\label{des__locl_8h_a58b4bb2ee2951c848f51b9983349a536}
+
+
+\subsection{Variable Documentation}
+\index{des\+\_\+locl.\+h@{des\+\_\+locl.\+h}!D\+E\+S\+\_\+\+S\+Ptrans@{D\+E\+S\+\_\+\+S\+Ptrans}}
+\index{D\+E\+S\+\_\+\+S\+Ptrans@{D\+E\+S\+\_\+\+S\+Ptrans}!des\+\_\+locl.\+h@{des\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+S\+\_\+\+S\+Ptrans}{DES_SPtrans}}]{\setlength{\rightskip}{0pt plus 5cm}const D\+E\+S\+\_\+\+L\+O\+NG D\+E\+S\+\_\+\+S\+Ptrans\mbox{[}8\mbox{]}\mbox{[}64\mbox{]}}\hypertarget{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}{}\label{des__locl_8h_a2d946a178f357e3b0d8f04f663002084}
+
+
+Definition at line 59 of file spr.\+h.
+

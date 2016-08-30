@@ -1,0 +1,444 @@
+\hypertarget{structs2n__connection}{}\section{s2n\+\_\+connection Struct Reference}
+\label{structs2n__connection}\index{s2n\+\_\+connection@{s2n\+\_\+connection}}
+
+
+{\ttfamily \#include $<$s2n\+\_\+connection.\+h$>$}
+
+
+
+Collaboration diagram for s2n\+\_\+connection\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structs2n__connection__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{structs2n__connection_abe974f22edeef8189603ba75fd90ff3caaac875c4dc08055725dd966fd44e0839}{E\+N\+C\+R\+Y\+P\+T\+ED}, 
+\hyperlink{structs2n__connection_abe974f22edeef8189603ba75fd90ff3ca32dd92f4aa3e7642b89daf8fe17d852c}{P\+L\+A\+I\+N\+T\+E\+XT}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__config}{s2n\+\_\+config} $\ast$ \hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}
+\item 
+int \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd}
+\item 
+int \hyperlink{structs2n__connection_abb118879baad1066df4d078fdb2da908}{writefd}
+\item 
+\hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdb}{s2n\+\_\+mode} \hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode}
+\item 
+\hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62}{s2n\+\_\+blinding} \hyperlink{structs2n__connection_a1bfa8f7b48f1d0d742fed4a18b4d3f40}{blinding}
+\item 
+struct \hyperlink{structs2n__timer}{s2n\+\_\+timer} \hyperlink{structs2n__connection_a31018fa57bbc729b543d5d33a937748b}{write\+\_\+timer}
+\item 
+uint64\+\_\+t \hyperlink{structs2n__connection_a8c0b95ab06c950bd9afd8444922d98a3}{delay}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}{session\+\_\+id} \mbox{[}\hyperlink{tls_2s2n__crypto_8h_a29125d7c5bb81700b27164fbc9c92746}{S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+I\+D\+\_\+\+M\+A\+X\+\_\+\+L\+EN}\mbox{]}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{session\+\_\+id\+\_\+len}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_a6055b7733f7282857a29ef763a4aed62}{client\+\_\+hello\+\_\+version}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_a29289057caf9ad21e99bd972da14acc3}{client\+\_\+protocol\+\_\+version}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_ae48c8e6d0ef10e7b815dd500562a47e7}{server\+\_\+protocol\+\_\+version}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\+\_\+protocol\+\_\+version}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_ab54a0b4ad8370fee08f0c47917684e65}{actual\+\_\+protocol\+\_\+version\+\_\+established}
+\item 
+struct \hyperlink{structs2n__crypto__parameters}{s2n\+\_\+crypto\+\_\+parameters} \hyperlink{structs2n__connection_afd0633da7a12696e4a8fdbf802701a05}{initial}
+\item 
+struct \hyperlink{structs2n__crypto__parameters}{s2n\+\_\+crypto\+\_\+parameters} \hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}
+\item 
+struct \hyperlink{structs2n__crypto__parameters}{s2n\+\_\+crypto\+\_\+parameters} $\ast$ \hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client}
+\item 
+struct \hyperlink{structs2n__crypto__parameters}{s2n\+\_\+crypto\+\_\+parameters} $\ast$ \hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}
+\item 
+union \hyperlink{unions2n__prf__working__space}{s2n\+\_\+prf\+\_\+working\+\_\+space} \hyperlink{structs2n__connection_a6e6bdc3e7f6925490c4ed56405acdc10}{prf\+\_\+space}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_a98a290bc914c8d1551b72c3eac121b65}{header\+\_\+in\+\_\+data} \mbox{[}\hyperlink{s2n__tls__parameters_8h_a7cc7782f30cb9ee302929d979826c557}{S2\+N\+\_\+\+T\+L\+S\+\_\+\+R\+E\+C\+O\+R\+D\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\+\_\+in}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}
+\item 
+enum s2n\+\_\+connection\+:: \{ ... \}  \hyperlink{structs2n__connection_ad63a0cc0cc12429207575e5d093f59d2}{in\+\_\+status}
+\item 
+uint16\+\_\+t \hyperlink{structs2n__connection_a9660c08a72961b73e1ec79a862591ee7}{current\+\_\+in\+\_\+record\+\_\+size}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_aac009a408307ec7913db2b2b159465fd}{alert\+\_\+in\+\_\+data} \mbox{[}\hyperlink{s2n__tls__parameters_8h_acf0815e20ae2239c2542f1a429c3dda1}{S2\+N\+\_\+\+A\+L\+E\+R\+T\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{structs2n__connection_a628dd7fe79c7cfd5f7bc02da8a270752}{alert\+\_\+in}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_a3e8c16136106e623cd0ee50701aaf141}{reader\+\_\+alert\+\_\+out\+\_\+data} \mbox{[}\hyperlink{s2n__tls__parameters_8h_acf0815e20ae2239c2542f1a429c3dda1}{S2\+N\+\_\+\+A\+L\+E\+R\+T\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}
+\item 
+uint8\+\_\+t \hyperlink{structs2n__connection_a950afe753c3200576cd4b083404a2e5a}{writer\+\_\+alert\+\_\+out\+\_\+data} \mbox{[}\hyperlink{s2n__tls__parameters_8h_acf0815e20ae2239c2542f1a429c3dda1}{S2\+N\+\_\+\+A\+L\+E\+R\+T\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{structs2n__connection_a00dd2a749a85d247561da67ec248d3e1}{reader\+\_\+alert\+\_\+out}
+\item 
+struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \hyperlink{structs2n__connection_a6168f6d8f8b3d65bc1d566091149ddf4}{writer\+\_\+alert\+\_\+out}
+\item 
+unsigned int \hyperlink{structs2n__connection_a1ba9fe08a4f37494def44e02d95a2ffa}{close\+\_\+notify\+\_\+queued}\+:1
+\item 
+struct \hyperlink{structs2n__handshake}{s2n\+\_\+handshake} \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}
+\item 
+uint16\+\_\+t \hyperlink{structs2n__connection_aeb12fafca93fad21fd9b32d31f192ea6}{max\+\_\+fragment\+\_\+length}
+\item 
+uint64\+\_\+t \hyperlink{structs2n__connection_ae40976768561ff646c1b9badadcd4f4e}{wire\+\_\+bytes\+\_\+in}
+\item 
+uint64\+\_\+t \hyperlink{structs2n__connection_ad34101c7be957b19718d9e9047e1af39}{wire\+\_\+bytes\+\_\+out}
+\item 
+sig\+\_\+atomic\+\_\+t \hyperlink{structs2n__connection_afaf913ae0bd2fe2866608f51060791a2}{closing}
+\item 
+sig\+\_\+atomic\+\_\+t \hyperlink{structs2n__connection_a9e746c5b2dde4a77b710780924853c2f}{closed}
+\item 
+char \hyperlink{structs2n__connection_aaeec7205ccf6834a5eaf18d9a5eb8936}{server\+\_\+name} \mbox{[}256\mbox{]}
+\item 
+char \hyperlink{structs2n__connection_a826afa0c257cdb351d45ca87c734ec3c}{application\+\_\+protocol} \mbox{[}256\mbox{]}
+\item 
+unsigned int \hyperlink{structs2n__connection_a579beb899db6aa0c25366672938b2216}{secure\+\_\+renegotiation}\+:1
+\item 
+\hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635}{s2n\+\_\+status\+\_\+request\+\_\+type} \hyperlink{structs2n__connection_a0dd734711814c74b9bb3d920187cfe3a}{status\+\_\+type}
+\item 
+struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} \hyperlink{structs2n__connection_ab3cd78ec62aea98bf900913bb379d523}{status\+\_\+response}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 39 of file s2n\+\_\+connection.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\subsubsection[{\texorpdfstring{anonymous enum}{anonymous enum}}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{structs2n__connection_abe974f22edeef8189603ba75fd90ff3c}{}\label{structs2n__connection_abe974f22edeef8189603ba75fd90ff3c}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{E\+N\+C\+R\+Y\+P\+T\+ED@{E\+N\+C\+R\+Y\+P\+T\+ED}!s2n\+\_\+connection@{s2n\+\_\+connection}}\index{s2n\+\_\+connection@{s2n\+\_\+connection}!E\+N\+C\+R\+Y\+P\+T\+ED@{E\+N\+C\+R\+Y\+P\+T\+ED}}\item[{\em 
+E\+N\+C\+R\+Y\+P\+T\+ED\hypertarget{structs2n__connection_abe974f22edeef8189603ba75fd90ff3caaac875c4dc08055725dd966fd44e0839}{}\label{structs2n__connection_abe974f22edeef8189603ba75fd90ff3caaac875c4dc08055725dd966fd44e0839}
+}]\index{P\+L\+A\+I\+N\+T\+E\+XT@{P\+L\+A\+I\+N\+T\+E\+XT}!s2n\+\_\+connection@{s2n\+\_\+connection}}\index{s2n\+\_\+connection@{s2n\+\_\+connection}!P\+L\+A\+I\+N\+T\+E\+XT@{P\+L\+A\+I\+N\+T\+E\+XT}}\item[{\em 
+P\+L\+A\+I\+N\+T\+E\+XT\hypertarget{structs2n__connection_abe974f22edeef8189603ba75fd90ff3ca32dd92f4aa3e7642b89daf8fe17d852c}{}\label{structs2n__connection_abe974f22edeef8189603ba75fd90ff3ca32dd92f4aa3e7642b89daf8fe17d852c}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 93 of file s2n\+\_\+connection.\+h.
+
+
+\begin{DoxyCode}
+93 \{ \hyperlink{structs2n__connection_abe974f22edeef8189603ba75fd90ff3caaac875c4dc08055725dd966fd44e0839}{ENCRYPTED}, \hyperlink{structs2n__connection_abe974f22edeef8189603ba75fd90ff3ca32dd92f4aa3e7642b89daf8fe17d852c}{PLAINTEXT} \} \hyperlink{structs2n__connection_ad63a0cc0cc12429207575e5d093f59d2}{in\_status};
+\end{DoxyCode}
+
+
+\subsection{Field Documentation}
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!config@{config}}
+\index{config@{config}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{config}{config}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+config}$\ast$ config}\hypertarget{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{}\label{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}
+
+
+Definition at line 41 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!readfd@{readfd}}
+\index{readfd@{readfd}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{readfd}{readfd}}]{\setlength{\rightskip}{0pt plus 5cm}int readfd}\hypertarget{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{}\label{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}
+
+
+Definition at line 44 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!writefd@{writefd}}
+\index{writefd@{writefd}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{writefd}{writefd}}]{\setlength{\rightskip}{0pt plus 5cm}int writefd}\hypertarget{structs2n__connection_abb118879baad1066df4d078fdb2da908}{}\label{structs2n__connection_abb118879baad1066df4d078fdb2da908}
+
+
+Definition at line 45 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!mode@{mode}}
+\index{mode@{mode}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{mode}{mode}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf s2n\+\_\+mode} mode}\hypertarget{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{}\label{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}
+
+
+Definition at line 48 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!blinding@{blinding}}
+\index{blinding@{blinding}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{blinding}{blinding}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf s2n\+\_\+blinding} blinding}\hypertarget{structs2n__connection_a1bfa8f7b48f1d0d742fed4a18b4d3f40}{}\label{structs2n__connection_a1bfa8f7b48f1d0d742fed4a18b4d3f40}
+
+
+Definition at line 51 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!write\+\_\+timer@{write\+\_\+timer}}
+\index{write\+\_\+timer@{write\+\_\+timer}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{write\+\_\+timer}{write_timer}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+timer} write\+\_\+timer}\hypertarget{structs2n__connection_a31018fa57bbc729b543d5d33a937748b}{}\label{structs2n__connection_a31018fa57bbc729b543d5d33a937748b}
+
+
+Definition at line 54 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!delay@{delay}}
+\index{delay@{delay}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{delay}{delay}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t delay}\hypertarget{structs2n__connection_a8c0b95ab06c950bd9afd8444922d98a3}{}\label{structs2n__connection_a8c0b95ab06c950bd9afd8444922d98a3}
+
+
+Definition at line 60 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!session\+\_\+id@{session\+\_\+id}}
+\index{session\+\_\+id@{session\+\_\+id}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{session\+\_\+id}{session_id}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t session\+\_\+id\mbox{[}{\bf S2\+N\+\_\+\+T\+L\+S\+\_\+\+S\+E\+S\+S\+I\+O\+N\+\_\+\+I\+D\+\_\+\+M\+A\+X\+\_\+\+L\+EN}\mbox{]}}\hypertarget{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}{}\label{structs2n__connection_ad009472eb0ee35fef5b49e42599a84a1}
+
+
+Definition at line 63 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!session\+\_\+id\+\_\+len@{session\+\_\+id\+\_\+len}}
+\index{session\+\_\+id\+\_\+len@{session\+\_\+id\+\_\+len}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{session\+\_\+id\+\_\+len}{session_id_len}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t session\+\_\+id\+\_\+len}\hypertarget{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}{}\label{structs2n__connection_a76a9703b780cc6c577acbe9ed651a79d}
+
+
+Definition at line 64 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!client\+\_\+hello\+\_\+version@{client\+\_\+hello\+\_\+version}}
+\index{client\+\_\+hello\+\_\+version@{client\+\_\+hello\+\_\+version}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{client\+\_\+hello\+\_\+version}{client_hello_version}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t client\+\_\+hello\+\_\+version}\hypertarget{structs2n__connection_a6055b7733f7282857a29ef763a4aed62}{}\label{structs2n__connection_a6055b7733f7282857a29ef763a4aed62}
+
+
+Definition at line 69 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!client\+\_\+protocol\+\_\+version@{client\+\_\+protocol\+\_\+version}}
+\index{client\+\_\+protocol\+\_\+version@{client\+\_\+protocol\+\_\+version}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{client\+\_\+protocol\+\_\+version}{client_protocol_version}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t client\+\_\+protocol\+\_\+version}\hypertarget{structs2n__connection_a29289057caf9ad21e99bd972da14acc3}{}\label{structs2n__connection_a29289057caf9ad21e99bd972da14acc3}
+
+
+Definition at line 70 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!server\+\_\+protocol\+\_\+version@{server\+\_\+protocol\+\_\+version}}
+\index{server\+\_\+protocol\+\_\+version@{server\+\_\+protocol\+\_\+version}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{server\+\_\+protocol\+\_\+version}{server_protocol_version}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t server\+\_\+protocol\+\_\+version}\hypertarget{structs2n__connection_ae48c8e6d0ef10e7b815dd500562a47e7}{}\label{structs2n__connection_ae48c8e6d0ef10e7b815dd500562a47e7}
+
+
+Definition at line 71 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!actual\+\_\+protocol\+\_\+version@{actual\+\_\+protocol\+\_\+version}}
+\index{actual\+\_\+protocol\+\_\+version@{actual\+\_\+protocol\+\_\+version}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{actual\+\_\+protocol\+\_\+version}{actual_protocol_version}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t actual\+\_\+protocol\+\_\+version}\hypertarget{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{}\label{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}
+
+
+Definition at line 72 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!actual\+\_\+protocol\+\_\+version\+\_\+established@{actual\+\_\+protocol\+\_\+version\+\_\+established}}
+\index{actual\+\_\+protocol\+\_\+version\+\_\+established@{actual\+\_\+protocol\+\_\+version\+\_\+established}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{actual\+\_\+protocol\+\_\+version\+\_\+established}{actual_protocol_version_established}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t actual\+\_\+protocol\+\_\+version\+\_\+established}\hypertarget{structs2n__connection_ab54a0b4ad8370fee08f0c47917684e65}{}\label{structs2n__connection_ab54a0b4ad8370fee08f0c47917684e65}
+
+
+Definition at line 73 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!initial@{initial}}
+\index{initial@{initial}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{initial}{initial}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+crypto\+\_\+parameters} initial}\hypertarget{structs2n__connection_afd0633da7a12696e4a8fdbf802701a05}{}\label{structs2n__connection_afd0633da7a12696e4a8fdbf802701a05}
+
+
+Definition at line 76 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!secure@{secure}}
+\index{secure@{secure}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{secure}{secure}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+crypto\+\_\+parameters} secure}\hypertarget{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{}\label{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}
+
+
+Definition at line 77 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!client@{client}}
+\index{client@{client}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{client}{client}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+crypto\+\_\+parameters}$\ast$ client}\hypertarget{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{}\label{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}
+
+
+Definition at line 80 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!server@{server}}
+\index{server@{server}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{server}{server}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+crypto\+\_\+parameters}$\ast$ server}\hypertarget{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{}\label{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}
+
+
+Definition at line 81 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!prf\+\_\+space@{prf\+\_\+space}}
+\index{prf\+\_\+space@{prf\+\_\+space}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{prf\+\_\+space}{prf_space}}]{\setlength{\rightskip}{0pt plus 5cm}union {\bf s2n\+\_\+prf\+\_\+working\+\_\+space} prf\+\_\+space}\hypertarget{structs2n__connection_a6e6bdc3e7f6925490c4ed56405acdc10}{}\label{structs2n__connection_a6e6bdc3e7f6925490c4ed56405acdc10}
+
+
+Definition at line 84 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!header\+\_\+in\+\_\+data@{header\+\_\+in\+\_\+data}}
+\index{header\+\_\+in\+\_\+data@{header\+\_\+in\+\_\+data}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{header\+\_\+in\+\_\+data}{header_in_data}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t header\+\_\+in\+\_\+data\mbox{[}{\bf S2\+N\+\_\+\+T\+L\+S\+\_\+\+R\+E\+C\+O\+R\+D\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}}\hypertarget{structs2n__connection_a98a290bc914c8d1551b72c3eac121b65}{}\label{structs2n__connection_a98a290bc914c8d1551b72c3eac121b65}
+
+
+Definition at line 89 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!header\+\_\+in@{header\+\_\+in}}
+\index{header\+\_\+in@{header\+\_\+in}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{header\+\_\+in}{header_in}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} header\+\_\+in}\hypertarget{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{}\label{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}
+
+
+Definition at line 90 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!in@{in}}
+\index{in@{in}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{in}{in}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} in}\hypertarget{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{}\label{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}
+
+
+Definition at line 91 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!out@{out}}
+\index{out@{out}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{out}{out}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} out}\hypertarget{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{}\label{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}
+
+
+Definition at line 92 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!in\+\_\+status@{in\+\_\+status}}
+\index{in\+\_\+status@{in\+\_\+status}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{in\+\_\+status}{in_status}}]{\setlength{\rightskip}{0pt plus 5cm}enum \{ ... \}   in\+\_\+status}\hypertarget{structs2n__connection_ad63a0cc0cc12429207575e5d093f59d2}{}\label{structs2n__connection_ad63a0cc0cc12429207575e5d093f59d2}
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!current\+\_\+in\+\_\+record\+\_\+size@{current\+\_\+in\+\_\+record\+\_\+size}}
+\index{current\+\_\+in\+\_\+record\+\_\+size@{current\+\_\+in\+\_\+record\+\_\+size}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{current\+\_\+in\+\_\+record\+\_\+size}{current_in_record_size}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t current\+\_\+in\+\_\+record\+\_\+size}\hypertarget{structs2n__connection_a9660c08a72961b73e1ec79a862591ee7}{}\label{structs2n__connection_a9660c08a72961b73e1ec79a862591ee7}
+
+
+Definition at line 96 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!alert\+\_\+in\+\_\+data@{alert\+\_\+in\+\_\+data}}
+\index{alert\+\_\+in\+\_\+data@{alert\+\_\+in\+\_\+data}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{alert\+\_\+in\+\_\+data}{alert_in_data}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t alert\+\_\+in\+\_\+data\mbox{[}{\bf S2\+N\+\_\+\+A\+L\+E\+R\+T\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}}\hypertarget{structs2n__connection_aac009a408307ec7913db2b2b159465fd}{}\label{structs2n__connection_aac009a408307ec7913db2b2b159465fd}
+
+
+Definition at line 101 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!alert\+\_\+in@{alert\+\_\+in}}
+\index{alert\+\_\+in@{alert\+\_\+in}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{alert\+\_\+in}{alert_in}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} alert\+\_\+in}\hypertarget{structs2n__connection_a628dd7fe79c7cfd5f7bc02da8a270752}{}\label{structs2n__connection_a628dd7fe79c7cfd5f7bc02da8a270752}
+
+
+Definition at line 102 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!reader\+\_\+alert\+\_\+out\+\_\+data@{reader\+\_\+alert\+\_\+out\+\_\+data}}
+\index{reader\+\_\+alert\+\_\+out\+\_\+data@{reader\+\_\+alert\+\_\+out\+\_\+data}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{reader\+\_\+alert\+\_\+out\+\_\+data}{reader_alert_out_data}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t reader\+\_\+alert\+\_\+out\+\_\+data\mbox{[}{\bf S2\+N\+\_\+\+A\+L\+E\+R\+T\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}}\hypertarget{structs2n__connection_a3e8c16136106e623cd0ee50701aaf141}{}\label{structs2n__connection_a3e8c16136106e623cd0ee50701aaf141}
+
+
+Definition at line 112 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!writer\+\_\+alert\+\_\+out\+\_\+data@{writer\+\_\+alert\+\_\+out\+\_\+data}}
+\index{writer\+\_\+alert\+\_\+out\+\_\+data@{writer\+\_\+alert\+\_\+out\+\_\+data}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{writer\+\_\+alert\+\_\+out\+\_\+data}{writer_alert_out_data}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t writer\+\_\+alert\+\_\+out\+\_\+data\mbox{[}{\bf S2\+N\+\_\+\+A\+L\+E\+R\+T\+\_\+\+L\+E\+N\+G\+TH}\mbox{]}}\hypertarget{structs2n__connection_a950afe753c3200576cd4b083404a2e5a}{}\label{structs2n__connection_a950afe753c3200576cd4b083404a2e5a}
+
+
+Definition at line 113 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!reader\+\_\+alert\+\_\+out@{reader\+\_\+alert\+\_\+out}}
+\index{reader\+\_\+alert\+\_\+out@{reader\+\_\+alert\+\_\+out}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{reader\+\_\+alert\+\_\+out}{reader_alert_out}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} reader\+\_\+alert\+\_\+out}\hypertarget{structs2n__connection_a00dd2a749a85d247561da67ec248d3e1}{}\label{structs2n__connection_a00dd2a749a85d247561da67ec248d3e1}
+
+
+Definition at line 114 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!writer\+\_\+alert\+\_\+out@{writer\+\_\+alert\+\_\+out}}
+\index{writer\+\_\+alert\+\_\+out@{writer\+\_\+alert\+\_\+out}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{writer\+\_\+alert\+\_\+out}{writer_alert_out}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stuffer} writer\+\_\+alert\+\_\+out}\hypertarget{structs2n__connection_a6168f6d8f8b3d65bc1d566091149ddf4}{}\label{structs2n__connection_a6168f6d8f8b3d65bc1d566091149ddf4}
+
+
+Definition at line 115 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!close\+\_\+notify\+\_\+queued@{close\+\_\+notify\+\_\+queued}}
+\index{close\+\_\+notify\+\_\+queued@{close\+\_\+notify\+\_\+queued}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{close\+\_\+notify\+\_\+queued}{close_notify_queued}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int close\+\_\+notify\+\_\+queued}\hypertarget{structs2n__connection_a1ba9fe08a4f37494def44e02d95a2ffa}{}\label{structs2n__connection_a1ba9fe08a4f37494def44e02d95a2ffa}
+
+
+Definition at line 118 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!handshake@{handshake}}
+\index{handshake@{handshake}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{handshake}{handshake}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+handshake} handshake}\hypertarget{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{}\label{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}
+
+
+Definition at line 121 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!max\+\_\+fragment\+\_\+length@{max\+\_\+fragment\+\_\+length}}
+\index{max\+\_\+fragment\+\_\+length@{max\+\_\+fragment\+\_\+length}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{max\+\_\+fragment\+\_\+length}{max_fragment_length}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t max\+\_\+fragment\+\_\+length}\hypertarget{structs2n__connection_aeb12fafca93fad21fd9b32d31f192ea6}{}\label{structs2n__connection_aeb12fafca93fad21fd9b32d31f192ea6}
+
+
+Definition at line 123 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!wire\+\_\+bytes\+\_\+in@{wire\+\_\+bytes\+\_\+in}}
+\index{wire\+\_\+bytes\+\_\+in@{wire\+\_\+bytes\+\_\+in}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{wire\+\_\+bytes\+\_\+in}{wire_bytes_in}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t wire\+\_\+bytes\+\_\+in}\hypertarget{structs2n__connection_ae40976768561ff646c1b9badadcd4f4e}{}\label{structs2n__connection_ae40976768561ff646c1b9badadcd4f4e}
+
+
+Definition at line 126 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!wire\+\_\+bytes\+\_\+out@{wire\+\_\+bytes\+\_\+out}}
+\index{wire\+\_\+bytes\+\_\+out@{wire\+\_\+bytes\+\_\+out}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{wire\+\_\+bytes\+\_\+out}{wire_bytes_out}}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t wire\+\_\+bytes\+\_\+out}\hypertarget{structs2n__connection_ad34101c7be957b19718d9e9047e1af39}{}\label{structs2n__connection_ad34101c7be957b19718d9e9047e1af39}
+
+
+Definition at line 127 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!closing@{closing}}
+\index{closing@{closing}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{closing}{closing}}]{\setlength{\rightskip}{0pt plus 5cm}sig\+\_\+atomic\+\_\+t closing}\hypertarget{structs2n__connection_afaf913ae0bd2fe2866608f51060791a2}{}\label{structs2n__connection_afaf913ae0bd2fe2866608f51060791a2}
+
+
+Definition at line 142 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!closed@{closed}}
+\index{closed@{closed}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{closed}{closed}}]{\setlength{\rightskip}{0pt plus 5cm}sig\+\_\+atomic\+\_\+t closed}\hypertarget{structs2n__connection_a9e746c5b2dde4a77b710780924853c2f}{}\label{structs2n__connection_a9e746c5b2dde4a77b710780924853c2f}
+
+
+Definition at line 143 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!server\+\_\+name@{server\+\_\+name}}
+\index{server\+\_\+name@{server\+\_\+name}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{server\+\_\+name}{server_name}}]{\setlength{\rightskip}{0pt plus 5cm}char server\+\_\+name\mbox{[}256\mbox{]}}\hypertarget{structs2n__connection_aaeec7205ccf6834a5eaf18d9a5eb8936}{}\label{structs2n__connection_aaeec7205ccf6834a5eaf18d9a5eb8936}
+
+
+Definition at line 146 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!application\+\_\+protocol@{application\+\_\+protocol}}
+\index{application\+\_\+protocol@{application\+\_\+protocol}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{application\+\_\+protocol}{application_protocol}}]{\setlength{\rightskip}{0pt plus 5cm}char application\+\_\+protocol\mbox{[}256\mbox{]}}\hypertarget{structs2n__connection_a826afa0c257cdb351d45ca87c734ec3c}{}\label{structs2n__connection_a826afa0c257cdb351d45ca87c734ec3c}
+
+
+Definition at line 147 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!secure\+\_\+renegotiation@{secure\+\_\+renegotiation}}
+\index{secure\+\_\+renegotiation@{secure\+\_\+renegotiation}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{secure\+\_\+renegotiation}{secure_renegotiation}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int secure\+\_\+renegotiation}\hypertarget{structs2n__connection_a579beb899db6aa0c25366672938b2216}{}\label{structs2n__connection_a579beb899db6aa0c25366672938b2216}
+
+
+Definition at line 154 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!status\+\_\+type@{status\+\_\+type}}
+\index{status\+\_\+type@{status\+\_\+type}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{status\+\_\+type}{status_type}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf s2n\+\_\+status\+\_\+request\+\_\+type} status\+\_\+type}\hypertarget{structs2n__connection_a0dd734711814c74b9bb3d920187cfe3a}{}\label{structs2n__connection_a0dd734711814c74b9bb3d920187cfe3a}
+
+
+Definition at line 157 of file s2n\+\_\+connection.\+h.
+
+\index{s2n\+\_\+connection@{s2n\+\_\+connection}!status\+\_\+response@{status\+\_\+response}}
+\index{status\+\_\+response@{status\+\_\+response}!s2n\+\_\+connection@{s2n\+\_\+connection}}
+\subsubsection[{\texorpdfstring{status\+\_\+response}{status_response}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+blob} status\+\_\+response}\hypertarget{structs2n__connection_ab3cd78ec62aea98bf900913bb379d523}{}\label{structs2n__connection_ab3cd78ec62aea98bf900913bb379d523}
+
+
+Definition at line 158 of file s2n\+\_\+connection.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+s2n-\/master/tls/\hyperlink{s2n__connection_8h}{s2n\+\_\+connection.\+h}\end{DoxyCompactItemize}

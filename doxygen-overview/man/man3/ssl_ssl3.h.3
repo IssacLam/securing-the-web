@@ -1,0 +1,1964 @@
+.TH "ssl3.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl3.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/comp\&.h>\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBssl3_record_st\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_buffer_st\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_state_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSSL3_CK_SCSV\fP   0x030000FF"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_FALLBACK_SCSV\fP   0x03005600"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_NULL_MD5\fP   0x03000001"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_NULL_SHA\fP   0x03000002"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_RC4_40_MD5\fP   0x03000003"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_RC4_128_MD5\fP   0x03000004"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_RC4_128_SHA\fP   0x03000005"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_RC2_40_MD5\fP   0x03000006"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_IDEA_128_SHA\fP   0x03000007"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_DES_40_CBC_SHA\fP   0x03000008"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_DES_64_CBC_SHA\fP   0x03000009"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_RSA_DES_192_CBC3_SHA\fP   0x0300000A"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DH_DSS_DES_40_CBC_SHA\fP   0x0300000B"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DH_DSS_DES_64_CBC_SHA\fP   0x0300000C"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DH_DSS_DES_192_CBC3_SHA\fP   0x0300000D"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DH_RSA_DES_40_CBC_SHA\fP   0x0300000E"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DH_RSA_DES_64_CBC_SHA\fP   0x0300000F"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DH_RSA_DES_192_CBC3_SHA\fP   0x03000010"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_EDH_DSS_DES_40_CBC_SHA\fP   0x03000011"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DHE_DSS_DES_40_CBC_SHA\fP   \fBSSL3_CK_EDH_DSS_DES_40_CBC_SHA\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_EDH_DSS_DES_64_CBC_SHA\fP   0x03000012"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DHE_DSS_DES_64_CBC_SHA\fP   \fBSSL3_CK_EDH_DSS_DES_64_CBC_SHA\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_EDH_DSS_DES_192_CBC3_SHA\fP   0x03000013"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DHE_DSS_DES_192_CBC3_SHA\fP   \fBSSL3_CK_EDH_DSS_DES_192_CBC3_SHA\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_EDH_RSA_DES_40_CBC_SHA\fP   0x03000014"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DHE_RSA_DES_40_CBC_SHA\fP   \fBSSL3_CK_EDH_RSA_DES_40_CBC_SHA\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_EDH_RSA_DES_64_CBC_SHA\fP   0x03000015"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DHE_RSA_DES_64_CBC_SHA\fP   \fBSSL3_CK_EDH_RSA_DES_64_CBC_SHA\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_EDH_RSA_DES_192_CBC3_SHA\fP   0x03000016"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_DHE_RSA_DES_192_CBC3_SHA\fP   \fBSSL3_CK_EDH_RSA_DES_192_CBC3_SHA\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_ADH_RC4_40_MD5\fP   0x03000017"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_ADH_RC4_128_MD5\fP   0x03000018"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_ADH_DES_40_CBC_SHA\fP   0x03000019"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_ADH_DES_64_CBC_SHA\fP   0x0300001A"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_ADH_DES_192_CBC_SHA\fP   0x0300001B"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_DES_64_CBC_SHA\fP   0x0300001E"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_DES_192_CBC3_SHA\fP   0x0300001F"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_RC4_128_SHA\fP   0x03000020"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_IDEA_128_CBC_SHA\fP   0x03000021"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_DES_64_CBC_MD5\fP   0x03000022"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_DES_192_CBC3_MD5\fP   0x03000023"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_RC4_128_MD5\fP   0x03000024"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_IDEA_128_CBC_MD5\fP   0x03000025"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_DES_40_CBC_SHA\fP   0x03000026"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_RC2_40_CBC_SHA\fP   0x03000027"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_RC4_40_SHA\fP   0x03000028"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_DES_40_CBC_MD5\fP   0x03000029"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_RC2_40_CBC_MD5\fP   0x0300002A"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CK_KRB5_RC4_40_MD5\fP   0x0300002B"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_NULL_MD5\fP   'NULL\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_NULL_SHA\fP   'NULL\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_RC4_40_MD5\fP   'EXP\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_RC4_128_MD5\fP   'RC4\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_RC4_128_SHA\fP   'RC4\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_RC2_40_MD5\fP   'EXP\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_IDEA_128_SHA\fP   'IDEA\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_DES_40_CBC_SHA\fP   'EXP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_DES_64_CBC_SHA\fP   'DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_RSA_DES_192_CBC3_SHA\fP   'DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DH_DSS_DES_40_CBC_SHA\fP   'EXP\-\fBDH\fP\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DH_DSS_DES_64_CBC_SHA\fP   'DH\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DH_DSS_DES_192_CBC3_SHA\fP   'DH\-DSS\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DH_RSA_DES_40_CBC_SHA\fP   'EXP\-\fBDH\fP\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DH_RSA_DES_64_CBC_SHA\fP   'DH\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DH_RSA_DES_192_CBC3_SHA\fP   'DH\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DHE_DSS_DES_40_CBC_SHA\fP   'EXP\-DHE\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DHE_DSS_DES_64_CBC_SHA\fP   'DHE\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DHE_DSS_DES_192_CBC3_SHA\fP   'DHE\-DSS\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DHE_RSA_DES_40_CBC_SHA\fP   'EXP\-DHE\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DHE_RSA_DES_64_CBC_SHA\fP   'DHE\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_DHE_RSA_DES_192_CBC3_SHA\fP   'DHE\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_EDH_DSS_DES_40_CBC_SHA\fP   'EXP\-EDH\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_EDH_DSS_DES_64_CBC_SHA\fP   'EDH\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_EDH_DSS_DES_192_CBC3_SHA\fP   'EDH\-DSS\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_EDH_RSA_DES_40_CBC_SHA\fP   'EXP\-EDH\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_EDH_RSA_DES_64_CBC_SHA\fP   'EDH\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_EDH_RSA_DES_192_CBC3_SHA\fP   'EDH\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_ADH_RC4_40_MD5\fP   'EXP\-ADH\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_ADH_RC4_128_MD5\fP   'ADH\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_ADH_DES_40_CBC_SHA\fP   'EXP\-ADH\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_ADH_DES_64_CBC_SHA\fP   'ADH\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_ADH_DES_192_CBC_SHA\fP   'ADH\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_DES_64_CBC_SHA\fP   'KRB5\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_DES_192_CBC3_SHA\fP   'KRB5\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_RC4_128_SHA\fP   'KRB5\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_IDEA_128_CBC_SHA\fP   'KRB5\-IDEA\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_DES_64_CBC_MD5\fP   'KRB5\-DES\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_DES_192_CBC3_MD5\fP   'KRB5\-DES\-CBC3\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_RC4_128_MD5\fP   'KRB5\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_IDEA_128_CBC_MD5\fP   'KRB5\-IDEA\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_DES_40_CBC_SHA\fP   'EXP\-KRB5\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_RC2_40_CBC_SHA\fP   'EXP\-KRB5\-RC2\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_RC4_40_SHA\fP   'EXP\-KRB5\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_DES_40_CBC_MD5\fP   'EXP\-KRB5\-DES\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_RC2_40_CBC_MD5\fP   'EXP\-KRB5\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_TXT_KRB5_RC4_40_MD5\fP   'EXP\-KRB5\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_SSL_SESSION_ID_LENGTH\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MAX_SSL_SESSION_ID_LENGTH\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MASTER_SECRET_SIZE\fP   48"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RANDOM_SIZE\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL3_SESSION_ID_SIZE\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_HEADER_LENGTH\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSSL3_HM_HEADER_LENGTH\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ALIGN_PAYLOAD\fP   8"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_MD_SIZE\fP   64"
+.br
+.ti -1c
+.RI "#define \fBSSL_RT_MAX_CIPHER_BLOCK_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_EXTRA\fP   (16384)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_PLAIN_LENGTH\fP   16384"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_COMPRESSED_OVERHEAD\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_ENCRYPTED_OVERHEAD\fP   (256 + \fBSSL3_RT_MAX_MD_SIZE\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_SEND_MAX_ENCRYPTED_OVERHEAD\fP   (\fBSSL_RT_MAX_CIPHER_BLOCK_SIZE\fP + \fBSSL3_RT_MAX_MD_SIZE\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_COMPRESSED_LENGTH\fP   (\fBSSL3_RT_MAX_PLAIN_LENGTH\fP+\fBSSL3_RT_MAX_COMPRESSED_OVERHEAD\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_ENCRYPTED_LENGTH\fP   (\fBSSL3_RT_MAX_ENCRYPTED_OVERHEAD\fP+\fBSSL3_RT_MAX_COMPRESSED_LENGTH\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_MAX_PACKET_SIZE\fP   (\fBSSL3_RT_MAX_ENCRYPTED_LENGTH\fP+\fBSSL3_RT_HEADER_LENGTH\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MD_CLIENT_FINISHED_CONST\fP   '\\x43\\x4C\\x4E\\x54'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MD_SERVER_FINISHED_CONST\fP   '\\x53\\x52\\x56\\x52'"
+.br
+.ti -1c
+.RI "#define \fBSSL3_VERSION\fP   0x0300"
+.br
+.ti -1c
+.RI "#define \fBSSL3_VERSION_MAJOR\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBSSL3_VERSION_MINOR\fP   0x00"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_CHANGE_CIPHER_SPEC\fP   20"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_ALERT\fP   21"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_HANDSHAKE\fP   22"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_APPLICATION_DATA\fP   23"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_HEARTBEAT\fP   24"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO\fP   0x1000"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_PREMASTER\fP   (\fBTLS1_RT_CRYPTO\fP | 0x1)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_CLIENT_RANDOM\fP   (\fBTLS1_RT_CRYPTO\fP | 0x2)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_SERVER_RANDOM\fP   (\fBTLS1_RT_CRYPTO\fP | 0x3)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_MASTER\fP   (\fBTLS1_RT_CRYPTO\fP | 0x4)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_READ\fP   0x0000"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_WRITE\fP   0x0100"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_MAC\fP   (\fBTLS1_RT_CRYPTO\fP | 0x5)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_KEY\fP   (\fBTLS1_RT_CRYPTO\fP | 0x6)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_IV\fP   (\fBTLS1_RT_CRYPTO\fP | 0x7)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_RT_CRYPTO_FIXED_IV\fP   (\fBTLS1_RT_CRYPTO\fP | 0x8)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_RT_HEADER\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AL_WARNING\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AL_FATAL\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_CLOSE_NOTIFY\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_UNEXPECTED_MESSAGE\fP   10/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_BAD_RECORD_MAC\fP   20/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_DECOMPRESSION_FAILURE\fP   30/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_HANDSHAKE_FAILURE\fP   40/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_NO_CERTIFICATE\fP   41"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_BAD_CERTIFICATE\fP   42"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_UNSUPPORTED_CERTIFICATE\fP   43"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_CERTIFICATE_REVOKED\fP   44"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_CERTIFICATE_EXPIRED\fP   45"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_CERTIFICATE_UNKNOWN\fP   46"
+.br
+.ti -1c
+.RI "#define \fBSSL3_AD_ILLEGAL_PARAMETER\fP   47/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_HB_REQUEST\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLS1_HB_RESPONSE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_RSA_SIGN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_DSS_SIGN\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_RSA_FIXED_DH\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_DSS_FIXED_DH\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_RSA_EPHEMERAL_DH\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_DSS_EPHEMERAL_DH\fP   6"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_FORTEZZA_DMS\fP   20"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CT_NUMBER\fP   9"
+.br
+.ti -1c
+.RI "#define \fBSSL3_FLAGS_NO_RENEGOTIATE_CIPHERS\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBSSL3_FLAGS_DELAY_CLIENT_FINISHED\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBSSL3_FLAGS_POP_BUFFER\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBTLS1_FLAGS_TLS_PADDING_BUG\fP   0x0008"
+.br
+.ti -1c
+.RI "#define \fBTLS1_FLAGS_SKIP_CERT_VERIFY\fP   0x0010"
+.br
+.ti -1c
+.RI "#define \fBTLS1_FLAGS_KEEP_HANDSHAKE\fP   0x0020"
+.br
+.ti -1c
+.RI "#define \fBSSL3_FLAGS_CCS_OK\fP   0x0080"
+.br
+.ti -1c
+.RI "#define \fBSSL3_FLAGS_SGC_RESTART_DONE\fP   0x0040"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_FLUSH\fP   (0x100|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_SCTP_ST_CW_WRITE_SOCK\fP   (0x310|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_SCTP_ST_CR_READ_SOCK\fP   (0x320|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CLNT_HELLO_A\fP   (0x110|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CLNT_HELLO_B\fP   (0x111|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_SRVR_HELLO_A\fP   (0x120|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_SRVR_HELLO_B\fP   (0x121|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_ST_CR_HELLO_VERIFY_REQUEST_A\fP   (0x126|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_ST_CR_HELLO_VERIFY_REQUEST_B\fP   (0x127|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CERT_A\fP   (0x130|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CERT_B\fP   (0x131|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_KEY_EXCH_A\fP   (0x140|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_KEY_EXCH_B\fP   (0x141|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CERT_REQ_A\fP   (0x150|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CERT_REQ_B\fP   (0x151|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_SRVR_DONE_A\fP   (0x160|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_SRVR_DONE_B\fP   (0x161|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CERT_A\fP   (0x170|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CERT_B\fP   (0x171|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CERT_C\fP   (0x172|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CERT_D\fP   (0x173|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_KEY_EXCH_A\fP   (0x180|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_KEY_EXCH_B\fP   (0x181|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CERT_VRFY_A\fP   (0x190|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CERT_VRFY_B\fP   (0x191|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CHANGE_A\fP   (0x1A0|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_CHANGE_B\fP   (0x1A1|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_NEXT_PROTO_A\fP   (0x200|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_NEXT_PROTO_B\fP   (0x201|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_FINISHED_A\fP   (0x1B0|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CW_FINISHED_B\fP   (0x1B1|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CHANGE_A\fP   (0x1C0|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CHANGE_B\fP   (0x1C1|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_FINISHED_A\fP   (0x1D0|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_FINISHED_B\fP   (0x1D1|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_SESSION_TICKET_A\fP   (0x1E0|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_SESSION_TICKET_B\fP   (0x1E1|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CERT_STATUS_A\fP   (0x1F0|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_CR_CERT_STATUS_B\fP   (0x1F1|SSL_ST_CONNECT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_FLUSH\fP   (0x100|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_SCTP_ST_SW_WRITE_SOCK\fP   (0x310|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_SCTP_ST_SR_READ_SOCK\fP   (0x320|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CLNT_HELLO_A\fP   (0x110|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CLNT_HELLO_B\fP   (0x111|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CLNT_HELLO_C\fP   (0x112|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CLNT_HELLO_D\fP   (0x115|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_ST_SW_HELLO_VERIFY_REQUEST_A\fP   (0x113|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_ST_SW_HELLO_VERIFY_REQUEST_B\fP   (0x114|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_HELLO_REQ_A\fP   (0x120|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_HELLO_REQ_B\fP   (0x121|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_HELLO_REQ_C\fP   (0x122|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_SRVR_HELLO_A\fP   (0x130|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_SRVR_HELLO_B\fP   (0x131|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CERT_A\fP   (0x140|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CERT_B\fP   (0x141|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_KEY_EXCH_A\fP   (0x150|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_KEY_EXCH_B\fP   (0x151|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CERT_REQ_A\fP   (0x160|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CERT_REQ_B\fP   (0x161|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_SRVR_DONE_A\fP   (0x170|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_SRVR_DONE_B\fP   (0x171|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CERT_A\fP   (0x180|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CERT_B\fP   (0x181|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_KEY_EXCH_A\fP   (0x190|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_KEY_EXCH_B\fP   (0x191|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CERT_VRFY_A\fP   (0x1A0|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CERT_VRFY_B\fP   (0x1A1|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CHANGE_A\fP   (0x1B0|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_CHANGE_B\fP   (0x1B1|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_NEXT_PROTO_A\fP   (0x210|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_NEXT_PROTO_B\fP   (0x211|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_FINISHED_A\fP   (0x1C0|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SR_FINISHED_B\fP   (0x1C1|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CHANGE_A\fP   (0x1D0|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CHANGE_B\fP   (0x1D1|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_FINISHED_A\fP   (0x1E0|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_FINISHED_B\fP   (0x1E1|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_SESSION_TICKET_A\fP   (0x1F0|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_SESSION_TICKET_B\fP   (0x1F1|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CERT_STATUS_A\fP   (0x200|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_ST_SW_CERT_STATUS_B\fP   (0x201|SSL_ST_ACCEPT)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_HELLO_REQUEST\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CLIENT_HELLO\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_SERVER_HELLO\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_NEWSESSION_TICKET\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CERTIFICATE\fP   11"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_SERVER_KEY_EXCHANGE\fP   12"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CERTIFICATE_REQUEST\fP   13"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_SERVER_DONE\fP   14"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CERTIFICATE_VERIFY\fP   15"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CLIENT_KEY_EXCHANGE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_FINISHED\fP   20"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CERTIFICATE_STATUS\fP   22"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_NEXT_PROTO\fP   67"
+.br
+.ti -1c
+.RI "#define \fBDTLS1_MT_HELLO_VERIFY_REQUEST\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL3_MT_CCS\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CC_READ\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CC_WRITE\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CC_CLIENT\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CC_SERVER\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CHANGE_CIPHER_CLIENT_WRITE\fP   (\fBSSL3_CC_CLIENT\fP|\fBSSL3_CC_WRITE\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CHANGE_CIPHER_SERVER_READ\fP   (\fBSSL3_CC_SERVER\fP|\fBSSL3_CC_READ\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CHANGE_CIPHER_CLIENT_READ\fP   (\fBSSL3_CC_CLIENT\fP|\fBSSL3_CC_READ\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL3_CHANGE_CIPHER_SERVER_WRITE\fP   (\fBSSL3_CC_SERVER\fP|\fBSSL3_CC_WRITE\fP)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBssl3_record_st\fP \fBSSL3_RECORD\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBssl3_buffer_st\fP \fBSSL3_BUFFER\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBssl3_state_st\fP \fBSSL3_STATE\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DTLS1_MT_HELLO_VERIFY_REQUEST   3"
+
+.PP
+Definition at line 757 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_SCTP_ST_CR_READ_SOCK   (0x320|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 643 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_SCTP_ST_CW_WRITE_SOCK   (0x310|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 642 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_SCTP_ST_SR_READ_SOCK   (0x320|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 693 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_SCTP_ST_SW_WRITE_SOCK   (0x310|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 692 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_ST_CR_HELLO_VERIFY_REQUEST_A   (0x126|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 651 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_ST_CR_HELLO_VERIFY_REQUEST_B   (0x127|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 652 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_ST_SW_HELLO_VERIFY_REQUEST_A   (0x113|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 702 of file ssl/ssl3\&.h\&.
+.SS "#define DTLS1_ST_SW_HELLO_VERIFY_REQUEST_B   (0x114|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 703 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_BAD_CERTIFICATE   42"
+
+.PP
+Definition at line 391 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_BAD_RECORD_MAC   20/* fatal */"
+
+.PP
+Definition at line 387 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_CERTIFICATE_EXPIRED   45"
+
+.PP
+Definition at line 394 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_CERTIFICATE_REVOKED   44"
+
+.PP
+Definition at line 393 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_CERTIFICATE_UNKNOWN   46"
+
+.PP
+Definition at line 395 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_CLOSE_NOTIFY   0"
+
+.PP
+Definition at line 385 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_DECOMPRESSION_FAILURE   30/* fatal */"
+
+.PP
+Definition at line 388 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_HANDSHAKE_FAILURE   40/* fatal */"
+
+.PP
+Definition at line 389 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_ILLEGAL_PARAMETER   47/* fatal */"
+
+.PP
+Definition at line 396 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_NO_CERTIFICATE   41"
+
+.PP
+Definition at line 390 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_UNEXPECTED_MESSAGE   10/* fatal */"
+
+.PP
+Definition at line 386 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AD_UNSUPPORTED_CERTIFICATE   43"
+
+.PP
+Definition at line 392 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AL_FATAL   2"
+
+.PP
+Definition at line 383 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_AL_WARNING   1"
+
+.PP
+Definition at line 382 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ALIGN_PAYLOAD   8"
+
+.PP
+Definition at line 295 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CC_CLIENT   0x10"
+
+.PP
+Definition at line 764 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CC_READ   0x01"
+
+.PP
+Definition at line 762 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CC_SERVER   0x20"
+
+.PP
+Definition at line 765 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CC_WRITE   0x02"
+
+.PP
+Definition at line 763 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CHANGE_CIPHER_CLIENT_READ   (\fBSSL3_CC_CLIENT\fP|\fBSSL3_CC_READ\fP)"
+
+.PP
+Definition at line 768 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CHANGE_CIPHER_CLIENT_WRITE   (\fBSSL3_CC_CLIENT\fP|\fBSSL3_CC_WRITE\fP)"
+
+.PP
+Definition at line 766 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CHANGE_CIPHER_SERVER_READ   (\fBSSL3_CC_SERVER\fP|\fBSSL3_CC_READ\fP)"
+
+.PP
+Definition at line 767 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CHANGE_CIPHER_SERVER_WRITE   (\fBSSL3_CC_SERVER\fP|\fBSSL3_CC_WRITE\fP)"
+
+.PP
+Definition at line 769 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_ADH_DES_192_CBC_SHA   0x0300001B"
+
+.PP
+Definition at line 178 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_ADH_DES_40_CBC_SHA   0x03000019"
+
+.PP
+Definition at line 176 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_ADH_DES_64_CBC_SHA   0x0300001A"
+
+.PP
+Definition at line 177 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_ADH_RC4_128_MD5   0x03000018"
+
+.PP
+Definition at line 175 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_ADH_RC4_40_MD5   0x03000017"
+
+.PP
+Definition at line 174 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DH_DSS_DES_192_CBC3_SHA   0x0300000D"
+
+.PP
+Definition at line 156 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DH_DSS_DES_40_CBC_SHA   0x0300000B"
+
+.PP
+Definition at line 154 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DH_DSS_DES_64_CBC_SHA   0x0300000C"
+
+.PP
+Definition at line 155 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DH_RSA_DES_192_CBC3_SHA   0x03000010"
+
+.PP
+Definition at line 159 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DH_RSA_DES_40_CBC_SHA   0x0300000E"
+
+.PP
+Definition at line 157 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DH_RSA_DES_64_CBC_SHA   0x0300000F"
+
+.PP
+Definition at line 158 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DHE_DSS_DES_192_CBC3_SHA   \fBSSL3_CK_EDH_DSS_DES_192_CBC3_SHA\fP"
+
+.PP
+Definition at line 166 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DHE_DSS_DES_40_CBC_SHA   \fBSSL3_CK_EDH_DSS_DES_40_CBC_SHA\fP"
+
+.PP
+Definition at line 162 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DHE_DSS_DES_64_CBC_SHA   \fBSSL3_CK_EDH_DSS_DES_64_CBC_SHA\fP"
+
+.PP
+Definition at line 164 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DHE_RSA_DES_192_CBC3_SHA   \fBSSL3_CK_EDH_RSA_DES_192_CBC3_SHA\fP"
+
+.PP
+Definition at line 172 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DHE_RSA_DES_40_CBC_SHA   \fBSSL3_CK_EDH_RSA_DES_40_CBC_SHA\fP"
+
+.PP
+Definition at line 168 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_DHE_RSA_DES_64_CBC_SHA   \fBSSL3_CK_EDH_RSA_DES_64_CBC_SHA\fP"
+
+.PP
+Definition at line 170 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_EDH_DSS_DES_192_CBC3_SHA   0x03000013"
+
+.PP
+Definition at line 165 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_EDH_DSS_DES_40_CBC_SHA   0x03000011"
+
+.PP
+Definition at line 161 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_EDH_DSS_DES_64_CBC_SHA   0x03000012"
+
+.PP
+Definition at line 163 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_EDH_RSA_DES_192_CBC3_SHA   0x03000016"
+
+.PP
+Definition at line 171 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_EDH_RSA_DES_40_CBC_SHA   0x03000014"
+
+.PP
+Definition at line 167 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_EDH_RSA_DES_64_CBC_SHA   0x03000015"
+
+.PP
+Definition at line 169 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_FALLBACK_SCSV   0x03005600"
+
+.PP
+Definition at line 141 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_DES_192_CBC3_MD5   0x03000023"
+
+.PP
+Definition at line 200 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_DES_192_CBC3_SHA   0x0300001F"
+
+.PP
+Definition at line 196 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_DES_40_CBC_MD5   0x03000029"
+
+.PP
+Definition at line 207 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_DES_40_CBC_SHA   0x03000026"
+
+.PP
+Definition at line 204 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_DES_64_CBC_MD5   0x03000022"
+
+.PP
+Definition at line 199 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_DES_64_CBC_SHA   0x0300001E"
+
+.PP
+Definition at line 195 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_IDEA_128_CBC_MD5   0x03000025"
+
+.PP
+Definition at line 202 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_IDEA_128_CBC_SHA   0x03000021"
+
+.PP
+Definition at line 198 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_RC2_40_CBC_MD5   0x0300002A"
+
+.PP
+Definition at line 208 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_RC2_40_CBC_SHA   0x03000027"
+
+.PP
+Definition at line 205 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_RC4_128_MD5   0x03000024"
+
+.PP
+Definition at line 201 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_RC4_128_SHA   0x03000020"
+
+.PP
+Definition at line 197 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_RC4_40_MD5   0x0300002B"
+
+.PP
+Definition at line 209 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_KRB5_RC4_40_SHA   0x03000028"
+
+.PP
+Definition at line 206 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_DES_192_CBC3_SHA   0x0300000A"
+
+.PP
+Definition at line 152 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_DES_40_CBC_SHA   0x03000008"
+
+.PP
+Definition at line 150 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_DES_64_CBC_SHA   0x03000009"
+
+.PP
+Definition at line 151 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_IDEA_128_SHA   0x03000007"
+
+.PP
+Definition at line 149 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_NULL_MD5   0x03000001"
+
+.PP
+Definition at line 143 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_NULL_SHA   0x03000002"
+
+.PP
+Definition at line 144 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_RC2_40_MD5   0x03000006"
+
+.PP
+Definition at line 148 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_RC4_128_MD5   0x03000004"
+
+.PP
+Definition at line 146 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_RC4_128_SHA   0x03000005"
+
+.PP
+Definition at line 147 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_RSA_RC4_40_MD5   0x03000003"
+
+.PP
+Definition at line 145 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CK_SCSV   0x030000FF"
+
+.PP
+Definition at line 135 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_DSS_EPHEMERAL_DH   6"
+
+.PP
+Definition at line 456 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_DSS_FIXED_DH   4"
+
+.PP
+Definition at line 454 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_DSS_SIGN   2"
+
+.PP
+Definition at line 452 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_FORTEZZA_DMS   20"
+
+.PP
+Definition at line 457 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_NUMBER   9"
+
+.PP
+Definition at line 462 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_RSA_EPHEMERAL_DH   5"
+
+.PP
+Definition at line 455 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_RSA_FIXED_DH   3"
+
+.PP
+Definition at line 453 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_CT_RSA_SIGN   1"
+
+.PP
+Definition at line 451 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_FLAGS_CCS_OK   0x0080"
+
+.PP
+Definition at line 474 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_FLAGS_DELAY_CLIENT_FINISHED   0x0002"
+
+.PP
+Definition at line 465 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS   0x0001"
+
+.PP
+Definition at line 464 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_FLAGS_POP_BUFFER   0x0004"
+
+.PP
+Definition at line 466 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_FLAGS_SGC_RESTART_DONE   0x0040"
+
+.PP
+Definition at line 477 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_HM_HEADER_LENGTH   4"
+
+.PP
+Definition at line 284 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MASTER_SECRET_SIZE   48"
+
+.PP
+Definition at line 279 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MAX_SSL_SESSION_ID_LENGTH   32"
+
+.PP
+Definition at line 277 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MD_CLIENT_FINISHED_CONST   '\\x43\\x4C\\x4E\\x54'"
+
+.PP
+Definition at line 352 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MD_SERVER_FINISHED_CONST   '\\x53\\x52\\x56\\x52'"
+
+.PP
+Definition at line 353 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CCS   1"
+
+.PP
+Definition at line 759 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CERTIFICATE   11"
+
+.PP
+Definition at line 746 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CERTIFICATE_REQUEST   13"
+
+.PP
+Definition at line 748 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CERTIFICATE_STATUS   22"
+
+.PP
+Definition at line 753 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CERTIFICATE_VERIFY   15"
+
+.PP
+Definition at line 750 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CLIENT_HELLO   1"
+
+.PP
+Definition at line 743 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_CLIENT_KEY_EXCHANGE   16"
+
+.PP
+Definition at line 751 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_FINISHED   20"
+
+.PP
+Definition at line 752 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_HELLO_REQUEST   0"
+
+.PP
+Definition at line 742 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_NEWSESSION_TICKET   4"
+
+.PP
+Definition at line 745 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_NEXT_PROTO   67"
+
+.PP
+Definition at line 755 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_SERVER_DONE   14"
+
+.PP
+Definition at line 749 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_SERVER_HELLO   2"
+
+.PP
+Definition at line 744 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_MT_SERVER_KEY_EXCHANGE   12"
+
+.PP
+Definition at line 747 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RANDOM_SIZE   32"
+
+.PP
+Definition at line 280 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_ALERT   21"
+
+.PP
+Definition at line 360 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_APPLICATION_DATA   23"
+
+.PP
+Definition at line 362 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_CHANGE_CIPHER_SPEC   20"
+
+.PP
+Definition at line 359 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_HANDSHAKE   22"
+
+.PP
+Definition at line 361 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_HEADER   0x100"
+
+.PP
+Definition at line 380 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_HEADER_LENGTH   5"
+
+.PP
+Definition at line 282 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_COMPRESSED_LENGTH   (\fBSSL3_RT_MAX_PLAIN_LENGTH\fP+\fBSSL3_RT_MAX_COMPRESSED_OVERHEAD\fP)"
+
+.PP
+Definition at line 344 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_COMPRESSED_OVERHEAD   1024"
+
+.PP
+Definition at line 322 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_ENCRYPTED_LENGTH   (\fBSSL3_RT_MAX_ENCRYPTED_OVERHEAD\fP+\fBSSL3_RT_MAX_COMPRESSED_LENGTH\fP)"
+
+.PP
+Definition at line 347 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_ENCRYPTED_OVERHEAD   (256 + \fBSSL3_RT_MAX_MD_SIZE\fP)"
+
+.PP
+Definition at line 329 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_EXTRA   (16384)"
+
+.PP
+Definition at line 317 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_MD_SIZE   64"
+
+.PP
+Definition at line 309 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_PACKET_SIZE   (\fBSSL3_RT_MAX_ENCRYPTED_LENGTH\fP+\fBSSL3_RT_HEADER_LENGTH\fP)"
+
+.PP
+Definition at line 349 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_MAX_PLAIN_LENGTH   16384"
+
+.PP
+Definition at line 320 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_RT_SEND_MAX_ENCRYPTED_OVERHEAD   (\fBSSL_RT_MAX_CIPHER_BLOCK_SIZE\fP + \fBSSL3_RT_MAX_MD_SIZE\fP)"
+
+.PP
+Definition at line 336 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_SESSION_ID_SIZE   32"
+
+.PP
+Definition at line 281 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_SSL_SESSION_ID_LENGTH   32"
+
+.PP
+Definition at line 276 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CERT_A   (0x130|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 653 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CERT_B   (0x131|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 654 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CERT_REQ_A   (0x150|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 657 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CERT_REQ_B   (0x151|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 658 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CERT_STATUS_A   (0x1F0|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 685 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CERT_STATUS_B   (0x1F1|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 686 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CHANGE_A   (0x1C0|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 679 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_CHANGE_B   (0x1C1|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 680 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_FINISHED_A   (0x1D0|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 681 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_FINISHED_B   (0x1D1|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 682 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_KEY_EXCH_A   (0x140|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 655 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_KEY_EXCH_B   (0x141|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 656 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_SESSION_TICKET_A   (0x1E0|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 683 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_SESSION_TICKET_B   (0x1E1|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 684 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_SRVR_DONE_A   (0x160|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 659 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_SRVR_DONE_B   (0x161|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 660 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_SRVR_HELLO_A   (0x120|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 649 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CR_SRVR_HELLO_B   (0x121|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 650 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CERT_A   (0x170|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 662 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CERT_B   (0x171|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 663 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CERT_C   (0x172|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 664 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CERT_D   (0x173|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 665 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CERT_VRFY_A   (0x190|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 668 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CERT_VRFY_B   (0x191|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 669 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CHANGE_A   (0x1A0|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 670 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CHANGE_B   (0x1A1|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 671 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CLNT_HELLO_A   (0x110|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 646 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_CLNT_HELLO_B   (0x111|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 647 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_FINISHED_A   (0x1B0|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 676 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_FINISHED_B   (0x1B1|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 677 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_FLUSH   (0x100|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 640 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_KEY_EXCH_A   (0x180|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 666 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_KEY_EXCH_B   (0x181|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 667 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_NEXT_PROTO_A   (0x200|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 673 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_CW_NEXT_PROTO_B   (0x201|SSL_ST_CONNECT)"
+
+.PP
+Definition at line 674 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CERT_A   (0x180|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 718 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CERT_B   (0x181|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 719 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CERT_VRFY_A   (0x1A0|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 722 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CERT_VRFY_B   (0x1A1|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 723 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CHANGE_A   (0x1B0|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 724 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CHANGE_B   (0x1B1|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 725 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CLNT_HELLO_A   (0x110|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 697 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CLNT_HELLO_B   (0x111|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 698 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CLNT_HELLO_C   (0x112|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 699 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_CLNT_HELLO_D   (0x115|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 700 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_FINISHED_A   (0x1C0|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 730 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_FINISHED_B   (0x1C1|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 731 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_KEY_EXCH_A   (0x190|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 720 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_KEY_EXCH_B   (0x191|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 721 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_NEXT_PROTO_A   (0x210|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 727 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SR_NEXT_PROTO_B   (0x211|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 728 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CERT_A   (0x140|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 709 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CERT_B   (0x141|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 710 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CERT_REQ_A   (0x160|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 713 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CERT_REQ_B   (0x161|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 714 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CERT_STATUS_A   (0x200|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 739 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CERT_STATUS_B   (0x201|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 740 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CHANGE_A   (0x1D0|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 733 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_CHANGE_B   (0x1D1|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 734 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_FINISHED_A   (0x1E0|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 735 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_FINISHED_B   (0x1E1|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 736 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_FLUSH   (0x100|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 690 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_HELLO_REQ_A   (0x120|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 704 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_HELLO_REQ_B   (0x121|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 705 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_HELLO_REQ_C   (0x122|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 706 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_KEY_EXCH_A   (0x150|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 711 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_KEY_EXCH_B   (0x151|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 712 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_SESSION_TICKET_A   (0x1F0|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 737 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_SESSION_TICKET_B   (0x1F1|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 738 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_SRVR_DONE_A   (0x170|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 715 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_SRVR_DONE_B   (0x171|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 716 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_SRVR_HELLO_A   (0x130|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 707 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_ST_SW_SRVR_HELLO_B   (0x131|SSL_ST_ACCEPT)"
+
+.PP
+Definition at line 708 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_ADH_DES_192_CBC_SHA   'ADH\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 252 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_ADH_DES_40_CBC_SHA   'EXP\-ADH\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 250 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_ADH_DES_64_CBC_SHA   'ADH\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 251 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_ADH_RC4_128_MD5   'ADH\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 249 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_ADH_RC4_40_MD5   'EXP\-ADH\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 248 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DH_DSS_DES_192_CBC3_SHA   'DH\-DSS\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 224 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DH_DSS_DES_40_CBC_SHA   'EXP\-\fBDH\fP\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 222 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DH_DSS_DES_64_CBC_SHA   'DH\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 223 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DH_RSA_DES_192_CBC3_SHA   'DH\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 227 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DH_RSA_DES_40_CBC_SHA   'EXP\-\fBDH\fP\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 225 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DH_RSA_DES_64_CBC_SHA   'DH\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 226 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DHE_DSS_DES_192_CBC3_SHA   'DHE\-DSS\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 231 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DHE_DSS_DES_40_CBC_SHA   'EXP\-DHE\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 229 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DHE_DSS_DES_64_CBC_SHA   'DHE\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 230 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DHE_RSA_DES_192_CBC3_SHA   'DHE\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 234 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DHE_RSA_DES_40_CBC_SHA   'EXP\-DHE\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 232 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_DHE_RSA_DES_64_CBC_SHA   'DHE\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 233 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_EDH_DSS_DES_192_CBC3_SHA   'EDH\-DSS\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 243 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_EDH_DSS_DES_40_CBC_SHA   'EXP\-EDH\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 241 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_EDH_DSS_DES_64_CBC_SHA   'EDH\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 242 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_EDH_RSA_DES_192_CBC3_SHA   'EDH\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 246 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_EDH_RSA_DES_40_CBC_SHA   'EXP\-EDH\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 244 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_EDH_RSA_DES_64_CBC_SHA   'EDH\-\fBRSA\fP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 245 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_DES_192_CBC3_MD5   'KRB5\-DES\-CBC3\-\fBMD5\fP'"
+
+.PP
+Definition at line 265 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_DES_192_CBC3_SHA   'KRB5\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 261 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_DES_40_CBC_MD5   'EXP\-KRB5\-DES\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 272 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_DES_40_CBC_SHA   'EXP\-KRB5\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 269 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_DES_64_CBC_MD5   'KRB5\-DES\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 264 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_DES_64_CBC_SHA   'KRB5\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 260 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_IDEA_128_CBC_MD5   'KRB5\-IDEA\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 267 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_IDEA_128_CBC_SHA   'KRB5\-IDEA\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 263 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_RC2_40_CBC_MD5   'EXP\-KRB5\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 273 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_RC2_40_CBC_SHA   'EXP\-KRB5\-RC2\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 270 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_RC4_128_MD5   'KRB5\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 266 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_RC4_128_SHA   'KRB5\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 262 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_RC4_40_MD5   'EXP\-KRB5\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 274 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_KRB5_RC4_40_SHA   'EXP\-KRB5\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 271 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_DES_192_CBC3_SHA   'DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 220 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_DES_40_CBC_SHA   'EXP\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 218 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_DES_64_CBC_SHA   'DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 219 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_IDEA_128_SHA   'IDEA\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 217 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_NULL_MD5   'NULL\-\fBMD5\fP'"
+
+.PP
+Definition at line 211 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_NULL_SHA   'NULL\-\fBSHA\fP'"
+
+.PP
+Definition at line 212 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_RC2_40_MD5   'EXP\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 216 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_RC4_128_MD5   'RC4\-\fBMD5\fP'"
+
+.PP
+Definition at line 214 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_RC4_128_SHA   'RC4\-\fBSHA\fP'"
+
+.PP
+Definition at line 215 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_TXT_RSA_RC4_40_MD5   'EXP\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 213 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_VERSION   0x0300"
+
+.PP
+Definition at line 355 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_VERSION_MAJOR   0x03"
+
+.PP
+Definition at line 356 of file ssl/ssl3\&.h\&.
+.SS "#define SSL3_VERSION_MINOR   0x00"
+
+.PP
+Definition at line 357 of file ssl/ssl3\&.h\&.
+.SS "#define SSL_RT_MAX_CIPHER_BLOCK_SIZE   16"
+
+.PP
+Definition at line 315 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_FLAGS_KEEP_HANDSHAKE   0x0020"
+
+.PP
+Definition at line 469 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_FLAGS_SKIP_CERT_VERIFY   0x0010"
+
+.PP
+Definition at line 468 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_FLAGS_TLS_PADDING_BUG   0x0008"
+
+.PP
+Definition at line 467 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_HB_REQUEST   1"
+
+.PP
+Definition at line 398 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_HB_RESPONSE   2"
+
+.PP
+Definition at line 399 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO   0x1000"
+
+.PP
+Definition at line 366 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_CLIENT_RANDOM   (\fBTLS1_RT_CRYPTO\fP | 0x2)"
+
+.PP
+Definition at line 368 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_FIXED_IV   (\fBTLS1_RT_CRYPTO\fP | 0x8)"
+
+.PP
+Definition at line 377 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_IV   (\fBTLS1_RT_CRYPTO\fP | 0x7)"
+
+.PP
+Definition at line 376 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_KEY   (\fBTLS1_RT_CRYPTO\fP | 0x6)"
+
+.PP
+Definition at line 375 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_MAC   (\fBTLS1_RT_CRYPTO\fP | 0x5)"
+
+.PP
+Definition at line 374 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_MASTER   (\fBTLS1_RT_CRYPTO\fP | 0x4)"
+
+.PP
+Definition at line 370 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_PREMASTER   (\fBTLS1_RT_CRYPTO\fP | 0x1)"
+
+.PP
+Definition at line 367 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_READ   0x0000"
+
+.PP
+Definition at line 372 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_SERVER_RANDOM   (\fBTLS1_RT_CRYPTO\fP | 0x3)"
+
+.PP
+Definition at line 369 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_CRYPTO_WRITE   0x0100"
+
+.PP
+Definition at line 373 of file ssl/ssl3\&.h\&.
+.SS "#define TLS1_RT_HEARTBEAT   24"
+
+.PP
+Definition at line 363 of file ssl/ssl3\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBssl3_buffer_st\fP  \fBSSL3_BUFFER\fP"
+
+.SS "typedef struct \fBssl3_record_st\fP  \fBSSL3_RECORD\fP"
+
+.SS "typedef struct \fBssl3_state_st\fP  \fBSSL3_STATE\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

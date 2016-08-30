@@ -1,0 +1,109 @@
+.TH "s2n-master/tests/fuzz/LD_PRELOAD/global_overrides.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/fuzz/LD_PRELOAD/global_overrides.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <dlfcn\&.h>\fP
+.br
+\fC#include 'crypto/s2n_drbg\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_GNU_SOURCE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_drbg_generate\fP (struct \fBs2n_drbg\fP *drbg, struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_send_to_fd\fP (struct \fBs2n_stuffer\fP *stuffer, int wfd, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_urandom_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _GNU_SOURCE"
+
+.PP
+Definition at line 16 of file global_overrides\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_drbg_generate (struct \fBs2n_drbg\fP * drbg, struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 28 of file global_overrides\&.c\&.
+.PP
+.nf
+28                                                                     {
+29 
+30     /* If fuzzing, only generate "fake" random numbers in order to ensure that fuzz tests are deterministic and repeatable\&.
+31      * This function should generate non-zero values since this function may be called repeatedly at startup until a
+32      * non-zero value is generated\&.
+33      */
+34     GUARD(s2n_get_urandom_data(blob));
+35     drbg->bytes_used += blob->size;
+36     return 0;
+37 }
+.fi
+.SS "int s2n_stuffer_send_to_fd (struct \fBs2n_stuffer\fP * stuffer, int wfd, uint32_t len)"
+
+.PP
+Definition at line 39 of file global_overrides\&.c\&.
+.PP
+.nf
+40 {
+41     /* Override the original s2n_stuffer_send_to_fd to check if the write file descriptor is -1, and if so, skip
+42      * writing anything\&. This is to speed up fuzz tests that write unnecessary data that is never actually read\&.
+43      */
+44     if(wfd == -1){
+45        stuffer->read_cursor += len;
+46        return len;
+47     }
+48 
+49     /* Otherwise, call the original s2n_stuffer_send_to_fd() */
+50     typedef int (*orig_s2n_stuffer_send_to_fd_func_type)(struct s2n_stuffer *stuffer, int wfd, uint32_t len);
+51     orig_s2n_stuffer_send_to_fd_func_type orig_s2n_stuffer_send_to_fd;
+52     orig_s2n_stuffer_send_to_fd = (orig_s2n_stuffer_send_to_fd_func_type) dlsym(RTLD_NEXT, "s2n_stuffer_send_to_fd");
+53     return orig_s2n_stuffer_send_to_fd(stuffer, wfd, len);
+54 }
+.fi
+.SS "int s2n_get_urandom_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 56 of file global_overrides\&.c\&.
+.PP
+.nf
+56                                                {
+57 
+58     /* If fuzzing, only generate "fake" random numbers in order to ensure that fuzz tests are deterministic and repeatable\&.
+59      * This function should generate non-zero values since this function may be called repeatedly at startup until a
+60      * non-zero value is generated\&.
+61      */
+62     for(int i=0; i < blob->size; i++){
+63        blob->data[i] = 4; /* Fake RNG\&. Chosen by fair dice roll\&. https://xkcd\&.com/221/ */
+64     }
+65     return 0;
+66 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

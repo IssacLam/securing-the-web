@@ -1,0 +1,187 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/seed/seed_locl.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/seed/seed_locl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'openssl/e_os2\&.h'\fP
+.br
+\fC#include <openssl/seed\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBG_FUNC\fP(v)          "
+.br
+.ti -1c
+.RI "#define \fBchar2word\fP(\fBc\fP,  i)   (i) = ((((\fBseed_word\fP)(\fBc\fP)[0]) << 24) | (((\fBseed_word\fP)(\fBc\fP)[1]) << 16) | (((\fBseed_word\fP)(\fBc\fP)[2]) << 8) | ((\fBseed_word\fP)(\fBc\fP)[3]))"
+.br
+.ti -1c
+.RI "#define \fBword2char\fP(l,  \fBc\fP)"
+.br
+.ti -1c
+.RI "#define \fBKEYSCHEDULE_UPDATE0\fP(T0,  T1,  X1,  X2,  X3,  X4,  KC)"
+.br
+.ti -1c
+.RI "#define \fBKEYSCHEDULE_UPDATE1\fP(T0,  T1,  X1,  X2,  X3,  X4,  KC)"
+.br
+.ti -1c
+.RI "#define \fBKEYUPDATE_TEMP\fP(T0,  T1,  K)  "
+.br
+.ti -1c
+.RI "#define \fBXOR_SEEDBLOCK\fP(DST,  SRC)        "
+.br
+.ti -1c
+.RI "#define \fBMOV_SEEDBLOCK\fP(DST,  SRC)        "
+.br
+.ti -1c
+.RI "#define \fBCHAR2WORD\fP(C,  \fBI\fP)                        "
+.br
+.ti -1c
+.RI "#define \fBWORD2CHAR\fP(\fBI\fP,  C)                        "
+.br
+.ti -1c
+.RI "#define \fBE_SEED\fP(T0,  T1,  X1,  X2,  X3,  X4,  rbase)  "
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned int \fBseed_word\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define G_FUNC(v)"
+\fBValue:\fP
+.PP
+.nf
+SS[0][(unsigned char)      (v) & 0xff] ^ SS[1][(unsigned char) ((v)>>8) & 0xff] ^ \
+        SS[2][(unsigned char)((v)>>16) & 0xff] ^ SS[3][(unsigned char)((v)>>24) & 0xff]
+.fi
+.PP
+Definition at line 43 of file seed_locl\&.h\&.
+.SS "#define char2word(\fBc\fP, i)   (i) = ((((\fBseed_word\fP)(\fBc\fP)[0]) << 24) | (((\fBseed_word\fP)(\fBc\fP)[1]) << 16) | (((\fBseed_word\fP)(\fBc\fP)[2]) << 8) | ((\fBseed_word\fP)(\fBc\fP)[3]))"
+
+.PP
+Definition at line 47 of file seed_locl\&.h\&.
+.SS "#define word2char(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+*((c)+0) = (unsigned char)((l)>>24) & 0xff; \
+        *((c)+1) = (unsigned char)((l)>>16) & 0xff; \
+        *((c)+2) = (unsigned char)((l)>> 8) & 0xff; \
+        *((c)+3) = (unsigned char)((l))     & 0xff
+.fi
+.PP
+Definition at line 50 of file seed_locl\&.h\&.
+.SS "#define KEYSCHEDULE_UPDATE0(T0, T1, X1, X2, X3, X4, KC)"
+\fBValue:\fP
+.PP
+.nf
+(T0) = (X3);                                     \
+        (X3) = (((X3)<<8) ^ ((X4)>>24)) & 0xffffffff;    \
+        (X4) = (((X4)<<8) ^ ((T0)>>24)) & 0xffffffff;    \
+        (T0) = ((X1) + (X3) - (KC))     & 0xffffffff;    \
+        (T1) = ((X2) + (KC) - (X4))     & 0xffffffff
+.fi
+.PP
+Definition at line 56 of file seed_locl\&.h\&.
+.SS "#define KEYSCHEDULE_UPDATE1(T0, T1, X1, X2, X3, X4, KC)"
+\fBValue:\fP
+.PP
+.nf
+(T0) = (X1);                                     \
+        (X1) = (((X1)>>8) ^ ((X2)<<24)) & 0xffffffff;    \
+        (X2) = (((X2)>>8) ^ ((T0)<<24)) & 0xffffffff;    \
+        (T0) = ((X1) + (X3) - (KC))     & 0xffffffff;     \
+        (T1) = ((X2) + (KC) - (X4))     & 0xffffffff
+.fi
+.PP
+Definition at line 63 of file seed_locl\&.h\&.
+.SS "#define KEYUPDATE_TEMP(T0, T1, K)"
+\fBValue:\fP
+.PP
+.nf
+(K)[0] = G_FUNC((T0));      \
+        (K)[1] = G_FUNC((T1))
+.fi
+.PP
+Definition at line 70 of file seed_locl\&.h\&.
+.SS "#define XOR_SEEDBLOCK(DST, SRC)"
+\fBValue:\fP
+.PP
+.nf
+((DST))[0] ^= ((SRC))[0];    \
+        ((DST))[1] ^= ((SRC))[1];    \
+        ((DST))[2] ^= ((SRC))[2];    \
+        ((DST))[3] ^= ((SRC))[3]
+.fi
+.PP
+Definition at line 74 of file seed_locl\&.h\&.
+.SS "#define MOV_SEEDBLOCK(DST, SRC)"
+\fBValue:\fP
+.PP
+.nf
+((DST))[0] = ((SRC))[0];     \
+        ((DST))[1] = ((SRC))[1];     \
+        ((DST))[2] = ((SRC))[2];     \
+        ((DST))[3] = ((SRC))[3]
+.fi
+.PP
+Definition at line 80 of file seed_locl\&.h\&.
+.SS "#define CHAR2WORD(C, \fBI\fP)"
+\fBValue:\fP
+.PP
+.nf
+char2word((C),    (I)[0]);    \
+        char2word((C+4),  (I)[1]);    \
+        char2word((C+8),  (I)[2]);    \
+        char2word((C+12), (I)[3])
+.fi
+.PP
+Definition at line 86 of file seed_locl\&.h\&.
+.SS "#define WORD2CHAR(\fBI\fP, C)"
+\fBValue:\fP
+.PP
+.nf
+word2char((I)[0], (C));       \
+        word2char((I)[1], (C+4));     \
+        word2char((I)[2], (C+8));     \
+        word2char((I)[3], (C+12))
+.fi
+.PP
+Definition at line 92 of file seed_locl\&.h\&.
+.SS "#define E_SEED(T0, T1, X1, X2, X3, X4, rbase)"
+\fBValue:\fP
+.PP
+.nf
+(T0) = (X3) ^ (ks->data)[(rbase)];       \
+        (T1) = (X4) ^ (ks->data)[(rbase)+1];     \
+        (T1) ^= (T0);                            \
+        (T1) = G_FUNC((T1));                     \
+        (T0) = ((T0) + (T1)) & 0xffffffff;       \
+        (T0) = G_FUNC((T0));                     \
+        (T1) = ((T1) + (T0)) & 0xffffffff;       \
+        (T1) = G_FUNC((T1));                     \
+        (T0) = ((T0) + (T1)) & 0xffffffff;       \
+        (X1) ^= (T0);                            \
+        (X2) ^= (T1)
+.fi
+.PP
+Definition at line 98 of file seed_locl\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned int \fBseed_word\fP"
+
+.PP
+Definition at line 35 of file seed_locl\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,624 @@
+\hypertarget{cswift_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/engines/vendor\+\_\+defns/cswift.h File Reference}
+\label{cswift_8h}\index{s2n-\/master/libcrypto-\/build/openssl/engines/vendor\+\_\+defns/cswift.\+h@{s2n-\/master/libcrypto-\/build/openssl/engines/vendor\+\_\+defns/cswift.\+h}}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct___s_w___u64}{\+\_\+\+S\+W\+\_\+\+U64}
+\item 
+struct \hyperlink{struct___s_w___l_a_r_g_e_n_u_m_b_e_r}{\+\_\+\+S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}
+\item 
+struct \hyperlink{struct___s_w___c_r_t}{\+\_\+\+S\+W\+\_\+\+C\+RT}
+\item 
+struct \hyperlink{struct___s_w___e_x_p}{\+\_\+\+S\+W\+\_\+\+E\+XP}
+\item 
+struct \hyperlink{struct___s_w___d_s_a}{\+\_\+\+S\+W\+\_\+\+D\+SA}
+\item 
+struct \hyperlink{struct___s_w___n_v_d_a_t_a}{\+\_\+\+S\+W\+\_\+\+N\+V\+D\+A\+TA}
+\item 
+struct \hyperlink{struct___s_w___p_a_r_a_m}{\+\_\+\+S\+W\+\_\+\+P\+A\+R\+AM}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{cswift_8h_a8c7b7be5dd3dcbaa85f9d9536fc93f55}{S\+W\+\_\+\+OK}~(0\+L)
+\item 
+\#define \hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}~(-\/10000\+L)
+\item 
+\#define \hyperlink{cswift_8h_a84cb45065c16bbbc6a275bf4a46272eb}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/1) /$\ast$ The Card is not present $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a45ccd9c25db6bc3a58910ae835f9b1de}{S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/2) /$\ast$ The card has not powered $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_aa8c2daaf59cad59730ec4795e12f6925}{S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/3) /$\ast$ Execution \hyperlink{usparc_8cc_a8ded0acb574430fd00c67aaacaeb313b}{of} \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a} command $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a95eab72c1fa0f78b4c7d6929a827cc30}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/4) /$\ast$ The Card failed to $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a524ebae602d9a21983ff3b0b5dec6837}{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/5) /$\ast$ \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a} required pointer is $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a6f90cfed774bf06ff62d73721bbdfee3}{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/6) /$\ast$ size is invalid, too $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ae7accc55bc6556f6735c2c7e6b073e4d}{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/7) /$\ast$ Invalid S\+W\+\_\+\+A\+C\+C\+\_\+\+C\+O\+N\+T\+E\+XT $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a9414930c040c2fd65ff5a59a90687a2c}{S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/8) /$\ast$ A request is already out-\/ $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ae14622864c0e4e6e037a498743f770f0}{S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/9) /$\ast$ A result is available.  $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a4ae28094a850fb3ea6f53e30a23d1e9b}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/10) /$\ast$ No request is pending.  $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a620a9a0c5c042aa1fa0a330a0e6ac131}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/11) /$\ast$ Not enough memory $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a09baacedcb87181bef583c3ac6477154}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/12) /$\ast$ Invalid algorithm \hyperlink{include_2openssl_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type} $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a055fa9b8a147f5d9dba5575d79a662dc}{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/13) /$\ast$ No key is associated with $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ace3b86f6d82e9f523a11b49ac3191283}{S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/14) /$\ast$ Cannot perform requested $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ab00b36d445b527dcbbe5232bcb111149}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/15) /$\ast$ Not implemented $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a2f5baa9805d6ae9d47081e5dc1df03c7}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/16) /$\ast$ Bad command code $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_abb1281ca5fae69c1794f1f39a6b14eec}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/17) /$\ast$ too small or too large in $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a7d249a784e55e74ea0aa58939f69b2a2}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/18) /$\ast$ Bad accelerator number $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ada4f0f75fa6c6a9a7c6ecf34ffb10277}{S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/19) /$\ast$ At least one \hyperlink{usparc_8cc_a8ded0acb574430fd00c67aaacaeb313b}{of} the self $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a3b62f7f25bf631f7eb446b75756fdfbc}{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/20) /$\ast$ Certain alogrithms require $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ae6e72a9e37ea8dfb3dc3e6439f28f01f}{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/21) /$\ast$ \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a} required pointer is $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_afc088a755110dc5e078977f9da0d32d1}{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/22) /$\ast$ size is invalid, too $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ad6eebc555c63f7529630991e630cf5dd}{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/23) /$\ast$ firmware checksum mismatch $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ae3dd0476b9f54a6a84fe3198f04974ae}{S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/24) /$\ast$ unknown firmware error $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_abf1cdb12702c3aade55c43a24f610068}{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/25) /$\ast$ request is abort when $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_af614f75538d9ddab1a76b85548933a25}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/26) /$\ast$ error in writing to Non-\/ $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_acf43f5fc07b9ceb35987e4fe9a013c3f}{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/27) /$\ast$ out \hyperlink{usparc_8cc_a8ded0acb574430fd00c67aaacaeb313b}{of} range error in $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a7a95ea8a7e9077d908f2fea2ade485df}{S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/28) /$\ast$ Random Number Generation $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_acb255b377706ec5bd10e4348de0880cd}{S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/29) /$\ast$ D\+SS Sign or Verify failure $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ae61ce01886683dfdea0648d4f1a3fba3}{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/30) /$\ast$ Failure in various math $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a23fdf2df4e9da9d8a110ec53ac29ed0d}{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/31) /$\ast$ Error in accessing on -\/ $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a046666d546069969abceb3b0ecaecf60}{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/32) /$\ast$ Wrong \hyperlink{s2n__config_8c_aa31f487a99743d24af9076a3e11e5425}{version} in firmware $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a99ef039c0cc9aca25b72520aa8fb4e2b}{S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR}~(\hyperlink{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/44) /$\ast$ All accelerators are bad $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a6efef235c40d1b4432e7902f22cce4bc}{S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT}~1
+\item 
+\#define \hyperlink{cswift_8h_a0a431cada4fb03aaeac24ff8f44fd78d}{S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP}~2
+\item 
+\#define \hyperlink{cswift_8h_a212c3c54b9137a51d016cc54e2bd4649}{S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA}~3
+\item 
+\#define \hyperlink{cswift_8h_a022b24b78406536a0f5d8bb0dc6ccacd}{S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA}~4
+\item 
+\#define \hyperlink{cswift_8h_a3953dcdac118a1136b1c53b5b524b6c1}{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT}~1   /$\ast$ perform Modular Exponentiation using $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ac436bf79e5fa48d7783bc610367e8742}{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP}~2   /$\ast$ perform Modular Exponentiation $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a0aa536b23e49f22d66c5df307dbfd746}{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN}~3   /$\ast$ perform D\+SS sign $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_aa7c73084463c5090b45103a7a3e98573}{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY}~4   /$\ast$ perform D\+SS verify $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_aa96406d0b75a1a747d9edfb560f9dedc}{S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND}~5   /$\ast$ perform random number generation $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_a955e7801a37db8b39b14de304362b8fc}{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD}~6   /$\ast$ perform read to nonvolatile R\+AM $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_aae5f667afb6a3179e5cfb07ebaee988f}{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE}~7   /$\ast$ perform write to nonvolatile R\+AM $\ast$/
+\item 
+\#define \hyperlink{cswift_8h_ab6aa9112532101d04f20eb18f787061a}{S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}~(-\/1)
+\item 
+\#define \hyperlink{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef long \hyperlink{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}{S\+W\+\_\+\+S\+T\+A\+T\+US}
+\item 
+typedef unsigned char \hyperlink{cswift_8h_ab7979745c365250458d6e0750e64b25b}{S\+W\+\_\+\+B\+Y\+TE}
+\item 
+typedef unsigned short \hyperlink{cswift_8h_ae27b48a7a88da219557c1ef880ed7b2d}{S\+W\+\_\+\+U16}
+\item 
+typedef unsigned long \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32}
+\item 
+typedef struct \hyperlink{struct___s_w___u64}{\+\_\+\+S\+W\+\_\+\+U64} \hyperlink{cswift_8h_a8b4591dbc000c56b593ddda09dbaf72b}{S\+W\+\_\+\+U64}
+\item 
+typedef \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} \hyperlink{cswift_8h_a502f2b57e4e3f4539da21d8414489135}{S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE}
+\item 
+typedef \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} \hyperlink{cswift_8h_af5d4336467feebf26f837cbbe21bc60d}{S\+W\+\_\+\+S\+T\+A\+TE}
+\item 
+typedef \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} \hyperlink{cswift_8h_a13262f139c9e5860075ffaa68820fb98}{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE}
+\item 
+typedef \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} \hyperlink{cswift_8h_abc32cc2324cce24bc8ca660f10359f7f}{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP}\mbox{[}4\mbox{]}
+\item 
+typedef struct \hyperlink{struct___s_w___l_a_r_g_e_n_u_m_b_e_r}{\+\_\+\+S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER} \hyperlink{cswift_8h_aace52592ab28d0cb89b2ede5e864d859}{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}
+\item 
+typedef int \hyperlink{cswift_8h_ac544dcc6d9b60ccdacc2684cc1eaa2f2}{S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE}
+\item 
+typedef struct \hyperlink{struct___s_w___c_r_t}{\+\_\+\+S\+W\+\_\+\+C\+RT} \hyperlink{cswift_8h_a9bd0b0b8a8293798c79bc28fda5e72f4}{S\+W\+\_\+\+C\+RT}
+\item 
+typedef struct \hyperlink{struct___s_w___e_x_p}{\+\_\+\+S\+W\+\_\+\+E\+XP} \hyperlink{cswift_8h_a243eeee9f031e5d9e6a5ff390746af8d}{S\+W\+\_\+\+E\+XP}
+\item 
+typedef struct \hyperlink{struct___s_w___d_s_a}{\+\_\+\+S\+W\+\_\+\+D\+SA} \hyperlink{cswift_8h_ac62baefcaf6b5deaa1983ea87b4910a6}{S\+W\+\_\+\+D\+SA}
+\item 
+typedef struct \hyperlink{struct___s_w___n_v_d_a_t_a}{\+\_\+\+S\+W\+\_\+\+N\+V\+D\+A\+TA} \hyperlink{cswift_8h_aa9eecb9c0ee28e80f5f0c9b0cbdd620f}{S\+W\+\_\+\+N\+V\+D\+A\+TA}
+\item 
+typedef struct \hyperlink{struct___s_w___p_a_r_a_m}{\+\_\+\+S\+W\+\_\+\+P\+A\+R\+AM} \hyperlink{cswift_8h_a7faf20628367936cf8bb79791ad23224}{S\+W\+\_\+\+P\+A\+R\+AM}
+\item 
+typedef \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} \hyperlink{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE}
+\item 
+typedef \hyperlink{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}{S\+W\+\_\+\+S\+T\+A\+T\+US} \hyperlink{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} \hyperlink{cswift_8h_ac10cd95e1417338bbade53d684d9845d}{t\+\_\+sw\+Acquire\+Acc\+Context}(\hyperlink{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} $\ast$hac)
+\item 
+typedef \hyperlink{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}{S\+W\+\_\+\+S\+T\+A\+T\+US} \hyperlink{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} \hyperlink{cswift_8h_a587b945f828bd614a1b5df243ad1ae87}{t\+\_\+sw\+Attach\+Key\+Param}(\hyperlink{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} hac, \hyperlink{cswift_8h_a7faf20628367936cf8bb79791ad23224}{S\+W\+\_\+\+P\+A\+R\+AM} $\ast$key\+\_\+params)
+\item 
+typedef \hyperlink{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}{S\+W\+\_\+\+S\+T\+A\+T\+US} \hyperlink{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} \hyperlink{cswift_8h_a7ce4bc0a671097d2b0e8c1ed48030f10}{t\+\_\+sw\+Simple\+Request}(\hyperlink{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} hac, \hyperlink{cswift_8h_a13262f139c9e5860075ffaa68820fb98}{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE} cmd, \hyperlink{cswift_8h_aace52592ab28d0cb89b2ede5e864d859}{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER} pin\mbox{[}$\,$\mbox{]}, \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} pin\+\_\+count, \hyperlink{cswift_8h_aace52592ab28d0cb89b2ede5e864d859}{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER} pout\mbox{[}$\,$\mbox{]}, \hyperlink{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{S\+W\+\_\+\+U32} pout\+\_\+count)
+\item 
+typedef \hyperlink{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}{S\+W\+\_\+\+S\+T\+A\+T\+US} \hyperlink{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} \hyperlink{cswift_8h_a9e7a54162f91ac583ed3c0984abb4091}{t\+\_\+sw\+Release\+Acc\+Context}(\hyperlink{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} hac)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+OK@{S\+W\+\_\+\+OK}}
+\index{S\+W\+\_\+\+OK@{S\+W\+\_\+\+OK}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+OK}{SW_OK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+OK~(0\+L)}\hypertarget{cswift_8h_a8c7b7be5dd3dcbaa85f9d9536fc93f55}{}\label{cswift_8h_a8c7b7be5dd3dcbaa85f9d9536fc93f55}
+
+
+Definition at line 50 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}{SW_ERR_BASE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE~(-\/10000\+L)}\hypertarget{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}{}\label{cswift_8h_a3cbd8424d71331eea159c7590325bbd6}
+
+
+Definition at line 51 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD}{SW_ERR_NO_CARD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+C\+A\+RD~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/1) /$\ast$ The Card is not present $\ast$/}\hypertarget{cswift_8h_a84cb45065c16bbbc6a275bf4a46272eb}{}\label{cswift_8h_a84cb45065c16bbbc6a275bf4a46272eb}
+
+
+Definition at line 52 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY}{SW_ERR_CARD_NOT_READY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+C\+A\+R\+D\+\_\+\+N\+O\+T\+\_\+\+R\+E\+A\+DY~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/2) /$\ast$ The card has not powered $\ast$/}\hypertarget{cswift_8h_a45ccd9c25db6bc3a58910ae835f9b1de}{}\label{cswift_8h_a45ccd9c25db6bc3a58910ae835f9b1de}
+
+
+Definition at line 53 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT@{S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT@{S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT}{SW_ERR_TIME_OUT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+\_\+\+O\+UT~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/3) /$\ast$ Execution {\bf of} {\bf a} command $\ast$/}\hypertarget{cswift_8h_aa8c2daaf59cad59730ec4795e12f6925}{}\label{cswift_8h_aa8c2daaf59cad59730ec4795e12f6925}
+
+
+Definition at line 55 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE}{SW_ERR_NO_EXECUTE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+E\+X\+E\+C\+U\+TE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/4) /$\ast$ The Card failed to $\ast$/}\hypertarget{cswift_8h_a95eab72c1fa0f78b4c7d6929a827cc30}{}\label{cswift_8h_a95eab72c1fa0f78b4c7d6929a827cc30}
+
+
+Definition at line 57 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}{SW_ERR_INPUT_NULL_PTR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/5) /$\ast$ {\bf a} required pointer is $\ast$/}\hypertarget{cswift_8h_a524ebae602d9a21983ff3b0b5dec6837}{}\label{cswift_8h_a524ebae602d9a21983ff3b0b5dec6837}
+
+
+Definition at line 59 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE}{SW_ERR_INPUT_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+P\+U\+T\+\_\+\+S\+I\+ZE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/6) /$\ast$ size is invalid, too $\ast$/}\hypertarget{cswift_8h_a6f90cfed774bf06ff62d73721bbdfee3}{}\label{cswift_8h_a6f90cfed774bf06ff62d73721bbdfee3}
+
+
+Definition at line 61 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}{SW_ERR_INVALID_HANDLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/7) /$\ast$ Invalid S\+W\+\_\+\+A\+C\+C\+\_\+\+C\+O\+N\+T\+E\+XT $\ast$/}\hypertarget{cswift_8h_ae7accc55bc6556f6735c2c7e6b073e4d}{}\label{cswift_8h_ae7accc55bc6556f6735c2c7e6b073e4d}
+
+
+Definition at line 63 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG@{S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG@{S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG}{SW_ERR_PENDING}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+P\+E\+N\+D\+I\+NG~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/8) /$\ast$ A request is already out-\/ $\ast$/}\hypertarget{cswift_8h_a9414930c040c2fd65ff5a59a90687a2c}{}\label{cswift_8h_a9414930c040c2fd65ff5a59a90687a2c}
+
+
+Definition at line 65 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE}{SW_ERR_AVAILABLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+A\+V\+A\+I\+L\+A\+B\+LE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/9) /$\ast$ A result is available.  $\ast$/}\hypertarget{cswift_8h_ae14622864c0e4e6e037a498743f770f0}{}\label{cswift_8h_ae14622864c0e4e6e037a498743f770f0}
+
+
+Definition at line 68 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG}{SW_ERR_NO_PENDING}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+P\+E\+N\+D\+I\+NG~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/10) /$\ast$ No request is pending.  $\ast$/}\hypertarget{cswift_8h_a4ae28094a850fb3ea6f53e30a23d1e9b}{}\label{cswift_8h_a4ae28094a850fb3ea6f53e30a23d1e9b}
+
+
+Definition at line 69 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY}{SW_ERR_NO_MEMORY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+\_\+\+M\+E\+M\+O\+RY~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/11) /$\ast$ Not enough memory $\ast$/}\hypertarget{cswift_8h_a620a9a0c5c042aa1fa0a330a0e6ac131}{}\label{cswift_8h_a620a9a0c5c042aa1fa0a330a0e6ac131}
+
+
+Definition at line 70 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM}{SW_ERR_BAD_ALGORITHM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+L\+G\+O\+R\+I\+T\+HM~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/12) /$\ast$ Invalid algorithm {\bf type} $\ast$/}\hypertarget{cswift_8h_a09baacedcb87181bef583c3ac6477154}{}\label{cswift_8h_a09baacedcb87181bef583c3ac6477154}
+
+
+Definition at line 71 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY}{SW_ERR_MISSING_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+K\+EY~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/13) /$\ast$ No key is associated with $\ast$/}\hypertarget{cswift_8h_a055fa9b8a147f5d9dba5575d79a662dc}{}\label{cswift_8h_a055fa9b8a147f5d9dba5575d79a662dc}
+
+
+Definition at line 73 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH@{S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH@{S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH}{SW_ERR_KEY_CMD_MISMATCH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+K\+E\+Y\+\_\+\+C\+M\+D\+\_\+\+M\+I\+S\+M\+A\+T\+CH~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/14) /$\ast$ Cannot perform requested $\ast$/}\hypertarget{cswift_8h_ace3b86f6d82e9f523a11b49ac3191283}{}\label{cswift_8h_ace3b86f6d82e9f523a11b49ac3191283}
+
+
+Definition at line 77 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED}{SW_ERR_NOT_IMPLEMENTED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+ED~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/15) /$\ast$ Not implemented $\ast$/}\hypertarget{cswift_8h_ab00b36d445b527dcbbe5232bcb111149}{}\label{cswift_8h_ab00b36d445b527dcbbe5232bcb111149}
+
+
+Definition at line 84 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND}{SW_ERR_BAD_COMMAND}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+C\+O\+M\+M\+A\+ND~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/16) /$\ast$ Bad command code $\ast$/}\hypertarget{cswift_8h_a2f5baa9805d6ae9d47081e5dc1df03c7}{}\label{cswift_8h_a2f5baa9805d6ae9d47081e5dc1df03c7}
+
+
+Definition at line 86 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE}{SW_ERR_BAD_ITEM_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+I\+T\+E\+M\+\_\+\+S\+I\+ZE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/17) /$\ast$ too small or too large in $\ast$/}\hypertarget{cswift_8h_abb1281ca5fae69c1794f1f39a6b14eec}{}\label{cswift_8h_abb1281ca5fae69c1794f1f39a6b14eec}
+
+
+Definition at line 87 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM@{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM}{SW_ERR_BAD_ACCNUM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+D\+\_\+\+A\+C\+C\+N\+UM~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/18) /$\ast$ Bad accelerator number $\ast$/}\hypertarget{cswift_8h_a7d249a784e55e74ea0aa58939f69b2a2}{}\label{cswift_8h_a7d249a784e55e74ea0aa58939f69b2a2}
+
+
+Definition at line 90 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL@{S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL@{S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL}{SW_ERR_SELFTEST_FAIL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+S\+E\+L\+F\+T\+E\+S\+T\+\_\+\+F\+A\+IL~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/19) /$\ast$ At least one {\bf of} the self $\ast$/}\hypertarget{cswift_8h_ada4f0f75fa6c6a9a7c6ecf34ffb10277}{}\label{cswift_8h_ada4f0f75fa6c6a9a7c6ecf34ffb10277}
+
+
+Definition at line 91 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN@{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN@{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN}{SW_ERR_MISALIGN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+I\+S\+A\+L\+I\+GN~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/20) /$\ast$ Certain alogrithms require $\ast$/}\hypertarget{cswift_8h_a3b62f7f25bf631f7eb446b75756fdfbc}{}\label{cswift_8h_a3b62f7f25bf631f7eb446b75756fdfbc}
+
+
+Definition at line 96 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR}{SW_ERR_OUTPUT_NULL_PTR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+N\+U\+L\+L\+\_\+\+P\+TR~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/21) /$\ast$ {\bf a} required pointer is $\ast$/}\hypertarget{cswift_8h_ae6e72a9e37ea8dfb3dc3e6439f28f01f}{}\label{cswift_8h_ae6e72a9e37ea8dfb3dc3e6439f28f01f}
+
+
+Definition at line 100 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE}{SW_ERR_OUTPUT_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+S\+I\+ZE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/22) /$\ast$ size is invalid, too $\ast$/}\hypertarget{cswift_8h_afc088a755110dc5e078977f9da0d32d1}{}\label{cswift_8h_afc088a755110dc5e078977f9da0d32d1}
+
+
+Definition at line 103 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM@{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM@{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM}{SW_ERR_FIRMWARE_CHECKSUM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+C\+H\+E\+C\+K\+S\+UM~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/23) /$\ast$ firmware checksum mismatch $\ast$/}\hypertarget{cswift_8h_ad6eebc555c63f7529630991e630cf5dd}{}\label{cswift_8h_ad6eebc555c63f7529630991e630cf5dd}
+
+
+Definition at line 106 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE}{SW_ERR_UNKNOWN_FIRMWARE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+U\+N\+K\+N\+O\+W\+N\+\_\+\+F\+I\+R\+M\+W\+A\+RE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/24) /$\ast$ unknown firmware error $\ast$/}\hypertarget{cswift_8h_ae3dd0476b9f54a6a84fe3198f04974ae}{}\label{cswift_8h_ae3dd0476b9f54a6a84fe3198f04974ae}
+
+
+Definition at line 109 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT@{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT}{SW_ERR_INTERRUPT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+I\+N\+T\+E\+R\+R\+U\+PT~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/25) /$\ast$ request is abort when $\ast$/}\hypertarget{cswift_8h_abf1cdb12702c3aade55c43a24f610068}{}\label{cswift_8h_abf1cdb12702c3aade55c43a24f610068}
+
+
+Definition at line 111 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL}{SW_ERR_NVWRITE_FAIL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+F\+A\+IL~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/26) /$\ast$ error in writing to Non-\/ $\ast$/}\hypertarget{cswift_8h_af614f75538d9ddab1a76b85548933a25}{}\label{cswift_8h_af614f75538d9ddab1a76b85548933a25}
+
+
+Definition at line 114 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE}{SW_ERR_NVWRITE_RANGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+N\+V\+W\+R\+I\+T\+E\+\_\+\+R\+A\+N\+GE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/27) /$\ast$ out {\bf of} range error in $\ast$/}\hypertarget{cswift_8h_acf43f5fc07b9ceb35987e4fe9a013c3f}{}\label{cswift_8h_acf43f5fc07b9ceb35987e4fe9a013c3f}
+
+
+Definition at line 116 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR}{SW_ERR_RNG_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+R\+N\+G\+\_\+\+E\+R\+R\+OR~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/28) /$\ast$ Random Number Generation $\ast$/}\hypertarget{cswift_8h_a7a95ea8a7e9077d908f2fea2ade485df}{}\label{cswift_8h_a7a95ea8a7e9077d908f2fea2ade485df}
+
+
+Definition at line 118 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE}{SW_ERR_DSS_FAILURE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+D\+S\+S\+\_\+\+F\+A\+I\+L\+U\+RE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/29) /$\ast$ D\+SS Sign or Verify failure $\ast$/}\hypertarget{cswift_8h_acb255b377706ec5bd10e4348de0880cd}{}\label{cswift_8h_acb255b377706ec5bd10e4348de0880cd}
+
+
+Definition at line 120 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE@{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE}{SW_ERR_MODEXP_FAILURE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+F\+A\+I\+L\+U\+RE~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/30) /$\ast$ Failure in various math $\ast$/}\hypertarget{cswift_8h_ae61ce01886683dfdea0648d4f1a3fba3}{}\label{cswift_8h_ae61ce01886683dfdea0648d4f1a3fba3}
+
+
+Definition at line 121 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY@{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY}{SW_ERR_ONBOARD_MEMORY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+O\+N\+B\+O\+A\+R\+D\+\_\+\+M\+E\+M\+O\+RY~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/31) /$\ast$ Error in accessing on -\/ $\ast$/}\hypertarget{cswift_8h_a23fdf2df4e9da9d8a110ec53ac29ed0d}{}\label{cswift_8h_a23fdf2df4e9da9d8a110ec53ac29ed0d}
+
+
+Definition at line 123 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON@{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON}{SW_ERR_FIRMWARE_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+F\+I\+R\+M\+W\+A\+R\+E\+\_\+\+V\+E\+R\+S\+I\+ON~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/32) /$\ast$ Wrong {\bf version} in firmware $\ast$/}\hypertarget{cswift_8h_a046666d546069969abceb3b0ecaecf60}{}\label{cswift_8h_a046666d546069969abceb3b0ecaecf60}
+
+
+Definition at line 125 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR}}
+\index{S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR@{S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR}{SW_ERR_ZERO_WORKING_ACCELERATOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+E\+R\+R\+\_\+\+Z\+E\+R\+O\+\_\+\+W\+O\+R\+K\+I\+N\+G\+\_\+\+A\+C\+C\+E\+L\+E\+R\+A\+T\+OR~({\bf S\+W\+\_\+\+E\+R\+R\+\_\+\+B\+A\+SE}-\/44) /$\ast$ All accelerators are bad $\ast$/}\hypertarget{cswift_8h_a99ef039c0cc9aca25b72520aa8fb4e2b}{}\label{cswift_8h_a99ef039c0cc9aca25b72520aa8fb4e2b}
+
+
+Definition at line 128 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT@{S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT}}
+\index{S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT@{S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT}{SW_ALG_CRT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+A\+L\+G\+\_\+\+C\+RT~1}\hypertarget{cswift_8h_a6efef235c40d1b4432e7902f22cce4bc}{}\label{cswift_8h_a6efef235c40d1b4432e7902f22cce4bc}
+
+
+Definition at line 132 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP@{S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP}}
+\index{S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP@{S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP}{SW_ALG_EXP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+A\+L\+G\+\_\+\+E\+XP~2}\hypertarget{cswift_8h_a0a431cada4fb03aaeac24ff8f44fd78d}{}\label{cswift_8h_a0a431cada4fb03aaeac24ff8f44fd78d}
+
+
+Definition at line 133 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA@{S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA}}
+\index{S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA@{S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA}{SW_ALG_DSA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+A\+L\+G\+\_\+\+D\+SA~3}\hypertarget{cswift_8h_a212c3c54b9137a51d016cc54e2bd4649}{}\label{cswift_8h_a212c3c54b9137a51d016cc54e2bd4649}
+
+
+Definition at line 134 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA@{S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA}}
+\index{S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA@{S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA}{SW_ALG_NVDATA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+A\+L\+G\+\_\+\+N\+V\+D\+A\+TA~4}\hypertarget{cswift_8h_a022b24b78406536a0f5d8bb0dc6ccacd}{}\label{cswift_8h_a022b24b78406536a0f5d8bb0dc6ccacd}
+
+
+Definition at line 135 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT@{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT@{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT}{SW_CMD_MODEXP_CRT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+X\+P\+\_\+\+C\+RT~1   /$\ast$ perform Modular Exponentiation using $\ast$/}\hypertarget{cswift_8h_a3953dcdac118a1136b1c53b5b524b6c1}{}\label{cswift_8h_a3953dcdac118a1136b1c53b5b524b6c1}
+
+
+Definition at line 138 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP@{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP@{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP}{SW_CMD_MODEXP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+M\+O\+D\+E\+XP~2   /$\ast$ perform Modular Exponentiation $\ast$/}\hypertarget{cswift_8h_ac436bf79e5fa48d7783bc610367e8742}{}\label{cswift_8h_ac436bf79e5fa48d7783bc610367e8742}
+
+
+Definition at line 140 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN@{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN@{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN}{SW_CMD_DSS_SIGN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+S\+I\+GN~3   /$\ast$ perform D\+SS sign $\ast$/}\hypertarget{cswift_8h_a0aa536b23e49f22d66c5df307dbfd746}{}\label{cswift_8h_a0aa536b23e49f22d66c5df307dbfd746}
+
+
+Definition at line 141 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY@{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY@{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY}{SW_CMD_DSS_VERIFY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+D\+S\+S\+\_\+\+V\+E\+R\+I\+FY~4   /$\ast$ perform D\+SS verify $\ast$/}\hypertarget{cswift_8h_aa7c73084463c5090b45103a7a3e98573}{}\label{cswift_8h_aa7c73084463c5090b45103a7a3e98573}
+
+
+Definition at line 142 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND@{S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND@{S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND}{SW_CMD_RAND}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+R\+A\+ND~5   /$\ast$ perform random number generation $\ast$/}\hypertarget{cswift_8h_aa96406d0b75a1a747d9edfb560f9dedc}{}\label{cswift_8h_aa96406d0b75a1a747d9edfb560f9dedc}
+
+
+Definition at line 143 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD@{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD@{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD}{SW_CMD_NVREAD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+R\+E\+AD~6   /$\ast$ perform read to nonvolatile R\+AM $\ast$/}\hypertarget{cswift_8h_a955e7801a37db8b39b14de304362b8fc}{}\label{cswift_8h_a955e7801a37db8b39b14de304362b8fc}
+
+
+Definition at line 144 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE@{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE}}
+\index{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE@{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE}{SW_CMD_NVWRITE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+M\+D\+\_\+\+N\+V\+W\+R\+I\+TE~7   /$\ast$ perform write to nonvolatile R\+AM $\ast$/}\hypertarget{cswift_8h_aae5f667afb6a3179e5cfb07ebaee988f}{}\label{cswift_8h_aae5f667afb6a3179e5cfb07ebaee988f}
+
+
+Definition at line 145 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}}
+\index{S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE}{SW_OS_INVALID_HANDLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+O\+S\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+H\+A\+N\+D\+LE~(-\/1)}\hypertarget{cswift_8h_ab6aa9112532101d04f20eb18f787061a}{}\label{cswift_8h_ab6aa9112532101d04f20eb18f787061a}
+
+
+Definition at line 175 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV@{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV}}
+\index{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV@{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV}{SW_CALLCONV}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV}\hypertarget{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}{}\label{cswift_8h_a56cdc305c78ccba96f69e0898ef46f68}
+
+
+Definition at line 176 of file cswift.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+S\+T\+A\+T\+US@{S\+W\+\_\+\+S\+T\+A\+T\+US}}
+\index{S\+W\+\_\+\+S\+T\+A\+T\+US@{S\+W\+\_\+\+S\+T\+A\+T\+US}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+S\+T\+A\+T\+US}{SW_STATUS}}]{\setlength{\rightskip}{0pt plus 5cm}typedef long {\bf S\+W\+\_\+\+S\+T\+A\+T\+US}}\hypertarget{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}{}\label{cswift_8h_ae9bc955bd9bfd653c47b514b0e93694f}
+
+
+Definition at line 25 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+B\+Y\+TE@{S\+W\+\_\+\+B\+Y\+TE}}
+\index{S\+W\+\_\+\+B\+Y\+TE@{S\+W\+\_\+\+B\+Y\+TE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+B\+Y\+TE}{SW_BYTE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned char {\bf S\+W\+\_\+\+B\+Y\+TE}}\hypertarget{cswift_8h_ab7979745c365250458d6e0750e64b25b}{}\label{cswift_8h_ab7979745c365250458d6e0750e64b25b}
+
+
+Definition at line 26 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+U16@{S\+W\+\_\+\+U16}}
+\index{S\+W\+\_\+\+U16@{S\+W\+\_\+\+U16}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+U16}{SW_U16}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned short {\bf S\+W\+\_\+\+U16}}\hypertarget{cswift_8h_ae27b48a7a88da219557c1ef880ed7b2d}{}\label{cswift_8h_ae27b48a7a88da219557c1ef880ed7b2d}
+
+
+Definition at line 27 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+U32@{S\+W\+\_\+\+U32}}
+\index{S\+W\+\_\+\+U32@{S\+W\+\_\+\+U32}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+U32}{SW_U32}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned long {\bf S\+W\+\_\+\+U32}}\hypertarget{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}{}\label{cswift_8h_a1ddf1d5a0d87795e81e41be673cbabeb}
+
+
+Definition at line 32 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+U64@{S\+W\+\_\+\+U64}}
+\index{S\+W\+\_\+\+U64@{S\+W\+\_\+\+U64}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+U64}{SW_U64}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+U64}  {\bf S\+W\+\_\+\+U64}}\hypertarget{cswift_8h_a8b4591dbc000c56b593ddda09dbaf72b}{}\label{cswift_8h_a8b4591dbc000c56b593ddda09dbaf72b}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE@{S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE}}
+\index{S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE@{S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE}{SW_ALGTYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+U32} {\bf S\+W\+\_\+\+A\+L\+G\+T\+Y\+PE}}\hypertarget{cswift_8h_a502f2b57e4e3f4539da21d8414489135}{}\label{cswift_8h_a502f2b57e4e3f4539da21d8414489135}
+
+
+Definition at line 147 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+S\+T\+A\+TE@{S\+W\+\_\+\+S\+T\+A\+TE}}
+\index{S\+W\+\_\+\+S\+T\+A\+TE@{S\+W\+\_\+\+S\+T\+A\+TE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+S\+T\+A\+TE}{SW_STATE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+U32} {\bf S\+W\+\_\+\+S\+T\+A\+TE}}\hypertarget{cswift_8h_af5d4336467feebf26f837cbbe21bc60d}{}\label{cswift_8h_af5d4336467feebf26f837cbbe21bc60d}
+
+
+Definition at line 148 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE@{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE}}
+\index{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE@{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE}{SW_COMMAND_CODE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+U32} {\bf S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE}}\hypertarget{cswift_8h_a13262f139c9e5860075ffaa68820fb98}{}\label{cswift_8h_a13262f139c9e5860075ffaa68820fb98}
+
+
+Definition at line 149 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP@{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP}}
+\index{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP@{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP}{SW_COMMAND_BITMAP}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+U32} S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+B\+I\+T\+M\+AP\mbox{[}4\mbox{]}}\hypertarget{cswift_8h_abc32cc2324cce24bc8ca660f10359f7f}{}\label{cswift_8h_abc32cc2324cce24bc8ca660f10359f7f}
+
+
+Definition at line 150 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER@{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}}
+\index{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER@{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}{SW_LARGENUMBER}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}  {\bf S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER}}\hypertarget{cswift_8h_aace52592ab28d0cb89b2ede5e864d859}{}\label{cswift_8h_aace52592ab28d0cb89b2ede5e864d859}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE}}
+\index{S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE}{SW_OSHANDLE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef int {\bf S\+W\+\_\+\+O\+S\+H\+A\+N\+D\+LE}}\hypertarget{cswift_8h_ac544dcc6d9b60ccdacc2684cc1eaa2f2}{}\label{cswift_8h_ac544dcc6d9b60ccdacc2684cc1eaa2f2}
+
+
+Definition at line 174 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+RT@{S\+W\+\_\+\+C\+RT}}
+\index{S\+W\+\_\+\+C\+RT@{S\+W\+\_\+\+C\+RT}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+RT}{SW_CRT}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+C\+RT}  {\bf S\+W\+\_\+\+C\+RT}}\hypertarget{cswift_8h_a9bd0b0b8a8293798c79bc28fda5e72f4}{}\label{cswift_8h_a9bd0b0b8a8293798c79bc28fda5e72f4}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+E\+XP@{S\+W\+\_\+\+E\+XP}}
+\index{S\+W\+\_\+\+E\+XP@{S\+W\+\_\+\+E\+XP}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+E\+XP}{SW_EXP}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+E\+XP}  {\bf S\+W\+\_\+\+E\+XP}}\hypertarget{cswift_8h_a243eeee9f031e5d9e6a5ff390746af8d}{}\label{cswift_8h_a243eeee9f031e5d9e6a5ff390746af8d}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+D\+SA@{S\+W\+\_\+\+D\+SA}}
+\index{S\+W\+\_\+\+D\+SA@{S\+W\+\_\+\+D\+SA}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+D\+SA}{SW_DSA}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+D\+SA}  {\bf S\+W\+\_\+\+D\+SA}}\hypertarget{cswift_8h_ac62baefcaf6b5deaa1983ea87b4910a6}{}\label{cswift_8h_ac62baefcaf6b5deaa1983ea87b4910a6}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+N\+V\+D\+A\+TA@{S\+W\+\_\+\+N\+V\+D\+A\+TA}}
+\index{S\+W\+\_\+\+N\+V\+D\+A\+TA@{S\+W\+\_\+\+N\+V\+D\+A\+TA}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+N\+V\+D\+A\+TA}{SW_NVDATA}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+N\+V\+D\+A\+TA}  {\bf S\+W\+\_\+\+N\+V\+D\+A\+TA}}\hypertarget{cswift_8h_aa9eecb9c0ee28e80f5f0c9b0cbdd620f}{}\label{cswift_8h_aa9eecb9c0ee28e80f5f0c9b0cbdd620f}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+P\+A\+R\+AM@{S\+W\+\_\+\+P\+A\+R\+AM}}
+\index{S\+W\+\_\+\+P\+A\+R\+AM@{S\+W\+\_\+\+P\+A\+R\+AM}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+P\+A\+R\+AM}{SW_PARAM}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+S\+W\+\_\+\+P\+A\+R\+AM}  {\bf S\+W\+\_\+\+P\+A\+R\+AM}}\hypertarget{cswift_8h_a7faf20628367936cf8bb79791ad23224}{}\label{cswift_8h_a7faf20628367936cf8bb79791ad23224}
+\index{cswift.\+h@{cswift.\+h}!S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE}}
+\index{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE@{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE}{SW_CONTEXT_HANDLE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+U32} {\bf S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE}}\hypertarget{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}{}\label{cswift_8h_ab18fc0d3535a1d096a5edccd6d3ab74c}
+
+
+Definition at line 214 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!t\+\_\+sw\+Acquire\+Acc\+Context@{t\+\_\+sw\+Acquire\+Acc\+Context}}
+\index{t\+\_\+sw\+Acquire\+Acc\+Context@{t\+\_\+sw\+Acquire\+Acc\+Context}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{t\+\_\+sw\+Acquire\+Acc\+Context}{t_swAcquireAccContext}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+S\+T\+A\+T\+US} {\bf S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} t\+\_\+sw\+Acquire\+Acc\+Context({\bf S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} $\ast$hac)}\hypertarget{cswift_8h_ac10cd95e1417338bbade53d684d9845d}{}\label{cswift_8h_ac10cd95e1417338bbade53d684d9845d}
+
+
+Definition at line 220 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!t\+\_\+sw\+Attach\+Key\+Param@{t\+\_\+sw\+Attach\+Key\+Param}}
+\index{t\+\_\+sw\+Attach\+Key\+Param@{t\+\_\+sw\+Attach\+Key\+Param}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{t\+\_\+sw\+Attach\+Key\+Param}{t_swAttachKeyParam}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+S\+T\+A\+T\+US} {\bf S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} t\+\_\+sw\+Attach\+Key\+Param({\bf S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} hac, {\bf S\+W\+\_\+\+P\+A\+R\+AM} $\ast$key\+\_\+params)}\hypertarget{cswift_8h_a587b945f828bd614a1b5df243ad1ae87}{}\label{cswift_8h_a587b945f828bd614a1b5df243ad1ae87}
+
+
+Definition at line 222 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!t\+\_\+sw\+Simple\+Request@{t\+\_\+sw\+Simple\+Request}}
+\index{t\+\_\+sw\+Simple\+Request@{t\+\_\+sw\+Simple\+Request}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{t\+\_\+sw\+Simple\+Request}{t_swSimpleRequest}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+S\+T\+A\+T\+US} {\bf S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} t\+\_\+sw\+Simple\+Request({\bf S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} hac, {\bf S\+W\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+O\+DE} cmd, {\bf S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER} pin\mbox{[}$\,$\mbox{]}, {\bf S\+W\+\_\+\+U32} pin\+\_\+count, {\bf S\+W\+\_\+\+L\+A\+R\+G\+E\+N\+U\+M\+B\+ER} pout\mbox{[}$\,$\mbox{]}, {\bf S\+W\+\_\+\+U32} pout\+\_\+count)}\hypertarget{cswift_8h_a7ce4bc0a671097d2b0e8c1ed48030f10}{}\label{cswift_8h_a7ce4bc0a671097d2b0e8c1ed48030f10}
+
+
+Definition at line 224 of file cswift.\+h.
+
+\index{cswift.\+h@{cswift.\+h}!t\+\_\+sw\+Release\+Acc\+Context@{t\+\_\+sw\+Release\+Acc\+Context}}
+\index{t\+\_\+sw\+Release\+Acc\+Context@{t\+\_\+sw\+Release\+Acc\+Context}!cswift.\+h@{cswift.\+h}}
+\subsubsection[{\texorpdfstring{t\+\_\+sw\+Release\+Acc\+Context}{t_swReleaseAccContext}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+W\+\_\+\+S\+T\+A\+T\+US} {\bf S\+W\+\_\+\+C\+A\+L\+L\+C\+O\+NV} t\+\_\+sw\+Release\+Acc\+Context({\bf S\+W\+\_\+\+C\+O\+N\+T\+E\+X\+T\+\_\+\+H\+A\+N\+D\+LE} hac)}\hypertarget{cswift_8h_a9e7a54162f91ac583ed3c0984abb4091}{}\label{cswift_8h_a9e7a54162f91ac583ed3c0984abb4091}
+
+
+Definition at line 230 of file cswift.\+h.
+

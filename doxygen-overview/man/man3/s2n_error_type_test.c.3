@@ -1,0 +1,58 @@
+.TH "s2n-master/tests/unit/s2n_error_type_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_error_type_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (\fBvoid\fP)"
+
+.PP
+Definition at line 24 of file s2n_error_type_test\&.c\&.
+.PP
+.nf
+25 {
+26     BEGIN_TEST();
+27 
+28     s2n_errno = S2N_ERR_OK;
+29     EXPECT_EQUAL(S2N_ERR_T_OK, s2n_error_get_type(s2n_errno));
+30     s2n_errno = S2N_ERR_IO;
+31     EXPECT_EQUAL(S2N_ERR_T_IO, s2n_error_get_type(s2n_errno));
+32     s2n_errno = S2N_ERR_CLOSED;
+33     EXPECT_EQUAL(S2N_ERR_T_CLOSED, s2n_error_get_type(s2n_errno));
+34     s2n_errno = S2N_ERR_BLOCKED;
+35     EXPECT_EQUAL(S2N_ERR_T_BLOCKED, s2n_error_get_type(s2n_errno));
+36     s2n_errno = S2N_ERR_ALERT;
+37     EXPECT_EQUAL(S2N_ERR_T_ALERT, s2n_error_get_type(s2n_errno));
+38     s2n_errno = S2N_ERR_BAD_MESSAGE;
+39     EXPECT_EQUAL(S2N_ERR_T_PROTO, s2n_error_get_type(s2n_errno));
+40     s2n_errno = S2N_ERR_FSTAT;
+41     EXPECT_EQUAL(S2N_ERR_T_INTERNAL, s2n_error_get_type(s2n_errno));
+42     s2n_errno = S2N_ERR_INVALID_BASE64;
+43     EXPECT_EQUAL(S2N_ERR_T_USAGE, s2n_error_get_type(s2n_errno));
+44 
+45     END_TEST();
+46 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

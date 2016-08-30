@@ -1,0 +1,247 @@
+\hypertarget{s2n__send_8c}{}\section{s2n-\/master/tls/s2n\+\_\+send.c File Reference}
+\label{s2n__send_8c}\index{s2n-\/master/tls/s2n\+\_\+send.\+c@{s2n-\/master/tls/s2n\+\_\+send.\+c}}
+{\ttfamily \#include $<$sys/param.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+handshake.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+record.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+cipher.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+send.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__send_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__send_8c_a76828dc199bf174409532010ccbf2a07}{s2n\+\_\+flush} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\+\_\+blocked\+\_\+status} $\ast$blocked)
+\item 
+ssize\+\_\+t \hyperlink{s2n__send_8c_a6d221800840cc73c57109088dac2f467}{s2n\+\_\+send} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$buf, ssize\+\_\+t size, \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\+\_\+blocked\+\_\+status} $\ast$blocked)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+send.\+c@{s2n\+\_\+send.\+c}!s2n\+\_\+flush@{s2n\+\_\+flush}}
+\index{s2n\+\_\+flush@{s2n\+\_\+flush}!s2n\+\_\+send.\+c@{s2n\+\_\+send.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+flush(struct s2n\+\_\+connection $\ast$conn, s2n\+\_\+blocked\+\_\+status $\ast$blocked)}{s2n_flush(struct s2n_connection *conn, s2n_blocked_status *blocked)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+flush (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{{\bf s2n\+\_\+blocked\+\_\+status} $\ast$}]{blocked}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__send_8c_a76828dc199bf174409532010ccbf2a07}{}\label{s2n__send_8c_a76828dc199bf174409532010ccbf2a07}
+
+
+Definition at line 34 of file s2n\+\_\+send.\+c.
+
+
+\begin{DoxyCode}
+35 \{
+36     \textcolor{keywordtype}{int} w;
+37 
+38     *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15daefb6db9aaec431d69fc4c1249bc432e3}{S2N\_BLOCKED\_ON\_WRITE};
+39 
+40     \textcolor{comment}{/* Write any data that's already pending */}
+41   WRITE:
+42     \textcolor{keywordflow}{while} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out})) \{
+43         w = \hyperlink{s2n__stuffer_8h_a40bf61bc8745a2d894dd558a2885a66b}{s2n\_stuffer\_send\_to\_fd}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}, conn->
+      \hyperlink{structs2n__connection_abb118879baad1066df4d078fdb2da908}{writefd}, \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}));
+44         \textcolor{keywordflow}{if} (w < 0) \{
+45             \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EWOULDBLOCK) \{
+46                 \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a440a0e3a40ff1c680a455803a9dd9dfc}{S2N\_ERR\_BLOCKED});
+47             \}
+48             \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ae8ab0b843d6f8172ea5f923aaf083374}{S2N\_ERR\_IO});
+49         \}
+50         conn->\hyperlink{structs2n__connection_ad34101c7be957b19718d9e9047e1af39}{wire\_bytes\_out} += w;
+51     \}
+52     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_afaf913ae0bd2fe2866608f51060791a2}{closing}) \{
+53         conn->\hyperlink{structs2n__connection_a9e746c5b2dde4a77b710780924853c2f}{closed} = 1;
+54         \textcolor{comment}{/* Delay wiping for close\_notify. s2n\_shutdown() needs to wait for peer's close\_notify */}
+55         \textcolor{keywordflow}{if} (!conn->\hyperlink{structs2n__connection_a1ba9fe08a4f37494def44e02d95a2ffa}{close\_notify\_queued}) \{
+56             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+57         \}
+58     \}
+59     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ae1b97eb16ae517a82ec90a0e2b8c48e7}{s2n\_stuffer\_rewrite}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}));
+60 
+61     \textcolor{comment}{/* If there's an alert pending out, send that */}
+62     \textcolor{keywordflow}{if} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->
+      \hyperlink{structs2n__connection_a00dd2a749a85d247561da67ec248d3e1}{reader\_alert\_out}) == 2) \{
+63         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} alert;
+64         alert.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = conn->\hyperlink{structs2n__connection_a00dd2a749a85d247561da67ec248d3e1}{reader\_alert\_out}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+65         alert.size = 2;
+66         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__record_8h_a345384c81da35d41574e7a2c8319c7e3}{s2n\_record\_write}(conn, \hyperlink{s2n__fragmentation__coalescing__test_8c_afe02a145f0d3a71b14d61e2774987f9d}{TLS\_ALERT}, &alert));
+67         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ae1b97eb16ae517a82ec90a0e2b8c48e7}{s2n\_stuffer\_rewrite}(&conn->
+      \hyperlink{structs2n__connection_a00dd2a749a85d247561da67ec248d3e1}{reader\_alert\_out}));
+68         conn->\hyperlink{structs2n__connection_afaf913ae0bd2fe2866608f51060791a2}{closing} = 1;
+69 
+70         \textcolor{comment}{/* Actually write it ... */}
+71         \textcolor{keywordflow}{goto} WRITE;
+72     \}
+73 
+74     \textcolor{comment}{/* Do the same for writer driven alerts */}
+75     \textcolor{keywordflow}{if} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->
+      \hyperlink{structs2n__connection_a6168f6d8f8b3d65bc1d566091149ddf4}{writer\_alert\_out}) == 2) \{
+76         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} alert;
+77         alert.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = conn->\hyperlink{structs2n__connection_a6168f6d8f8b3d65bc1d566091149ddf4}{writer\_alert\_out}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+78         alert.size = 2;
+79         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__record_8h_a345384c81da35d41574e7a2c8319c7e3}{s2n\_record\_write}(conn, \hyperlink{s2n__fragmentation__coalescing__test_8c_afe02a145f0d3a71b14d61e2774987f9d}{TLS\_ALERT}, &alert));
+80         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ae1b97eb16ae517a82ec90a0e2b8c48e7}{s2n\_stuffer\_rewrite}(&conn->
+      \hyperlink{structs2n__connection_a6168f6d8f8b3d65bc1d566091149ddf4}{writer\_alert\_out}));
+81         conn->\hyperlink{structs2n__connection_afaf913ae0bd2fe2866608f51060791a2}{closing} = 1;
+82 
+83         \textcolor{comment}{/* Actually write it ... */}
+84         \textcolor{keywordflow}{goto} WRITE;
+85     \}
+86 
+87     *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED};
+88 
+89     \textcolor{keywordflow}{return} 0;
+90 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__send_8c_a76828dc199bf174409532010ccbf2a07_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__send_8c_a76828dc199bf174409532010ccbf2a07_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+send.\+c@{s2n\+\_\+send.\+c}!s2n\+\_\+send@{s2n\+\_\+send}}
+\index{s2n\+\_\+send@{s2n\+\_\+send}!s2n\+\_\+send.\+c@{s2n\+\_\+send.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+send(struct s2n\+\_\+connection $\ast$conn, void $\ast$buf, ssize\+\_\+t size, s2n\+\_\+blocked\+\_\+status $\ast$blocked)}{s2n_send(struct s2n_connection *conn, void *buf, ssize_t size, s2n_blocked_status *blocked)}}]{\setlength{\rightskip}{0pt plus 5cm}ssize\+\_\+t s2n\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{{\bf void} $\ast$}]{buf, }
+\item[{ssize\+\_\+t}]{size, }
+\item[{{\bf s2n\+\_\+blocked\+\_\+status} $\ast$}]{blocked}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__send_8c_a6d221800840cc73c57109088dac2f467}{}\label{s2n__send_8c_a6d221800840cc73c57109088dac2f467}
+
+
+Definition at line 92 of file s2n\+\_\+send.\+c.
+
+
+\begin{DoxyCode}
+93 \{
+94     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} in = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = buf \};
+95     ssize\_t bytes\_written = 0;
+96     \textcolor{keywordtype}{int} max\_payload\_size;
+97     \textcolor{keywordtype}{int} w;
+98 
+99     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a9e746c5b2dde4a77b710780924853c2f}{closed}) \{
+100         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ab2b3c63db9e35ed79c3191161b6c9ccc}{S2N\_ERR\_CLOSED});
+101     \}
+102 
+103     \textcolor{comment}{/* Flush any pending I/O */}
+104     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__send_8c_a76828dc199bf174409532010ccbf2a07}{s2n\_flush}(conn, blocked));
+105 
+106     *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15daefb6db9aaec431d69fc4c1249bc432e3}{S2N\_BLOCKED\_ON\_WRITE};
+107 
+108     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}((max\_payload\_size = \hyperlink{s2n__record_8h_a2df411911fffd95c6f847fc181c77025}{s2n\_record\_max\_write\_payload\_size}(conn)
+      ));
+109 
+110     \textcolor{comment}{/* TLS 1.0 and SSLv3 are vulnerable to the so-called Beast attack. Work}
+111 \textcolor{comment}{     * around this by splitting messages into one byte records, and then}
+112 \textcolor{comment}{     * the remainder can follow as usual.}
+113 \textcolor{comment}{     */}
+114     \textcolor{keywordtype}{int} cbcHackUsed = 0;
+115 
+116     \textcolor{keyword}{struct }\hyperlink{structs2n__crypto__parameters}{s2n\_crypto\_parameters} *writer = conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server};
+117     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode} == \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT}) \{
+118         writer = conn->\hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client};
+119     \}
+120 
+121     \textcolor{comment}{/* Now write the data we were asked to send this round */}
+122     \textcolor{keywordflow}{while} (size) \{
+123         in.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = MIN(size, max\_payload\_size);
+124 
+125         \textcolor{comment}{/* Don't split messages in server mode for interoperability with naive clients.}
+126 \textcolor{comment}{         * Some clients may have expectations based on the amount of content in the first record.}
+127 \textcolor{comment}{         */}
+128         \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} < \hyperlink{s2n_8h_a2e4a51448d3a9ea14b506ac2573f9bae}{S2N\_TLS11} && writer->
+      \hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite}->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_CBC && conn->\hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode} != 
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}) \{
+129             \textcolor{keywordflow}{if} (in.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} > 1 && cbcHackUsed == 0) \{
+130                 in.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 1;
+131                 cbcHackUsed = 1;
+132             \}
+133         \}
+134 
+135         \textcolor{comment}{/* Write and encrypt the record */}
+136         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ae1b97eb16ae517a82ec90a0e2b8c48e7}{s2n\_stuffer\_rewrite}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}));
+137         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__record_8h_a345384c81da35d41574e7a2c8319c7e3}{s2n\_record\_write}(conn, \hyperlink{s2n__tls__parameters_8h_a5104f80ba38ebfd2266b1ec313f0aeb2}{TLS\_APPLICATION\_DATA}, &in));
+138 
+139         bytes\_written += in.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+140 
+141         \textcolor{comment}{/* Send it */}
+142         \textcolor{keywordflow}{while} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out})) \{
+143             \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = 0;
+144             w = \hyperlink{s2n__stuffer_8h_a40bf61bc8745a2d894dd558a2885a66b}{s2n\_stuffer\_send\_to\_fd}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}, conn->
+      \hyperlink{structs2n__connection_abb118879baad1066df4d078fdb2da908}{writefd}, \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}));
+145             \textcolor{keywordflow}{if} (w < 0) \{
+146                 \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EWOULDBLOCK) \{
+147                     \textcolor{keywordflow}{if} (bytes\_written) \{
+148                         \textcolor{keywordflow}{return} bytes\_written;
+149                     \}
+150                     \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a440a0e3a40ff1c680a455803a9dd9dfc}{S2N\_ERR\_BLOCKED});
+151                 \}
+152                 \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ae8ab0b843d6f8172ea5f923aaf083374}{S2N\_ERR\_IO});
+153             \}
+154             conn->\hyperlink{structs2n__connection_ad34101c7be957b19718d9e9047e1af39}{wire\_bytes\_out} += w;
+155         \}
+156 
+157         in.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} += in.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+158         size -= in.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+159     \}
+160 
+161     *blocked = \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED};
+162 
+163     \textcolor{keywordflow}{return} bytes\_written;
+164 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__send_8c_a6d221800840cc73c57109088dac2f467_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__send_8c_a6d221800840cc73c57109088dac2f467_icgraph}
+\end{center}
+\end{figure}
+
+

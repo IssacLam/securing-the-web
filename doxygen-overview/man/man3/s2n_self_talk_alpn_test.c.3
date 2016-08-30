@@ -1,0 +1,387 @@
+.TH "s2n-master/tests/unit/s2n_self_talk_alpn_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_self_talk_alpn_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmock_nanoseconds_since_epoch\fP (\fBvoid\fP *data, uint64_t *nanoseconds)"
+.br
+.ti -1c
+.RI "int \fBmock_client\fP (int writefd, int readfd, const char **protocols, int count, const char *expected)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int mock_nanoseconds_since_epoch (\fBvoid\fP * data, uint64_t * nanoseconds)"
+
+.PP
+Definition at line 83 of file s2n_self_talk_alpn_test\&.c\&.
+.PP
+.nf
+84 {
+85     static int called = 0;
+86 
+87     /* When first called return 0 seconds */
+88     *nanoseconds = 0;
+89 
+90     /* When next called return 31 seconds */
+91     if (called) {
+92         *nanoseconds += (uint64_t) 31 * 1000000000;
+93     }
+94 
+95     called = 1;
+96 
+97     return 0;
+98 }
+.fi
+.SS "int mock_client (int writefd, int readfd, const char ** protocols, int count, const char * expected)"
+
+.PP
+Definition at line 100 of file s2n_self_talk_alpn_test\&.c\&.
+.PP
+.nf
+101 {
+102     char buffer[0xffff];
+103     struct s2n_connection *conn;
+104     struct s2n_config *config;
+105     s2n_blocked_status blocked;
+106     int result = 0;
+107 
+108     /* Give the server a chance to listen */
+109     sleep(1);
+110 
+111     conn = s2n_connection_new(S2N_CLIENT);
+112     config = s2n_config_new();
+113     s2n_config_set_protocol_preferences(config, protocols, count);
+114     s2n_connection_set_config(conn, config);
+115 
+116     s2n_connection_set_read_fd(conn, readfd);
+117     s2n_connection_set_write_fd(conn, writefd);
+118 
+119     result = s2n_negotiate(conn, &blocked);
+120     if (result < 0) {
+121         result = 1;
+122     }
+123 
+124     const char *got = s2n_get_application_protocol(conn);
+125     if ((got != NULL && expected == NULL) ||
+126         (got == NULL && expected != NULL) ||
+127         (got != NULL && expected != NULL && strcmp(expected, got) != 0)) {
+128         result = 2;
+129     }
+130 
+131     for (int i = 1; i < 0xffff; i += 100) {
+132         for (int j = 0; j < i; j++) {
+133             buffer[j] = 33;
+134         }
+135         
+136         s2n_send(conn, buffer, i, &blocked);
+137     }
+138     
+139     int shutdown_rc= -1;
+140     do {
+141         shutdown_rc = s2n_shutdown(conn, &blocked);
+142     } while(shutdown_rc != 0);
+143 
+144     s2n_connection_free(conn);
+145 
+146     /* Give the server a chance to a void a sigpipe */
+147     sleep(1);
+148 
+149     _exit(result);
+150 }
+.fi
+.SS "int main (int argc, char ** argv)"
+Test no client ALPN request 
+.PP
+Definition at line 152 of file s2n_self_talk_alpn_test\&.c\&.
+.PP
+.nf
+153 {
+154     char buffer[0xffff];
+155     struct s2n_connection *conn;
+156     struct s2n_config *config;
+157     s2n_blocked_status blocked;
+158     int status;
+159     pid_t pid;
+160     int server_to_client[2];
+161     int client_to_server[2];
+162 
+163     const char *protocols[] = { "http/1\&.1", "spdy/3\&.1" };
+164     const char *mismatch_protocols[] = { "spdy/2" };
+165 
+166     BEGIN_TEST();
+167 
+168     EXPECT_SUCCESS(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+169 
+170     EXPECT_NOT_NULL(config = s2n_config_new());
+171     EXPECT_SUCCESS(s2n_config_set_protocol_preferences(config, protocols, 2));
+172     EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(config, certificate, private_key));
+173     EXPECT_SUCCESS(s2n_config_add_dhparams(config, dhparams));
+174     
+176     /* Create a pipe */
+177     EXPECT_SUCCESS(pipe(server_to_client));
+178     EXPECT_SUCCESS(pipe(client_to_server));
+179 
+180     /* Create a child process */
+181     pid = fork();
+182     if (pid == 0) {
+183         /* This is the child process, close the read end of the pipe */
+184         EXPECT_SUCCESS(close(client_to_server[0]));
+185         EXPECT_SUCCESS(close(server_to_client[1]));
+186 
+187         /* Send the client hello with no ALPN extensions, and validate we didn't
+188          * negotiate an application protocol */
+189         mock_client(client_to_server[1], server_to_client[0], NULL, 0, NULL);
+190     }
+191 
+192     /* This is the parent */
+193     EXPECT_SUCCESS(close(client_to_server[1]));
+194     EXPECT_SUCCESS(close(server_to_client[0]));
+195 
+196     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+197     EXPECT_SUCCESS(s2n_connection_set_config(conn, config));
+198 
+199     /* Set up the connection to read from the fd */
+200     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, client_to_server[0]));
+201     EXPECT_SUCCESS(s2n_connection_set_write_fd(conn, server_to_client[1]));
+202 
+203     /* Negotiate the handshake\&. */
+204     EXPECT_SUCCESS(s2n_negotiate(conn, &blocked));
+205 
+206     /* Expect NULL negotiated protocol */
+207     EXPECT_EQUAL(s2n_get_application_protocol(conn), NULL);
+208 
+209     for (int i = 1; i < 0xffff; i += 100) {
+210         char * ptr = buffer;
+211         int bytes_read = 0;
+212         int size = i;
+213 
+214         do {
+215             EXPECT_SUCCESS(bytes_read = s2n_recv(conn, ptr, size, &blocked));
+216 
+217             size -= bytes_read;
+218             ptr += bytes_read;
+219         } while(size);
+220 
+221         for (int j = 0; j < i; j++) {
+222             EXPECT_EQUAL(buffer[j], 33);
+223         }
+224     }
+225 
+226     EXPECT_SUCCESS(s2n_shutdown(conn, &blocked));
+227     EXPECT_SUCCESS(s2n_connection_free(conn));
+228 
+229     /* Clean up */
+230     EXPECT_EQUAL(waitpid(-1, &status, 0), pid);
+231     EXPECT_EQUAL(status, 0);
+232 
+233     /* Test a matching ALPN request */
+234     /* Create a pipe */
+235     EXPECT_SUCCESS(pipe(server_to_client));
+236     EXPECT_SUCCESS(pipe(client_to_server));
+237 
+238     /* Create a child process */
+239     pid = fork();
+240     if (pid == 0) {
+241         /* This is the child process, close the read end of the pipe */
+242         EXPECT_SUCCESS(close(client_to_server[0]));
+243         EXPECT_SUCCESS(close(server_to_client[1]));
+244 
+245         /* Clients ALPN preferences match our preferences, so we pick the
+246          * most preffered server one */
+247         mock_client(client_to_server[1], server_to_client[0], protocols, 2, protocols[0]);
+248     }
+249 
+250     /* This is the parent */
+251     EXPECT_SUCCESS(close(client_to_server[1]));
+252     EXPECT_SUCCESS(close(server_to_client[0]));
+253 
+254     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+255     EXPECT_SUCCESS(s2n_connection_set_config(conn, config));
+256 
+257     /* Set up the connection to read from the fd */
+258     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, client_to_server[0]));
+259     EXPECT_SUCCESS(s2n_connection_set_write_fd(conn, server_to_client[1]));
+260 
+261     /* Negotiate the handshake\&. */
+262     EXPECT_SUCCESS(s2n_negotiate(conn, &blocked));
+263 
+264     /* Expect our most prefered negotiated protocol */
+265     EXPECT_STRING_EQUAL(s2n_get_application_protocol(conn), protocols[0]);
+266 
+267     for (int i = 1; i < 0xffff; i += 100) {
+268         char * ptr = buffer;
+269         int bytes_read = 0;
+270         int size = i;
+271 
+272         do {
+273             EXPECT_SUCCESS(bytes_read = s2n_recv(conn, ptr, size, &blocked));
+274 
+275             size -= bytes_read;
+276             ptr += bytes_read;
+277         } while(size);
+278 
+279         for (int j = 0; j < i; j++) {
+280             EXPECT_EQUAL(buffer[j], 33);
+281         }
+282     }
+283 
+284     EXPECT_SUCCESS(s2n_shutdown(conn, &blocked));
+285     EXPECT_SUCCESS(s2n_connection_free(conn));
+286 
+287     /* Clean up */
+288     EXPECT_EQUAL(waitpid(-1, &status, 0), pid);
+289     EXPECT_EQUAL(status, 0);
+290 
+291     /* Test a lower prefered matching ALPN request */
+292     /* Create a pipe */
+293     EXPECT_SUCCESS(pipe(server_to_client));
+294     EXPECT_SUCCESS(pipe(client_to_server));
+295 
+296     /* Create a child process */
+297     pid = fork();
+298     if (pid == 0) {
+299         /* This is the child process, close the read end of the pipe */
+300         EXPECT_SUCCESS(close(client_to_server[0]));
+301         EXPECT_SUCCESS(close(server_to_client[1]));
+302 
+303         /* Client only advertises our second choice, so we should negotiate it */
+304         mock_client(client_to_server[1], server_to_client[0], &protocols[1], 1, protocols[1]);
+305     }
+306 
+307     /* This is the parent */
+308     EXPECT_SUCCESS(close(client_to_server[1]));
+309     EXPECT_SUCCESS(close(server_to_client[0]));
+310 
+311     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+312     EXPECT_SUCCESS(s2n_connection_set_config(conn, config));
+313 
+314     /* Set up the connection to read from the fd */
+315     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, client_to_server[0]));
+316     EXPECT_SUCCESS(s2n_connection_set_write_fd(conn, server_to_client[1]));
+317 
+318     /* Negotiate the handshake\&. */
+319 
+320     EXPECT_SUCCESS(s2n_negotiate(conn, &blocked));
+321 
+322     for (int i = 1; i < 0xffff; i += 100) {
+323         char * ptr = buffer;
+324         int bytes_read = 0;
+325         int size = i;
+326 
+327         do {
+328             EXPECT_SUCCESS(bytes_read = s2n_recv(conn, ptr, size, &blocked));
+329 
+330             size -= bytes_read;
+331             ptr += bytes_read;
+332         } while(size);
+333 
+334         for (int j = 0; j < i; j++) {
+335             EXPECT_EQUAL(buffer[j], 33);
+336         }
+337     }
+338 
+339     /* Expect our least prefered negotiated protocol */
+340     EXPECT_STRING_EQUAL(s2n_get_application_protocol(conn), protocols[1]);
+341 
+342     EXPECT_SUCCESS(s2n_shutdown(conn, &blocked));
+343     EXPECT_SUCCESS(s2n_connection_free(conn));
+344 
+345     /* Clean up */
+346     EXPECT_EQUAL(waitpid(-1, &status, 0), pid);
+347     EXPECT_EQUAL(status, 0);
+348 
+349     /* Test a non-matching ALPN request */
+350     /* Create a pipe */
+351     EXPECT_SUCCESS(pipe(server_to_client));
+352     EXPECT_SUCCESS(pipe(client_to_server));
+353     for (int i = 0; i < 2; i++) {
+354         EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+355         EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+356     }
+357 
+358     /* Create a child process */
+359     pid = fork();
+360     if (pid == 0) {
+361         /* This is the child process, close the read end of the pipe */
+362         EXPECT_SUCCESS(close(client_to_server[0]));
+363         EXPECT_SUCCESS(close(server_to_client[1]));
+364 
+365         /* Client doesn't support any of our protocols, so we shouldn't complete
+366          * the handshake */
+367         mock_client(client_to_server[1], server_to_client[0], mismatch_protocols, 1, NULL);
+368     }
+369 
+370     /* This is the parent */
+371     EXPECT_SUCCESS(close(client_to_server[1]));
+372     EXPECT_SUCCESS(close(server_to_client[0]));
+373 
+374     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+375     EXPECT_SUCCESS(s2n_connection_set_config(conn, config));
+376 
+377     /* Set up the connection to read from the fd */
+378     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, client_to_server[0]));
+379     EXPECT_SUCCESS(s2n_connection_set_write_fd(conn, server_to_client[1]));
+380 
+381     /* s2n_negotiate will fail, which ordinarily would delay with a sleep\&. 
+382      * Remove the sleep and fake the delay with a mock time routine */
+383     EXPECT_SUCCESS(s2n_connection_set_blinding(conn, S2N_SELF_SERVICE_BLINDING));
+384     EXPECT_SUCCESS(s2n_config_set_nanoseconds_since_epoch_callback(config, mock_nanoseconds_since_epoch, NULL));
+385 
+386     /* Negotiate the handshake\&. */
+387     int negotiate_rc;
+388     do {
+389         negotiate_rc = s2n_negotiate(conn, &blocked);
+390     } while(errno == EAGAIN && blocked);
+391     EXPECT_TRUE(negotiate_rc == -1 && s2n_errno == S2N_ERR_NO_APPLICATION_PROTOCOL);
+392 
+393     /* Expect NULL negotiated protocol */
+394     EXPECT_EQUAL(s2n_get_application_protocol(conn), NULL);
+395 
+396     /* Negotiation failed\&. Free the connection without shutdown */
+397     EXPECT_SUCCESS(s2n_connection_free(conn));
+398 
+399     /* Close the pipes */
+400     EXPECT_SUCCESS(close(client_to_server[0]));
+401     EXPECT_SUCCESS(close(server_to_client[1]));
+402 
+403     /* Clean up */
+404     EXPECT_EQUAL(waitpid(-1, &status, 0), pid);
+405     EXPECT_NOT_EQUAL(status, 0);
+406 
+407     EXPECT_SUCCESS(s2n_config_free(config));
+408     END_TEST();
+409 
+410     return 0;
+411 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

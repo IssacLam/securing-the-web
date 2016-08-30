@@ -1,0 +1,114 @@
+.TH "cast.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cast.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcast_key_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCAST_ENCRYPT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCAST_DECRYPT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCAST_LONG\fP   unsigned int"
+.br
+.ti -1c
+.RI "#define \fBCAST_BLOCK\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCAST_KEY_LENGTH\fP   16"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBcast_key_st\fP \fBCAST_KEY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_set_key\fP (\fBCAST_KEY\fP *key, int \fBlen\fP, const unsigned char *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_ecb_encrypt\fP (const unsigned char *in, unsigned char *out, const \fBCAST_KEY\fP *key, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_encrypt\fP (\fBCAST_LONG\fP *data, const \fBCAST_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_decrypt\fP (\fBCAST_LONG\fP *data, const \fBCAST_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_cbc_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, const \fBCAST_KEY\fP *ks, unsigned char *iv, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_cfb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, const \fBCAST_KEY\fP *schedule, unsigned char *ivec, int *\fBnum\fP, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCAST_ofb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, const \fBCAST_KEY\fP *schedule, unsigned char *ivec, int *\fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CAST_BLOCK   8"
+
+.PP
+Definition at line 77 of file include/openssl/cast\&.h\&.
+.SS "#define CAST_DECRYPT   0"
+
+.PP
+Definition at line 73 of file include/openssl/cast\&.h\&.
+.SS "#define CAST_ENCRYPT   1"
+
+.PP
+Definition at line 72 of file include/openssl/cast\&.h\&.
+.SS "#define CAST_KEY_LENGTH   16"
+
+.PP
+Definition at line 78 of file include/openssl/cast\&.h\&.
+.SS "#define CAST_LONG   unsigned int"
+
+.PP
+Definition at line 75 of file include/openssl/cast\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBcast_key_st\fP  \fBCAST_KEY\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP CAST_cbc_encrypt (const unsigned char * in, unsigned char * out, long length, const \fBCAST_KEY\fP * ks, unsigned char * iv, int enc)"
+
+.SS "\fBvoid\fP CAST_cfb64_encrypt (const unsigned char * in, unsigned char * out, long length, const \fBCAST_KEY\fP * schedule, unsigned char * ivec, int * num, int enc)"
+
+.SS "\fBvoid\fP CAST_decrypt (\fBCAST_LONG\fP * data, const \fBCAST_KEY\fP * key)"
+
+.SS "\fBvoid\fP CAST_ecb_encrypt (const unsigned char * in, unsigned char * out, const \fBCAST_KEY\fP * key, int enc)"
+
+.SS "\fBvoid\fP CAST_encrypt (\fBCAST_LONG\fP * data, const \fBCAST_KEY\fP * key)"
+
+.SS "\fBvoid\fP CAST_ofb64_encrypt (const unsigned char * in, unsigned char * out, long length, const \fBCAST_KEY\fP * schedule, unsigned char * ivec, int * num)"
+
+.SS "\fBvoid\fP CAST_set_key (\fBCAST_KEY\fP * key, int len, const unsigned char * data)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

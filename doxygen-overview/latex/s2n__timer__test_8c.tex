@@ -1,0 +1,112 @@
+\hypertarget{s2n__timer__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+timer\+\_\+test.c File Reference}
+\label{s2n__timer__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+timer\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+timer\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+timer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+config.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+timer\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__timer__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__timer__test_8c_a6ce0ff109dec89bf4248cdbb48cf3d3d}{mock\+\_\+clock} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$in, uint64\+\_\+t $\ast$out)
+\item 
+int \hyperlink{s2n__timer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+timer\+\_\+test.\+c@{s2n\+\_\+timer\+\_\+test.\+c}!mock\+\_\+clock@{mock\+\_\+clock}}
+\index{mock\+\_\+clock@{mock\+\_\+clock}!s2n\+\_\+timer\+\_\+test.\+c@{s2n\+\_\+timer\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{mock\+\_\+clock(void $\ast$in, uint64\+\_\+t $\ast$out)}{mock_clock(void *in, uint64_t *out)}}]{\setlength{\rightskip}{0pt plus 5cm}int mock\+\_\+clock (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{in, }
+\item[{uint64\+\_\+t $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__timer__test_8c_a6ce0ff109dec89bf4248cdbb48cf3d3d}{}\label{s2n__timer__test_8c_a6ce0ff109dec89bf4248cdbb48cf3d3d}
+
+
+Definition at line 23 of file s2n\+\_\+timer\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+24 \{
+25     *out = *(uint64\_t *)in;
+26 
+27     \textcolor{keywordflow}{return} 0;
+28 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{s2n__timer__test_8c_a6ce0ff109dec89bf4248cdbb48cf3d3d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+timer\+\_\+test.\+c@{s2n\+\_\+timer\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+timer\+\_\+test.\+c@{s2n\+\_\+timer\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__timer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__timer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 30 of file s2n\+\_\+timer\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+31 \{
+32     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config};
+33     \textcolor{keyword}{struct }\hyperlink{structs2n__timer}{s2n\_timer} timer;
+34     uint64\_t nanoseconds;
+35     uint64\_t mock\_time;
+36 
+37     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+38 
+39     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(config = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}());
+40     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a55f4687b7def930a7ac41335d35d72ef}{s2n\_config\_set\_nanoseconds\_since\_epoch\_callback}
+      (config, \hyperlink{s2n__timer__test_8c_a6ce0ff109dec89bf4248cdbb48cf3d3d}{mock\_clock}, &mock\_time));
+41 
+42     mock\_time = 0;
+43     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}{s2n\_timer\_start}(config, &timer));
+44 
+45     mock\_time = 10;
+46     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}{s2n\_timer\_reset}(config, &timer, &nanoseconds));
+47     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(nanoseconds, 10);
+48 
+49     mock\_time = 20;
+50     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_aae9740ae7fe7b0a3a82ce18cbaa866a6}{s2n\_timer\_elapsed}(config, &timer, &nanoseconds));
+51     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(nanoseconds, 10);
+52 
+53     mock\_time = 30;
+54     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}{s2n\_timer\_reset}(config, &timer, &nanoseconds));
+55     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(nanoseconds, 20);
+56 
+57     mock\_time = 40;
+58     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__timer_8c_aae9740ae7fe7b0a3a82ce18cbaa866a6}{s2n\_timer\_elapsed}(config, &timer, &nanoseconds));
+59     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(nanoseconds, 10);
+60 
+61     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+62 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__timer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,82 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/rand/rand_lcl.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/rand/rand_lcl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBENTROPY_NEEDED\fP   32      /* require 256 \fBbits\fP = 32 \fBbytes\fP \fBof\fP randomness */"
+.br
+.ti -1c
+.RI "#define \fBUSE_SHA1_RAND\fP"
+.br
+.ti -1c
+.RI "#define \fBMD_Update\fP(\fBa\fP,  b,  \fBc\fP)               \fBEVP_DigestUpdate\fP(\fBa\fP,b,\fBc\fP)"
+.br
+.ti -1c
+.RI "#define \fBMD_Final\fP(\fBa\fP,  b)                     \fBEVP_DigestFinal_ex\fP(\fBa\fP,b,NULL)"
+.br
+.ti -1c
+.RI "#define \fBMD_DIGEST_LENGTH\fP   \fBSHA_DIGEST_LENGTH\fP"
+.br
+.ti -1c
+.RI "#define \fBMD_Init\fP(\fBa\fP)                           \fBEVP_DigestInit_ex\fP(\fBa\fP,\fBEVP_sha1\fP(), NULL)"
+.br
+.ti -1c
+.RI "#define \fBMD\fP(\fBa\fP,  b,  \fBc\fP)                             \fBEVP_Digest\fP(\fBa\fP,b,\fBc\fP,NULL,\fBEVP_sha1\fP(), NULL)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBssleay_rand_bytes\fP (unsigned char *buf, int \fBnum\fP, int pseudo, int lock)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ENTROPY_NEEDED   32      /* require 256 \fBbits\fP = 32 \fBbytes\fP \fBof\fP randomness */"
+
+.PP
+Definition at line 115 of file rand_lcl\&.h\&.
+.SS "#define USE_SHA1_RAND"
+
+.PP
+Definition at line 119 of file rand_lcl\&.h\&.
+.SS "#define MD_Update(\fBa\fP, b, \fBc\fP)   \fBEVP_DigestUpdate\fP(\fBa\fP,b,\fBc\fP)"
+
+.PP
+Definition at line 132 of file rand_lcl\&.h\&.
+.SS "#define MD_Final(\fBa\fP, b)   \fBEVP_DigestFinal_ex\fP(\fBa\fP,b,NULL)"
+
+.PP
+Definition at line 133 of file rand_lcl\&.h\&.
+.SS "#define MD_DIGEST_LENGTH   \fBSHA_DIGEST_LENGTH\fP"
+
+.PP
+Definition at line 141 of file rand_lcl\&.h\&.
+.SS "#define MD_Init(\fBa\fP)   \fBEVP_DigestInit_ex\fP(\fBa\fP,\fBEVP_sha1\fP(), NULL)"
+
+.PP
+Definition at line 142 of file rand_lcl\&.h\&.
+.SS "#define MD(\fBa\fP, b, \fBc\fP)   \fBEVP_Digest\fP(\fBa\fP,b,\fBc\fP,NULL,\fBEVP_sha1\fP(), NULL)"
+
+.PP
+Definition at line 143 of file rand_lcl\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ssleay_rand_bytes (unsigned char * buf, int num, int pseudo, int lock)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

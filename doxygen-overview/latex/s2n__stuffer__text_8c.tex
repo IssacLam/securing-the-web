@@ -1,0 +1,219 @@
+\hypertarget{s2n__stuffer__text_8c}{}\section{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+text.c File Reference}
+\label{s2n__stuffer__text_8c}\index{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+text.\+c@{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+text.\+c}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+text.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__text_8c_a5539e4ea695ead45fbd2c83012894de4}{s2n\+\_\+stuffer\+\_\+peek\+\_\+char} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$\hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer}, char $\ast$\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})
+\item 
+int \hyperlink{s2n__stuffer__text_8c_a8416dd232f3ae1d356dafba8c9de8bd4}{s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$\hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer})
+\item 
+int \hyperlink{s2n__stuffer__text_8c_a5ab3277576af346c7a22e5824fcb3027}{s2n\+\_\+stuffer\+\_\+read\+\_\+token} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$token, char delim)
+\item 
+int \hyperlink{s2n__stuffer__text_8c_a60fa5894187dfe382077cce73964cd35}{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, const char $\ast$str)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}!s2n\+\_\+stuffer\+\_\+peek\+\_\+char@{s2n\+\_\+stuffer\+\_\+peek\+\_\+char}}
+\index{s2n\+\_\+stuffer\+\_\+peek\+\_\+char@{s2n\+\_\+stuffer\+\_\+peek\+\_\+char}!s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+peek\+\_\+char(struct s2n\+\_\+stuffer $\ast$s2n\+\_\+stuffer, char $\ast$c)}{s2n_stuffer_peek_char(struct s2n_stuffer *s2n_stuffer, char *c)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+peek\+\_\+char (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{s2n\+\_\+stuffer, }
+\item[{char $\ast$}]{c}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__text_8c_a5539e4ea695ead45fbd2c83012894de4}{}\label{s2n__stuffer__text_8c_a5539e4ea695ead45fbd2c83012894de4}
+
+
+Definition at line 23 of file s2n\+\_\+stuffer\+\_\+text.\+c.
+
+
+\begin{DoxyCode}
+24 \{
+25     \textcolor{keywordtype}{int} r = \hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(s2n\_stuffer, (uint8\_t *) 
+      \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c});
+26     \textcolor{keywordflow}{if} (r == 0) \{
+27         s2n\_stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}--;
+28     \}
+29     \textcolor{keywordflow}{return} r;
+30 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text_8c_a5539e4ea695ead45fbd2c83012894de4_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{s2n__stuffer__text_8c_a5539e4ea695ead45fbd2c83012894de4_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}!s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace@{s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace}}
+\index{s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace@{s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace}!s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace(struct s2n\+\_\+stuffer $\ast$s2n\+\_\+stuffer)}{s2n_stuffer_skip_whitespace(struct s2n_stuffer *s2n_stuffer)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+skip\+\_\+whitespace (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{s2n\+\_\+stuffer}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__text_8c_a8416dd232f3ae1d356dafba8c9de8bd4}{}\label{s2n__stuffer__text_8c_a8416dd232f3ae1d356dafba8c9de8bd4}
+
+
+Definition at line 32 of file s2n\+\_\+stuffer\+\_\+text.\+c.
+
+
+\begin{DoxyCode}
+33 \{
+34     \textcolor{keywordtype}{int} skipped = 0;
+35     \textcolor{keywordflow}{while} (s2n\_stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} < s2n\_stuffer->\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}) \{
+36         \textcolor{keywordflow}{switch} (s2n\_stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[s2n\_stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}]) \{
+37         \textcolor{keywordflow}{case} \textcolor{charliteral}{' '}:              \textcolor{comment}{/* We don't use isspace, because it changes under locales */}
+38         \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)t'}:
+39         \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)n'}:
+40         \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)r'}:
+41             s2n\_stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} += 1;
+42             skipped += 1;
+43             \textcolor{keywordflow}{break};
+44         \textcolor{keywordflow}{default}:
+45             \textcolor{keywordflow}{return} skipped;
+46         \}
+47     \}
+48 
+49     \textcolor{keywordflow}{return} skipped;
+50 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{s2n__stuffer__text_8c_a8416dd232f3ae1d356dafba8c9de8bd4_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}!s2n\+\_\+stuffer\+\_\+read\+\_\+token@{s2n\+\_\+stuffer\+\_\+read\+\_\+token}}
+\index{s2n\+\_\+stuffer\+\_\+read\+\_\+token@{s2n\+\_\+stuffer\+\_\+read\+\_\+token}!s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+read\+\_\+token(struct s2n\+\_\+stuffer $\ast$stuffer, struct s2n\+\_\+stuffer $\ast$token, char delim)}{s2n_stuffer_read_token(struct s2n_stuffer *stuffer, struct s2n_stuffer *token, char delim)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+read\+\_\+token (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{token, }
+\item[{char}]{delim}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__text_8c_a5ab3277576af346c7a22e5824fcb3027}{}\label{s2n__stuffer__text_8c_a5ab3277576af346c7a22e5824fcb3027}
+
+
+Definition at line 52 of file s2n\+\_\+stuffer\+\_\+text.\+c.
+
+
+\begin{DoxyCode}
+53 \{
+54     \textcolor{keywordtype}{int} token\_size = 0;
+55 
+56     \textcolor{keywordflow}{while} ((stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} + token\_size) < stuffer->
+      \hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}) \{
+57         \textcolor{keywordflow}{if} (stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} + token\_size] == delim) \{
+58             \textcolor{keywordflow}{break};
+59         \}
+60 
+61         token\_size++;
+62     \}
+63 
+64     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aff9283fe7b7a90e13c6c90014719354d}{s2n\_stuffer\_copy}(stuffer, token, token\_size));
+65 
+66     \textcolor{comment}{/* Consume the delimiter too */}
+67     \textcolor{keywordflow}{if} (stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} < stuffer->\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}) \{
+68         stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}++;
+69     \}
+70 
+71     \textcolor{keywordflow}{return} 0;
+72 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text_8c_a5ab3277576af346c7a22e5824fcb3027_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=275pt]{s2n__stuffer__text_8c_a5ab3277576af346c7a22e5824fcb3027_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}!s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string@{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string}}
+\index{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string@{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string}!s2n\+\_\+stuffer\+\_\+text.\+c@{s2n\+\_\+stuffer\+\_\+text.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string(struct s2n\+\_\+stuffer $\ast$stuffer, const char $\ast$str)}{s2n_stuffer_alloc_ro_from_string(struct s2n_stuffer *stuffer, const char *str)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+string (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{const char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__text_8c_a60fa5894187dfe382077cce73964cd35}{}\label{s2n__stuffer__text_8c_a60fa5894187dfe382077cce73964cd35}
+
+
+Definition at line 74 of file s2n\+\_\+stuffer\+\_\+text.\+c.
+
+
+\begin{DoxyCode}
+75 \{
+76     uint32\_t \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length} = strlen(str);
+77 
+78     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(stuffer, length + 1));
+79     \textcolor{keywordflow}{return} \hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(stuffer, (\textcolor{keyword}{const} uint8\_t *)str, length);
+80 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text_8c_a60fa5894187dfe382077cce73964cd35_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text_8c_a60fa5894187dfe382077cce73964cd35_icgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,315 @@
+.TH "s2n-master/tls/s2n_record_read.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_record_read.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_crypto\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_sequence\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_sslv2_record_header_parse\fP (struct \fBs2n_connection\fP *conn, uint8_t *record_type, uint8_t *client_protocol_version, uint16_t *fragment_length)"
+.br
+.ti -1c
+.RI "int \fBs2n_record_header_parse\fP (struct \fBs2n_connection\fP *conn, uint8_t *content_type, uint16_t *fragment_length)"
+.br
+.ti -1c
+.RI "int \fBs2n_record_parse\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_sslv2_record_header_parse (struct \fBs2n_connection\fP * conn, uint8_t * record_type, uint8_t * client_protocol_version, uint16_t * fragment_length)"
+
+.PP
+Definition at line 37 of file s2n_record_read\&.c\&.
+.PP
+.nf
+38 {
+39     struct s2n_stuffer *in = &conn->header_in;
+40 
+41     if (s2n_stuffer_data_available(in) < S2N_TLS_RECORD_HEADER_LENGTH) {
+42         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+43     }
+44 
+45     GUARD(s2n_stuffer_read_uint16(in, fragment_length));
+46 
+47     /* Adjust to account for the 3 bytes of payload data we consumed in the header */
+48     *fragment_length -= 3;
+49 
+50     GUARD(s2n_stuffer_read_uint8(in, record_type));
+51 
+52     uint8_t protocol_version[S2N_TLS_PROTOCOL_VERSION_LEN];
+53     GUARD(s2n_stuffer_read_bytes(in, protocol_version, S2N_TLS_PROTOCOL_VERSION_LEN));
+54 
+55     *client_protocol_version = (protocol_version[0] * 10) + protocol_version[1];
+56 
+57     return 0;
+58 }
+.fi
+.SS "int s2n_record_header_parse (struct \fBs2n_connection\fP * conn, uint8_t * content_type, uint16_t * fragment_length)"
+
+.PP
+Definition at line 60 of file s2n_record_read\&.c\&.
+.PP
+.nf
+61 {
+62     struct s2n_stuffer *in = &conn->header_in;
+63 
+64     if (s2n_stuffer_data_available(in) < S2N_TLS_RECORD_HEADER_LENGTH) {
+65         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+66     }
+67 
+68     GUARD(s2n_stuffer_read_uint8(in, content_type));
+69 
+70     uint8_t protocol_version[S2N_TLS_PROTOCOL_VERSION_LEN];
+71     GUARD(s2n_stuffer_read_bytes(in, protocol_version, S2N_TLS_PROTOCOL_VERSION_LEN));
+72 
+73     uint8_t version = (protocol_version[0] * 10) + protocol_version[1];
+74 
+75     if (conn->actual_protocol_version_established && conn->actual_protocol_version != version) {
+76         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+77     }
+78 
+79     GUARD(s2n_stuffer_read_uint16(in, fragment_length));
+80 
+81     /* Some servers send fragments that are above the maximum length\&.  (e\&.g\&.
+82      * Openssl 1\&.0\&.1, so we don't check if the fragment length is >
+83      * S2N_TLS_MAXIMUM_FRAGMENT_LENGTH\&. The on-the-wire max is 65k 
+84      */
+85 
+86     GUARD(s2n_stuffer_reread(in));
+87 
+88     return 0;
+89 }
+.fi
+.SS "int s2n_record_parse (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 91 of file s2n_record_read\&.c\&.
+.PP
+.nf
+92 {
+93     struct s2n_blob iv;
+94     struct s2n_blob en;
+95     struct s2n_blob aad;
+96     uint8_t content_type;
+97     uint16_t fragment_length;
+98     uint8_t ivpad[S2N_TLS_MAX_IV_LEN];
+99     uint8_t aad_gen[S2N_TLS_MAX_AAD_LEN] = { 0 };
+100     uint8_t aad_iv[S2N_TLS_MAX_IV_LEN] = { 0 };
+101 
+102     uint8_t *sequence_number = conn->client->client_sequence_number;
+103     struct s2n_hmac_state *mac = &conn->client->client_record_mac;
+104     struct s2n_session_key *session_key = &conn->client->client_key;
+105     struct s2n_cipher_suite *cipher_suite = conn->client->cipher_suite;
+106     uint8_t *implicit_iv = conn->client->client_implicit_iv;
+107 
+108     if (conn->mode == S2N_CLIENT) {
+109         sequence_number = conn->server->server_sequence_number;
+110         mac = &conn->server->server_record_mac;
+111         session_key = &conn->server->server_key;
+112         cipher_suite = conn->server->cipher_suite;
+113         implicit_iv = conn->server->server_implicit_iv;
+114     }
+115 
+116     GUARD(s2n_record_header_parse(conn, &content_type, &fragment_length));
+117 
+118     /* Add the header to the HMAC */
+119     uint8_t *header = s2n_stuffer_raw_read(&conn->header_in, S2N_TLS_RECORD_HEADER_LENGTH);
+120     notnull_check(header);
+121 
+122     uint16_t encrypted_length = fragment_length;
+123     if (cipher_suite->cipher->type == S2N_CBC) {
+124         iv\&.data = implicit_iv;
+125         iv\&.size = cipher_suite->cipher->io\&.cbc\&.record_iv_size;
+126         lte_check(cipher_suite->cipher->io\&.cbc\&.record_iv_size, S2N_TLS_MAX_IV_LEN);
+127 
+128         /* For TLS >= 1\&.1 the IV is in the packet */
+129         if (conn->actual_protocol_version > S2N_TLS10) {
+130             GUARD(s2n_stuffer_read(&conn->in, &iv));
+131             gte_check(encrypted_length, iv\&.size);
+132             encrypted_length -= iv\&.size;
+133         }
+134     }
+135 
+136     en\&.size = encrypted_length;
+137     en\&.data = s2n_stuffer_raw_read(&conn->in, en\&.size);
+138     notnull_check(en\&.data);
+139 
+140     uint16_t payload_length = encrypted_length;
+141     int mac_digest_size = s2n_hmac_digest_size(mac->alg);
+142 
+143     gte_check(mac_digest_size, 0);
+144     gte_check(payload_length, mac_digest_size);
+145 
+146     payload_length -= mac_digest_size;
+147 
+148     /* In AEAD mode, the explicit IV is in the record */
+149     if (cipher_suite->cipher->type == S2N_AEAD) {
+150         gte_check(en\&.size, cipher_suite->cipher->io\&.aead\&.record_iv_size);
+151 
+152         struct s2n_stuffer iv_stuffer;
+153         iv\&.data = aad_iv;
+154         iv\&.size = sizeof(aad_iv);
+155 
+156         GUARD(s2n_stuffer_init(&iv_stuffer, &iv));
+157         GUARD(s2n_stuffer_write_bytes(&iv_stuffer, implicit_iv, cipher_suite->cipher->io\&.aead\&.fixed_iv_size));
+158         GUARD(s2n_stuffer_write_bytes(&iv_stuffer, en\&.data, cipher_suite->cipher->io\&.aead\&.record_iv_size));
+159 
+160         /* Set the IV size to the amount of data written */
+161         iv\&.size = s2n_stuffer_data_available(&iv_stuffer);
+162 
+163         iv\&.data = aad_iv;
+164         iv\&.size = cipher_suite->cipher->io\&.aead\&.fixed_iv_size + cipher_suite->cipher->io\&.aead\&.record_iv_size;
+165 
+166         aad\&.data = aad_gen;
+167         aad\&.size = sizeof(aad_gen);
+168 
+169         /* remove the AEAD overhead from the record size */
+170         gte_check(payload_length, cipher_suite->cipher->io\&.aead\&.record_iv_size + cipher_suite->cipher->io\&.aead\&.tag_size);
+171         payload_length -= cipher_suite->cipher->io\&.aead\&.record_iv_size;
+172         payload_length -= cipher_suite->cipher->io\&.aead\&.tag_size;
+173 
+174         struct s2n_stuffer ad_stuffer;
+175         GUARD(s2n_stuffer_init(&ad_stuffer, &aad));
+176         GUARD(s2n_aead_aad_init(conn, sequence_number, content_type, payload_length, &ad_stuffer));
+177     }
+178 
+179     /* Decrypt stuff! */
+180     switch (cipher_suite->cipher->type) {
+181     case S2N_STREAM:
+182         GUARD(cipher_suite->cipher->io\&.stream\&.decrypt(session_key, &en, &en));
+183         break;
+184     case S2N_CBC:
+185         /* Check that we have some data to decrypt */
+186         ne_check(en\&.size, 0);
+187 
+188         /* \&.\&.\&. and that we have a multiple of the block size */
+189         eq_check(en\&.size % iv\&.size, 0);
+190 
+191         /* Copy the last encrypted block to be the next IV */
+192         memcpy_check(ivpad, en\&.data + en\&.size - iv\&.size, iv\&.size);
+193 
+194         GUARD(cipher_suite->cipher->io\&.cbc\&.decrypt(session_key, &iv, &en, &en));
+195 
+196         memcpy_check(implicit_iv, ivpad, iv\&.size);
+197         break;
+198     case S2N_AEAD:
+199         /* Check that we have some data to decrypt */
+200         ne_check(en\&.size, 0);
+201 
+202         GUARD(cipher_suite->cipher->io\&.aead\&.decrypt(session_key, &iv, &aad, &en, &en));
+203         break;
+204     default:
+205         return -1;
+206         break;
+207     }
+208 
+209     int offset = 0;
+210 
+211     /* Skip the explicit IV */
+212     if (cipher_suite->cipher->type == S2N_AEAD) {
+213         gt_check(en\&.size, cipher_suite->cipher->io\&.aead\&.record_iv_size);
+214         offset = cipher_suite->cipher->io\&.aead\&.record_iv_size;
+215     }
+216     /* Subtract the padding length */
+217     else if (cipher_suite->cipher->type == S2N_CBC) {
+218         gt_check(en\&.size, 0);
+219         payload_length -= (en\&.data[en\&.size - 1] + 1);
+220     }
+221 
+222     /* Update the MAC */
+223     header[3] = (payload_length >> 8);
+224     header[4] = payload_length & 0xff;
+225     GUARD(s2n_hmac_reset(mac));
+226     GUARD(s2n_hmac_update(mac, sequence_number, S2N_TLS_SEQUENCE_NUM_LEN));
+227 
+228     if (conn->actual_protocol_version == S2N_SSLv3) {
+229         GUARD(s2n_hmac_update(mac, header, 1));
+230         GUARD(s2n_hmac_update(mac, header + 3, 2));
+231     } else {
+232         GUARD(s2n_hmac_update(mac, header, S2N_TLS_RECORD_HEADER_LENGTH));
+233     }
+234 
+235     struct s2n_blob seq = {\&.data = sequence_number,\&.size = S2N_TLS_SEQUENCE_NUM_LEN };
+236     GUARD(s2n_increment_sequence_number(&seq));
+237 
+238     /* Padding */
+239     if (cipher_suite->cipher->type == S2N_CBC) {
+240         if (s2n_verify_cbc(conn, mac, &en) < 0) {
+241             GUARD(s2n_stuffer_wipe(&conn->in));
+242             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+243             return -1;
+244         }
+245     } else {
+246         /* MAC check for streaming ciphers - no padding */
+247         GUARD(s2n_hmac_update(mac, en\&.data + offset, payload_length));
+248 
+249         uint8_t check_digest[S2N_MAX_DIGEST_LEN];
+250         lte_check(mac_digest_size, sizeof(check_digest));
+251         GUARD(s2n_hmac_digest(mac, check_digest, mac_digest_size));
+252 
+253         if (s2n_hmac_digest_verify(en\&.data + payload_length + offset, check_digest, mac_digest_size) < 0) {
+254             GUARD(s2n_stuffer_wipe(&conn->in));
+255             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+256             return -1;
+257         }
+258     }
+259 
+260     /* O\&.k\&., we've successfully read and decrypted the record, now we need to align the stuffer
+261      * for reading the plaintext data\&.
+262      */
+263     GUARD(s2n_stuffer_reread(&conn->in));
+264     GUARD(s2n_stuffer_reread(&conn->header_in));
+265 
+266     /* Skip the IV, if any */
+267     if (cipher_suite->cipher->type == S2N_CBC && conn->actual_protocol_version > S2N_TLS10) {
+268         GUARD(s2n_stuffer_skip_read(&conn->in, cipher_suite->cipher->io\&.cbc\&.record_iv_size));
+269     } else if (cipher_suite->cipher->type == S2N_AEAD && conn->actual_protocol_version >= S2N_TLS12) {
+270         GUARD(s2n_stuffer_skip_read(&conn->in, cipher_suite->cipher->io\&.aead\&.record_iv_size));
+271     }
+272 
+273     /* Truncate and wipe the MAC and any padding */
+274     GUARD(s2n_stuffer_wipe_n(&conn->in, s2n_stuffer_data_available(&conn->in) - payload_length));
+275     conn->in_status = PLAINTEXT;
+276 
+277     return 0;
+278 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,419 @@
+\hypertarget{s2n__record__read_8c}{}\section{s2n-\/master/tls/s2n\+\_\+record\+\_\+read.c File Reference}
+\label{s2n__record__read_8c}\index{s2n-\/master/tls/s2n\+\_\+record\+\_\+read.\+c@{s2n-\/master/tls/s2n\+\_\+record\+\_\+read.\+c}}
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+record.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+crypto.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+sequence.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+cipher.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+hmac.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+record\+\_\+read.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__record__read_8c_ada746040b578344a72196d5dd1d356fd}{s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, uint8\+\_\+t $\ast$record\+\_\+type, uint8\+\_\+t $\ast$client\+\_\+protocol\+\_\+version, uint16\+\_\+t $\ast$fragment\+\_\+length)
+\item 
+int \hyperlink{s2n__record__read_8c_af0794788139e3e2975022dd47f983eda}{s2n\+\_\+record\+\_\+header\+\_\+parse} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, uint8\+\_\+t $\ast$content\+\_\+type, uint16\+\_\+t $\ast$fragment\+\_\+length)
+\item 
+int \hyperlink{s2n__record__read_8c_a26b47800a66fc8e167d92b302e0b7079}{s2n\+\_\+record\+\_\+parse} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+record\+\_\+read.\+c@{s2n\+\_\+record\+\_\+read.\+c}!s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse@{s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse}}
+\index{s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse@{s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse}!s2n\+\_\+record\+\_\+read.\+c@{s2n\+\_\+record\+\_\+read.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse(struct s2n\+\_\+connection $\ast$conn, uint8\+\_\+t $\ast$record\+\_\+type, uint8\+\_\+t $\ast$client\+\_\+protocol\+\_\+version, uint16\+\_\+t $\ast$fragment\+\_\+length)}{s2n_sslv2_record_header_parse(struct s2n_connection *conn, uint8_t *record_type, uint8_t *client_protocol_version, uint16_t *fragment_length)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+sslv2\+\_\+record\+\_\+header\+\_\+parse (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{uint8\+\_\+t $\ast$}]{record\+\_\+type, }
+\item[{uint8\+\_\+t $\ast$}]{client\+\_\+protocol\+\_\+version, }
+\item[{uint16\+\_\+t $\ast$}]{fragment\+\_\+length}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__record__read_8c_ada746040b578344a72196d5dd1d356fd}{}\label{s2n__record__read_8c_ada746040b578344a72196d5dd1d356fd}
+
+
+Definition at line 37 of file s2n\+\_\+record\+\_\+read.\+c.
+
+
+\begin{DoxyCode}
+38 \{
+39     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} *in = &conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in};
+40 
+41     \textcolor{keywordflow}{if} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(in) < 
+      \hyperlink{s2n__tls__parameters_8h_a7cc7782f30cb9ee302929d979826c557}{S2N\_TLS\_RECORD\_HEADER\_LENGTH}) \{
+42         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+43     \}
+44 
+45     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(in, fragment\_length));
+46 
+47     \textcolor{comment}{/* Adjust to account for the 3 bytes of payload data we consumed in the header */}
+48     *fragment\_length -= 3;
+49 
+50     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, record\_type));
+51 
+52     uint8\_t protocol\_version[\hyperlink{s2n__connection_8h_ad4c29631b045d5227442f693bc3bf117}{S2N\_TLS\_PROTOCOL\_VERSION\_LEN}];
+53     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ab84cff8edd5b5f264afe261f093f894b}{s2n\_stuffer\_read\_bytes}(in, protocol\_version, 
+      \hyperlink{s2n__connection_8h_ad4c29631b045d5227442f693bc3bf117}{S2N\_TLS\_PROTOCOL\_VERSION\_LEN}));
+54 
+55     *client\_protocol\_version = (protocol\_version[0] * 10) + protocol\_version[1];
+56 
+57     \textcolor{keywordflow}{return} 0;
+58 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c_ada746040b578344a72196d5dd1d356fd_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c_ada746040b578344a72196d5dd1d356fd_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+record\+\_\+read.\+c@{s2n\+\_\+record\+\_\+read.\+c}!s2n\+\_\+record\+\_\+header\+\_\+parse@{s2n\+\_\+record\+\_\+header\+\_\+parse}}
+\index{s2n\+\_\+record\+\_\+header\+\_\+parse@{s2n\+\_\+record\+\_\+header\+\_\+parse}!s2n\+\_\+record\+\_\+read.\+c@{s2n\+\_\+record\+\_\+read.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+record\+\_\+header\+\_\+parse(struct s2n\+\_\+connection $\ast$conn, uint8\+\_\+t $\ast$content\+\_\+type, uint16\+\_\+t $\ast$fragment\+\_\+length)}{s2n_record_header_parse(struct s2n_connection *conn, uint8_t *content_type, uint16_t *fragment_length)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+record\+\_\+header\+\_\+parse (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{uint8\+\_\+t $\ast$}]{content\+\_\+type, }
+\item[{uint16\+\_\+t $\ast$}]{fragment\+\_\+length}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__record__read_8c_af0794788139e3e2975022dd47f983eda}{}\label{s2n__record__read_8c_af0794788139e3e2975022dd47f983eda}
+
+
+Definition at line 60 of file s2n\+\_\+record\+\_\+read.\+c.
+
+
+\begin{DoxyCode}
+61 \{
+62     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} *in = &conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in};
+63 
+64     \textcolor{keywordflow}{if} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(in) < 
+      \hyperlink{s2n__tls__parameters_8h_a7cc7782f30cb9ee302929d979826c557}{S2N\_TLS\_RECORD\_HEADER\_LENGTH}) \{
+65         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+66     \}
+67 
+68     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, content\_type));
+69 
+70     uint8\_t protocol\_version[\hyperlink{s2n__connection_8h_ad4c29631b045d5227442f693bc3bf117}{S2N\_TLS\_PROTOCOL\_VERSION\_LEN}];
+71     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ab84cff8edd5b5f264afe261f093f894b}{s2n\_stuffer\_read\_bytes}(in, protocol\_version, 
+      \hyperlink{s2n__connection_8h_ad4c29631b045d5227442f693bc3bf117}{S2N\_TLS\_PROTOCOL\_VERSION\_LEN}));
+72 
+73     uint8\_t \hyperlink{s2n__config_8c_aa31f487a99743d24af9076a3e11e5425}{version} = (protocol\_version[0] * 10) + protocol\_version[1];
+74 
+75     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_ab54a0b4ad8370fee08f0c47917684e65}{actual\_protocol\_version\_established} && conn->
+      \hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} != version) \{
+76         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+77     \}
+78 
+79     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(in, fragment\_length));
+80 
+81     \textcolor{comment}{/* Some servers send fragments that are above the maximum length.  (e.g.}
+82 \textcolor{comment}{     * Openssl 1.0.1, so we don't check if the fragment length is >}
+83 \textcolor{comment}{     * S2N\_TLS\_MAXIMUM\_FRAGMENT\_LENGTH. The on-the-wire max is 65k }
+84 \textcolor{comment}{     */}
+85 
+86     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a5d6db4ed8311ba66aec1227fceca24a9}{s2n\_stuffer\_reread}(in));
+87 
+88     \textcolor{keywordflow}{return} 0;
+89 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c_af0794788139e3e2975022dd47f983eda_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c_af0794788139e3e2975022dd47f983eda_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+record\+\_\+read.\+c@{s2n\+\_\+record\+\_\+read.\+c}!s2n\+\_\+record\+\_\+parse@{s2n\+\_\+record\+\_\+parse}}
+\index{s2n\+\_\+record\+\_\+parse@{s2n\+\_\+record\+\_\+parse}!s2n\+\_\+record\+\_\+read.\+c@{s2n\+\_\+record\+\_\+read.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+record\+\_\+parse(struct s2n\+\_\+connection $\ast$conn)}{s2n_record_parse(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+record\+\_\+parse (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__record__read_8c_a26b47800a66fc8e167d92b302e0b7079}{}\label{s2n__record__read_8c_a26b47800a66fc8e167d92b302e0b7079}
+
+
+Definition at line 91 of file s2n\+\_\+record\+\_\+read.\+c.
+
+
+\begin{DoxyCode}
+92 \{
+93     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} iv;
+94     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} en;
+95     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} aad;
+96     uint8\_t content\_type;
+97     uint16\_t fragment\_length;
+98     uint8\_t ivpad[\hyperlink{tls_2s2n__crypto_8h_a10384078d09bffcc7c0570926203dbfd}{S2N\_TLS\_MAX\_IV\_LEN}];
+99     uint8\_t aad\_gen[\hyperlink{tls_2s2n__crypto_8h_ab30e8f0e36665372119e4f958b41ed2b}{S2N\_TLS\_MAX\_AAD\_LEN}] = \{ 0 \};
+100     uint8\_t aad\_iv[\hyperlink{tls_2s2n__crypto_8h_a10384078d09bffcc7c0570926203dbfd}{S2N\_TLS\_MAX\_IV\_LEN}] = \{ 0 \};
+101 
+102     uint8\_t *sequence\_number = conn->\hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client}->\hyperlink{structs2n__crypto__parameters_ab7767b5b58441b15ac1028ac18b06ef1}{client\_sequence\_number};
+103     \textcolor{keyword}{struct }\hyperlink{structs2n__hmac__state}{s2n\_hmac\_state} *mac = &conn->\hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client}->
+      \hyperlink{structs2n__crypto__parameters_a9e84d70c1483dbddcb35a95aca818166}{client\_record\_mac};
+104     \textcolor{keyword}{struct }\hyperlink{structs2n__session__key}{s2n\_session\_key} *session\_key = &conn->\hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client}->
+      \hyperlink{structs2n__crypto__parameters_a5310bf07c6a3cac0ed09c19e967a8a27}{client\_key};
+105     \textcolor{keyword}{struct }\hyperlink{structs2n__cipher__suite}{s2n\_cipher\_suite} *cipher\_suite = conn->\hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client}->
+      \hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite};
+106     uint8\_t *implicit\_iv = conn->\hyperlink{structs2n__connection_a052f81d7dc7e2612341fe0da1e749ebd}{client}->\hyperlink{structs2n__crypto__parameters_ac38c4c9618058e6ca7f9fef4c7ea6048}{client\_implicit\_iv};
+107 
+108     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode} == \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT}) \{
+109         sequence\_number = conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->\hyperlink{structs2n__crypto__parameters_a286710aff413808336b2f294554c7e55}{server\_sequence\_number};
+110         mac = &conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->\hyperlink{structs2n__crypto__parameters_a2d6bba69a948270d25b1e24876225224}{server\_record\_mac};
+111         session\_key = &conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->\hyperlink{structs2n__crypto__parameters_a09fdc758a329111328b6a714fab83719}{server\_key};
+112         cipher\_suite = conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->\hyperlink{structs2n__crypto__parameters_a5446cce0337d14b74b38f2a81ea19670}{cipher\_suite};
+113         implicit\_iv = conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->\hyperlink{structs2n__crypto__parameters_a6f73f56517df7d3ff20e29a89d24bbd0}{server\_implicit\_iv};
+114     \}
+115 
+116     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__record__read_8c_af0794788139e3e2975022dd47f983eda}{s2n\_record\_header\_parse}(conn, &content\_type, &fragment\_length));
+117 
+118     \textcolor{comment}{/* Add the header to the HMAC */}
+119     uint8\_t *header = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}, 
+      \hyperlink{s2n__tls__parameters_8h_a7cc7782f30cb9ee302929d979826c557}{S2N\_TLS\_RECORD\_HEADER\_LENGTH});
+120     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(header);
+121 
+122     uint16\_t encrypted\_length = fragment\_length;
+123     \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_CBC) \{
+124         iv.data = implicit\_iv;
+125         iv.size = cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}{cbc}.\hyperlink{structs2n__cbc__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size};
+126         \hyperlink{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{lte\_check}(cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}{cbc}.
+      \hyperlink{structs2n__cbc__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size}, \hyperlink{tls_2s2n__crypto_8h_a10384078d09bffcc7c0570926203dbfd}{S2N\_TLS\_MAX\_IV\_LEN});
+127 
+128         \textcolor{comment}{/* For TLS >= 1.1 the IV is in the packet */}
+129         \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} > \hyperlink{s2n_8h_ab16c04a1d8479546aa124c4e52a1703f}{S2N\_TLS10}) \{
+130             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a49bb9749c055c6fb6f713cebeaa14cb5}{s2n\_stuffer\_read}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}, &iv));
+131             \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\_check}(encrypted\_length, iv.size);
+132             encrypted\_length -= iv.size;
+133         \}
+134     \}
+135 
+136     en.size = encrypted\_length;
+137     en.data = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}, en.size);
+138     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(en.data);
+139 
+140     uint16\_t payload\_length = encrypted\_length;
+141     \textcolor{keywordtype}{int} mac\_digest\_size = \hyperlink{s2n__hmac_8c_ad9e0cc00ac39458cba7a9b1792429dbd}{s2n\_hmac\_digest\_size}(mac->\hyperlink{structs2n__hmac__state_ae2daecd156006e6cf5c5800a7293628c}{alg});
+142 
+143     \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\_check}(mac\_digest\_size, 0);
+144     \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\_check}(payload\_length, mac\_digest\_size);
+145 
+146     payload\_length -= mac\_digest\_size;
+147 
+148     \textcolor{comment}{/* In AEAD mode, the explicit IV is in the record */}
+149     \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_AEAD) \{
+150         \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\_check}(en.size, cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.
+      \hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size});
+151 
+152         \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} iv\_stuffer;
+153         iv.data = aad\_iv;
+154         iv.size = \textcolor{keyword}{sizeof}(aad\_iv);
+155 
+156         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&iv\_stuffer, &iv));
+157         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&iv\_stuffer, implicit\_iv, cipher\_suite->
+      \hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_af2f96dd7607527cb38344275a4282922}{fixed\_iv\_size}));
+158         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&iv\_stuffer, en.data, cipher\_suite->
+      \hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size}));
+159 
+160         \textcolor{comment}{/* Set the IV size to the amount of data written */}
+161         iv.size = \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&iv\_stuffer);
+162 
+163         iv.data = aad\_iv;
+164         iv.size = cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_af2f96dd7607527cb38344275a4282922}{fixed\_iv\_size} + cipher\_suite->
+      \hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size};
+165 
+166         aad.data = aad\_gen;
+167         aad.size = \textcolor{keyword}{sizeof}(aad\_gen);
+168 
+169         \textcolor{comment}{/* remove the AEAD overhead from the record size */}
+170         \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\_check}(payload\_length, cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.
+      \hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size} + cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.
+      \hyperlink{structs2n__aead__cipher_a0bcbed39d70cb77892a96690e07f5389}{tag\_size});
+171         payload\_length -= cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.
+      \hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size};
+172         payload\_length -= cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_a0bcbed39d70cb77892a96690e07f5389}{tag\_size};
+173 
+174         \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} ad\_stuffer;
+175         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&ad\_stuffer, &aad));
+176         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__aead_8c_aafbbe3f24a9f607cc8cb47a6af5a3505}{s2n\_aead\_aad\_init}(conn, sequence\_number, content\_type, payload\_length, 
+      &ad\_stuffer));
+177     \}
+178 
+179     \textcolor{comment}{/* Decrypt stuff! */}
+180     \textcolor{keywordflow}{switch} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type}) \{
+181     \textcolor{keywordflow}{case} S2N\_STREAM:
+182         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a86b4ea19595781516c4e0a14c959db1c}{stream}.\hyperlink{structs2n__stream__cipher_a4fb65037e99ad954a92255cebbd26895}{decrypt}(session\_key, &en, &en));
+183         \textcolor{keywordflow}{break};
+184     \textcolor{keywordflow}{case} S2N\_CBC:
+185         \textcolor{comment}{/* Check that we have some data to decrypt */}
+186         \hyperlink{s2n__safety_8h_afe97d76b660ce1f4bf3a02a648e93c68}{ne\_check}(en.size, 0);
+187 
+188         \textcolor{comment}{/* ... and that we have a multiple of the block size */}
+189         \hyperlink{s2n__safety_8h_a286ad9b0d46f4af176671cda1ed6f58a}{eq\_check}(en.size % iv.size, 0);
+190 
+191         \textcolor{comment}{/* Copy the last encrypted block to be the next IV */}
+192         \hyperlink{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}{memcpy\_check}(ivpad, en.data + en.size - iv.size, iv.size);
+193 
+194         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}{cbc}.\hyperlink{structs2n__cbc__cipher_afd72553012c67d9a116f2ed5fa7bf00d}{decrypt}(session\_key, &iv, &en, &en));
+195 
+196         \hyperlink{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}{memcpy\_check}(implicit\_iv, ivpad, iv.size);
+197         \textcolor{keywordflow}{break};
+198     \textcolor{keywordflow}{case} S2N\_AEAD:
+199         \textcolor{comment}{/* Check that we have some data to decrypt */}
+200         \hyperlink{s2n__safety_8h_afe97d76b660ce1f4bf3a02a648e93c68}{ne\_check}(en.size, 0);
+201 
+202         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_ab0de9f364ac505a11483b249e38b492c}{decrypt}(session\_key, &iv, &aad, &en, &
+      en));
+203         \textcolor{keywordflow}{break};
+204     \textcolor{keywordflow}{default}:
+205         \textcolor{keywordflow}{return} -1;
+206         \textcolor{keywordflow}{break};
+207     \}
+208 
+209     \textcolor{keywordtype}{int} offset = 0;
+210 
+211     \textcolor{comment}{/* Skip the explicit IV */}
+212     \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_AEAD) \{
+213         \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\_check}(en.size, cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.
+      \hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size});
+214         offset = cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size};
+215     \}
+216     \textcolor{comment}{/* Subtract the padding length */}
+217     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_CBC) \{
+218         \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\_check}(en.size, 0);
+219         payload\_length -= (en.data[en.size - 1] + 1);
+220     \}
+221 
+222     \textcolor{comment}{/* Update the MAC */}
+223     header[3] = (payload\_length >> 8);
+224     header[4] = payload\_length & 0xff;
+225     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_ac4f30ec554d9a717c6269a5de8ae4acf}{s2n\_hmac\_reset}(mac));
+226     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(mac, sequence\_number, 
+      \hyperlink{tls_2s2n__crypto_8h_ab6af529d3a237c0d8d2f67edcf831c25}{S2N\_TLS\_SEQUENCE\_NUM\_LEN}));
+227 
+228     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} == \hyperlink{s2n_8h_a457805749bd152786e9e344a5b22ab67}{S2N\_SSLv3}) \{
+229         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(mac, header, 1));
+230         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(mac, header + 3, 2));
+231     \} \textcolor{keywordflow}{else} \{
+232         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(mac, header, 
+      \hyperlink{s2n__tls__parameters_8h_a7cc7782f30cb9ee302929d979826c557}{S2N\_TLS\_RECORD\_HEADER\_LENGTH}));
+233     \}
+234 
+235     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} seq = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = sequence\_number,.size = 
+      \hyperlink{tls_2s2n__crypto_8h_ab6af529d3a237c0d8d2f67edcf831c25}{S2N\_TLS\_SEQUENCE\_NUM\_LEN} \};
+236     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__sequence_8c_a650e459c699416b64accc69561e5fc16}{s2n\_increment\_sequence\_number}(&seq));
+237 
+238     \textcolor{comment}{/* Padding */}
+239     \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_CBC) \{
+240         \textcolor{keywordflow}{if} (\hyperlink{s2n__cbc_8c_a49a0a2c5708c690625b2474555727b80}{s2n\_verify\_cbc}(conn, mac, &en) < 0) \{
+241             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}));
+242             \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+243             \textcolor{keywordflow}{return} -1;
+244         \}
+245     \} \textcolor{keywordflow}{else} \{
+246         \textcolor{comment}{/* MAC check for streaming ciphers - no padding */}
+247         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(mac, en.data + offset, payload\_length));
+248 
+249         uint8\_t check\_digest[\hyperlink{s2n__prf_8h_a6e72344ee5c9fe106257b029521e675e}{S2N\_MAX\_DIGEST\_LEN}];
+250         \hyperlink{s2n__safety_8h_ad35087e5d980b38035ca99fc5090775e}{lte\_check}(mac\_digest\_size, \textcolor{keyword}{sizeof}(check\_digest));
+251         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a4501c4b9ea25f86e9c6c0e9d1bd9276b}{s2n\_hmac\_digest}(mac, check\_digest, mac\_digest\_size));
+252 
+253         \textcolor{keywordflow}{if} (\hyperlink{s2n__hmac_8c_a7787cefe78aedac6b20db11cc451a433}{s2n\_hmac\_digest\_verify}(en.data + payload\_length + offset, check\_digest, 
+      mac\_digest\_size) < 0) \{
+254             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}));
+255             \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+256             \textcolor{keywordflow}{return} -1;
+257         \}
+258     \}
+259 
+260     \textcolor{comment}{/* O.k., we've successfully read and decrypted the record, now we need to align the stuffer}
+261 \textcolor{comment}{     * for reading the plaintext data.}
+262 \textcolor{comment}{     */}
+263     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a5d6db4ed8311ba66aec1227fceca24a9}{s2n\_stuffer\_reread}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}));
+264     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a5d6db4ed8311ba66aec1227fceca24a9}{s2n\_stuffer\_reread}(&conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}));
+265 
+266     \textcolor{comment}{/* Skip the IV, if any */}
+267     \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_CBC && conn->
+      \hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} > \hyperlink{s2n_8h_ab16c04a1d8479546aa124c4e52a1703f}{S2N\_TLS10}) \{
+268         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a0d643b31c896c7f6f2c058977cf46c3b}{s2n\_stuffer\_skip\_read}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}, cipher\_suite->
+      \hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}{cbc}.\hyperlink{structs2n__cbc__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size}));
+269     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cipher\_suite->\hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type} == S2N\_AEAD && conn->
+      \hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} >= \hyperlink{s2n_8h_ab17e84046986d49ffd31571b8d32d24e}{S2N\_TLS12}) \{
+270         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a0d643b31c896c7f6f2c058977cf46c3b}{s2n\_stuffer\_skip\_read}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}, cipher\_suite->
+      \hyperlink{structs2n__cipher__suite_aa0d5d8173f0d8ab4afc0c6524078d6e3}{cipher}->\hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}.\hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}.\hyperlink{structs2n__aead__cipher_af6c57bc6bf62e1b811c6771a76e38448}{record\_iv\_size}));
+271     \}
+272 
+273     \textcolor{comment}{/* Truncate and wipe the MAC and any padding */}
+274     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a15cd08990395a34e8f22775c2db3455b}{s2n\_stuffer\_wipe\_n}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}, 
+      \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}) - payload\_length));
+275     conn->\hyperlink{structs2n__connection_ad63a0cc0cc12429207575e5d093f59d2}{in\_status} = PLAINTEXT;
+276 
+277     \textcolor{keywordflow}{return} 0;
+278 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c_a26b47800a66fc8e167d92b302e0b7079_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__record__read_8c_a26b47800a66fc8e167d92b302e0b7079_icgraph}
+\end{center}
+\end{figure}
+
+

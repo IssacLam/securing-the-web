@@ -1,0 +1,78 @@
+\hypertarget{rc5s_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/rc5/rc5s.cpp File Reference}
+\label{rc5s_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/rc5/rc5s.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/crypto/rc5/rc5s.\+cpp}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/rc5.\+h$>$}\\*
+Include dependency graph for rc5s.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=285pt]{rc5s_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc5s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{rc5s.\+cpp@{rc5s.\+cpp}!main@{main}}
+\index{main@{main}!rc5s.\+cpp@{rc5s.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{rc5s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{}\label{rc5s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}
+
+
+Definition at line 37 of file rc5s.\+cpp.
+
+
+\begin{DoxyCode}
+38     \{
+39     \hyperlink{structrc5__key__st}{RC5\_32\_KEY} key;
+40     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} s1,s2,e1,e2;
+41     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[2];
+42     \textcolor{keywordtype}{int} i,j;
+43     \textcolor{keyword}{static} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} d[16]=\{0x01,0x23,0x45,0x67,0x89,0xAB,0xCD,0xEF\};
+44 
+45     \hyperlink{rc5_8h_a6daf54d3aa2118e239c17595774951b8}{RC5\_32\_set\_key}(&key, 16,d,12);
+46 
+47     \textcolor{keywordflow}{for} (j=0; j<6; j++)
+48         \{
+49         \textcolor{keywordflow}{for} (i=0; i<1000; i++) 
+50             \{
+51             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+52             GetTSC(s1);
+53             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+54             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+55             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+56             GetTSC(e1);
+57             GetTSC(s2);
+58             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+59             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+60             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+61             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+62             GetTSC(e2);
+63             \hyperlink{rc5_8h_ad52ba6858c3047927ac4031394fd4637}{RC5\_32\_encrypt}(&data[0],&key);
+64             \}
+65 
+66         printf(\textcolor{stringliteral}{"cast %d %d (%d)\(\backslash\)n"},
+67             e1-s1,e2-s2,((e2-s2)-(e1-s1)));
+68         \}
+69     \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{rc5s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f_cgraph}
+\end{center}
+\end{figure}
+
+

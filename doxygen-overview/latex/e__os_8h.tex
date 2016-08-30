@@ -1,0 +1,283 @@
+\hypertarget{e__os_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/e\+\_\+os.h File Reference}
+\label{e__os_8h}\index{s2n-\/master/libcrypto-\/build/openssl/e\+\_\+os.\+h@{s2n-\/master/libcrypto-\/build/openssl/e\+\_\+os.\+h}}
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/e\+\_\+os2.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+Include dependency graph for e\+\_\+os.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{e__os_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{e__os_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{e__os_8h_a311ea57ec45e57f2b1a16841d27b5c35}{D\+E\+V\+R\+A\+N\+D\+OM}~\char`\"{}/dev/urandom\char`\"{},\char`\"{}/dev/random\char`\"{},\char`\"{}/dev/srandom\char`\"{}
+\item 
+\#define \hyperlink{e__os_8h_afa269eda8828dfda0969aaa1cdf6db69}{D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD}~\char`\"{}/var/run/egd-\/pool\char`\"{},\char`\"{}/dev/egd-\/pool\char`\"{},\char`\"{}/etc/egd-\/pool\char`\"{},\char`\"{}/etc/entropy\char`\"{}
+\item 
+\#define \hyperlink{e__os_8h_a24bfcfed5b8782b2fab749150d55217d}{M\+S\+\_\+\+S\+T\+A\+T\+IC}
+\item 
+\#define \hyperlink{e__os_8h_ab199cfe59c45c462a9ab4d8230078856}{get\+\_\+last\+\_\+sys\+\_\+error}()    ~\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}
+\item 
+\#define \hyperlink{e__os_8h_ae25bc86181953cda3ebc048d5eb8e658}{clear\+\_\+sys\+\_\+error}()          ~\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}=0
+\item 
+\#define \hyperlink{e__os_8h_a3d54240b3e2a42df74184997ca4fcf97}{get\+\_\+last\+\_\+socket\+\_\+error}()~\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}
+\item 
+\#define \hyperlink{e__os_8h_a3283dc6a2aa9c6987e9f42609fde740f}{clear\+\_\+socket\+\_\+error}()    ~\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}=0
+\item 
+\#define \hyperlink{e__os_8h_a7bb01471241009322a4e6500b544809d}{ioctlsocket}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})        ~ioctl(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},b,\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})
+\item 
+\#define \hyperlink{e__os_8h_a515714eeaac33e82c3c5fb8d8ffe4513}{closesocket}(s)                ~close(s)
+\item 
+\#define \hyperlink{e__os_8h_acc2603e6dfe6e59f772472ded98551a0}{readsocket}(s,  b,  n)          ~read((s),(b),(n))
+\item 
+\#define \hyperlink{e__os_8h_af544e0ef77fac4a3b095d8abcfbd3ce4}{writesocket}(s,  b,  n)        ~write((s),(b),(n))
+\item 
+\#define \hyperlink{e__os_8h_a9bf82f2bf6a77e81125eeaa7ee405322}{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK}
+\item 
+\#define \hyperlink{e__os_8h_a642b44301ac8c307e33604ba3d273671}{M\+S\+\_\+\+F\+AR}
+\item 
+\#define \hyperlink{e__os_8h_ac938f1e75e250eff8d8b1f258299d9e3}{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF}~\char`\"{}openssl.\+cnf\char`\"{}
+\item 
+\#define \hyperlink{e__os_8h_ad5e1b2b3637f94b4c320b98e050d1634}{S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF}~\hyperlink{e__os_8h_ac938f1e75e250eff8d8b1f258299d9e3}{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF}
+\item 
+\#define \hyperlink{e__os_8h_af69318ea4c03a0128fb3a04cfec4e4ca}{R\+F\+I\+LE}~\char`\"{}.rnd\char`\"{}
+\item 
+\#define \hyperlink{e__os_8h_a58ba462e20b716f2c020af2bb5131b20}{L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR}~\textquotesingle{}\+:\textquotesingle{}
+\item 
+\#define \hyperlink{e__os_8h_a5f33015382be5da5b3bcddd0e53af7b3}{N\+U\+L\+\_\+\+D\+EV}~\char`\"{}/dev/null\char`\"{}
+\item 
+\#define \hyperlink{e__os_8h_a0d0f00840d4353c236ea5e48efaf164d}{E\+X\+IT}(n)                      ~exit(n)
+\item 
+\#define \hyperlink{e__os_8h_a2b7867c30e519e5b52f73112d8a8cfcf}{S\+S\+Leay\+\_\+getpid}()          ~getpid()
+\item 
+\#define \hyperlink{e__os_8h_aa8e0508750f1a35909865bf7acd8a4d3}{O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT}(n)~do \{ \hyperlink{e__os_8h_a0d0f00840d4353c236ea5e48efaf164d}{E\+X\+IT}(n); return(n); \} while(0)
+\item 
+\#define \hyperlink{e__os_8h_a75681ed3ec900c26c376323c03229ead}{D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG}~/$\ast$ gcc $<$ 2.\+6.\+3 on D\+G\+UX $\ast$/
+\item 
+\#define \hyperlink{e__os_8h_a00d24c7231be28dbaf71f5408f30e44c}{inline}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!D\+E\+V\+R\+A\+N\+D\+OM@{D\+E\+V\+R\+A\+N\+D\+OM}}
+\index{D\+E\+V\+R\+A\+N\+D\+OM@{D\+E\+V\+R\+A\+N\+D\+OM}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+V\+R\+A\+N\+D\+OM}{DEVRANDOM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+V\+R\+A\+N\+D\+OM~\char`\"{}/dev/urandom\char`\"{},\char`\"{}/dev/random\char`\"{},\char`\"{}/dev/srandom\char`\"{}}\hypertarget{e__os_8h_a311ea57ec45e57f2b1a16841d27b5c35}{}\label{e__os_8h_a311ea57ec45e57f2b1a16841d27b5c35}
+
+
+Definition at line 85 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD@{D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD}}
+\index{D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD@{D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD}{DEVRANDOM_EGD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+V\+R\+A\+N\+D\+O\+M\+\_\+\+E\+GD~\char`\"{}/var/run/egd-\/pool\char`\"{},\char`\"{}/dev/egd-\/pool\char`\"{},\char`\"{}/etc/egd-\/pool\char`\"{},\char`\"{}/etc/entropy\char`\"{}}\hypertarget{e__os_8h_afa269eda8828dfda0969aaa1cdf6db69}{}\label{e__os_8h_afa269eda8828dfda0969aaa1cdf6db69}
+
+
+Definition at line 93 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!M\+S\+\_\+\+S\+T\+A\+T\+IC@{M\+S\+\_\+\+S\+T\+A\+T\+IC}}
+\index{M\+S\+\_\+\+S\+T\+A\+T\+IC@{M\+S\+\_\+\+S\+T\+A\+T\+IC}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{M\+S\+\_\+\+S\+T\+A\+T\+IC}{MS_STATIC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+S\+\_\+\+S\+T\+A\+T\+IC}\hypertarget{e__os_8h_a24bfcfed5b8782b2fab749150d55217d}{}\label{e__os_8h_a24bfcfed5b8782b2fab749150d55217d}
+
+
+Definition at line 126 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!get\+\_\+last\+\_\+sys\+\_\+error@{get\+\_\+last\+\_\+sys\+\_\+error}}
+\index{get\+\_\+last\+\_\+sys\+\_\+error@{get\+\_\+last\+\_\+sys\+\_\+error}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{get\+\_\+last\+\_\+sys\+\_\+error}{get_last_sys_error}}]{\setlength{\rightskip}{0pt plus 5cm}\#define get\+\_\+last\+\_\+sys\+\_\+error(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf errno}}\hypertarget{e__os_8h_ab199cfe59c45c462a9ab4d8230078856}{}\label{e__os_8h_ab199cfe59c45c462a9ab4d8230078856}
+
+
+Definition at line 150 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!clear\+\_\+sys\+\_\+error@{clear\+\_\+sys\+\_\+error}}
+\index{clear\+\_\+sys\+\_\+error@{clear\+\_\+sys\+\_\+error}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{clear\+\_\+sys\+\_\+error}{clear_sys_error}}]{\setlength{\rightskip}{0pt plus 5cm}\#define clear\+\_\+sys\+\_\+error(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf errno}=0}\hypertarget{e__os_8h_ae25bc86181953cda3ebc048d5eb8e658}{}\label{e__os_8h_ae25bc86181953cda3ebc048d5eb8e658}
+
+
+Definition at line 151 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!get\+\_\+last\+\_\+socket\+\_\+error@{get\+\_\+last\+\_\+socket\+\_\+error}}
+\index{get\+\_\+last\+\_\+socket\+\_\+error@{get\+\_\+last\+\_\+socket\+\_\+error}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{get\+\_\+last\+\_\+socket\+\_\+error}{get_last_socket_error}}]{\setlength{\rightskip}{0pt plus 5cm}\#define get\+\_\+last\+\_\+socket\+\_\+error(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf errno}}\hypertarget{e__os_8h_a3d54240b3e2a42df74184997ca4fcf97}{}\label{e__os_8h_a3d54240b3e2a42df74184997ca4fcf97}
+
+
+Definition at line 213 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!clear\+\_\+socket\+\_\+error@{clear\+\_\+socket\+\_\+error}}
+\index{clear\+\_\+socket\+\_\+error@{clear\+\_\+socket\+\_\+error}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{clear\+\_\+socket\+\_\+error}{clear_socket_error}}]{\setlength{\rightskip}{0pt plus 5cm}\#define clear\+\_\+socket\+\_\+error(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~{\bf errno}=0}\hypertarget{e__os_8h_a3283dc6a2aa9c6987e9f42609fde740f}{}\label{e__os_8h_a3283dc6a2aa9c6987e9f42609fde740f}
+
+
+Definition at line 214 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!ioctlsocket@{ioctlsocket}}
+\index{ioctlsocket@{ioctlsocket}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{ioctlsocket}{ioctlsocket}}]{\setlength{\rightskip}{0pt plus 5cm}\#define ioctlsocket(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)~ioctl({\bf a},b,{\bf c})}\hypertarget{e__os_8h_a7bb01471241009322a4e6500b544809d}{}\label{e__os_8h_a7bb01471241009322a4e6500b544809d}
+
+
+Definition at line 215 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!closesocket@{closesocket}}
+\index{closesocket@{closesocket}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{closesocket}{closesocket}}]{\setlength{\rightskip}{0pt plus 5cm}\#define closesocket(
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)~close(s)}\hypertarget{e__os_8h_a515714eeaac33e82c3c5fb8d8ffe4513}{}\label{e__os_8h_a515714eeaac33e82c3c5fb8d8ffe4513}
+
+
+Definition at line 216 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!readsocket@{readsocket}}
+\index{readsocket@{readsocket}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{readsocket}{readsocket}}]{\setlength{\rightskip}{0pt plus 5cm}\#define readsocket(
+\begin{DoxyParamCaption}
+\item[{}]{s, }
+\item[{}]{b, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~read((s),(b),(n))}\hypertarget{e__os_8h_acc2603e6dfe6e59f772472ded98551a0}{}\label{e__os_8h_acc2603e6dfe6e59f772472ded98551a0}
+
+
+Definition at line 217 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!writesocket@{writesocket}}
+\index{writesocket@{writesocket}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{writesocket}{writesocket}}]{\setlength{\rightskip}{0pt plus 5cm}\#define writesocket(
+\begin{DoxyParamCaption}
+\item[{}]{s, }
+\item[{}]{b, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~write((s),(b),(n))}\hypertarget{e__os_8h_af544e0ef77fac4a3b095d8abcfbd3ce4}{}\label{e__os_8h_af544e0ef77fac4a3b095d8abcfbd3ce4}
+
+
+Definition at line 218 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK@{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK}}
+\index{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK@{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK}{MS_CALLBACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK}\hypertarget{e__os_8h_a9bf82f2bf6a77e81125eeaa7ee405322}{}\label{e__os_8h_a9bf82f2bf6a77e81125eeaa7ee405322}
+
+
+Definition at line 225 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!M\+S\+\_\+\+F\+AR@{M\+S\+\_\+\+F\+AR}}
+\index{M\+S\+\_\+\+F\+AR@{M\+S\+\_\+\+F\+AR}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{M\+S\+\_\+\+F\+AR}{MS_FAR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+S\+\_\+\+F\+AR}\hypertarget{e__os_8h_a642b44301ac8c307e33604ba3d273671}{}\label{e__os_8h_a642b44301ac8c307e33604ba3d273671}
+
+
+Definition at line 226 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF@{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF}}
+\index{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF@{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF}{OPENSSL_CONF}}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF~\char`\"{}openssl.\+cnf\char`\"{}}\hypertarget{e__os_8h_ac938f1e75e250eff8d8b1f258299d9e3}{}\label{e__os_8h_ac938f1e75e250eff8d8b1f258299d9e3}
+
+
+Definition at line 490 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF@{S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF}}
+\index{S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF@{S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF}{SSLEAY_CONF}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+S\+L\+E\+A\+Y\+\_\+\+C\+O\+NF~{\bf O\+P\+E\+N\+S\+S\+L\+\_\+\+C\+O\+NF}}\hypertarget{e__os_8h_ad5e1b2b3637f94b4c320b98e050d1634}{}\label{e__os_8h_ad5e1b2b3637f94b4c320b98e050d1634}
+
+
+Definition at line 491 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!R\+F\+I\+LE@{R\+F\+I\+LE}}
+\index{R\+F\+I\+LE@{R\+F\+I\+LE}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{R\+F\+I\+LE}{RFILE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+F\+I\+LE~\char`\"{}.rnd\char`\"{}}\hypertarget{e__os_8h_af69318ea4c03a0128fb3a04cfec4e4ca}{}\label{e__os_8h_af69318ea4c03a0128fb3a04cfec4e4ca}
+
+
+Definition at line 492 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR@{L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR}}
+\index{L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR@{L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR}{LIST_SEPARATOR_CHAR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+I\+S\+T\+\_\+\+S\+E\+P\+A\+R\+A\+T\+O\+R\+\_\+\+C\+H\+AR~\textquotesingle{}\+:\textquotesingle{}}\hypertarget{e__os_8h_a58ba462e20b716f2c020af2bb5131b20}{}\label{e__os_8h_a58ba462e20b716f2c020af2bb5131b20}
+
+
+Definition at line 493 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!N\+U\+L\+\_\+\+D\+EV@{N\+U\+L\+\_\+\+D\+EV}}
+\index{N\+U\+L\+\_\+\+D\+EV@{N\+U\+L\+\_\+\+D\+EV}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{N\+U\+L\+\_\+\+D\+EV}{NUL_DEV}}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+U\+L\+\_\+\+D\+EV~\char`\"{}/dev/null\char`\"{}}\hypertarget{e__os_8h_a5f33015382be5da5b3bcddd0e53af7b3}{}\label{e__os_8h_a5f33015382be5da5b3bcddd0e53af7b3}
+
+
+Definition at line 494 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!E\+X\+IT@{E\+X\+IT}}
+\index{E\+X\+IT@{E\+X\+IT}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{E\+X\+IT}{EXIT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+X\+IT(
+\begin{DoxyParamCaption}
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~exit(n)}\hypertarget{e__os_8h_a0d0f00840d4353c236ea5e48efaf164d}{}\label{e__os_8h_a0d0f00840d4353c236ea5e48efaf164d}
+
+
+Definition at line 495 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!S\+S\+Leay\+\_\+getpid@{S\+S\+Leay\+\_\+getpid}}
+\index{S\+S\+Leay\+\_\+getpid@{S\+S\+Leay\+\_\+getpid}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{S\+S\+Leay\+\_\+getpid}{SSLeay_getpid}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+S\+Leay\+\_\+getpid(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~getpid()}\hypertarget{e__os_8h_a2b7867c30e519e5b52f73112d8a8cfcf}{}\label{e__os_8h_a2b7867c30e519e5b52f73112d8a8cfcf}
+
+
+Definition at line 498 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT@{O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT}}
+\index{O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT@{O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT}{OPENSSL_EXIT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\+P\+E\+N\+S\+S\+L\+\_\+\+E\+X\+IT(
+\begin{DoxyParamCaption}
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~do \{ {\bf E\+X\+IT}(n); return(n); \} while(0)}\hypertarget{e__os_8h_aa8e0508750f1a35909865bf7acd8a4d3}{}\label{e__os_8h_aa8e0508750f1a35909865bf7acd8a4d3}
+
+
+Definition at line 684 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG@{D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG}}
+\index{D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG@{D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG}{DG_GCC_BUG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+G\+\_\+\+G\+C\+C\+\_\+\+B\+UG~/$\ast$ gcc $<$ 2.\+6.\+3 on D\+G\+UX $\ast$/}\hypertarget{e__os_8h_a75681ed3ec900c26c376323c03229ead}{}\label{e__os_8h_a75681ed3ec900c26c376323c03229ead}
+
+
+Definition at line 690 of file e\+\_\+os.\+h.
+
+\index{e\+\_\+os.\+h@{e\+\_\+os.\+h}!inline@{inline}}
+\index{inline@{inline}!e\+\_\+os.\+h@{e\+\_\+os.\+h}}
+\subsubsection[{\texorpdfstring{inline}{inline}}]{\setlength{\rightskip}{0pt plus 5cm}\#define inline}\hypertarget{e__os_8h_a00d24c7231be28dbaf71f5408f30e44c}{}\label{e__os_8h_a00d24c7231be28dbaf71f5408f30e44c}
+
+
+Definition at line 774 of file e\+\_\+os.\+h.
+

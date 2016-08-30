@@ -1,0 +1,98 @@
+.TH "s2n-master/tls/s2n_server_finished.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_server_finished.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_resume\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_server_finished_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_finished_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_server_finished_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 28 of file s2n_server_finished\&.c\&.
+.PP
+.nf
+29 {
+30     uint8_t *our_version;
+31     int length = S2N_TLS_FINISHED_LEN;
+32     our_version = conn->handshake\&.server_finished;
+33 
+34     if (conn->actual_protocol_version == S2N_SSLv3) {
+35         length = S2N_SSL_FINISHED_LEN;
+36     }
+37 
+38     uint8_t *their_version = s2n_stuffer_raw_read(&conn->handshake\&.io, length);
+39     notnull_check(their_version);
+40 
+41     if (!s2n_constant_time_equals(our_version, their_version, length)) {
+42         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+43     }
+44 
+45     return 0;
+46 }
+.fi
+.SS "int s2n_server_finished_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 48 of file s2n_server_finished\&.c\&.
+.PP
+.nf
+49 {
+50     uint8_t *our_version;
+51     int length = S2N_TLS_FINISHED_LEN;
+52 
+53     /* Compute the finished message */
+54     GUARD(s2n_prf_server_finished(conn));
+55 
+56     our_version = conn->handshake\&.server_finished;
+57 
+58     if (conn->actual_protocol_version == S2N_SSLv3) {
+59         length = S2N_SSL_FINISHED_LEN;
+60     }
+61 
+62     GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, our_version, length));
+63 
+64     /* Zero the sequence number */
+65     struct s2n_blob seq = {\&.data = conn->secure\&.server_sequence_number,\&.size = S2N_TLS_SEQUENCE_NUM_LEN };
+66     GUARD(s2n_blob_zero(&seq));
+67 
+68     /* Update the secure state to active, and point the client at the active state */
+69     conn->server = &conn->secure;
+70 
+71     if (conn->handshake\&.handshake_type == RESUME) {
+72         GUARD(s2n_prf_key_expansion(conn));
+73     }
+74 
+75     return 0;
+76 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

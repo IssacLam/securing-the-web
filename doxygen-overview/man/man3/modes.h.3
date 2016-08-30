@@ -1,0 +1,265 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/modes.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/modes.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBblock128_f\fP) (const unsigned char in[16], unsigned char out[16], const \fBvoid\fP *key)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBcbc128_f\fP) (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], int enc)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBctr128_f\fP) (const unsigned char *in, unsigned char *out, size_t blocks, const \fBvoid\fP *key, const unsigned char ivec[16])"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBccm128_f\fP) (const unsigned char *in, unsigned char *out, size_t blocks, const \fBvoid\fP *key, const unsigned char ivec[16], unsigned char cmac[16])"
+.br
+.ti -1c
+.RI "typedef struct \fBgcm128_context\fP \fBGCM128_CONTEXT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBccm128_context\fP \fBCCM128_CONTEXT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBxts128_context\fP \fBXTS128_CONTEXT\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cbc128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cbc128_decrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_ctr128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], unsigned char ecount_buf[16], unsigned int *\fBnum\fP, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_ctr128_encrypt_ctr32\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], unsigned char ecount_buf[16], unsigned int *\fBnum\fP, \fBctr128_f\fP ctr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_ofb128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], int *\fBnum\fP, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cfb128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], int *\fBnum\fP, int enc, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cfb128_8_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlength\fP, const \fBvoid\fP *key, unsigned char ivec[16], int *\fBnum\fP, int enc, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_cfb128_1_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBbits\fP, const \fBvoid\fP *key, unsigned char ivec[16], int *\fBnum\fP, int enc, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_cts128_encrypt_block\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_cts128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_cts128_decrypt_block\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_cts128_decrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_nistcts128_encrypt_block\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_nistcts128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_nistcts128_decrypt_block\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_nistcts128_decrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+.br
+.ti -1c
+.RI "\fBGCM128_CONTEXT\fP * \fBCRYPTO_gcm128_new\fP (\fBvoid\fP *key, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_init\fP (\fBGCM128_CONTEXT\fP *ctx, \fBvoid\fP *key, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_setiv\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *iv, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_aad\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *aad, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_encrypt\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *in, unsigned char *out, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_decrypt\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *in, unsigned char *out, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_encrypt_ctr32\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *in, unsigned char *out, size_t \fBlen\fP, \fBctr128_f\fP stream)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_decrypt_ctr32\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *in, unsigned char *out, size_t \fBlen\fP, \fBctr128_f\fP stream)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_gcm128_finish\fP (\fBGCM128_CONTEXT\fP *ctx, const unsigned char *tag, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_tag\fP (\fBGCM128_CONTEXT\fP *ctx, unsigned char *tag, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_gcm128_release\fP (\fBGCM128_CONTEXT\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_ccm128_init\fP (\fBCCM128_CONTEXT\fP *ctx, unsigned int M, unsigned int L, \fBvoid\fP *key, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ccm128_setiv\fP (\fBCCM128_CONTEXT\fP *ctx, const unsigned char *nonce, size_t nlen, size_t mlen)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCRYPTO_ccm128_aad\fP (\fBCCM128_CONTEXT\fP *ctx, const unsigned char *aad, size_t alen)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ccm128_encrypt\fP (\fBCCM128_CONTEXT\fP *ctx, const unsigned char *inp, unsigned char *out, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ccm128_decrypt\fP (\fBCCM128_CONTEXT\fP *ctx, const unsigned char *inp, unsigned char *out, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ccm128_encrypt_ccm64\fP (\fBCCM128_CONTEXT\fP *ctx, const unsigned char *inp, unsigned char *out, size_t \fBlen\fP, \fBccm128_f\fP stream)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_ccm128_decrypt_ccm64\fP (\fBCCM128_CONTEXT\fP *ctx, const unsigned char *inp, unsigned char *out, size_t \fBlen\fP, \fBccm128_f\fP stream)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_ccm128_tag\fP (\fBCCM128_CONTEXT\fP *ctx, unsigned char *tag, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCRYPTO_xts128_encrypt\fP (const \fBXTS128_CONTEXT\fP *ctx, const unsigned char iv[16], const unsigned char *inp, unsigned char *out, size_t \fBlen\fP, int enc)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_128_wrap\fP (\fBvoid\fP *key, const unsigned char *iv, unsigned char *out, const unsigned char *in, size_t inlen, \fBblock128_f\fP block)"
+.br
+.ti -1c
+.RI "size_t \fBCRYPTO_128_unwrap\fP (\fBvoid\fP *key, const unsigned char *iv, unsigned char *out, const unsigned char *in, size_t inlen, \fBblock128_f\fP block)"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef \fBvoid\fP(* block128_f) (const unsigned char in[16], unsigned char out[16], const \fBvoid\fP *key)"
+
+.PP
+Definition at line 13 of file modes\&.h\&.
+.SS "typedef \fBvoid\fP(* cbc128_f) (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBvoid\fP *key, unsigned char ivec[16], int enc)"
+
+.PP
+Definition at line 16 of file modes\&.h\&.
+.SS "typedef \fBvoid\fP(* ctr128_f) (const unsigned char *in, unsigned char *out, size_t blocks, const \fBvoid\fP *key, const unsigned char ivec[16])"
+
+.PP
+Definition at line 20 of file modes\&.h\&.
+.SS "typedef \fBvoid\fP(* ccm128_f) (const unsigned char *in, unsigned char *out, size_t blocks, const \fBvoid\fP *key, const unsigned char ivec[16], unsigned char cmac[16])"
+
+.PP
+Definition at line 24 of file modes\&.h\&.
+.SS "typedef struct \fBgcm128_context\fP \fBGCM128_CONTEXT\fP"
+
+.PP
+Definition at line 98 of file modes\&.h\&.
+.SS "typedef struct \fBccm128_context\fP \fBCCM128_CONTEXT\fP"
+
+.PP
+Definition at line 123 of file modes\&.h\&.
+.SS "typedef struct \fBxts128_context\fP \fBXTS128_CONTEXT\fP"
+
+.PP
+Definition at line 144 of file modes\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP CRYPTO_cbc128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_cbc128_decrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_ctr128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], unsigned char ecount_buf[16], unsigned int * num, \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_ctr128_encrypt_ctr32 (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], unsigned char ecount_buf[16], unsigned int * num, \fBctr128_f\fP ctr)"
+
+.SS "\fBvoid\fP CRYPTO_ofb128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], int * num, \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_cfb128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], int * num, int enc, \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_cfb128_8_encrypt (const unsigned char * in, unsigned char * out, size_t length, const \fBvoid\fP * key, unsigned char ivec[16], int * num, int enc, \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_cfb128_1_encrypt (const unsigned char * in, unsigned char * out, size_t bits, const \fBvoid\fP * key, unsigned char ivec[16], int * num, int enc, \fBblock128_f\fP block)"
+
+.SS "size_t CRYPTO_cts128_encrypt_block (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBblock128_f\fP block)"
+
+.SS "size_t CRYPTO_cts128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+
+.SS "size_t CRYPTO_cts128_decrypt_block (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBblock128_f\fP block)"
+
+.SS "size_t CRYPTO_cts128_decrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+
+.SS "size_t CRYPTO_nistcts128_encrypt_block (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBblock128_f\fP block)"
+
+.SS "size_t CRYPTO_nistcts128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+
+.SS "size_t CRYPTO_nistcts128_decrypt_block (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBblock128_f\fP block)"
+
+.SS "size_t CRYPTO_nistcts128_decrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBvoid\fP * key, unsigned char ivec[16], \fBcbc128_f\fP cbc)"
+
+.SS "\fBGCM128_CONTEXT\fP* CRYPTO_gcm128_new (\fBvoid\fP * key, \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_gcm128_init (\fBGCM128_CONTEXT\fP * ctx, \fBvoid\fP * key, \fBblock128_f\fP block)"
+
+.SS "\fBvoid\fP CRYPTO_gcm128_setiv (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * iv, size_t len)"
+
+.SS "int CRYPTO_gcm128_aad (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * aad, size_t len)"
+
+.SS "int CRYPTO_gcm128_encrypt (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len)"
+
+.SS "int CRYPTO_gcm128_decrypt (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len)"
+
+.SS "int CRYPTO_gcm128_encrypt_ctr32 (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len, \fBctr128_f\fP stream)"
+
+.SS "int CRYPTO_gcm128_decrypt_ctr32 (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * in, unsigned char * out, size_t len, \fBctr128_f\fP stream)"
+
+.SS "int CRYPTO_gcm128_finish (\fBGCM128_CONTEXT\fP * ctx, const unsigned char * tag, size_t len)"
+
+.SS "\fBvoid\fP CRYPTO_gcm128_tag (\fBGCM128_CONTEXT\fP * ctx, unsigned char * tag, size_t len)"
+
+.SS "\fBvoid\fP CRYPTO_gcm128_release (\fBGCM128_CONTEXT\fP * ctx)"
+
+.SS "\fBvoid\fP CRYPTO_ccm128_init (\fBCCM128_CONTEXT\fP * ctx, unsigned int M, unsigned int L, \fBvoid\fP * key, \fBblock128_f\fP block)"
+
+.SS "int CRYPTO_ccm128_setiv (\fBCCM128_CONTEXT\fP * ctx, const unsigned char * nonce, size_t nlen, size_t mlen)"
+
+.SS "\fBvoid\fP CRYPTO_ccm128_aad (\fBCCM128_CONTEXT\fP * ctx, const unsigned char * aad, size_t alen)"
+
+.SS "int CRYPTO_ccm128_encrypt (\fBCCM128_CONTEXT\fP * ctx, const unsigned char * inp, unsigned char * out, size_t len)"
+
+.SS "int CRYPTO_ccm128_decrypt (\fBCCM128_CONTEXT\fP * ctx, const unsigned char * inp, unsigned char * out, size_t len)"
+
+.SS "int CRYPTO_ccm128_encrypt_ccm64 (\fBCCM128_CONTEXT\fP * ctx, const unsigned char * inp, unsigned char * out, size_t len, \fBccm128_f\fP stream)"
+
+.SS "int CRYPTO_ccm128_decrypt_ccm64 (\fBCCM128_CONTEXT\fP * ctx, const unsigned char * inp, unsigned char * out, size_t len, \fBccm128_f\fP stream)"
+
+.SS "size_t CRYPTO_ccm128_tag (\fBCCM128_CONTEXT\fP * ctx, unsigned char * tag, size_t len)"
+
+.SS "int CRYPTO_xts128_encrypt (const \fBXTS128_CONTEXT\fP * ctx, const unsigned char iv[16], const unsigned char * inp, unsigned char * out, size_t len, int enc)"
+
+.SS "size_t CRYPTO_128_wrap (\fBvoid\fP * key, const unsigned char * iv, unsigned char * out, const unsigned char * in, size_t inlen, \fBblock128_f\fP block)"
+
+.SS "size_t CRYPTO_128_unwrap (\fBvoid\fP * key, const unsigned char * iv, unsigned char * out, const unsigned char * in, size_t inlen, \fBblock128_f\fP block)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

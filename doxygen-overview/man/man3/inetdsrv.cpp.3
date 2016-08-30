@@ -1,0 +1,168 @@
+.TH "s2n-master/libcrypto-build/openssl/demos/ssl/inetdsrv.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/demos/ssl/inetdsrv.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'rsa\&.h'\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <openssl/pem\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHOME\fP   '/usr/users/sampo/demo/'"
+.br
+.ti -1c
+.RI "#define \fBCERTF\fP   \fBHOME\fP 'plain\-cert\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBKEYF\fP   \fBHOME\fP 'plain\-key\&.pem'"
+.br
+.ti -1c
+.RI "#define \fBCHK_NULL\fP(\fBx\fP)   if ((\fBx\fP)==NULL) exit (1)"
+.br
+.ti -1c
+.RI "#define \fBCHK_ERR\fP(err,  s)"
+.br
+.ti -1c
+.RI "#define \fBCHK_SSL\fP(err)   if ((err)==\-1) { \fBERR_print_errors_fp\fP(log); exit(2); }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP ()"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define HOME   '/usr/users/sampo/demo/'"
+
+.PP
+Definition at line 17 of file inetdsrv\&.cpp\&.
+.SS "#define CERTF   \fBHOME\fP 'plain\-cert\&.pem'"
+
+.PP
+Definition at line 18 of file inetdsrv\&.cpp\&.
+.SS "#define KEYF   \fBHOME\fP 'plain\-key\&.pem'"
+
+.PP
+Definition at line 19 of file inetdsrv\&.cpp\&.
+.SS "#define CHK_NULL(\fBx\fP)   if ((\fBx\fP)==NULL) exit (1)"
+
+.PP
+Definition at line 21 of file inetdsrv\&.cpp\&.
+.SS "#define CHK_ERR(err, s)"
+\fBValue:\fP
+.PP
+.nf
+if ((err)==-1) \
+                         { fprintf(log, "%s %d\n", (s), errno); exit(1); }
+.fi
+.PP
+Definition at line 22 of file inetdsrv\&.cpp\&.
+.SS "#define CHK_SSL(err)   if ((err)==\-1) { \fBERR_print_errors_fp\fP(log); exit(2); }"
+
+.PP
+Definition at line 24 of file inetdsrv\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP main (\fBvoid\fP)"
+
+.PP
+Definition at line 26 of file inetdsrv\&.cpp\&.
+.PP
+.nf
+27 {
+28   int err;
+29   SSL_CTX* ctx;
+30   SSL*     ssl;
+31   X509*    client_cert;
+32   char*    str;
+33   char     buf [4096];
+34   FILE* log;
+35   
+36   log = fopen ("/dev/console", "a");                     CHK_NULL(log);
+37   fprintf (log, "inetdserv %ld\n", (long)getpid());
+38   
+39   SSL_load_error_strings();
+40   ctx = SSL_CTX_new (); CHK_NULL(ctx);
+41   
+42   err = SSL_CTX_use_RSAPrivateKey_file (ctx, KEYF,  SSL_FILETYPE_PEM);
+43   CHK_SSL (err);
+44   
+45   err = SSL_CTX_use_certificate_file   (ctx, CERTF, SSL_FILETYPE_PEM);
+46   CHK_SSL (err);
+47 
+48   /* inetd has already opened the TCP connection, so we can get right
+49      down to business\&. */
+50   
+51   ssl = SSL_new (ctx);  CHK_NULL(ssl);
+52   SSL_set_fd (ssl,  fileno(stdin));
+53   err = SSL_accept (ssl);                                CHK_SSL(err);
+54   
+55   /* Get the cipher - opt */
+56   
+57   fprintf (log, "SSL connection using %s\n", SSL_get_cipher (ssl));
+58   
+59   /* Get client's certificate (note: beware of dynamic allocation) - opt */
+60 
+61   client_cert = SSL_get_peer_certificate (ssl);
+62   if (client_cert != NULL) {
+63     fprintf (log, "Client certificate:\n");
+64     
+65     str = X509_NAME_oneline (X509_get_subject_name (client_cert));
+66     CHK_NULL(str);
+67     fprintf (log, "\t subject: %s\n", str);
+68     OPENSSL_free (str);
+69     
+70     str = X509_NAME_oneline (X509_get_issuer_name  (client_cert));
+71     CHK_NULL(str);
+72     fprintf (log, "\t issuer: %s\n", str);
+73     OPENSSL_free (str);
+74     
+75     /* We could do all sorts of certificate verification stuff here before
+76        deallocating the certificate\&. */
+77     
+78     X509_free (client_cert);
+79   } else
+80     fprintf (log, "Client doe not have certificate\&.\n");
+81 
+82   /* ------------------------------------------------- */
+83   /* DATA EXCHANGE: Receive message and send reply  */
+84   
+85   err = SSL_read (ssl, buf, sizeof(buf) - 1);  CHK_SSL(err);
+86   buf[err] = '\0';
+87   fprintf (log, "Got %d chars:'%s'\n", err, buf);
+88   
+89   err = SSL_write (ssl, "Loud and clear\&.", strlen("Loud and clear\&."));
+90   CHK_SSL(err);
+91 
+92   /* Clean up\&. */
+93 
+94   fclose (log);
+95   SSL_free (ssl);
+96   SSL_CTX_free (ctx);
+97 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

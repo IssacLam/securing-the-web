@@ -1,0 +1,100 @@
+.TH "s2n-master/tls/s2n_connection.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_connection.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <signal\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+\fC#include 'tls/s2n_crypto\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'tls/s2n_prf\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'utils/s2n_timer\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_connection\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_TLS_PROTOCOL_VERSION_LEN\fP   2"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_connection_kill\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_TLS_PROTOCOL_VERSION_LEN   2"
+
+.PP
+Definition at line 37 of file s2n_connection\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_connection_kill (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 365 of file s2n_connection\&.c\&.
+.PP
+.nf
+366 {
+367     conn->closed = 1;
+368 
+369     /* Delay between 10 and 30 seconds in nanoseconds */
+370     int64_t min = TEN_S, max = 3 * TEN_S;
+371 
+372     /* Keep track of the delay so that it can be enforced */
+373     conn->delay = min + s2n_public_random(max - min);
+374 
+375     /* Restart the write timer */
+376     GUARD(s2n_timer_start(conn->config, &conn->write_timer));
+377 
+378     if (conn->blinding == S2N_BUILT_IN_BLINDING) {
+379         struct timespec sleep_time = {\&.tv_sec = conn->delay / ONE_S,\&.tv_nsec = conn->delay % ONE_S };
+380         int r;
+381 
+382         do {
+383             r = nanosleep(&sleep_time, &sleep_time);
+384         }
+385         while (r != 0);
+386     }
+387 
+388     return 0;
+389 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

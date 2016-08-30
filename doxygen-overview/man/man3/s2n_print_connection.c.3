@@ -1,0 +1,74 @@
+.TH "s2n-master/tests/testlib/s2n_print_connection.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/testlib/s2n_print_connection.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBs2n_print_connection\fP (struct \fBs2n_connection\fP *conn, const char *marker)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP s2n_print_connection (struct \fBs2n_connection\fP * conn, const char * marker)"
+
+.PP
+Definition at line 21 of file s2n_print_connection\&.c\&.
+.PP
+.nf
+22 {
+23     int i;
+24 
+25     printf("marker: %s\n", marker);
+26     printf("HEADER IN Stuffer (write: %d, read: %d, size: %d)\n", conn->header_in\&.write_cursor, conn->header_in\&.read_cursor, conn->header_in\&.blob\&.size);
+27     for (i = 0; i < conn->header_in\&.blob\&.size; i++) {
+28         printf("%02x", conn->header_in\&.blob\&.data[i]);
+29         if ((i + 1) % 8 == 0) {
+30             printf(" ");
+31         }
+32         if ((i + 1) % 40 == 0) {
+33             printf("\n");
+34         }
+35     }
+36     printf("\n");
+37  
+38     printf("IN Stuffer (write: %d, read: %d, size: %d)\n", conn->in\&.write_cursor, conn->in\&.read_cursor, conn->in\&.blob\&.size);
+39     for (i = 0; i < conn->in\&.write_cursor; i++) {
+40         printf("%02x", conn->in\&.blob\&.data[i]);
+41         if ((i + 1) % 8 == 0) {
+42             printf(" ");
+43         }
+44         if ((i + 1) % 40 == 0) {
+45             printf("\n");
+46         }
+47     }
+48     printf("\n");
+49 
+50     printf("OUT Stuffer (write: %d, read: %d, size: %d)\n", conn->out\&.write_cursor, conn->out\&.read_cursor, conn->out\&.blob\&.size);
+51     for (i = 0; i < conn->out\&.write_cursor; i++) {
+52         printf("%02x", conn->out\&.blob\&.data[i]);
+53         if ((i + 1) % 8 == 0) {
+54             printf(" ");
+55         }
+56         if ((i + 1) % 40 == 0) {
+57             printf("\n");
+58         }
+59     }
+60     printf("\n");
+61 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

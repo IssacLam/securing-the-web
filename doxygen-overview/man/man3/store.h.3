@@ -1,0 +1,1775 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/store/store.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/store/store.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSTORE_OBJECT_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSTORE_CTRL_SET_DIRECTORY\fP   0x0001"
+.br
+.ti -1c
+.RI "#define \fBSTORE_CTRL_SET_FILE\fP   0x0002"
+.br
+.ti -1c
+.RI "#define \fBSTORE_CTRL_SET_CONF_FILE\fP   0x0003"
+.br
+.ti -1c
+.RI "#define \fBSTORE_CTRL_SET_CONF_SECTION\fP   0x0004"
+.br
+.ti -1c
+.RI "#define \fBSTORE_set_app_data\fP(s,  arg)             \fBSTORE_set_ex_data\fP(s,0,arg)"
+.br
+.ti -1c
+.RI "#define \fBSTORE_get_app_data\fP(s)                     \fBSTORE_get_ex_data\fP(s,0)"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_DELETE\fP   134"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_GENERATE\fP   135"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_LIST_END\fP   168"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_LIST_NEXT\fP   136"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_LIST_START\fP   137"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_MODIFY\fP   169"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_MEM_STORE\fP   138"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_GET0_CSTR\fP   139"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_GET0_DN\fP   140"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_GET0_NUMBER\fP   141"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_GET0_SHA1STR\fP   142"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_MODIFY_CSTR\fP   143"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_MODIFY_DN\fP   144"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_MODIFY_NUMBER\fP   145"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_MODIFY_SHA1STR\fP   146"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_SET_CSTR\fP   147"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_SET_DN\fP   148"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_SET_NUMBER\fP   149"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_ATTR_INFO_SET_SHA1STR\fP   150"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_CERTIFICATE\fP   170"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_CTRL\fP   161"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_DELETE_ARBITRARY\fP   158"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_DELETE_CERTIFICATE\fP   102"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_DELETE_CRL\fP   103"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_DELETE_NUMBER\fP   104"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_DELETE_PRIVATE_KEY\fP   105"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_DELETE_PUBLIC_KEY\fP   106"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GENERATE_CRL\fP   107"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GENERATE_KEY\fP   108"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GET_ARBITRARY\fP   159"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GET_CERTIFICATE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GET_CRL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GET_NUMBER\fP   111"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GET_PRIVATE_KEY\fP   112"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_GET_PUBLIC_KEY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CERTIFICATE_END\fP   114"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CERTIFICATE_ENDP\fP   153"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CERTIFICATE_NEXT\fP   115"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CERTIFICATE_START\fP   116"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CRL_END\fP   117"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CRL_ENDP\fP   154"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CRL_NEXT\fP   118"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_CRL_START\fP   119"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PRIVATE_KEY_END\fP   120"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PRIVATE_KEY_ENDP\fP   155"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PRIVATE_KEY_NEXT\fP   121"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PRIVATE_KEY_START\fP   122"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PUBLIC_KEY_END\fP   123"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PUBLIC_KEY_ENDP\fP   156"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PUBLIC_KEY_NEXT\fP   124"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_LIST_PUBLIC_KEY_START\fP   125"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_MODIFY_ARBITRARY\fP   162"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_MODIFY_CERTIFICATE\fP   163"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_MODIFY_CRL\fP   164"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_MODIFY_NUMBER\fP   165"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_MODIFY_PRIVATE_KEY\fP   166"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_MODIFY_PUBLIC_KEY\fP   167"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_NEW_ENGINE\fP   133"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_NEW_METHOD\fP   132"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_PARSE_ATTRS_END\fP   151"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_PARSE_ATTRS_ENDP\fP   172"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_PARSE_ATTRS_NEXT\fP   152"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_PARSE_ATTRS_START\fP   171"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_REVOKE_CERTIFICATE\fP   129"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_REVOKE_PRIVATE_KEY\fP   130"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_REVOKE_PUBLIC_KEY\fP   131"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_STORE_ARBITRARY\fP   157"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_STORE_CERTIFICATE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_STORE_CRL\fP   101"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_STORE_NUMBER\fP   126"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_STORE_PRIVATE_KEY\fP   127"
+.br
+.ti -1c
+.RI "#define \fBSTORE_F_STORE_STORE_PUBLIC_KEY\fP   128"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_ALREADY_HAS_A_VALUE\fP   127"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_DELETING_ARBITRARY\fP   132"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_DELETING_CERTIFICATE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_DELETING_KEY\fP   101"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_DELETING_NUMBER\fP   102"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_GENERATING_CRL\fP   103"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_GENERATING_KEY\fP   104"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_GETTING_ARBITRARY\fP   133"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_GETTING_CERTIFICATE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_GETTING_KEY\fP   106"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_GETTING_NUMBER\fP   107"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_LISTING_CERTIFICATES\fP   108"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_LISTING_KEYS\fP   109"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_MODIFYING_ARBITRARY\fP   138"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_MODIFYING_CERTIFICATE\fP   139"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_MODIFYING_CRL\fP   140"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_MODIFYING_NUMBER\fP   141"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_MODIFYING_PRIVATE_KEY\fP   142"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_MODIFYING_PUBLIC_KEY\fP   143"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_REVOKING_CERTIFICATE\fP   110"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_REVOKING_KEY\fP   111"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_STORING_ARBITRARY\fP   134"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_STORING_CERTIFICATE\fP   112"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_STORING_KEY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_FAILED_STORING_NUMBER\fP   114"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NOT_IMPLEMENTED\fP   128"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_CONTROL_FUNCTION\fP   144"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_DELETE_ARBITRARY_FUNCTION\fP   135"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_DELETE_NUMBER_FUNCTION\fP   115"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_DELETE_OBJECT_FUNCTION\fP   116"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_GENERATE_CRL_FUNCTION\fP   117"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_GENERATE_OBJECT_FUNCTION\fP   118"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_GET_OBJECT_ARBITRARY_FUNCTION\fP   136"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_GET_OBJECT_FUNCTION\fP   119"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_GET_OBJECT_NUMBER_FUNCTION\fP   120"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_LIST_OBJECT_ENDP_FUNCTION\fP   131"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_LIST_OBJECT_END_FUNCTION\fP   121"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_LIST_OBJECT_NEXT_FUNCTION\fP   122"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_LIST_OBJECT_START_FUNCTION\fP   123"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_MODIFY_OBJECT_FUNCTION\fP   145"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_REVOKE_OBJECT_FUNCTION\fP   124"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_STORE\fP   129"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_STORE_OBJECT_ARBITRARY_FUNCTION\fP   137"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_STORE_OBJECT_FUNCTION\fP   125"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_STORE_OBJECT_NUMBER_FUNCTION\fP   126"
+.br
+.ti -1c
+.RI "#define \fBSTORE_R_NO_VALUE\fP   130"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef enum \fBSTORE_object_types\fP \fBSTORE_OBJECT_TYPES\fP"
+.br
+.ti -1c
+.RI "typedef enum \fBSTORE_params\fP \fBSTORE_PARAM_TYPES\fP"
+.br
+.ti -1c
+.RI "typedef enum \fBSTORE_attribs\fP \fBSTORE_ATTR_TYPES\fP"
+.br
+.ti -1c
+.RI "typedef enum \fBSTORE_certificate_status\fP \fBSTORE_CERTIFICATE_STATUS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSTORE_OBJECT_st\fP \fBSTORE_OBJECT\fP"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_INITIALISE_FUNC_PTR\fP) (\fBSTORE\fP *)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBSTORE_CLEANUP_FUNC_PTR\fP) (\fBSTORE\fP *)"
+.br
+.ti -1c
+.RI "typedef \fBSTORE_OBJECT\fP *(* \fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef \fBSTORE_OBJECT\fP *(* \fBSTORE_GET_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP *(* \fBSTORE_START_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef \fBSTORE_OBJECT\fP *(* \fBSTORE_NEXT_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_END_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_STORE_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBSTORE_OBJECT\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_GENERIC_FUNC_PTR\fP) (\fBSTORE\fP *, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "typedef int(* \fBSTORE_CTRL_FUNC_PTR\fP) (\fBSTORE\fP *, int cmd, long l, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*f) (\fBvoid\fP))"
+.br
+.ti -1c
+.RI "typedef struct STORE_attr_info_st \fBSTORE_ATTR_INFO\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBSTORE_object_types\fP { \fBSTORE_OBJECT_TYPE_X509_CERTIFICATE\fP = 0x01, \fBSTORE_OBJECT_TYPE_X509_CRL\fP = 0x02, \fBSTORE_OBJECT_TYPE_PRIVATE_KEY\fP = 0x03, \fBSTORE_OBJECT_TYPE_PUBLIC_KEY\fP = 0x04, \fBSTORE_OBJECT_TYPE_NUMBER\fP = 0x05, \fBSTORE_OBJECT_TYPE_ARBITRARY\fP = 0x06, \fBSTORE_OBJECT_TYPE_NUM\fP = 0x06 }"
+.br
+.ti -1c
+.RI "enum \fBSTORE_params\fP { \fBSTORE_PARAM_EVP_TYPE\fP = 0x01, \fBSTORE_PARAM_BITS\fP = 0x02, \fBSTORE_PARAM_KEY_PARAMETERS\fP = 0x03, \fBSTORE_PARAM_KEY_NO_PARAMETERS\fP = 0x04, \fBSTORE_PARAM_AUTH_PASSPHRASE\fP = 0x05, \fBSTORE_PARAM_AUTH_KRB5_TICKET\fP = 0x06, \fBSTORE_PARAM_TYPE_NUM\fP = 0x06 }"
+.br
+.ti -1c
+.RI "enum \fBSTORE_attribs\fP { \fBSTORE_ATTR_END\fP = 0x00, \fBSTORE_ATTR_FRIENDLYNAME\fP = 0x01, \fBSTORE_ATTR_KEYID\fP = 0x02, \fBSTORE_ATTR_ISSUERKEYID\fP = 0x03, \fBSTORE_ATTR_SUBJECTKEYID\fP = 0x04, \fBSTORE_ATTR_ISSUERSERIALHASH\fP = 0x05, \fBSTORE_ATTR_ISSUER\fP = 0x06, \fBSTORE_ATTR_SERIAL\fP = 0x07, \fBSTORE_ATTR_SUBJECT\fP = 0x08, \fBSTORE_ATTR_CERTHASH\fP = 0x09, \fBSTORE_ATTR_EMAIL\fP = 0x0a, \fBSTORE_ATTR_FILENAME\fP = 0x0b, \fBSTORE_ATTR_TYPE_NUM\fP = 0x0b, \fBSTORE_ATTR_OR\fP = 0xff }"
+.br
+.ti -1c
+.RI "enum \fBSTORE_certificate_status\fP { \fBSTORE_X509_VALID\fP = 0x00, \fBSTORE_X509_EXPIRED\fP = 0x01, \fBSTORE_X509_SUSPENDED\fP = 0x02, \fBSTORE_X509_REVOKED\fP = 0x03 }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTORE\fP * \fBSTORE_new_method\fP (const \fBSTORE_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "\fBSTORE\fP * \fBSTORE_new_engine\fP (\fBENGINE\fP *engine)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSTORE_free\fP (\fBSTORE\fP *ui)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ctrl\fP (\fBSTORE\fP *store, int cmd, long i, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*f)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBSTORE_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_set_ex_data\fP (\fBSTORE\fP *r, int idx, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_get_ex_data\fP (\fBSTORE\fP *r, int idx)"
+.br
+.ti -1c
+.RI "const \fBSTORE_METHOD\fP * \fBSTORE_get_method\fP (\fBSTORE\fP *store)"
+.br
+.ti -1c
+.RI "const \fBSTORE_METHOD\fP * \fBSTORE_set_method\fP (\fBSTORE\fP *store, const \fBSTORE_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "const \fBSTORE_METHOD\fP * \fBSTORE_Memory\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBSTORE_OBJECT\fP * \fBSTORE_OBJECT_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSTORE_OBJECT_free\fP (\fBSTORE_OBJECT\fP *data)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBSTORE_get_certificate\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_certificate\fP (\fBSTORE\fP *\fBe\fP, \fBX509\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_certificate\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_revoke_certificate\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_certificate\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_certificate_start\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBSTORE_list_certificate_next\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_certificate_end\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_certificate_endp\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_generate_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_get_private_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_private_key\fP (\fBSTORE\fP *\fBe\fP, \fBEVP_PKEY\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_private_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_revoke_private_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_private_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_private_key_start\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_list_private_key_next\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_private_key_end\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_private_key_endp\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_get_public_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_public_key\fP (\fBSTORE\fP *\fBe\fP, \fBEVP_PKEY\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_public_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_revoke_public_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_public_key\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_public_key_start\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBSTORE_list_public_key_next\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_public_key_end\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_public_key_endp\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBSTORE_generate_crl\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBSTORE_get_crl\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_crl\fP (\fBSTORE\fP *\fBe\fP, \fBX509_CRL\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_crl\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_crl\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_list_crl_start\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBSTORE_list_crl_next\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_crl_end\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_list_crl_endp\fP (\fBSTORE\fP *\fBe\fP, \fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_number\fP (\fBSTORE\fP *\fBe\fP, \fBBIGNUM\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_number\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSTORE_get_number\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_number\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_store_arbitrary\fP (\fBSTORE\fP *\fBe\fP, \fBBUF_MEM\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_modify_arbitrary\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBBUF_MEM\fP * \fBSTORE_get_arbitrary\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "int \fBSTORE_delete_arbitrary\fP (\fBSTORE\fP *\fBe\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+.br
+.ti -1c
+.RI "\fBSTORE_METHOD\fP * \fBSTORE_create_method\fP (char *name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSTORE_destroy_method\fP (\fBSTORE_METHOD\fP *store_method)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_initialise_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_INITIALISE_FUNC_PTR\fP init_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_cleanup_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_CLEANUP_FUNC_PTR\fP clean_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_generate_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP generate_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_get_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GET_OBJECT_FUNC_PTR\fP get_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_STORE_OBJECT_FUNC_PTR\fP store_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_modify_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP store_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_revoke_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP revoke_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_delete_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP delete_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_list_start_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_START_OBJECT_FUNC_PTR\fP list_start_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_list_next_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_NEXT_OBJECT_FUNC_PTR\fP list_next_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_list_end_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_END_OBJECT_FUNC_PTR\fP list_end_f)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_update_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERIC_FUNC_PTR\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_lock_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERIC_FUNC_PTR\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_unlock_store_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_GENERIC_FUNC_PTR\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_method_set_ctrl_function\fP (\fBSTORE_METHOD\fP *sm, \fBSTORE_CTRL_FUNC_PTR\fP ctrl_f)"
+.br
+.ti -1c
+.RI "\fBSTORE_INITIALISE_FUNC_PTR\fP \fBSTORE_method_get_initialise_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_CLEANUP_FUNC_PTR\fP \fBSTORE_method_get_cleanup_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_generate_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GET_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_get_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_STORE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_modify_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_revoke_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_delete_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_START_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_list_start_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_NEXT_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_list_next_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_END_OBJECT_FUNC_PTR\fP \fBSTORE_method_get_list_end_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERIC_FUNC_PTR\fP \fBSTORE_method_get_update_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERIC_FUNC_PTR\fP \fBSTORE_method_get_lock_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_GENERIC_FUNC_PTR\fP \fBSTORE_method_get_unlock_store_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBSTORE_CTRL_FUNC_PTR\fP \fBSTORE_method_get_ctrl_function\fP (\fBSTORE_METHOD\fP *sm)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBSTORE_parse_attrs_start\fP (\fBOPENSSL_ITEM\fP *attributes)"
+.br
+.ti -1c
+.RI "\fBSTORE_ATTR_INFO\fP * \fBSTORE_parse_attrs_next\fP (\fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_parse_attrs_end\fP (\fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "int \fBSTORE_parse_attrs_endp\fP (\fBvoid\fP *handle)"
+.br
+.ti -1c
+.RI "\fBSTORE_ATTR_INFO\fP * \fBSTORE_ATTR_INFO_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_free\fP (\fBSTORE_ATTR_INFO\fP *attrs)"
+.br
+.ti -1c
+.RI "char * \fBSTORE_ATTR_INFO_get0_cstr\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSTORE_ATTR_INFO_get0_sha1str\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code)"
+.br
+.ti -1c
+.RI "\fBX509_NAME\fP * \fBSTORE_ATTR_INFO_get0_dn\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSTORE_ATTR_INFO_get0_number\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_cstr\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, char *cstr, size_t cstr_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_sha1str\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, unsigned char *sha1str, size_t sha1str_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_dn\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, \fBX509_NAME\fP *dn)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_set_number\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, \fBBIGNUM\fP *number)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_cstr\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, char *cstr, size_t cstr_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_sha1str\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, unsigned char *sha1str, size_t sha1str_size)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_dn\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, \fBX509_NAME\fP *dn)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_modify_number\fP (\fBSTORE_ATTR_INFO\fP *attrs, \fBSTORE_ATTR_TYPES\fP code, \fBBIGNUM\fP *number)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_compare\fP (const \fBSTORE_ATTR_INFO\fP *const *\fBa\fP, const \fBSTORE_ATTR_INFO\fP *const *b)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_in_range\fP (\fBSTORE_ATTR_INFO\fP *\fBa\fP, \fBSTORE_ATTR_INFO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_in\fP (\fBSTORE_ATTR_INFO\fP *\fBa\fP, \fBSTORE_ATTR_INFO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBSTORE_ATTR_INFO_in_ex\fP (\fBSTORE_ATTR_INFO\fP *\fBa\fP, \fBSTORE_ATTR_INFO\fP *b)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_STORE_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char *const \fBSTORE_object_type_string\fP [\fBSTORE_OBJECT_TYPE_NUM\fP+1]"
+.br
+.ti -1c
+.RI "const int \fBSTORE_param_sizes\fP [\fBSTORE_PARAM_TYPE_NUM\fP+1]"
+.br
+.ti -1c
+.RI "const int \fBSTORE_attr_sizes\fP [\fBSTORE_ATTR_TYPE_NUM\fP+1]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define STORE_CTRL_SET_DIRECTORY   0x0001"
+
+.PP
+Definition at line 106 of file store\&.h\&.
+.SS "#define STORE_CTRL_SET_FILE   0x0002"
+
+.PP
+Definition at line 110 of file store\&.h\&.
+.SS "#define STORE_CTRL_SET_CONF_FILE   0x0003"
+
+.PP
+Definition at line 115 of file store\&.h\&.
+.SS "#define STORE_CTRL_SET_CONF_SECTION   0x0004"
+
+.PP
+Definition at line 120 of file store\&.h\&.
+.SS "#define STORE_set_app_data(s, arg)   \fBSTORE_set_ex_data\fP(s,0,arg)"
+
+.PP
+Definition at line 123 of file store\&.h\&.
+.SS "#define STORE_get_app_data(s)   \fBSTORE_get_ex_data\fP(s,0)"
+
+.PP
+Definition at line 124 of file store\&.h\&.
+.SS "#define STORE_F_MEM_DELETE   134"
+
+.PP
+Definition at line 534 of file store\&.h\&.
+.SS "#define STORE_F_MEM_GENERATE   135"
+
+.PP
+Definition at line 535 of file store\&.h\&.
+.SS "#define STORE_F_MEM_LIST_END   168"
+
+.PP
+Definition at line 536 of file store\&.h\&.
+.SS "#define STORE_F_MEM_LIST_NEXT   136"
+
+.PP
+Definition at line 537 of file store\&.h\&.
+.SS "#define STORE_F_MEM_LIST_START   137"
+
+.PP
+Definition at line 538 of file store\&.h\&.
+.SS "#define STORE_F_MEM_MODIFY   169"
+
+.PP
+Definition at line 539 of file store\&.h\&.
+.SS "#define STORE_F_MEM_STORE   138"
+
+.PP
+Definition at line 540 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_GET0_CSTR   139"
+
+.PP
+Definition at line 541 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_GET0_DN   140"
+
+.PP
+Definition at line 542 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_GET0_NUMBER   141"
+
+.PP
+Definition at line 543 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_GET0_SHA1STR   142"
+
+.PP
+Definition at line 544 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_MODIFY_CSTR   143"
+
+.PP
+Definition at line 545 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_MODIFY_DN   144"
+
+.PP
+Definition at line 546 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_MODIFY_NUMBER   145"
+
+.PP
+Definition at line 547 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_MODIFY_SHA1STR   146"
+
+.PP
+Definition at line 548 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_SET_CSTR   147"
+
+.PP
+Definition at line 549 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_SET_DN   148"
+
+.PP
+Definition at line 550 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_SET_NUMBER   149"
+
+.PP
+Definition at line 551 of file store\&.h\&.
+.SS "#define STORE_F_STORE_ATTR_INFO_SET_SHA1STR   150"
+
+.PP
+Definition at line 552 of file store\&.h\&.
+.SS "#define STORE_F_STORE_CERTIFICATE   170"
+
+.PP
+Definition at line 553 of file store\&.h\&.
+.SS "#define STORE_F_STORE_CTRL   161"
+
+.PP
+Definition at line 554 of file store\&.h\&.
+.SS "#define STORE_F_STORE_DELETE_ARBITRARY   158"
+
+.PP
+Definition at line 555 of file store\&.h\&.
+.SS "#define STORE_F_STORE_DELETE_CERTIFICATE   102"
+
+.PP
+Definition at line 556 of file store\&.h\&.
+.SS "#define STORE_F_STORE_DELETE_CRL   103"
+
+.PP
+Definition at line 557 of file store\&.h\&.
+.SS "#define STORE_F_STORE_DELETE_NUMBER   104"
+
+.PP
+Definition at line 558 of file store\&.h\&.
+.SS "#define STORE_F_STORE_DELETE_PRIVATE_KEY   105"
+
+.PP
+Definition at line 559 of file store\&.h\&.
+.SS "#define STORE_F_STORE_DELETE_PUBLIC_KEY   106"
+
+.PP
+Definition at line 560 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GENERATE_CRL   107"
+
+.PP
+Definition at line 561 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GENERATE_KEY   108"
+
+.PP
+Definition at line 562 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GET_ARBITRARY   159"
+
+.PP
+Definition at line 563 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GET_CERTIFICATE   109"
+
+.PP
+Definition at line 564 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GET_CRL   110"
+
+.PP
+Definition at line 565 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GET_NUMBER   111"
+
+.PP
+Definition at line 566 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GET_PRIVATE_KEY   112"
+
+.PP
+Definition at line 567 of file store\&.h\&.
+.SS "#define STORE_F_STORE_GET_PUBLIC_KEY   113"
+
+.PP
+Definition at line 568 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CERTIFICATE_END   114"
+
+.PP
+Definition at line 569 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CERTIFICATE_ENDP   153"
+
+.PP
+Definition at line 570 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CERTIFICATE_NEXT   115"
+
+.PP
+Definition at line 571 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CERTIFICATE_START   116"
+
+.PP
+Definition at line 572 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CRL_END   117"
+
+.PP
+Definition at line 573 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CRL_ENDP   154"
+
+.PP
+Definition at line 574 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CRL_NEXT   118"
+
+.PP
+Definition at line 575 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_CRL_START   119"
+
+.PP
+Definition at line 576 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PRIVATE_KEY_END   120"
+
+.PP
+Definition at line 577 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PRIVATE_KEY_ENDP   155"
+
+.PP
+Definition at line 578 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PRIVATE_KEY_NEXT   121"
+
+.PP
+Definition at line 579 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PRIVATE_KEY_START   122"
+
+.PP
+Definition at line 580 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PUBLIC_KEY_END   123"
+
+.PP
+Definition at line 581 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PUBLIC_KEY_ENDP   156"
+
+.PP
+Definition at line 582 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PUBLIC_KEY_NEXT   124"
+
+.PP
+Definition at line 583 of file store\&.h\&.
+.SS "#define STORE_F_STORE_LIST_PUBLIC_KEY_START   125"
+
+.PP
+Definition at line 584 of file store\&.h\&.
+.SS "#define STORE_F_STORE_MODIFY_ARBITRARY   162"
+
+.PP
+Definition at line 585 of file store\&.h\&.
+.SS "#define STORE_F_STORE_MODIFY_CERTIFICATE   163"
+
+.PP
+Definition at line 586 of file store\&.h\&.
+.SS "#define STORE_F_STORE_MODIFY_CRL   164"
+
+.PP
+Definition at line 587 of file store\&.h\&.
+.SS "#define STORE_F_STORE_MODIFY_NUMBER   165"
+
+.PP
+Definition at line 588 of file store\&.h\&.
+.SS "#define STORE_F_STORE_MODIFY_PRIVATE_KEY   166"
+
+.PP
+Definition at line 589 of file store\&.h\&.
+.SS "#define STORE_F_STORE_MODIFY_PUBLIC_KEY   167"
+
+.PP
+Definition at line 590 of file store\&.h\&.
+.SS "#define STORE_F_STORE_NEW_ENGINE   133"
+
+.PP
+Definition at line 591 of file store\&.h\&.
+.SS "#define STORE_F_STORE_NEW_METHOD   132"
+
+.PP
+Definition at line 592 of file store\&.h\&.
+.SS "#define STORE_F_STORE_PARSE_ATTRS_END   151"
+
+.PP
+Definition at line 593 of file store\&.h\&.
+.SS "#define STORE_F_STORE_PARSE_ATTRS_ENDP   172"
+
+.PP
+Definition at line 594 of file store\&.h\&.
+.SS "#define STORE_F_STORE_PARSE_ATTRS_NEXT   152"
+
+.PP
+Definition at line 595 of file store\&.h\&.
+.SS "#define STORE_F_STORE_PARSE_ATTRS_START   171"
+
+.PP
+Definition at line 596 of file store\&.h\&.
+.SS "#define STORE_F_STORE_REVOKE_CERTIFICATE   129"
+
+.PP
+Definition at line 597 of file store\&.h\&.
+.SS "#define STORE_F_STORE_REVOKE_PRIVATE_KEY   130"
+
+.PP
+Definition at line 598 of file store\&.h\&.
+.SS "#define STORE_F_STORE_REVOKE_PUBLIC_KEY   131"
+
+.PP
+Definition at line 599 of file store\&.h\&.
+.SS "#define STORE_F_STORE_STORE_ARBITRARY   157"
+
+.PP
+Definition at line 600 of file store\&.h\&.
+.SS "#define STORE_F_STORE_STORE_CERTIFICATE   100"
+
+.PP
+Definition at line 601 of file store\&.h\&.
+.SS "#define STORE_F_STORE_STORE_CRL   101"
+
+.PP
+Definition at line 602 of file store\&.h\&.
+.SS "#define STORE_F_STORE_STORE_NUMBER   126"
+
+.PP
+Definition at line 603 of file store\&.h\&.
+.SS "#define STORE_F_STORE_STORE_PRIVATE_KEY   127"
+
+.PP
+Definition at line 604 of file store\&.h\&.
+.SS "#define STORE_F_STORE_STORE_PUBLIC_KEY   128"
+
+.PP
+Definition at line 605 of file store\&.h\&.
+.SS "#define STORE_R_ALREADY_HAS_A_VALUE   127"
+
+.PP
+Definition at line 608 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_DELETING_ARBITRARY   132"
+
+.PP
+Definition at line 609 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_DELETING_CERTIFICATE   100"
+
+.PP
+Definition at line 610 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_DELETING_KEY   101"
+
+.PP
+Definition at line 611 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_DELETING_NUMBER   102"
+
+.PP
+Definition at line 612 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_GENERATING_CRL   103"
+
+.PP
+Definition at line 613 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_GENERATING_KEY   104"
+
+.PP
+Definition at line 614 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_GETTING_ARBITRARY   133"
+
+.PP
+Definition at line 615 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_GETTING_CERTIFICATE   105"
+
+.PP
+Definition at line 616 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_GETTING_KEY   106"
+
+.PP
+Definition at line 617 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_GETTING_NUMBER   107"
+
+.PP
+Definition at line 618 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_LISTING_CERTIFICATES   108"
+
+.PP
+Definition at line 619 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_LISTING_KEYS   109"
+
+.PP
+Definition at line 620 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_MODIFYING_ARBITRARY   138"
+
+.PP
+Definition at line 621 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_MODIFYING_CERTIFICATE   139"
+
+.PP
+Definition at line 622 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_MODIFYING_CRL   140"
+
+.PP
+Definition at line 623 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_MODIFYING_NUMBER   141"
+
+.PP
+Definition at line 624 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_MODIFYING_PRIVATE_KEY   142"
+
+.PP
+Definition at line 625 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_MODIFYING_PUBLIC_KEY   143"
+
+.PP
+Definition at line 626 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_REVOKING_CERTIFICATE   110"
+
+.PP
+Definition at line 627 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_REVOKING_KEY   111"
+
+.PP
+Definition at line 628 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_STORING_ARBITRARY   134"
+
+.PP
+Definition at line 629 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_STORING_CERTIFICATE   112"
+
+.PP
+Definition at line 630 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_STORING_KEY   113"
+
+.PP
+Definition at line 631 of file store\&.h\&.
+.SS "#define STORE_R_FAILED_STORING_NUMBER   114"
+
+.PP
+Definition at line 632 of file store\&.h\&.
+.SS "#define STORE_R_NOT_IMPLEMENTED   128"
+
+.PP
+Definition at line 633 of file store\&.h\&.
+.SS "#define STORE_R_NO_CONTROL_FUNCTION   144"
+
+.PP
+Definition at line 634 of file store\&.h\&.
+.SS "#define STORE_R_NO_DELETE_ARBITRARY_FUNCTION   135"
+
+.PP
+Definition at line 635 of file store\&.h\&.
+.SS "#define STORE_R_NO_DELETE_NUMBER_FUNCTION   115"
+
+.PP
+Definition at line 636 of file store\&.h\&.
+.SS "#define STORE_R_NO_DELETE_OBJECT_FUNCTION   116"
+
+.PP
+Definition at line 637 of file store\&.h\&.
+.SS "#define STORE_R_NO_GENERATE_CRL_FUNCTION   117"
+
+.PP
+Definition at line 638 of file store\&.h\&.
+.SS "#define STORE_R_NO_GENERATE_OBJECT_FUNCTION   118"
+
+.PP
+Definition at line 639 of file store\&.h\&.
+.SS "#define STORE_R_NO_GET_OBJECT_ARBITRARY_FUNCTION   136"
+
+.PP
+Definition at line 640 of file store\&.h\&.
+.SS "#define STORE_R_NO_GET_OBJECT_FUNCTION   119"
+
+.PP
+Definition at line 641 of file store\&.h\&.
+.SS "#define STORE_R_NO_GET_OBJECT_NUMBER_FUNCTION   120"
+
+.PP
+Definition at line 642 of file store\&.h\&.
+.SS "#define STORE_R_NO_LIST_OBJECT_ENDP_FUNCTION   131"
+
+.PP
+Definition at line 643 of file store\&.h\&.
+.SS "#define STORE_R_NO_LIST_OBJECT_END_FUNCTION   121"
+
+.PP
+Definition at line 644 of file store\&.h\&.
+.SS "#define STORE_R_NO_LIST_OBJECT_NEXT_FUNCTION   122"
+
+.PP
+Definition at line 645 of file store\&.h\&.
+.SS "#define STORE_R_NO_LIST_OBJECT_START_FUNCTION   123"
+
+.PP
+Definition at line 646 of file store\&.h\&.
+.SS "#define STORE_R_NO_MODIFY_OBJECT_FUNCTION   145"
+
+.PP
+Definition at line 647 of file store\&.h\&.
+.SS "#define STORE_R_NO_REVOKE_OBJECT_FUNCTION   124"
+
+.PP
+Definition at line 648 of file store\&.h\&.
+.SS "#define STORE_R_NO_STORE   129"
+
+.PP
+Definition at line 649 of file store\&.h\&.
+.SS "#define STORE_R_NO_STORE_OBJECT_ARBITRARY_FUNCTION   137"
+
+.PP
+Definition at line 650 of file store\&.h\&.
+.SS "#define STORE_R_NO_STORE_OBJECT_FUNCTION   125"
+
+.PP
+Definition at line 651 of file store\&.h\&.
+.SS "#define STORE_R_NO_STORE_OBJECT_NUMBER_FUNCTION   126"
+
+.PP
+Definition at line 652 of file store\&.h\&.
+.SS "#define STORE_R_NO_VALUE   130"
+
+.PP
+Definition at line 653 of file store\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef enum \fBSTORE_object_types\fP  \fBSTORE_OBJECT_TYPES\fP"
+
+.SS "typedef enum \fBSTORE_params\fP  \fBSTORE_PARAM_TYPES\fP"
+
+.SS "typedef enum \fBSTORE_attribs\fP  \fBSTORE_ATTR_TYPES\fP"
+
+.SS "typedef enum \fBSTORE_certificate_status\fP  \fBSTORE_CERTIFICATE_STATUS\fP"
+
+.SS "typedef struct \fBSTORE_OBJECT_st\fP  \fBSTORE_OBJECT\fP"
+
+.SS "typedef int(* STORE_INITIALISE_FUNC_PTR) (\fBSTORE\fP *)"
+
+.PP
+Definition at line 360 of file store\&.h\&.
+.SS "typedef \fBvoid\fP(* STORE_CLEANUP_FUNC_PTR) (\fBSTORE\fP *)"
+
+.PP
+Definition at line 361 of file store\&.h\&.
+.SS "typedef \fBSTORE_OBJECT\fP*(* STORE_GENERATE_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 362 of file store\&.h\&.
+.SS "typedef \fBSTORE_OBJECT\fP*(* STORE_GET_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 369 of file store\&.h\&.
+.SS "typedef \fBvoid\fP*(* STORE_START_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 373 of file store\&.h\&.
+.SS "typedef \fBSTORE_OBJECT\fP*(* STORE_NEXT_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBvoid\fP *handle)"
+
+.PP
+Definition at line 376 of file store\&.h\&.
+.SS "typedef int(* STORE_END_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBvoid\fP *handle)"
+
+.PP
+Definition at line 377 of file store\&.h\&.
+.SS "typedef int(* STORE_HANDLE_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 378 of file store\&.h\&.
+.SS "typedef int(* STORE_STORE_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBSTORE_OBJECT\fP *data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 381 of file store\&.h\&.
+.SS "typedef int(* STORE_MODIFY_OBJECT_FUNC_PTR) (\fBSTORE\fP *, \fBSTORE_OBJECT_TYPES\fP \fBtype\fP, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 385 of file store\&.h\&.
+.SS "typedef int(* STORE_GENERIC_FUNC_PTR) (\fBSTORE\fP *, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.PP
+Definition at line 391 of file store\&.h\&.
+.SS "typedef int(* STORE_CTRL_FUNC_PTR) (\fBSTORE\fP *, int cmd, long l, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*f)(\fBvoid\fP))"
+
+.PP
+Definition at line 393 of file store\&.h\&.
+.SS "typedef struct STORE_attr_info_st \fBSTORE_ATTR_INFO\fP"
+
+.PP
+Definition at line 463 of file store\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBSTORE_object_types\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISTORE_OBJECT_TYPE_X509_CERTIFICATE \fP\fP
+.TP
+\fB\fISTORE_OBJECT_TYPE_X509_CRL \fP\fP
+.TP
+\fB\fISTORE_OBJECT_TYPE_PRIVATE_KEY \fP\fP
+.TP
+\fB\fISTORE_OBJECT_TYPE_PUBLIC_KEY \fP\fP
+.TP
+\fB\fISTORE_OBJECT_TYPE_NUMBER \fP\fP
+.TP
+\fB\fISTORE_OBJECT_TYPE_ARBITRARY \fP\fP
+.TP
+\fB\fISTORE_OBJECT_TYPE_NUM \fP\fP
+.PP
+Definition at line 160 of file store\&.h\&.
+.PP
+.nf
+160                                 {
+161     STORE_OBJECT_TYPE_X509_CERTIFICATE = 0x01, /* X509 * */
+162     STORE_OBJECT_TYPE_X509_CRL = 0x02, /* X509_CRL * */
+163     STORE_OBJECT_TYPE_PRIVATE_KEY = 0x03, /* EVP_PKEY * */
+164     STORE_OBJECT_TYPE_PUBLIC_KEY = 0x04, /* EVP_PKEY * */
+165     STORE_OBJECT_TYPE_NUMBER = 0x05, /* BIGNUM * */
+166     STORE_OBJECT_TYPE_ARBITRARY = 0x06, /* BUF_MEM * */
+167     STORE_OBJECT_TYPE_NUM = 0x06 /* The amount of known object types */
+168 } STORE_OBJECT_TYPES;
+.fi
+.SS "enum \fBSTORE_params\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISTORE_PARAM_EVP_TYPE \fP\fP
+.TP
+\fB\fISTORE_PARAM_BITS \fP\fP
+.TP
+\fB\fISTORE_PARAM_KEY_PARAMETERS \fP\fP
+.TP
+\fB\fISTORE_PARAM_KEY_NO_PARAMETERS \fP\fP
+.TP
+\fB\fISTORE_PARAM_AUTH_PASSPHRASE \fP\fP
+.TP
+\fB\fISTORE_PARAM_AUTH_KRB5_TICKET \fP\fP
+.TP
+\fB\fISTORE_PARAM_TYPE_NUM \fP\fP
+.PP
+Definition at line 177 of file store\&.h\&.
+.PP
+.nf
+177                           {
+178     STORE_PARAM_EVP_TYPE = 0x01, /* int */
+179     STORE_PARAM_BITS = 0x02,    /* size_t */
+180     STORE_PARAM_KEY_PARAMETERS = 0x03, /* ??? */
+181     STORE_PARAM_KEY_NO_PARAMETERS = 0x04, /* N/A */
+182     STORE_PARAM_AUTH_PASSPHRASE = 0x05, /* char * */
+183     STORE_PARAM_AUTH_KRB5_TICKET = 0x06, /* void * */
+184     STORE_PARAM_TYPE_NUM = 0x06 /* The amount of known parameter types */
+185 } STORE_PARAM_TYPES;
+.fi
+.SS "enum \fBSTORE_attribs\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISTORE_ATTR_END \fP\fP
+.TP
+\fB\fISTORE_ATTR_FRIENDLYNAME \fP\fP
+.TP
+\fB\fISTORE_ATTR_KEYID \fP\fP
+.TP
+\fB\fISTORE_ATTR_ISSUERKEYID \fP\fP
+.TP
+\fB\fISTORE_ATTR_SUBJECTKEYID \fP\fP
+.TP
+\fB\fISTORE_ATTR_ISSUERSERIALHASH \fP\fP
+.TP
+\fB\fISTORE_ATTR_ISSUER \fP\fP
+.TP
+\fB\fISTORE_ATTR_SERIAL \fP\fP
+.TP
+\fB\fISTORE_ATTR_SUBJECT \fP\fP
+.TP
+\fB\fISTORE_ATTR_CERTHASH \fP\fP
+.TP
+\fB\fISTORE_ATTR_EMAIL \fP\fP
+.TP
+\fB\fISTORE_ATTR_FILENAME \fP\fP
+.TP
+\fB\fISTORE_ATTR_TYPE_NUM \fP\fP
+.TP
+\fB\fISTORE_ATTR_OR \fP\fP
+.PP
+Definition at line 197 of file store\&.h\&.
+.PP
+.nf
+197                            {
+198     STORE_ATTR_END = 0x00,
+199     STORE_ATTR_FRIENDLYNAME = 0x01, /* C string */
+200     STORE_ATTR_KEYID = 0x02,    /* 160 bit string (SHA1) */
+201     STORE_ATTR_ISSUERKEYID = 0x03, /* 160 bit string (SHA1) */
+202     STORE_ATTR_SUBJECTKEYID = 0x04, /* 160 bit string (SHA1) */
+203     STORE_ATTR_ISSUERSERIALHASH = 0x05, /* 160 bit string (SHA1) */
+204     STORE_ATTR_ISSUER = 0x06,   /* X509_NAME * */
+205     STORE_ATTR_SERIAL = 0x07,   /* BIGNUM * */
+206     STORE_ATTR_SUBJECT = 0x08,  /* X509_NAME * */
+207     STORE_ATTR_CERTHASH = 0x09, /* 160 bit string (SHA1) */
+208     STORE_ATTR_EMAIL = 0x0a,    /* C string */
+209     STORE_ATTR_FILENAME = 0x0b, /* C string */
+210     STORE_ATTR_TYPE_NUM = 0x0b, /* The amount of known attribute types */
+211     STORE_ATTR_OR = 0xff        /* This is a special separator, which
+212                                  * expresses the OR operation\&.  */
+213 } STORE_ATTR_TYPES;
+.fi
+.SS "enum \fBSTORE_certificate_status\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISTORE_X509_VALID \fP\fP
+.TP
+\fB\fISTORE_X509_EXPIRED \fP\fP
+.TP
+\fB\fISTORE_X509_SUSPENDED \fP\fP
+.TP
+\fB\fISTORE_X509_REVOKED \fP\fP
+.PP
+Definition at line 220 of file store\&.h\&.
+.PP
+.nf
+220                                       {
+221     STORE_X509_VALID = 0x00,
+222     STORE_X509_EXPIRED = 0x01,
+223     STORE_X509_SUSPENDED = 0x02,
+224     STORE_X509_REVOKED = 0x03
+225 } STORE_CERTIFICATE_STATUS;
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "\fBSTORE\fP* STORE_new_method (const \fBSTORE_METHOD\fP * method)"
+
+.SS "\fBSTORE\fP* STORE_new_engine (\fBENGINE\fP * engine)"
+
+.SS "\fBvoid\fP STORE_free (\fBSTORE\fP * ui)"
+
+.SS "int STORE_ctrl (\fBSTORE\fP * store, int cmd, long i, \fBvoid\fP * p, \fBvoid\fP(*)(\fBvoid\fP) f)"
+
+.SS "int STORE_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int STORE_set_ex_data (\fBSTORE\fP * r, int idx, \fBvoid\fP * arg)"
+
+.SS "\fBvoid\fP* STORE_get_ex_data (\fBSTORE\fP * r, int idx)"
+
+.SS "const \fBSTORE_METHOD\fP* STORE_get_method (\fBSTORE\fP * store)"
+
+.SS "const \fBSTORE_METHOD\fP* STORE_set_method (\fBSTORE\fP * store, const \fBSTORE_METHOD\fP * meth)"
+
+.SS "const \fBSTORE_METHOD\fP* STORE_Memory (\fBvoid\fP)"
+
+.SS "\fBSTORE_OBJECT\fP* STORE_OBJECT_new (\fBvoid\fP)"
+
+.SS "\fBvoid\fP STORE_OBJECT_free (\fBSTORE_OBJECT\fP * data)"
+
+.SS "\fBX509\fP* STORE_get_certificate (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_store_certificate (\fBSTORE\fP * e, \fBX509\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_modify_certificate (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_attributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_revoke_certificate (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_delete_certificate (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBvoid\fP* STORE_list_certificate_start (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBX509\fP* STORE_list_certificate_next (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_certificate_end (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_certificate_endp (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "\fBEVP_PKEY\fP* STORE_generate_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBEVP_PKEY\fP* STORE_get_private_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_store_private_key (\fBSTORE\fP * e, \fBEVP_PKEY\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_modify_private_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_revoke_private_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_delete_private_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBvoid\fP* STORE_list_private_key_start (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBEVP_PKEY\fP* STORE_list_private_key_next (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_private_key_end (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_private_key_endp (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "\fBEVP_PKEY\fP* STORE_get_public_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_store_public_key (\fBSTORE\fP * e, \fBEVP_PKEY\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_modify_public_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_revoke_public_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_delete_public_key (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBvoid\fP* STORE_list_public_key_start (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBEVP_PKEY\fP* STORE_list_public_key_next (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_public_key_end (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_public_key_endp (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "\fBX509_CRL\fP* STORE_generate_crl (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBX509_CRL\fP* STORE_get_crl (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_store_crl (\fBSTORE\fP * e, \fBX509_CRL\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_modify_crl (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_delete_crl (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBvoid\fP* STORE_list_crl_start (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBX509_CRL\fP* STORE_list_crl_next (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_crl_end (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_list_crl_endp (\fBSTORE\fP * e, \fBvoid\fP * handle)"
+
+.SS "int STORE_store_number (\fBSTORE\fP * e, \fBBIGNUM\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_modify_number (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBBIGNUM\fP* STORE_get_number (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_delete_number (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_store_arbitrary (\fBSTORE\fP * e, \fBBUF_MEM\fP * data, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_modify_arbitrary (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP search_attributes[], \fBOPENSSL_ITEM\fP add_sttributes[], \fBOPENSSL_ITEM\fP modify_attributes[], \fBOPENSSL_ITEM\fP delete_attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBBUF_MEM\fP* STORE_get_arbitrary (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "int STORE_delete_arbitrary (\fBSTORE\fP * e, \fBOPENSSL_ITEM\fP attributes[], \fBOPENSSL_ITEM\fP parameters[])"
+
+.SS "\fBSTORE_METHOD\fP* STORE_create_method (char * name)"
+
+.SS "\fBvoid\fP STORE_destroy_method (\fBSTORE_METHOD\fP * store_method)"
+
+.SS "int STORE_method_set_initialise_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_INITIALISE_FUNC_PTR\fP init_f)"
+
+.SS "int STORE_method_set_cleanup_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_CLEANUP_FUNC_PTR\fP clean_f)"
+
+.SS "int STORE_method_set_generate_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP generate_f)"
+
+.SS "int STORE_method_set_get_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GET_OBJECT_FUNC_PTR\fP get_f)"
+
+.SS "int STORE_method_set_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_STORE_OBJECT_FUNC_PTR\fP store_f)"
+
+.SS "int STORE_method_set_modify_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP store_f)"
+
+.SS "int STORE_method_set_revoke_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP revoke_f)"
+
+.SS "int STORE_method_set_delete_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP delete_f)"
+
+.SS "int STORE_method_set_list_start_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_START_OBJECT_FUNC_PTR\fP list_start_f)"
+
+.SS "int STORE_method_set_list_next_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_NEXT_OBJECT_FUNC_PTR\fP list_next_f)"
+
+.SS "int STORE_method_set_list_end_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_END_OBJECT_FUNC_PTR\fP list_end_f)"
+
+.SS "int STORE_method_set_update_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERIC_FUNC_PTR\fP)"
+
+.SS "int STORE_method_set_lock_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERIC_FUNC_PTR\fP)"
+
+.SS "int STORE_method_set_unlock_store_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_GENERIC_FUNC_PTR\fP)"
+
+.SS "int STORE_method_set_ctrl_function (\fBSTORE_METHOD\fP * sm, \fBSTORE_CTRL_FUNC_PTR\fP ctrl_f)"
+
+.SS "\fBSTORE_INITIALISE_FUNC_PTR\fP STORE_method_get_initialise_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_CLEANUP_FUNC_PTR\fP STORE_method_get_cleanup_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_GENERATE_OBJECT_FUNC_PTR\fP STORE_method_get_generate_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_GET_OBJECT_FUNC_PTR\fP STORE_method_get_get_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_STORE_OBJECT_FUNC_PTR\fP STORE_method_get_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_MODIFY_OBJECT_FUNC_PTR\fP STORE_method_get_modify_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP STORE_method_get_revoke_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_HANDLE_OBJECT_FUNC_PTR\fP STORE_method_get_delete_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_START_OBJECT_FUNC_PTR\fP STORE_method_get_list_start_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_NEXT_OBJECT_FUNC_PTR\fP STORE_method_get_list_next_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_END_OBJECT_FUNC_PTR\fP STORE_method_get_list_end_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_GENERIC_FUNC_PTR\fP STORE_method_get_update_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_GENERIC_FUNC_PTR\fP STORE_method_get_lock_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_GENERIC_FUNC_PTR\fP STORE_method_get_unlock_store_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBSTORE_CTRL_FUNC_PTR\fP STORE_method_get_ctrl_function (\fBSTORE_METHOD\fP * sm)"
+
+.SS "\fBvoid\fP* STORE_parse_attrs_start (\fBOPENSSL_ITEM\fP * attributes)"
+
+.SS "\fBSTORE_ATTR_INFO\fP* STORE_parse_attrs_next (\fBvoid\fP * handle)"
+
+.SS "int STORE_parse_attrs_end (\fBvoid\fP * handle)"
+
+.SS "int STORE_parse_attrs_endp (\fBvoid\fP * handle)"
+
+.SS "\fBSTORE_ATTR_INFO\fP* STORE_ATTR_INFO_new (\fBvoid\fP)"
+
+.SS "int STORE_ATTR_INFO_free (\fBSTORE_ATTR_INFO\fP * attrs)"
+
+.SS "char* STORE_ATTR_INFO_get0_cstr (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.SS "unsigned char* STORE_ATTR_INFO_get0_sha1str (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.SS "\fBX509_NAME\fP* STORE_ATTR_INFO_get0_dn (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.SS "\fBBIGNUM\fP* STORE_ATTR_INFO_get0_number (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code)"
+
+.SS "int STORE_ATTR_INFO_set_cstr (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, char * cstr, size_t cstr_size)"
+
+.SS "int STORE_ATTR_INFO_set_sha1str (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, unsigned char * sha1str, size_t sha1str_size)"
+
+.SS "int STORE_ATTR_INFO_set_dn (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBX509_NAME\fP * dn)"
+
+.SS "int STORE_ATTR_INFO_set_number (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBBIGNUM\fP * number)"
+
+.SS "int STORE_ATTR_INFO_modify_cstr (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, char * cstr, size_t cstr_size)"
+
+.SS "int STORE_ATTR_INFO_modify_sha1str (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, unsigned char * sha1str, size_t sha1str_size)"
+
+.SS "int STORE_ATTR_INFO_modify_dn (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBX509_NAME\fP * dn)"
+
+.SS "int STORE_ATTR_INFO_modify_number (\fBSTORE_ATTR_INFO\fP * attrs, \fBSTORE_ATTR_TYPES\fP code, \fBBIGNUM\fP * number)"
+
+.SS "int STORE_ATTR_INFO_compare (const \fBSTORE_ATTR_INFO\fP *const * a, const \fBSTORE_ATTR_INFO\fP *const * b)"
+
+.SS "int STORE_ATTR_INFO_in_range (\fBSTORE_ATTR_INFO\fP * a, \fBSTORE_ATTR_INFO\fP * b)"
+
+.SS "int STORE_ATTR_INFO_in (\fBSTORE_ATTR_INFO\fP * a, \fBSTORE_ATTR_INFO\fP * b)"
+
+.SS "int STORE_ATTR_INFO_in_ex (\fBSTORE_ATTR_INFO\fP * a, \fBSTORE_ATTR_INFO\fP * b)"
+
+.SS "\fBvoid\fP ERR_load_STORE_strings (\fBvoid\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "const char* const STORE_object_type_string[\fBSTORE_OBJECT_TYPE_NUM\fP+1]"
+
+.SS "const int STORE_param_sizes[\fBSTORE_PARAM_TYPE_NUM\fP+1]"
+
+.SS "const int STORE_attr_sizes[\fBSTORE_ATTR_TYPE_NUM\fP+1]"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

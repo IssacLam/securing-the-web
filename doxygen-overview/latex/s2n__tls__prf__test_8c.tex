@@ -1,0 +1,127 @@
+\hypertarget{s2n__tls__prf__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+tls\+\_\+prf\+\_\+test.c File Reference}
+\label{s2n__tls__prf__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}testlib/s2n\+\_\+testlib.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+prf.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__tls__prf__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__tls__prf__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c@{s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c@{s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__tls__prf__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__tls__prf__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 35 of file s2n\+\_\+tls\+\_\+prf\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+36 \{
+37     uint8\_t master\_secret\_hex\_pad[96];
+38     \textcolor{keywordtype}{char} premaster\_secret\_hex\_in[] = \textcolor{stringliteral}{"
+      0301bebf2a5707c7bda6bfe5a8971a351a9ebd019de412212da021fd802e03f49f231d4e959c7352679f892f9d7f9748"};
+39     \textcolor{keywordtype}{char} client\_random\_hex\_in[] = \textcolor{stringliteral}{"537eefc1e720b311ff8483d057ae750a3667af9d5b496cc0d2edfb0dd309a286"};
+40     \textcolor{keywordtype}{char} server\_random\_hex\_in[] = \textcolor{stringliteral}{"537eefc29f337c5eedacd00a1889b031261701872d666a74fa999dc13bcd8821"};
+41     \textcolor{keywordtype}{char} master\_secret\_hex\_in[] = \textcolor{stringliteral}{"
+      c8c610686237cd024a2d8e0391f61a8a4464c2c9576ea2b5ccf3af68139ec07c6a1720097063de968f2341f77b837120"};
+42 
+43     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} client\_random\_in;
+44     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} server\_random\_in;
+45     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} premaster\_secret\_in;
+46     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} master\_secret\_hex\_out;
+47     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} master\_secret = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = master\_secret\_hex\_pad,.size = \textcolor{keyword}{sizeof}(
+      master\_secret\_hex\_pad) \};
+48     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} pms;
+49 
+50     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+51 
+52     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+53 
+54     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+55 
+56     \textcolor{comment}{/* Check the most common PRF */}
+57     conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} = \hyperlink{s2n_8h_a2e4a51448d3a9ea14b506ac2573f9bae}{S2N\_TLS11};
+58 
+59     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a60fa5894187dfe382077cce73964cd35}{s2n\_stuffer\_alloc\_ro\_from\_string}(&
+      client\_random\_in, client\_random\_hex\_in));
+60     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a60fa5894187dfe382077cce73964cd35}{s2n\_stuffer\_alloc\_ro\_from\_string}(&
+      server\_random\_in, server\_random\_hex\_in));
+61     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a60fa5894187dfe382077cce73964cd35}{s2n\_stuffer\_alloc\_ro\_from\_string}(&
+      premaster\_secret\_in, premaster\_secret\_hex\_in));
+62 
+63     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&master\_secret\_hex\_out, &master\_secret));
+64 
+65     \textcolor{comment}{/* Parse the hex */}
+66     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 48; i++) \{
+67         uint8\_t \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+68         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&
+      premaster\_secret\_in, &c));
+69         conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_aff85fd3b06a6aa697da1c520ee9f0714}{rsa\_premaster\_secret}[i] = \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+70     \}
+71     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 32; i++) \{
+72         uint8\_t \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+73         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&client\_random\_in
+      , &c));
+74         conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a782eb75227ef443a21bfa5f2eb9d4b7a}{client\_random}[i] = \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+75     \}
+76     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 32; i++) \{
+77         uint8\_t \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+78         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&server\_random\_in
+      , &c));
+79         conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}[i] = \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+80     \}
+81 
+82     pms.data = conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_aff85fd3b06a6aa697da1c520ee9f0714}{rsa\_premaster\_secret};
+83     pms.size = \textcolor{keyword}{sizeof}(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_aff85fd3b06a6aa697da1c520ee9f0714}{rsa\_premaster\_secret});
+84     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__prf_8c_a290fe2c5aef3de88d8e727c089513b06}{s2n\_prf\_master\_secret}(conn, &pms));
+85 
+86     \textcolor{comment}{/* Convert the master secret to hex */}
+87     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 48; i++) \{
+88         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_afa09f772b334ba411a27ba2d52747b7d}{s2n\_stuffer\_write\_uint8\_hex}(&
+      master\_secret\_hex\_out, conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_a5fe631e363754e6d6232fcbf54a771a6}{master\_secret}[i]));
+89     \}
+90 
+91     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(master\_secret\_hex\_pad, master\_secret\_hex\_in, \textcolor{keyword}{sizeof}(
+      master\_secret\_hex\_pad)), 0);
+92 
+93     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+94     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&client\_random\_in));
+95     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&server\_random\_in));
+96     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&premaster\_secret\_in));
+97 
+98     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+99 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__tls__prf__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

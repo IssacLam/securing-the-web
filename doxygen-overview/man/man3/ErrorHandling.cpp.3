@@ -1,0 +1,203 @@
+.TH "s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/ErrorHandling.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/ErrorHandling.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ErrorHandling\&.hpp'\fP
+.br
+\fC#include 'CPStringUtils\&.hpp'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessage\fP (const char *theErrorMessage)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessageAndAppendLongInt\fP (const char *theErrorMessage, const long theLongInt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessageAndCStrAndLongInt\fP (const char *theErrorMessage, const char *theCStr, const long theLongInt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSetErrorMessageAndCStr\fP (const char *theErrorMessage, const char *theCStr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBAppendCStrToErrorMessage\fP (const char *theErrorMessage)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBAppendLongIntToErrorMessage\fP (const long theLongInt)"
+.br
+.ti -1c
+.RI "char * \fBGetErrorMessage\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "OSErr \fBGetErrorMessageInNewHandle\fP (Handle *inoutHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBGetErrorMessageInExistingHandle\fP (Handle inoutHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendErrorMessageToHandle\fP (Handle inoutHandle)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "char * \fBgErrorMessage\fP = gErrorMessageBuffer"
+.br
+.ti -1c
+.RI "int \fBgErrorMessageMaxLength\fP = sizeof(gErrorMessageBuffer)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP SetErrorMessage (const char * theErrorMessage)"
+
+.PP
+Definition at line 72 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+73 {
+74     if (theErrorMessage != nil)
+75     {
+76         CopyCStrToCStr(theErrorMessage,gErrorMessage,gErrorMessageMaxLength);
+77     }
+78 }
+.fi
+.SS "\fBvoid\fP SetErrorMessageAndAppendLongInt (const char * theErrorMessage, const long theLongInt)"
+
+.PP
+Definition at line 81 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+82 {
+83     if (theErrorMessage != nil)
+84     {
+85         CopyCStrAndConcatLongIntToCStr(theErrorMessage,theLongInt,gErrorMessage,gErrorMessageMaxLength);
+86     }
+87 }
+.fi
+.SS "\fBvoid\fP SetErrorMessageAndCStrAndLongInt (const char * theErrorMessage, const char * theCStr, const long theLongInt)"
+
+.PP
+Definition at line 89 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+90 {
+91     if (theErrorMessage != nil)
+92     {
+93         CopyCStrAndInsertCStrLongIntIntoCStr(theErrorMessage,theCStr,theLongInt,gErrorMessage,gErrorMessageMaxLength);
+94     }
+95 
+96 }
+.fi
+.SS "\fBvoid\fP SetErrorMessageAndCStr (const char * theErrorMessage, const char * theCStr)"
+
+.PP
+Definition at line 98 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+99 {
+100     if (theErrorMessage != nil)
+101     {
+102         CopyCStrAndInsertCStrLongIntIntoCStr(theErrorMessage,theCStr,-1,gErrorMessage,gErrorMessageMaxLength);
+103     }
+104 }
+.fi
+.SS "\fBvoid\fP AppendCStrToErrorMessage (const char * theErrorMessage)"
+
+.PP
+Definition at line 107 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+108 {
+109     if (theErrorMessage != nil)
+110     {
+111         ConcatCStrToCStr(theErrorMessage,gErrorMessage,gErrorMessageMaxLength);
+112     }
+113 }
+.fi
+.SS "\fBvoid\fP AppendLongIntToErrorMessage (const long theLongInt)"
+
+.PP
+Definition at line 116 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+117 {
+118     ConcatLongIntToCStr(theLongInt,gErrorMessage,gErrorMessageMaxLength);
+119 }
+.fi
+.SS "char* GetErrorMessage (\fBvoid\fP)"
+
+.PP
+Definition at line 123 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+124 {
+125     return gErrorMessage;
+126 }
+.fi
+.SS "OSErr GetErrorMessageInNewHandle (Handle * inoutHandle)"
+
+.PP
+Definition at line 129 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+130 {
+131 OSErr       errCode;
+132 
+133 
+134     errCode = CopyCStrToNewHandle(gErrorMessage,inoutHandle);
+135     
+136     return(errCode);
+137 }
+.fi
+.SS "OSErr GetErrorMessageInExistingHandle (Handle inoutHandle)"
+
+.PP
+Definition at line 140 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+141 {
+142 OSErr       errCode;
+143 
+144 
+145     errCode = CopyCStrToExistingHandle(gErrorMessage,inoutHandle);
+146     
+147     return(errCode);
+148 }
+.fi
+.SS "OSErr AppendErrorMessageToHandle (Handle inoutHandle)"
+
+.PP
+Definition at line 152 of file ErrorHandling\&.cpp\&.
+.PP
+.nf
+153 {
+154 OSErr       errCode;
+155 
+156 
+157     errCode = AppendCStrToHandle(gErrorMessage,inoutHandle,nil);
+158     
+159     return(errCode);
+160 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "char* gErrorMessage = gErrorMessageBuffer"
+
+.PP
+Definition at line 67 of file ErrorHandling\&.cpp\&.
+.SS "int gErrorMessageMaxLength = sizeof(gErrorMessageBuffer)"
+
+.PP
+Definition at line 68 of file ErrorHandling\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

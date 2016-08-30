@@ -1,0 +1,190 @@
+.TH "s2n-master/tls/s2n_send.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_send.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/param\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_flush\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.ti -1c
+.RI "ssize_t \fBs2n_send\fP (struct \fBs2n_connection\fP *conn, \fBvoid\fP *buf, ssize_t size, \fBs2n_blocked_status\fP *blocked)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_flush (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 34 of file s2n_send\&.c\&.
+.PP
+.nf
+35 {
+36     int w;
+37 
+38     *blocked = S2N_BLOCKED_ON_WRITE;
+39 
+40     /* Write any data that's already pending */
+41   WRITE:
+42     while (s2n_stuffer_data_available(&conn->out)) {
+43         w = s2n_stuffer_send_to_fd(&conn->out, conn->writefd, s2n_stuffer_data_available(&conn->out));
+44         if (w < 0) {
+45             if (errno == EWOULDBLOCK) {
+46                 S2N_ERROR(S2N_ERR_BLOCKED);
+47             }
+48             S2N_ERROR(S2N_ERR_IO);
+49         }
+50         conn->wire_bytes_out += w;
+51     }
+52     if (conn->closing) {
+53         conn->closed = 1;
+54         /* Delay wiping for close_notify\&. s2n_shutdown() needs to wait for peer's close_notify */
+55         if (!conn->close_notify_queued) {
+56             GUARD(s2n_connection_wipe(conn));
+57         }
+58     }
+59     GUARD(s2n_stuffer_rewrite(&conn->out));
+60 
+61     /* If there's an alert pending out, send that */
+62     if (s2n_stuffer_data_available(&conn->reader_alert_out) == 2) {
+63         struct s2n_blob alert;
+64         alert\&.data = conn->reader_alert_out\&.blob\&.data;
+65         alert\&.size = 2;
+66         GUARD(s2n_record_write(conn, TLS_ALERT, &alert));
+67         GUARD(s2n_stuffer_rewrite(&conn->reader_alert_out));
+68         conn->closing = 1;
+69 
+70         /* Actually write it \&.\&.\&. */
+71         goto WRITE;
+72     }
+73 
+74     /* Do the same for writer driven alerts */
+75     if (s2n_stuffer_data_available(&conn->writer_alert_out) == 2) {
+76         struct s2n_blob alert;
+77         alert\&.data = conn->writer_alert_out\&.blob\&.data;
+78         alert\&.size = 2;
+79         GUARD(s2n_record_write(conn, TLS_ALERT, &alert));
+80         GUARD(s2n_stuffer_rewrite(&conn->writer_alert_out));
+81         conn->closing = 1;
+82 
+83         /* Actually write it \&.\&.\&. */
+84         goto WRITE;
+85     }
+86 
+87     *blocked = S2N_NOT_BLOCKED;
+88 
+89     return 0;
+90 }
+.fi
+.SS "ssize_t s2n_send (struct \fBs2n_connection\fP * conn, \fBvoid\fP * buf, ssize_t size, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 92 of file s2n_send\&.c\&.
+.PP
+.nf
+93 {
+94     struct s2n_blob in = {\&.data = buf };
+95     ssize_t bytes_written = 0;
+96     int max_payload_size;
+97     int w;
+98 
+99     if (conn->closed) {
+100         S2N_ERROR(S2N_ERR_CLOSED);
+101     }
+102 
+103     /* Flush any pending I/O */
+104     GUARD(s2n_flush(conn, blocked));
+105 
+106     *blocked = S2N_BLOCKED_ON_WRITE;
+107 
+108     GUARD((max_payload_size = s2n_record_max_write_payload_size(conn)));
+109 
+110     /* TLS 1\&.0 and SSLv3 are vulnerable to the so-called Beast attack\&. Work
+111      * around this by splitting messages into one byte records, and then
+112      * the remainder can follow as usual\&.
+113      */
+114     int cbcHackUsed = 0;
+115 
+116     struct s2n_crypto_parameters *writer = conn->server;
+117     if (conn->mode == S2N_CLIENT) {
+118         writer = conn->client;
+119     }
+120 
+121     /* Now write the data we were asked to send this round */
+122     while (size) {
+123         in\&.size = MIN(size, max_payload_size);
+124 
+125         /* Don't split messages in server mode for interoperability with naive clients\&.
+126          * Some clients may have expectations based on the amount of content in the first record\&.
+127          */
+128         if (conn->actual_protocol_version < S2N_TLS11 && writer->cipher_suite->cipher->type == S2N_CBC && conn->mode != S2N_SERVER) {
+129             if (in\&.size > 1 && cbcHackUsed == 0) {
+130                 in\&.size = 1;
+131                 cbcHackUsed = 1;
+132             }
+133         }
+134 
+135         /* Write and encrypt the record */
+136         GUARD(s2n_stuffer_rewrite(&conn->out));
+137         GUARD(s2n_record_write(conn, TLS_APPLICATION_DATA, &in));
+138 
+139         bytes_written += in\&.size;
+140 
+141         /* Send it */
+142         while (s2n_stuffer_data_available(&conn->out)) {
+143             errno = 0;
+144             w = s2n_stuffer_send_to_fd(&conn->out, conn->writefd, s2n_stuffer_data_available(&conn->out));
+145             if (w < 0) {
+146                 if (errno == EWOULDBLOCK) {
+147                     if (bytes_written) {
+148                         return bytes_written;
+149                     }
+150                     S2N_ERROR(S2N_ERR_BLOCKED);
+151                 }
+152                 S2N_ERROR(S2N_ERR_IO);
+153             }
+154             conn->wire_bytes_out += w;
+155         }
+156 
+157         in\&.data += in\&.size;
+158         size -= in\&.size;
+159     }
+160 
+161     *blocked = S2N_NOT_BLOCKED;
+162 
+163     return bytes_written;
+164 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,920 @@
+.TH "dh.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+dh.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBdh_method\fP"
+.br
+.ti -1c
+.RI "struct \fBdh_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBOPENSSL_DH_MAX_MODULUS_BITS\fP   10000"
+.br
+.ti -1c
+.RI "#define \fBDH_FLAG_CACHE_MONT_P\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBDH_FLAG_NO_EXP_CONSTTIME\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBDH_FLAG_FIPS_METHOD\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBDH_FLAG_NON_FIPS_ALLOW\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBDH_GENERATOR_2\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDH_GENERATOR_5\fP   5"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_P_NOT_PRIME\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_P_NOT_SAFE_PRIME\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBDH_UNABLE_TO_CHECK_GENERATOR\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBDH_NOT_SUITABLE_GENERATOR\fP   0x08"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_Q_NOT_PRIME\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_INVALID_Q_VALUE\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_INVALID_J_VALUE\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_PUBKEY_TOO_SMALL\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_PUBKEY_TOO_LARGE\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_PUBKEY_INVALID\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBDH_CHECK_P_NOT_STRONG_PRIME\fP   \fBDH_CHECK_P_NOT_SAFE_PRIME\fP"
+.br
+.ti -1c
+.RI "#define \fBd2i_DHparams_fp\fP(\fBfp\fP,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBi2d_DHparams_fp\fP(\fBfp\fP,  \fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBd2i_DHparams_bio\fP(\fBbp\fP,  \fBx\fP)   \fBASN1_d2i_bio_of\fP(\fBDH\fP,\fBDH_new\fP,\fBd2i_DHparams\fP,\fBbp\fP,\fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBi2d_DHparams_bio\fP(\fBbp\fP,  \fBx\fP)   \fBASN1_i2d_bio_of_const\fP(\fBDH\fP,\fBi2d_DHparams\fP,\fBbp\fP,\fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_paramgen_prime_len\fP(ctx,  \fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_paramgen_subprime_len\fP(ctx,  \fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_paramgen_type\fP(ctx,  typ)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_paramgen_generator\fP(ctx,  \fBgen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_rfc5114\fP(ctx,  \fBgen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dhx_rfc5114\fP(ctx,  \fBgen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_kdf_type\fP(ctx,  kdf)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_dh_kdf_type\fP(ctx)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set0_dh_kdf_oid\fP(ctx,  oid)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get0_dh_kdf_oid\fP(ctx,  poid)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_kdf_md\fP(ctx,  md)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_dh_kdf_md\fP(ctx,  pmd)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set_dh_kdf_outlen\fP(ctx,  \fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get_dh_kdf_outlen\fP(ctx,  plen)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_set0_dh_kdf_ukm\fP(ctx,  \fBp\fP,  plen)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTX_get0_dh_kdf_ukm\fP(ctx,  \fBp\fP)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_PARAMGEN_PRIME_LEN\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 1)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_PARAMGEN_GENERATOR\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 2)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_RFC5114\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 3)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_PARAMGEN_SUBPRIME_LEN\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 4)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_PARAMGEN_TYPE\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 5)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_KDF_TYPE\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 6)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_KDF_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 7)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_DH_KDF_MD\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 8)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_KDF_OUTLEN\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 9)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_DH_KDF_OUTLEN\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 10)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_KDF_UKM\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 11)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_DH_KDF_UKM\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 12)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_DH_KDF_OID\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 13)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_CTRL_GET_DH_KDF_OID\fP   (\fBEVP_PKEY_ALG_CTRL\fP + 14)"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_DH_KDF_NONE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBEVP_PKEY_DH_KDF_X9_42\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDH_F_COMPUTE_KEY\fP   102"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DHPARAMS_PRINT_FP\fP   101"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_BUILTIN_GENPARAMS\fP   106"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_CMS_DECRYPT\fP   117"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_CMS_SET_PEERKEY\fP   118"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_CMS_SET_SHARED_INFO\fP   119"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_COMPUTE_KEY\fP   114"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_GENERATE_KEY\fP   115"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_GENERATE_PARAMETERS_EX\fP   116"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_NEW_METHOD\fP   105"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_PARAM_DECODE\fP   107"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_PRIV_DECODE\fP   110"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_PRIV_ENCODE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_PUB_DECODE\fP   108"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DH_PUB_ENCODE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBDH_F_DO_DH_PRINT\fP   100"
+.br
+.ti -1c
+.RI "#define \fBDH_F_GENERATE_KEY\fP   103"
+.br
+.ti -1c
+.RI "#define \fBDH_F_GENERATE_PARAMETERS\fP   104"
+.br
+.ti -1c
+.RI "#define \fBDH_F_PKEY_DH_DERIVE\fP   112"
+.br
+.ti -1c
+.RI "#define \fBDH_F_PKEY_DH_KEYGEN\fP   113"
+.br
+.ti -1c
+.RI "#define \fBDH_R_BAD_GENERATOR\fP   101"
+.br
+.ti -1c
+.RI "#define \fBDH_R_BN_DECODE_ERROR\fP   109"
+.br
+.ti -1c
+.RI "#define \fBDH_R_BN_ERROR\fP   106"
+.br
+.ti -1c
+.RI "#define \fBDH_R_DECODE_ERROR\fP   104"
+.br
+.ti -1c
+.RI "#define \fBDH_R_INVALID_PUBKEY\fP   102"
+.br
+.ti -1c
+.RI "#define \fBDH_R_KDF_PARAMETER_ERROR\fP   112"
+.br
+.ti -1c
+.RI "#define \fBDH_R_KEYS_NOT_SET\fP   108"
+.br
+.ti -1c
+.RI "#define \fBDH_R_KEY_SIZE_TOO_SMALL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBDH_R_MODULUS_TOO_LARGE\fP   103"
+.br
+.ti -1c
+.RI "#define \fBDH_R_NON_FIPS_METHOD\fP   111"
+.br
+.ti -1c
+.RI "#define \fBDH_R_NO_PARAMETERS_SET\fP   107"
+.br
+.ti -1c
+.RI "#define \fBDH_R_NO_PRIVATE_VALUE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBDH_R_PARAMETER_ENCODING_ERROR\fP   105"
+.br
+.ti -1c
+.RI "#define \fBDH_R_PEER_KEY_ERROR\fP   113"
+.br
+.ti -1c
+.RI "#define \fBDH_R_SHARED_INFO_ERROR\fP   114"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDH\fP * \fBDHparams_dup\fP (\fBDH\fP *)"
+.br
+.ti -1c
+.RI "const \fBDH_METHOD\fP * \fBDH_OpenSSL\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDH_set_default_method\fP (const \fBDH_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "const \fBDH_METHOD\fP * \fBDH_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBDH_set_method\fP (\fBDH\fP *dh, const \fBDH_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDH_new_method\fP (\fBENGINE\fP *engine)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDH_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDH_free\fP (\fBDH\fP *dh)"
+.br
+.ti -1c
+.RI "int \fBDH_up_ref\fP (\fBDH\fP *dh)"
+.br
+.ti -1c
+.RI "int \fBDH_size\fP (const \fBDH\fP *dh)"
+.br
+.ti -1c
+.RI "int \fBDH_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBDH_set_ex_data\fP (\fBDH\fP *d, int idx, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBDH_get_ex_data\fP (\fBDH\fP *d, int idx)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDH_generate_parameters\fP (int prime_len, int generator, \fBvoid\fP(*callback)(int, int, \fBvoid\fP *), \fBvoid\fP *cb_arg)"
+.br
+.ti -1c
+.RI "int \fBDH_generate_parameters_ex\fP (\fBDH\fP *dh, int prime_len, int generator, \fBBN_GENCB\fP *\fBcb\fP)"
+.br
+.ti -1c
+.RI "int \fBDH_check\fP (const \fBDH\fP *dh, int *codes)"
+.br
+.ti -1c
+.RI "int \fBDH_check_pub_key\fP (const \fBDH\fP *dh, const \fBBIGNUM\fP *pub_key, int *codes)"
+.br
+.ti -1c
+.RI "int \fBDH_generate_key\fP (\fBDH\fP *dh)"
+.br
+.ti -1c
+.RI "int \fBDH_compute_key\fP (unsigned char *key, const \fBBIGNUM\fP *pub_key, \fBDH\fP *dh)"
+.br
+.ti -1c
+.RI "int \fBDH_compute_key_padded\fP (unsigned char *key, const \fBBIGNUM\fP *pub_key, \fBDH\fP *dh)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBd2i_DHparams\fP (\fBDH\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DHparams\fP (const \fBDH\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBd2i_DHxparams\fP (\fBDH\fP **\fBa\fP, const unsigned char **\fBpp\fP, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBi2d_DHxparams\fP (const \fBDH\fP *\fBa\fP, unsigned char **\fBpp\fP)"
+.br
+.ti -1c
+.RI "int \fBDHparams_print_fp\fP (FILE *\fBfp\fP, const \fBDH\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBDHparams_print\fP (\fBBIO\fP *\fBbp\fP, const \fBDH\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDH_get_1024_160\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDH_get_2048_224\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDH\fP * \fBDH_get_2048_256\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBDH_KDF_X9_42\fP (unsigned char *out, size_t outlen, const unsigned char *Z, size_t Zlen, \fBASN1_OBJECT\fP *key_oid, const unsigned char *ukm, size_t ukmlen, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_DH_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define d2i_DHparams_bio(\fBbp\fP, \fBx\fP)   \fBASN1_d2i_bio_of\fP(\fBDH\fP,\fBDH_new\fP,\fBd2i_DHparams\fP,\fBbp\fP,\fBx\fP)"
+
+.PP
+Definition at line 189 of file crypto/dh/dh\&.h\&.
+.SS "#define d2i_DHparams_fp(\fBfp\fP, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+(DH *)ASN1_d2i_fp((char *(*)())DH_new, \
+                (char *(*)())d2i_DHparams,(fp),(unsigned char **)(x))
+.fi
+.PP
+Definition at line 185 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_INVALID_J_VALUE   0x40"
+
+.PP
+Definition at line 172 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_INVALID_Q_VALUE   0x20"
+
+.PP
+Definition at line 171 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_P_NOT_PRIME   0x01"
+
+.PP
+Definition at line 166 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_P_NOT_SAFE_PRIME   0x02"
+
+.PP
+Definition at line 167 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_P_NOT_STRONG_PRIME   \fBDH_CHECK_P_NOT_SAFE_PRIME\fP"
+
+.PP
+Definition at line 183 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_PUBKEY_INVALID   0x04"
+
+.PP
+Definition at line 177 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_PUBKEY_TOO_LARGE   0x02"
+
+.PP
+Definition at line 176 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_PUBKEY_TOO_SMALL   0x01"
+
+.PP
+Definition at line 175 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_CHECK_Q_NOT_PRIME   0x10"
+
+.PP
+Definition at line 170 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_COMPUTE_KEY   102"
+
+.PP
+Definition at line 352 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_BUILTIN_GENPARAMS   106"
+
+.PP
+Definition at line 354 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_CMS_DECRYPT   117"
+
+.PP
+Definition at line 355 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_CMS_SET_PEERKEY   118"
+
+.PP
+Definition at line 356 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_CMS_SET_SHARED_INFO   119"
+
+.PP
+Definition at line 357 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_COMPUTE_KEY   114"
+
+.PP
+Definition at line 358 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_GENERATE_KEY   115"
+
+.PP
+Definition at line 359 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_GENERATE_PARAMETERS_EX   116"
+
+.PP
+Definition at line 360 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_NEW_METHOD   105"
+
+.PP
+Definition at line 361 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_PARAM_DECODE   107"
+
+.PP
+Definition at line 362 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_PRIV_DECODE   110"
+
+.PP
+Definition at line 363 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_PRIV_ENCODE   111"
+
+.PP
+Definition at line 364 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_PUB_DECODE   108"
+
+.PP
+Definition at line 365 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DH_PUB_ENCODE   109"
+
+.PP
+Definition at line 366 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DHPARAMS_PRINT_FP   101"
+
+.PP
+Definition at line 353 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_DO_DH_PRINT   100"
+
+.PP
+Definition at line 367 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_GENERATE_KEY   103"
+
+.PP
+Definition at line 368 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_GENERATE_PARAMETERS   104"
+
+.PP
+Definition at line 369 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_PKEY_DH_DERIVE   112"
+
+.PP
+Definition at line 370 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_F_PKEY_DH_KEYGEN   113"
+
+.PP
+Definition at line 371 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_FLAG_CACHE_MONT_P   0x01"
+
+.PP
+Definition at line 80 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_FLAG_FIPS_METHOD   0x0400"
+
+.PP
+Definition at line 99 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_FLAG_NO_EXP_CONSTTIME   0x02"
+
+.PP
+Definition at line 90 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_FLAG_NON_FIPS_ALLOW   0x0400"
+
+.PP
+Definition at line 107 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_GENERATOR_2   2"
+
+.PP
+Definition at line 161 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_GENERATOR_5   5"
+
+.PP
+Definition at line 163 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_NOT_SUITABLE_GENERATOR   0x08"
+
+.PP
+Definition at line 169 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_BAD_GENERATOR   101"
+
+.PP
+Definition at line 374 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_BN_DECODE_ERROR   109"
+
+.PP
+Definition at line 375 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_BN_ERROR   106"
+
+.PP
+Definition at line 376 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_DECODE_ERROR   104"
+
+.PP
+Definition at line 377 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_INVALID_PUBKEY   102"
+
+.PP
+Definition at line 378 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_KDF_PARAMETER_ERROR   112"
+
+.PP
+Definition at line 379 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_KEY_SIZE_TOO_SMALL   110"
+
+.PP
+Definition at line 381 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_KEYS_NOT_SET   108"
+
+.PP
+Definition at line 380 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_MODULUS_TOO_LARGE   103"
+
+.PP
+Definition at line 382 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_NO_PARAMETERS_SET   107"
+
+.PP
+Definition at line 384 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_NO_PRIVATE_VALUE   100"
+
+.PP
+Definition at line 385 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_NON_FIPS_METHOD   111"
+
+.PP
+Definition at line 383 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_PARAMETER_ENCODING_ERROR   105"
+
+.PP
+Definition at line 386 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_PEER_KEY_ERROR   113"
+
+.PP
+Definition at line 387 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_R_SHARED_INFO_ERROR   114"
+
+.PP
+Definition at line 388 of file crypto/dh/dh\&.h\&.
+.SS "#define DH_UNABLE_TO_CHECK_GENERATOR   0x04"
+
+.PP
+Definition at line 168 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_KDF_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 7)"
+
+.PP
+Definition at line 329 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_KDF_OID   (\fBEVP_PKEY_ALG_CTRL\fP + 13)"
+
+.PP
+Definition at line 335 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_KDF_OUTLEN   (\fBEVP_PKEY_ALG_CTRL\fP + 9)"
+
+.PP
+Definition at line 331 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_KDF_TYPE   (\fBEVP_PKEY_ALG_CTRL\fP + 6)"
+
+.PP
+Definition at line 328 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_KDF_UKM   (\fBEVP_PKEY_ALG_CTRL\fP + 11)"
+
+.PP
+Definition at line 333 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_PARAMGEN_GENERATOR   (\fBEVP_PKEY_ALG_CTRL\fP + 2)"
+
+.PP
+Definition at line 324 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_PARAMGEN_PRIME_LEN   (\fBEVP_PKEY_ALG_CTRL\fP + 1)"
+
+.PP
+Definition at line 323 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_PARAMGEN_SUBPRIME_LEN   (\fBEVP_PKEY_ALG_CTRL\fP + 4)"
+
+.PP
+Definition at line 326 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_PARAMGEN_TYPE   (\fBEVP_PKEY_ALG_CTRL\fP + 5)"
+
+.PP
+Definition at line 327 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_DH_RFC5114   (\fBEVP_PKEY_ALG_CTRL\fP + 3)"
+
+.PP
+Definition at line 325 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_DH_KDF_MD   (\fBEVP_PKEY_ALG_CTRL\fP + 8)"
+
+.PP
+Definition at line 330 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_DH_KDF_OID   (\fBEVP_PKEY_ALG_CTRL\fP + 14)"
+
+.PP
+Definition at line 336 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_DH_KDF_OUTLEN   (\fBEVP_PKEY_ALG_CTRL\fP + 10)"
+
+.PP
+Definition at line 332 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTRL_GET_DH_KDF_UKM   (\fBEVP_PKEY_ALG_CTRL\fP + 12)"
+
+.PP
+Definition at line 334 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_get0_dh_kdf_oid(ctx, poid)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_GET_DH_KDF_OID, 0, (void *)poid)
+.fi
+.PP
+Definition at line 288 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_get0_dh_kdf_ukm(ctx, \fBp\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_GET_DH_KDF_UKM, 0, (void *)p)
+.fi
+.PP
+Definition at line 318 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_dh_kdf_md(ctx, pmd)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_GET_DH_KDF_MD, 0, (void *)pmd)
+.fi
+.PP
+Definition at line 298 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_dh_kdf_outlen(ctx, plen)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                        EVP_PKEY_CTRL_GET_DH_KDF_OUTLEN, 0, (void *)plen)
+.fi
+.PP
+Definition at line 308 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_get_dh_kdf_type(ctx)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_DH_KDF_TYPE, -2, NULL)
+.fi
+.PP
+Definition at line 278 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set0_dh_kdf_oid(ctx, oid)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_DH_KDF_OID, 0, (void *)oid)
+.fi
+.PP
+Definition at line 283 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set0_dh_kdf_ukm(ctx, \fBp\fP, plen)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_DH_KDF_UKM, plen, (void *)p)
+.fi
+.PP
+Definition at line 313 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_kdf_md(ctx, md)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_DH_KDF_MD, 0, (void *)md)
+.fi
+.PP
+Definition at line 293 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_kdf_outlen(ctx, \fBlen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_DH_KDF_OUTLEN, len, NULL)
+.fi
+.PP
+Definition at line 303 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_kdf_type(ctx, kdf)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, \
+                                EVP_PKEY_OP_DERIVE, \
+                                EVP_PKEY_CTRL_DH_KDF_TYPE, kdf, NULL)
+.fi
+.PP
+Definition at line 273 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_paramgen_generator(ctx, \fBgen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DH, EVP_PKEY_OP_PARAMGEN, \
+                        EVP_PKEY_CTRL_DH_PARAMGEN_GENERATOR, gen, NULL)
+.fi
+.PP
+Definition at line 261 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_paramgen_prime_len(ctx, \fBlen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DH, EVP_PKEY_OP_PARAMGEN, \
+                        EVP_PKEY_CTRL_DH_PARAMGEN_PRIME_LEN, len, NULL)
+.fi
+.PP
+Definition at line 249 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_paramgen_subprime_len(ctx, \fBlen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DH, EVP_PKEY_OP_PARAMGEN, \
+                        EVP_PKEY_CTRL_DH_PARAMGEN_SUBPRIME_LEN, len, NULL)
+.fi
+.PP
+Definition at line 253 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_paramgen_type(ctx, typ)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DH, EVP_PKEY_OP_PARAMGEN, \
+                        EVP_PKEY_CTRL_DH_PARAMGEN_TYPE, typ, NULL)
+.fi
+.PP
+Definition at line 257 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dh_rfc5114(ctx, \fBgen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, EVP_PKEY_OP_PARAMGEN, \
+                        EVP_PKEY_CTRL_DH_RFC5114, gen, NULL)
+.fi
+.PP
+Definition at line 265 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_CTX_set_dhx_rfc5114(ctx, \fBgen\fP)"
+\fBValue:\fP
+.PP
+.nf
+EVP_PKEY_CTX_ctrl(ctx, EVP_PKEY_DHX, EVP_PKEY_OP_PARAMGEN, \
+                        EVP_PKEY_CTRL_DH_RFC5114, gen, NULL)
+.fi
+.PP
+Definition at line 269 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_DH_KDF_NONE   1"
+
+.PP
+Definition at line 339 of file crypto/dh/dh\&.h\&.
+.SS "#define EVP_PKEY_DH_KDF_X9_42   2"
+
+.PP
+Definition at line 340 of file crypto/dh/dh\&.h\&.
+.SS "#define i2d_DHparams_bio(\fBbp\fP, \fBx\fP)   \fBASN1_i2d_bio_of_const\fP(\fBDH\fP,\fBi2d_DHparams\fP,\fBbp\fP,\fBx\fP)"
+
+.PP
+Definition at line 190 of file crypto/dh/dh\&.h\&.
+.SS "#define i2d_DHparams_fp(\fBfp\fP, \fBx\fP)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_i2d_fp(i2d_DHparams,(fp), \
+                (unsigned char *)(x))
+.fi
+.PP
+Definition at line 187 of file crypto/dh/dh\&.h\&.
+.SS "#define OPENSSL_DH_MAX_MODULUS_BITS   10000"
+
+.PP
+Definition at line 77 of file crypto/dh/dh\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBDH\fP* d2i_DHparams (\fBDH\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "\fBDH\fP* d2i_DHxparams (\fBDH\fP ** a, const unsigned char ** pp, long length)"
+
+.SS "int DH_check (const \fBDH\fP * dh, int * codes)"
+
+.SS "int DH_check_pub_key (const \fBDH\fP * dh, const \fBBIGNUM\fP * pub_key, int * codes)"
+
+.SS "int DH_compute_key (unsigned char * key, const \fBBIGNUM\fP * pub_key, \fBDH\fP * dh)"
+
+.SS "int DH_compute_key_padded (unsigned char * key, const \fBBIGNUM\fP * pub_key, \fBDH\fP * dh)"
+
+.SS "\fBvoid\fP DH_free (\fBDH\fP * dh)"
+
+.SS "int DH_generate_key (\fBDH\fP * dh)"
+
+.SS "\fBDH\fP* DH_generate_parameters (int prime_len, int generator, \fBvoid\fP(*)(int, int, \fBvoid\fP *) callback, \fBvoid\fP * cb_arg)"
+
+.SS "int DH_generate_parameters_ex (\fBDH\fP * dh, int prime_len, int generator, \fBBN_GENCB\fP * cb)"
+
+.SS "\fBDH\fP* DH_get_1024_160 (\fBvoid\fP)"
+
+.SS "\fBDH\fP* DH_get_2048_224 (\fBvoid\fP)"
+
+.SS "\fBDH\fP* DH_get_2048_256 (\fBvoid\fP)"
+
+.SS "const \fBDH_METHOD\fP* DH_get_default_method (\fBvoid\fP)"
+
+.SS "\fBvoid\fP* DH_get_ex_data (\fBDH\fP * d, int idx)"
+
+.SS "int DH_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int DH_KDF_X9_42 (unsigned char * out, size_t outlen, const unsigned char * Z, size_t Zlen, \fBASN1_OBJECT\fP * key_oid, const unsigned char * ukm, size_t ukmlen, const \fBEVP_MD\fP * md)"
+
+.SS "\fBDH\fP* DH_new (\fBvoid\fP)"
+
+.SS "\fBDH\fP* DH_new_method (\fBENGINE\fP * engine)"
+
+.SS "const \fBDH_METHOD\fP* DH_OpenSSL (\fBvoid\fP)"
+
+.SS "\fBvoid\fP DH_set_default_method (const \fBDH_METHOD\fP * meth)"
+
+.SS "int DH_set_ex_data (\fBDH\fP * d, int idx, \fBvoid\fP * arg)"
+
+.SS "int DH_set_method (\fBDH\fP * dh, const \fBDH_METHOD\fP * meth)"
+
+.SS "int DH_size (const \fBDH\fP * dh)"
+
+.SS "int DH_up_ref (\fBDH\fP * dh)"
+
+.SS "\fBDH\fP* DHparams_dup (\fBDH\fP *)"
+
+.SS "int DHparams_print (\fBBIO\fP * bp, const \fBDH\fP * x)"
+
+.SS "int DHparams_print_fp (FILE * fp, const \fBDH\fP * x)"
+
+.SS "\fBvoid\fP ERR_load_DH_strings (\fBvoid\fP)"
+
+.SS "int i2d_DHparams (const \fBDH\fP * a, unsigned char ** pp)"
+
+.SS "int i2d_DHxparams (const \fBDH\fP * a, unsigned char ** pp)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

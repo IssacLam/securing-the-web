@@ -1,0 +1,1368 @@
+\hypertarget{include_2openssl_2dh_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/include/openssl/dh.h File Reference}
+\label{include_2openssl_2dh_8h}\index{s2n-\/master/libcrypto-\/build/openssl/include/openssl/dh.\+h@{s2n-\/master/libcrypto-\/build/openssl/include/openssl/dh.\+h}}
+{\ttfamily \#include $<$openssl/e\+\_\+os2.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/bio.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ossl\+\_\+typ.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/bn.\+h$>$}\\*
+Include dependency graph for dh.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{include_2openssl_2dh_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{include_2openssl_2dh_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdh__method}{dh\+\_\+method}
+\item 
+struct \hyperlink{structdh__st}{dh\+\_\+st}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a687a0cabc76d4d94d019771361688c5a}{O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS}~10000
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ae20676e957e8bcd258ed558e846be9ff}{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P}~0x01
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aa8fc01401e69ab47d9ba8a7cbb8f15aa}{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME}~0x02
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ac1ea4c694872ecc8572e053d3f0f1cc1}{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}~0x0400
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a62b7f533e2709ccaa5f658b3496e71ae}{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW}~0x0400
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a7ef28fe223497f1c02b2fba554fa3455}{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2}~2
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aa265ad9663ec5601a2ce433a8b84a1ba}{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5}~5
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2d92cc973efdc0898f1316b4c6aa20ee}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}~0x01
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab0ffbfaa9b0729cb71b15b5a6d3237e9}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME}~0x02
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a8c0bb02eb4f8c5c80a530823075c6107}{D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}~0x04
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a40f47155870f02952b862a5db31f0371}{D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}~0x08
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab231da1601384a99817d8782880a16d3}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}~0x10
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a462398aaaa1c99d87fffda82786eb631}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE}~0x20
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_abe3ecde245d022713ec3f1d2f532b043}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE}~0x40
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a6103bb4d325fe19f5e3b2d027afc5b59}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}~0x01
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a726aee7943b504c73c6df38c6e2ce516}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}~0x02
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a11e55fef683a5971e72b7aee49a242b6}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID}~0x04
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_acdb91634317b317f8083b04a6bad5fe8}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME}~\hyperlink{include_2openssl_2dh_8h_ab0ffbfaa9b0729cb71b15b5a6d3237e9}{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME}
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_afde41e165a16349d28b43405d10ac856}{d2i\+\_\+\+D\+Hparams\+\_\+fp}(\hyperlink{include_2openssl_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp},  \hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2c62f812345723aec047e0f232f7a663}{i2d\+\_\+\+D\+Hparams\+\_\+fp}(\hyperlink{include_2openssl_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp},  \hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_afb659a3948d162fb7ff1f108ecb673bf}{d2i\+\_\+\+D\+Hparams\+\_\+bio}(\hyperlink{include_2openssl_2conf_8h_a8f12a78fdc053e4143bc0896f8b3d937}{bp},  \hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})~\hyperlink{include_2openssl_2asn1_8h_a73ea94b72999e6b4b832cf6b59649ac5}{A\+S\+N1\+\_\+d2i\+\_\+bio\+\_\+of}(\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH},\hyperlink{include_2openssl_2dh_8h_a76c6e12bd1f0b9977d80fee83b086031}{D\+H\+\_\+new},\hyperlink{include_2openssl_2dh_8h_a24ea03dc870df9a1292e23c86ae31f25}{d2i\+\_\+\+D\+Hparams},\hyperlink{include_2openssl_2conf_8h_a8f12a78fdc053e4143bc0896f8b3d937}{bp},\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab2683b33086ac9da9ba59e0d6441be70}{i2d\+\_\+\+D\+Hparams\+\_\+bio}(\hyperlink{include_2openssl_2conf_8h_a8f12a78fdc053e4143bc0896f8b3d937}{bp},  \hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})~\hyperlink{include_2openssl_2asn1_8h_a5953594ac6360d30dcd66b18fdd75026}{A\+S\+N1\+\_\+i2d\+\_\+bio\+\_\+of\+\_\+const}(\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH},\hyperlink{include_2openssl_2dh_8h_a1c152b5a5c2b12db3b69c1e923a6fa64}{i2d\+\_\+\+D\+Hparams},\hyperlink{include_2openssl_2conf_8h_a8f12a78fdc053e4143bc0896f8b3d937}{bp},\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a8b2dc33799edbb01686f60bda0eb2421}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len}(ctx,  \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a92c16bcec6d154a4ca540799ea2c1527}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len}(ctx,  \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ac09fa94318c0d06cd408e88842a154cf}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type}(ctx,  typ)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aec3b7524c578fb097627668c8eea1967}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator}(ctx,  \hyperlink{include_2openssl_2x509v3_8h_a0f99fcc683d81fd9fa9b97e70be08279}{gen})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2d6625202121dfdd1deba2f739bed67f}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114}(ctx,  \hyperlink{include_2openssl_2x509v3_8h_a0f99fcc683d81fd9fa9b97e70be08279}{gen})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a960ea06048d48f767adcc99548c25ed0}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114}(ctx,  \hyperlink{include_2openssl_2x509v3_8h_a0f99fcc683d81fd9fa9b97e70be08279}{gen})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ae04d050c5bccfba34cecdd48243816c9}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type}(ctx,  kdf)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2911bf39bfdd9abaf1a999e4bc26b238}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type}(ctx)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2d2b960c00541a160088709198f2c6fb}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid}(ctx,  oid)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a7284d6ec1649e3d82a29de786fe80e1a}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid}(ctx,  poid)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a104413761ca825baccf392c7a408216c}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md}(ctx,  md)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ac669e386c49d603c2cd3f6c85c09a50b}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md}(ctx,  pmd)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aefb91c662c067edec601c6cf601f0ad6}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen}(ctx,  \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aa7c8b3b3246dc8403b143b4e0b28ba41}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen}(ctx,  plen)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2af0100686a53f192ca549f6e0749ac8}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm}(ctx,  \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p},  plen)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a697158f975485c15bd916ccbf48217a0}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm}(ctx,  \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p})
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ae3484d3d197500d0dc1c8de4591609ec}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 1)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab7d7c2f1371e2615e283731ab6f3d4dc}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 2)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_adff946dd8fb535e7fc8447536da98d2b}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 3)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ac6a632df99e207fce4a2092255b5d422}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 4)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_abeb1e8173dc2043458cff5b7252959f5}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 5)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a46082fa87550c212de295fd60a3e690d}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 6)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aa688b328a3a60a8cc77ade062e9a6935}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 7)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a524da9521d25bb3e405e2c62d505fcb3}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 8)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a0411c118d67ec5a090206ff76f699dcc}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 9)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_add03b22e1fadee1873dc2af36c366bec}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 10)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_adfaa8b85765df997a898e1defa91b716}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 11)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a6263cd0c4681b6ca2624221db4632cf5}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 12)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a57ec9ba78aee9ccf16a31ba1ebff0ce5}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 13)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a9a9f2865affe6b05ada236e2af073cff}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}~(\hyperlink{include_2openssl_2evp_8h_ab7513c3358eaf58ae5b97e9c40562596}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 14)
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aa07ad034d2a938473095a01ac53decc0}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE}~1
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a4464a0c19f323764ad88d59044c358e3}{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42}~2
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a0258675e34ce8776d8e8866b5835aa36}{D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}~102
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a03318c93cfb6bee6ad2d36e55303d285}{D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP}~101
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_aa54bfeab4a272f1beeb28498e5f70ab6}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS}~106
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a7bb84b7fbdb5f21d5a857c492cd01942}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT}~117
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a44e545839fe6cfda8b37d1653b7c09f5}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY}~118
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2fcc57d07bba14c02b44cf2da7f45522}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO}~119
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a2035626f5cd336d56cb5aa1f74a94d86}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}~114
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a653b045f2c5250d8ed2c24ac29a168a4}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}~115
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a4401b083b7e71d5af4c61511940a3e18}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX}~116
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ad5244870c85f9d2b99fc544c7bab7444}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD}~105
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a388bc08034dd793d766a30c6c9fecbfa}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE}~107
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab1772b8fd8fd47445c24899facac9a17}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE}~110
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ade1a093bf1e9756dfd551c56d078e0d3}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE}~111
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_adc5710fac21d1df0571e62a211deba8b}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE}~108
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a6159410148d0bab1f80732b59f750f2a}{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE}~109
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a98d6c3f77582688b36c000e79c88f2d7}{D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT}~100
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a28a5b8f3ea212869597dda5b0f319376}{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}~103
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a3be4292a72d9ae34b0be960700b04780}{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS}~104
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a7cd431869b2de4b0a18643f9dd604c9d}{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE}~112
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a9e969d6d414153ba3dd9331c54cc120d}{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN}~113
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a263eb4aa856aafc239b1eb803d4a4ba6}{D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}~101
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_add74e3847b6f09137296203d3d69ec36}{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}~109
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab0d9779e1357cfa0bd93a734cac02a28}{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR}~106
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a7164f18ea382333e7c8921cdc7eee6f4}{D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}~104
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a5740e9188b38bad1ab3d0eb6a2323f7f}{D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY}~102
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a40d10a7bbb13a2e9f6a9a690cba0ce96}{D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR}~112
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a0ec03ab691cb32598a469971f26b0116}{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET}~108
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_ab429322a15fa0cdb46d2e8bee24f3f13}{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}~110
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a209a2c08d9ae8c4322817b8949356282}{D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}~103
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_abbbfc2650b3b8f82c51c22b15378865f}{D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}~111
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a228a208b015ded8312e20f26d9ce6a94}{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET}~107
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a5a37cbff453983f9108b5c71941f0634}{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE}~100
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a4661ba73eff85d1f1906fa2a199ee6f3}{D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR}~105
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a67240aa61bab19e75373765413cbe2b0}{D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR}~113
+\item 
+\#define \hyperlink{include_2openssl_2dh_8h_a7f43af8ef88919871b88a90964ee80ef}{D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR}~114
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_ab71b4cb56c0ad4c6bbf3606aab6dd175}{D\+Hparams\+\_\+dup} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$)
+\item 
+const \hyperlink{crypto_2ossl__typ_8h_a5cc1db56c9b2f76075c0878f65e9b46d}{D\+H\+\_\+\+M\+E\+T\+H\+OD} $\ast$ \hyperlink{include_2openssl_2dh_8h_a6514f2f044797e99461868d5faa8b69e}{D\+H\+\_\+\+Open\+S\+SL} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{include_2openssl_2dh_8h_a6c63e1e8af5957d7f798439c854d06b6}{D\+H\+\_\+set\+\_\+default\+\_\+method} (const \hyperlink{crypto_2ossl__typ_8h_a5cc1db56c9b2f76075c0878f65e9b46d}{D\+H\+\_\+\+M\+E\+T\+H\+OD} $\ast$meth)
+\item 
+const \hyperlink{crypto_2ossl__typ_8h_a5cc1db56c9b2f76075c0878f65e9b46d}{D\+H\+\_\+\+M\+E\+T\+H\+OD} $\ast$ \hyperlink{include_2openssl_2dh_8h_ae2b07654d087940e36e7583887d8b070}{D\+H\+\_\+get\+\_\+default\+\_\+method} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a3ec2b749f56ccf1c887a72fa11b7c53d}{D\+H\+\_\+set\+\_\+method} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh, const \hyperlink{crypto_2ossl__typ_8h_a5cc1db56c9b2f76075c0878f65e9b46d}{D\+H\+\_\+\+M\+E\+T\+H\+OD} $\ast$meth)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_a2e97e03aee56c6094bb7fd6322b3ce68}{D\+H\+\_\+new\+\_\+method} (\hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$engine)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_a76c6e12bd1f0b9977d80fee83b086031}{D\+H\+\_\+new} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{include_2openssl_2dh_8h_a1f15312ca21e290ee714e86578820c35}{D\+H\+\_\+free} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_af7c3e51cba326865c3684012c2337df1}{D\+H\+\_\+up\+\_\+ref} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a9e1fdd62e3bfe4b671dbfc363f0e6297}{D\+H\+\_\+size} (const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_af458f384a3619c199f6b3789fa23bcb9}{D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index} (long argl, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$argp, \hyperlink{include_2openssl_2ossl__typ_8h_a524acd717ae812f604e3027f8255d0ba}{C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+new} $\ast$new\+\_\+func, \hyperlink{include_2openssl_2ossl__typ_8h_a1235777e2310295c33f29a5f06e40682}{C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+dup} $\ast$dup\+\_\+func, \hyperlink{include_2openssl_2ossl__typ_8h_a723f84d260fce598230a3cdd45885246}{C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+free} $\ast$\hyperlink{include_2openssl_2asn1_8h_ac5afe3357c8713bbdcf934d7c060cad0}{free\+\_\+func})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a60dbe09572bfaf14603c29bd2b095ffa}{D\+H\+\_\+set\+\_\+ex\+\_\+data} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$d, int idx, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$arg)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$ \hyperlink{include_2openssl_2dh_8h_afe91dd784736f6e608cae7f65a938cd2}{D\+H\+\_\+get\+\_\+ex\+\_\+data} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$d, int idx)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_a6fc41faeaf9e88902bf8b8c06ac20568}{D\+H\+\_\+generate\+\_\+parameters} (int prime\+\_\+len, int generator, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void}($\ast$callback)(int, int, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$), \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$cb\+\_\+arg)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a11ef051e93bc408f3e7ba77d44c5d3cb}{D\+H\+\_\+generate\+\_\+parameters\+\_\+ex} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh, int prime\+\_\+len, int generator, \hyperlink{crypto_2ossl__typ_8h_ae122a8be18f4fe821e5389381ececa09}{B\+N\+\_\+\+G\+E\+N\+CB} $\ast$\hyperlink{include_2openssl_2pem_8h_a921d6e42da41258bdbb0d8184d7554a2}{cb})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_ae37f7b9808959007f12b420a836a650e}{D\+H\+\_\+check} (const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh, int $\ast$codes)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a024a17ba62d9a3cb41c109996c01cb7b}{D\+H\+\_\+check\+\_\+pub\+\_\+key} (const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$pub\+\_\+key, int $\ast$codes)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_ab90ec6b9e64f62c05754731c0c13ea01}{D\+H\+\_\+generate\+\_\+key} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_ac47f31f61d60571c0987c97a268e4865}{D\+H\+\_\+compute\+\_\+key} (unsigned char $\ast$key, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$pub\+\_\+key, \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh)
+\item 
+int \hyperlink{include_2openssl_2dh_8h_adfc2f11c582c3e73114a955f6efa0cfe}{D\+H\+\_\+compute\+\_\+key\+\_\+padded} (unsigned char $\ast$key, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$pub\+\_\+key, \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$dh)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_a24ea03dc870df9a1292e23c86ae31f25}{d2i\+\_\+\+D\+Hparams} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$$\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const unsigned char $\ast$$\ast$\hyperlink{include_2openssl_2asn1_8h_a3b4c67b77785d8fb51a21fe9832d4822}{pp}, long \hyperlink{include_2openssl_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a1c152b5a5c2b12db3b69c1e923a6fa64}{i2d\+\_\+\+D\+Hparams} (const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, unsigned char $\ast$$\ast$\hyperlink{include_2openssl_2asn1_8h_a3b4c67b77785d8fb51a21fe9832d4822}{pp})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_a0bbe5aae825ba1ad52248ce1f8e8810c}{d2i\+\_\+\+D\+Hxparams} (\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$$\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const unsigned char $\ast$$\ast$\hyperlink{include_2openssl_2asn1_8h_a3b4c67b77785d8fb51a21fe9832d4822}{pp}, long \hyperlink{include_2openssl_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a0541a2984cf5b83a2054eee6862ef12f}{i2d\+\_\+\+D\+Hxparams} (const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, unsigned char $\ast$$\ast$\hyperlink{include_2openssl_2asn1_8h_a3b4c67b77785d8fb51a21fe9832d4822}{pp})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a2cd239d7fbd80203ed566fb6982806bf}{D\+Hparams\+\_\+print\+\_\+fp} (F\+I\+LE $\ast$\hyperlink{include_2openssl_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp}, const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a932ad3961b4555ff449f6df19349d7d8}{D\+Hparams\+\_\+print} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$\hyperlink{include_2openssl_2conf_8h_a8f12a78fdc053e4143bc0896f8b3d937}{bp}, const \hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_adfb0d4240d725ee70056b4ad1840adc8}{D\+H\+\_\+get\+\_\+1024\+\_\+160} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_a3b7b15b670dff02ae33df69a5ee661a3}{D\+H\+\_\+get\+\_\+2048\+\_\+224} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a5a5072cfe75a51d0ff201c0a8d2d68b2}{DH} $\ast$ \hyperlink{include_2openssl_2dh_8h_aafaa9010009d096c198450719507f16c}{D\+H\+\_\+get\+\_\+2048\+\_\+256} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{include_2openssl_2dh_8h_a476c709ae2b48b838d096b56afe99a15}{D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42} (unsigned char $\ast$out, size\+\_\+t outlen, const unsigned char $\ast$Z, size\+\_\+t Zlen, \hyperlink{crypto_2ossl__typ_8h_ae3fda0801e4c8e250087052bafb3ce2e}{A\+S\+N1\+\_\+\+O\+B\+J\+E\+CT} $\ast$key\+\_\+oid, const unsigned char $\ast$ukm, size\+\_\+t ukmlen, const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$md)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{include_2openssl_2dh_8h_ab7dc4c132afcf74a775990d14591d161}{E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS@{O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS}}
+\index{O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS@{O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS}{OPENSSL_DH_MAX_MODULUS_BITS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\+P\+E\+N\+S\+S\+L\+\_\+\+D\+H\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+B\+I\+TS~10000}\hypertarget{include_2openssl_2dh_8h_a687a0cabc76d4d94d019771361688c5a}{}\label{include_2openssl_2dh_8h_a687a0cabc76d4d94d019771361688c5a}
+
+
+Definition at line 77 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P}}
+\index{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P}{DH_FLAG_CACHE_MONT_P}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+C\+A\+C\+H\+E\+\_\+\+M\+O\+N\+T\+\_\+P~0x01}\hypertarget{include_2openssl_2dh_8h_ae20676e957e8bcd258ed558e846be9ff}{}\label{include_2openssl_2dh_8h_ae20676e957e8bcd258ed558e846be9ff}
+
+
+Definition at line 80 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME}}
+\index{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME}{DH_FLAG_NO_EXP_CONSTTIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+\_\+\+E\+X\+P\+\_\+\+C\+O\+N\+S\+T\+T\+I\+ME~0x02}\hypertarget{include_2openssl_2dh_8h_aa8fc01401e69ab47d9ba8a7cbb8f15aa}{}\label{include_2openssl_2dh_8h_aa8fc01401e69ab47d9ba8a7cbb8f15aa}
+
+
+Definition at line 90 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}}
+\index{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}{DH_FLAG_FIPS_METHOD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD~0x0400}\hypertarget{include_2openssl_2dh_8h_ac1ea4c694872ecc8572e053d3f0f1cc1}{}\label{include_2openssl_2dh_8h_ac1ea4c694872ecc8572e053d3f0f1cc1}
+
+
+Definition at line 99 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW}}
+\index{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW@{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW}{DH_FLAG_NON_FIPS_ALLOW}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+L\+A\+G\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+A\+L\+L\+OW~0x0400}\hypertarget{include_2openssl_2dh_8h_a62b7f533e2709ccaa5f658b3496e71ae}{}\label{include_2openssl_2dh_8h_a62b7f533e2709ccaa5f658b3496e71ae}
+
+
+Definition at line 107 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2@{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2}}
+\index{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2@{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2}{DH_GENERATOR_2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+2~2}\hypertarget{include_2openssl_2dh_8h_a7ef28fe223497f1c02b2fba554fa3455}{}\label{include_2openssl_2dh_8h_a7ef28fe223497f1c02b2fba554fa3455}
+
+
+Definition at line 161 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5@{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5}}
+\index{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5@{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5}{DH_GENERATOR_5}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+\_\+5~5}\hypertarget{include_2openssl_2dh_8h_aa265ad9663ec5601a2ce433a8b84a1ba}{}\label{include_2openssl_2dh_8h_aa265ad9663ec5601a2ce433a8b84a1ba}
+
+
+Definition at line 163 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}{DH_CHECK_P_NOT_PRIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME~0x01}\hypertarget{include_2openssl_2dh_8h_a2d92cc973efdc0898f1316b4c6aa20ee}{}\label{include_2openssl_2dh_8h_a2d92cc973efdc0898f1316b4c6aa20ee}
+
+
+Definition at line 166 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME}{DH_CHECK_P_NOT_SAFE_PRIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME~0x02}\hypertarget{include_2openssl_2dh_8h_ab0ffbfaa9b0729cb71b15b5a6d3237e9}{}\label{include_2openssl_2dh_8h_ab0ffbfaa9b0729cb71b15b5a6d3237e9}
+
+
+Definition at line 167 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}}
+\index{D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}{DH_UNABLE_TO_CHECK_GENERATOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+U\+N\+A\+B\+L\+E\+\_\+\+T\+O\+\_\+\+C\+H\+E\+C\+K\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR~0x04}\hypertarget{include_2openssl_2dh_8h_a8c0bb02eb4f8c5c80a530823075c6107}{}\label{include_2openssl_2dh_8h_a8c0bb02eb4f8c5c80a530823075c6107}
+
+
+Definition at line 168 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}}
+\index{D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}{DH_NOT_SUITABLE_GENERATOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+N\+O\+T\+\_\+\+S\+U\+I\+T\+A\+B\+L\+E\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR~0x08}\hypertarget{include_2openssl_2dh_8h_a40f47155870f02952b862a5db31f0371}{}\label{include_2openssl_2dh_8h_a40f47155870f02952b862a5db31f0371}
+
+
+Definition at line 169 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME}{DH_CHECK_Q_NOT_PRIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+Q\+\_\+\+N\+O\+T\+\_\+\+P\+R\+I\+ME~0x10}\hypertarget{include_2openssl_2dh_8h_ab231da1601384a99817d8782880a16d3}{}\label{include_2openssl_2dh_8h_ab231da1601384a99817d8782880a16d3}
+
+
+Definition at line 170 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE}{DH_CHECK_INVALID_Q_VALUE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+Q\+\_\+\+V\+A\+L\+UE~0x20}\hypertarget{include_2openssl_2dh_8h_a462398aaaa1c99d87fffda82786eb631}{}\label{include_2openssl_2dh_8h_a462398aaaa1c99d87fffda82786eb631}
+
+
+Definition at line 171 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE}{DH_CHECK_INVALID_J_VALUE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+J\+\_\+\+V\+A\+L\+UE~0x40}\hypertarget{include_2openssl_2dh_8h_abe3ecde245d022713ec3f1d2f532b043}{}\label{include_2openssl_2dh_8h_abe3ecde245d022713ec3f1d2f532b043}
+
+
+Definition at line 172 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}{DH_CHECK_PUBKEY_TOO_SMALL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL~0x01}\hypertarget{include_2openssl_2dh_8h_a6103bb4d325fe19f5e3b2d027afc5b59}{}\label{include_2openssl_2dh_8h_a6103bb4d325fe19f5e3b2d027afc5b59}
+
+
+Definition at line 175 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}{DH_CHECK_PUBKEY_TOO_LARGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE~0x02}\hypertarget{include_2openssl_2dh_8h_a726aee7943b504c73c6df38c6e2ce516}{}\label{include_2openssl_2dh_8h_a726aee7943b504c73c6df38c6e2ce516}
+
+
+Definition at line 176 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID}{DH_CHECK_PUBKEY_INVALID}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+U\+B\+K\+E\+Y\+\_\+\+I\+N\+V\+A\+L\+ID~0x04}\hypertarget{include_2openssl_2dh_8h_a11e55fef683a5971e72b7aee49a242b6}{}\label{include_2openssl_2dh_8h_a11e55fef683a5971e72b7aee49a242b6}
+
+
+Definition at line 177 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME}}
+\index{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME@{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME}{DH_CHECK_P_NOT_STRONG_PRIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+T\+R\+O\+N\+G\+\_\+\+P\+R\+I\+ME~{\bf D\+H\+\_\+\+C\+H\+E\+C\+K\+\_\+\+P\+\_\+\+N\+O\+T\+\_\+\+S\+A\+F\+E\+\_\+\+P\+R\+I\+ME}}\hypertarget{include_2openssl_2dh_8h_acdb91634317b317f8083b04a6bad5fe8}{}\label{include_2openssl_2dh_8h_acdb91634317b317f8083b04a6bad5fe8}
+
+
+Definition at line 183 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!d2i\+\_\+\+D\+Hparams\+\_\+fp@{d2i\+\_\+\+D\+Hparams\+\_\+fp}}
+\index{d2i\+\_\+\+D\+Hparams\+\_\+fp@{d2i\+\_\+\+D\+Hparams\+\_\+fp}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{d2i\+\_\+\+D\+Hparams\+\_\+fp}{d2i_DHparams_fp}}]{\setlength{\rightskip}{0pt plus 5cm}\#define d2i\+\_\+\+D\+Hparams\+\_\+fp(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf fp}, }
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_afde41e165a16349d28b43405d10ac856}{}\label{include_2openssl_2dh_8h_afde41e165a16349d28b43405d10ac856}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(\hyperlink{structdh__st}{DH} *)\hyperlink{crypto_2asn1_2asn1_8h_a46e8f7b1d72f1b0ed35be70b7eebf04e}{ASN1\_d2i\_fp}((\textcolor{keywordtype}{char} *(*)())\hyperlink{crypto_2dh_2dh_8h_a76c6e12bd1f0b9977d80fee83b086031}{DH\_new}, \(\backslash\)
+                (\textcolor{keywordtype}{char} *(*)())\hyperlink{crypto_2dh_2dh_8h_a24ea03dc870df9a1292e23c86ae31f25}{d2i\_DHparams},(\hyperlink{crypto_2conf_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp}),(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} **)(
+      \hyperlink{crypto_2pem_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}))
+\end{DoxyCode}
+
+
+Definition at line 185 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!i2d\+\_\+\+D\+Hparams\+\_\+fp@{i2d\+\_\+\+D\+Hparams\+\_\+fp}}
+\index{i2d\+\_\+\+D\+Hparams\+\_\+fp@{i2d\+\_\+\+D\+Hparams\+\_\+fp}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{i2d\+\_\+\+D\+Hparams\+\_\+fp}{i2d_DHparams_fp}}]{\setlength{\rightskip}{0pt plus 5cm}\#define i2d\+\_\+\+D\+Hparams\+\_\+fp(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf fp}, }
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2c62f812345723aec047e0f232f7a663}{}\label{include_2openssl_2dh_8h_a2c62f812345723aec047e0f232f7a663}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2asn1_2asn1_8h_ab8593b7f48b705107765d19814fbc205}{ASN1\_i2d\_fp}(\hyperlink{crypto_2dh_2dh_8h_a1c152b5a5c2b12db3b69c1e923a6fa64}{i2d\_DHparams},(\hyperlink{crypto_2conf_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp}), \(\backslash\)
+                (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)(\hyperlink{crypto_2pem_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x}))
+\end{DoxyCode}
+
+
+Definition at line 187 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!d2i\+\_\+\+D\+Hparams\+\_\+bio@{d2i\+\_\+\+D\+Hparams\+\_\+bio}}
+\index{d2i\+\_\+\+D\+Hparams\+\_\+bio@{d2i\+\_\+\+D\+Hparams\+\_\+bio}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{d2i\+\_\+\+D\+Hparams\+\_\+bio}{d2i_DHparams_bio}}]{\setlength{\rightskip}{0pt plus 5cm}\#define d2i\+\_\+\+D\+Hparams\+\_\+bio(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf bp}, }
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~{\bf A\+S\+N1\+\_\+d2i\+\_\+bio\+\_\+of}({\bf DH},{\bf D\+H\+\_\+new},{\bf d2i\+\_\+\+D\+Hparams},{\bf bp},{\bf x})}\hypertarget{include_2openssl_2dh_8h_afb659a3948d162fb7ff1f108ecb673bf}{}\label{include_2openssl_2dh_8h_afb659a3948d162fb7ff1f108ecb673bf}
+
+
+Definition at line 189 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!i2d\+\_\+\+D\+Hparams\+\_\+bio@{i2d\+\_\+\+D\+Hparams\+\_\+bio}}
+\index{i2d\+\_\+\+D\+Hparams\+\_\+bio@{i2d\+\_\+\+D\+Hparams\+\_\+bio}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{i2d\+\_\+\+D\+Hparams\+\_\+bio}{i2d_DHparams_bio}}]{\setlength{\rightskip}{0pt plus 5cm}\#define i2d\+\_\+\+D\+Hparams\+\_\+bio(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf bp}, }
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~{\bf A\+S\+N1\+\_\+i2d\+\_\+bio\+\_\+of\+\_\+const}({\bf DH},{\bf i2d\+\_\+\+D\+Hparams},{\bf bp},{\bf x})}\hypertarget{include_2openssl_2dh_8h_ab2683b33086ac9da9ba59e0d6441be70}{}\label{include_2openssl_2dh_8h_ab2683b33086ac9da9ba59e0d6441be70}
+
+
+Definition at line 190 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len}{EVP_PKEY_CTX_set_dh_paramgen_prime_len}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+prime\+\_\+len(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf len}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a8b2dc33799edbb01686f60bda0eb2421}{}\label{include_2openssl_2dh_8h_a8b2dc33799edbb01686f60bda0eb2421}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a448e7098be1d69039d6d0ccb450e2b51}{EVP\_PKEY\_DH}, 
+      \hyperlink{crypto_2evp_2evp_8h_afef8e63b568f3d2a3c17be0ad69e95df}{EVP\_PKEY\_OP\_PARAMGEN}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_ae3484d3d197500d0dc1c8de4591609ec}{EVP\_PKEY\_CTRL\_DH\_PARAMGEN\_PRIME\_LEN}, 
+      \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, NULL)
+\end{DoxyCode}
+
+
+Definition at line 249 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len}{EVP_PKEY_CTX_set_dh_paramgen_subprime_len}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+subprime\+\_\+len(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf len}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a92c16bcec6d154a4ca540799ea2c1527}{}\label{include_2openssl_2dh_8h_a92c16bcec6d154a4ca540799ea2c1527}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a448e7098be1d69039d6d0ccb450e2b51}{EVP\_PKEY\_DH}, 
+      \hyperlink{crypto_2evp_2evp_8h_afef8e63b568f3d2a3c17be0ad69e95df}{EVP\_PKEY\_OP\_PARAMGEN}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_ac6a632df99e207fce4a2092255b5d422}{EVP\_PKEY\_CTRL\_DH\_PARAMGEN\_SUBPRIME\_LEN}, 
+      \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, NULL)
+\end{DoxyCode}
+
+
+Definition at line 253 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type}{EVP_PKEY_CTX_set_dh_paramgen_type}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+type(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{typ}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ac09fa94318c0d06cd408e88842a154cf}{}\label{include_2openssl_2dh_8h_ac09fa94318c0d06cd408e88842a154cf}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a448e7098be1d69039d6d0ccb450e2b51}{EVP\_PKEY\_DH}, 
+      \hyperlink{crypto_2evp_2evp_8h_afef8e63b568f3d2a3c17be0ad69e95df}{EVP\_PKEY\_OP\_PARAMGEN}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_abeb1e8173dc2043458cff5b7252959f5}{EVP\_PKEY\_CTRL\_DH\_PARAMGEN\_TYPE}, typ, NULL)
+\end{DoxyCode}
+
+
+Definition at line 257 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator}{EVP_PKEY_CTX_set_dh_paramgen_generator}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+paramgen\+\_\+generator(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf gen}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_aec3b7524c578fb097627668c8eea1967}{}\label{include_2openssl_2dh_8h_aec3b7524c578fb097627668c8eea1967}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a448e7098be1d69039d6d0ccb450e2b51}{EVP\_PKEY\_DH}, 
+      \hyperlink{crypto_2evp_2evp_8h_afef8e63b568f3d2a3c17be0ad69e95df}{EVP\_PKEY\_OP\_PARAMGEN}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_ab7d7c2f1371e2615e283731ab6f3d4dc}{EVP\_PKEY\_CTRL\_DH\_PARAMGEN\_GENERATOR}, 
+      \hyperlink{crypto_2x509v3_2x509v3_8h_abc75d7b679cdd06e349a20f71141c9b8}{gen}, NULL)
+\end{DoxyCode}
+
+
+Definition at line 261 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114}{EVP_PKEY_CTX_set_dh_rfc5114}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+rfc5114(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf gen}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2d6625202121dfdd1deba2f739bed67f}{}\label{include_2openssl_2dh_8h_a2d6625202121dfdd1deba2f739bed67f}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, 
+      \hyperlink{crypto_2evp_2evp_8h_afef8e63b568f3d2a3c17be0ad69e95df}{EVP\_PKEY\_OP\_PARAMGEN}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_adff946dd8fb535e7fc8447536da98d2b}{EVP\_PKEY\_CTRL\_DH\_RFC5114}, \hyperlink{crypto_2x509v3_2x509v3_8h_abc75d7b679cdd06e349a20f71141c9b8}{gen}, NULL)
+\end{DoxyCode}
+
+
+Definition at line 265 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114}{EVP_PKEY_CTX_set_dhx_rfc5114}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dhx\+\_\+rfc5114(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf gen}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a960ea06048d48f767adcc99548c25ed0}{}\label{include_2openssl_2dh_8h_a960ea06048d48f767adcc99548c25ed0}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, 
+      \hyperlink{crypto_2evp_2evp_8h_afef8e63b568f3d2a3c17be0ad69e95df}{EVP\_PKEY\_OP\_PARAMGEN}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_adff946dd8fb535e7fc8447536da98d2b}{EVP\_PKEY\_CTRL\_DH\_RFC5114}, \hyperlink{crypto_2x509v3_2x509v3_8h_abc75d7b679cdd06e349a20f71141c9b8}{gen}, NULL)
+\end{DoxyCode}
+
+
+Definition at line 269 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type}{EVP_PKEY_CTX_set_dh_kdf_type}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+type(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{kdf}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ae04d050c5bccfba34cecdd48243816c9}{}\label{include_2openssl_2dh_8h_ae04d050c5bccfba34cecdd48243816c9}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a46082fa87550c212de295fd60a3e690d}{EVP\_PKEY\_CTRL\_DH\_KDF\_TYPE}, kdf, NULL)
+\end{DoxyCode}
+
+
+Definition at line 273 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type}{EVP_PKEY_CTX_get_dh_kdf_type}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+type(
+\begin{DoxyParamCaption}
+\item[{}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2911bf39bfdd9abaf1a999e4bc26b238}{}\label{include_2openssl_2dh_8h_a2911bf39bfdd9abaf1a999e4bc26b238}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a46082fa87550c212de295fd60a3e690d}{EVP\_PKEY\_CTRL\_DH\_KDF\_TYPE}, -2, NULL)
+\end{DoxyCode}
+
+
+Definition at line 278 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid}{EVP_PKEY_CTX_set0_dh_kdf_oid}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+oid(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{oid}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2d2b960c00541a160088709198f2c6fb}{}\label{include_2openssl_2dh_8h_a2d2b960c00541a160088709198f2c6fb}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a57ec9ba78aee9ccf16a31ba1ebff0ce5}{EVP\_PKEY\_CTRL\_DH\_KDF\_OID}, 0, (\textcolor{keywordtype}{void} *)oid)
+\end{DoxyCode}
+
+
+Definition at line 283 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid}{EVP_PKEY_CTX_get0_dh_kdf_oid}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+oid(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{poid}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a7284d6ec1649e3d82a29de786fe80e1a}{}\label{include_2openssl_2dh_8h_a7284d6ec1649e3d82a29de786fe80e1a}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a9a9f2865affe6b05ada236e2af073cff}{EVP\_PKEY\_CTRL\_GET\_DH\_KDF\_OID}, 0, (\textcolor{keywordtype}{void} *)poid)
+\end{DoxyCode}
+
+
+Definition at line 288 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md}{EVP_PKEY_CTX_set_dh_kdf_md}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+md(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{md}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a104413761ca825baccf392c7a408216c}{}\label{include_2openssl_2dh_8h_a104413761ca825baccf392c7a408216c}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_aa688b328a3a60a8cc77ade062e9a6935}{EVP\_PKEY\_CTRL\_DH\_KDF\_MD}, 0, (\textcolor{keywordtype}{void} *)md)
+\end{DoxyCode}
+
+
+Definition at line 293 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md}{EVP_PKEY_CTX_get_dh_kdf_md}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+md(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{pmd}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ac669e386c49d603c2cd3f6c85c09a50b}{}\label{include_2openssl_2dh_8h_ac669e386c49d603c2cd3f6c85c09a50b}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a524da9521d25bb3e405e2c62d505fcb3}{EVP\_PKEY\_CTRL\_GET\_DH\_KDF\_MD}, 0, (\textcolor{keywordtype}{void} *)pmd)
+\end{DoxyCode}
+
+
+Definition at line 298 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen}{EVP_PKEY_CTX_set_dh_kdf_outlen}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set\+\_\+dh\+\_\+kdf\+\_\+outlen(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf len}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_aefb91c662c067edec601c6cf601f0ad6}{}\label{include_2openssl_2dh_8h_aefb91c662c067edec601c6cf601f0ad6}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a0411c118d67ec5a090206ff76f699dcc}{EVP\_PKEY\_CTRL\_DH\_KDF\_OUTLEN}, 
+      \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, NULL)
+\end{DoxyCode}
+
+
+Definition at line 303 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen}{EVP_PKEY_CTX_get_dh_kdf_outlen}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get\+\_\+dh\+\_\+kdf\+\_\+outlen(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{plen}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_aa7c8b3b3246dc8403b143b4e0b28ba41}{}\label{include_2openssl_2dh_8h_aa7c8b3b3246dc8403b143b4e0b28ba41}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                        \hyperlink{include_2openssl_2dh_8h_add03b22e1fadee1873dc2af36c366bec}{EVP\_PKEY\_CTRL\_GET\_DH\_KDF\_OUTLEN}, 0, (\textcolor{keywordtype}{void} *)plen)
+\end{DoxyCode}
+
+
+Definition at line 308 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm}{EVP_PKEY_CTX_set0_dh_kdf_ukm}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+set0\+\_\+dh\+\_\+kdf\+\_\+ukm(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf p}, }
+\item[{}]{plen}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2af0100686a53f192ca549f6e0749ac8}{}\label{include_2openssl_2dh_8h_a2af0100686a53f192ca549f6e0749ac8}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_adfaa8b85765df997a898e1defa91b716}{EVP\_PKEY\_CTRL\_DH\_KDF\_UKM}, plen, (\textcolor{keywordtype}{void} *)
+      \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p})
+\end{DoxyCode}
+
+
+Definition at line 313 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm}{EVP_PKEY_CTX_get0_dh_kdf_ukm}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+X\+\_\+get0\+\_\+dh\+\_\+kdf\+\_\+ukm(
+\begin{DoxyParamCaption}
+\item[{}]{ctx, }
+\item[{}]{{\bf p}}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a697158f975485c15bd916ccbf48217a0}{}\label{include_2openssl_2dh_8h_a697158f975485c15bd916ccbf48217a0}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2evp_2evp_8h_ac215192017d713cda37872ad4d9daf54}{EVP\_PKEY\_CTX\_ctrl}(ctx, \hyperlink{crypto_2evp_2evp_8h_a956428fc6271ac72e3b1ddc6314ad1e5}{EVP\_PKEY\_DHX}, \(\backslash\)
+                                \hyperlink{crypto_2evp_2evp_8h_aeaebf1c81d24beb3b8ac8187e612cb3e}{EVP\_PKEY\_OP\_DERIVE}, \(\backslash\)
+                                \hyperlink{include_2openssl_2dh_8h_a6263cd0c4681b6ca2624221db4632cf5}{EVP\_PKEY\_CTRL\_GET\_DH\_KDF\_UKM}, 0, (\textcolor{keywordtype}{void} *)
+      \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p})
+\end{DoxyCode}
+
+
+Definition at line 318 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN}{EVP_PKEY_CTRL_DH_PARAMGEN_PRIME_LEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+P\+R\+I\+M\+E\+\_\+\+L\+EN~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 1)}\hypertarget{include_2openssl_2dh_8h_ae3484d3d197500d0dc1c8de4591609ec}{}\label{include_2openssl_2dh_8h_ae3484d3d197500d0dc1c8de4591609ec}
+
+
+Definition at line 323 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}{EVP_PKEY_CTRL_DH_PARAMGEN_GENERATOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 2)}\hypertarget{include_2openssl_2dh_8h_ab7d7c2f1371e2615e283731ab6f3d4dc}{}\label{include_2openssl_2dh_8h_ab7d7c2f1371e2615e283731ab6f3d4dc}
+
+
+Definition at line 324 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114}{EVP_PKEY_CTRL_DH_RFC5114}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+R\+F\+C5114~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 3)}\hypertarget{include_2openssl_2dh_8h_adff946dd8fb535e7fc8447536da98d2b}{}\label{include_2openssl_2dh_8h_adff946dd8fb535e7fc8447536da98d2b}
+
+
+Definition at line 325 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN}{EVP_PKEY_CTRL_DH_PARAMGEN_SUBPRIME_LEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+S\+U\+B\+P\+R\+I\+M\+E\+\_\+\+L\+EN~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 4)}\hypertarget{include_2openssl_2dh_8h_ac6a632df99e207fce4a2092255b5d422}{}\label{include_2openssl_2dh_8h_ac6a632df99e207fce4a2092255b5d422}
+
+
+Definition at line 326 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE}{EVP_PKEY_CTRL_DH_PARAMGEN_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+G\+E\+N\+\_\+\+T\+Y\+PE~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 5)}\hypertarget{include_2openssl_2dh_8h_abeb1e8173dc2043458cff5b7252959f5}{}\label{include_2openssl_2dh_8h_abeb1e8173dc2043458cff5b7252959f5}
+
+
+Definition at line 327 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE}{EVP_PKEY_CTRL_DH_KDF_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+T\+Y\+PE~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 6)}\hypertarget{include_2openssl_2dh_8h_a46082fa87550c212de295fd60a3e690d}{}\label{include_2openssl_2dh_8h_a46082fa87550c212de295fd60a3e690d}
+
+
+Definition at line 328 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}{EVP_PKEY_CTRL_DH_KDF_MD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 7)}\hypertarget{include_2openssl_2dh_8h_aa688b328a3a60a8cc77ade062e9a6935}{}\label{include_2openssl_2dh_8h_aa688b328a3a60a8cc77ade062e9a6935}
+
+
+Definition at line 329 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD}{EVP_PKEY_CTRL_GET_DH_KDF_MD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+MD~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 8)}\hypertarget{include_2openssl_2dh_8h_a524da9521d25bb3e405e2c62d505fcb3}{}\label{include_2openssl_2dh_8h_a524da9521d25bb3e405e2c62d505fcb3}
+
+
+Definition at line 330 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}{EVP_PKEY_CTRL_DH_KDF_OUTLEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 9)}\hypertarget{include_2openssl_2dh_8h_a0411c118d67ec5a090206ff76f699dcc}{}\label{include_2openssl_2dh_8h_a0411c118d67ec5a090206ff76f699dcc}
+
+
+Definition at line 331 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN}{EVP_PKEY_CTRL_GET_DH_KDF_OUTLEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+U\+T\+L\+EN~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 10)}\hypertarget{include_2openssl_2dh_8h_add03b22e1fadee1873dc2af36c366bec}{}\label{include_2openssl_2dh_8h_add03b22e1fadee1873dc2af36c366bec}
+
+
+Definition at line 332 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}{EVP_PKEY_CTRL_DH_KDF_UKM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 11)}\hypertarget{include_2openssl_2dh_8h_adfaa8b85765df997a898e1defa91b716}{}\label{include_2openssl_2dh_8h_adfaa8b85765df997a898e1defa91b716}
+
+
+Definition at line 333 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM}{EVP_PKEY_CTRL_GET_DH_KDF_UKM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+U\+KM~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 12)}\hypertarget{include_2openssl_2dh_8h_a6263cd0c4681b6ca2624221db4632cf5}{}\label{include_2openssl_2dh_8h_a6263cd0c4681b6ca2624221db4632cf5}
+
+
+Definition at line 334 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}{EVP_PKEY_CTRL_DH_KDF_OID}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 13)}\hypertarget{include_2openssl_2dh_8h_a57ec9ba78aee9ccf16a31ba1ebff0ce5}{}\label{include_2openssl_2dh_8h_a57ec9ba78aee9ccf16a31ba1ebff0ce5}
+
+
+Definition at line 335 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID}{EVP_PKEY_CTRL_GET_DH_KDF_OID}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+C\+T\+R\+L\+\_\+\+G\+E\+T\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+O\+ID~({\bf E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+A\+L\+G\+\_\+\+C\+T\+RL} + 14)}\hypertarget{include_2openssl_2dh_8h_a9a9f2865affe6b05ada236e2af073cff}{}\label{include_2openssl_2dh_8h_a9a9f2865affe6b05ada236e2af073cff}
+
+
+Definition at line 336 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE}{EVP_PKEY_DH_KDF_NONE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+N\+O\+NE~1}\hypertarget{include_2openssl_2dh_8h_aa07ad034d2a938473095a01ac53decc0}{}\label{include_2openssl_2dh_8h_aa07ad034d2a938473095a01ac53decc0}
+
+
+Definition at line 339 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42}}
+\index{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42@{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42}{EVP_PKEY_DH_KDF_X9_42}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+V\+P\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42~2}\hypertarget{include_2openssl_2dh_8h_a4464a0c19f323764ad88d59044c358e3}{}\label{include_2openssl_2dh_8h_a4464a0c19f323764ad88d59044c358e3}
+
+
+Definition at line 340 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}}
+\index{D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}{DH_F_COMPUTE_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY~102}\hypertarget{include_2openssl_2dh_8h_a0258675e34ce8776d8e8866b5835aa36}{}\label{include_2openssl_2dh_8h_a0258675e34ce8776d8e8866b5835aa36}
+
+
+Definition at line 352 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP@{D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP@{D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP}{DH_F_DHPARAMS_PRINT_FP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+P\+A\+R\+A\+M\+S\+\_\+\+P\+R\+I\+N\+T\+\_\+\+FP~101}\hypertarget{include_2openssl_2dh_8h_a03318c93cfb6bee6ad2d36e55303d285}{}\label{include_2openssl_2dh_8h_a03318c93cfb6bee6ad2d36e55303d285}
+
+
+Definition at line 353 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS}{DH_F_DH_BUILTIN_GENPARAMS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+B\+U\+I\+L\+T\+I\+N\+\_\+\+G\+E\+N\+P\+A\+R\+A\+MS~106}\hypertarget{include_2openssl_2dh_8h_aa54bfeab4a272f1beeb28498e5f70ab6}{}\label{include_2openssl_2dh_8h_aa54bfeab4a272f1beeb28498e5f70ab6}
+
+
+Definition at line 354 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT}{DH_F_DH_CMS_DECRYPT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+D\+E\+C\+R\+Y\+PT~117}\hypertarget{include_2openssl_2dh_8h_a7bb84b7fbdb5f21d5a857c492cd01942}{}\label{include_2openssl_2dh_8h_a7bb84b7fbdb5f21d5a857c492cd01942}
+
+
+Definition at line 355 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY}{DH_F_DH_CMS_SET_PEERKEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+P\+E\+E\+R\+K\+EY~118}\hypertarget{include_2openssl_2dh_8h_a44e545839fe6cfda8b37d1653b7c09f5}{}\label{include_2openssl_2dh_8h_a44e545839fe6cfda8b37d1653b7c09f5}
+
+
+Definition at line 356 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO}{DH_F_DH_CMS_SET_SHARED_INFO}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+M\+S\+\_\+\+S\+E\+T\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+FO~119}\hypertarget{include_2openssl_2dh_8h_a2fcc57d07bba14c02b44cf2da7f45522}{}\label{include_2openssl_2dh_8h_a2fcc57d07bba14c02b44cf2da7f45522}
+
+
+Definition at line 357 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY}{DH_F_DH_COMPUTE_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+K\+EY~114}\hypertarget{include_2openssl_2dh_8h_a2035626f5cd336d56cb5aa1f74a94d86}{}\label{include_2openssl_2dh_8h_a2035626f5cd336d56cb5aa1f74a94d86}
+
+
+Definition at line 358 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}{DH_F_DH_GENERATE_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY~115}\hypertarget{include_2openssl_2dh_8h_a653b045f2c5250d8ed2c24ac29a168a4}{}\label{include_2openssl_2dh_8h_a653b045f2c5250d8ed2c24ac29a168a4}
+
+
+Definition at line 359 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX}{DH_F_DH_GENERATE_PARAMETERS_EX}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+EX~116}\hypertarget{include_2openssl_2dh_8h_a4401b083b7e71d5af4c61511940a3e18}{}\label{include_2openssl_2dh_8h_a4401b083b7e71d5af4c61511940a3e18}
+
+
+Definition at line 360 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD}{DH_F_DH_NEW_METHOD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+N\+E\+W\+\_\+\+M\+E\+T\+H\+OD~105}\hypertarget{include_2openssl_2dh_8h_ad5244870c85f9d2b99fc544c7bab7444}{}\label{include_2openssl_2dh_8h_ad5244870c85f9d2b99fc544c7bab7444}
+
+
+Definition at line 361 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE}{DH_F_DH_PARAM_DECODE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+A\+R\+A\+M\+\_\+\+D\+E\+C\+O\+DE~107}\hypertarget{include_2openssl_2dh_8h_a388bc08034dd793d766a30c6c9fecbfa}{}\label{include_2openssl_2dh_8h_a388bc08034dd793d766a30c6c9fecbfa}
+
+
+Definition at line 362 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE}{DH_F_DH_PRIV_DECODE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+D\+E\+C\+O\+DE~110}\hypertarget{include_2openssl_2dh_8h_ab1772b8fd8fd47445c24899facac9a17}{}\label{include_2openssl_2dh_8h_ab1772b8fd8fd47445c24899facac9a17}
+
+
+Definition at line 363 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE}{DH_F_DH_PRIV_ENCODE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+R\+I\+V\+\_\+\+E\+N\+C\+O\+DE~111}\hypertarget{include_2openssl_2dh_8h_ade1a093bf1e9756dfd551c56d078e0d3}{}\label{include_2openssl_2dh_8h_ade1a093bf1e9756dfd551c56d078e0d3}
+
+
+Definition at line 364 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE}{DH_F_DH_PUB_DECODE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+D\+E\+C\+O\+DE~108}\hypertarget{include_2openssl_2dh_8h_adc5710fac21d1df0571e62a211deba8b}{}\label{include_2openssl_2dh_8h_adc5710fac21d1df0571e62a211deba8b}
+
+
+Definition at line 365 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE@{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE}{DH_F_DH_PUB_ENCODE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+H\+\_\+\+P\+U\+B\+\_\+\+E\+N\+C\+O\+DE~109}\hypertarget{include_2openssl_2dh_8h_a6159410148d0bab1f80732b59f750f2a}{}\label{include_2openssl_2dh_8h_a6159410148d0bab1f80732b59f750f2a}
+
+
+Definition at line 366 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT@{D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT}}
+\index{D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT@{D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT}{DH_F_DO_DH_PRINT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+D\+O\+\_\+\+D\+H\+\_\+\+P\+R\+I\+NT~100}\hypertarget{include_2openssl_2dh_8h_a98d6c3f77582688b36c000e79c88f2d7}{}\label{include_2openssl_2dh_8h_a98d6c3f77582688b36c000e79c88f2d7}
+
+
+Definition at line 367 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}}
+\index{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY@{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY}{DH_F_GENERATE_KEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+K\+EY~103}\hypertarget{include_2openssl_2dh_8h_a28a5b8f3ea212869597dda5b0f319376}{}\label{include_2openssl_2dh_8h_a28a5b8f3ea212869597dda5b0f319376}
+
+
+Definition at line 368 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS@{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS}}
+\index{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS@{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS}{DH_F_GENERATE_PARAMETERS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+G\+E\+N\+E\+R\+A\+T\+E\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+RS~104}\hypertarget{include_2openssl_2dh_8h_a3be4292a72d9ae34b0be960700b04780}{}\label{include_2openssl_2dh_8h_a3be4292a72d9ae34b0be960700b04780}
+
+
+Definition at line 369 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE@{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE}}
+\index{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE@{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE}{DH_F_PKEY_DH_DERIVE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+D\+E\+R\+I\+VE~112}\hypertarget{include_2openssl_2dh_8h_a7cd431869b2de4b0a18643f9dd604c9d}{}\label{include_2openssl_2dh_8h_a7cd431869b2de4b0a18643f9dd604c9d}
+
+
+Definition at line 370 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN@{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN}}
+\index{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN@{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN}{DH_F_PKEY_DH_KEYGEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+F\+\_\+\+P\+K\+E\+Y\+\_\+\+D\+H\+\_\+\+K\+E\+Y\+G\+EN~113}\hypertarget{include_2openssl_2dh_8h_a9e969d6d414153ba3dd9331c54cc120d}{}\label{include_2openssl_2dh_8h_a9e969d6d414153ba3dd9331c54cc120d}
+
+
+Definition at line 371 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR@{D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR}{DH_R_BAD_GENERATOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+B\+A\+D\+\_\+\+G\+E\+N\+E\+R\+A\+T\+OR~101}\hypertarget{include_2openssl_2dh_8h_a263eb4aa856aafc239b1eb803d4a4ba6}{}\label{include_2openssl_2dh_8h_a263eb4aa856aafc239b1eb803d4a4ba6}
+
+
+Definition at line 374 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}{DH_R_BN_DECODE_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR~109}\hypertarget{include_2openssl_2dh_8h_add74e3847b6f09137296203d3d69ec36}{}\label{include_2openssl_2dh_8h_add74e3847b6f09137296203d3d69ec36}
+
+
+Definition at line 375 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR}{DH_R_BN_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+B\+N\+\_\+\+E\+R\+R\+OR~106}\hypertarget{include_2openssl_2dh_8h_ab0d9779e1357cfa0bd93a734cac02a28}{}\label{include_2openssl_2dh_8h_ab0d9779e1357cfa0bd93a734cac02a28}
+
+
+Definition at line 376 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR}{DH_R_DECODE_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+D\+E\+C\+O\+D\+E\+\_\+\+E\+R\+R\+OR~104}\hypertarget{include_2openssl_2dh_8h_a7164f18ea382333e7c8921cdc7eee6f4}{}\label{include_2openssl_2dh_8h_a7164f18ea382333e7c8921cdc7eee6f4}
+
+
+Definition at line 377 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY@{D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY}}
+\index{D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY@{D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY}{DH_R_INVALID_PUBKEY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+P\+U\+B\+K\+EY~102}\hypertarget{include_2openssl_2dh_8h_a5740e9188b38bad1ab3d0eb6a2323f7f}{}\label{include_2openssl_2dh_8h_a5740e9188b38bad1ab3d0eb6a2323f7f}
+
+
+Definition at line 378 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR}{DH_R_KDF_PARAMETER_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+K\+D\+F\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+R\+R\+OR~112}\hypertarget{include_2openssl_2dh_8h_a40d10a7bbb13a2e9f6a9a690cba0ce96}{}\label{include_2openssl_2dh_8h_a40d10a7bbb13a2e9f6a9a690cba0ce96}
+
+
+Definition at line 379 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET@{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET}}
+\index{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET@{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET}{DH_R_KEYS_NOT_SET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+S\+\_\+\+N\+O\+T\+\_\+\+S\+ET~108}\hypertarget{include_2openssl_2dh_8h_a0ec03ab691cb32598a469971f26b0116}{}\label{include_2openssl_2dh_8h_a0ec03ab691cb32598a469971f26b0116}
+
+
+Definition at line 380 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL@{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}}
+\index{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL@{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL}{DH_R_KEY_SIZE_TOO_SMALL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+K\+E\+Y\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+O\+O\+\_\+\+S\+M\+A\+LL~110}\hypertarget{include_2openssl_2dh_8h_ab429322a15fa0cdb46d2e8bee24f3f13}{}\label{include_2openssl_2dh_8h_ab429322a15fa0cdb46d2e8bee24f3f13}
+
+
+Definition at line 381 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE@{D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}}
+\index{D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE@{D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE}{DH_R_MODULUS_TOO_LARGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+M\+O\+D\+U\+L\+U\+S\+\_\+\+T\+O\+O\+\_\+\+L\+A\+R\+GE~103}\hypertarget{include_2openssl_2dh_8h_a209a2c08d9ae8c4322817b8949356282}{}\label{include_2openssl_2dh_8h_a209a2c08d9ae8c4322817b8949356282}
+
+
+Definition at line 382 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD@{D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}}
+\index{D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD@{D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD}{DH_R_NON_FIPS_METHOD}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+N\+O\+N\+\_\+\+F\+I\+P\+S\+\_\+\+M\+E\+T\+H\+OD~111}\hypertarget{include_2openssl_2dh_8h_abbbfc2650b3b8f82c51c22b15378865f}{}\label{include_2openssl_2dh_8h_abbbfc2650b3b8f82c51c22b15378865f}
+
+
+Definition at line 383 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET@{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET}}
+\index{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET@{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET}{DH_R_NO_PARAMETERS_SET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+S\+\_\+\+S\+ET~107}\hypertarget{include_2openssl_2dh_8h_a228a208b015ded8312e20f26d9ce6a94}{}\label{include_2openssl_2dh_8h_a228a208b015ded8312e20f26d9ce6a94}
+
+
+Definition at line 384 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE@{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE}}
+\index{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE@{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE}{DH_R_NO_PRIVATE_VALUE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+N\+O\+\_\+\+P\+R\+I\+V\+A\+T\+E\+\_\+\+V\+A\+L\+UE~100}\hypertarget{include_2openssl_2dh_8h_a5a37cbff453983f9108b5c71941f0634}{}\label{include_2openssl_2dh_8h_a5a37cbff453983f9108b5c71941f0634}
+
+
+Definition at line 385 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR}{DH_R_PARAMETER_ENCODING_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+P\+A\+R\+A\+M\+E\+T\+E\+R\+\_\+\+E\+N\+C\+O\+D\+I\+N\+G\+\_\+\+E\+R\+R\+OR~105}\hypertarget{include_2openssl_2dh_8h_a4661ba73eff85d1f1906fa2a199ee6f3}{}\label{include_2openssl_2dh_8h_a4661ba73eff85d1f1906fa2a199ee6f3}
+
+
+Definition at line 386 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR}{DH_R_PEER_KEY_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+P\+E\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+R\+R\+OR~113}\hypertarget{include_2openssl_2dh_8h_a67240aa61bab19e75373765413cbe2b0}{}\label{include_2openssl_2dh_8h_a67240aa61bab19e75373765413cbe2b0}
+
+
+Definition at line 387 of file dh.\+h.
+
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR}}
+\index{D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR@{D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR}{DH_R_SHARED_INFO_ERROR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+H\+\_\+\+R\+\_\+\+S\+H\+A\+R\+E\+D\+\_\+\+I\+N\+F\+O\+\_\+\+E\+R\+R\+OR~114}\hypertarget{include_2openssl_2dh_8h_a7f43af8ef88919871b88a90964ee80ef}{}\label{include_2openssl_2dh_8h_a7f43af8ef88919871b88a90964ee80ef}
+
+
+Definition at line 388 of file dh.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+Hparams\+\_\+dup@{D\+Hparams\+\_\+dup}}
+\index{D\+Hparams\+\_\+dup@{D\+Hparams\+\_\+dup}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+Hparams\+\_\+dup(\+D\+H $\ast$)}{DHparams_dup(DH *)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+Hparams\+\_\+dup (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ab71b4cb56c0ad4c6bbf3606aab6dd175}{}\label{include_2openssl_2dh_8h_ab71b4cb56c0ad4c6bbf3606aab6dd175}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+Open\+S\+SL@{D\+H\+\_\+\+Open\+S\+SL}}
+\index{D\+H\+\_\+\+Open\+S\+SL@{D\+H\+\_\+\+Open\+S\+SL}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+Open\+S\+S\+L(void)}{DH_OpenSSL(void)}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf D\+H\+\_\+\+M\+E\+T\+H\+OD}$\ast$ D\+H\+\_\+\+Open\+S\+SL (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a6514f2f044797e99461868d5faa8b69e}{}\label{include_2openssl_2dh_8h_a6514f2f044797e99461868d5faa8b69e}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+set\+\_\+default\+\_\+method@{D\+H\+\_\+set\+\_\+default\+\_\+method}}
+\index{D\+H\+\_\+set\+\_\+default\+\_\+method@{D\+H\+\_\+set\+\_\+default\+\_\+method}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+set\+\_\+default\+\_\+method(const D\+H\+\_\+\+M\+E\+T\+H\+O\+D $\ast$meth)}{DH_set_default_method(const DH_METHOD *meth)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} D\+H\+\_\+set\+\_\+default\+\_\+method (
+\begin{DoxyParamCaption}
+\item[{const {\bf D\+H\+\_\+\+M\+E\+T\+H\+OD} $\ast$}]{meth}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a6c63e1e8af5957d7f798439c854d06b6}{}\label{include_2openssl_2dh_8h_a6c63e1e8af5957d7f798439c854d06b6}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+get\+\_\+default\+\_\+method@{D\+H\+\_\+get\+\_\+default\+\_\+method}}
+\index{D\+H\+\_\+get\+\_\+default\+\_\+method@{D\+H\+\_\+get\+\_\+default\+\_\+method}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+get\+\_\+default\+\_\+method(void)}{DH_get_default_method(void)}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf D\+H\+\_\+\+M\+E\+T\+H\+OD}$\ast$ D\+H\+\_\+get\+\_\+default\+\_\+method (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ae2b07654d087940e36e7583887d8b070}{}\label{include_2openssl_2dh_8h_ae2b07654d087940e36e7583887d8b070}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+set\+\_\+method@{D\+H\+\_\+set\+\_\+method}}
+\index{D\+H\+\_\+set\+\_\+method@{D\+H\+\_\+set\+\_\+method}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+set\+\_\+method(\+D\+H $\ast$dh, const D\+H\+\_\+\+M\+E\+T\+H\+O\+D $\ast$meth)}{DH_set_method(DH *dh, const DH_METHOD *meth)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+set\+\_\+method (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{dh, }
+\item[{const {\bf D\+H\+\_\+\+M\+E\+T\+H\+OD} $\ast$}]{meth}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a3ec2b749f56ccf1c887a72fa11b7c53d}{}\label{include_2openssl_2dh_8h_a3ec2b749f56ccf1c887a72fa11b7c53d}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+new\+\_\+method@{D\+H\+\_\+new\+\_\+method}}
+\index{D\+H\+\_\+new\+\_\+method@{D\+H\+\_\+new\+\_\+method}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+new\+\_\+method(\+E\+N\+G\+I\+N\+E $\ast$engine)}{DH_new_method(ENGINE *engine)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+H\+\_\+new\+\_\+method (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{engine}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2e97e03aee56c6094bb7fd6322b3ce68}{}\label{include_2openssl_2dh_8h_a2e97e03aee56c6094bb7fd6322b3ce68}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+new@{D\+H\+\_\+new}}
+\index{D\+H\+\_\+new@{D\+H\+\_\+new}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+new(void)}{DH_new(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+H\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a76c6e12bd1f0b9977d80fee83b086031}{}\label{include_2openssl_2dh_8h_a76c6e12bd1f0b9977d80fee83b086031}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+free@{D\+H\+\_\+free}}
+\index{D\+H\+\_\+free@{D\+H\+\_\+free}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+free(\+D\+H $\ast$dh)}{DH_free(DH *dh)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} D\+H\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{dh}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a1f15312ca21e290ee714e86578820c35}{}\label{include_2openssl_2dh_8h_a1f15312ca21e290ee714e86578820c35}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+up\+\_\+ref@{D\+H\+\_\+up\+\_\+ref}}
+\index{D\+H\+\_\+up\+\_\+ref@{D\+H\+\_\+up\+\_\+ref}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+up\+\_\+ref(\+D\+H $\ast$dh)}{DH_up_ref(DH *dh)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+up\+\_\+ref (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{dh}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_af7c3e51cba326865c3684012c2337df1}{}\label{include_2openssl_2dh_8h_af7c3e51cba326865c3684012c2337df1}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+size@{D\+H\+\_\+size}}
+\index{D\+H\+\_\+size@{D\+H\+\_\+size}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+size(const D\+H $\ast$dh)}{DH_size(const DH *dh)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf DH} $\ast$}]{dh}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a9e1fdd62e3bfe4b671dbfc363f0e6297}{}\label{include_2openssl_2dh_8h_a9e1fdd62e3bfe4b671dbfc363f0e6297}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index@{D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index}}
+\index{D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index@{D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index(long argl, void $\ast$argp, C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+new $\ast$new\+\_\+func, C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+dup $\ast$dup\+\_\+func, C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+free $\ast$free\+\_\+func)}{DH_get_ex_new_index(long argl, void *argp, CRYPTO_EX_new *new_func, CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+get\+\_\+ex\+\_\+new\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{long}]{argl, }
+\item[{{\bf void} $\ast$}]{argp, }
+\item[{{\bf C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+new} $\ast$}]{new\+\_\+func, }
+\item[{{\bf C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+dup} $\ast$}]{dup\+\_\+func, }
+\item[{{\bf C\+R\+Y\+P\+T\+O\+\_\+\+E\+X\+\_\+free} $\ast$}]{free\+\_\+func}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_af458f384a3619c199f6b3789fa23bcb9}{}\label{include_2openssl_2dh_8h_af458f384a3619c199f6b3789fa23bcb9}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+set\+\_\+ex\+\_\+data@{D\+H\+\_\+set\+\_\+ex\+\_\+data}}
+\index{D\+H\+\_\+set\+\_\+ex\+\_\+data@{D\+H\+\_\+set\+\_\+ex\+\_\+data}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+set\+\_\+ex\+\_\+data(\+D\+H $\ast$d, int idx, void $\ast$arg)}{DH_set_ex_data(DH *d, int idx, void *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+set\+\_\+ex\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{d, }
+\item[{int}]{idx, }
+\item[{{\bf void} $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a60dbe09572bfaf14603c29bd2b095ffa}{}\label{include_2openssl_2dh_8h_a60dbe09572bfaf14603c29bd2b095ffa}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+get\+\_\+ex\+\_\+data@{D\+H\+\_\+get\+\_\+ex\+\_\+data}}
+\index{D\+H\+\_\+get\+\_\+ex\+\_\+data@{D\+H\+\_\+get\+\_\+ex\+\_\+data}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+get\+\_\+ex\+\_\+data(\+D\+H $\ast$d, int idx)}{DH_get_ex_data(DH *d, int idx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void}$\ast$ D\+H\+\_\+get\+\_\+ex\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{d, }
+\item[{int}]{idx}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_afe91dd784736f6e608cae7f65a938cd2}{}\label{include_2openssl_2dh_8h_afe91dd784736f6e608cae7f65a938cd2}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+generate\+\_\+parameters@{D\+H\+\_\+generate\+\_\+parameters}}
+\index{D\+H\+\_\+generate\+\_\+parameters@{D\+H\+\_\+generate\+\_\+parameters}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+generate\+\_\+parameters(int prime\+\_\+len, int generator, void($\ast$callback)(int, int, void $\ast$), void $\ast$cb\+\_\+arg)}{DH_generate_parameters(int prime_len, int generator, void(*callback)(int, int, void *), void *cb_arg)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+H\+\_\+generate\+\_\+parameters (
+\begin{DoxyParamCaption}
+\item[{int}]{prime\+\_\+len, }
+\item[{int}]{generator, }
+\item[{{\bf void}($\ast$)(int, int, {\bf void} $\ast$)}]{callback, }
+\item[{{\bf void} $\ast$}]{cb\+\_\+arg}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a6fc41faeaf9e88902bf8b8c06ac20568}{}\label{include_2openssl_2dh_8h_a6fc41faeaf9e88902bf8b8c06ac20568}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+generate\+\_\+parameters\+\_\+ex@{D\+H\+\_\+generate\+\_\+parameters\+\_\+ex}}
+\index{D\+H\+\_\+generate\+\_\+parameters\+\_\+ex@{D\+H\+\_\+generate\+\_\+parameters\+\_\+ex}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+generate\+\_\+parameters\+\_\+ex(\+D\+H $\ast$dh, int prime\+\_\+len, int generator, B\+N\+\_\+\+G\+E\+N\+C\+B $\ast$cb)}{DH_generate_parameters_ex(DH *dh, int prime_len, int generator, BN_GENCB *cb)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+generate\+\_\+parameters\+\_\+ex (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{dh, }
+\item[{int}]{prime\+\_\+len, }
+\item[{int}]{generator, }
+\item[{{\bf B\+N\+\_\+\+G\+E\+N\+CB} $\ast$}]{cb}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a11ef051e93bc408f3e7ba77d44c5d3cb}{}\label{include_2openssl_2dh_8h_a11ef051e93bc408f3e7ba77d44c5d3cb}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+check@{D\+H\+\_\+check}}
+\index{D\+H\+\_\+check@{D\+H\+\_\+check}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+check(const D\+H $\ast$dh, int $\ast$codes)}{DH_check(const DH *dh, int *codes)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+check (
+\begin{DoxyParamCaption}
+\item[{const {\bf DH} $\ast$}]{dh, }
+\item[{int $\ast$}]{codes}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ae37f7b9808959007f12b420a836a650e}{}\label{include_2openssl_2dh_8h_ae37f7b9808959007f12b420a836a650e}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+check\+\_\+pub\+\_\+key@{D\+H\+\_\+check\+\_\+pub\+\_\+key}}
+\index{D\+H\+\_\+check\+\_\+pub\+\_\+key@{D\+H\+\_\+check\+\_\+pub\+\_\+key}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+check\+\_\+pub\+\_\+key(const D\+H $\ast$dh, const B\+I\+G\+N\+U\+M $\ast$pub\+\_\+key, int $\ast$codes)}{DH_check_pub_key(const DH *dh, const BIGNUM *pub_key, int *codes)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+check\+\_\+pub\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{const {\bf DH} $\ast$}]{dh, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{pub\+\_\+key, }
+\item[{int $\ast$}]{codes}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a024a17ba62d9a3cb41c109996c01cb7b}{}\label{include_2openssl_2dh_8h_a024a17ba62d9a3cb41c109996c01cb7b}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+generate\+\_\+key@{D\+H\+\_\+generate\+\_\+key}}
+\index{D\+H\+\_\+generate\+\_\+key@{D\+H\+\_\+generate\+\_\+key}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+generate\+\_\+key(\+D\+H $\ast$dh)}{DH_generate_key(DH *dh)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+generate\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$}]{dh}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ab90ec6b9e64f62c05754731c0c13ea01}{}\label{include_2openssl_2dh_8h_ab90ec6b9e64f62c05754731c0c13ea01}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+compute\+\_\+key@{D\+H\+\_\+compute\+\_\+key}}
+\index{D\+H\+\_\+compute\+\_\+key@{D\+H\+\_\+compute\+\_\+key}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+compute\+\_\+key(unsigned char $\ast$key, const B\+I\+G\+N\+U\+M $\ast$pub\+\_\+key, D\+H $\ast$dh)}{DH_compute_key(unsigned char *key, const BIGNUM *pub_key, DH *dh)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+compute\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{key, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{pub\+\_\+key, }
+\item[{{\bf DH} $\ast$}]{dh}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ac47f31f61d60571c0987c97a268e4865}{}\label{include_2openssl_2dh_8h_ac47f31f61d60571c0987c97a268e4865}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+compute\+\_\+key\+\_\+padded@{D\+H\+\_\+compute\+\_\+key\+\_\+padded}}
+\index{D\+H\+\_\+compute\+\_\+key\+\_\+padded@{D\+H\+\_\+compute\+\_\+key\+\_\+padded}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+compute\+\_\+key\+\_\+padded(unsigned char $\ast$key, const B\+I\+G\+N\+U\+M $\ast$pub\+\_\+key, D\+H $\ast$dh)}{DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+compute\+\_\+key\+\_\+padded (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{key, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{pub\+\_\+key, }
+\item[{{\bf DH} $\ast$}]{dh}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_adfc2f11c582c3e73114a955f6efa0cfe}{}\label{include_2openssl_2dh_8h_adfc2f11c582c3e73114a955f6efa0cfe}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!d2i\+\_\+\+D\+Hparams@{d2i\+\_\+\+D\+Hparams}}
+\index{d2i\+\_\+\+D\+Hparams@{d2i\+\_\+\+D\+Hparams}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{d2i\+\_\+\+D\+Hparams(\+D\+H $\ast$$\ast$a, const unsigned char $\ast$$\ast$pp, long length)}{d2i_DHparams(DH **a, const unsigned char **pp, long length)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ d2i\+\_\+\+D\+Hparams (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$$\ast$}]{a, }
+\item[{const unsigned char $\ast$$\ast$}]{pp, }
+\item[{long}]{length}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a24ea03dc870df9a1292e23c86ae31f25}{}\label{include_2openssl_2dh_8h_a24ea03dc870df9a1292e23c86ae31f25}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!i2d\+\_\+\+D\+Hparams@{i2d\+\_\+\+D\+Hparams}}
+\index{i2d\+\_\+\+D\+Hparams@{i2d\+\_\+\+D\+Hparams}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{i2d\+\_\+\+D\+Hparams(const D\+H $\ast$a, unsigned char $\ast$$\ast$pp)}{i2d_DHparams(const DH *a, unsigned char **pp)}}]{\setlength{\rightskip}{0pt plus 5cm}int i2d\+\_\+\+D\+Hparams (
+\begin{DoxyParamCaption}
+\item[{const {\bf DH} $\ast$}]{a, }
+\item[{unsigned char $\ast$$\ast$}]{pp}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a1c152b5a5c2b12db3b69c1e923a6fa64}{}\label{include_2openssl_2dh_8h_a1c152b5a5c2b12db3b69c1e923a6fa64}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!d2i\+\_\+\+D\+Hxparams@{d2i\+\_\+\+D\+Hxparams}}
+\index{d2i\+\_\+\+D\+Hxparams@{d2i\+\_\+\+D\+Hxparams}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{d2i\+\_\+\+D\+Hxparams(\+D\+H $\ast$$\ast$a, const unsigned char $\ast$$\ast$pp, long length)}{d2i_DHxparams(DH **a, const unsigned char **pp, long length)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ d2i\+\_\+\+D\+Hxparams (
+\begin{DoxyParamCaption}
+\item[{{\bf DH} $\ast$$\ast$}]{a, }
+\item[{const unsigned char $\ast$$\ast$}]{pp, }
+\item[{long}]{length}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a0bbe5aae825ba1ad52248ce1f8e8810c}{}\label{include_2openssl_2dh_8h_a0bbe5aae825ba1ad52248ce1f8e8810c}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!i2d\+\_\+\+D\+Hxparams@{i2d\+\_\+\+D\+Hxparams}}
+\index{i2d\+\_\+\+D\+Hxparams@{i2d\+\_\+\+D\+Hxparams}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{i2d\+\_\+\+D\+Hxparams(const D\+H $\ast$a, unsigned char $\ast$$\ast$pp)}{i2d_DHxparams(const DH *a, unsigned char **pp)}}]{\setlength{\rightskip}{0pt plus 5cm}int i2d\+\_\+\+D\+Hxparams (
+\begin{DoxyParamCaption}
+\item[{const {\bf DH} $\ast$}]{a, }
+\item[{unsigned char $\ast$$\ast$}]{pp}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a0541a2984cf5b83a2054eee6862ef12f}{}\label{include_2openssl_2dh_8h_a0541a2984cf5b83a2054eee6862ef12f}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+Hparams\+\_\+print\+\_\+fp@{D\+Hparams\+\_\+print\+\_\+fp}}
+\index{D\+Hparams\+\_\+print\+\_\+fp@{D\+Hparams\+\_\+print\+\_\+fp}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+Hparams\+\_\+print\+\_\+fp(\+F\+I\+L\+E $\ast$fp, const D\+H $\ast$x)}{DHparams_print_fp(FILE *fp, const DH *x)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+Hparams\+\_\+print\+\_\+fp (
+\begin{DoxyParamCaption}
+\item[{F\+I\+LE $\ast$}]{fp, }
+\item[{const {\bf DH} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a2cd239d7fbd80203ed566fb6982806bf}{}\label{include_2openssl_2dh_8h_a2cd239d7fbd80203ed566fb6982806bf}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+Hparams\+\_\+print@{D\+Hparams\+\_\+print}}
+\index{D\+Hparams\+\_\+print@{D\+Hparams\+\_\+print}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+Hparams\+\_\+print(\+B\+I\+O $\ast$bp, const D\+H $\ast$x)}{DHparams_print(BIO *bp, const DH *x)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+Hparams\+\_\+print (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{bp, }
+\item[{const {\bf DH} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a932ad3961b4555ff449f6df19349d7d8}{}\label{include_2openssl_2dh_8h_a932ad3961b4555ff449f6df19349d7d8}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+get\+\_\+1024\+\_\+160@{D\+H\+\_\+get\+\_\+1024\+\_\+160}}
+\index{D\+H\+\_\+get\+\_\+1024\+\_\+160@{D\+H\+\_\+get\+\_\+1024\+\_\+160}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+get\+\_\+1024\+\_\+160(void)}{DH_get_1024_160(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+H\+\_\+get\+\_\+1024\+\_\+160 (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_adfb0d4240d725ee70056b4ad1840adc8}{}\label{include_2openssl_2dh_8h_adfb0d4240d725ee70056b4ad1840adc8}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+get\+\_\+2048\+\_\+224@{D\+H\+\_\+get\+\_\+2048\+\_\+224}}
+\index{D\+H\+\_\+get\+\_\+2048\+\_\+224@{D\+H\+\_\+get\+\_\+2048\+\_\+224}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+get\+\_\+2048\+\_\+224(void)}{DH_get_2048_224(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+H\+\_\+get\+\_\+2048\+\_\+224 (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a3b7b15b670dff02ae33df69a5ee661a3}{}\label{include_2openssl_2dh_8h_a3b7b15b670dff02ae33df69a5ee661a3}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+get\+\_\+2048\+\_\+256@{D\+H\+\_\+get\+\_\+2048\+\_\+256}}
+\index{D\+H\+\_\+get\+\_\+2048\+\_\+256@{D\+H\+\_\+get\+\_\+2048\+\_\+256}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+get\+\_\+2048\+\_\+256(void)}{DH_get_2048_256(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DH}$\ast$ D\+H\+\_\+get\+\_\+2048\+\_\+256 (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_aafaa9010009d096c198450719507f16c}{}\label{include_2openssl_2dh_8h_aafaa9010009d096c198450719507f16c}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42@{D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42}}
+\index{D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42@{D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42(unsigned char $\ast$out, size\+\_\+t outlen, const unsigned char $\ast$\+Z, size\+\_\+t Zlen, A\+S\+N1\+\_\+\+O\+B\+J\+E\+C\+T $\ast$key\+\_\+oid, const unsigned char $\ast$ukm, size\+\_\+t ukmlen, const E\+V\+P\+\_\+\+M\+D $\ast$md)}{DH_KDF_X9_42(unsigned char *out, size_t outlen, const unsigned char *Z, size_t Zlen, ASN1_OBJECT *key_oid, const unsigned char *ukm, size_t ukmlen, const EVP_MD *md)}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+H\+\_\+\+K\+D\+F\+\_\+\+X9\+\_\+42 (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{out, }
+\item[{size\+\_\+t}]{outlen, }
+\item[{const unsigned char $\ast$}]{Z, }
+\item[{size\+\_\+t}]{Zlen, }
+\item[{{\bf A\+S\+N1\+\_\+\+O\+B\+J\+E\+CT} $\ast$}]{key\+\_\+oid, }
+\item[{const unsigned char $\ast$}]{ukm, }
+\item[{size\+\_\+t}]{ukmlen, }
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{md}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_a476c709ae2b48b838d096b56afe99a15}{}\label{include_2openssl_2dh_8h_a476c709ae2b48b838d096b56afe99a15}
+\index{include/openssl/dh.\+h@{include/openssl/dh.\+h}!E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings@{E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings}}
+\index{E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings@{E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings}!include/openssl/dh.\+h@{include/openssl/dh.\+h}}
+\subsubsection[{\texorpdfstring{E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings(void)}{ERR_load_DH_strings(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} E\+R\+R\+\_\+load\+\_\+\+D\+H\+\_\+strings (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{include_2openssl_2dh_8h_ab7dc4c132afcf74a775990d14591d161}{}\label{include_2openssl_2dh_8h_ab7dc4c132afcf74a775990d14591d161}

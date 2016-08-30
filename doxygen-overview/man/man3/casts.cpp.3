@@ -1,0 +1,66 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/cast/casts.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/cast/casts.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/cast\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP main (int argc, char * argv[])"
+
+.PP
+Definition at line 37 of file casts\&.cpp\&.
+.PP
+.nf
+38     {
+39     CAST_KEY key;
+40     unsigned long s1,s2,e1,e2;
+41     unsigned long data[2];
+42     int i,j;
+43     static unsigned char d[16]={0x01,0x23,0x45,0x67,0x89,0xAB,0xCD,0xEF};
+44 
+45     CAST_set_key(&key, 16,d);
+46 
+47     for (j=0; j<6; j++)
+48         {
+49         for (i=0; i<1000; i++) 
+50             {
+51             CAST_encrypt(&data[0],&key);
+52             GetTSC(s1);
+53             CAST_encrypt(&data[0],&key);
+54             CAST_encrypt(&data[0],&key);
+55             CAST_encrypt(&data[0],&key);
+56             GetTSC(e1);
+57             GetTSC(s2);
+58             CAST_encrypt(&data[0],&key);
+59             CAST_encrypt(&data[0],&key);
+60             CAST_encrypt(&data[0],&key);
+61             CAST_encrypt(&data[0],&key);
+62             GetTSC(e2);
+63             CAST_encrypt(&data[0],&key);
+64             }
+65 
+66         printf("cast %d %d (%d)\n",
+67             e1-s1,e2-s2,((e2-s2)-(e1-s1)));
+68         }
+69     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

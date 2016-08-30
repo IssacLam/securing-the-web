@@ -1,0 +1,3064 @@
+.TH "s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/CPStringUtils.hpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/MacOS/GetHTTPS.src/CPStringUtils.hpp \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBCopyPStrToCStr\fP (const unsigned char *thePStr, char *theCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyPStrToPStr\fP (const unsigned char *theSrcPStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrToCStr\fP (const char *theSrcCStr, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrToPStr\fP (const char *theSrcCStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatPStrToCStr\fP (const unsigned char *thePStr, char *theCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatPStrToPStr\fP (const unsigned char *theSrcPStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCStrToPStr\fP (const char *theSrcCStr, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCStrToCStr\fP (const char *theSrcCStr, char *theDstCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCharToCStr\fP (const char theChar, char *theDstCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatCharToPStr\fP (const char theChar, unsigned char *theDstPStr, const int maxPStrLength)"
+.br
+.ti -1c
+.RI "int \fBComparePStrs\fP (const unsigned char *theFirstPStr, const unsigned char *theSecondPStr, const Boolean ignoreCase=true)"
+.br
+.ti -1c
+.RI "int \fBCompareCStrs\fP (const char *theFirstCStr, const char *theSecondCStr, const Boolean ignoreCase=true)"
+.br
+.ti -1c
+.RI "int \fBCompareCStrToPStr\fP (const char *theCStr, const unsigned char *thePStr, const Boolean ignoreCase=true)"
+.br
+.ti -1c
+.RI "Boolean \fBCStrsAreEqual\fP (const char *theFirstCStr, const char *theSecondCStr, const Boolean ignoreCase=true)"
+.br
+.ti -1c
+.RI "Boolean \fBPStrsAreEqual\fP (const unsigned char *theFirstCStr, const unsigned char *theSecondCStr, const Boolean ignoreCase=true)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyLongIntToCStr\fP (const long theNum, char *theCStr, const int maxCStrLength, const int numDigits=\-1)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyUnsignedLongIntToCStr\fP (const unsigned long theNum, char *theCStr, const int maxCStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatLongIntToCStr\fP (const long theNum, char *theCStr, const int maxCStrLength, const int numDigits=\-1)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndConcatLongIntToCStr\fP (const char *theSrcCStr, const long theNum, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyLongIntToPStr\fP (const long theNum, unsigned char *thePStr, const int maxPStrLength, const int numDigits=\-1)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConcatLongIntToPStr\fP (const long theNum, unsigned char *thePStr, const int maxPStrLength, const int numDigits=\-1)"
+.br
+.ti -1c
+.RI "long \fBCStrLength\fP (const char *theCString)"
+.br
+.ti -1c
+.RI "long \fBPStrLength\fP (const unsigned char *thePString)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyCStrToExistingHandle\fP (const char *theCString, Handle theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyLongIntToExistingHandle\fP (const long inTheLongInt, Handle theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyCStrToNewHandle\fP (const char *theCString, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyPStrToNewHandle\fP (const unsigned char *thePString, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyLongIntToNewHandle\fP (const long inTheLongInt, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendCStrToHandle\fP (const char *theCString, Handle theHandle, long *currentLength=nil, long *maxLength=nil)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendCharsToHandle\fP (const char *theChars, const int numChars, Handle theHandle, long *currentLength=nil, long *maxLength=nil)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendPStrToHandle\fP (const unsigned char *thePString, Handle theHandle, long *currentLength=nil)"
+.br
+.ti -1c
+.RI "OSErr \fBAppendLongIntToHandle\fP (const long inTheLongInt, Handle theHandle, long *currentLength=nil)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBZeroMem\fP (\fBvoid\fP *theMemPtr, const unsigned long numBytes)"
+.br
+.ti -1c
+.RI "char * \fBFindCharInCStr\fP (const char theChar, const char *theCString)"
+.br
+.ti -1c
+.RI "long \fBFindCharOffsetInCStr\fP (const char theChar, const char *theCString, const Boolean inIgnoreCase=false)"
+.br
+.ti -1c
+.RI "long \fBFindCStrOffsetInCStr\fP (const char *theCSubstring, const char *theCString, const Boolean inIgnoreCase=false)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCSubstrToCStr\fP (const char *theSrcCStr, const int maxCharsToCopy, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCSubstrToPStr\fP (const char *theSrcCStr, const int maxCharsToCopy, unsigned char *theDstPStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBInsertCStrIntoCStr\fP (const char *theSrcCStr, const int theInsertionOffset, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBInsertPStrIntoCStr\fP (const unsigned char *theSrcPStr, const int theInsertionOffset, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBInsertCStrIntoHandle\fP (const char *theCString, Handle theHandle, const long inInsertOffset)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsertCStrIntoCStr\fP (const char *theSrcCStr, const char *theInsertCStr, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsertCStrsLongIntsIntoCStr\fP (const char *theSrcCStr, const char **theInsertCStrs, const long *theLongInts, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsert1LongIntIntoCStr\fP (const char *theSrcCStr, const long theNum, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsert2LongIntsIntoCStr\fP (const char *theSrcCStr, const long long1, const long long2, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsert3LongIntsIntoCStr\fP (const char *theSrcCStr, const long long1, const long long2, const long long3, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCopyCStrAndInsertCStrLongIntIntoCStr\fP (const char *theSrcCStr, const char *theInsertCStr, const long theNum, char *theDstCStr, const int maxDstStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyCStrAndInsertCStrLongIntIntoHandle\fP (const char *theSrcCStr, const char *theInsertCStr, const long theNum, Handle *theHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedWordToCStr\fP (char *theSrcCStr, int whichWord, char *theDstCStr, int maxDstCStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedWordToNewHandle\fP (char *theSrcCStr, int whichWord, Handle *outTheHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedLineToCStr\fP (const char *theSrcCStr, int inWhichLine, int *lineEndIndex, Boolean *gotLastLine, char *theDstCStr, const int maxDstCStrLength)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyIndexedLineToNewHandle\fP (const char *theSrcCStr, int inWhichLine, Handle *outNewHandle)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractIntFromCStr\fP (const char *theSrcCStr, int *outInt, Boolean skipLeadingSpaces=true)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractIntFromPStr\fP (const unsigned char *theSrcPStr, int *outInt, Boolean skipLeadingSpaces=true)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBConvertCStrToUpperCase\fP (char *theSrcCStr)"
+.br
+.ti -1c
+.RI "int \fBCountOccurencesOfCharInCStr\fP (const char inChar, const char *inSrcCStr)"
+.br
+.ti -1c
+.RI "int \fBCountWordsInCStr\fP (const char *inSrcCStr)"
+.br
+.ti -1c
+.RI "OSErr \fBCountDigits\fP (const char *inCStr, int *outNumIntegerDigits, int *outNumFractDigits)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBExtractCStrItemFromCStr\fP (const char *inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean *foundItem, char *outDstCharPtr, const int inDstCharPtrMaxLength, const Boolean inTreatMultipleDelimsAsSingleDelim=false)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractCStrItemFromCStrIntoNewHandle\fP (const char *inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean *foundItem, Handle *outNewHandle, const Boolean inTreatMultipleDelimsAsSingleDelim=false)"
+.br
+.ti -1c
+.RI "OSErr \fBExtractFloatFromCStr\fP (const char *inCString, extended80 *outFloat)"
+.br
+.ti -1c
+.RI "OSErr \fBCopyFloatToCStr\fP (const extended80 *theFloat, char *theCStr, const int maxCStrLength, const int inMaxNumIntDigits=\-1, const int inMaxNumFractDigits=\-1)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSkipWhiteSpace\fP (char **ioSrcCharPtr, const Boolean inStopAtEOL=false)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP CopyPStrToCStr (const unsigned char * thePStr, char * theCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 69 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+70 {
+71 int     i,numPChars;
+72 
+73 
+74     if (thePStr != nil && theCStr != nil && maxCStrLength > 0)
+75     {
+76         numPChars = thePStr[0];
+77         
+78         for (i = 0;;i++)
+79         {
+80             if (i >= numPChars || i >= maxCStrLength - 1)
+81             {
+82                 theCStr[i] = 0;
+83                 
+84                 break;
+85             }
+86             
+87             else
+88             {
+89                 theCStr[i] = thePStr[i + 1];
+90             }
+91         }
+92     }
+93 }
+.fi
+.SS "\fBvoid\fP CopyPStrToPStr (const unsigned char * theSrcPStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 96 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+97 {
+98 int     theMaxDstStrLength;
+99 
+100     
+101     theMaxDstStrLength = maxDstStrLength;
+102     
+103     
+104     if (theDstPStr != nil && theSrcPStr != nil && theMaxDstStrLength > 0)
+105     {
+106         if (theMaxDstStrLength > 255)
+107         {
+108             theMaxDstStrLength = 255;
+109         }
+110         
+111         
+112         if (theMaxDstStrLength - 1 < theSrcPStr[0])
+113         {
+114             BlockMove(theSrcPStr + 1,theDstPStr + 1,theMaxDstStrLength - 1);
+115             
+116             theDstPStr[0] = theMaxDstStrLength - 1;
+117         }
+118         
+119         else
+120         {
+121             BlockMove(theSrcPStr,theDstPStr,theSrcPStr[0] + 1);
+122         }
+123     }
+124 }
+.fi
+.SS "\fBvoid\fP CopyCStrToCStr (const char * theSrcCStr, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 127 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+128 {
+129 int     i;
+130 
+131 
+132     if (theDstCStr != nil && theSrcCStr != nil && maxDstStrLength > 0)
+133     {
+134         for (i = 0;;i++)
+135         {
+136             if (theSrcCStr[i] == 0 || i >= maxDstStrLength - 1)
+137             {
+138                 theDstCStr[i] = 0;
+139                 
+140                 break;
+141             }
+142             
+143             else
+144             {
+145                 theDstCStr[i] = theSrcCStr[i];
+146             }
+147         }
+148     }
+149 }
+.fi
+.SS "\fBvoid\fP CopyCStrToPStr (const char * theSrcCStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 214 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+215 {
+216 int     i;
+217 int     theMaxDstStrLength;
+218 
+219     
+220     theMaxDstStrLength = maxDstStrLength;
+221 
+222     if (theDstPStr != nil && theSrcCStr != nil && theMaxDstStrLength > 0)
+223     {
+224         if (theMaxDstStrLength > 255)
+225         {
+226             theMaxDstStrLength = 255;
+227         }
+228         
+229         
+230         for (i = 0;;i++)
+231         {
+232             if (i >= theMaxDstStrLength - 1 || theSrcCStr[i] == 0)
+233             {
+234                 theDstPStr[0] = i;
+235                 
+236                 break;
+237             }
+238             
+239             else
+240             {
+241                 theDstPStr[i + 1] = theSrcCStr[i];
+242             }
+243         }
+244     }
+245 }
+.fi
+.SS "\fBvoid\fP ConcatPStrToCStr (const unsigned char * thePStr, char * theCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 248 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+249 {
+250 int     i,numPChars,cStrLength;
+251 
+252 
+253     if (thePStr != nil && theCStr != nil && maxCStrLength > 0)
+254     {
+255         for (cStrLength = 0;theCStr[cStrLength] != 0;cStrLength++)
+256         {
+257         
+258         }
+259         
+260 
+261         numPChars = thePStr[0];
+262         
+263         
+264         for (i = 0;;i++)
+265         {
+266             if (i >= numPChars || cStrLength >= maxCStrLength - 1)
+267             {
+268                 theCStr[cStrLength++] = 0;
+269                 
+270                 break;
+271             }
+272             
+273             else
+274             {
+275                 theCStr[cStrLength++] = thePStr[i + 1];
+276             }
+277         }
+278     }
+279 }
+.fi
+.SS "\fBvoid\fP ConcatPStrToPStr (const unsigned char * theSrcPStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 283 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+284 {
+285 int     theMaxDstStrLength;
+286 
+287     
+288     theMaxDstStrLength = maxDstStrLength;
+289     
+290     if (theSrcPStr != nil && theDstPStr != nil && theMaxDstStrLength > 0)
+291     {
+292         if (theMaxDstStrLength > 255)
+293         {
+294             theMaxDstStrLength = 255;
+295         }
+296         
+297         
+298         if (theMaxDstStrLength - theDstPStr[0] - 1 < theSrcPStr[0])
+299         {
+300             BlockMove(theSrcPStr + 1,theDstPStr + theDstPStr[0] + 1,theMaxDstStrLength - 1 - theDstPStr[0]);
+301             
+302             theDstPStr[0] = theMaxDstStrLength - 1;
+303         }
+304         
+305         else
+306         {
+307             BlockMove(theSrcPStr + 1,theDstPStr + theDstPStr[0] + 1,theSrcPStr[0]);
+308             
+309             theDstPStr[0] += theSrcPStr[0];
+310         }
+311     }
+312 }
+.fi
+.SS "\fBvoid\fP ConcatCStrToPStr (const char * theSrcCStr, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 316 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+317 {
+318 int     i,thePStrLength;
+319 int     theMaxDstStrLength;
+320 
+321     
+322     theMaxDstStrLength = maxDstStrLength;
+323 
+324     if (theSrcCStr != nil && theDstPStr != nil && theMaxDstStrLength > 0)
+325     {
+326         if (theMaxDstStrLength > 255)
+327         {
+328             theMaxDstStrLength = 255;
+329         }
+330         
+331         
+332         thePStrLength = theDstPStr[0];
+333         
+334         for (i = 0;;i++)
+335         {
+336             if (theSrcCStr[i] == 0 || thePStrLength >= theMaxDstStrLength - 1)
+337             {
+338                 theDstPStr[0] = thePStrLength;
+339                 
+340                 break;
+341             }
+342             
+343             else
+344             {
+345                 theDstPStr[thePStrLength + 1] = theSrcCStr[i];
+346                 
+347                 thePStrLength++;
+348             }
+349         }
+350     }
+351 }
+.fi
+.SS "\fBvoid\fP ConcatCStrToCStr (const char * theSrcCStr, char * theDstCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 355 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+356 {
+357 int     cStrLength;
+358 
+359 
+360     if (theSrcCStr != nil && theDstCStr != nil && maxCStrLength > 0)
+361     {
+362         for (cStrLength = 0;theDstCStr[cStrLength] != 0;cStrLength++)
+363         {
+364         
+365         }
+366         
+367 
+368         for (;;)
+369         {
+370             if (*theSrcCStr == 0 || cStrLength >= maxCStrLength - 1)
+371             {
+372                 theDstCStr[cStrLength++] = 0;
+373                 
+374                 break;
+375             }
+376             
+377             else
+378             {
+379                 theDstCStr[cStrLength++] = *theSrcCStr++;
+380             }
+381         }
+382     }
+383 }
+.fi
+.SS "\fBvoid\fP ConcatCharToCStr (const char theChar, char * theDstCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 387 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+388 {
+389 int     cStrLength;
+390 
+391 
+392     if (theDstCStr != nil && maxCStrLength > 0)
+393     {
+394         cStrLength = CStrLength(theDstCStr);
+395         
+396         if (cStrLength < maxCStrLength - 1)
+397         {
+398             theDstCStr[cStrLength++] = theChar;
+399             theDstCStr[cStrLength++] = '\0';
+400         }
+401     }
+402 }
+.fi
+.SS "\fBvoid\fP ConcatCharToPStr (const char theChar, unsigned char * theDstPStr, const int maxPStrLength)"
+
+.PP
+Definition at line 406 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+407 {
+408 int     pStrLength;
+409 
+410 
+411     if (theDstPStr != nil && maxPStrLength > 0)
+412     {
+413         pStrLength = PStrLength(theDstPStr);
+414         
+415         if (pStrLength < maxPStrLength - 1 && pStrLength < 255)
+416         {
+417             theDstPStr[pStrLength + 1] = theChar;
+418             theDstPStr[0] += 1;
+419         }
+420     }
+421 }
+.fi
+.SS "int ComparePStrs (const unsigned char * theFirstPStr, const unsigned char * theSecondPStr, const Boolean ignoreCase = \fCtrue\fP)"
+
+.PP
+Definition at line 531 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+532 {
+533 int     i,returnValue;
+534 char    firstChar,secondChar;
+535 
+536     
+537     returnValue = 0;
+538     
+539     
+540     if (theFirstPStr != nil && theSecondPStr != nil)
+541     {
+542         for (i = 1;;i++)
+543         {
+544             firstChar = theFirstPStr[i];
+545             secondChar = theSecondPStr[i];
+546 
+547             if (ignoreCase == true)
+548             {
+549                 if (firstChar >= 'A' && firstChar <= 'Z')
+550                 {
+551                     firstChar = 'a' + (firstChar - 'A');
+552                 }
+553                 
+554                 if (secondChar >= 'A' && secondChar <= 'Z')
+555                 {
+556                     secondChar = 'a' + (secondChar - 'A');
+557                 }
+558             }
+559 
+560 
+561             if (theFirstPStr[0] < i && theSecondPStr[0] >= i)
+562             {
+563                 returnValue = -1;
+564                 
+565                 break;
+566             }
+567             
+568             else if (theFirstPStr[0] >= i && theSecondPStr[0] < i)
+569             {
+570                 returnValue = 1;
+571                 
+572                 break;
+573             }
+574             
+575             else if (theFirstPStr[0] < i && theSecondPStr[0] < i)
+576             {
+577                 returnValue = 0;
+578                 
+579                 break;
+580             }
+581             
+582             else if (firstChar < secondChar)
+583             {
+584                 returnValue = -1;
+585                 
+586                 break;
+587             }
+588             
+589             else if (firstChar > secondChar)
+590             {
+591                 returnValue = 1;
+592                 
+593                 break;
+594             }
+595         }
+596     }
+597     
+598     
+599     return(returnValue);
+600 }
+.fi
+.SS "int CompareCStrs (const char * theFirstCStr, const char * theSecondCStr, const Boolean ignoreCase = \fCtrue\fP)"
+
+.PP
+Definition at line 426 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+427 {
+428 int     returnValue;
+429 char    firstChar,secondChar;
+430 
+431     
+432     returnValue = 0;
+433     
+434     
+435     if (theFirstCStr != nil && theSecondCStr != nil)
+436     {
+437         for (;;)
+438         {
+439             firstChar = *theFirstCStr;
+440             secondChar = *theSecondCStr;
+441             
+442             if (ignoreCase == true)
+443             {
+444                 if (firstChar >= 'A' && firstChar <= 'Z')
+445                 {
+446                     firstChar = 'a' + (firstChar - 'A');
+447                 }
+448                 
+449                 if (secondChar >= 'A' && secondChar <= 'Z')
+450                 {
+451                     secondChar = 'a' + (secondChar - 'A');
+452                 }
+453             }
+454             
+455             
+456             if (firstChar == 0 && secondChar != 0)
+457             {
+458                 returnValue = -1;
+459                 
+460                 break;
+461             }
+462             
+463             else if (firstChar != 0 && secondChar == 0)
+464             {
+465                 returnValue = 1;
+466                 
+467                 break;
+468             }
+469             
+470             else if (firstChar == 0 && secondChar == 0)
+471             {
+472                 returnValue = 0;
+473                 
+474                 break;
+475             }
+476             
+477             else if (firstChar < secondChar)
+478             {
+479                 returnValue = -1;
+480                 
+481                 break;
+482             }
+483             
+484             else if (firstChar > secondChar)
+485             {
+486                 returnValue = 1;
+487                 
+488                 break;
+489             }
+490             
+491             theFirstCStr++;
+492             theSecondCStr++;
+493         }
+494     }
+495     
+496     
+497     return(returnValue);
+498 }
+.fi
+.SS "int CompareCStrToPStr (const char * theCStr, const unsigned char * thePStr, const Boolean ignoreCase = \fCtrue\fP)"
+
+.PP
+Definition at line 604 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+605 {
+606 int     returnValue;
+607 char    tempString[256];
+608 
+609     
+610     returnValue = 0;
+611     
+612     if (theCStr != nil && thePStr != nil)
+613     {
+614         CopyPStrToCStr(thePStr,tempString,sizeof(tempString));
+615         
+616         returnValue = CompareCStrs(theCStr,tempString,ignoreCase);
+617     }
+618     
+619     
+620     return(returnValue);
+621 }
+.fi
+.SS "Boolean CStrsAreEqual (const char * theFirstCStr, const char * theSecondCStr, const Boolean ignoreCase = \fCtrue\fP)"
+
+.PP
+Definition at line 502 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+503 {
+504     if (CompareCStrs(theFirstCStr,theSecondCStr,ignoreCase) == 0)
+505     {
+506         return true;
+507     }
+508     
+509     else
+510     {
+511         return false;
+512     }
+513 }
+.fi
+.SS "Boolean PStrsAreEqual (const unsigned char * theFirstCStr, const unsigned char * theSecondCStr, const Boolean ignoreCase = \fCtrue\fP)"
+
+.PP
+Definition at line 516 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+517 {
+518     if (ComparePStrs(theFirstPStr,theSecondPStr,ignoreCase) == 0)
+519     {
+520         return true;
+521     }
+522     
+523     else
+524     {
+525         return false;
+526     }
+527 }
+.fi
+.SS "\fBvoid\fP CopyLongIntToCStr (const long theNum, char * theCStr, const int maxCStrLength, const int numDigits = \fC\-1\fP)"
+
+.PP
+Definition at line 711 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+712 {
+713 Str255      theStr255;
+714 
+715 
+716     NumToString(theNum,theStr255);
+717 
+718 
+719     if (numDigits > 0)
+720     {
+721     int     charsToInsert;
+722     
+723         
+724         charsToInsert = numDigits - PStrLength(theStr255);
+725         
+726         if (charsToInsert > 0)
+727         {
+728         char    tempString[256];
+729             
+730             CopyCStrToCStr("",tempString,sizeof(tempString));
+731             
+732             for (;charsToInsert > 0;charsToInsert--)
+733             {
+734                 ConcatCStrToCStr("0",tempString,sizeof(tempString));
+735             }
+736             
+737             ConcatPStrToCStr(theStr255,tempString,sizeof(tempString));
+738             
+739             CopyCStrToPStr(tempString,theStr255,sizeof(theStr255));
+740         }
+741     }
+742 
+743 
+744     CopyPStrToCStr(theStr255,theCStr,maxCStrLength);
+745 }
+.fi
+.SS "\fBvoid\fP CopyUnsignedLongIntToCStr (const unsigned long theNum, char * theCStr, const int maxCStrLength)"
+
+.PP
+Definition at line 751 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+752 {
+753 char            tempString[256];
+754 int             srcCharIndex,dstCharIndex;
+755 unsigned long   tempNum,quotient,remainder;
+756 
+757     
+758     if (theNum == 0)
+759     {
+760         CopyCStrToCStr("0",theCStr,maxCStrLength);
+761     }
+762     
+763     else
+764     {
+765         srcCharIndex = 0;
+766         
+767         tempNum = theNum;
+768         
+769         for (;;)
+770         {
+771             if (srcCharIndex >= sizeof(tempString) - 1 || tempNum == 0)
+772             {
+773                 for (dstCharIndex = 0;;)
+774                 {
+775                     if (dstCharIndex >= maxCStrLength - 1 || srcCharIndex <= 0)
+776                     {
+777                         theCStr[dstCharIndex] = 0;
+778                         
+779                         break;
+780                     }
+781                     
+782                     theCStr[dstCharIndex++] = tempString[--srcCharIndex];
+783                 }
+784                 
+785                 break;
+786             }
+787             
+788 
+789             quotient = tempNum / 10;
+790             
+791             remainder = tempNum - (quotient * 10);
+792             
+793             tempString[srcCharIndex] = '0' + remainder;
+794             
+795             srcCharIndex++;
+796             
+797             tempNum = quotient;
+798         }
+799     }
+800 }
+.fi
+.SS "\fBvoid\fP ConcatLongIntToCStr (const long theNum, char * theCStr, const int maxCStrLength, const int numDigits = \fC\-1\fP)"
+
+.PP
+Definition at line 625 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+626 {
+627 Str255      theStr255;
+628 
+629 
+630     NumToString(theNum,theStr255);
+631 
+632 
+633     if (numDigits > 0)
+634     {
+635     int     charsToInsert;
+636     
+637         
+638         charsToInsert = numDigits - PStrLength(theStr255);
+639         
+640         if (charsToInsert > 0)
+641         {
+642         char    tempString[256];
+643             
+644             CopyCStrToCStr("",tempString,sizeof(tempString));
+645             
+646             for (;charsToInsert > 0;charsToInsert--)
+647             {
+648                 ConcatCStrToCStr("0",tempString,sizeof(tempString));
+649             }
+650             
+651             ConcatPStrToCStr(theStr255,tempString,sizeof(tempString));
+652             
+653             CopyCStrToPStr(tempString,theStr255,sizeof(theStr255));
+654         }
+655     }
+656 
+657 
+658     ConcatPStrToCStr(theStr255,theCStr,maxCStrLength);
+659 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndConcatLongIntToCStr (const char * theSrcCStr, const long theNum, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 702 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+703 {
+704     CopyCStrToCStr(theSrcCStr,theDstCStr,maxDstStrLength);
+705     
+706     ConcatLongIntToCStr(theNum,theDstCStr,maxDstStrLength);
+707 }
+.fi
+.SS "\fBvoid\fP CopyLongIntToPStr (const long theNum, unsigned char * thePStr, const int maxPStrLength, const int numDigits = \fC\-1\fP)"
+
+.PP
+Definition at line 805 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+806 {
+807 char    tempString[256];
+808 
+809 
+810     CopyLongIntToCStr(theNum,tempString,sizeof(tempString),numDigits);
+811     
+812     CopyCStrToPStr(tempString,thePStr,maxPStrLength);
+813 }
+.fi
+.SS "\fBvoid\fP ConcatLongIntToPStr (const long theNum, unsigned char * thePStr, const int maxPStrLength, const int numDigits = \fC\-1\fP)"
+
+.PP
+Definition at line 664 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+665 {
+666 Str255      theStr255;
+667 
+668 
+669     NumToString(theNum,theStr255);
+670 
+671 
+672     if (numDigits > 0)
+673     {
+674     int     charsToInsert;
+675     
+676         
+677         charsToInsert = numDigits - PStrLength(theStr255);
+678         
+679         if (charsToInsert > 0)
+680         {
+681         char    tempString[256];
+682             
+683             CopyCStrToCStr("",tempString,sizeof(tempString));
+684             
+685             for (;charsToInsert > 0;charsToInsert--)
+686             {
+687                 ConcatCStrToCStr("0",tempString,sizeof(tempString));
+688             }
+689             
+690             ConcatPStrToCStr(theStr255,tempString,sizeof(tempString));
+691             
+692             CopyCStrToPStr(tempString,theStr255,sizeof(theStr255));
+693         }
+694     }
+695 
+696 
+697     ConcatPStrToPStr(theStr255,thePStr,maxPStrLength);
+698 }
+.fi
+.SS "long CStrLength (const char * theCString)"
+
+.PP
+Definition at line 1175 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1176 {
+1177 long    cStrLength = 0;
+1178 
+1179     
+1180     if (theCString != nil)
+1181     {
+1182         for (cStrLength = 0;theCString[cStrLength] != 0;cStrLength++)
+1183         {
+1184         
+1185         }
+1186     }
+1187     
+1188     
+1189     return(cStrLength);
+1190 }
+.fi
+.SS "long PStrLength (const unsigned char * thePString)"
+
+.PP
+Definition at line 1194 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1195 {
+1196 long    pStrLength = 0;
+1197 
+1198     
+1199     if (thePString != nil)
+1200     {
+1201         pStrLength = thePString[0];
+1202     }
+1203     
+1204     
+1205     return(pStrLength);
+1206 }
+.fi
+.SS "OSErr CopyCStrToExistingHandle (const char * theCString, Handle theHandle)"
+
+.PP
+Definition at line 847 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+848 {
+849 OSErr   errCode = noErr;
+850 long    stringLength;
+851 
+852     
+853     if (theCString == nil)
+854     {
+855         SetErrorMessageAndBail(("CopyCStrToExistingHandle: Bad parameter, theCString == nil"));
+856     }
+857 
+858     if (theHandle == nil)
+859     {
+860         SetErrorMessageAndBail(("CopyCStrToExistingHandle: Bad parameter, theHandle == nil"));
+861     }
+862 
+863     if (*theHandle == nil)
+864     {
+865         SetErrorMessageAndBail(("CopyCStrToExistingHandle: Bad parameter, *theHandle == nil"));
+866     }
+867 
+868 
+869 
+870     stringLength = CStrLength(theCString) + 1;
+871     
+872     SetHandleSize(theHandle,stringLength);
+873     
+874     if (GetHandleSize(theHandle) < stringLength)
+875     {
+876         SetErrorMessageAndLongIntAndBail("CopyCStrToExistingHandle: Can't set Handle size, MemError() = ",MemError());
+877     }
+878     
+879     
+880     ::BlockMove(theCString,*theHandle,stringLength);
+881     
+882 
+883 EXITPOINT:
+884     
+885     return(errCode);
+886 }
+.fi
+.SS "OSErr CopyLongIntToExistingHandle (const long inTheLongInt, Handle theHandle)"
+
+.PP
+Definition at line 831 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+832 {
+833 OSErr       errCode = noErr;
+834 char        tempString[32];
+835     
+836     
+837     CopyLongIntToCStr(inTheLongInt,tempString,sizeof(tempString));
+838     
+839     errCode = CopyCStrToExistingHandle(tempString,theHandle);
+840 
+841     return(errCode);
+842 }
+.fi
+.SS "OSErr CopyCStrToNewHandle (const char * theCString, Handle * theHandle)"
+
+.PP
+Definition at line 892 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+893 {
+894 OSErr   errCode = noErr;
+895 long    stringLength;
+896 
+897     
+898     if (theCString == nil)
+899     {
+900         SetErrorMessageAndBail(("CopyCStrToNewHandle: Bad parameter, theCString == nil"));
+901     }
+902 
+903     if (theHandle == nil)
+904     {
+905         SetErrorMessageAndBail(("CopyCStrToNewHandle: Bad parameter, theHandle == nil"));
+906     }
+907 
+908 
+909 
+910     stringLength = CStrLength(theCString) + 1;
+911     
+912     *theHandle = NewHandle(stringLength);
+913     
+914     if (*theHandle == nil)
+915     {
+916         SetErrorMessageAndLongIntAndBail("CopyCStrToNewHandle: Can't allocate Handle, MemError() = ",MemError());
+917     }
+918     
+919     
+920     ::BlockMove(theCString,**theHandle,stringLength);
+921     
+922 
+923 EXITPOINT:
+924     
+925     return(errCode);
+926 }
+.fi
+.SS "OSErr CopyPStrToNewHandle (const unsigned char * thePString, Handle * theHandle)"
+
+.PP
+Definition at line 930 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+931 {
+932 OSErr   errCode = noErr;
+933 long    stringLength;
+934 
+935     
+936     if (thePString == nil)
+937     {
+938         SetErrorMessageAndBail(("CopyPStrToNewHandle: Bad parameter, thePString == nil"));
+939     }
+940 
+941     if (theHandle == nil)
+942     {
+943         SetErrorMessageAndBail(("CopyPStrToNewHandle: Bad parameter, theHandle == nil"));
+944     }
+945 
+946 
+947 
+948     stringLength = PStrLength(thePString) + 1;
+949     
+950     *theHandle = NewHandle(stringLength);
+951     
+952     if (*theHandle == nil)
+953     {
+954         SetErrorMessageAndLongIntAndBail("CopyPStrToNewHandle: Can't allocate Handle, MemError() = ",MemError());
+955     }
+956     
+957     
+958     if (stringLength > 1)
+959     {
+960         BlockMove(thePString + 1,**theHandle,stringLength - 1);
+961     }
+962     
+963     (**theHandle)[stringLength - 1] = 0;
+964     
+965 
+966 EXITPOINT:
+967     
+968     return(errCode);
+969 }
+.fi
+.SS "OSErr CopyLongIntToNewHandle (const long inTheLongInt, Handle * theHandle)"
+
+.PP
+Definition at line 817 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+818 {
+819 OSErr       errCode = noErr;
+820 char        tempString[32];
+821     
+822     
+823     CopyLongIntToCStr(inTheLongInt,tempString,sizeof(tempString));
+824     
+825     errCode = CopyCStrToNewHandle(tempString,theHandle);
+826 
+827     return(errCode);
+828 }
+.fi
+.SS "OSErr AppendCStrToHandle (const char * theCString, Handle theHandle, long * currentLength = \fCnil\fP, long * maxLength = \fCnil\fP)"
+
+.PP
+Definition at line 990 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+991 {
+992 OSErr       errCode = noErr;
+993 long        handleMaxLength,handleCurrentLength,stringLength,byteCount;
+994 
+995 
+996     if (theCString == nil)
+997     {
+998         SetErrorMessageAndBail(("AppendCStrToHandle: Bad parameter, theCString == nil"));
+999     }
+1000 
+1001     if (theHandle == nil)
+1002     {
+1003         SetErrorMessageAndBail(("AppendCStrToHandle: Bad parameter, theHandle == nil"));
+1004     }
+1005     
+1006     
+1007     if (maxLength != nil)
+1008     {
+1009         handleMaxLength = *maxLength;
+1010     }
+1011     
+1012     else
+1013     {
+1014         handleMaxLength = GetHandleSize(theHandle);
+1015     }
+1016     
+1017     
+1018     if (currentLength != nil && *currentLength >= 0)
+1019     {
+1020         handleCurrentLength = *currentLength;
+1021     }
+1022     
+1023     else
+1024     {
+1025         handleCurrentLength = CStrLength(*theHandle);
+1026     }
+1027     
+1028     
+1029     stringLength = CStrLength(theCString);
+1030     
+1031     byteCount = handleCurrentLength + stringLength + 1;
+1032     
+1033     if (byteCount > handleMaxLength)
+1034     {
+1035         SetHandleSize(theHandle,handleCurrentLength + stringLength + 1);
+1036         
+1037         if (maxLength != nil)
+1038         {
+1039             *maxLength = GetHandleSize(theHandle);
+1040             
+1041             handleMaxLength = *maxLength;
+1042         }
+1043         
+1044         else
+1045         {
+1046             handleMaxLength = GetHandleSize(theHandle);
+1047         }
+1048 
+1049         if (byteCount > handleMaxLength)
+1050         {
+1051             SetErrorMessageAndLongIntAndBail("AppendCStrToHandle: Can't increase Handle allocation, MemError() = ",MemError());
+1052         }
+1053     }
+1054     
+1055     
+1056     BlockMove(theCString,*theHandle + handleCurrentLength,stringLength + 1);
+1057     
+1058     
+1059     if (currentLength != nil)
+1060     {
+1061         *currentLength += stringLength;
+1062     }
+1063 
+1064 
+1065     errCode = noErr;
+1066     
+1067     
+1068 EXITPOINT:
+1069 
+1070     return(errCode);
+1071 }
+.fi
+.SS "OSErr AppendCharsToHandle (const char * theChars, const int numChars, Handle theHandle, long * currentLength = \fCnil\fP, long * maxLength = \fCnil\fP)"
+
+.PP
+Definition at line 1075 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1076 {
+1077 OSErr       errCode = noErr;
+1078 long        handleMaxLength,handleCurrentLength,byteCount;
+1079 
+1080 
+1081     if (theChars == nil)
+1082     {
+1083         SetErrorMessageAndBail(("AppendCharsToHandle: Bad parameter, theChars == nil"));
+1084     }
+1085 
+1086     if (theHandle == nil)
+1087     {
+1088         SetErrorMessageAndBail(("AppendCharsToHandle: Bad parameter, theHandle == nil"));
+1089     }
+1090     
+1091     
+1092     if (maxLength != nil)
+1093     {
+1094         handleMaxLength = *maxLength;
+1095     }
+1096     
+1097     else
+1098     {
+1099         handleMaxLength = GetHandleSize(theHandle);
+1100     }
+1101     
+1102     
+1103     if (currentLength != nil && *currentLength >= 0)
+1104     {
+1105         handleCurrentLength = *currentLength;
+1106     }
+1107     
+1108     else
+1109     {
+1110         handleCurrentLength = CStrLength(*theHandle);
+1111     }
+1112     
+1113     
+1114     byteCount = handleCurrentLength + numChars + 1;
+1115     
+1116     if (byteCount > handleMaxLength)
+1117     {
+1118         SetHandleSize(theHandle,handleCurrentLength + numChars + 1);
+1119         
+1120         if (maxLength != nil)
+1121         {
+1122             *maxLength = GetHandleSize(theHandle);
+1123             
+1124             handleMaxLength = *maxLength;
+1125         }
+1126         
+1127         else
+1128         {
+1129             handleMaxLength = GetHandleSize(theHandle);
+1130         }
+1131 
+1132         if (byteCount > handleMaxLength)
+1133         {
+1134             SetErrorMessageAndLongIntAndBail("AppendCharsToHandle: Can't increase Handle allocation, MemError() = ",MemError());
+1135         }
+1136     }
+1137     
+1138     
+1139     BlockMove(theChars,*theHandle + handleCurrentLength,numChars);
+1140     
+1141     (*theHandle)[handleCurrentLength + numChars] = '\0';
+1142     
+1143     if (currentLength != nil)
+1144     {
+1145         *currentLength += numChars;
+1146     }
+1147 
+1148 
+1149     errCode = noErr;
+1150     
+1151     
+1152 EXITPOINT:
+1153 
+1154     return(errCode);
+1155 }
+.fi
+.SS "OSErr AppendPStrToHandle (const unsigned char * thePString, Handle theHandle, long * currentLength = \fCnil\fP)"
+
+.PP
+Definition at line 972 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+973 {
+974 OSErr       errCode = noErr;
+975 char        tempString[256];
+976 
+977     
+978     CopyPStrToCStr(thePString,tempString,sizeof(tempString));
+979     
+980     errCode = AppendCStrToHandle(tempString,theHandle,currentLength);
+981     
+982 
+983 EXITPOINT:
+984     
+985     return(errCode);
+986 }
+.fi
+.SS "OSErr AppendLongIntToHandle (const long inTheLongInt, Handle theHandle, long * currentLength = \fCnil\fP)"
+
+.PP
+Definition at line 1159 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1160 {
+1161 OSErr       errCode = noErr;
+1162 char        tempString[32];
+1163     
+1164     
+1165     CopyLongIntToCStr(inTheLongInt,tempString,sizeof(tempString));
+1166     
+1167     errCode = AppendCStrToHandle(tempString,theHandle,currentLength);
+1168 
+1169     return(errCode);
+1170 }
+.fi
+.SS "\fBvoid\fP ZeroMem (\fBvoid\fP * theMemPtr, const unsigned long numBytes)"
+
+.PP
+Definition at line 1212 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1213 {
+1214 unsigned char   *theBytePtr;
+1215 unsigned long   *theLongPtr;
+1216 unsigned long   numSingleBytes;
+1217 unsigned long   theNumBytes;
+1218 
+1219     
+1220     theNumBytes = numBytes;
+1221     
+1222     if (theMemPtr != nil && theNumBytes > 0)
+1223     {
+1224         theBytePtr = (unsigned char *) theMemPtr;
+1225         
+1226         numSingleBytes = (unsigned long) theBytePtr & 0x0003;
+1227         
+1228         while (numSingleBytes > 0)
+1229         {
+1230             *theBytePtr++ = 0;
+1231             
+1232             theNumBytes--;
+1233             numSingleBytes--;
+1234         }
+1235         
+1236 
+1237         theLongPtr = (unsigned long *) theBytePtr;
+1238         
+1239         while (theNumBytes >= 4)
+1240         {
+1241             *theLongPtr++ = 0;
+1242             
+1243             theNumBytes -= 4;
+1244         }
+1245         
+1246         
+1247         theBytePtr = (unsigned char *) theLongPtr;
+1248         
+1249         while (theNumBytes > 0)
+1250         {
+1251             *theBytePtr++ = 0;
+1252             
+1253             theNumBytes--;
+1254         }
+1255     }
+1256 }
+.fi
+.SS "char* FindCharInCStr (const char theChar, const char * theCString)"
+
+.PP
+Definition at line 1261 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1262 {
+1263 char    *theStringSearchPtr;
+1264 
+1265     
+1266     theStringSearchPtr = (char  *) theCString;
+1267     
+1268     if (theStringSearchPtr != nil)
+1269     {
+1270         while (*theStringSearchPtr != '\0' && *theStringSearchPtr != theChar)
+1271         {
+1272             theStringSearchPtr++;
+1273         }
+1274         
+1275         if (*theStringSearchPtr == '\0')
+1276         {
+1277             theStringSearchPtr = nil;
+1278         }
+1279     }
+1280     
+1281     return(theStringSearchPtr);
+1282 }
+.fi
+.SS "long FindCharOffsetInCStr (const char theChar, const char * theCString, const Boolean inIgnoreCase = \fCfalse\fP)"
+
+.PP
+Definition at line 1286 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1287 {
+1288 long    theOffset = -1;
+1289 
+1290 
+1291     if (theCString != nil)
+1292     {
+1293         theOffset = 0;
+1294         
+1295 
+1296         if (inIgnoreCase)
+1297         {
+1298         char    searchChar = theChar;
+1299         
+1300             if (searchChar >= 'a' && searchChar <= 'z')
+1301             {
+1302                 searchChar = searchChar - 'a' + 'A';
+1303             }
+1304             
+1305             
+1306             while (*theCString != 0)
+1307             {
+1308             char    currentChar = *theCString;
+1309             
+1310                 if (currentChar >= 'a' && currentChar <= 'z')
+1311                 {
+1312                     currentChar = currentChar - 'a' + 'A';
+1313                 }
+1314             
+1315                 if (currentChar == searchChar)
+1316                 {
+1317                     break;
+1318                 }
+1319                 
+1320                 theCString++;
+1321                 theOffset++;
+1322             }
+1323         }
+1324         
+1325         else
+1326         {
+1327             while (*theCString != 0 && *theCString != theChar)
+1328             {
+1329                 theCString++;
+1330                 theOffset++;
+1331             }
+1332         }
+1333         
+1334         if (*theCString == 0)
+1335         {
+1336             theOffset = -1;
+1337         }
+1338     }
+1339     
+1340     return(theOffset);
+1341 }
+.fi
+.SS "long FindCStrOffsetInCStr (const char * theCSubstring, const char * theCString, const Boolean inIgnoreCase = \fCfalse\fP)"
+
+.PP
+Definition at line 1344 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1345 {
+1346 long    theOffset = -1;
+1347 
+1348 
+1349     if (theCSubstring != nil && theCString != nil)
+1350     {
+1351         for (theOffset = 0;;theOffset++)
+1352         {
+1353             if (theCString[theOffset] == 0)
+1354             {
+1355                 theOffset = -1;
+1356                 
+1357                 goto EXITPOINT;
+1358             }
+1359             
+1360             
+1361             for (const char *tempSubstringPtr = theCSubstring,*tempCStringPtr = theCString + theOffset;;tempSubstringPtr++,tempCStringPtr++)
+1362             {
+1363                 if (*tempSubstringPtr == 0)
+1364                 {
+1365                     goto EXITPOINT;
+1366                 }
+1367                 
+1368                 else if (*tempCStringPtr == 0)
+1369                 {
+1370                     break;
+1371                 }
+1372             
+1373             char    searchChar = *tempSubstringPtr;
+1374             char    currentChar = *tempCStringPtr;
+1375             
+1376                 if (inIgnoreCase && searchChar >= 'a' && searchChar <= 'z')
+1377                 {
+1378                     searchChar = searchChar - 'a' + 'A';
+1379                 }
+1380                 
+1381                 if (inIgnoreCase && currentChar >= 'a' && currentChar <= 'z')
+1382                 {
+1383                     currentChar = currentChar - 'a' + 'A';
+1384                 }
+1385                 
+1386                 if (currentChar != searchChar)
+1387                 {
+1388                     break;
+1389                 }
+1390             }
+1391         }
+1392         
+1393         theOffset = -1;
+1394     }
+1395 
+1396 
+1397 EXITPOINT:
+1398     
+1399     return(theOffset);
+1400 }
+.fi
+.SS "\fBvoid\fP CopyCSubstrToCStr (const char * theSrcCStr, const int maxCharsToCopy, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 153 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+154 {
+155 int     i;
+156 
+157 
+158     if (theDstCStr != nil && theSrcCStr != nil && maxDstStrLength > 0)
+159     {
+160         for (i = 0;;i++)
+161         {
+162             if (theSrcCStr[i] == 0 || i >= maxDstStrLength - 1 || i >= maxCharsToCopy)
+163             {
+164                 theDstCStr[i] = 0;
+165                 
+166                 break;
+167             }
+168             
+169             else
+170             {
+171                 theDstCStr[i] = theSrcCStr[i];
+172             }
+173         }
+174     }
+175 }
+.fi
+.SS "\fBvoid\fP CopyCSubstrToPStr (const char * theSrcCStr, const int maxCharsToCopy, unsigned char * theDstPStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 179 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+180 {
+181 int     i;
+182 int     theMaxDstStrLength;
+183 
+184     
+185     theMaxDstStrLength = maxDstStrLength;
+186 
+187     if (theDstPStr != nil && theSrcCStr != nil && theMaxDstStrLength > 0)
+188     {
+189         if (theMaxDstStrLength > 255)
+190         {
+191             theMaxDstStrLength = 255;
+192         }
+193         
+194         
+195         for (i = 0;;i++)
+196         {
+197             if (theSrcCStr[i] == 0 || i >= theMaxDstStrLength - 1 || i >= maxCharsToCopy)
+198             {
+199                 theDstPStr[0] = i;
+200                 
+201                 break;
+202             }
+203             
+204             else
+205             {
+206                 theDstPStr[i + 1] = theSrcCStr[i];
+207             }
+208         }
+209     }
+210 }
+.fi
+.SS "\fBvoid\fP InsertCStrIntoCStr (const char * theSrcCStr, const int theInsertionOffset, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1404 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1405 {
+1406 int     currentLength;
+1407 int     insertLength;
+1408 int     numCharsToInsert;
+1409 int     numCharsToShift;
+1410 
+1411     
+1412     if (theDstCStr != nil && theSrcCStr != nil && maxDstStrLength > 0 && theInsertionOffset < maxDstStrLength - 1)
+1413     {
+1414         currentLength = CStrLength(theDstCStr);
+1415         
+1416         insertLength = CStrLength(theSrcCStr);
+1417         
+1418 
+1419         if (theInsertionOffset + insertLength < maxDstStrLength - 1)
+1420         {
+1421             numCharsToInsert = insertLength;
+1422         }
+1423         
+1424         else
+1425         {
+1426             numCharsToInsert = maxDstStrLength - 1 - theInsertionOffset;
+1427         }
+1428         
+1429 
+1430         if (numCharsToInsert + currentLength < maxDstStrLength - 1)
+1431         {
+1432             numCharsToShift = currentLength - theInsertionOffset;
+1433         }
+1434         
+1435         else
+1436         {
+1437             numCharsToShift = maxDstStrLength - 1 - theInsertionOffset - numCharsToInsert;
+1438         }
+1439 
+1440         
+1441         if (numCharsToShift > 0)
+1442         {
+1443             BlockMove(theDstCStr + theInsertionOffset,theDstCStr + theInsertionOffset + numCharsToInsert,numCharsToShift);
+1444         }
+1445         
+1446         if (numCharsToInsert > 0)
+1447         {
+1448             BlockMove(theSrcCStr,theDstCStr + theInsertionOffset,numCharsToInsert);
+1449         }
+1450         
+1451         theDstCStr[theInsertionOffset + numCharsToInsert + numCharsToShift] = 0;
+1452     }
+1453 }
+.fi
+.SS "\fBvoid\fP InsertPStrIntoCStr (const unsigned char * theSrcPStr, const int theInsertionOffset, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1457 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1458 {
+1459 int     currentLength;
+1460 int     insertLength;
+1461 int     numCharsToInsert;
+1462 int     numCharsToShift;
+1463 
+1464     
+1465     if (theDstCStr != nil && theSrcPStr != nil && maxDstStrLength > 0 && theInsertionOffset < maxDstStrLength - 1)
+1466     {
+1467         currentLength = CStrLength(theDstCStr);
+1468         
+1469         insertLength = PStrLength(theSrcPStr);
+1470         
+1471 
+1472         if (theInsertionOffset + insertLength < maxDstStrLength - 1)
+1473         {
+1474             numCharsToInsert = insertLength;
+1475         }
+1476         
+1477         else
+1478         {
+1479             numCharsToInsert = maxDstStrLength - 1 - theInsertionOffset;
+1480         }
+1481         
+1482 
+1483         if (numCharsToInsert + currentLength < maxDstStrLength - 1)
+1484         {
+1485             numCharsToShift = currentLength - theInsertionOffset;
+1486         }
+1487         
+1488         else
+1489         {
+1490             numCharsToShift = maxDstStrLength - 1 - theInsertionOffset - numCharsToInsert;
+1491         }
+1492 
+1493         
+1494         if (numCharsToShift > 0)
+1495         {
+1496             BlockMove(theDstCStr + theInsertionOffset,theDstCStr + theInsertionOffset + numCharsToInsert,numCharsToShift);
+1497         }
+1498         
+1499         if (numCharsToInsert > 0)
+1500         {
+1501             BlockMove(theSrcPStr + 1,theDstCStr + theInsertionOffset,numCharsToInsert);
+1502         }
+1503         
+1504         theDstCStr[theInsertionOffset + numCharsToInsert + numCharsToShift] = 0;
+1505     }
+1506 }
+.fi
+.SS "OSErr InsertCStrIntoHandle (const char * theCString, Handle theHandle, const long inInsertOffset)"
+
+.PP
+Definition at line 1510 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1511 {
+1512 OSErr   errCode;
+1513 int     currentLength;
+1514 int     insertLength;
+1515 
+1516     
+1517     SetErrorMessageAndBailIfNil(theCString,"InsertCStrIntoHandle: Bad parameter, theCString == nil");
+1518 
+1519     SetErrorMessageAndBailIfNil(theHandle,"InsertCStrIntoHandle: Bad parameter, theHandle == nil");
+1520     
+1521     currentLength = CStrLength(*theHandle);
+1522     
+1523     if (currentLength + 1 > ::GetHandleSize(theHandle))
+1524     {
+1525         SetErrorMessageAndBail("InsertCStrIntoHandle: Handle has been overflowed");
+1526     }
+1527     
+1528     if (inInsertOffset > currentLength)
+1529     {
+1530         SetErrorMessageAndBail("InsertCStrIntoHandle: Insertion offset is greater than string length");
+1531     }
+1532     
+1533     insertLength = CStrLength(theCString);
+1534     
+1535     ::SetHandleSize(theHandle,currentLength + 1 + insertLength);
+1536     
+1537     if (::GetHandleSize(theHandle) < currentLength + 1 + insertLength)
+1538     {
+1539         SetErrorMessageAndLongIntAndBail("InsertCStrIntoHandle: Can't expand storage for Handle, MemError() = ",MemError());
+1540     }
+1541     
+1542     ::BlockMove(*theHandle + inInsertOffset,*theHandle + inInsertOffset + insertLength,currentLength - inInsertOffset + 1);
+1543     
+1544     ::BlockMove(theCString,*theHandle + inInsertOffset,insertLength);
+1545 
+1546 
+1547     errCode = noErr;
+1548     
+1549     
+1550 EXITPOINT:
+1551 
+1552     return(errCode);
+1553 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndInsertCStrIntoCStr (const char * theSrcCStr, const char * theInsertCStr, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1580 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1581 {
+1582 const char  *theCStrs[2] = { theInsertCStr,nil };
+1583 
+1584     CopyCStrAndInsertCStrsLongIntsIntoCStr(theSrcCStr,theCStrs,nil,theDstCStr,maxDstStrLength);
+1585 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndInsertCStrsLongIntsIntoCStr (const char * theSrcCStr, const char ** theInsertCStrs, const long * theLongInts, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1599 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1600 {
+1601 int         dstCharIndex,srcCharIndex,theMaxDstStrLength;
+1602 int         theCStrIndex = 0;
+1603 int         theLongIntIndex = 0;
+1604 
+1605     
+1606     theMaxDstStrLength = maxDstStrLength;
+1607     
+1608     if (theDstCStr != nil && theSrcCStr != nil && theMaxDstStrLength > 0)
+1609     {
+1610         dstCharIndex = 0;
+1611         
+1612         srcCharIndex = 0;
+1613         
+1614         
+1615         //  Allow room for NULL at end of string
+1616         
+1617         theMaxDstStrLength--;
+1618         
+1619         
+1620         for (;;)
+1621         {
+1622             //  Hit end of buffer?
+1623             
+1624             if (dstCharIndex >= theMaxDstStrLength)
+1625             {
+1626                 theDstCStr[dstCharIndex++] = 0;
+1627                 
+1628                 goto EXITPOINT;
+1629             }
+1630             
+1631             //  End of source string?
+1632             
+1633             else if (theSrcCStr[srcCharIndex] == 0)
+1634             {
+1635                 theDstCStr[dstCharIndex++] = 0;
+1636                 
+1637                 goto EXITPOINT;
+1638             }
+1639             
+1640             //  Did we find a '%s'?
+1641             
+1642             else if (theInsertCStrs != nil && theInsertCStrs[theCStrIndex] != nil && theSrcCStr[srcCharIndex] == '%' && theSrcCStr[srcCharIndex + 1] == 's')
+1643             {
+1644                 //  Skip over the '%s'
+1645                 
+1646                 srcCharIndex += 2;
+1647                 
+1648                 
+1649                 //  Terminate the dest string and then concat the string
+1650                 
+1651                 theDstCStr[dstCharIndex] = 0;
+1652                 
+1653                 ConcatCStrToCStr(theInsertCStrs[theCStrIndex],theDstCStr,theMaxDstStrLength);
+1654                 
+1655                 dstCharIndex = CStrLength(theDstCStr);
+1656                 
+1657                 theCStrIndex++;
+1658             }
+1659             
+1660             //  Did we find a '%ld'?
+1661             
+1662             else if (theLongInts != nil && theSrcCStr[srcCharIndex] == '%' && theSrcCStr[srcCharIndex + 1] == 'l' && theSrcCStr[srcCharIndex + 2] == 'd')
+1663             {
+1664                 //  Skip over the '%ld'
+1665                 
+1666                 srcCharIndex += 3;
+1667                 
+1668                 
+1669                 //  Terminate the dest string and then concat the number
+1670                 
+1671                 theDstCStr[dstCharIndex] = 0;
+1672                 
+1673                 ConcatLongIntToCStr(theLongInts[theLongIntIndex],theDstCStr,theMaxDstStrLength);
+1674                 
+1675                 theLongIntIndex++;
+1676                 
+1677                 dstCharIndex = CStrLength(theDstCStr);
+1678             }
+1679             
+1680             else
+1681             {
+1682                 theDstCStr[dstCharIndex++] = theSrcCStr[srcCharIndex++];
+1683             }
+1684         }
+1685     }
+1686 
+1687 
+1688 
+1689 EXITPOINT:
+1690 
+1691     return;
+1692 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndInsert1LongIntIntoCStr (const char * theSrcCStr, const long theNum, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1558 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1559 {
+1560     CopyCStrAndInsertCStrLongIntIntoCStr(theSrcCStr,nil,theNum,theDstCStr,maxDstStrLength);
+1561 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndInsert2LongIntsIntoCStr (const char * theSrcCStr, const long long1, const long long2, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1564 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1565 {
+1566 const long  theLongInts[] = { long1,long2 };
+1567 
+1568     CopyCStrAndInsertCStrsLongIntsIntoCStr(theSrcCStr,nil,theLongInts,theDstCStr,maxDstStrLength);
+1569 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndInsert3LongIntsIntoCStr (const char * theSrcCStr, const long long1, const long long2, const long long3, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1572 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1573 {
+1574 const long  theLongInts[] = { long1,long2,long3 };
+1575 
+1576     CopyCStrAndInsertCStrsLongIntsIntoCStr(theSrcCStr,nil,theLongInts,theDstCStr,maxDstStrLength);
+1577 }
+.fi
+.SS "\fBvoid\fP CopyCStrAndInsertCStrLongIntIntoCStr (const char * theSrcCStr, const char * theInsertCStr, const long theNum, char * theDstCStr, const int maxDstStrLength)"
+
+.PP
+Definition at line 1589 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1590 {
+1591 const char  *theCStrs[2] = { theInsertCStr,nil };
+1592 const long  theLongInts[1] = { theNum };
+1593 
+1594     CopyCStrAndInsertCStrsLongIntsIntoCStr(theSrcCStr,theCStrs,theLongInts,theDstCStr,maxDstStrLength);
+1595 }
+.fi
+.SS "OSErr CopyCStrAndInsertCStrLongIntIntoHandle (const char * theSrcCStr, const char * theInsertCStr, const long theNum, Handle * theHandle)"
+
+.PP
+Definition at line 1698 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1699 {
+1700 OSErr   errCode;
+1701 long    byteCount;
+1702 
+1703     
+1704     if (theHandle != nil)
+1705     {
+1706         byteCount = CStrLength(theSrcCStr) + CStrLength(theInsertCStr) + 32;
+1707         
+1708         *theHandle = NewHandle(byteCount);
+1709         
+1710         if (*theHandle == nil)
+1711         {
+1712             SetErrorMessageAndLongIntAndBail("CopyCStrAndInsertCStrLongIntIntoHandle: Can't allocate Handle, MemError() = ",MemError());
+1713         }
+1714         
+1715         
+1716         HLock(*theHandle);
+1717         
+1718         CopyCStrAndInsertCStrLongIntIntoCStr(theSrcCStr,theInsertCStr,theNum,**theHandle,byteCount);
+1719         
+1720         HUnlock(*theHandle);
+1721     }
+1722     
+1723     errCode = noErr;
+1724     
+1725     
+1726 EXITPOINT:
+1727 
+1728     return(errCode);
+1729 }
+.fi
+.SS "OSErr CopyIndexedWordToCStr (char * theSrcCStr, int whichWord, char * theDstCStr, int maxDstCStrLength)"
+
+.PP
+Definition at line 1735 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1736 {
+1737 OSErr       errCode;
+1738 char        *srcCharPtr,*dstCharPtr;
+1739 int         wordCount;
+1740 int         byteCount;
+1741 
+1742 
+1743     if (theSrcCStr == nil)
+1744     {
+1745         SetErrorMessageAndBail(("CopyIndexedWordToCStr: Bad parameter, theSrcCStr == nil"));
+1746     }
+1747     
+1748     if (theDstCStr == nil)
+1749     {
+1750         SetErrorMessageAndBail(("CopyIndexedWordToCStr: Bad parameter, theDstCStr == nil"));
+1751     }
+1752     
+1753     if (whichWord < 0)
+1754     {
+1755         SetErrorMessageAndBail(("CopyIndexedWordToCStr: Bad parameter, whichWord < 0"));
+1756     }
+1757     
+1758     if (maxDstCStrLength <= 0)
+1759     {
+1760         SetErrorMessageAndBail(("CopyIndexedWordToCStr: Bad parameter, maxDstCStrLength <= 0"));
+1761     }
+1762 
+1763     
+1764     *theDstCStr = '\0';
+1765     
+1766     srcCharPtr = theSrcCStr;
+1767 
+1768     while (*srcCharPtr == ' ' || *srcCharPtr == '\t')
+1769     {
+1770         srcCharPtr++;
+1771     }
+1772     
+1773 
+1774     for (wordCount = 0;wordCount < whichWord;wordCount++)
+1775     {
+1776         while (*srcCharPtr != ' ' && *srcCharPtr != '\t' && *srcCharPtr != '\r' && *srcCharPtr != '\n' && *srcCharPtr != '\0')
+1777         {
+1778             srcCharPtr++;
+1779         }
+1780         
+1781         if (*srcCharPtr == '\r' || *srcCharPtr == '\n' || *srcCharPtr == '\0')
+1782         {
+1783             errCode = noErr;
+1784             
+1785             goto EXITPOINT;
+1786         }
+1787 
+1788         while (*srcCharPtr == ' ' || *srcCharPtr == '\t')
+1789         {
+1790             srcCharPtr++;
+1791         }
+1792         
+1793         if (*srcCharPtr == '\r' || *srcCharPtr == '\n' || *srcCharPtr == '\0')
+1794         {
+1795             errCode = noErr;
+1796             
+1797             goto EXITPOINT;
+1798         }
+1799     }
+1800 
+1801 
+1802     dstCharPtr = theDstCStr;
+1803     byteCount = 0;
+1804     
+1805     
+1806     for(;;)
+1807     {
+1808         if (byteCount >= maxDstCStrLength - 1 || *srcCharPtr == '\0' || *srcCharPtr == ' ' || *srcCharPtr == '\t' || *srcCharPtr == '\r' || *srcCharPtr == '\n')
+1809         {
+1810             *dstCharPtr = '\0';
+1811             break;
+1812         }
+1813         
+1814         *dstCharPtr++ = *srcCharPtr++;
+1815         
+1816         byteCount++;
+1817     }
+1818 
+1819 
+1820     errCode = noErr;
+1821 
+1822 
+1823 EXITPOINT:
+1824 
+1825     return(errCode);
+1826 }
+.fi
+.SS "OSErr CopyIndexedWordToNewHandle (char * theSrcCStr, int whichWord, Handle * outTheHandle)"
+
+.PP
+Definition at line 1832 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1833 {
+1834 OSErr       errCode;
+1835 char        *srcCharPtr;
+1836 int         wordCount;
+1837 int         byteCount;
+1838 
+1839 
+1840     if (theSrcCStr == nil)
+1841     {
+1842         SetErrorMessageAndBail(("CopyIndexedWordToNewHandle: Bad parameter, theSrcCStr == nil"));
+1843     }
+1844     
+1845     if (outTheHandle == nil)
+1846     {
+1847         SetErrorMessageAndBail(("CopyIndexedWordToNewHandle: Bad parameter, outTheHandle == nil"));
+1848     }
+1849     
+1850     if (whichWord < 0)
+1851     {
+1852         SetErrorMessageAndBail(("CopyIndexedWordToNewHandle: Bad parameter, whichWord < 0"));
+1853     }
+1854 
+1855     
+1856     *outTheHandle = nil;
+1857     
+1858 
+1859     srcCharPtr = theSrcCStr;
+1860 
+1861     while (*srcCharPtr == ' ' || *srcCharPtr == '\t')
+1862     {
+1863         srcCharPtr++;
+1864     }
+1865     
+1866 
+1867     for (wordCount = 0;wordCount < whichWord;wordCount++)
+1868     {
+1869         while (*srcCharPtr != ' ' && *srcCharPtr != '\t' && *srcCharPtr != '\r' && *srcCharPtr != '\n' && *srcCharPtr != '\0')
+1870         {
+1871             srcCharPtr++;
+1872         }
+1873         
+1874         if (*srcCharPtr == '\r' || *srcCharPtr == '\n' || *srcCharPtr == '\0')
+1875         {
+1876             break;
+1877         }
+1878 
+1879         while (*srcCharPtr == ' ' || *srcCharPtr == '\t')
+1880         {
+1881             srcCharPtr++;
+1882         }
+1883         
+1884         if (*srcCharPtr == '\r' || *srcCharPtr == '\n' || *srcCharPtr == '\0')
+1885         {
+1886             break;
+1887         }
+1888     }
+1889 
+1890 
+1891     for (byteCount = 0;;byteCount++)
+1892     {
+1893         if (srcCharPtr[byteCount] == ' ' || srcCharPtr[byteCount] == '\t' || srcCharPtr[byteCount] == '\r' || srcCharPtr[byteCount] == '\n' || srcCharPtr[byteCount] == '\0')
+1894         {
+1895             break;
+1896         }
+1897     }
+1898 
+1899     
+1900     *outTheHandle = NewHandle(byteCount + 1);
+1901     
+1902     if (*outTheHandle == nil)
+1903     {
+1904         SetErrorMessageAndLongIntAndBail("CopyIndexedWordToNewHandle: Can't allocate Handle, MemError() = ",MemError());
+1905     }
+1906     
+1907     
+1908     ::BlockMove(srcCharPtr,**outTheHandle,byteCount);
+1909     
+1910     (**outTheHandle)[byteCount] = '\0';
+1911 
+1912     errCode = noErr;
+1913 
+1914 
+1915 EXITPOINT:
+1916 
+1917     return(errCode);
+1918 }
+.fi
+.SS "OSErr CopyIndexedLineToCStr (const char * theSrcCStr, int inWhichLine, int * lineEndIndex, Boolean * gotLastLine, char * theDstCStr, const int maxDstCStrLength)"
+
+.PP
+Definition at line 1922 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+1923 {
+1924 OSErr       errCode;
+1925 int         theCurrentLine;
+1926 int         theCurrentLineOffset;
+1927 int         theEOSOffset;
+1928 
+1929 
+1930     if (theSrcCStr == nil)
+1931     {
+1932         SetErrorMessageAndBail(("CopyIndexedLineToCStr: Bad parameter, theSrcCStr == nil"));
+1933     }
+1934     
+1935     if (theDstCStr == nil)
+1936     {
+1937         SetErrorMessageAndBail(("CopyIndexedLineToCStr: Bad parameter, theDstCStr == nil"));
+1938     }
+1939     
+1940     if (inWhichLine < 0)
+1941     {
+1942         SetErrorMessageAndBail(("CopyIndexedLineToCStr: Bad parameter, inWhichLine < 0"));
+1943     }
+1944     
+1945     if (maxDstCStrLength <= 0)
+1946     {
+1947         SetErrorMessageAndBail(("CopyIndexedLineToCStr: Bad parameter, maxDstCStrLength <= 0"));
+1948     }
+1949     
+1950     
+1951     if (gotLastLine != nil)
+1952     {
+1953         *gotLastLine = false;
+1954     }
+1955 
+1956     
+1957     *theDstCStr = 0;
+1958     
+1959     theCurrentLineOffset = 0;
+1960     
+1961     theCurrentLine = 0;
+1962     
+1963     
+1964     while (theCurrentLine < inWhichLine)
+1965     {
+1966         while (theSrcCStr[theCurrentLineOffset] != '\r' && theSrcCStr[theCurrentLineOffset] != 0)
+1967         {
+1968             theCurrentLineOffset++;
+1969         }
+1970         
+1971         if (theSrcCStr[theCurrentLineOffset] == 0)
+1972         {
+1973             break;
+1974         }
+1975         
+1976         theCurrentLineOffset++;
+1977         theCurrentLine++;
+1978     }
+1979         
+1980     if (theSrcCStr[theCurrentLineOffset] == 0)
+1981     {
+1982         SetErrorMessageAndLongIntAndBail("CopyIndexedLineToCStr: Too few lines in source text, can't get line ",inWhichLine);
+1983     }
+1984 
+1985 
+1986     theEOSOffset = FindCharOffsetInCStr('\r',theSrcCStr + theCurrentLineOffset);
+1987     
+1988     if (theEOSOffset >= 0)
+1989     {
+1990         CopyCSubstrToCStr(theSrcCStr + theCurrentLineOffset,theEOSOffset,theDstCStr,maxDstCStrLength);
+1991         
+1992         if (gotLastLine != nil)
+1993         {
+1994             *gotLastLine = false;
+1995         }
+1996     
+1997         if (lineEndIndex != nil)
+1998         {
+1999             *lineEndIndex = theEOSOffset;
+2000         }
+2001     }
+2002     
+2003     else
+2004     {
+2005         theEOSOffset = CStrLength(theSrcCStr + theCurrentLineOffset);
+2006 
+2007         CopyCSubstrToCStr(theSrcCStr + theCurrentLineOffset,theEOSOffset,theDstCStr,maxDstCStrLength);
+2008         
+2009         if (gotLastLine != nil)
+2010         {
+2011             *gotLastLine = true;
+2012         }
+2013     
+2014         if (lineEndIndex != nil)
+2015         {
+2016             *lineEndIndex = theEOSOffset;
+2017         }
+2018     }
+2019     
+2020 
+2021     errCode = noErr;
+2022 
+2023 
+2024 EXITPOINT:
+2025 
+2026     return(errCode);
+2027 }
+.fi
+.SS "OSErr CopyIndexedLineToNewHandle (const char * theSrcCStr, int inWhichLine, Handle * outNewHandle)"
+
+.PP
+Definition at line 2031 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2032 {
+2033 OSErr       errCode;
+2034 int         theCurrentLine;
+2035 int         theCurrentLineOffset;
+2036 int         byteCount;
+2037 
+2038 
+2039     SetErrorMessageAndBailIfNil(theSrcCStr,"CopyIndexedLineToNewHandle: Bad parameter, theSrcCStr == nil");
+2040     SetErrorMessageAndBailIfNil(outNewHandle,"CopyIndexedLineToNewHandle: Bad parameter, outNewHandle == nil");
+2041     
+2042     if (inWhichLine < 0)
+2043     {
+2044         SetErrorMessageAndBail(("CopyIndexedLineToNewHandle: Bad parameter, inWhichLine < 0"));
+2045     }
+2046     
+2047 
+2048     theCurrentLineOffset = 0;
+2049     
+2050     theCurrentLine = 0;
+2051     
+2052     
+2053     while (theCurrentLine < inWhichLine)
+2054     {
+2055         while (theSrcCStr[theCurrentLineOffset] != '\r' && theSrcCStr[theCurrentLineOffset] != '\0')
+2056         {
+2057             theCurrentLineOffset++;
+2058         }
+2059         
+2060         if (theSrcCStr[theCurrentLineOffset] == '\0')
+2061         {
+2062             break;
+2063         }
+2064         
+2065         theCurrentLineOffset++;
+2066         theCurrentLine++;
+2067     }
+2068         
+2069     if (theSrcCStr[theCurrentLineOffset] == '\0')
+2070     {
+2071         SetErrorMessageAndLongIntAndBail("CopyIndexedLineToNewHandle: Too few lines in source text, can't get line #",inWhichLine);
+2072     }
+2073 
+2074     
+2075     byteCount = 0;
+2076     
+2077     while (theSrcCStr[theCurrentLineOffset + byteCount] != '\r' && theSrcCStr[theCurrentLineOffset + byteCount] != '\0')
+2078     {
+2079         byteCount++;
+2080     }
+2081         
+2082     
+2083     *outNewHandle = NewHandle(byteCount + 1);
+2084     
+2085     if (*outNewHandle == nil)
+2086     {
+2087         SetErrorMessageAndLongIntAndBail("CopyIndexedLineToNewHandle: Can't allocate Handle, MemError() = ",MemError());
+2088     }
+2089     
+2090     ::BlockMove(theSrcCStr + theCurrentLineOffset,**outNewHandle,byteCount);
+2091     
+2092     (**outNewHandle)[byteCount] = '\0';
+2093 
+2094     errCode = noErr;
+2095 
+2096 
+2097 EXITPOINT:
+2098 
+2099     return(errCode);
+2100 }
+.fi
+.SS "OSErr ExtractIntFromCStr (const char * theSrcCStr, int * outInt, Boolean skipLeadingSpaces = \fCtrue\fP)"
+
+.PP
+Definition at line 2149 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2150 {
+2151 OSErr       errCode;
+2152 int         theCharIndex;
+2153 
+2154 
+2155     if (theSrcCStr == nil)
+2156     {
+2157         SetErrorMessageAndBail(("ExtractIntFromCStr: Bad parameter, theSrcCStr == nil"));
+2158     }
+2159     
+2160     if (outInt == nil)
+2161     {
+2162         SetErrorMessageAndBail(("ExtractIntFromCStr: Bad parameter, outInt == nil"));
+2163     }   
+2164 
+2165     
+2166     *outInt = 0;
+2167     
+2168     theCharIndex = 0;
+2169     
+2170     if (skipLeadingSpaces == true)
+2171     {
+2172         while (theSrcCStr[theCharIndex] == ' ')
+2173         {
+2174             theCharIndex++;
+2175         }
+2176     }
+2177     
+2178     if (theSrcCStr[theCharIndex] < '0' || theSrcCStr[theCharIndex] > '9')
+2179     {
+2180         SetErrorMessageAndBail(("ExtractIntFromCStr: Bad parameter, theSrcCStr contains a bogus numeric representation"));
+2181     }
+2182 
+2183 
+2184     while (theSrcCStr[theCharIndex] >= '0' && theSrcCStr[theCharIndex] <= '9')
+2185     {
+2186         *outInt = (*outInt * 10) + (theSrcCStr[theCharIndex] - '0');
+2187         
+2188         theCharIndex++;
+2189     }
+2190     
+2191 
+2192     errCode = noErr;
+2193 
+2194 
+2195 EXITPOINT:
+2196 
+2197     return(errCode);
+2198 }
+.fi
+.SS "OSErr ExtractIntFromPStr (const unsigned char * theSrcPStr, int * outInt, Boolean skipLeadingSpaces = \fCtrue\fP)"
+
+.PP
+Definition at line 2202 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2203 {
+2204 OSErr       errCode;
+2205 char        theCStr[256];
+2206 
+2207 
+2208     if (theSrcPStr == nil)
+2209     {
+2210         SetErrorMessageAndBail(("ExtractIntFromPStr: Bad parameter, theSrcPStr == nil"));
+2211     }
+2212     
+2213     if (outInt == nil)
+2214     {
+2215         SetErrorMessageAndBail(("ExtractIntFromPStr: Bad parameter, outInt == nil"));
+2216     }
+2217     
+2218     
+2219     CopyPStrToCStr(theSrcPStr,theCStr,sizeof(theCStr));
+2220     
+2221     
+2222     errCode = ExtractIntFromCStr(theCStr,outInt,skipLeadingSpaces);
+2223 
+2224 
+2225 EXITPOINT:
+2226 
+2227     return(errCode);
+2228 }
+.fi
+.SS "\fBvoid\fP ConvertCStrToUpperCase (char * theSrcCStr)"
+
+.PP
+Definition at line 2293 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2294 {
+2295 char        *theCharPtr;
+2296 
+2297 
+2298     if (theSrcCStr != nil)
+2299     {
+2300         theCharPtr = theSrcCStr;
+2301         
+2302         while (*theCharPtr != 0)
+2303         {
+2304             if (*theCharPtr >= 'a' && *theCharPtr <= 'z')
+2305             {
+2306                 *theCharPtr = *theCharPtr - 'a' + 'A';
+2307             }
+2308             
+2309             theCharPtr++;
+2310         }
+2311     }
+2312 }
+.fi
+.SS "int CountOccurencesOfCharInCStr (const char inChar, const char * inSrcCStr)"
+
+.PP
+Definition at line 2232 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2233 {
+2234 int     theSrcCharIndex;
+2235 int     numOccurrences = -1;
+2236 
+2237 
+2238     if (inSrcCStr != nil && inChar != '\0')
+2239     {
+2240         numOccurrences = 0;
+2241         
+2242         for (theSrcCharIndex = 0;inSrcCStr[theSrcCharIndex] != '\0';theSrcCharIndex++)
+2243         {
+2244             if (inSrcCStr[theSrcCharIndex] == inChar)
+2245             {
+2246                 numOccurrences++;
+2247             }
+2248         }
+2249     }
+2250     
+2251     return(numOccurrences);
+2252 }
+.fi
+.SS "int CountWordsInCStr (const char * inSrcCStr)"
+
+.PP
+Definition at line 2255 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2256 {
+2257 int     numWords = -1;
+2258 
+2259 
+2260     if (inSrcCStr != nil)
+2261     {
+2262         numWords = 0;
+2263         
+2264         //  Skip lead spaces
+2265         
+2266         while (*inSrcCStr == ' ')
+2267         {
+2268             inSrcCStr++;
+2269         }
+2270 
+2271         while (*inSrcCStr != '\0')
+2272         {
+2273             numWords++;
+2274 
+2275             while (*inSrcCStr != ' ' && *inSrcCStr != '\0')
+2276             {
+2277                 inSrcCStr++;
+2278             }
+2279             
+2280             while (*inSrcCStr == ' ')
+2281             {
+2282                 inSrcCStr++;
+2283             }
+2284         }
+2285     }
+2286     
+2287     return(numWords);
+2288 }
+.fi
+.SS "OSErr CountDigits (const char * inCStr, int * outNumIntegerDigits, int * outNumFractDigits)"
+
+.PP
+Definition at line 2105 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2106 {
+2107 OSErr   errCode = noErr;
+2108 int     numIntDigits = 0;
+2109 int     numFractDigits = 0;
+2110 int     digitIndex = 0;
+2111 
+2112     
+2113     SetErrorMessageAndBailIfNil(inCStr,"CountDigits: Bad parameter, theSrcCStr == nil");
+2114     SetErrorMessageAndBailIfNil(outNumIntegerDigits,"CountDigits: Bad parameter, outNumIntegerDigits == nil");
+2115     SetErrorMessageAndBailIfNil(outNumFractDigits,"CountDigits: Bad parameter, outNumFractDigits == nil");
+2116     
+2117     digitIndex = 0;
+2118     
+2119     while (inCStr[digitIndex] >= '0' && inCStr[digitIndex] <= '9')
+2120     {
+2121         digitIndex++;
+2122         numIntDigits++;
+2123     }
+2124     
+2125     if (inCStr[digitIndex] == '\&.')
+2126     {
+2127         digitIndex++;
+2128         
+2129         while (inCStr[digitIndex] >= '0' && inCStr[digitIndex] <= '9')
+2130         {
+2131             digitIndex++;
+2132             numFractDigits++;
+2133         }
+2134     }
+2135     
+2136     *outNumIntegerDigits = numIntDigits;
+2137     
+2138     *outNumFractDigits = numFractDigits;
+2139     
+2140     errCode = noErr;
+2141     
+2142 EXITPOINT:
+2143 
+2144     return(errCode);
+2145 }
+.fi
+.SS "\fBvoid\fP ExtractCStrItemFromCStr (const char * inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean * foundItem, char * outDstCharPtr, const int inDstCharPtrMaxLength, const Boolean inTreatMultipleDelimsAsSingleDelim = \fCfalse\fP)"
+
+.PP
+Definition at line 2320 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2321 {
+2322 int     theItem;
+2323 int     theSrcCharIndex;
+2324 int     theDstCharIndex;
+2325 
+2326 
+2327     if (foundItem != nil)
+2328     {
+2329         *foundItem = false;
+2330     }
+2331     
+2332     
+2333     if (outDstCharPtr != nil && inDstCharPtrMaxLength > 0 && inItemNumber >= 0 && inItemDelimiter != 0)
+2334     {
+2335         *outDstCharPtr = 0;
+2336         
+2337 
+2338         theSrcCharIndex = 0;
+2339         
+2340         for (theItem = 0;theItem < inItemNumber;theItem++)
+2341         {
+2342             while (inSrcCStr[theSrcCharIndex] != inItemDelimiter && inSrcCStr[theSrcCharIndex] != '\0')
+2343             {
+2344                 theSrcCharIndex++;
+2345             }
+2346             
+2347             if (inSrcCStr[theSrcCharIndex] == inItemDelimiter)
+2348             {
+2349                 theSrcCharIndex++;
+2350                 
+2351                 if (inTreatMultipleDelimsAsSingleDelim)
+2352                 {
+2353                     while (inSrcCStr[theSrcCharIndex] == inItemDelimiter)
+2354                     {
+2355                         theSrcCharIndex++;
+2356                     }
+2357                 }
+2358             }
+2359             
+2360             
+2361             if (inSrcCStr[theSrcCharIndex] == '\0')
+2362             {
+2363                 goto EXITPOINT;
+2364             }
+2365         }
+2366         
+2367 
+2368         if (foundItem != nil)
+2369         {
+2370             *foundItem = true;
+2371         }
+2372         
+2373         
+2374         theDstCharIndex = 0;
+2375         
+2376         for (;;)
+2377         {
+2378             if (inSrcCStr[theSrcCharIndex] == 0 || inSrcCStr[theSrcCharIndex] == inItemDelimiter || theDstCharIndex >= inDstCharPtrMaxLength - 1)
+2379             {
+2380                 outDstCharPtr[theDstCharIndex] = 0;
+2381                 
+2382                 break;
+2383             }
+2384             
+2385             outDstCharPtr[theDstCharIndex++] = inSrcCStr[theSrcCharIndex++];
+2386         }
+2387     }
+2388     
+2389     
+2390 EXITPOINT:
+2391 
+2392     return;
+2393 }
+.fi
+.SS "OSErr ExtractCStrItemFromCStrIntoNewHandle (const char * inSrcCStr, const char inItemDelimiter, const int inItemNumber, Boolean * foundItem, Handle * outNewHandle, const Boolean inTreatMultipleDelimsAsSingleDelim = \fCfalse\fP)"
+
+.PP
+Definition at line 2397 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2398 {
+2399 OSErr   errCode;
+2400 int     theItem;
+2401 int     theSrcCharIndex;
+2402 int     theItemLength;
+2403 
+2404 
+2405     if (inSrcCStr == nil)
+2406     {
+2407         SetErrorMessage("ExtractCStrItemFromCStrIntoNewHandle: Bad parameter, inSrcCStr == nil");
+2408         errCode = kGenericError;
+2409         goto EXITPOINT;
+2410     }
+2411     
+2412     if (outNewHandle == nil)
+2413     {
+2414         SetErrorMessage("ExtractCStrItemFromCStrIntoNewHandle: Bad parameter, outNewHandle == nil");
+2415         errCode = kGenericError;
+2416         goto EXITPOINT;
+2417     }
+2418     
+2419     if (foundItem == nil)
+2420     {
+2421         SetErrorMessage("ExtractCStrItemFromCStrIntoNewHandle: Bad parameter, foundItem == nil");
+2422         errCode = kGenericError;
+2423         goto EXITPOINT;
+2424     }
+2425     
+2426     if (inItemNumber < 0)
+2427     {
+2428         SetErrorMessage("ExtractCStrItemFromCStrIntoNewHandle: Bad parameter, inItemNumber < 0");
+2429         errCode = kGenericError;
+2430         goto EXITPOINT;
+2431     }
+2432     
+2433     if (inItemDelimiter == 0)
+2434     {
+2435         SetErrorMessage("ExtractCStrItemFromCStrIntoNewHandle: Bad parameter, inItemDelimiter == 0");
+2436         errCode = kGenericError;
+2437         goto EXITPOINT;
+2438     }
+2439 
+2440 
+2441     *foundItem = false;
+2442     
+2443     theSrcCharIndex = 0;
+2444     
+2445     for (theItem = 0;theItem < inItemNumber;theItem++)
+2446     {
+2447         while (inSrcCStr[theSrcCharIndex] != inItemDelimiter && inSrcCStr[theSrcCharIndex] != '\0')
+2448         {
+2449             theSrcCharIndex++;
+2450         }
+2451         
+2452         if (inSrcCStr[theSrcCharIndex] == inItemDelimiter)
+2453         {
+2454             theSrcCharIndex++;
+2455             
+2456             if (inTreatMultipleDelimsAsSingleDelim)
+2457             {
+2458                 while (inSrcCStr[theSrcCharIndex] == inItemDelimiter)
+2459                 {
+2460                     theSrcCharIndex++;
+2461                 }
+2462             }
+2463         }
+2464         
+2465         
+2466         if (inSrcCStr[theSrcCharIndex] == '\0')
+2467         {
+2468             errCode = noErr;
+2469             
+2470             goto EXITPOINT;
+2471         }
+2472     }
+2473     
+2474 
+2475     *foundItem = true;
+2476     
+2477     
+2478     for (theItemLength = 0;;theItemLength++)
+2479     {
+2480         if (inSrcCStr[theSrcCharIndex + theItemLength] == 0 || inSrcCStr[theSrcCharIndex + theItemLength] == inItemDelimiter)
+2481         {
+2482             break;
+2483         }
+2484     }
+2485     
+2486 
+2487     *outNewHandle = NewHandle(theItemLength + 1);
+2488     
+2489     if (*outNewHandle == nil)
+2490     {
+2491         SetErrorMessageAndLongIntAndBail("ExtractCStrItemFromCStrIntoNewHandle: Can't allocate Handle, MemError() = ",MemError());
+2492     }
+2493     
+2494     
+2495     BlockMove(inSrcCStr + theSrcCharIndex,**outNewHandle,theItemLength);
+2496     
+2497     (**outNewHandle)[theItemLength] = 0;
+2498     
+2499     errCode = noErr;
+2500     
+2501     
+2502 EXITPOINT:
+2503 
+2504     return(errCode);
+2505 }
+.fi
+.SS "OSErr ExtractFloatFromCStr (const char * inCString, extended80 * outFloat)"
+
+.PP
+Definition at line 2512 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2513 {
+2514 OSErr               errCode;
+2515 Str255              theStr255;
+2516 Handle              theNumberPartsTableHandle = nil;
+2517 long                theNumberPartsOffset,theNumberPartsLength;
+2518 FormatResultType    theFormatResultType;
+2519 NumberParts         theNumberPartsTable;
+2520 NumFormatStringRec  theNumFormatStringRec;
+2521 
+2522 
+2523     if (inCString == nil)
+2524     {
+2525         SetErrorMessage("ExtractFloatFromCStr: Bad parameter, inCString == nil");
+2526         errCode = kGenericError;
+2527         goto EXITPOINT;
+2528     }
+2529 
+2530     if (outFloat == nil)
+2531     {
+2532         SetErrorMessage("ExtractFloatFromCStr: Bad parameter, outFloat == nil");
+2533         errCode = kGenericError;
+2534         goto EXITPOINT;
+2535     }
+2536     
+2537     
+2538 //  GetIntlResourceTable(smRoman,smNumberPartsTable,&theNumberPartsTableHandle,&theNumberPartsOffset,&theNumberPartsLength);
+2539 
+2540     GetIntlResourceTable(GetScriptManagerVariable(smSysScript),smNumberPartsTable,&theNumberPartsTableHandle,&theNumberPartsOffset,&theNumberPartsLength);  
+2541     
+2542     if (theNumberPartsTableHandle == nil)
+2543     {
+2544         SetErrorMessage("ExtractFloatFromCStr: Can't get number parts table for converting string representations to/from numeric representations");
+2545         errCode = kGenericError;
+2546         goto EXITPOINT;
+2547     }
+2548     
+2549     if (theNumberPartsLength > sizeof(theNumberPartsTable))
+2550     {
+2551         SetErrorMessage("ExtractFloatFromCStr: Number parts table has bad length");
+2552         errCode = kGenericError;
+2553         goto EXITPOINT;
+2554     }
+2555     
+2556 
+2557     BlockMove(*theNumberPartsTableHandle + theNumberPartsOffset,&theNumberPartsTable,theNumberPartsLength);
+2558     
+2559     
+2560     theFormatResultType = (FormatResultType) StringToFormatRec(kNumberFormatString,&theNumberPartsTable,&theNumFormatStringRec);
+2561     
+2562     if (theFormatResultType != fFormatOK)
+2563     {
+2564         SetErrorMessage("ExtractFloatFromCStr: StringToFormatRec() != fFormatOK");
+2565         errCode = kGenericError;
+2566         goto EXITPOINT;
+2567     }
+2568 
+2569     
+2570     CopyCStrToPStr(inCString,theStr255,sizeof(theStr255));
+2571 
+2572 
+2573     theFormatResultType = (FormatResultType) StringToExtended(theStr255,&theNumFormatStringRec,&theNumberPartsTable,outFloat);
+2574     
+2575     if (theFormatResultType != fFormatOK && theFormatResultType != fBestGuess)
+2576     {
+2577         SetErrorMessageAndLongIntAndBail("ExtractFloatFromCStr: StringToExtended() = ",theFormatResultType);
+2578     }
+2579 
+2580     
+2581     errCode = noErr;
+2582     
+2583 
+2584 EXITPOINT:
+2585     
+2586     return(errCode);
+2587 }
+.fi
+.SS "OSErr CopyFloatToCStr (const extended80 * theFloat, char * theCStr, const int maxCStrLength, const int inMaxNumIntDigits = \fC\-1\fP, const int inMaxNumFractDigits = \fC\-1\fP)"
+
+.PP
+Definition at line 2591 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2592 {
+2593 OSErr               errCode;
+2594 Str255              theStr255;
+2595 Handle              theNumberPartsTableHandle = nil;
+2596 long                theNumberPartsOffset,theNumberPartsLength;
+2597 FormatResultType    theFormatResultType;
+2598 NumberParts         theNumberPartsTable;
+2599 NumFormatStringRec  theNumFormatStringRec;
+2600 
+2601 
+2602     if (theCStr == nil)
+2603     {
+2604         SetErrorMessage("CopyFloatToCStr: Bad parameter, theCStr == nil");
+2605         errCode = kGenericError;
+2606         goto EXITPOINT;
+2607     }
+2608 
+2609     if (theFloat == nil)
+2610     {
+2611         SetErrorMessage("CopyFloatToCStr: Bad parameter, theFloat == nil");
+2612         errCode = kGenericError;
+2613         goto EXITPOINT;
+2614     }
+2615     
+2616 
+2617 //  GetIntlResourceTable(smRoman,smNumberPartsTable,&theNumberPartsTableHandle,&theNumberPartsOffset,&theNumberPartsLength);
+2618 
+2619     GetIntlResourceTable(GetScriptManagerVariable(smSysScript),smNumberPartsTable,&theNumberPartsTableHandle,&theNumberPartsOffset,&theNumberPartsLength);  
+2620     
+2621     if (theNumberPartsTableHandle == nil)
+2622     {
+2623         SetErrorMessage("CopyFloatToCStr: Can't get number parts table for converting string representations to/from numeric representations");
+2624         errCode = kGenericError;
+2625         goto EXITPOINT;
+2626     }
+2627     
+2628     if (theNumberPartsLength > sizeof(theNumberPartsTable))
+2629     {
+2630         SetErrorMessage("CopyFloatToCStr: Number parts table has bad length");
+2631         errCode = kGenericError;
+2632         goto EXITPOINT;
+2633     }
+2634     
+2635     
+2636     BlockMove(*theNumberPartsTableHandle + theNumberPartsOffset,&theNumberPartsTable,theNumberPartsLength);
+2637     
+2638     
+2639     if (inMaxNumIntDigits >= 0 || inMaxNumFractDigits >= 0)
+2640     {
+2641     char    numberFormat[64];
+2642     int     numberFormatLength = 0;
+2643     
+2644         for (int i = 0;i < inMaxNumIntDigits && numberFormatLength < sizeof(numberFormat) - 1;i++)
+2645         {
+2646             numberFormat[numberFormatLength++] = '0';
+2647         }
+2648         
+2649         if (inMaxNumFractDigits > 0 && numberFormatLength < sizeof(numberFormat) - 1)
+2650         {
+2651             numberFormat[numberFormatLength++] = '\&.';
+2652             
+2653             for (int i = 0;i < inMaxNumFractDigits && numberFormatLength < sizeof(numberFormat) - 1;i++)
+2654             {
+2655                 numberFormat[numberFormatLength++] = '0';
+2656             }
+2657         }
+2658 
+2659         
+2660         if (numberFormatLength < sizeof(numberFormat) - 1)
+2661         {
+2662             numberFormat[numberFormatLength++] = ';';
+2663         }
+2664         
+2665         if (numberFormatLength < sizeof(numberFormat) - 1)
+2666         {
+2667             numberFormat[numberFormatLength++] = '-';
+2668         }
+2669         
+2670 
+2671         for (int i = 0;i < inMaxNumIntDigits && numberFormatLength < sizeof(numberFormat) - 1;i++)
+2672         {
+2673             numberFormat[numberFormatLength++] = '0';
+2674         }
+2675         
+2676         if (inMaxNumFractDigits > 0 && numberFormatLength < sizeof(numberFormat) - 1)
+2677         {
+2678             numberFormat[numberFormatLength++] = '\&.';
+2679             
+2680             for (int i = 0;i < inMaxNumFractDigits && numberFormatLength < sizeof(numberFormat) - 1;i++)
+2681             {
+2682                 numberFormat[numberFormatLength++] = '0';
+2683             }
+2684         }
+2685         
+2686         numberFormat[numberFormatLength] = '\0';
+2687 
+2688 
+2689     Str255  tempStr255;
+2690     
+2691         CopyCStrToPStr(numberFormat,tempStr255,sizeof(tempStr255));
+2692         
+2693         theFormatResultType = (FormatResultType) StringToFormatRec(tempStr255,&theNumberPartsTable,&theNumFormatStringRec);
+2694     }
+2695     
+2696     else
+2697     {
+2698         theFormatResultType = (FormatResultType) StringToFormatRec(kNumberFormatString,&theNumberPartsTable,&theNumFormatStringRec);
+2699     }
+2700     
+2701     if (theFormatResultType != fFormatOK)
+2702     {
+2703         SetErrorMessage("CopyFloatToCStr: StringToFormatRec() != fFormatOK");
+2704         errCode = kGenericError;
+2705         goto EXITPOINT;
+2706     }
+2707 
+2708 
+2709     theFormatResultType = (FormatResultType) ExtendedToString(theFloat,&theNumFormatStringRec,&theNumberPartsTable,theStr255);
+2710     
+2711     if (theFormatResultType != fFormatOK)
+2712     {
+2713         SetErrorMessage("CopyFloatToCStr: ExtendedToString() != fFormatOK");
+2714         errCode = kGenericError;
+2715         goto EXITPOINT;
+2716     }
+2717 
+2718     
+2719     CopyPStrToCStr(theStr255,theCStr,maxCStrLength);
+2720     
+2721     errCode = noErr;
+2722     
+2723 
+2724 EXITPOINT:
+2725     
+2726     return(errCode);
+2727 }
+.fi
+.SS "\fBvoid\fP SkipWhiteSpace (char ** ioSrcCharPtr, const Boolean inStopAtEOL = \fCfalse\fP)"
+
+.PP
+Definition at line 2733 of file CPStringUtils\&.cpp\&.
+.PP
+.nf
+2734 {
+2735     if (ioSrcCharPtr != nil && *ioSrcCharPtr != nil)
+2736     {
+2737         if (inStopAtEOL)
+2738         {
+2739             while ((**ioSrcCharPtr == ' ' || **ioSrcCharPtr == '\t') && **ioSrcCharPtr != '\r' && **ioSrcCharPtr != '\n')
+2740             {
+2741                 *ioSrcCharPtr++;
+2742             }
+2743         }
+2744         
+2745         else
+2746         {
+2747             while (**ioSrcCharPtr == ' ' || **ioSrcCharPtr == '\t')
+2748             {
+2749                 *ioSrcCharPtr++;
+2750             }
+2751         }
+2752     }
+2753 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

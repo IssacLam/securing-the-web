@@ -1,0 +1,278 @@
+.TH "s2n-master/crypto/s2n_hmac.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_hmac.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/md5\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_hmac_digest_size\fP (\fBs2n_hmac_algorithm\fP alg)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_init\fP (struct \fBs2n_hmac_state\fP *state, \fBs2n_hmac_algorithm\fP alg, const \fBvoid\fP *key, uint32_t \fBklen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_update\fP (struct \fBs2n_hmac_state\fP *state, const \fBvoid\fP *in, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_digest\fP (struct \fBs2n_hmac_state\fP *state, \fBvoid\fP *out, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_digest_two_compression_rounds\fP (struct \fBs2n_hmac_state\fP *state, \fBvoid\fP *out, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_reset\fP (struct \fBs2n_hmac_state\fP *state)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_digest_verify\fP (const \fBvoid\fP *\fBa\fP, const \fBvoid\fP *b, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_hmac_copy\fP (struct \fBs2n_hmac_state\fP *to, struct \fBs2n_hmac_state\fP *from)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_hmac_digest_size (\fBs2n_hmac_algorithm\fP alg)"
+
+.PP
+Definition at line 28 of file s2n_hmac\&.c\&.
+.PP
+.nf
+29 {
+30     if (alg == S2N_HMAC_SSLv3_MD5) {
+31         alg = S2N_HMAC_MD5;
+32     }
+33     if (alg == S2N_HMAC_SSLv3_SHA1) {
+34         alg = S2N_HMAC_SHA1;
+35     }
+36 
+37     return s2n_hash_digest_size((s2n_hash_algorithm) alg);
+38 }
+.fi
+.SS "int s2n_hmac_init (struct \fBs2n_hmac_state\fP * state, \fBs2n_hmac_algorithm\fP alg, const \fBvoid\fP * key, uint32_t klen)"
+
+.PP
+Definition at line 84 of file s2n_hmac\&.c\&.
+.PP
+.nf
+85 {
+86     s2n_hash_algorithm hash_alg = S2N_HASH_NONE;
+87     state->currently_in_hash_block = 0;
+88     state->digest_size = 0;
+89     state->block_size = 64;
+90     state->hash_block_size = 64;
+91 
+92     switch (alg) {
+93     case S2N_HMAC_NONE:
+94         break;
+95     case S2N_HMAC_SSLv3_MD5:
+96         state->block_size = 48;
+97         /* Fall through \&.\&.\&. */
+98     case S2N_HMAC_MD5:
+99         hash_alg = S2N_HASH_MD5;
+100         state->digest_size = MD5_DIGEST_LENGTH;
+101         break;
+102     case S2N_HMAC_SSLv3_SHA1:
+103         state->block_size = 40;
+104         /* Fall through \&.\&.\&. */
+105     case S2N_HMAC_SHA1:
+106         hash_alg = S2N_HASH_SHA1;
+107         state->digest_size = SHA_DIGEST_LENGTH;
+108         break;
+109     case S2N_HMAC_SHA224:
+110         hash_alg = S2N_HASH_SHA224;
+111         state->digest_size = SHA224_DIGEST_LENGTH;
+112         break;
+113     case S2N_HMAC_SHA256:
+114         hash_alg = S2N_HASH_SHA256;
+115         state->digest_size = SHA256_DIGEST_LENGTH;
+116         break;
+117     case S2N_HMAC_SHA384:
+118         hash_alg = S2N_HASH_SHA384;
+119         state->digest_size = SHA384_DIGEST_LENGTH;
+120         state->block_size = 128;
+121         state->hash_block_size = 128;
+122         break;
+123     case S2N_HMAC_SHA512:
+124         hash_alg = S2N_HASH_SHA512;
+125         state->digest_size = SHA512_DIGEST_LENGTH;
+126         state->block_size = 128;
+127         state->hash_block_size = 128;
+128         break;
+129     default:
+130         S2N_ERROR(S2N_ERR_HMAC_INVALID_ALGORITHM);
+131     }
+132 
+133     gte_check(sizeof(state->xor_pad), state->block_size);
+134     gte_check(sizeof(state->digest_pad), state->digest_size);
+135 
+136     state->alg = alg;
+137 
+138     if (alg == S2N_HMAC_SSLv3_SHA1 || alg == S2N_HMAC_SSLv3_MD5) {
+139         return s2n_sslv3_mac_init(state, alg, key, klen);
+140     }
+141 
+142     GUARD(s2n_hash_init(&state->inner_just_key, hash_alg));
+143     GUARD(s2n_hash_init(&state->outer, hash_alg));
+144 
+145     uint32_t copied = klen;
+146     if (klen > state->block_size) {
+147         GUARD(s2n_hash_update(&state->outer, key, klen));
+148         GUARD(s2n_hash_digest(&state->outer, state->digest_pad, state->digest_size));
+149 
+150         memcpy_check(state->xor_pad, state->digest_pad, state->digest_size);
+151         copied = state->digest_size;
+152     } else {
+153         memcpy_check(state->xor_pad, key, klen);
+154     }
+155 
+156     for (int i = 0; i < copied; i++) {
+157         state->xor_pad[i] ^= 0x36;
+158     }
+159     for (int i = copied; i < state->block_size; i++) {
+160         state->xor_pad[i] = 0x36;
+161     }
+162 
+163     GUARD(s2n_hash_update(&state->inner_just_key, state->xor_pad, state->block_size));
+164 
+165     /* 0x36 xor 0x5c == 0x6a */
+166     for (int i = 0; i < state->block_size; i++) {
+167         state->xor_pad[i] ^= 0x6a;
+168     }
+169 
+170     return s2n_hmac_reset(state);
+171 }
+.fi
+.SS "int s2n_hmac_update (struct \fBs2n_hmac_state\fP * state, const \fBvoid\fP * in, uint32_t size)"
+
+.PP
+Definition at line 173 of file s2n_hmac\&.c\&.
+.PP
+.nf
+174 {
+175     /* Keep track of how much of the current hash block is full
+176      *
+177      * Why the 4294949760 constant in this code? 4294949760 is the highest 32-bit
+178      * value that is congruent to 0 modulo all of our HMAC block sizes, that is also
+179      * at least 16k smaller than 2^32\&. It therefore has no effect on the mathematical
+180      * result, and no valid record size can cause it to overflow\&.
+181      * 
+182      * The value was found with the following python code;
+183      * 
+184      * x = (2 ** 32) - (2 ** 14)
+185      * while True:
+186      *   if x % 40 | x % 48 | x % 64 | x % 128 == 0:
+187      *     break
+188      *   x -= 1
+189      * print x
+190      *
+191      * What it does do however is ensure that the mod operation takes a
+192      * constant number of instruction cycles, regardless of the size of the
+193      * input\&. On some platforms, including Intel, the operation can take a
+194      * smaller number of cycles if the input is "small"\&.
+195      */
+196     state->currently_in_hash_block += (4294949760 + size) % state->hash_block_size;
+197     state->currently_in_hash_block %= state->block_size;
+198 
+199     return s2n_hash_update(&state->inner, in, size);
+200 }
+.fi
+.SS "int s2n_hmac_digest (struct \fBs2n_hmac_state\fP * state, \fBvoid\fP * out, uint32_t size)"
+
+.PP
+Definition at line 202 of file s2n_hmac\&.c\&.
+.PP
+.nf
+203 {
+204     if (state->alg == S2N_HMAC_SSLv3_SHA1 || state->alg == S2N_HMAC_SSLv3_MD5) {
+205         return s2n_sslv3_mac_digest(state, out, size);
+206     }
+207 
+208     GUARD(s2n_hash_digest(&state->inner, state->digest_pad, state->digest_size));
+209     GUARD(s2n_hash_reset(&state->outer));
+210     GUARD(s2n_hash_update(&state->outer, state->xor_pad, state->block_size));
+211     GUARD(s2n_hash_update(&state->outer, state->digest_pad, state->digest_size));
+212 
+213     return s2n_hash_digest(&state->outer, out, size);
+214 }
+.fi
+.SS "int s2n_hmac_digest_two_compression_rounds (struct \fBs2n_hmac_state\fP * state, \fBvoid\fP * out, uint32_t size)"
+
+.PP
+Definition at line 216 of file s2n_hmac\&.c\&.
+.PP
+.nf
+217 {
+218     GUARD(s2n_hmac_digest(state, out, size));
+219 
+220     /* If there were 9 or more bytes of space left in the current hash block
+221      * then the serialized length, plus an 0x80 byte, will have fit in that block\&. 
+222      * If there were fewer than 9 then adding the length will have caused an extra 
+223      * compression block round\&. This digest function always does two compression rounds,
+224      * even if there is no need for the second\&.
+225      */
+226     if (state->currently_in_hash_block > (state->hash_block_size - 9)) {
+227         return 0;
+228     }
+229 
+230     return s2n_hash_update(&state->inner, state->xor_pad, state->hash_block_size);
+231 }
+.fi
+.SS "int s2n_hmac_reset (struct \fBs2n_hmac_state\fP * state)"
+
+.PP
+Definition at line 233 of file s2n_hmac\&.c\&.
+.PP
+.nf
+234 {
+235     state->currently_in_hash_block = 0;
+236     memcpy_check(&state->inner, &state->inner_just_key, sizeof(state->inner));
+237 
+238     return 0;
+239 }
+.fi
+.SS "int s2n_hmac_digest_verify (const \fBvoid\fP * a, const \fBvoid\fP * b, uint32_t len)"
+
+.PP
+Definition at line 241 of file s2n_hmac\&.c\&.
+.PP
+.nf
+242 {
+243     return 0 - !s2n_constant_time_equals(a, b, len);
+244 }
+.fi
+.SS "int s2n_hmac_copy (struct \fBs2n_hmac_state\fP * to, struct \fBs2n_hmac_state\fP * from)"
+
+.PP
+Definition at line 246 of file s2n_hmac\&.c\&.
+.PP
+.nf
+247 {
+248     memcpy_check(to, from, sizeof(struct s2n_hmac_state));
+249     return 0;
+250 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

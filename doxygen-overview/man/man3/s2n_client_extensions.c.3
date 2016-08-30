@@ -1,0 +1,201 @@
+.TH "s2n-master/tls/s2n_client_extensions.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_client_extensions.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_client_extensions_send\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_stuffer\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_extensions_recv\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_blob\fP *extensions)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_client_extensions_send (struct \fBs2n_connection\fP * conn, struct \fBs2n_stuffer\fP * out)"
+
+.PP
+Definition at line 37 of file s2n_client_extensions\&.c\&.
+.PP
+.nf
+38 {
+39     uint16_t total_size = 0;
+40 
+41     /* Signature algorithms */
+42     if (conn->actual_protocol_version == S2N_TLS12) {
+43         total_size += 8;
+44     }
+45 
+46     uint16_t application_protocols_len = conn->config->application_protocols\&.size;
+47     uint16_t server_name_len = strlen(conn->server_name);
+48 
+49     if (server_name_len) {
+50         total_size += 9 + server_name_len;
+51     }
+52     if (application_protocols_len) {
+53         total_size += 6 + application_protocols_len;
+54     }
+55     if (conn->config->status_request_type != S2N_STATUS_REQUEST_NONE) {
+56         total_size += 9;
+57     }
+58 
+59     /* Write ECC extensions: Supported Curves and Supported Point Formats */
+60     int ec_curves_count = sizeof(s2n_ecc_supported_curves) / sizeof(s2n_ecc_supported_curves[0]);
+61     total_size += 12 + ec_curves_count * 2;
+62 
+63     GUARD(s2n_stuffer_write_uint16(out, total_size));
+64 
+65     if (conn->actual_protocol_version == S2N_TLS12) {
+66         /* The extension header */
+67         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_SIGNATURE_ALGORITHMS));
+68         GUARD(s2n_stuffer_write_uint16(out, 4));
+69 
+70         /* Just one signature/hash pair, so 2 bytes */
+71         GUARD(s2n_stuffer_write_uint16(out, 2));
+72         GUARD(s2n_stuffer_write_uint8(out, TLS_HASH_ALGORITHM_SHA1));
+73         GUARD(s2n_stuffer_write_uint8(out, TLS_SIGNATURE_ALGORITHM_RSA));
+74     }
+75 
+76     if (server_name_len) {
+77         /* Write the server name */
+78         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_SERVER_NAME));
+79         GUARD(s2n_stuffer_write_uint16(out, server_name_len + 5));
+80 
+81         /* Size of all of the server names */
+82         GUARD(s2n_stuffer_write_uint16(out, server_name_len + 3));
+83 
+84         /* Name type - host name, RFC3546 */
+85         GUARD(s2n_stuffer_write_uint8(out, 0));
+86 
+87         struct s2n_blob server_name;
+88         server_name\&.data = (uint8_t *) conn->server_name;
+89         server_name\&.size = server_name_len;
+90         GUARD(s2n_stuffer_write_uint16(out, server_name_len));
+91         GUARD(s2n_stuffer_write(out, &server_name));
+92     }
+93 
+94     /* Write ALPN extension */
+95     if (application_protocols_len) {
+96         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_ALPN));
+97         GUARD(s2n_stuffer_write_uint16(out, application_protocols_len + 2));
+98         GUARD(s2n_stuffer_write_uint16(out, application_protocols_len));
+99         GUARD(s2n_stuffer_write(out, &conn->config->application_protocols));
+100     }
+101 
+102     if (conn->config->status_request_type != S2N_STATUS_REQUEST_NONE) {
+103         /* We only support OCSP */
+104         eq_check(conn->config->status_request_type, S2N_STATUS_REQUEST_OCSP);
+105         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_STATUS_REQUEST));
+106         GUARD(s2n_stuffer_write_uint16(out, 5));
+107         GUARD(s2n_stuffer_write_uint8(out, (uint8_t) conn->config->status_request_type));
+108         GUARD(s2n_stuffer_write_uint16(out, 0));
+109         GUARD(s2n_stuffer_write_uint16(out, 0));
+110     }
+111 
+112     /*
+113      * RFC 4492: Clients SHOULD send both the Supported Elliptic Curves Extension
+114      * and the Supported Point Formats Extension\&.
+115      */
+116     {
+117         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_ELLIPTIC_CURVES));
+118         GUARD(s2n_stuffer_write_uint16(out, 2 + ec_curves_count * 2));
+119         /* Curve list len */
+120         GUARD(s2n_stuffer_write_uint16(out, ec_curves_count * 2));
+121         /* Curve list */
+122         for (int i = 0; i < ec_curves_count; i++) {
+123             GUARD(s2n_stuffer_write_uint16(out, s2n_ecc_supported_curves[i]\&.iana_id));
+124         }
+125 
+126         GUARD(s2n_stuffer_write_uint16(out, TLS_EXTENSION_EC_POINT_FORMATS));
+127         GUARD(s2n_stuffer_write_uint16(out, 2));
+128         /* Point format list len */
+129         GUARD(s2n_stuffer_write_uint8(out, 1));
+130         /* Only allow uncompressed format */
+131         GUARD(s2n_stuffer_write_uint8(out, 0));
+132     }
+133 
+134     return 0;
+135 }
+.fi
+.SS "int s2n_client_extensions_recv (struct \fBs2n_connection\fP * conn, struct \fBs2n_blob\fP * extensions)"
+
+.PP
+Definition at line 137 of file s2n_client_extensions\&.c\&.
+.PP
+.nf
+138 {
+139     struct s2n_stuffer in;
+140 
+141     GUARD(s2n_stuffer_init(&in, extensions));
+142     GUARD(s2n_stuffer_write(&in, extensions));
+143 
+144     while (s2n_stuffer_data_available(&in)) {
+145         struct s2n_blob ext;
+146         uint16_t extension_type, extension_size;
+147         struct s2n_stuffer extension;
+148 
+149         GUARD(s2n_stuffer_read_uint16(&in, &extension_type));
+150         GUARD(s2n_stuffer_read_uint16(&in, &extension_size));
+151 
+152         ext\&.size = extension_size;
+153         lte_check(extension_size, s2n_stuffer_data_available(&in));
+154         ext\&.data = s2n_stuffer_raw_read(&in, ext\&.size);
+155         notnull_check(ext\&.data);
+156 
+157         GUARD(s2n_stuffer_init(&extension, &ext));
+158         GUARD(s2n_stuffer_write(&extension, &ext));
+159 
+160         switch (extension_type) {
+161         case TLS_EXTENSION_SERVER_NAME:
+162             GUARD(s2n_recv_client_server_name(conn, &extension));
+163             break;
+164         case TLS_EXTENSION_SIGNATURE_ALGORITHMS:
+165             GUARD(s2n_recv_client_signature_algorithms(conn, &extension));
+166             break;
+167         case TLS_EXTENSION_ALPN:
+168             GUARD(s2n_recv_client_alpn(conn, &extension));
+169             break;
+170         case TLS_EXTENSION_STATUS_REQUEST:
+171             GUARD(s2n_recv_client_status_request(conn, &extension));
+172             break;
+173         case TLS_EXTENSION_ELLIPTIC_CURVES:
+174             GUARD(s2n_recv_client_elliptic_curves(conn, &extension));
+175             break;
+176         case TLS_EXTENSION_EC_POINT_FORMATS:
+177             GUARD(s2n_recv_client_ec_point_formats(conn, &extension));
+178             break;
+179         case TLS_EXTENSION_RENEGOTIATION_INFO:
+180             GUARD(s2n_recv_client_renegotiation_info(conn, &extension));
+181             break;
+182         }
+183     }
+184 
+185     return 0;
+186 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

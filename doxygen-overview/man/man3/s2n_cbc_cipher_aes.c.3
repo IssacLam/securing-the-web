@@ -1,0 +1,139 @@
+.TH "s2n-master/crypto/s2n_cbc_cipher_aes.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_cbc_cipher_aes.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_cbc_cipher_aes_decrypt\fP (struct \fBs2n_session_key\fP *key, struct \fBs2n_blob\fP *iv, struct \fBs2n_blob\fP *in, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_cbc_cipher_aes128_get_decryption_key\fP (struct \fBs2n_session_key\fP *key, struct \fBs2n_blob\fP *in)"
+.br
+.ti -1c
+.RI "int \fBs2n_cbc_cipher_aes256_get_encryption_key\fP (struct \fBs2n_session_key\fP *key, struct \fBs2n_blob\fP *in)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_cipher\fP \fBs2n_aes128\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher\fP \fBs2n_aes256\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_cbc_cipher_aes_decrypt (struct \fBs2n_session_key\fP * key, struct \fBs2n_blob\fP * iv, struct \fBs2n_blob\fP * in, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 45 of file s2n_cbc_cipher_aes\&.c\&.
+.PP
+.nf
+46 {
+47     gte_check(out->size, in->size);
+48 
+49     if (EVP_DecryptInit_ex(&key->native_format\&.evp_cipher_ctx, NULL, NULL, NULL, iv->data) == 0) {
+50         S2N_ERROR(S2N_ERR_KEY_INIT);
+51     }
+52 
+53     int len = out->size;
+54     if (EVP_DecryptUpdate(&key->native_format\&.evp_cipher_ctx, out->data, &len, in->data, in->size) == 0) {
+55         S2N_ERROR(S2N_ERR_DECRYPT);
+56     }
+57 
+58     return 0;
+59 }
+.fi
+.SS "int s2n_cbc_cipher_aes128_get_decryption_key (struct \fBs2n_session_key\fP * key, struct \fBs2n_blob\fP * in)"
+
+.PP
+Definition at line 61 of file s2n_cbc_cipher_aes\&.c\&.
+.PP
+.nf
+62 {
+63     eq_check(in->size, 128 / 8);
+64     EVP_CIPHER_CTX_set_padding(&key->native_format\&.evp_cipher_ctx, EVP_CIPH_NO_PADDING);
+65     EVP_DecryptInit_ex(&key->native_format\&.evp_cipher_ctx, EVP_aes_128_cbc(), NULL, in->data, NULL);
+66 
+67     return 0;
+68 }
+.fi
+.SS "int s2n_cbc_cipher_aes256_get_encryption_key (struct \fBs2n_session_key\fP * key, struct \fBs2n_blob\fP * in)"
+
+.PP
+Definition at line 88 of file s2n_cbc_cipher_aes\&.c\&.
+.PP
+.nf
+89 {
+90     eq_check(in->size, 256 / 8);
+91     EVP_CIPHER_CTX_init(&key->native_format\&.evp_cipher_ctx);
+92     EVP_CIPHER_CTX_set_padding(&key->native_format\&.evp_cipher_ctx, EVP_CIPH_NO_PADDING);
+93     EVP_EncryptInit_ex(&key->native_format\&.evp_cipher_ctx, EVP_aes_256_cbc(), NULL, in->data, NULL);
+94 
+95     return 0;
+96 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBs2n_cipher\fP s2n_aes128"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.key_material_size = 16,
+    \&.type = S2N_CBC,
+    \&.io\&.cbc = {
+               \&.block_size = 16,
+               \&.record_iv_size = 16,
+               \&.decrypt = s2n_cbc_cipher_aes_decrypt,
+               \&.encrypt = s2n_cbc_cipher_aes_encrypt},
+    \&.init = s2n_cbc_cipher_aes_init,
+    \&.get_decryption_key = s2n_cbc_cipher_aes128_get_decryption_key,
+    \&.get_encryption_key = s2n_cbc_cipher_aes128_get_encryption_key,
+    \&.destroy_key = s2n_cbc_cipher_aes_destroy_key,
+}
+.fi
+.PP
+Definition at line 112 of file s2n_cbc_cipher_aes\&.c\&.
+.SS "struct \fBs2n_cipher\fP s2n_aes256"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.key_material_size = 32,
+    \&.type = S2N_CBC,
+    \&.io\&.cbc = {
+               \&.block_size = 16,
+               \&.record_iv_size = 16,
+               \&.decrypt = s2n_cbc_cipher_aes_decrypt,
+               \&.encrypt = s2n_cbc_cipher_aes_encrypt},
+    \&.init = s2n_cbc_cipher_aes_init,
+    \&.get_decryption_key = s2n_cbc_cipher_aes256_get_decryption_key,
+    \&.get_encryption_key = s2n_cbc_cipher_aes256_get_encryption_key,
+    \&.destroy_key = s2n_cbc_cipher_aes_destroy_key,
+}
+.fi
+.PP
+Definition at line 126 of file s2n_cbc_cipher_aes\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

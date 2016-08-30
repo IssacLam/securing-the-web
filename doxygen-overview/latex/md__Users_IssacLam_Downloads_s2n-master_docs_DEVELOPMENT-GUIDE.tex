@@ -1,0 +1,453 @@
+If you are curious about the internals of s2n, or interested in contributing to s2n, this document is for you. If instead you are interested in using s2n in an application that you are developing, please see the accompanying https\+://github.com/awslabs/s2n/blob/master/docs/\+U\+S\+A\+G\+E-\/\+G\+U\+I\+D\+E.\+md \char`\"{}\+Usage Guide\char`\"{}.
+
+\subsection*{s2n\textquotesingle{}s development principles}
+
+Before getting into the detail of how s2n works internally, it\textquotesingle{}s worth covering s2n\textquotesingle{}s development principles. These principles guide and inform many of the design decisions we\textquotesingle{}ll go through. We\textquotesingle{}re always open to new principles, if you can think of better ones and make a case for them.
+
+\paragraph*{Development principles}
+
+
+\begin{DoxyItemize}
+\item {\bfseries Maintain an excellent T\+L\+S/\+S\+SL implementation}~\newline
+Although it\textquotesingle{}s hidden \char`\"{}$\ast$under the hood$\ast$\char`\"{}, T\+L\+S/\+S\+SL is the direct interface with customers and end-\/users. Good performance and security are critical to a positive experience.
+\item {\bfseries Protect user data and keys}~\newline
+Above all else, s2n must ensure that user data and private keys are being handled correctly and carefully. Security is often a matter of trade-\/offs and costs; we should always strive to increase the costs for attackers whenever the trade offs are acceptable to users.
+\item {\bfseries Stay simple}~\newline
+Write as little code as necessary, omit rarely used optional features and support as few modes of operation as possible. We will also promote and encourage changes that reduce the size of our code base.
+\item {\bfseries Write clear readable code with a light cognitive load}~\newline
+s2n\textquotesingle{}s code must be concise, easy to follow and legible to a proficient C programmer. Our code should be organized in a way that divides the implementation up into small units of work, with the entire context necessary at hand. We should also minimize the number of branches in our code, the depth of our call stacks, and the number of members in our structures.
+\item {\bfseries Defend in depth and systematically}~\newline
+Great care and attention to detail is required to write good code, but we also use automation and mechanistic processes to protect against human error.
+\item {\bfseries Be easy to use and maintain sane defaults}~\newline
+It should be low effort, even for a novice developer, to use s2n in a safe way. We also shouldn\textquotesingle{}t \char`\"{}$\ast$pass the buck$\ast$\char`\"{} and place the burden of subtle or complicated T\+L\+S-\/specific decision making upon application authors and system administrators.
+\item {\bfseries Provide great performance and responsiveness}~\newline
+T\+L\+S/\+S\+SL is rapidly becoming ubiquitous. Even small inefficiencies and overhead can become significant when multiplied by billions of users and quintillions of sessions.
+\item {\bfseries Stay paranoid}~\newline
+s2n operates in a security critical space. Even with the most precautionary development methods it is impossible to guarantee the absence of defects. A subtle one-\/byte error on a single line may still cause problems.
+\item {\bfseries Make data-\/driven decisions}~\newline
+Opinions can differ on security best practices, sometimes in contradictory ways. Where possible, we are guided by facts and measurable data.
+\end{DoxyItemize}
+
+\paragraph*{Priorities}
+
+When weighing up difficult implementation trade-\/offs our ordered set of priorities are\+:
+
+
+\begin{DoxyEnumerate}
+\item Security
+\item Readability
+\item Ease of use
+\item Performance.
+\end{DoxyEnumerate}
+
+\paragraph*{Commit and code-\/review policy}
+
+s2n is review-\/then-\/commit for code changes, and commit-\/then-\/review for documentation changes. Code additions are made by pull requests, no author may merge their own pull request on code. Changes to documentation, including code comments, may be made more freely.
+
+\subsection*{Coding style and conventions}
+
+Per our development principles, an important goal is to reduce the cognitive load required to read, review and extend s2n. Although s2n is written in C, s2n adopts several patterns more common to functional programming. Though they are used in a way that is idiomatic and shouldn\textquotesingle{}t feel completely alien in C.
+
+\subsubsection*{High level function design}
+
+The first convention is that\textquotesingle{}s s2n\textquotesingle{}s functions are generally quite small, no more than a page or two at most and commonly just a few lines. Functions have a clear input and output and are in that sense \char`\"{}pure\char`\"{} functions; for example handling a particular T\+LS handshake message type takes the message as input, and the output is connection state.
+
+
+\begin{DoxyCode}
+\textcolor{comment}{/* An idiomatic s2n function generally has:}
+\textcolor{comment}{ * }
+\textcolor{comment}{ *  An int return value. This is used to signal success or error.}
+\textcolor{comment}{ *  An input, often a struct.}
+\textcolor{comment}{ *  An output, often a struct.}
+\textcolor{comment}{ */}
+\textcolor{keywordtype}{int} s2n\_do\_something(\textcolor{keyword}{struct} *some\_input, \textcolor{keyword}{struct} *some\_output);
+\end{DoxyCode}
+
+
+s2n functions also operate in a message passing style. For example, a simplified version of the flow when handling a T\+LS client finished message might looks like this\+:
+
+
+
+each function handles a clear, well-\/defined piece of work, before passing on responsibility to the next function.
+
+The second convention of s2n\textquotesingle{}s functions is that functions are split into two kinds\+: those that handle control flow and coordinate other functions, and those that parse messages. For example, in the above diagram, it might appear that the functions are calling each other directly but we try to avoid that. Instead there is a coordinating outer function responsible for the flow control.
+
+A simplified version of the coordinating function would resemble\+:
+
+
+\begin{DoxyCode}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a49bb9749c055c6fb6f713cebeaa14cb5}{s2n\_stuffer\_read}(connection, input\_stuffer));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_cbc\_aes\_decrypt(input\_stuffer, output\_stuffer));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_cbc\_verify(output\_stuffer));
+\end{DoxyCode}
+
+
+Splitting things up this way leads to a shallower call stack, but the main benefit is that functions can read quite declaratively. In the case of message parsers, the function contents can read almost like schemas of the message being parsed.
+
+A good example file for message parsing to look at is \href{https://github.com/awslabs/s2n/blob/master/tls/s2n_server_finished.c}{\tt tls/s2n\+\_\+server\+\_\+finished.\+c}. From reading the file it should be reasonably clear that a server finished message consists just of S2\+N\+\_\+\+T\+L\+S\+\_\+\+F\+I\+N\+I\+S\+H\+E\+D\+\_\+\+L\+EN number of bytes, what the next state is and so on.
+
+As you may also see in that file, the functions for reading and writing a particular message type are in the same file. That way all of context and logic needed to handle that message type can be reviewed and thought about in one place.
+
+\subsubsection*{Error handling and Macros}
+
+As may also be clear from the above examples, s2n has some conventions for how errors are handled. Firstly, s2n functions should always return -\/1 or N\+U\+LL on error, and 0 or a valid pointer on success. s2n also includes a thread local variable\+: s2n\+\_\+errno, for indicating the cause of the error. This follows the convention set by libc (with errno), getaddrinfo (gai\+\_\+errno), net-\/snmp (snmp\+\_\+errno), and countless other libraries.
+
+In s2n, we {\bfseries always} check return values. Because of that, the coding pattern\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordflow}{if} (s2n\_do\_something(with\_something\_else) < 0) \{
+    \textcolor{keywordflow}{return} -1;
+\}
+\end{DoxyCode}
+
+
+is so common that \hyperlink{s2n__safety_8h}{utils/s2n\+\_\+safety.\+h} provides two macros\+:
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#define GUARD( x )      if ( (x) < 0 ) return -1}
+\textcolor{preprocessor}{#define GUARD\_PTR( x )  if ( (x) < 0 ) return NULL}
+\end{DoxyCode}
+
+
+These macros should be used when calling functions you expect to succeed. Primarily these macros help save two lines that repeatedly clutter files, and secondarily they are very useful when developing and debugging code as it is easy to redefine the macro to implement a simple backtrace (even a simple printf will suffice, but a breakpoint is more usual).
+
+If a function does fail, it should use the \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2\+N\+\_\+\+E\+R\+R\+O\+R()} macro provided for surfacing the error to an application. New error translations, and their human-\/readable translations can be defined in \href{https://github.com/awslabs/s2n/blob/master/error/s2n_errno.h}{\tt error/s2n\+\_\+errno.\+h} and \href{https://github.com/awslabs/s2n/blob/master/error/s2n_errno.c}{\tt error/s2n\+\_\+errno.\+c}. When called, e.\+g.\+:
+
+
+\begin{DoxyCode}
+\hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+\end{DoxyCode}
+
+
+the macro will set s2n\+\_\+errno correctly, as well as some useful debug strings, and return -\/1.
+
+\subsubsection*{Safety checking}
+
+\href{https://github.com/awslabs/s2n/blob/master/utils/s2n_safety.h}{\tt utils/s2n\+\_\+safety.\+h} provides several more convenience macros intended to make safety and bounds checking easier. There are checked versions of memcpy and memset, as well as predicate testers like gte\+\_\+check, inclusive\+\_\+range\+\_\+check, exclusive\+\_\+range\+\_\+check for performing simple comparisons in a systematic, error-\/handled, way.
+
+{\itshape Note}\+: In general, C preprocessor Macros with embedded control flow are a bad idea, but G\+U\+A\+RD, S2\+N\+\_\+\+E\+R\+R\+OR and the safety checkers are so thoroughly used throughout s2n that it should be a clear and idiomatic pattern, almost forming a small domain specific language.
+
+\subsubsection*{Control flow and the state machine}
+
+Branches can be a source of cognitive load, as they ask the reader to follow a path of thinking, while also remembering that there is another path to be explored. When branches are nested they can often lead to impossible to grasp combinatorial explosions. s2n tries to systematically reduce the number of branches used in the code in several ways.
+
+Firstly, there are almost no ifdef calls in s2n. Ifdefs can be a particularly penalizing source of cognitive load. In addition to being a branch, they also ask the reader to mix state from two different languages (C, and the C pre processor) and they tend to be associated with ugly rendering in I\+D\+Es and code formatters. In the few places where ifdef\textquotesingle{}s are necessary, we use them in a careful way without compromising the integrity of the function. \href{https://github.com/awslabs/s2n/blob/master/tls/s2n_config.c}{\tt tls/s2n\+\_\+config.\+c} is a good example. Rather than mixing the Apple and non-\/\+Apple implementations and cluttering one function with several ifdefs, there is a complete implementation of the timer functionality for each platform. Within the P\+O\+S\+IX implementation, an ifdef and define are used to use the most precise clock type, but in a way that does not compromise readability.
+
+Secondly, s2n generally branches in the case of failure, rather than success. So instead of creating a nest of if\textquotesingle{}s\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordflow}{if} (s2n\_foo() == 0) \{
+    \textcolor{keywordflow}{if} (s2n\_bar() == 0) \{
+         \textcolor{keywordflow}{if} (s2n\_baz() == 0) \{
+\end{DoxyCode}
+
+
+we do\+:
+
+
+\begin{DoxyCode}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_foo());
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_bar());
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_baz());
+\end{DoxyCode}
+
+
+This pattern leads to a linear control flow, where the main body of a function describes everything that happens in a regular, \char`\"{}$\ast$happy$\ast$\char`\"{} case. Any deviation is usually a fatal error and we exit the function. This is safe because s2n rarely allocates resources, and so has nothing to clean up on error.
+
+This pattern also leads to extremely few \char`\"{}else\char`\"{} clauses in the s2n code base. Within s2n, else clauses should be treated with suspicion and examined for potential eradication. Where an else clause is necessary, we try to ensure that the first if block is the most likely case. This aids readability, and also results in a more efficient compiled instruction pipeline (although good C\+PU branch prediction will rapidly correct any mis-\/ordering).
+
+For branches on small enumerated types, s2n generally favors switch statements\+: though switch statements taking up more than about 25 lines of code are discouraged, and a \char`\"{}default\+:\char`\"{} block is mandatory.
+
+Another technique for complexity avoidance is that the core T\+LS state machine within s2n does not use branches and instead uses a table of function pointers (another technique borrowed from functional programming) to dispatch data to the correct handler. This is covered in more detail later in this document.
+
+Lastly, s2n studiously avoids locks. s2n is designed to be thread-\/safe, but does so by using atomic data types in the small number of well-\/isolated variables that may be accessed by multiple threads.
+
+\subsubsection*{Code formatting and commenting}
+
+s2n is written in C99. The code formatting and indentation should be relatively clear from reading some s2n source files, but there is also an automated \char`\"{}make indent\char`\"{} target that will indent the s2n sources.
+
+There should be no need for comments to explain {\itshape what} s2n code is doing; variables and functions should be given clear and human-\/readable names that make their purpose and intent intuitive. Comments explaining {\itshape why} we are doing something are encouraged. Often some context setting is necessary; a reference to an R\+FC, or a reminder of some critical state that is hard to work directly into the immediate code in a natural way.
+
+Every source code file must include a copy of the Apache Software License 2.\+0, as well as a correct copyright notification. The year of copyright should be the year in which the file was first created.
+
+There is also a brief set of other coding conventions\+:
+
+
+\begin{DoxyItemize}
+\item s2n uses explicitly sized primitives where possible. E.\+g. uint8\+\_\+t, uint32\+\_\+t.
+\item In general s2n uses unsigned ints for sizes, as T\+L\+S/\+S\+SL do the same.
+\item Any structures exposed to application authors must be opaque\+: s2n manages the memory allocation and de-\/allocation.
+\item Variables are declared closest to their first point of use, to maximize context around the typing.
+\item Duplication of logic is discouraged
+\item 4 spaces, no tabs
+\item Assuming a terminal that is 120 characters wide is ok
+\end{DoxyItemize}
+
+\subsection*{Tests}
+
+s2n is written in C99, a language which lacks a \char`\"{}standard\char`\"{} testing framework. Although there are some more well used C++ testing frameworks, s2n also targets some embedded platforms on which a C++ compiler is unavailable.
+
+Since testing and test-\/cases are absolutely mandatory for all s2n functionality, s2n includes its own small testing framework, defined in \href{https://github.com/awslabs/s2n/blob/master/tests/s2n_test.h}{\tt tests/s2n\+\_\+test.\+h}. The framework consists of 15 macros that allow you to start a test suite, which is a normal C application with a \hyperlink{s2nc_8c_ad1835a0a190dc5fe4f925bb69443c770}{main()} function, and to validate various expectations.
+
+Unit tests are added as .c files in \href{https://github.com/awslabs/s2n/blob/master/tests/unit/}{\tt tests/unit/}. A simple example to look at is \href{https://github.com/awslabs/s2n/blob/master/tests/unit/s2n_stuffer_base64_test.c}{\tt tests/unit/s2n\+\_\+stuffer\+\_\+base64\+\_\+test.\+c}. The tests are started with \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{B\+E\+G\+I\+N\+\_\+\+T\+E\+S\+T()}, and expectations are tested with E\+X\+P\+E\+C\+T\+\_\+\+S\+U\+C\+C\+E\+SS and E\+X\+P\+E\+C\+T\+\_\+\+E\+Q\+U\+AL before exiting with an E\+N\+D\+\_\+\+T\+E\+ST call.
+
+The test framework will take care of compiling and executing the tests and indicates success or failure with green or red text in the console.
+
+In addition to fully covering functionality in the correct cases, s2n tests are also expected to include adversarial or \char`\"{}negative\char`\"{} test cases. For example the tests performed on record encryption validate that s2n is tamper resistant by attempting to actually tamper with records. Similarly, we validate that our memory handling routines cannot be over-\/filled by attempting to over-\/fill them.
+
+To avoid adding unneeded code to the production build of s2n, there is also a small test library defined at \href{https://github.com/awslabs/s2n/blob/master/tests/testlib/}{\tt tests/testlib/} which includes routines useful for test cases. For example there is a hex parser and emitter, which is useful for defining network data in test cases, but not needed in production.
+
+\subsection*{A tour of s2n memory handling\+: blobs and stuffers}
+
+C has a history of issues around memory and buffer handling. To avoid problems in this area, s2n does not use C string functions or standard buffer manipulation patterns. Instead memory regions are tracked explicitly, with \hyperlink{structs2n__blob}{s2n\+\_\+blob} structures, and buffers are re-\/oriented as streams with \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} structures.
+
+\subsubsection*{\hyperlink{structs2n__blob}{s2n\+\_\+blob} \+: keeping track of memory ranges}
+
+\hyperlink{structs2n__blob}{s2n\+\_\+blob} is a very simple data structure\+:
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} \{
+    uint8\_t *\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+    uint32\_t \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+\};
+\end{DoxyCode}
+
+
+Functions that handle memory ranges are expected to at least use blobs (stuffers are better though, as we\textquotesingle{}ll see). A blob can be initialized with an existing memory buffer using {\bfseries s2n\+\_\+blob\+\_\+init}, but \href{https://github.com/awslabs/s2n/blob/master/utils/s2n_mem.h}{\tt utils/s2n\+\_\+mem.\+h} also defines routines for dynamically allocated blobs. For handling user data we prefer the latter, as s2n prevents the memory regions from being swapped to disk and from showing up in core files (where supported).
+
+\subsubsection*{\hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} \+: a streaming buffer}
+
+The stuffer data structure included in s2n is intended to handle all protocol level input and output to memory buffers and is the real work-\/horse of s2n. At its core a stuffer is a blob and two cursors\+:
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} \{
+    \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} \hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob};
+    uint32\_t \hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor};
+    uint32\_t \hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor};
+    ...
+\};
+\end{DoxyCode}
+
+
+This layout that makes it possible to implement a stream\+:
+
+
+
+All access to/from the stuffer goes \char`\"{}through\char`\"{} s2n\+\_\+stuffer\+\_\+ functions. For example, we can write with {\bfseries \hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\+\_\+stuffer\+\_\+write()}}, and when we do the write cursor is incremented to the new position. We can read with {\bfseries \hyperlink{s2n__stuffer_8c_a49bb9749c055c6fb6f713cebeaa14cb5}{s2n\+\_\+stuffer\+\_\+read()}}, and of course we can only read data as far as the write cursor (which is always at or ahead of the read cursor). To protect user data, when we read data out of the stuffer, we wipe the copy of the data within the local stuffer memory. We also ensure that it\textquotesingle{}s only possible to read as much data as is in the stuffer.
+
+A stuffer can be initialized directly from a blob, which makes it fixed in size, or it can be allocated dynamically. In the latter case, we can also choose to make the stuffer growable (by using {\bfseries s2n\+\_\+stuffer\+\_\+growable\+\_\+alloc} instead of {\bfseries s2n\+\_\+stuffer\+\_\+alloc}). If a stuffer is growable then attempting to write past the end of the current blob will result in the blob being extended (by at least 1K at a time) to fit the data.
+
+To further encourage stream-\/oriented programming, the stuffer is also the place where all marshaling and de-\/marshaling happens. For example you can read and write ints directly to a stuffer\+:
+
+
+\begin{DoxyCode}
+\textcolor{comment}{/* Read and write integers in network order */}
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint8\_t *
+      \hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint16\_t 
+      *\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_a71787bb6eeba3413137cde42d32a0f6c}{s2n\_stuffer\_read\_uint24}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint32\_t 
+      *\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_a7cf35b0d626c422e4fa414bda44f51bb}{s2n\_stuffer\_read\_uint32}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint32\_t 
+      *\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_ae1122959189bd03c92af5fd134016977}{s2n\_stuffer\_read\_uint64}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint64\_t 
+      *\hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint8\_t 
+      \hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, 
+      uint16\_t \hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, 
+      uint32\_t \hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_a958a82fb4dfe3517bcfd95f46807f715}{s2n\_stuffer\_write\_uint32}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, 
+      uint32\_t \hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\textcolor{keyword}{extern} \textcolor{keywordtype}{int} \hyperlink{s2n__stuffer_8c_af5be81568462bd6626c1d00a939ff30d}{s2n\_stuffer\_write\_uint64}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, 
+      uint64\_t \hyperlink{crypto_2pem_2pem_8h_a9a372ec768baa595be7fbb3a8825a797}{u});
+\end{DoxyCode}
+
+
+and there are other utility functions for handling base64 encoding to and from a stuffer, or text manipulation -\/ like tokenization. The idea is to implement basic serializing just once, rather than spread out and duplicated across the message parsers, and to maximize the declarative nature of the I/O. For example, this code parses a T\+LS record header\+:
+
+
+\begin{DoxyCode}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, &message\_type));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, &protocol\_major\_version));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, &protocol\_minor\_version));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(in, &record\_size));
+\end{DoxyCode}
+
+
+This pattern should make it very clear what the message format is, where the contents are being stored, and that we\textquotesingle{}re handling things in a safe way.
+
+There are times when we must interact with C functions from other libraries; for example when handling encryption and decryption. In these cases it is usually necessary to provide access to \char`\"{}raw\char`\"{} pointers into stuffers. s2n provides two functions for this\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} *\hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint32\_t data\_len)
+      ;
+\textcolor{keywordtype}{void} *\hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(\textcolor{keyword}{struct} \hyperlink{structs2n__stuffer}{s2n\_stuffer} *stuffer, uint32\_t data\_len);
+\end{DoxyCode}
+
+
+the first function returns a pointer to the existing location of the write cursor, and then increments the write cursor by data\+\_\+len, so an external function is free to write to the pointer, as long as it only writes data\+\_\+len bytes. The second function does the same thing, except that it increments the read cursor. Use of these functions is discouraged and should only be done when necessary for compatibility.
+
+One problem with returning raw pointers is that a pointer can become stale if the stuffer is later resized. Growable stuffers are resized using realloc(), which is free to copy and re-\/address memory. This could leave the original pointer location dangling, potentially leading to an invalid access. To prevent this, stuffers have a life-\/cycle and can be tainted, which prevents them from being resized within their present life-\/cycle.
+
+Internally stuffers track 4 bits of state\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} alloced:1;
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} growable:1;
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} wiped:1;
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} tainted:1;
+\end{DoxyCode}
+
+
+the first two bits of state track whether a stuffer was dynamically allocated (and so should be free\textquotesingle{}d later) and whether or not it is growable. The \char`\"{}wiped\char`\"{} piece of state tracks whether a stuffer has been wiped clean and the data erased. If a stuffer has been fully read then it should be in a wiped state, but a stuffer is also explicitly wiped at the end of its lifecycle and this bit of state helps avoids needless zeroing of memory. tainted is set to 1 whenever the raw access functions are called. If a stuffer is currently tainted then it can not be resized and it becomes ungrowable. This is reset when a stuffer is explicitly wiped, which begins the life-\/cycle anew. So any pointers returned by the raw access functions are legal only until s2n\+\_\+stuffer\+\_\+wipe is called.
+
+The end result is that this kind of pattern is legal\+:
+
+
+\begin{DoxyCode}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aba979c37cd169d15368bcdf473360073}{s2n\_stuffer\_growable\_alloc}(&in, 1500));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&in, &fifteen\_hundred\_bytes\_blob));
+uint8\_t * ptr = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&in, 1500);
+\end{DoxyCode}
+
+
+but attempting to write more data would not be legal\+:
+
+
+\begin{DoxyCode}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aba979c37cd169d15368bcdf473360073}{s2n\_stuffer\_growable\_alloc}(&in, 1500));
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&in, &fifteen\_hundred\_bytes\_blob));
+uint8\_t * ptr = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&in, 1500);
+
+\textcolor{comment}{/* This write will fail, the stuffer is no longer growable, as a raw}
+\textcolor{comment}{ * pointer was taken */}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&in, &some\_more\_data\_blob);
+
+\textcolor{comment}{/* Stuffer life cycle is now complete, reset everything and wipe */}
+\hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&in));
+\end{DoxyCode}
+
+
+\subsection*{\hyperlink{structs2n__connection}{s2n\+\_\+connection} and the T\+LS state machine}
+
+Every connection is associated with an \hyperlink{structs2n__connection}{s2n\+\_\+connection} structure. The details of this structure are opaque to applications, but internally it is where all of the T\+LS state is managed. To make sense of what is going on, it is necessary to understand how the T\+LS protocol works at the record and handshake layers.
+
+When a T\+LS connection is being started, the first communication consists of handshake messages. The client sends the first message (a client hello), and then the server replies (with a server hello), and so on. Because a server must wait for a client and vice versa, this phase of a T\+LS connection is not full-\/duplex. To save on memory, s2n uses a single stuffer for both incoming and outgoing handshake messages and it is located as s2n\+\_\+connection-\/$>$handshake.\+io (which is a growable stuffer).
+
+Borrowing another trick from functional programming, the state machine for handling handshake messages is implemented using a table of function pointers, located in \href{https://github.com/awslabs/s2n/blob/master/tls/s2n_handshake_io.c}{\tt tls/s2n\+\_\+handshake\+\_\+io.\+c}.
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{static} \textcolor{keyword}{struct }\hyperlink{structs2n__handshake__action}{s2n\_handshake\_action} state\_machine[] = \{
+    \textcolor{comment}{/*Message type  Handshake type       Writer S2N\_SERVER                S2N\_CLIENT                  
+       handshake.state              */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a97bbcc3a3f636384bc16b898d90879ea}{TLS\_CLIENT\_HELLO},      \textcolor{charliteral}{'C'}, \{
+      \hyperlink{s2n__client__hello_8c_abfb7d01ea645110aea3c808de4d86f1d}{s2n\_client\_hello\_recv},    \hyperlink{s2n__client__hello_8c_a4b86117a2a4f018991a01ff788272441}{s2n\_client\_hello\_send}\}\},    \textcolor{comment}{/*
+       CLIENT\_HELLO              */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a048b49dbe4e0abcdaa5f50b2ecd91fc4}{TLS\_SERVER\_HELLO},      \textcolor{charliteral}{'S'}, \{
+      \hyperlink{s2n__server__hello_8c_a8e32b708f98ecbfa1148c5393f8b9dba}{s2n\_server\_hello\_send},    \hyperlink{s2n__server__hello_8c_a2139f810755eb8cf27ebea179e81ac81}{s2n\_server\_hello\_recv}\}\},    \textcolor{comment}{/*
+       SERVER\_HELLO              */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a38cffd9bc0cc95a332e46519976d472f}{TLS\_SERVER\_CERT},       \textcolor{charliteral}{'S'}, \{
+      \hyperlink{s2n__server__cert_8c_ab1bb9b2e08cb682e4bb9b156b49a0afa}{s2n\_server\_cert\_send},     \hyperlink{s2n__server__cert_8c_aea75ffb292cac5d71183fee7c14b7496}{s2n\_server\_cert\_recv}\}\},     \textcolor{comment}{/*
+       SERVER\_CERT               */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a9d3fa686a8b630798a5b93e4267937f2}{TLS\_SERVER\_KEY},        \textcolor{charliteral}{'S'}, \{
+      \hyperlink{s2n__server__key__exchange_8c_a940aed548236e016710e5ef69dc98df8}{s2n\_server\_key\_send},      \hyperlink{s2n__server__key__exchange_8c_a933dc8cdaebb70f8a7364e390d9deeaf}{s2n\_server\_key\_recv}\}\},      \textcolor{comment}{/* SERVER\_KEY  
+                    */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a1a7828d23227c0e93bc09824b18a46ae}{TLS\_SERVER\_CERT\_REQ},   \textcolor{charliteral}{'S'}, \{NULL,                     
+      NULL\}\},                     \textcolor{comment}{/* SERVER\_CERT\_REQ           */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_ad4a7ea7191525f41bbdf0775c35eff6e}{TLS\_SERVER\_HELLO\_DONE}, \textcolor{charliteral}{'S'}, \{
+      \hyperlink{s2n__server__done_8c_a944852f699b2815f6a37b602113e26f7}{s2n\_server\_done\_send},     \hyperlink{s2n__server__done_8c_a55414ad2a6f07ebbae51cbd0bf6f5974}{s2n\_server\_done\_recv}\}\},     \textcolor{comment}{/*
+       SERVER\_HELLO\_DONE         */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_aaf660cd50e825aeb1b481c61862c4226}{TLS\_CLIENT\_CERT},       \textcolor{charliteral}{'C'}, \{NULL,                     NULL
+      \}\},                     \textcolor{comment}{/* CLIENT\_CERT               */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a32b656089b312b746625119dce8119b3}{TLS\_CLIENT\_KEY},        \textcolor{charliteral}{'C'}, \{
+      \hyperlink{s2n__client__key__exchange_8c_a5d0b0b0a8964b40aff5e3562bf65a9e1}{s2n\_client\_key\_recv},      \hyperlink{s2n__client__key__exchange_8c_a59294a875b6596b8dd5ad02a58e77c94}{s2n\_client\_key\_send}\}\},      \textcolor{comment}{/* CLIENT\_KEY  
+                    */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a0d1a6202ecebb1f9fd64cd8da6021249}{TLS\_CLIENT\_CERT\_VERIFY},\textcolor{charliteral}{'C'}, \{NULL,                  
+         NULL\}\},                     \textcolor{comment}{/* CLIENT\_CERT\_VERIFY        */}
+    \{\hyperlink{s2n__tls__parameters_8h_a5788d973268381c45d0909ebc14a16fd}{TLS\_CHANGE\_CIPHER\_SPEC}, 0,            \textcolor{charliteral}{'C'}, \{
+      \hyperlink{s2n__client__ccs_8c_aab9d53a394720e55e7648730f94bb176}{s2n\_client\_ccs\_recv},      \hyperlink{s2n__client__ccs_8c_a9be1791dfd4b0af9525be21fb52ec4eb}{s2n\_client\_ccs\_send}\}\},      \textcolor{comment}{/*
+       CLIENT\_CHANGE\_CIPHER\_SPEC */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_aab129406e117bb0c60df5ffda5596c34}{TLS\_CLIENT\_FINISHED},   \textcolor{charliteral}{'C'}, \{
+      \hyperlink{s2n__client__finished_8c_a1e5af2e3c7ad308eb7a32333210875f5}{s2n\_client\_finished\_recv}, \hyperlink{s2n__client__finished_8c_ac384b39fb82314ba9d3d4aebbae8f0e3}{s2n\_client\_finished\_send}\}\}, \textcolor{comment}{/*
+       CLIENT\_FINISHED           */}
+    \{\hyperlink{s2n__tls__parameters_8h_a5788d973268381c45d0909ebc14a16fd}{TLS\_CHANGE\_CIPHER\_SPEC}, 0,            \textcolor{charliteral}{'S'}, \{
+      \hyperlink{s2n__server__ccs_8c_ad4c716e8d39e6bb93acba86ccda02554}{s2n\_server\_ccs\_send},      \hyperlink{s2n__server__ccs_8c_ae06266c2514a2576c570f3f01d9f9ecf}{s2n\_server\_ccs\_recv}\}\},      \textcolor{comment}{/*
+       SERVER\_CHANGE\_CIPHER\_SPEC */}
+    \{\hyperlink{s2n__fragmentation__coalescing__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, \hyperlink{s2n__handshake__io_8c_a5bd625f2fac81aaad1575a65bffbfa71}{TLS\_SERVER\_FINISHED},   \textcolor{charliteral}{'S'}, \{
+      \hyperlink{s2n__server__finished_8c_a1faebdea4c42a7b27ce347885b9bd9ee}{s2n\_server\_finished\_send}, \hyperlink{s2n__server__finished_8c_adae4d52456ffeb3a606ed1fb545539e4}{s2n\_server\_finished\_recv}\}\}, \textcolor{comment}{/*
+       SERVER\_FINISHED           */}
+    \{\hyperlink{s2n__tls__parameters_8h_a5104f80ba38ebfd2266b1ec313f0aeb2}{TLS\_APPLICATION\_DATA}, 0,              \textcolor{charliteral}{'B'}, \{NULL, NULL\}\}    \textcolor{comment}{/* HANDSHAKE\_OVER     
+             */}
+\};
+\end{DoxyCode}
+
+
+The \textquotesingle{}writer\textquotesingle{} field indicates whether we expect a Client or a Server to write a particular message type (or \textquotesingle{}B\textquotesingle{} for both in the case of an application data message, but we haven\textquotesingle{}t gotten to that yet). If s2n is acting as a server, then it attempts to read client messages, if it\textquotesingle{}s acting as a client it will try to write it. To perform either operation it calls the relevant function pointer. This way the state machine can be very short and simple\+: write a handshake message out when we have one pending, and in the other direction read in data until we have a fully-\/buffered handshake message before then calling the relevant message parsing function.
+
+One detail we\textquotesingle{}ve skipped over so far is that handshake messages are encapsulated by an additional record layer within the T\+LS protocol. As we\textquotesingle{}ve already seen, T\+LS records are fairly simple\+: just a 5 byte header indicating the message type (Handshake, application data, and alerts), protocol version, and record size. The remainder of the record is data and may or may not be encrypted. What isn\textquotesingle{}t so simple is that T\+LS allows \textquotesingle{}inner\textquotesingle{} messages, like Handshake message, to be fragmented across several records, and for a single record to contain multiple messages.
+
+
+
+In the outbound direction, s2n never coalesces multiple messages into a single record, so writing a handshake message is a simple matter of fragmenting the handshake message if necessary and writing the records. In the inbound direction, the small state machine in s2n\+\_\+handshake\+\_\+io.\+c takes care of any fragmentation and coalescing. See \href{https://github.com/awslabs/s2n/blob/master/tests/unit/s2n_fragmentation_coalescing_test.c}{\tt tests/unit/s2n\+\_\+fragmentation\+\_\+coalescing\+\_\+test.\+c} for our test cases covering the logic too.
+
+To perform all of this, the \hyperlink{structs2n__connection}{s2n\+\_\+connection} structure has a few more internal stuffers\+:
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} header\_in;
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} in;
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} out;
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} alert\_in;
+\end{DoxyCode}
+
+
+\textquotesingle{}header\+\_\+in\textquotesingle{} is a small 5 byte stuffer, which is used to read in a record header. Once that stuffer is full, and the size of the next record is determined (from that header), inward data is directed to the \textquotesingle{}in\textquotesingle{} stuffer. The \textquotesingle{}out\textquotesingle{} stuffer is for data that we are writing out; like an encrypted T\+LS record. \textquotesingle{}alert\+\_\+in\textquotesingle{} is for any T\+LS alert message that s2n receives from its peer. s2n treats all alerts as fatal, but we buffer the full alert message so that reason can be logged.
+
+When past the handshake phase, s2n supports full-\/duplex I/O. Separate threads or event handlers are free to call s2n\+\_\+send and s2n\+\_\+recv on the same connection. Because either a read or a write may cause a connection to be closed, there are two additional stuffers for storing outbound alert messages\+:
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} reader\_alert\_out;
+\textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} writer\_alert\_out;
+\end{DoxyCode}
+
+
+this pattern means that both the reader thread and writer thread can create pending alert messages without needing any locks. If either the reader or writer generates an alert, it also sets the \textquotesingle{}closing\textquotesingle{} state to 1.
+
+
+\begin{DoxyCode}
+sig\_atomic\_t closing;
+sig\_atomic\_t closed;
+\end{DoxyCode}
+
+
+\textquotesingle{}closing\textquotesingle{} is an atomic, but even if it were not it can only be changed from 0 to 1, so an over-\/write is harmless. Every time a T\+LS record is fully-\/written, \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\+\_\+send()} checks to see if closing is set to 1. If it is then the reader or writer alert message will be sent (writer takes priority, if both are present) and the connection will be closed. Once the closed is 1, no more I/O may be sent or received on the connection.
+
+\subsection*{s2n and entropy}
+
+s2n provides two deterministic random number generators to every thread. {\bfseries \hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\+\_\+get\+\_\+public\+\_\+random\+\_\+data()}} should be used to generate any data that is exposed in a public context including nonces, initialization vectors, and randomized timing values. {\bfseries \hyperlink{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data()}} should be used for data which must be kept secret. Additionally s2n over-\/rides libcrypto\textquotesingle{}s entropy generation with {\bfseries \hyperlink{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\+\_\+get\+\_\+private\+\_\+random\+\_\+data()}}.
+
+\subsection*{Contributing to s2n}
+
+We are happy to accept contributions to s2n. We suggest the following general procedure\+:
+
+
+\begin{DoxyItemize}
+\item Please read all of the documentation available in the s2n \char`\"{}docs/\char`\"{} directory. This development guide along with the usage guide should give a good flavor for what the goals of s2n are and whether they line up with your idea for a contribution
+\item If you have an idea for a significant contribution, it is worth first cutting an issue and discussing the change. Get feedback on the A\+PI design, or what the feature might require, before writing code.
+\item If you discover a security critical bug, please report it via \href{http://aws.amazon.com/security/vulnerability-reporting/}{\tt http\+://aws.\+amazon.\+com/security/vulnerability-\/reporting/} and {\bfseries do not} create a public issue.
+\item Create a git fork of the s2n repository and prepare your changes locally within your fork.
+\item When you\textquotesingle{}re ready, and when all tests are passing, create a pull request to the master awslabs s2n repository.
+\item All changes to s2n go through code review and legal review. All submissions and contributions are made under the terms of the Apache Software License 2.\+0. For larger contributions, we may ask you to sign a contributor license agreement.
+\item s2n undergoes periodic government and commercial security analyses, including code audits and penetration tests. To participate in these analyses, we may ask you to sign a Non Disclosure Agreement. 
+\end{DoxyItemize}

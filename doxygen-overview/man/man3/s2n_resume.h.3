@@ -1,0 +1,138 @@
+.TH "s2n-master/tls/s2n_resume.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_resume.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_SERIALIZED_FORMAT_VERSION\fP   1"
+.br
+.ti -1c
+.RI "#define \fBS2N_STATE_LIFETIME_IN_NANOS\fP   21600000000"
+.br
+.ti -1c
+.RI "#define \fBS2N_STATE_SIZE_IN_BYTES\fP   (1 + 8 + 1 + \fBS2N_TLS_CIPHER_SUITE_LEN\fP + \fBS2N_TLS_SECRET_LEN\fP)"
+.br
+.ti -1c
+.RI "#define \fBS2N_TLS_SESSION_CACHE_TTL\fP   (6 * 60 * 60)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_is_caching_enabled\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_resume_from_cache\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_store_to_cache\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_SERIALIZED_FORMAT_VERSION   1"
+
+.PP
+Definition at line 22 of file s2n_resume\&.h\&.
+.SS "#define S2N_STATE_LIFETIME_IN_NANOS   21600000000"
+
+.PP
+Definition at line 23 of file s2n_resume\&.h\&.
+.SS "#define S2N_STATE_SIZE_IN_BYTES   (1 + 8 + 1 + \fBS2N_TLS_CIPHER_SUITE_LEN\fP + \fBS2N_TLS_SECRET_LEN\fP)"
+
+.PP
+Definition at line 24 of file s2n_resume\&.h\&.
+.SS "#define S2N_TLS_SESSION_CACHE_TTL   (6 * 60 * 60)"
+
+.PP
+Definition at line 25 of file s2n_resume\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_is_caching_enabled (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 25 of file s2n_resume\&.c\&.
+.PP
+.nf
+26 {
+27     /* Caching is enabled iff all of the caching callbacks are set */
+28     return config->cache_store && config->cache_retrieve && config->cache_delete;
+29 }
+.fi
+.SS "int s2n_resume_from_cache (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 94 of file s2n_resume\&.c\&.
+.PP
+.nf
+95 {
+96     uint8_t data[S2N_STATE_SIZE_IN_BYTES];
+97     struct s2n_blob entry = {\&.data = data,\&.size = S2N_STATE_SIZE_IN_BYTES };
+98     struct s2n_stuffer from;
+99     uint64_t size;
+100 
+101     if (conn->session_id_len == 0 || conn->session_id_len > S2N_TLS_SESSION_ID_MAX_LEN) {
+102         return -1;
+103     }
+104 
+105     GUARD(s2n_stuffer_init(&from, &entry));
+106     uint8_t *state = s2n_stuffer_raw_write(&from, entry\&.size);
+107     notnull_check(state);
+108 
+109     size = S2N_STATE_SIZE_IN_BYTES;
+110     if (conn->config->cache_retrieve(conn->config->cache_retrieve_data, conn->session_id, conn->session_id_len, state, &size)) {
+111         return -1;
+112     }
+113 
+114     if (size != S2N_STATE_SIZE_IN_BYTES) {
+115         return -1;
+116     }
+117 
+118     GUARD(s2n_deserialize_resumption_state(conn, &from));
+119 
+120     return 0;
+121 }
+.fi
+.SS "int s2n_store_to_cache (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 123 of file s2n_resume\&.c\&.
+.PP
+.nf
+124 {
+125     uint8_t data[S2N_STATE_SIZE_IN_BYTES];
+126     struct s2n_blob entry = {\&.data = data,\&.size = S2N_STATE_SIZE_IN_BYTES };
+127     struct s2n_stuffer to;
+128 
+129     if (!s2n_is_caching_enabled(conn->config)) {
+130         return -1;
+131     }
+132 
+133     if (conn->session_id_len == 0 || conn->session_id_len > S2N_TLS_SESSION_ID_MAX_LEN) {
+134         return -1;
+135     }
+136 
+137     GUARD(s2n_stuffer_init(&to, &entry));
+138     GUARD(s2n_serialize_resumption_state(conn, &to));
+139 
+140     /* Store to the cache */
+141     conn->config->cache_store(conn->config->cache_store_data, S2N_TLS_SESSION_CACHE_TTL, conn->session_id, conn->session_id_len, entry\&.data, entry\&.size);
+142 
+143     return 0;
+144 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

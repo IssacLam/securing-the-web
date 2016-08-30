@@ -1,0 +1,238 @@
+\hypertarget{namespaces2n__resume__test}{}\section{s2n\+\_\+resume\+\_\+test Namespace Reference}
+\label{namespaces2n__resume__test}\index{s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaces2n__resume__test_aaa7497098a8d662d5a0f51a1a491540d}{try\+\_\+resume} (endpoint, port, cipher, ssl\+\_\+version)
+\item 
+def \hyperlink{namespaces2n__resume__test_ab4a3e90cdff13290146c3286c6b221cf}{main} (argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \hyperlink{namespaces2n__resume__test_adbfecdf840887c5e82f08e23e9d9430f}{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}
+\item 
+dictionary \hyperlink{namespaces2n__resume__test_a58e49fbf9e2d2275dc26b83ca33c2be5}{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}
+\item 
+dictionary \hyperlink{namespaces2n__resume__test_a9d72f369529645dbdb50ee3e23136d3d}{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}!try\+\_\+resume@{try\+\_\+resume}}
+\index{try\+\_\+resume@{try\+\_\+resume}!s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}}
+\subsubsection[{\texorpdfstring{try\+\_\+resume(endpoint, port, cipher, ssl\+\_\+version)}{try_resume(endpoint, port, cipher, ssl_version)}}]{\setlength{\rightskip}{0pt plus 5cm}def s2n\+\_\+resume\+\_\+test.\+try\+\_\+resume (
+\begin{DoxyParamCaption}
+\item[{}]{endpoint, }
+\item[{}]{port, }
+\item[{}]{cipher, }
+\item[{}]{ssl\+\_\+version}
+\end{DoxyParamCaption}
+)}\hypertarget{namespaces2n__resume__test_aaa7497098a8d662d5a0f51a1a491540d}{}\label{namespaces2n__resume__test_aaa7497098a8d662d5a0f51a1a491540d}
+
+
+Definition at line 63 of file s2n\+\_\+resume\+\_\+test.\+py.
+
+
+\begin{DoxyCode}
+63 \textcolor{keyword}{def }\hyperlink{namespaces2n__resume__test_aaa7497098a8d662d5a0f51a1a491540d}{try\_resume}(endpoint, port, cipher, ssl\_version):
+64     \textcolor{comment}{# Fire up s2nd}
+65     s2nd = subprocess.Popen([\textcolor{stringliteral}{"../../bin/s2nd"}, \textcolor{stringliteral}{"-c"}, \textcolor{stringliteral}{"test\_all"}, str(endpoint), str(port)], stdin=
+      subprocess.PIPE, stdout=subprocess.PIPE)
+66 
+67     \textcolor{comment}{# Make sure it's running}
+68     s2nd.stdout.readline()
+69 
+70     \textcolor{comment}{# Fire up s\_client}
+71     s\_client = subprocess.Popen([\textcolor{stringliteral}{"../../libcrypto-root/bin/openssl"}, \textcolor{stringliteral}{"s\_client"}, PROTO\_VERS\_TO\_ARG[
+      ssl\_version], \textcolor{stringliteral}{"-cipher"}, cipher,
+72                                  \textcolor{stringliteral}{"-quiet"}, \textcolor{stringliteral}{"-reconnect"}, \textcolor{stringliteral}{"-connect"}, str(endpoint) + \textcolor{stringliteral}{":"} + str(port)], 
+      stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+73                                  stderr=subprocess.DEVNULL)
+74 
+75     \textcolor{comment}{# Wait until the 6th connection}
+76     seperators = 0
+77     \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} s2nd.stdout:
+78         line = line.decode(\textcolor{stringliteral}{"utf-8"}).strip()
+79         \textcolor{keywordflow}{if} line.startswith(\textcolor{stringliteral}{"Resumed session"}):
+80             seperators += 1
+81         \textcolor{keywordflow}{if} seperators == 5:
+82             \textcolor{keywordflow}{break}
+83 
+84     \textcolor{keywordflow}{if} seperators != 5:
+85         \textcolor{keywordflow}{return} -1
+86 
+87     \textcolor{comment}{# Write the cipher name towards s2n}
+88     s\_client.stdin.write((cipher + \textcolor{stringliteral}{"\(\backslash\)n"}).encode(\textcolor{stringliteral}{"utf-8"}))
+89     s\_client.stdin.flush()
+90 
+91     \textcolor{comment}{# Read it}
+92     found = 0
+93     \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} range(0, 10):
+94         output = s2nd.stdout.readline().decode(\textcolor{stringliteral}{"utf-8"})
+95         \textcolor{keywordflow}{if} output.strip() == cipher:
+96             found = 1
+97             \textcolor{keywordflow}{break}
+98 
+99     \textcolor{keywordflow}{if} found == 0:
+100         \textcolor{keywordflow}{return} -1
+101 
+102     \textcolor{comment}{# Write the cipher name from s2n}
+103     s2nd.stdin.write((cipher + \textcolor{stringliteral}{"\(\backslash\)n"}).encode(\textcolor{stringliteral}{"utf-8"}))
+104     s2nd.stdin.flush()
+105     found = 0
+106     \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} range(0, 10):
+107         output = s\_client.stdout.readline().decode(\textcolor{stringliteral}{"utf-8"})
+108         \textcolor{keywordflow}{if} output.strip() == cipher:
+109             found = 1
+110             \textcolor{keywordflow}{break}
+111 
+112     \textcolor{keywordflow}{if} found == 0:
+113         \textcolor{keywordflow}{return} -1
+114 
+115     s\_client.kill()
+116     s\_client.wait()
+117     s2nd.kill()
+118     s2nd.wait()
+119 
+120     \textcolor{keywordflow}{return} 0
+121 
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{namespaces2n__resume__test_aaa7497098a8d662d5a0f51a1a491540d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}!main@{main}}
+\index{main@{main}!s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}}
+\subsubsection[{\texorpdfstring{main(argv)}{main(argv)}}]{\setlength{\rightskip}{0pt plus 5cm}def s2n\+\_\+resume\+\_\+test.\+main (
+\begin{DoxyParamCaption}
+\item[{}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{namespaces2n__resume__test_ab4a3e90cdff13290146c3286c6b221cf}{}\label{namespaces2n__resume__test_ab4a3e90cdff13290146c3286c6b221cf}
+
+
+Definition at line 122 of file s2n\+\_\+resume\+\_\+test.\+py.
+
+
+\begin{DoxyCode}
+122 \textcolor{keyword}{def }\hyperlink{namespaces2n__resume__test_ab4a3e90cdff13290146c3286c6b221cf}{main}(argv):
+123     \textcolor{keywordflow}{if} \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}(argv) < 2:
+124         print(\textcolor{stringliteral}{"s2n\_resume\_test.py host port"})
+125         sys.exit(1)
+126 
+127     print(\textcolor{stringliteral}{"\(\backslash\)nRunning resumption tests with: "} + os.popen(\textcolor{stringliteral}{'../../libcrypto-root/bin/openssl version'}).read()
+      )
+128     failed = 0
+129     \textcolor{keywordflow}{for} ssl\_version \textcolor{keywordflow}{in} [ssl.PROTOCOL\_SSLv3, ssl.PROTOCOL\_TLSv1, ssl.PROTOCOL\_TLSv1\_1, ssl.PROTOCOL\_TLSv1\_2]
+      :
+130         print(\textcolor{stringliteral}{"\(\backslash\)n\(\backslash\)tTesting ciphers using client version: "} + PROTO\_VERS\_TO\_STR[ssl\_version])
+131         \textcolor{keywordflow}{for} cipher \textcolor{keywordflow}{in} S2N\_CIPHERS:
+132             cipher\_name = cipher[0]
+133             cipher\_vers = cipher[1]
+134 
+135             \textcolor{keywordflow}{if} ssl\_version < cipher\_vers:
+136                 \textcolor{keywordflow}{continue}
+137 
+138             ret = \hyperlink{namespaces2n__resume__test_aaa7497098a8d662d5a0f51a1a491540d}{try\_resume}(argv[0], int(argv[1]), cipher\_name, ssl\_version)
+139             print(\textcolor{stringliteral}{"Cipher: %-30s Vers: %-10s ... "} % (cipher\_name, PROTO\_VERS\_TO\_STR[ssl\_version]), end=\textcolor{stringliteral}{''})
+140             \textcolor{keywordflow}{if} ret == 0:
+141                 \textcolor{keywordflow}{if} sys.stdout.isatty():
+142                     print(\textcolor{stringliteral}{"\(\backslash\)033[32;1mPASSED\(\backslash\)033[0m"})
+143                 \textcolor{keywordflow}{else}:
+144                     print(\textcolor{stringliteral}{"PASSED"})
+145             \textcolor{keywordflow}{else}:
+146                 \textcolor{keywordflow}{if} sys.stdout.isatty():
+147                     print(\textcolor{stringliteral}{"\(\backslash\)033[31;1mFAILED\(\backslash\)033[0m"})
+148                 \textcolor{keywordflow}{else}:
+149                     print(\textcolor{stringliteral}{"FAILED"})
+150                 failed = 1
+151     \textcolor{keywordflow}{return} failed
+152 
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{namespaces2n__resume__test_ab4a3e90cdff13290146c3286c6b221cf_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}!S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS@{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}}
+\index{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS@{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}!s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}{S2N_CIPHERS}}]{\setlength{\rightskip}{0pt plus 5cm}list S2\+N\+\_\+\+C\+I\+P\+H\+E\+RS}\hypertarget{namespaces2n__resume__test_adbfecdf840887c5e82f08e23e9d9430f}{}\label{namespaces2n__resume__test_adbfecdf840887c5e82f08e23e9d9430f}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = [
+2     (\textcolor{stringliteral}{"RC4-MD5"}, ssl.PROTOCOL\_SSLv3),
+3     (\textcolor{stringliteral}{"RC4-SHA"}, ssl.PROTOCOL\_SSLv3),
+4     (\textcolor{stringliteral}{"DES-CBC3-SHA"}, ssl.PROTOCOL\_SSLv3),
+5     (\textcolor{stringliteral}{"EDH-RSA-DES-CBC3-SHA"}, ssl.PROTOCOL\_SSLv3),
+6     (\textcolor{stringliteral}{"AES128-SHA"}, ssl.PROTOCOL\_TLSv1),
+7     (\textcolor{stringliteral}{"DHE-RSA-AES128-SHA"}, ssl.PROTOCOL\_TLSv1),
+8     (\textcolor{stringliteral}{"AES256-SHA"}, ssl.PROTOCOL\_TLSv1),
+9     (\textcolor{stringliteral}{"DHE-RSA-AES256-SHA"}, ssl.PROTOCOL\_TLSv1),
+10     (\textcolor{stringliteral}{"AES128-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+11     (\textcolor{stringliteral}{"AES256-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+12     (\textcolor{stringliteral}{"DHE-RSA-AES128-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+13     (\textcolor{stringliteral}{"DHE-RSA-AES256-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+14     (\textcolor{stringliteral}{"AES128-GCM-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+15     (\textcolor{stringliteral}{"AES256-GCM-SHA384"}, ssl.PROTOCOL\_TLSv1\_2),
+16     (\textcolor{stringliteral}{"DHE-RSA-AES128-GCM-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+17     (\textcolor{stringliteral}{"ECDHE-RSA-DES-CBC3-SHA"}, ssl.PROTOCOL\_TLSv1),
+18     (\textcolor{stringliteral}{"ECDHE-RSA-AES128-SHA"}, ssl.PROTOCOL\_TLSv1),
+19     (\textcolor{stringliteral}{"ECDHE-RSA-AES256-SHA"}, ssl.PROTOCOL\_TLSv1),
+20     (\textcolor{stringliteral}{"ECDHE-RSA-AES128-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+21     (\textcolor{stringliteral}{"ECDHE-RSA-AES256-SHA384"}, ssl.PROTOCOL\_TLSv1\_2),
+22     (\textcolor{stringliteral}{"ECDHE-RSA-AES128-GCM-SHA256"}, ssl.PROTOCOL\_TLSv1\_2),
+23     (\textcolor{stringliteral}{"ECDHE-RSA-AES256-GCM-SHA384"}, ssl.PROTOCOL\_TLSv1\_2),
+24 ]
+\end{DoxyCode}
+
+
+Definition at line 24 of file s2n\+\_\+resume\+\_\+test.\+py.
+
+\index{s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}!P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR@{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}}
+\index{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR@{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}!s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}}
+\subsubsection[{\texorpdfstring{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}{PROTO_VERS_TO_STR}}]{\setlength{\rightskip}{0pt plus 5cm}dictionary P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+S\+TR}\hypertarget{namespaces2n__resume__test_a58e49fbf9e2d2275dc26b83ca33c2be5}{}\label{namespaces2n__resume__test_a58e49fbf9e2d2275dc26b83ca33c2be5}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = \{
+2     ssl.PROTOCOL\_SSLv3 : \textcolor{stringliteral}{"SSLv3"},
+3     ssl.PROTOCOL\_TLSv1 : \textcolor{stringliteral}{"TLSv1.0"},
+4     ssl.PROTOCOL\_TLSv1\_1 : \textcolor{stringliteral}{"TLSv1.1"},
+5     ssl.PROTOCOL\_TLSv1\_2 : \textcolor{stringliteral}{"TLSv1.2"},
+6 \}
+\end{DoxyCode}
+
+
+Definition at line 49 of file s2n\+\_\+resume\+\_\+test.\+py.
+
+\index{s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}!P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG@{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG}}
+\index{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG@{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG}!s2n\+\_\+resume\+\_\+test@{s2n\+\_\+resume\+\_\+test}}
+\subsubsection[{\texorpdfstring{P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG}{PROTO_VERS_TO_ARG}}]{\setlength{\rightskip}{0pt plus 5cm}dictionary P\+R\+O\+T\+O\+\_\+\+V\+E\+R\+S\+\_\+\+T\+O\+\_\+\+A\+RG}\hypertarget{namespaces2n__resume__test_a9d72f369529645dbdb50ee3e23136d3d}{}\label{namespaces2n__resume__test_a9d72f369529645dbdb50ee3e23136d3d}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 = \{
+2     ssl.PROTOCOL\_SSLv3 : \textcolor{stringliteral}{"-ssl3"},
+3     ssl.PROTOCOL\_TLSv1 : \textcolor{stringliteral}{"-tls1"},
+4     ssl.PROTOCOL\_TLSv1\_1 : \textcolor{stringliteral}{"-tls1\_1"},
+5     ssl.PROTOCOL\_TLSv1\_2 : \textcolor{stringliteral}{"-tls1\_2"},
+6 \}
+\end{DoxyCode}
+
+
+Definition at line 56 of file s2n\+\_\+resume\+\_\+test.\+py.
+

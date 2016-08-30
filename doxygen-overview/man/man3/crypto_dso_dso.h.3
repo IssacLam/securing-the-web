@@ -1,0 +1,731 @@
+.TH "dso.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+dso.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/crypto\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBdso_meth_st\fP"
+.br
+.ti -1c
+.RI "struct \fBdso_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDSO_CTRL_GET_FLAGS\fP   1"
+.br
+.ti -1c
+.RI "#define \fBDSO_CTRL_SET_FLAGS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDSO_CTRL_OR_FLAGS\fP   3"
+.br
+.ti -1c
+.RI "#define \fBDSO_FLAG_NO_NAME_TRANSLATION\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBDSO_FLAG_NAME_TRANSLATION_EXT_ONLY\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBDSO_FLAG_UPCASE_SYMBOL\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBDSO_FLAG_GLOBAL_SYMBOLS\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_BEOS_BIND_FUNC\fP   144"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_BEOS_BIND_VAR\fP   145"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_BEOS_LOAD\fP   146"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_BEOS_NAME_CONVERTER\fP   147"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_BEOS_UNLOAD\fP   148"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DLFCN_BIND_FUNC\fP   100"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DLFCN_BIND_VAR\fP   101"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DLFCN_LOAD\fP   102"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DLFCN_MERGER\fP   130"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DLFCN_NAME_CONVERTER\fP   123"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DLFCN_UNLOAD\fP   103"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DL_BIND_FUNC\fP   104"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DL_BIND_VAR\fP   105"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DL_LOAD\fP   106"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DL_MERGER\fP   131"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DL_NAME_CONVERTER\fP   124"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DL_UNLOAD\fP   107"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_BIND_FUNC\fP   108"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_BIND_VAR\fP   109"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_CONVERT_FILENAME\fP   126"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_CTRL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_FREE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_GET_FILENAME\fP   127"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_GET_LOADED_FILENAME\fP   128"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_GLOBAL_LOOKUP\fP   139"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_LOAD\fP   112"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_MERGE\fP   132"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_NEW_METHOD\fP   113"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_PATHBYADDR\fP   140"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_SET_FILENAME\fP   129"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_SET_NAME_CONVERTER\fP   122"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_DSO_UP_REF\fP   114"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_GLOBAL_LOOKUP_FUNC\fP   138"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_PATHBYADDR\fP   137"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_VMS_BIND_SYM\fP   115"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_VMS_LOAD\fP   116"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_VMS_MERGER\fP   133"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_VMS_UNLOAD\fP   117"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_BIND_FUNC\fP   118"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_BIND_VAR\fP   119"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_GLOBALLOOKUP\fP   142"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_GLOBALLOOKUP_FUNC\fP   143"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_JOINER\fP   135"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_LOAD\fP   120"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_MERGER\fP   134"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_NAME_CONVERTER\fP   125"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_PATHBYADDR\fP   141"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_SPLITTER\fP   136"
+.br
+.ti -1c
+.RI "#define \fBDSO_F_WIN32_UNLOAD\fP   121"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_CTRL_FAILED\fP   100"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_DSO_ALREADY_LOADED\fP   110"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_EMPTY_FILE_STRUCTURE\fP   113"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_FAILURE\fP   114"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_FILENAME_TOO_BIG\fP   101"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_FINISH_FAILED\fP   102"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_INCORRECT_FILE_SYNTAX\fP   115"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_LOAD_FAILED\fP   103"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_NAME_TRANSLATION_FAILED\fP   109"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_NO_FILENAME\fP   111"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_NO_FILE_SPECIFICATION\fP   116"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_NULL_HANDLE\fP   104"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_SET_FILENAME_FAILED\fP   112"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_STACK_ERROR\fP   105"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_SYM_FAILURE\fP   106"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_UNLOAD_FAILED\fP   107"
+.br
+.ti -1c
+.RI "#define \fBDSO_R_UNSUPPORTED\fP   108"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBDSO_FUNC_TYPE\fP) (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef struct \fBdso_st\fP \fBDSO\fP"
+.br
+.ti -1c
+.RI "typedef char *(* \fBDSO_NAME_CONVERTER_FUNC\fP) (\fBDSO\fP *, const char *)"
+.br
+.ti -1c
+.RI "typedef char *(* \fBDSO_MERGER_FUNC\fP) (\fBDSO\fP *, const char *, const char *)"
+.br
+.ti -1c
+.RI "typedef struct \fBdso_meth_st\fP \fBDSO_METHOD\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDSO\fP * \fBDSO_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO\fP * \fBDSO_new_method\fP (\fBDSO_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "int \fBDSO_free\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_flags\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_up_ref\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "long \fBDSO_ctrl\fP (\fBDSO\fP *dso, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "int \fBDSO_set_name_converter\fP (\fBDSO\fP *dso, \fBDSO_NAME_CONVERTER_FUNC\fP \fBcb\fP, \fBDSO_NAME_CONVERTER_FUNC\fP *oldcb)"
+.br
+.ti -1c
+.RI "const char * \fBDSO_get_filename\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "int \fBDSO_set_filename\fP (\fBDSO\fP *dso, const char *filename)"
+.br
+.ti -1c
+.RI "char * \fBDSO_convert_filename\fP (\fBDSO\fP *dso, const char *filename)"
+.br
+.ti -1c
+.RI "char * \fBDSO_merge\fP (\fBDSO\fP *dso, const char *filespec1, const char *filespec2)"
+.br
+.ti -1c
+.RI "const char * \fBDSO_get_loaded_filename\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBDSO_set_default_method\fP (\fBDSO_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_get_method\fP (\fBDSO\fP *dso)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_set_method\fP (\fBDSO\fP *dso, \fBDSO_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBDSO\fP * \fBDSO_load\fP (\fBDSO\fP *dso, const char *filename, \fBDSO_METHOD\fP *meth, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBDSO_bind_var\fP (\fBDSO\fP *dso, const char *symname)"
+.br
+.ti -1c
+.RI "\fBDSO_FUNC_TYPE\fP \fBDSO_bind_func\fP (\fBDSO\fP *dso, const char *symname)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_openssl\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_null\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_dlfcn\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_dl\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_win32\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_vms\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBDSO_pathbyaddr\fP (\fBvoid\fP *addr, char *path, int sz)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBDSO_global_lookup\fP (const char *name)"
+.br
+.ti -1c
+.RI "\fBDSO_METHOD\fP * \fBDSO_METHOD_beos\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_DSO_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DSO_CTRL_GET_FLAGS   1"
+
+.PP
+Definition at line 70 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_CTRL_OR_FLAGS   3"
+
+.PP
+Definition at line 72 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_CTRL_SET_FLAGS   2"
+
+.PP
+Definition at line 71 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_BEOS_BIND_FUNC   144"
+
+.PP
+Definition at line 379 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_BEOS_BIND_VAR   145"
+
+.PP
+Definition at line 380 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_BEOS_LOAD   146"
+
+.PP
+Definition at line 381 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_BEOS_NAME_CONVERTER   147"
+
+.PP
+Definition at line 382 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_BEOS_UNLOAD   148"
+
+.PP
+Definition at line 383 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DL_BIND_FUNC   104"
+
+.PP
+Definition at line 390 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DL_BIND_VAR   105"
+
+.PP
+Definition at line 391 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DL_LOAD   106"
+
+.PP
+Definition at line 392 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DL_MERGER   131"
+
+.PP
+Definition at line 393 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DL_NAME_CONVERTER   124"
+
+.PP
+Definition at line 394 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DL_UNLOAD   107"
+
+.PP
+Definition at line 395 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DLFCN_BIND_FUNC   100"
+
+.PP
+Definition at line 384 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DLFCN_BIND_VAR   101"
+
+.PP
+Definition at line 385 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DLFCN_LOAD   102"
+
+.PP
+Definition at line 386 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DLFCN_MERGER   130"
+
+.PP
+Definition at line 387 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DLFCN_NAME_CONVERTER   123"
+
+.PP
+Definition at line 388 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DLFCN_UNLOAD   103"
+
+.PP
+Definition at line 389 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_BIND_FUNC   108"
+
+.PP
+Definition at line 396 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_BIND_VAR   109"
+
+.PP
+Definition at line 397 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_CONVERT_FILENAME   126"
+
+.PP
+Definition at line 398 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_CTRL   110"
+
+.PP
+Definition at line 399 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_FREE   111"
+
+.PP
+Definition at line 400 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_GET_FILENAME   127"
+
+.PP
+Definition at line 401 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_GET_LOADED_FILENAME   128"
+
+.PP
+Definition at line 402 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_GLOBAL_LOOKUP   139"
+
+.PP
+Definition at line 403 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_LOAD   112"
+
+.PP
+Definition at line 404 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_MERGE   132"
+
+.PP
+Definition at line 405 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_NEW_METHOD   113"
+
+.PP
+Definition at line 406 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_PATHBYADDR   140"
+
+.PP
+Definition at line 407 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_SET_FILENAME   129"
+
+.PP
+Definition at line 408 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_SET_NAME_CONVERTER   122"
+
+.PP
+Definition at line 409 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_DSO_UP_REF   114"
+
+.PP
+Definition at line 410 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_GLOBAL_LOOKUP_FUNC   138"
+
+.PP
+Definition at line 411 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_PATHBYADDR   137"
+
+.PP
+Definition at line 412 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_VMS_BIND_SYM   115"
+
+.PP
+Definition at line 413 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_VMS_LOAD   116"
+
+.PP
+Definition at line 414 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_VMS_MERGER   133"
+
+.PP
+Definition at line 415 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_VMS_UNLOAD   117"
+
+.PP
+Definition at line 416 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_BIND_FUNC   118"
+
+.PP
+Definition at line 417 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_BIND_VAR   119"
+
+.PP
+Definition at line 418 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_GLOBALLOOKUP   142"
+
+.PP
+Definition at line 419 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_GLOBALLOOKUP_FUNC   143"
+
+.PP
+Definition at line 420 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_JOINER   135"
+
+.PP
+Definition at line 421 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_LOAD   120"
+
+.PP
+Definition at line 422 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_MERGER   134"
+
+.PP
+Definition at line 423 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_NAME_CONVERTER   125"
+
+.PP
+Definition at line 424 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_PATHBYADDR   141"
+
+.PP
+Definition at line 425 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_SPLITTER   136"
+
+.PP
+Definition at line 426 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_F_WIN32_UNLOAD   121"
+
+.PP
+Definition at line 427 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_FLAG_GLOBAL_SYMBOLS   0x20"
+
+.PP
+Definition at line 108 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_FLAG_NAME_TRANSLATION_EXT_ONLY   0x02"
+
+.PP
+Definition at line 95 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_FLAG_NO_NAME_TRANSLATION   0x01"
+
+.PP
+Definition at line 87 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_FLAG_UPCASE_SYMBOL   0x10"
+
+.PP
+Definition at line 101 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_CTRL_FAILED   100"
+
+.PP
+Definition at line 430 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_DSO_ALREADY_LOADED   110"
+
+.PP
+Definition at line 431 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_EMPTY_FILE_STRUCTURE   113"
+
+.PP
+Definition at line 432 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_FAILURE   114"
+
+.PP
+Definition at line 433 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_FILENAME_TOO_BIG   101"
+
+.PP
+Definition at line 434 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_FINISH_FAILED   102"
+
+.PP
+Definition at line 435 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_INCORRECT_FILE_SYNTAX   115"
+
+.PP
+Definition at line 436 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_LOAD_FAILED   103"
+
+.PP
+Definition at line 437 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_NAME_TRANSLATION_FAILED   109"
+
+.PP
+Definition at line 438 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_NO_FILE_SPECIFICATION   116"
+
+.PP
+Definition at line 440 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_NO_FILENAME   111"
+
+.PP
+Definition at line 439 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_NULL_HANDLE   104"
+
+.PP
+Definition at line 441 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_SET_FILENAME_FAILED   112"
+
+.PP
+Definition at line 442 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_STACK_ERROR   105"
+
+.PP
+Definition at line 443 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_SYM_FAILURE   106"
+
+.PP
+Definition at line 444 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_UNLOAD_FAILED   107"
+
+.PP
+Definition at line 445 of file crypto/dso/dso\&.h\&.
+.SS "#define DSO_R_UNSUPPORTED   108"
+
+.PP
+Definition at line 446 of file crypto/dso/dso\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBdso_st\fP \fBDSO\fP"
+
+.PP
+Definition at line 112 of file crypto/dso/dso\&.h\&.
+.SS "typedef \fBvoid\fP(* DSO_FUNC_TYPE) (\fBvoid\fP)"
+
+.PP
+Definition at line 110 of file crypto/dso/dso\&.h\&.
+.SS "typedef char*(* DSO_MERGER_FUNC) (\fBDSO\fP *, const char *, const char *)"
+
+.PP
+Definition at line 138 of file crypto/dso/dso\&.h\&.
+.SS "typedef struct \fBdso_meth_st\fP  \fBDSO_METHOD\fP"
+
+.SS "typedef char*(* DSO_NAME_CONVERTER_FUNC) (\fBDSO\fP *, const char *)"
+
+.PP
+Definition at line 122 of file crypto/dso/dso\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBDSO_FUNC_TYPE\fP DSO_bind_func (\fBDSO\fP * dso, const char * symname)"
+
+.SS "\fBvoid\fP* DSO_bind_var (\fBDSO\fP * dso, const char * symname)"
+
+.SS "char* DSO_convert_filename (\fBDSO\fP * dso, const char * filename)"
+
+.SS "long DSO_ctrl (\fBDSO\fP * dso, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "int DSO_flags (\fBDSO\fP * dso)"
+
+.SS "int DSO_free (\fBDSO\fP * dso)"
+
+.SS "\fBDSO_METHOD\fP* DSO_get_default_method (\fBvoid\fP)"
+
+.SS "const char* DSO_get_filename (\fBDSO\fP * dso)"
+
+.SS "const char* DSO_get_loaded_filename (\fBDSO\fP * dso)"
+
+.SS "\fBDSO_METHOD\fP* DSO_get_method (\fBDSO\fP * dso)"
+
+.SS "\fBvoid\fP* DSO_global_lookup (const char * name)"
+
+.SS "\fBDSO\fP* DSO_load (\fBDSO\fP * dso, const char * filename, \fBDSO_METHOD\fP * meth, int flags)"
+
+.SS "char* DSO_merge (\fBDSO\fP * dso, const char * filespec1, const char * filespec2)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_beos (\fBvoid\fP)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_dl (\fBvoid\fP)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_dlfcn (\fBvoid\fP)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_null (\fBvoid\fP)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_openssl (\fBvoid\fP)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_vms (\fBvoid\fP)"
+
+.SS "\fBDSO_METHOD\fP* DSO_METHOD_win32 (\fBvoid\fP)"
+
+.SS "\fBDSO\fP* DSO_new (\fBvoid\fP)"
+
+.SS "\fBDSO\fP* DSO_new_method (\fBDSO_METHOD\fP * method)"
+
+.SS "int DSO_pathbyaddr (\fBvoid\fP * addr, char * path, int sz)"
+
+.SS "\fBvoid\fP DSO_set_default_method (\fBDSO_METHOD\fP * meth)"
+
+.SS "int DSO_set_filename (\fBDSO\fP * dso, const char * filename)"
+
+.SS "\fBDSO_METHOD\fP* DSO_set_method (\fBDSO\fP * dso, \fBDSO_METHOD\fP * meth)"
+
+.SS "int DSO_set_name_converter (\fBDSO\fP * dso, \fBDSO_NAME_CONVERTER_FUNC\fP cb, \fBDSO_NAME_CONVERTER_FUNC\fP * oldcb)"
+
+.SS "int DSO_up_ref (\fBDSO\fP * dso)"
+
+.SS "\fBvoid\fP ERR_load_DSO_strings (\fBvoid\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

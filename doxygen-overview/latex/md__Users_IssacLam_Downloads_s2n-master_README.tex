@@ -1,0 +1,117 @@
+
+
+s2n is a C99 implementation of the T\+L\+S/\+S\+SL protocols that is designed to be simple, small, fast, and with security as a priority. It is released and licensed under the Apache Software License 2.\+0.
+
+\href{https://travis-ci.org/awslabs/s2n}{\tt } \href{http://aws.amazon.com/apache-2-0/}{\tt } \href{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf}{\tt } \href{https://github.com/awslabs/s2n/network}{\tt } \href{https://github.com/awslabs/s2n/stargazers}{\tt }
+
+\subsection*{Using s2n}
+
+The s2n I/O A\+P\+Is are designed to be intuitive to developers familiar with the widely-\/used P\+O\+S\+IX I/O A\+P\+Is, and s2n supports blocking, non-\/blocking, and full-\/duplex I/O. Additionally there are no locks or mutexes within s2n.
+
+
+\begin{DoxyCode}
+\textcolor{comment}{/* Create a server mode connection handle */}
+\textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER});
+\textcolor{keywordflow}{if} (conn == NULL) \{
+    ... error ...
+\}
+
+\textcolor{comment}{/* Associate a connection with a file descriptor */}
+\textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a80776ecf7e726f52165cdec5e2652d1e}{s2n\_connection\_set\_fd}(conn, fd) < 0) \{
+    ... error ...
+\}
+
+\textcolor{comment}{/* Negotiate the TLS handshake */}
+s2n\_blocked\_status blocked;
+\textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked) < 0) \{
+    ... error ...
+\}
+
+\textcolor{comment}{/* Write data to the connection */}
+\textcolor{keywordtype}{int} bytes\_written;
+bytes\_written = \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, \textcolor{stringliteral}{"Hello World"}, \textcolor{keyword}{sizeof}(\textcolor{stringliteral}{"Hello World"}), &blocked);
+\end{DoxyCode}
+
+
+For details on building the s2n library and how to use s2n in an application you are developing, see the https\+://github.com/awslabs/s2n/blob/master/docs/\+U\+S\+A\+G\+E-\/\+G\+U\+I\+D\+E.\+md \char`\"{}\+A\+P\+I Reference\char`\"{}.
+
+\subsection*{s2n features}
+
+s2n implements S\+S\+Lv3, T\+L\+S1.\+0, T\+L\+S1.\+1, and T\+L\+S1.\+2. For encryption, s2n supports 128-\/bit and 256-\/bit A\+ES, in the C\+BC and G\+CM modes, 3\+D\+ES, and R\+C4. For forward secrecy, s2n supports both D\+HE and E\+C\+D\+HE. s2n also supports the Server Name Indicator (S\+NI), Application-\/\+Layer Protocol Negotiation (A\+L\+PN) and the Online Certificate Status Protocol (O\+C\+SP) T\+LS extensions. S\+S\+Lv3, R\+C4, and D\+HE are each disabled by default for security reasons.
+
+As it can be difficult to keep track of which encryption algorithms and protocols are best to use, s2n features a simple A\+PI to use the latest \char`\"{}default\char`\"{} set of preferences. If you prefer to remain on a specific version for backwards compatibility, that is also supported.
+
+
+\begin{DoxyCode}
+\textcolor{comment}{/* Use the latest s2n "default" set of ciphersuite and protocol preferences */}
+\hyperlink{s2n_8h_a21b09fcd09e2d33e8ed9389a109f2ab2}{s2n\_config\_set\_cipher\_preferences}(config, \textcolor{stringliteral}{"default"});
+
+\textcolor{comment}{/* Use a specific set of preferences, update when you're ready */}
+\hyperlink{s2n_8h_a21b09fcd09e2d33e8ed9389a109f2ab2}{s2n\_config\_set\_cipher\_preferences}(config, \textcolor{stringliteral}{"20150306"})
+\end{DoxyCode}
+
+
+\subsection*{s2n safety mechanisms}
+
+Internally s2n takes a systematic approach to data protection and includes several mechanisms designed to improve safety.
+
+\subparagraph*{Small and auditable code base}
+
+Ignoring tests, blank lines and comments, s2n is about 6,000 lines of code. s2n\textquotesingle{}s code is also structured and written with a focus on reviewability. All s2n code is subject to code review, and we plan to complete security evaluations of s2n on an annual basis.
+
+To date there have been two external code-\/level reviews of s2n, including one by a commercial security vendor. s2n has also been shared with some trusted members of the broader cryptography, security, and Open Source communities. Any issues discovered are always recorded in the s2n issue tracker.
+
+\subparagraph*{Static analysis, fuzz-\/testing and penetration testing}
+
+In addition to code reviews, s2n is subject to regular static analysis, fuzz-\/testing, and penetration testing. Several penetration tests have occurred, including two by commercial vendors.
+
+\subparagraph*{Unit tests and end-\/to-\/end testing}
+
+s2n includes positive and negative unit tests and end-\/to-\/end test cases.
+
+\subparagraph*{Erase on read}
+
+s2n encrypts or erases plaintext data as quickly as possible. For example, decrypted data buffers are erased as they are read by the application.
+
+\subparagraph*{Built-\/in memory protection}
+
+s2n uses operating system features to protect data from being swapped to disk or appearing in core dumps.
+
+\subparagraph*{Minimalist feature adoption}
+
+s2n avoids implementing rarely used options and extensions, as well as features with a history of triggering protocol-\/level vulnerabilities. For example there is no support for session renegotiation or D\+T\+LS.
+
+\subparagraph*{Compartmentalized random number generation}
+
+The security of T\+LS and its associated encryption algorithms depends upon secure random number generation. s2n provides every thread with two separate random number generators. One for \char`\"{}public\char`\"{} randomly generated data that may appear in the clear, and one for \char`\"{}private\char`\"{} data that should remain secret. This approach lessens the risk of potential predictability weaknesses in random number generation algorithms from leaking information across contexts.
+
+\subparagraph*{Modularized encryption}
+
+s2n has been structured so that different encryption libraries may be used. Today s2n supports Open\+S\+SL, Libre\+S\+SL, Boring\+S\+SL, and the Apple Common Crypto framework to perform the underlying cryptographic operations.
+
+\subparagraph*{Timing blinding}
+
+s2n includes structured support for blinding time-\/based side-\/channels that may leak sensitive data. For example, if s2n fails to parse a T\+LS record or handshake message, s2n will add a randomized delay of between 10 and 30 seconds, granular to nanoseconds, before responding. This raises the complexity of real-\/world timing side-\/channel attacks by a factor of at least tens of trillions.
+
+\subparagraph*{Table based state-\/machines}
+
+s2n uses simple tables to drive the T\+L\+S/\+S\+SL state machines, making it difficult for invalid out-\/of-\/order states to arise.
+
+\subparagraph*{C safety}
+
+s2n is written in C, but makes light use of standard C library functions and wraps all memory handling, string handling, and serialization in systematic boundary-\/enforcing checks.
+
+\subsection*{Security issue notifications}
+
+If you discover a potential security issue in s2n we ask that you notify A\+WS Security via our \href{http://aws.amazon.com/security/vulnerability-reporting/}{\tt vulnerability reporting page}. Please do {\bfseries not} create a public github issue.
+
+If you package or distribute s2n, or use s2n as part of a large multi-\/user service, you may be eligible for pre-\/notification of future s2n releases. Please contact \href{mailto:s2n-pre-notification@amazon.com}{\tt s2n-\/pre-\/notification@amazon.\+com}.
+
+\subsection*{Contributing to s2n}
+
+If you are interested in contributing to s2n, please see our https\+://github.com/awslabs/s2n/blob/master/docs/\+D\+E\+V\+E\+L\+O\+P\+M\+E\+N\+T-\/\+G\+U\+I\+D\+E.\+md \char`\"{}development guide\char`\"{}.
+
+\subsection*{Language Bindings for s2n}
+
+See our https\+://github.com/awslabs/s2n/blob/master/docs/\+B\+I\+N\+D\+I\+N\+G\+S.\+md \char`\"{}language bindings list\char`\"{} for language bindings for s2n that we\textquotesingle{}re aware of. 

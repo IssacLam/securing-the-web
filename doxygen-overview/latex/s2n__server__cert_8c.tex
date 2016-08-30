@@ -1,0 +1,140 @@
+\hypertarget{s2n__server__cert_8c}{}\section{s2n-\/master/tls/s2n\+\_\+server\+\_\+cert.c File Reference}
+\label{s2n__server__cert_8c}\index{s2n-\/master/tls/s2n\+\_\+server\+\_\+cert.\+c@{s2n-\/master/tls/s2n\+\_\+server\+\_\+cert.\+c}}
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+server\+\_\+cert.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__cert_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__server__cert_8c_aea75ffb292cac5d71183fee7c14b7496}{s2n\+\_\+server\+\_\+cert\+\_\+recv} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__server__cert_8c_ab1bb9b2e08cb682e4bb9b156b49a0afa}{s2n\+\_\+server\+\_\+cert\+\_\+send} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+server\+\_\+cert.\+c@{s2n\+\_\+server\+\_\+cert.\+c}!s2n\+\_\+server\+\_\+cert\+\_\+recv@{s2n\+\_\+server\+\_\+cert\+\_\+recv}}
+\index{s2n\+\_\+server\+\_\+cert\+\_\+recv@{s2n\+\_\+server\+\_\+cert\+\_\+recv}!s2n\+\_\+server\+\_\+cert.\+c@{s2n\+\_\+server\+\_\+cert.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+server\+\_\+cert\+\_\+recv(struct s2n\+\_\+connection $\ast$conn)}{s2n_server_cert_recv(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+server\+\_\+cert\+\_\+recv (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__cert_8c_aea75ffb292cac5d71183fee7c14b7496}{}\label{s2n__server__cert_8c_aea75ffb292cac5d71183fee7c14b7496}
+
+
+Definition at line 29 of file s2n\+\_\+server\+\_\+cert.\+c.
+
+
+\begin{DoxyCode}
+30 \{
+31     uint32\_t size\_of\_all\_certificates;
+32 
+33     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a71787bb6eeba3413137cde42d32a0f6c}{s2n\_stuffer\_read\_uint24}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, &size\_of\_all\_certificates));
+34 
+35     \textcolor{keywordflow}{if} (size\_of\_all\_certificates > \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}) || size\_of\_all\_certificates < 3) \{
+36         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+37     \}
+38 
+39     \textcolor{keywordtype}{int} certificate\_count = 0;
+40     \textcolor{keywordflow}{while} (\hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io})) \{
+41         uint32\_t certificate\_size;
+42 
+43         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a71787bb6eeba3413137cde42d32a0f6c}{s2n\_stuffer\_read\_uint24}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, &certificate\_size));
+44 
+45         \textcolor{keywordflow}{if} (certificate\_size > \hyperlink{s2n__stuffer_8h_a56d3da0e05e4c05eb87a343306c4f170}{s2n\_stuffer\_data\_available}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}) || certificate\_size == 0) \{
+46             \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+47         \}
+48 
+49         \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} asn1cert;
+50         asn1cert.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, certificate\_size);
+51         asn1cert.size = certificate\_size;
+52         \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(asn1cert.data);
+53 
+54         \textcolor{comment}{/* TODO: certificate validation goes here */}
+55         \hyperlink{s2n__safety_8h_a83da623ffe1132fa8ff86945161d4ed7}{gt\_check}(certificate\_size, 0);
+56 
+57         \textcolor{comment}{/* Pull the public key from the first certificate */}
+58         \textcolor{keywordflow}{if} (certificate\_count == 0) \{
+59             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__rsa_8c_a4cd1d9d3c5bb5e42c5301366b38b361a}{s2n\_asn1der\_to\_rsa\_public\_key}(&conn->
+      \hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ac66524c1ba7864aa76ef5774384e7579}{server\_rsa\_public\_key}, &asn1cert));
+60         \}
+61 
+62         certificate\_count++;
+63     \}
+64 
+65     \hyperlink{s2n__safety_8h_a033f3870a2832a9972eadb4700f725b9}{gte\_check}(certificate\_count, 1);
+66 
+67     \textcolor{keywordflow}{return} 0;
+68 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__cert_8c_aea75ffb292cac5d71183fee7c14b7496_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+server\+\_\+cert.\+c@{s2n\+\_\+server\+\_\+cert.\+c}!s2n\+\_\+server\+\_\+cert\+\_\+send@{s2n\+\_\+server\+\_\+cert\+\_\+send}}
+\index{s2n\+\_\+server\+\_\+cert\+\_\+send@{s2n\+\_\+server\+\_\+cert\+\_\+send}!s2n\+\_\+server\+\_\+cert.\+c@{s2n\+\_\+server\+\_\+cert.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+server\+\_\+cert\+\_\+send(struct s2n\+\_\+connection $\ast$conn)}{s2n_server_cert_send(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+server\+\_\+cert\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__cert_8c_ab1bb9b2e08cb682e4bb9b156b49a0afa}{}\label{s2n__server__cert_8c_ab1bb9b2e08cb682e4bb9b156b49a0afa}
+
+
+Definition at line 70 of file s2n\+\_\+server\+\_\+cert.\+c.
+
+
+\begin{DoxyCode}
+71 \{
+72     \textcolor{keyword}{struct }\hyperlink{structs2n__cert__chain}{s2n\_cert\_chain} *head = conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->
+      \hyperlink{structs2n__crypto__parameters_a20dd75e38ae2f99535e509425e4dface}{chosen\_cert\_chain}->\hyperlink{structs2n__cert__chain__and__key_a006e23cea0adf1733edba58ea15cd7ed}{head};
+73 
+74     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server}->\hyperlink{structs2n__crypto__parameters_a20dd75e38ae2f99535e509425e4dface}{chosen\_cert\_chain}->\hyperlink{structs2n__cert__chain__and__key_af6903d14cb3f4627a8cfe70d368b1413}{chain\_size}));
+75 
+76     \textcolor{keywordflow}{while} (head) \{
+77         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, head->\hyperlink{structs2n__cert__chain_a875a2920fc4ec101b865d6006baa3b75}{cert}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+78         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, head->\hyperlink{structs2n__cert__chain_a875a2920fc4ec101b865d6006baa3b75}{cert}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, head->\hyperlink{structs2n__cert__chain_a875a2920fc4ec101b865d6006baa3b75}{cert}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+79         head = head->\hyperlink{structs2n__cert__chain_ae78fa31ff74363e3d7351dd25f5a0745}{next};
+80     \}
+81 
+82     \textcolor{keywordflow}{return} 0;
+83 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__cert_8c_ab1bb9b2e08cb682e4bb9b156b49a0afa_cgraph}
+\end{center}
+\end{figure}
+
+

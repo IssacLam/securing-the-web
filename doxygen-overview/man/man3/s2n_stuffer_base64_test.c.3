@@ -1,0 +1,101 @@
+.TH "s2n-master/tests/unit/s2n_stuffer_base64_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_stuffer_base64_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 23 of file s2n_stuffer_base64_test\&.c\&.
+.PP
+.nf
+24 {
+25     char hello_world[] = "Hello world!";
+26     uint8_t hello_world_base64[] = "SGVsbG8gd29ybGQhAA==";
+27     struct s2n_stuffer stuffer, known_data, scratch, entropy, mirror;
+28     uint8_t pad[50];
+29     struct s2n_blob r = {\&.data = pad, \&.size = sizeof(pad)};
+30 
+31     BEGIN_TEST();
+32     
+33 
+34     /* Create a 100 byte stuffer */
+35     EXPECT_SUCCESS(s2n_stuffer_alloc(&stuffer, 1000));
+36 
+37     /* Write our known data */
+38     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_string(&known_data, hello_world));
+39     EXPECT_SUCCESS(s2n_stuffer_write_base64(&stuffer, &known_data));
+40     EXPECT_SUCCESS(s2n_stuffer_free(&known_data));
+41 
+42     /* Check it against the known output */
+43     EXPECT_EQUAL(memcmp(stuffer\&.blob\&.data, hello_world_base64, strlen((char *)hello_world)), 0);
+44 
+45     /* Check that we can read it again */
+46     EXPECT_SUCCESS(s2n_stuffer_alloc(&scratch, 50));
+47     EXPECT_SUCCESS(s2n_stuffer_read_base64(&stuffer, &scratch));
+48     EXPECT_SUCCESS(memcmp(scratch\&.blob\&.data, hello_world, strlen(hello_world)));
+49 
+50     /* Now try with some randomly generated data\&. Make sure we try each boundary case,
+51      * where size % 3 == 0, 1, 2
+52      */
+53     EXPECT_SUCCESS(s2n_stuffer_alloc(&entropy, 50));
+54     EXPECT_SUCCESS(s2n_stuffer_alloc(&mirror, 50));
+55 
+56     for (int i = entropy\&.blob\&.size; i > 0; i--) {
+57         EXPECT_SUCCESS(s2n_stuffer_wipe(&stuffer));
+58         EXPECT_SUCCESS(s2n_stuffer_wipe(&entropy));
+59         EXPECT_SUCCESS(s2n_stuffer_wipe(&mirror));
+60 
+61         /* Get i bytes of random data */
+62         r\&.size = i;
+63         EXPECT_SUCCESS(s2n_get_urandom_data(&r));
+64         EXPECT_SUCCESS(s2n_stuffer_write_bytes(&entropy, pad, i));
+65 
+66         /* Write i bytes  it, base64 encoded */
+67         /* Read it back, decoded */
+68         EXPECT_SUCCESS(s2n_stuffer_write_base64(&stuffer, &entropy));
+69 
+70         /* Should be (i / 3) * 4 + a carry  */
+71         EXPECT_EQUAL((i / 3) * 4 + ((i % 3) ? 4 : 0), s2n_stuffer_data_available(&stuffer));
+72 
+73         /* Read it back, decoded */
+74         EXPECT_SUCCESS(s2n_stuffer_read_base64(&stuffer, &mirror));
+75 
+76         /* Verify it's the same */
+77         EXPECT_EQUAL(memcmp(mirror\&.blob\&.data, entropy\&.blob\&.data, i), 0);
+78     }
+79 
+80     EXPECT_SUCCESS(s2n_stuffer_free(&stuffer));
+81     EXPECT_SUCCESS(s2n_stuffer_free(&scratch));
+82     EXPECT_SUCCESS(s2n_stuffer_free(&mirror));
+83     EXPECT_SUCCESS(s2n_stuffer_free(&entropy));
+84 
+85     END_TEST();
+86 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

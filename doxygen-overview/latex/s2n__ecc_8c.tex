@@ -1,0 +1,512 @@
+\hypertarget{s2n__ecc_8c}{}\section{s2n-\/master/crypto/s2n\+\_\+ecc.c File Reference}
+\label{s2n__ecc_8c}\index{s2n-\/master/crypto/s2n\+\_\+ecc.\+c@{s2n-\/master/crypto/s2n\+\_\+ecc.\+c}}
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+ecc.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$openssl/ec.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/bn.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ecdh.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/obj\+\_\+mac.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls\+\_\+parameters.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+ecc.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__ecc_8c_ae4af4bd5bbab2674956ff1bdac54acfd}{T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED}~3
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__ecc_8c_aeec802fc7158ae21261d4601d559cf8f}{s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key} (struct \hyperlink{structs2n__ecc__params}{s2n\+\_\+ecc\+\_\+params} $\ast$server\+\_\+ecc\+\_\+params)
+\item 
+int \hyperlink{s2n__ecc_8c_a22f487d2899e677ff0567f080c25cdd8}{s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params} (struct \hyperlink{structs2n__ecc__params}{s2n\+\_\+ecc\+\_\+params} $\ast$server\+\_\+ecc\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$out, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$written)
+\item 
+int \hyperlink{s2n__ecc_8c_a5e4d1afa56f139f9e455415fa3abc4b2}{s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params} (struct \hyperlink{structs2n__ecc__params}{s2n\+\_\+ecc\+\_\+params} $\ast$server\+\_\+ecc\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$in, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$read)
+\item 
+int \hyperlink{s2n__ecc_8c_a11a83b6df21bca2cffecea1e80b2583f}{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server} (struct \hyperlink{structs2n__ecc__params}{s2n\+\_\+ecc\+\_\+params} $\ast$server\+\_\+ecc\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$Yc\+\_\+in, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$shared\+\_\+key)
+\item 
+int \hyperlink{s2n__ecc_8c_adf5f203c386c47c234efb85287401f7f}{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client} (struct \hyperlink{structs2n__ecc__params}{s2n\+\_\+ecc\+\_\+params} $\ast$server\+\_\+ecc\+\_\+params, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$Yc\+\_\+out, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$shared\+\_\+key)
+\item 
+int \hyperlink{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d}{s2n\+\_\+ecc\+\_\+params\+\_\+free} (struct \hyperlink{structs2n__ecc__params}{s2n\+\_\+ecc\+\_\+params} $\ast$server\+\_\+ecc\+\_\+params)
+\item 
+int \hyperlink{s2n__ecc_8c_abb776b3598360bc599df037aec01faa0}{s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$iana\+\_\+ids, const struct \hyperlink{structs2n__ecc__named__curve}{s2n\+\_\+ecc\+\_\+named\+\_\+curve} $\ast$$\ast$found)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const struct \hyperlink{structs2n__ecc__named__curve}{s2n\+\_\+ecc\+\_\+named\+\_\+curve} \hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\+\_\+ecc\+\_\+supported\+\_\+curves} \mbox{[}2\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED@{T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED}}
+\index{T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED@{T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED}{TLS_EC_CURVE_TYPE_NAMED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+E\+C\+\_\+\+C\+U\+R\+V\+E\+\_\+\+T\+Y\+P\+E\+\_\+\+N\+A\+M\+ED~3}\hypertarget{s2n__ecc_8c_ae4af4bd5bbab2674956ff1bdac54acfd}{}\label{s2n__ecc_8c_ae4af4bd5bbab2674956ff1bdac54acfd}
+
+
+Definition at line 28 of file s2n\+\_\+ecc.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key@{s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key}}
+\index{s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key@{s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key(struct s2n\+\_\+ecc\+\_\+params $\ast$server\+\_\+ecc\+\_\+params)}{s2n_ecc_generate_ephemeral_key(struct s2n_ecc_params *server_ecc_params)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+generate\+\_\+ephemeral\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+ecc\+\_\+params} $\ast$}]{server\+\_\+ecc\+\_\+params}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_aeec802fc7158ae21261d4601d559cf8f}{}\label{s2n__ecc_8c_aeec802fc7158ae21261d4601d559cf8f}
+
+
+Definition at line 42 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+43 \{
+44     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve});
+45     server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key} = s2n\_ecc\_generate\_own\_key(server\_ecc\_params->
+      \hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve});
+46     \textcolor{keywordflow}{if} (server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key} == NULL) \{
+47         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a59d438f8b9b73def7eeba529ff4bac9d}{S2N\_ERR\_ECDHE\_GEN\_KEY});
+48     \}
+49     \textcolor{keywordflow}{return} 0;
+50 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_aeec802fc7158ae21261d4601d559cf8f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params@{s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params}}
+\index{s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params@{s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params(struct s2n\+\_\+ecc\+\_\+params $\ast$server\+\_\+ecc\+\_\+params, struct s2n\+\_\+stuffer $\ast$out, struct s2n\+\_\+blob $\ast$written)}{s2n_ecc_write_ecc_params(struct s2n_ecc_params *server_ecc_params, struct s2n_stuffer *out, struct s2n_blob *written)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+write\+\_\+ecc\+\_\+params (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+ecc\+\_\+params} $\ast$}]{server\+\_\+ecc\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{out, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{written}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_a22f487d2899e677ff0567f080c25cdd8}{}\label{s2n__ecc_8c_a22f487d2899e677ff0567f080c25cdd8}
+
+
+Definition at line 52 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+53 \{
+54     uint8\_t point\_len;
+55     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} point;
+56 
+57     \textcolor{comment}{/* Remember when the written data starts */}
+58     written->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(out, 0);
+59     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(written->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data});
+60 
+61     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(out, 
+      \hyperlink{s2n__ecc_8c_ae4af4bd5bbab2674956ff1bdac54acfd}{TLS\_EC\_CURVE\_TYPE\_NAMED}));
+62     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(out, server\_ecc\_params->
+      \hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve}->\hyperlink{structs2n__ecc__named__curve_aed2eff88de004a99c7833b5aee330568}{iana\_id}));
+63 
+64     \textcolor{comment}{/* Precalculate point length */}
+65     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_ecc\_calculate\_point\_length(\hyperlink{crypto_2ec_2ec_8h_a4801169f999e2527d5368ec2a8cfc20a}{EC\_KEY\_get0\_public\_key}(
+      server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}), \hyperlink{crypto_2ec_2ec_8h_aa11ad233e9c9a49d34d33e2feef70c33}{EC\_KEY\_get0\_group}(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}), &point\_len));
+66 
+67     \textcolor{comment}{/* Write point length */}
+68     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(out, point\_len));
+69 
+70     \textcolor{comment}{/* Write the point */}
+71     point.data = \hyperlink{s2n__stuffer_8c_afdc941db81df32f38b7800210f3f2d11}{s2n\_stuffer\_raw\_write}(out, point\_len);
+72     point.size = point\_len;
+73     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(point.data);
+74     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_ecc\_write\_point\_data\_snug(\hyperlink{crypto_2ec_2ec_8h_a4801169f999e2527d5368ec2a8cfc20a}{EC\_KEY\_get0\_public\_key}(server\_ecc\_params
+      ->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}), \hyperlink{crypto_2ec_2ec_8h_aa11ad233e9c9a49d34d33e2feef70c33}{EC\_KEY\_get0\_group}(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}), &point));
+75 
+76     written->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 3 + (1 + point\_len);
+77 
+78     \textcolor{keywordflow}{return} 0;
+79 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a22f487d2899e677ff0567f080c25cdd8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a22f487d2899e677ff0567f080c25cdd8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params@{s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params}}
+\index{s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params@{s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params(struct s2n\+\_\+ecc\+\_\+params $\ast$server\+\_\+ecc\+\_\+params, struct s2n\+\_\+stuffer $\ast$in, struct s2n\+\_\+blob $\ast$read)}{s2n_ecc_read_ecc_params(struct s2n_ecc_params *server_ecc_params, struct s2n_stuffer *in, struct s2n_blob *read)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+read\+\_\+ecc\+\_\+params (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+ecc\+\_\+params} $\ast$}]{server\+\_\+ecc\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{in, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{read}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_a5e4d1afa56f139f9e455415fa3abc4b2}{}\label{s2n__ecc_8c_a5e4d1afa56f139f9e455415fa3abc4b2}
+
+
+Definition at line 81 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+82 \{
+83     uint8\_t curve\_type;
+84     uint8\_t point\_length;
+85     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} point\_blob, curve\_blob;
+86     \hyperlink{structec__point__st}{EC\_POINT} *point;
+87 
+88     \textcolor{comment}{/* Remember where we started reading the data */}
+89     read->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(in, 0);
+90     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(read->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data});
+91 
+92     \textcolor{comment}{/* Read the curve */}
+93     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, &curve\_type));
+94     \textcolor{keywordflow}{if} (curve\_type != \hyperlink{s2n__ecc_8c_ae4af4bd5bbab2674956ff1bdac54acfd}{TLS\_EC\_CURVE\_TYPE\_NAMED}) \{
+95         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+96     \}
+97     curve\_blob.data = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(in, 2);
+98     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(curve\_blob.data);
+99 
+100     curve\_blob.size = 2;
+101     \textcolor{comment}{/* Verify that the client supports the server curve */}
+102     \textcolor{keywordflow}{if} (\hyperlink{s2n__ecc_8c_abb776b3598360bc599df037aec01faa0}{s2n\_ecc\_find\_supported\_curve}(&curve\_blob, &server\_ecc\_params->
+      \hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve}) != 0) \{
+103         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a05bae59c6e1cb8b82abdde7ee1ff5b74}{S2N\_ERR\_ECDHE\_UNSUPPORTED\_CURVE});
+104     \}
+105     \textcolor{comment}{/* Create a key to store the server public point */}
+106     server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key} = \hyperlink{crypto_2ec_2ec_8h_a182a5987df69a31238f78634f6d57e8d}{EC\_KEY\_new\_by\_curve\_name}(server\_ecc\_params->
+      \hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve}->\hyperlink{structs2n__ecc__named__curve_a3f490463e3deacd512f6e95f6f906b75}{libcrypto\_nid});
+107     \textcolor{keywordflow}{if} (server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key} == NULL) \{
+108         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a05bae59c6e1cb8b82abdde7ee1ff5b74}{S2N\_ERR\_ECDHE\_UNSUPPORTED\_CURVE});
+109     \}
+110 
+111     \textcolor{comment}{/* Read the point */}
+112     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(in, &point\_length));
+113     point\_blob.size = point\_length;
+114     point\_blob.data = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(in, point\_blob.size);
+115     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(point\_blob.data);
+116 
+117     \textcolor{comment}{/* Parse and store the server public point */}
+118     point = s2n\_ecc\_blob\_to\_point(&point\_blob, server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key});
+119     \textcolor{keywordflow}{if} (point == NULL) \{
+120         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+121     \}
+122     \textcolor{keywordflow}{if} (\hyperlink{crypto_2ec_2ec_8h_ab3456a0d8ea13abb1e0c4c79fa0fef48}{EC\_KEY\_set\_public\_key}(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}, point) != 1) \{
+123         \hyperlink{crypto_2ec_2ec_8h_a7defc41c1babb9e601de2d50c9fc81b5}{EC\_POINT\_free}(point);
+124         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+125     \}
+126     \hyperlink{crypto_2ec_2ec_8h_a7defc41c1babb9e601de2d50c9fc81b5}{EC\_POINT\_free}(point);
+127 
+128     read->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 3 + (1 + point\_length);
+129 
+130     \textcolor{keywordflow}{return} 0;
+131 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a5e4d1afa56f139f9e455415fa3abc4b2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a5e4d1afa56f139f9e455415fa3abc4b2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server@{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server}}
+\index{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server@{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server(struct s2n\+\_\+ecc\+\_\+params $\ast$server\+\_\+ecc\+\_\+params, struct s2n\+\_\+stuffer $\ast$\+Yc\+\_\+in, struct s2n\+\_\+blob $\ast$shared\+\_\+key)}{s2n_ecc_compute_shared_secret_as_server(struct s2n_ecc_params *server_ecc_params, struct s2n_stuffer *Yc_in, struct s2n_blob *shared_key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+ecc\+\_\+params} $\ast$}]{server\+\_\+ecc\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{Yc\+\_\+in, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{shared\+\_\+key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_a11a83b6df21bca2cffecea1e80b2583f}{}\label{s2n__ecc_8c_a11a83b6df21bca2cffecea1e80b2583f}
+
+
+Definition at line 133 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+134 \{
+135     uint8\_t client\_public\_len;
+136     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} client\_public\_blob;
+137     \hyperlink{structec__point__st}{EC\_POINT} *client\_public;
+138     \textcolor{keywordtype}{int} rc;
+139 
+140     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(Yc\_in, &client\_public\_len));
+141     client\_public\_blob.size = client\_public\_len;
+142     client\_public\_blob.data = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(Yc\_in, client\_public\_blob.size);
+143     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(client\_public\_blob.data);
+144 
+145     \textcolor{comment}{/* Parse the client public */}
+146     client\_public = s2n\_ecc\_blob\_to\_point(&client\_public\_blob, server\_ecc\_params->
+      \hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key});
+147     \textcolor{keywordflow}{if} (client\_public == NULL) \{
+148         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+149     \}
+150 
+151     \textcolor{comment}{/* Compute the key and free the point */}
+152     rc = s2n\_ecc\_compute\_shared\_secret(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}, client\_public, shared\_key);
+153     \hyperlink{crypto_2ec_2ec_8h_a7defc41c1babb9e601de2d50c9fc81b5}{EC\_POINT\_free}(client\_public);
+154     \textcolor{keywordflow}{return} rc;
+155 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a11a83b6df21bca2cffecea1e80b2583f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{s2n__ecc_8c_a11a83b6df21bca2cffecea1e80b2583f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client@{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client}}
+\index{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client@{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client(struct s2n\+\_\+ecc\+\_\+params $\ast$server\+\_\+ecc\+\_\+params, struct s2n\+\_\+stuffer $\ast$\+Yc\+\_\+out, struct s2n\+\_\+blob $\ast$shared\+\_\+key)}{s2n_ecc_compute_shared_secret_as_client(struct s2n_ecc_params *server_ecc_params, struct s2n_stuffer *Yc_out, struct s2n_blob *shared_key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+compute\+\_\+shared\+\_\+secret\+\_\+as\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+ecc\+\_\+params} $\ast$}]{server\+\_\+ecc\+\_\+params, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{Yc\+\_\+out, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{shared\+\_\+key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_adf5f203c386c47c234efb85287401f7f}{}\label{s2n__ecc_8c_adf5f203c386c47c234efb85287401f7f}
+
+
+Definition at line 157 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+158 \{
+159     \hyperlink{structec__key__st}{EC\_KEY} *client\_key;
+160 
+161     \textcolor{comment}{/* Generate the client key. Don't forget to free it. */}
+162     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve});
+163     client\_key = s2n\_ecc\_generate\_own\_key(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a1e0c49e3a87b8db6332443fcf0462468}{negotiated\_curve});
+164     \textcolor{keywordflow}{if} (client\_key == NULL) \{
+165         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a59d438f8b9b73def7eeba529ff4bac9d}{S2N\_ERR\_ECDHE\_GEN\_KEY});
+166     \}
+167 
+168     \textcolor{comment}{/* Compute the shared secret */}
+169     \textcolor{keywordflow}{if} (s2n\_ecc\_compute\_shared\_secret(client\_key, \hyperlink{crypto_2ec_2ec_8h_a4801169f999e2527d5368ec2a8cfc20a}{EC\_KEY\_get0\_public\_key}(
+      server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key}), shared\_key) != 0) \{
+170         \hyperlink{crypto_2ec_2ec_8h_af3759e18dd8bf0c3144527c0377668a7}{EC\_KEY\_free}(client\_key);
+171         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a62aff74bf4b886c16f4e61fa3bd4d970}{S2N\_ERR\_ECDHE\_SHARED\_SECRET});
+172     \}
+173 
+174     \textcolor{comment}{/* Write the client public to Yc */}
+175     \textcolor{keywordflow}{if} (s2n\_ecc\_write\_point\_with\_length(\hyperlink{crypto_2ec_2ec_8h_a4801169f999e2527d5368ec2a8cfc20a}{EC\_KEY\_get0\_public\_key}(client\_key), 
+      \hyperlink{crypto_2ec_2ec_8h_aa11ad233e9c9a49d34d33e2feef70c33}{EC\_KEY\_get0\_group}(client\_key), Yc\_out) != 0) \{
+176         \hyperlink{crypto_2ec_2ec_8h_af3759e18dd8bf0c3144527c0377668a7}{EC\_KEY\_free}(client\_key);
+177         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a67be45a1131c05bc23d9ef60c273959b}{S2N\_ERR\_ECDHE\_SERIALIZING});
+178     \}
+179     \hyperlink{crypto_2ec_2ec_8h_af3759e18dd8bf0c3144527c0377668a7}{EC\_KEY\_free}(client\_key);
+180 
+181     \textcolor{keywordflow}{return} 0;
+182 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_adf5f203c386c47c234efb85287401f7f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_adf5f203c386c47c234efb85287401f7f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+params\+\_\+free@{s2n\+\_\+ecc\+\_\+params\+\_\+free}}
+\index{s2n\+\_\+ecc\+\_\+params\+\_\+free@{s2n\+\_\+ecc\+\_\+params\+\_\+free}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+params\+\_\+free(struct s2n\+\_\+ecc\+\_\+params $\ast$server\+\_\+ecc\+\_\+params)}{s2n_ecc_params_free(struct s2n_ecc_params *server_ecc_params)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+params\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+ecc\+\_\+params} $\ast$}]{server\+\_\+ecc\+\_\+params}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d}{}\label{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d}
+
+
+Definition at line 184 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+185 \{
+186     \textcolor{keywordflow}{if} (server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key} != NULL) \{
+187         \hyperlink{crypto_2ec_2ec_8h_af3759e18dd8bf0c3144527c0377668a7}{EC\_KEY\_free}(server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key});
+188         server\_ecc\_params->\hyperlink{structs2n__ecc__params_a507c1731500e509e84bc42991cb6aea6}{ec\_key} = NULL;
+189     \}
+190     \textcolor{keywordflow}{return} 0;
+191 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_a637d230cb6cd42160518cd5778d9994d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve@{s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve}}
+\index{s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve@{s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve(struct s2n\+\_\+blob $\ast$iana\+\_\+ids, const struct s2n\+\_\+ecc\+\_\+named\+\_\+curve $\ast$$\ast$found)}{s2n_ecc_find_supported_curve(struct s2n_blob *iana_ids, const struct s2n_ecc_named_curve **found)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+ecc\+\_\+find\+\_\+supported\+\_\+curve (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{iana\+\_\+ids, }
+\item[{const struct {\bf s2n\+\_\+ecc\+\_\+named\+\_\+curve} $\ast$$\ast$}]{found}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ecc_8c_abb776b3598360bc599df037aec01faa0}{}\label{s2n__ecc_8c_abb776b3598360bc599df037aec01faa0}
+
+
+Definition at line 281 of file s2n\+\_\+ecc.\+c.
+
+
+\begin{DoxyCode}
+282 \{
+283     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} iana\_ids\_in;
+284 
+285     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&iana\_ids\_in, iana\_ids));
+286     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&iana\_ids\_in, iana\_ids));
+287     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \textcolor{keyword}{sizeof}(\hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\_ecc\_supported\_curves}) / \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\_ecc\_supported\_curves}[0]); i++) \{
+288         \textcolor{keyword}{const} \textcolor{keyword}{struct }\hyperlink{structs2n__ecc__named__curve}{s2n\_ecc\_named\_curve} *supported\_curve = &
+      \hyperlink{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{s2n\_ecc\_supported\_curves}[i];
+289         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < iana\_ids->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} / 2; j++) \{
+290             uint16\_t \hyperlink{structs2n__ecc__named__curve_aed2eff88de004a99c7833b5aee330568}{iana\_id};
+291             \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(&iana\_ids\_in, &iana\_id));
+292 
+293             \textcolor{keywordflow}{if} (supported\_curve->\hyperlink{structs2n__ecc__named__curve_aed2eff88de004a99c7833b5aee330568}{iana\_id} == iana\_id) \{
+294                 *found = supported\_curve;
+295                 \textcolor{keywordflow}{return} 0;
+296             \}
+297         \}
+298         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a5d6db4ed8311ba66aec1227fceca24a9}{s2n\_stuffer\_reread}(&iana\_ids\_in));
+299     \}
+300 
+301     \textcolor{comment}{/* Nothing found */}
+302     \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a05bae59c6e1cb8b82abdde7ee1ff5b74}{S2N\_ERR\_ECDHE\_UNSUPPORTED\_CURVE});
+303 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_abb776b3598360bc599df037aec01faa0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ecc_8c_abb776b3598360bc599df037aec01faa0_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}!s2n\+\_\+ecc\+\_\+supported\+\_\+curves@{s2n\+\_\+ecc\+\_\+supported\+\_\+curves}}
+\index{s2n\+\_\+ecc\+\_\+supported\+\_\+curves@{s2n\+\_\+ecc\+\_\+supported\+\_\+curves}!s2n\+\_\+ecc.\+c@{s2n\+\_\+ecc.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+ecc\+\_\+supported\+\_\+curves}{s2n_ecc_supported_curves}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf s2n\+\_\+ecc\+\_\+named\+\_\+curve} s2n\+\_\+ecc\+\_\+supported\+\_\+curves\mbox{[}2\mbox{]}}\hypertarget{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}{}\label{s2n__ecc_8c_a27f438af5123167d9e831390707be2a0}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    \{.iana\_id = \hyperlink{s2n__tls__parameters_8h_a757a1067e7373e3594f0a575e0a05d1f}{TLS\_EC\_CURVE\_SECP\_256\_R1},.libcrypto\_nid = 
+      \hyperlink{crypto_2objects_2obj__mac_8h_ac177770ddc9957dc8f93327507e99476}{NID\_X9\_62\_prime256v1}\},
+    \{.iana\_id = \hyperlink{s2n__tls__parameters_8h_a601d2910b7217811cc85b865d6bc252e}{TLS\_EC\_CURVE\_SECP\_384\_R1},.libcrypto\_nid = 
+      \hyperlink{crypto_2objects_2obj__mac_8h_ab548204ceb887b38de104fa9d2113a70}{NID\_secp384r1}\},
+\}
+\end{DoxyCode}
+
+
+Definition at line 30 of file s2n\+\_\+ecc.\+c.
+

@@ -1,0 +1,226 @@
+.TH "ssl_method_st" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl_method_st \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ssl\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBversion\fP"
+.br
+.ti -1c
+.RI "int(* \fBssl_new\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBssl_clear\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBssl_free\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int(* \fBssl_accept\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int(* \fBssl_connect\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int(* \fBssl_read\fP )(\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int(* \fBssl_peek\fP )(\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int(* \fBssl_write\fP )(\fBSSL\fP *s, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int(* \fBssl_shutdown\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int(* \fBssl_renegotiate\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int(* \fBssl_renegotiate_check\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long(* \fBssl_get_message\fP )(\fBSSL\fP *s, int st1, int stn, int mt, long max, int *ok)"
+.br
+.ti -1c
+.RI "int(* \fBssl_read_bytes\fP )(\fBSSL\fP *s, int \fBtype\fP, unsigned char *buf, int \fBlen\fP, int peek)"
+.br
+.ti -1c
+.RI "int(* \fBssl_write_bytes\fP )(\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf_, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int(* \fBssl_dispatch_alert\fP )(\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long(* \fBssl_ctrl\fP )(\fBSSL\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long(* \fBssl_ctx_ctrl\fP )(\fBSSL_CTX\fP *ctx, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP *(* \fBget_cipher_by_char\fP )(const unsigned char *ptr)"
+.br
+.ti -1c
+.RI "int(* \fBput_cipher_by_char\fP )(const \fBSSL_CIPHER\fP *cipher, unsigned char *ptr)"
+.br
+.ti -1c
+.RI "int(* \fBssl_pending\fP )(const \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int(* \fBnum_ciphers\fP )(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP *(* \fBget_cipher\fP )(unsigned ncipher)"
+.br
+.ti -1c
+.RI "const struct \fBssl_method_st\fP *(* \fBget_ssl_method\fP )(int \fBversion\fP)"
+.br
+.ti -1c
+.RI "long(* \fBget_timeout\fP )(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "struct \fBssl3_enc_method\fP * \fBssl3_enc\fP"
+.br
+.ti -1c
+.RI "int(* \fBssl_version\fP )(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "long(* \fBssl_callback_ctrl\fP )(\fBSSL\fP *s, int cb_id, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "long(* \fBssl_ctx_callback_ctrl\fP )(\fBSSL_CTX\fP *s, int cb_id, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 438 of file ssl\&.h\&.
+.SH "Field Documentation"
+.PP 
+.SS "int version"
+
+.PP
+Definition at line 439 of file ssl\&.h\&.
+.SS "int(* ssl_new)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 440 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* ssl_clear)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 441 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* ssl_free)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 442 of file ssl\&.h\&.
+.SS "int(* ssl_accept)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 443 of file ssl\&.h\&.
+.SS "int(* ssl_connect)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 444 of file ssl\&.h\&.
+.SS "int(* ssl_read)(\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+
+.PP
+Definition at line 445 of file ssl\&.h\&.
+.SS "int(* ssl_peek)(\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+
+.PP
+Definition at line 446 of file ssl\&.h\&.
+.SS "int(* ssl_write)(\fBSSL\fP *s, const \fBvoid\fP *buf, int \fBlen\fP)"
+
+.PP
+Definition at line 447 of file ssl\&.h\&.
+.SS "int(* ssl_shutdown)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 448 of file ssl\&.h\&.
+.SS "int(* ssl_renegotiate)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 449 of file ssl\&.h\&.
+.SS "int(* ssl_renegotiate_check)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 450 of file ssl\&.h\&.
+.SS "long(* ssl_get_message)(\fBSSL\fP *s, int st1, int stn, int mt, long max, int *ok)"
+
+.PP
+Definition at line 451 of file ssl\&.h\&.
+.SS "int(* ssl_read_bytes)(\fBSSL\fP *s, int \fBtype\fP, unsigned char *buf, int \fBlen\fP, int peek)"
+
+.PP
+Definition at line 453 of file ssl\&.h\&.
+.SS "int(* ssl_write_bytes)(\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf_, int \fBlen\fP)"
+
+.PP
+Definition at line 455 of file ssl\&.h\&.
+.SS "int(* ssl_dispatch_alert)(\fBSSL\fP *s)"
+
+.PP
+Definition at line 456 of file ssl\&.h\&.
+.SS "long(* ssl_ctrl)(\fBSSL\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+
+.PP
+Definition at line 457 of file ssl\&.h\&.
+.SS "long(* ssl_ctx_ctrl)(\fBSSL_CTX\fP *ctx, int cmd, long larg, \fBvoid\fP *parg)"
+
+.PP
+Definition at line 458 of file ssl\&.h\&.
+.SS "const \fBSSL_CIPHER\fP *(* get_cipher_by_char)(const unsigned char *ptr)"
+
+.PP
+Definition at line 459 of file ssl\&.h\&.
+.SS "int(* put_cipher_by_char)(const \fBSSL_CIPHER\fP *cipher, unsigned char *ptr)"
+
+.PP
+Definition at line 460 of file ssl\&.h\&.
+.SS "int(* ssl_pending)(const \fBSSL\fP *s)"
+
+.PP
+Definition at line 461 of file ssl\&.h\&.
+.SS "int(* num_ciphers)(\fBvoid\fP)"
+
+.PP
+Definition at line 462 of file ssl\&.h\&.
+.SS "const \fBSSL_CIPHER\fP *(* get_cipher)(unsigned ncipher)"
+
+.PP
+Definition at line 463 of file ssl\&.h\&.
+.SS "const struct \fBssl_method_st\fP *(* get_ssl_method)(int \fBversion\fP)"
+
+.PP
+Definition at line 464 of file ssl\&.h\&.
+.SS "long(* get_timeout)(\fBvoid\fP)"
+
+.PP
+Definition at line 465 of file ssl\&.h\&.
+.SS "struct \fBssl3_enc_method\fP * ssl3_enc"
+
+.PP
+Definition at line 466 of file ssl\&.h\&.
+.SS "int(* ssl_version)(\fBvoid\fP)"
+
+.PP
+Definition at line 467 of file ssl\&.h\&.
+.SS "long(* ssl_callback_ctrl)(\fBSSL\fP *s, int cb_id, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+
+.PP
+Definition at line 468 of file ssl\&.h\&.
+.SS "long(* ssl_ctx_callback_ctrl)(\fBSSL_CTX\fP *s, int cb_id, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+
+.PP
+Definition at line 469 of file ssl\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

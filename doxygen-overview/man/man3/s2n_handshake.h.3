@@ -1,0 +1,143 @@
+.TH "s2n-master/tls/s2n_handshake.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_handshake.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_crypto\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_handshake\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBmessage_type_t\fP { \fBCLIENT_HELLO\fP, \fBSERVER_HELLO\fP, \fBSERVER_CERT\fP, \fBSERVER_CERT_STATUS\fP, \fBSERVER_KEY\fP, \fBSERVER_CERT_REQ\fP, \fBSERVER_HELLO_DONE\fP, \fBCLIENT_CERT\fP, \fBCLIENT_KEY\fP, \fBCLIENT_CERT_VERIFY\fP, \fBCLIENT_CHANGE_CIPHER_SPEC\fP, \fBCLIENT_FINISHED\fP, \fBSERVER_CHANGE_CIPHER_SPEC\fP, \fBSERVER_FINISHED\fP, \fBAPPLICATION_DATA\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_conn_set_handshake_type\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBmessage_type_t\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fICLIENT_HELLO \fP\fP
+.TP
+\fB\fISERVER_HELLO \fP\fP
+.TP
+\fB\fISERVER_CERT \fP\fP
+.TP
+\fB\fISERVER_CERT_STATUS \fP\fP
+.TP
+\fB\fISERVER_KEY \fP\fP
+.TP
+\fB\fISERVER_CERT_REQ \fP\fP
+.TP
+\fB\fISERVER_HELLO_DONE \fP\fP
+.TP
+\fB\fICLIENT_CERT \fP\fP
+.TP
+\fB\fICLIENT_KEY \fP\fP
+.TP
+\fB\fICLIENT_CERT_VERIFY \fP\fP
+.TP
+\fB\fICLIENT_CHANGE_CIPHER_SPEC \fP\fP
+.TP
+\fB\fICLIENT_FINISHED \fP\fP
+.TP
+\fB\fISERVER_CHANGE_CIPHER_SPEC \fP\fP
+.TP
+\fB\fISERVER_FINISHED \fP\fP
+.TP
+\fB\fIAPPLICATION_DATA \fP\fP
+.PP
+Definition at line 28 of file s2n_handshake\&.h\&.
+.PP
+.nf
+28              {
+29     CLIENT_HELLO,
+30     SERVER_HELLO,
+31     SERVER_CERT,
+32     SERVER_CERT_STATUS,
+33     SERVER_KEY,
+34     SERVER_CERT_REQ,
+35     SERVER_HELLO_DONE,
+36     CLIENT_CERT,
+37     CLIENT_KEY,
+38     CLIENT_CERT_VERIFY,
+39     CLIENT_CHANGE_CIPHER_SPEC,
+40     CLIENT_FINISHED,
+41     SERVER_CHANGE_CIPHER_SPEC,
+42     SERVER_FINISHED,
+43     APPLICATION_DATA
+44 } message_type_t;
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_conn_set_handshake_type (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 118 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+119 {
+120     if (s2n_is_caching_enabled(conn->config)) {
+121         if (!s2n_resume_from_cache(conn)) {
+122             conn->handshake\&.handshake_type = RESUME;
+123             return 0;
+124         }
+125 
+126         if (conn->mode == S2N_SERVER) {
+127             struct s2n_blob session_id = {\&.data = conn->session_id,\&.size = S2N_TLS_SESSION_ID_MAX_LEN };
+128 
+129             /* Generate a new session id */
+130             GUARD(s2n_get_public_random_data(&session_id));
+131             conn->session_id_len = S2N_TLS_SESSION_ID_MAX_LEN;
+132         }
+133     }
+134 
+135     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_EPH) {
+136         conn->handshake\&.handshake_type = FULL_WITH_PFS;
+137 
+138         if (s2n_server_can_send_ocsp(conn)) {
+139             conn->handshake\&.handshake_type = FULL_WITH_PFS_WITH_STATUS;
+140         }
+141     } else {
+142         conn->handshake\&.handshake_type = FULL_NO_PFS;
+143 
+144         if (s2n_server_can_send_ocsp(conn)) {
+145             conn->handshake\&.handshake_type = FULL_NO_PFS_WITH_STATUS;
+146         }
+147     }
+148 
+149     return 0;
+150 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

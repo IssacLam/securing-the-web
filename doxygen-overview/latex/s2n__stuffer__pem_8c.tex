@@ -1,0 +1,154 @@
+\hypertarget{s2n__stuffer__pem_8c}{}\section{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+pem.c File Reference}
+\label{s2n__stuffer__pem_8c}\index{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+pem.\+c}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+pem.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__pem_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__stuffer__pem_8c_a72f4cf03c8cb7282cf10736ea8232280}{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH}~64
+\item 
+\#define \hyperlink{s2n__stuffer__pem_8c_a3bf34762949a33758de5feb70cd5baa7}{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE}~\char`\"{}-\/-\/-\/-\/-\/\char`\"{}
+\item 
+\#define \hyperlink{s2n__stuffer__pem_8c_a9c42081c0ae95fbc79511c4a1e5b7c26}{S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN}~(\hyperlink{s2n__stuffer__pem_8c_a3bf34762949a33758de5feb70cd5baa7}{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE} \char`\"{}B\+E\+G\+IN \char`\"{})
+\item 
+\#define \hyperlink{s2n__stuffer__pem_8c_abc84ce20c371a3cff9f8fa9eaf31c6b1}{S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN}~(\hyperlink{s2n__stuffer__pem_8c_a3bf34762949a33758de5feb70cd5baa7}{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE} \char`\"{}E\+ND \char`\"{})
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__pem_8c_a240dc3086fa85eadbb6989e0a2186799}{s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$pem, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$asn1)
+\item 
+int \hyperlink{s2n__stuffer__pem_8c_abdb8ea972bc65569944ce760b97283cf}{s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$pem, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$asn1)
+\item 
+int \hyperlink{s2n__stuffer__pem_8c_acc09d820f511dde4633ecad55f062a87}{s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$pem, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$pkcs3)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH}}
+\index{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH}{S2N_PEM_LINE_LENGTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+N\+E\+\_\+\+L\+E\+N\+G\+TH~64}\hypertarget{s2n__stuffer__pem_8c_a72f4cf03c8cb7282cf10736ea8232280}{}\label{s2n__stuffer__pem_8c_a72f4cf03c8cb7282cf10736ea8232280}
+
+
+Definition at line 24 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE}}
+\index{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE}{S2N_PEM_LINE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE~\char`\"{}-\/-\/-\/-\/-\/\char`\"{}}\hypertarget{s2n__stuffer__pem_8c_a3bf34762949a33758de5feb70cd5baa7}{}\label{s2n__stuffer__pem_8c_a3bf34762949a33758de5feb70cd5baa7}
+
+
+Definition at line 25 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN}}
+\index{S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN}{S2N_PEM_BEGIN_TOKEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+P\+E\+M\+\_\+\+B\+E\+G\+I\+N\+\_\+\+T\+O\+K\+EN~({\bf S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE} \char`\"{}B\+E\+G\+IN \char`\"{})}\hypertarget{s2n__stuffer__pem_8c_a9c42081c0ae95fbc79511c4a1e5b7c26}{}\label{s2n__stuffer__pem_8c_a9c42081c0ae95fbc79511c4a1e5b7c26}
+
+
+Definition at line 26 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN}}
+\index{S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN@{S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN}{S2N_PEM_END_TOKEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S2\+N\+\_\+\+P\+E\+M\+\_\+\+E\+N\+D\+\_\+\+T\+O\+K\+EN~({\bf S2\+N\+\_\+\+P\+E\+M\+\_\+\+L\+I\+NE} \char`\"{}E\+ND \char`\"{})}\hypertarget{s2n__stuffer__pem_8c_abc84ce20c371a3cff9f8fa9eaf31c6b1}{}\label{s2n__stuffer__pem_8c_abc84ce20c371a3cff9f8fa9eaf31c6b1}
+
+
+Definition at line 27 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem@{s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem}}
+\index{s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem@{s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem(struct s2n\+\_\+stuffer $\ast$pem, struct s2n\+\_\+stuffer $\ast$asn1)}{s2n_stuffer_rsa_private_key_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+rsa\+\_\+private\+\_\+key\+\_\+from\+\_\+pem (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{pem, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{asn1}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__pem_8c_a240dc3086fa85eadbb6989e0a2186799}{}\label{s2n__stuffer__pem_8c_a240dc3086fa85eadbb6989e0a2186799}
+
+
+Definition at line 99 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+
+\begin{DoxyCode}
+100 \{
+101     \textcolor{keywordflow}{return} s2n\_stuffer\_data\_from\_pem(pem, asn1, \textcolor{stringliteral}{"RSA PRIVATE KEY"});
+102 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__pem_8c_a240dc3086fa85eadbb6989e0a2186799_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem@{s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem}}
+\index{s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem@{s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem(struct s2n\+\_\+stuffer $\ast$pem, struct s2n\+\_\+stuffer $\ast$asn1)}{s2n_stuffer_certificate_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *asn1)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+certificate\+\_\+from\+\_\+pem (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{pem, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{asn1}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__pem_8c_abdb8ea972bc65569944ce760b97283cf}{}\label{s2n__stuffer__pem_8c_abdb8ea972bc65569944ce760b97283cf}
+
+
+Definition at line 104 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+
+\begin{DoxyCode}
+105 \{
+106     \textcolor{keywordflow}{return} s2n\_stuffer\_data\_from\_pem(pem, asn1, \textcolor{stringliteral}{"CERTIFICATE"});
+107 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__pem_8c_abdb8ea972bc65569944ce760b97283cf_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}!s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem@{s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem}}
+\index{s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem@{s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem}!s2n\+\_\+stuffer\+\_\+pem.\+c@{s2n\+\_\+stuffer\+\_\+pem.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem(struct s2n\+\_\+stuffer $\ast$pem, struct s2n\+\_\+stuffer $\ast$pkcs3)}{s2n_stuffer_dhparams_from_pem(struct s2n_stuffer *pem, struct s2n_stuffer *pkcs3)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+dhparams\+\_\+from\+\_\+pem (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{pem, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{pkcs3}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__pem_8c_acc09d820f511dde4633ecad55f062a87}{}\label{s2n__stuffer__pem_8c_acc09d820f511dde4633ecad55f062a87}
+
+
+Definition at line 109 of file s2n\+\_\+stuffer\+\_\+pem.\+c.
+
+
+\begin{DoxyCode}
+110 \{
+111     \textcolor{keywordflow}{return} s2n\_stuffer\_data\_from\_pem(pem, pkcs3, \textcolor{stringliteral}{"DH PARAMETERS"});
+112 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__pem_8c_acc09d820f511dde4633ecad55f062a87_icgraph}
+\end{center}
+\end{figure}
+
+

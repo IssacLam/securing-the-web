@@ -40,7 +40,6 @@ int main(int argc, char **argv)
     
     uint8_t msg[length];
     
-
     s2n_hash_algorithm alg = nondet_s2n_hash_algorithm();
     __CPROVER_assume(alg >= 0 && alg <= 7);
         

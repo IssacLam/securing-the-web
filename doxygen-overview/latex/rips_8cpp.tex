@@ -1,0 +1,99 @@
+\hypertarget{rips_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/ripemd/asm/rips.cpp File Reference}
+\label{rips_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/ripemd/asm/rips.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/crypto/ripemd/asm/rips.\+cpp}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ripemd.\+h$>$}\\*
+Include dependency graph for rips.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{rips_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}{ripemd160\+\_\+block\+\_\+x86}~ripemd160\+\_\+block\+\_\+asm\+\_\+host\+\_\+order
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rips_8cpp_abf951479a9d301b2fa5f535789b0f90c}{ripemd160\+\_\+block\+\_\+x86} (\hyperlink{ripemd_8h_a57548127d8e218e8f130c6286dcfe570}{R\+I\+P\+E\+M\+D160\+\_\+\+C\+TX} $\ast$ctx, unsigned char $\ast$buffer, int \hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rips_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{rips.\+cpp@{rips.\+cpp}!ripemd160\+\_\+block\+\_\+x86@{ripemd160\+\_\+block\+\_\+x86}}
+\index{ripemd160\+\_\+block\+\_\+x86@{ripemd160\+\_\+block\+\_\+x86}!rips.\+cpp@{rips.\+cpp}}
+\subsubsection[{\texorpdfstring{ripemd160\+\_\+block\+\_\+x86}{ripemd160_block_x86}}]{\setlength{\rightskip}{0pt plus 5cm}\#define ripemd160\+\_\+block\+\_\+x86~ripemd160\+\_\+block\+\_\+asm\+\_\+host\+\_\+order}\hypertarget{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}{}\label{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}
+
+
+Definition at line 37 of file rips.\+cpp.
+
+
+
+\subsection{Function Documentation}
+\index{rips.\+cpp@{rips.\+cpp}!ripemd160\+\_\+block\+\_\+x86@{ripemd160\+\_\+block\+\_\+x86}}
+\index{ripemd160\+\_\+block\+\_\+x86@{ripemd160\+\_\+block\+\_\+x86}!rips.\+cpp@{rips.\+cpp}}
+\subsubsection[{\texorpdfstring{ripemd160\+\_\+block\+\_\+x86(\+R\+I\+P\+E\+M\+D160\+\_\+\+C\+T\+X $\ast$ctx, unsigned char $\ast$buffer, int num)}{ripemd160_block_x86(RIPEMD160_CTX *ctx, unsigned char *buffer, int num)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} ripemd160\+\_\+block\+\_\+x86 (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+I\+P\+E\+M\+D160\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{unsigned char $\ast$}]{buffer, }
+\item[{int}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{rips_8cpp_abf951479a9d301b2fa5f535789b0f90c}{}\label{rips_8cpp_abf951479a9d301b2fa5f535789b0f90c}
+\index{rips.\+cpp@{rips.\+cpp}!main@{main}}
+\index{main@{main}!rips.\+cpp@{rips.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{rips_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{}\label{rips_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}
+
+
+Definition at line 43 of file rips.\+cpp.
+
+
+\begin{DoxyCode}
+44     \{
+45     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} buffer[64*256];
+46     \hyperlink{struct_r_i_p_e_m_d160state__st}{RIPEMD160\_CTX} ctx;
+47     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} s1,s2,e1,e2;
+48     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} k[16];
+49     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[2];
+50     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} iv[8];
+51     \textcolor{keywordtype}{int} i,\hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num}=0,numm;
+52     \textcolor{keywordtype}{int} j=0;
+53 
+54     \textcolor{keywordflow}{if} (argc >= 2)
+55         num=atoi(argv[1]);
+56 
+57     \textcolor{keywordflow}{if} (num == 0) num=16;
+58     \textcolor{keywordflow}{if} (num > 250) num=16;
+59     numm=num+2;
+60 \textcolor{preprocessor}{#if 0}
+61     num*=64;
+62     numm*=64;
+63 \textcolor{preprocessor}{#endif}
+64 
+65     \textcolor{keywordflow}{for} (j=0; j<6; j++)
+66         \{
+67         \textcolor{keywordflow}{for} (i=0; i<10; i++) 
+68             \{
+69             \hyperlink{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}{ripemd160\_block\_x86}(&ctx,buffer,numm);
+70             GetTSC(s1);
+71             \hyperlink{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}{ripemd160\_block\_x86}(&ctx,buffer,numm);
+72             GetTSC(e1);
+73             GetTSC(s2);
+74             \hyperlink{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}{ripemd160\_block\_x86}(&ctx,buffer,num);
+75             GetTSC(e2);
+76             \hyperlink{rips_8cpp_a96f889f036fa8b75d9c7b8511b4b91c0}{ripemd160\_block\_x86}(&ctx,buffer,num);
+77             \}
+78         printf(\textcolor{stringliteral}{"ripemd160 (%d bytes) %d %d (%.2f)\(\backslash\)n"},num*64,
+79             e1-s1,e2-s2,(\textcolor{keywordtype}{double})((e1-s1)-(e2-s2))/2);
+80         \}
+81     \}
+\end{DoxyCode}

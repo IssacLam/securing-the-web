@@ -1,0 +1,192 @@
+.TH "s2n-master/libcrypto-build/openssl/ms/uplink.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/ms/uplink.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'applink\&.c'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBAPPMACROS_ONLY\fP"
+.br
+.ti -1c
+.RI "#define \fBUP_stdin\fP   (*(\fBvoid\fP *(*)(\fBvoid\fP))\fBOPENSSL_UplinkTable\fP[APPLINK_STDIN])()"
+.br
+.ti -1c
+.RI "#define \fBUP_stdout\fP   (*(\fBvoid\fP *(*)(\fBvoid\fP))\fBOPENSSL_UplinkTable\fP[APPLINK_STDOUT])()"
+.br
+.ti -1c
+.RI "#define \fBUP_stderr\fP   (*(\fBvoid\fP *(*)(\fBvoid\fP))\fBOPENSSL_UplinkTable\fP[APPLINK_STDERR])()"
+.br
+.ti -1c
+.RI "#define \fBUP_fprintf\fP   (*(int (*)(\fBvoid\fP *,const char *,\&.\&.\&.))\fBOPENSSL_UplinkTable\fP[APPLINK_FPRINTF])"
+.br
+.ti -1c
+.RI "#define \fBUP_fgets\fP   (*(char *(*)(char *,int,\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FGETS])"
+.br
+.ti -1c
+.RI "#define \fBUP_fread\fP   (*(size_t (*)(\fBvoid\fP *,size_t,size_t,\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FREAD])"
+.br
+.ti -1c
+.RI "#define \fBUP_fwrite\fP   (*(size_t (*)(const \fBvoid\fP *,size_t,size_t,\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FWRITE])"
+.br
+.ti -1c
+.RI "#define \fBUP_fsetmod\fP   (*(int (*)(\fBvoid\fP *,char))\fBOPENSSL_UplinkTable\fP[APPLINK_FSETMOD])"
+.br
+.ti -1c
+.RI "#define \fBUP_feof\fP   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FEOF])"
+.br
+.ti -1c
+.RI "#define \fBUP_fclose\fP   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FCLOSE])"
+.br
+.ti -1c
+.RI "#define \fBUP_fopen\fP   (*(\fBvoid\fP *(*)(const char *,const char *))\fBOPENSSL_UplinkTable\fP[APPLINK_FOPEN])"
+.br
+.ti -1c
+.RI "#define \fBUP_fseek\fP   (*(int (*)(\fBvoid\fP *,long,int))\fBOPENSSL_UplinkTable\fP[APPLINK_FSEEK])"
+.br
+.ti -1c
+.RI "#define \fBUP_ftell\fP   (*(long (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FTELL])"
+.br
+.ti -1c
+.RI "#define \fBUP_fflush\fP   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FFLUSH])"
+.br
+.ti -1c
+.RI "#define \fBUP_ferror\fP   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FERROR])"
+.br
+.ti -1c
+.RI "#define \fBUP_clearerr\fP   (*(\fBvoid\fP (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_CLEARERR])"
+.br
+.ti -1c
+.RI "#define \fBUP_fileno\fP   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FILENO])"
+.br
+.ti -1c
+.RI "#define \fBUP_open\fP   (*(int (*)(const char *,int,\&.\&.\&.))\fBOPENSSL_UplinkTable\fP[APPLINK_OPEN])"
+.br
+.ti -1c
+.RI "#define \fBUP_read\fP   (*(\fBossl_ssize_t\fP (*)(int,\fBvoid\fP *,size_t))\fBOPENSSL_UplinkTable\fP[APPLINK_READ])"
+.br
+.ti -1c
+.RI "#define \fBUP_write\fP   (*(\fBossl_ssize_t\fP (*)(int,const \fBvoid\fP *,size_t))\fBOPENSSL_UplinkTable\fP[APPLINK_WRITE])"
+.br
+.ti -1c
+.RI "#define \fBUP_lseek\fP   (*(long (*)(int,long,int))\fBOPENSSL_UplinkTable\fP[APPLINK_LSEEK])"
+.br
+.ti -1c
+.RI "#define \fBUP_close\fP   (*(int (*)(int))\fBOPENSSL_UplinkTable\fP[APPLINK_CLOSE])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP * \fBOPENSSL_UplinkTable\fP []"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define APPMACROS_ONLY"
+
+.PP
+Definition at line 1 of file uplink\&.h\&.
+.SS "#define UP_stdin   (*(\fBvoid\fP *(*)(\fBvoid\fP))\fBOPENSSL_UplinkTable\fP[APPLINK_STDIN])()"
+
+.PP
+Definition at line 6 of file uplink\&.h\&.
+.SS "#define UP_stdout   (*(\fBvoid\fP *(*)(\fBvoid\fP))\fBOPENSSL_UplinkTable\fP[APPLINK_STDOUT])()"
+
+.PP
+Definition at line 7 of file uplink\&.h\&.
+.SS "#define UP_stderr   (*(\fBvoid\fP *(*)(\fBvoid\fP))\fBOPENSSL_UplinkTable\fP[APPLINK_STDERR])()"
+
+.PP
+Definition at line 8 of file uplink\&.h\&.
+.SS "#define UP_fprintf   (*(int (*)(\fBvoid\fP *,const char *,\&.\&.\&.))\fBOPENSSL_UplinkTable\fP[APPLINK_FPRINTF])"
+
+.PP
+Definition at line 9 of file uplink\&.h\&.
+.SS "#define UP_fgets   (*(char *(*)(char *,int,\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FGETS])"
+
+.PP
+Definition at line 10 of file uplink\&.h\&.
+.SS "#define UP_fread   (*(size_t (*)(\fBvoid\fP *,size_t,size_t,\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FREAD])"
+
+.PP
+Definition at line 11 of file uplink\&.h\&.
+.SS "#define UP_fwrite   (*(size_t (*)(const \fBvoid\fP *,size_t,size_t,\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FWRITE])"
+
+.PP
+Definition at line 12 of file uplink\&.h\&.
+.SS "#define UP_fsetmod   (*(int (*)(\fBvoid\fP *,char))\fBOPENSSL_UplinkTable\fP[APPLINK_FSETMOD])"
+
+.PP
+Definition at line 13 of file uplink\&.h\&.
+.SS "#define UP_feof   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FEOF])"
+
+.PP
+Definition at line 14 of file uplink\&.h\&.
+.SS "#define UP_fclose   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FCLOSE])"
+
+.PP
+Definition at line 15 of file uplink\&.h\&.
+.SS "#define UP_fopen   (*(\fBvoid\fP *(*)(const char *,const char *))\fBOPENSSL_UplinkTable\fP[APPLINK_FOPEN])"
+
+.PP
+Definition at line 17 of file uplink\&.h\&.
+.SS "#define UP_fseek   (*(int (*)(\fBvoid\fP *,long,int))\fBOPENSSL_UplinkTable\fP[APPLINK_FSEEK])"
+
+.PP
+Definition at line 18 of file uplink\&.h\&.
+.SS "#define UP_ftell   (*(long (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FTELL])"
+
+.PP
+Definition at line 19 of file uplink\&.h\&.
+.SS "#define UP_fflush   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FFLUSH])"
+
+.PP
+Definition at line 20 of file uplink\&.h\&.
+.SS "#define UP_ferror   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FERROR])"
+
+.PP
+Definition at line 21 of file uplink\&.h\&.
+.SS "#define UP_clearerr   (*(\fBvoid\fP (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_CLEARERR])"
+
+.PP
+Definition at line 22 of file uplink\&.h\&.
+.SS "#define UP_fileno   (*(int (*)(\fBvoid\fP *))\fBOPENSSL_UplinkTable\fP[APPLINK_FILENO])"
+
+.PP
+Definition at line 23 of file uplink\&.h\&.
+.SS "#define UP_open   (*(int (*)(const char *,int,\&.\&.\&.))\fBOPENSSL_UplinkTable\fP[APPLINK_OPEN])"
+
+.PP
+Definition at line 25 of file uplink\&.h\&.
+.SS "#define UP_read   (*(\fBossl_ssize_t\fP (*)(int,\fBvoid\fP *,size_t))\fBOPENSSL_UplinkTable\fP[APPLINK_READ])"
+
+.PP
+Definition at line 26 of file uplink\&.h\&.
+.SS "#define UP_write   (*(\fBossl_ssize_t\fP (*)(int,const \fBvoid\fP *,size_t))\fBOPENSSL_UplinkTable\fP[APPLINK_WRITE])"
+
+.PP
+Definition at line 27 of file uplink\&.h\&.
+.SS "#define UP_lseek   (*(long (*)(int,long,int))\fBOPENSSL_UplinkTable\fP[APPLINK_LSEEK])"
+
+.PP
+Definition at line 28 of file uplink\&.h\&.
+.SS "#define UP_close   (*(int (*)(int))\fBOPENSSL_UplinkTable\fP[APPLINK_CLOSE])"
+
+.PP
+Definition at line 29 of file uplink\&.h\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBvoid\fP* OPENSSL_UplinkTable[]"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

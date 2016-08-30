@@ -1,0 +1,380 @@
+\hypertarget{jpake_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/jpake/jpake.h File Reference}
+\label{jpake_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/jpake/jpake.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/jpake/jpake.\+h}}
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/bn.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/sha.\+h$>$}\\*
+Include dependency graph for jpake.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{jpake_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_j_p_a_k_e___z_k_p}{J\+P\+A\+K\+E\+\_\+\+Z\+KP}
+\item 
+struct \hyperlink{struct_j_p_a_k_e___s_t_e_p___p_a_r_t}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P\+\_\+\+P\+A\+RT}
+\item 
+struct \hyperlink{struct_j_p_a_k_e___s_t_e_p1}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1}
+\item 
+struct \hyperlink{struct_j_p_a_k_e___s_t_e_p3_a}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A}
+\item 
+struct \hyperlink{struct_j_p_a_k_e___s_t_e_p3_b}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{jpake_8h_af4123579ccea2c50ea2c3843fb6a4a29}{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS}~101
+\item 
+\#define \hyperlink{jpake_8h_a7e143353cdc394451387b8e2c131b37a}{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS}~102
+\item 
+\#define \hyperlink{jpake_8h_ab6a8e926504a4bd691168a203481f931}{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS}~103
+\item 
+\#define \hyperlink{jpake_8h_a15d0098975f4fbad86dd526945310cd1}{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS}~104
+\item 
+\#define \hyperlink{jpake_8h_a147d0f3d9e5804a6f623733b10db1bbb}{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP}~100
+\item 
+\#define \hyperlink{jpake_8h_afc3784e538d6238112be356059e19844}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}~108
+\item 
+\#define \hyperlink{jpake_8h_aa7419003c01c59ab531aa341203c8b5c}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}~109
+\item 
+\#define \hyperlink{jpake_8h_aa5d2226277b998e16f2c4be772d131c5}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE}~105
+\item 
+\#define \hyperlink{jpake_8h_a62a962e3d481c0e9b3d76137ccc46faa}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}~106
+\item 
+\#define \hyperlink{jpake_8h_a2123edf3cbdc66fa7811bedee8dd406a}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}~107
+\item 
+\#define \hyperlink{jpake_8h_abdf84423fd655100c4436a0dabc3462a}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED}~102
+\item 
+\#define \hyperlink{jpake_8h_ad7d84c15524f70643091ce2819c6edbd}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED}~103
+\item 
+\#define \hyperlink{jpake_8h_a8bb8214bbd54071e4eb6597eb2d835d4}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED}~104
+\item 
+\#define \hyperlink{jpake_8h_abea4266837867202facfad61c3d91520}{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED}~100
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} \hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX}
+\item 
+typedef \hyperlink{struct_j_p_a_k_e___s_t_e_p___p_a_r_t}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P\+\_\+\+P\+A\+RT} \hyperlink{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ \hyperlink{jpake_8h_aad649459291bdeac92de164c2fa47301}{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new} (const char $\ast$name, const char $\ast$peer\+\_\+name, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$\hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p}, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$g, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$q, const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$secret)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_ab2cfa6e567464072e6bbff8c5aa4bdcc}{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free} (\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_a8a62af18725e8e42054fcdff05c20367}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init} (\hyperlink{struct_j_p_a_k_e___s_t_e_p1}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$s1)
+\item 
+int \hyperlink{jpake_8h_ac5216f52dfbad63d4223397166015fb1}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate} (\hyperlink{struct_j_p_a_k_e___s_t_e_p1}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$send, \hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+int \hyperlink{jpake_8h_ac23df83d72c755854306d93e1c8fc9fc}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process} (\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx, const \hyperlink{struct_j_p_a_k_e___s_t_e_p1}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$received)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_a7a5fd1225ccbf4c0187b44477d20add3}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release} (\hyperlink{struct_j_p_a_k_e___s_t_e_p1}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$s1)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_a3602124c8489c290b6208ea398ad2380}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init} (\hyperlink{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$s2)
+\item 
+int \hyperlink{jpake_8h_a19f49543849287b72a2f7ac1d8759f15}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate} (\hyperlink{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$send, \hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+int \hyperlink{jpake_8h_af09ec7951710ef822f4d75dd705b7285}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process} (\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx, const \hyperlink{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$received)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_ac2f7050241538b3127c55e718d3039cb}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release} (\hyperlink{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$s2)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_a5e9fadf7f90f456f48f5d93e2c454984}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init} (\hyperlink{struct_j_p_a_k_e___s_t_e_p3_a}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$s3a)
+\item 
+int \hyperlink{jpake_8h_a52b39fa10d2063a71dfbf31b602245c5}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate} (\hyperlink{struct_j_p_a_k_e___s_t_e_p3_a}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$send, \hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+int \hyperlink{jpake_8h_adf2ba2cb2f78817ea900068fd9a1537d}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process} (\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx, const \hyperlink{struct_j_p_a_k_e___s_t_e_p3_a}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$received)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_a9e5a8e026c761a19d8218a472b98fb00}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release} (\hyperlink{struct_j_p_a_k_e___s_t_e_p3_a}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$s3a)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_ab605b9c321853178b2d8936b097209cf}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init} (\hyperlink{struct_j_p_a_k_e___s_t_e_p3_b}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$s3b)
+\item 
+int \hyperlink{jpake_8h_a1c1e49fa8fc15a94e2ecc26b288c2436}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate} (\hyperlink{struct_j_p_a_k_e___s_t_e_p3_b}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$send, \hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+int \hyperlink{jpake_8h_a73e1dbd090fb3197f6ccea834e3c7a03}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process} (\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx, const \hyperlink{struct_j_p_a_k_e___s_t_e_p3_b}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$received)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_a7e22c60728766427985080cd38c017ab}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release} (\hyperlink{struct_j_p_a_k_e___s_t_e_p3_b}{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$s3b)
+\item 
+const \hyperlink{crypto_2ossl__typ_8h_a6fb19728907ec6515e4bfb716bffa141}{B\+I\+G\+N\+UM} $\ast$ \hyperlink{jpake_8h_a107b0b59b427b2c87a0ecf8d1cf7d243}{J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key} (\hyperlink{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{jpake_8h_ab1829eadd354dd1737765dd10939e24c}{E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS}}
+\index{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS}{JPAKE_F_JPAKE_STEP1_PROCESS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+\+P\+R\+O\+C\+E\+SS~101}\hypertarget{jpake_8h_af4123579ccea2c50ea2c3843fb6a4a29}{}\label{jpake_8h_af4123579ccea2c50ea2c3843fb6a4a29}
+
+
+Definition at line 108 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS}}
+\index{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS}{JPAKE_F_JPAKE_STEP2_PROCESS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+\+P\+R\+O\+C\+E\+SS~102}\hypertarget{jpake_8h_a7e143353cdc394451387b8e2c131b37a}{}\label{jpake_8h_a7e143353cdc394451387b8e2c131b37a}
+
+
+Definition at line 109 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS}}
+\index{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS}{JPAKE_F_JPAKE_STEP3A_PROCESS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+\+P\+R\+O\+C\+E\+SS~103}\hypertarget{jpake_8h_ab6a8e926504a4bd691168a203481f931}{}\label{jpake_8h_ab6a8e926504a4bd691168a203481f931}
+
+
+Definition at line 110 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS}}
+\index{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS}{JPAKE_F_JPAKE_STEP3B_PROCESS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+\+P\+R\+O\+C\+E\+SS~104}\hypertarget{jpake_8h_a15d0098975f4fbad86dd526945310cd1}{}\label{jpake_8h_a15d0098975f4fbad86dd526945310cd1}
+
+
+Definition at line 111 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP}}
+\index{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP@{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP}{JPAKE_F_VERIFY_ZKP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+F\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+Z\+KP~100}\hypertarget{jpake_8h_a147d0f3d9e5804a6f623733b10db1bbb}{}\label{jpake_8h_a147d0f3d9e5804a6f623733b10db1bbb}
+
+
+Definition at line 112 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}{JPAKE_R_G_TO_THE_X3_IS_NOT_LEGAL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X3\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL~108}\hypertarget{jpake_8h_afc3784e538d6238112be356059e19844}{}\label{jpake_8h_afc3784e538d6238112be356059e19844}
+
+
+Definition at line 115 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL}{JPAKE_R_G_TO_THE_X4_IS_NOT_LEGAL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+N\+O\+T\+\_\+\+L\+E\+G\+AL~109}\hypertarget{jpake_8h_aa7419003c01c59ab531aa341203c8b5c}{}\label{jpake_8h_aa7419003c01c59ab531aa341203c8b5c}
+
+
+Definition at line 116 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE}{JPAKE_R_G_TO_THE_X4_IS_ONE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+G\+\_\+\+T\+O\+\_\+\+T\+H\+E\+\_\+\+X4\+\_\+\+I\+S\+\_\+\+O\+NE~105}\hypertarget{jpake_8h_aa5d2226277b998e16f2c4be772d131c5}{}\label{jpake_8h_aa5d2226277b998e16f2c4be772d131c5}
+
+
+Definition at line 117 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}{JPAKE_R_HASH_OF_HASH_OF_KEY_MISMATCH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH~106}\hypertarget{jpake_8h_a62a962e3d481c0e9b3d76137ccc46faa}{}\label{jpake_8h_a62a962e3d481c0e9b3d76137ccc46faa}
+
+
+Definition at line 118 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH}{JPAKE_R_HASH_OF_KEY_MISMATCH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+H\+A\+S\+H\+\_\+\+O\+F\+\_\+\+K\+E\+Y\+\_\+\+M\+I\+S\+M\+A\+T\+CH~107}\hypertarget{jpake_8h_a2123edf3cbdc66fa7811bedee8dd406a}{}\label{jpake_8h_a2123edf3cbdc66fa7811bedee8dd406a}
+
+
+Definition at line 119 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED}{JPAKE_R_VERIFY_B_FAILED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+B\+\_\+\+F\+A\+I\+L\+ED~102}\hypertarget{jpake_8h_abdf84423fd655100c4436a0dabc3462a}{}\label{jpake_8h_abdf84423fd655100c4436a0dabc3462a}
+
+
+Definition at line 120 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED}{JPAKE_R_VERIFY_X3_FAILED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X3\+\_\+\+F\+A\+I\+L\+ED~103}\hypertarget{jpake_8h_ad7d84c15524f70643091ce2819c6edbd}{}\label{jpake_8h_ad7d84c15524f70643091ce2819c6edbd}
+
+
+Definition at line 121 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED}{JPAKE_R_VERIFY_X4_FAILED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+X4\+\_\+\+F\+A\+I\+L\+ED~104}\hypertarget{jpake_8h_a8bb8214bbd54071e4eb6597eb2d835d4}{}\label{jpake_8h_a8bb8214bbd54071e4eb6597eb2d835d4}
+
+
+Definition at line 122 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED}}
+\index{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED@{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED}{JPAKE_R_ZKP_VERIFY_FAILED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+P\+A\+K\+E\+\_\+\+R\+\_\+\+Z\+K\+P\+\_\+\+V\+E\+R\+I\+F\+Y\+\_\+\+F\+A\+I\+L\+ED~100}\hypertarget{jpake_8h_abea4266837867202facfad61c3d91520}{}\label{jpake_8h_abea4266837867202facfad61c3d91520}
+
+
+Definition at line 123 of file jpake.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+C\+TX@{J\+P\+A\+K\+E\+\_\+\+C\+TX}}
+\index{J\+P\+A\+K\+E\+\_\+\+C\+TX@{J\+P\+A\+K\+E\+\_\+\+C\+TX}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+C\+TX}{JPAKE_CTX}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} {\bf J\+P\+A\+K\+E\+\_\+\+C\+TX}}\hypertarget{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}{}\label{jpake_8h_a3ac1e7e997e278e8ba655877e8132ae9}
+
+
+Definition at line 24 of file jpake.\+h.
+
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2}{JPAKE_STEP2}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P\+\_\+\+P\+A\+RT} {\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2}}\hypertarget{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}{}\label{jpake_8h_aafb7a564c6146c2deb95df52228d4ea4}
+
+
+Definition at line 43 of file jpake.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new@{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new}}
+\index{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new@{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new(const char $\ast$name, const char $\ast$peer\+\_\+name, const B\+I\+G\+N\+U\+M $\ast$p, const B\+I\+G\+N\+U\+M $\ast$g, const B\+I\+G\+N\+U\+M $\ast$q, const B\+I\+G\+N\+U\+M $\ast$secret)}{JPAKE_CTX_new(const char *name, const char *peer_name, const BIGNUM *p, const BIGNUM *g, const BIGNUM *q, const BIGNUM *secret)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX}$\ast$ J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{name, }
+\item[{const char $\ast$}]{peer\+\_\+name, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{p, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{g, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{q, }
+\item[{const {\bf B\+I\+G\+N\+UM} $\ast$}]{secret}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_aad649459291bdeac92de164c2fa47301}{}\label{jpake_8h_aad649459291bdeac92de164c2fa47301}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free@{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free}}
+\index{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free@{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free(\+J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx)}{JPAKE_CTX_free(JPAKE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+C\+T\+X\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_ab2cfa6e567464072e6bbff8c5aa4bdcc}{}\label{jpake_8h_ab2cfa6e567464072e6bbff8c5aa4bdcc}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1 $\ast$s1)}{JPAKE_STEP1_init(JPAKE_STEP1 *s1)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$}]{s1}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a8a62af18725e8e42054fcdff05c20367}{}\label{jpake_8h_a8a62af18725e8e42054fcdff05c20367}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1 $\ast$send, J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx)}{JPAKE_STEP1_generate(JPAKE_STEP1 *send, JPAKE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+generate (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$}]{send, }
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_ac5216f52dfbad63d4223397166015fb1}{}\label{jpake_8h_ac5216f52dfbad63d4223397166015fb1}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process(\+J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx, const J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1 $\ast$received)}{JPAKE_STEP1_process(JPAKE_CTX *ctx, const JPAKE_STEP1 *received)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+process (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const {\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$}]{received}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_ac23df83d72c755854306d93e1c8fc9fc}{}\label{jpake_8h_ac23df83d72c755854306d93e1c8fc9fc}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1 $\ast$s1)}{JPAKE_STEP1_release(JPAKE_STEP1 *s1)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1\+\_\+release (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P1} $\ast$}]{s1}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a7a5fd1225ccbf4c0187b44477d20add3}{}\label{jpake_8h_a7a5fd1225ccbf4c0187b44477d20add3}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2 $\ast$s2)}{JPAKE_STEP2_init(JPAKE_STEP2 *s2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$}]{s2}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a3602124c8489c290b6208ea398ad2380}{}\label{jpake_8h_a3602124c8489c290b6208ea398ad2380}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2 $\ast$send, J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx)}{JPAKE_STEP2_generate(JPAKE_STEP2 *send, JPAKE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+generate (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$}]{send, }
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a19f49543849287b72a2f7ac1d8759f15}{}\label{jpake_8h_a19f49543849287b72a2f7ac1d8759f15}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process(\+J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx, const J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2 $\ast$received)}{JPAKE_STEP2_process(JPAKE_CTX *ctx, const JPAKE_STEP2 *received)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+process (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const {\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$}]{received}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_af09ec7951710ef822f4d75dd705b7285}{}\label{jpake_8h_af09ec7951710ef822f4d75dd705b7285}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2 $\ast$s2)}{JPAKE_STEP2_release(JPAKE_STEP2 *s2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2\+\_\+release (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P2} $\ast$}]{s2}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_ac2f7050241538b3127c55e718d3039cb}{}\label{jpake_8h_ac2f7050241538b3127c55e718d3039cb}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A $\ast$s3a)}{JPAKE_STEP3A_init(JPAKE_STEP3A *s3a)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$}]{s3a}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a5e9fadf7f90f456f48f5d93e2c454984}{}\label{jpake_8h_a5e9fadf7f90f456f48f5d93e2c454984}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A $\ast$send, J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx)}{JPAKE_STEP3A_generate(JPAKE_STEP3A *send, JPAKE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+generate (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$}]{send, }
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a52b39fa10d2063a71dfbf31b602245c5}{}\label{jpake_8h_a52b39fa10d2063a71dfbf31b602245c5}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process(\+J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx, const J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A $\ast$received)}{JPAKE_STEP3A_process(JPAKE_CTX *ctx, const JPAKE_STEP3A *received)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+process (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const {\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$}]{received}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_adf2ba2cb2f78817ea900068fd9a1537d}{}\label{jpake_8h_adf2ba2cb2f78817ea900068fd9a1537d}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A $\ast$s3a)}{JPAKE_STEP3A_release(JPAKE_STEP3A *s3a)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+A\+\_\+release (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3A} $\ast$}]{s3a}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a9e5a8e026c761a19d8218a472b98fb00}{}\label{jpake_8h_a9e5a8e026c761a19d8218a472b98fb00}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B $\ast$s3b)}{JPAKE_STEP3B_init(JPAKE_STEP3B *s3b)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$}]{s3b}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_ab605b9c321853178b2d8936b097209cf}{}\label{jpake_8h_ab605b9c321853178b2d8936b097209cf}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B $\ast$send, J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx)}{JPAKE_STEP3B_generate(JPAKE_STEP3B *send, JPAKE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+generate (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$}]{send, }
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a1c1e49fa8fc15a94e2ecc26b288c2436}{}\label{jpake_8h_a1c1e49fa8fc15a94e2ecc26b288c2436}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process(\+J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx, const J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B $\ast$received)}{JPAKE_STEP3B_process(JPAKE_CTX *ctx, const JPAKE_STEP3B *received)}}]{\setlength{\rightskip}{0pt plus 5cm}int J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+process (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const {\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$}]{received}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a73e1dbd090fb3197f6ccea834e3c7a03}{}\label{jpake_8h_a73e1dbd090fb3197f6ccea834e3c7a03}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release}}
+\index{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release@{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release(\+J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B $\ast$s3b)}{JPAKE_STEP3B_release(JPAKE_STEP3B *s3b)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3\+B\+\_\+release (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+S\+T\+E\+P3B} $\ast$}]{s3b}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a7e22c60728766427985080cd38c017ab}{}\label{jpake_8h_a7e22c60728766427985080cd38c017ab}
+\index{jpake.\+h@{jpake.\+h}!J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key@{J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key}}
+\index{J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key@{J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key(\+J\+P\+A\+K\+E\+\_\+\+C\+T\+X $\ast$ctx)}{JPAKE_get_shared_key(JPAKE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf B\+I\+G\+N\+UM}$\ast$ J\+P\+A\+K\+E\+\_\+get\+\_\+shared\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{{\bf J\+P\+A\+K\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_a107b0b59b427b2c87a0ecf8d1cf7d243}{}\label{jpake_8h_a107b0b59b427b2c87a0ecf8d1cf7d243}
+\index{jpake.\+h@{jpake.\+h}!E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings@{E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings}}
+\index{E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings@{E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings}!jpake.\+h@{jpake.\+h}}
+\subsubsection[{\texorpdfstring{E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings(void)}{ERR_load_JPAKE_strings(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} E\+R\+R\+\_\+load\+\_\+\+J\+P\+A\+K\+E\+\_\+strings (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{jpake_8h_ab1829eadd354dd1737765dd10939e24c}{}\label{jpake_8h_ab1829eadd354dd1737765dd10939e24c}

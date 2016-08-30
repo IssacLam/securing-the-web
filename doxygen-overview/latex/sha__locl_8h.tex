@@ -1,0 +1,439 @@
+\hypertarget{sha__locl_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/sha/sha\+\_\+locl.h File Reference}
+\label{sha__locl_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/sha/sha\+\_\+locl.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/sha/sha\+\_\+locl.\+h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/sha.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}md32\+\_\+common.\+h\char`\"{}}\\*
+Include dependency graph for sha\+\_\+locl.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sha__locl_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{sha__locl_8h_aac8f225368bee71ed6c7393934774ef6}{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN}
+\item 
+\#define \hyperlink{sha__locl_8h_ae0d20ce75e492887693e8f4a356de4a6}{H\+A\+S\+H\+\_\+\+L\+O\+NG}~\hyperlink{include_2openssl_2sha_8h_a1b2e699d6af9a09d35e23c231e415c6c}{S\+H\+A\+\_\+\+L\+O\+NG}
+\item 
+\#define \hyperlink{sha__locl_8h_a2f6de7b310d150fd97d2b7073168f9cb}{H\+A\+S\+H\+\_\+\+C\+TX}~\hyperlink{crypto_2sha_2sha_8h_af97c715f0e9f6c4fc9c0ea04e19a269b}{S\+H\+A\+\_\+\+C\+TX}
+\item 
+\#define \hyperlink{sha__locl_8h_a8393f24e21d095ecc17486160ec74d76}{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}~\hyperlink{include_2openssl_2sha_8h_a400b14e6b40b76415449c1222724d4f3}{S\+H\+A\+\_\+\+C\+B\+L\+O\+CK}
+\item 
+\#define \hyperlink{sha__locl_8h_ac08c7b37bc6530316949a4364a20e9c3}{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  s)  
+\item 
+\#define \hyperlink{sha__locl_8h_a9e6448ccb76976da4e123c8388924253}{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0}~0x67452301\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_a1bb79876b4bd5302fc2b34c400ce5e08}{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1}~0xefcdab89\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_ae9fcb8ac944b40f94581f2c20abb5f86}{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2}~0x98badcfe\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_aeddeb6e441fa66ff4d3193a7712844a2}{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3}~0x10325476\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_af38fe1a5e84d9bf274b5147ad818fde2}{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4}~0xc3d2e1f0\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_a64e072a45caae94e9ca750ca135aaeae}{K\+\_\+00\+\_\+19}~0x5a827999\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_a658f7fa3b12dc5b32223c628df9147b1}{K\+\_\+20\+\_\+39}~0x6ed9eba1\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_a48c3de4625dc773168303792d9da3938}{K\+\_\+40\+\_\+59}~0x8f1bbcdc\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_a161cd54d440a7d1a9e979cfb26375186}{K\+\_\+60\+\_\+79}~0xca62c1d6\+UL
+\item 
+\#define \hyperlink{sha__locl_8h_a6ad619db7c2d51625c352287e11b3bf7}{F\+\_\+00\+\_\+19}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)~((((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}) $^\wedge$ (d)) \& (b)) $^\wedge$ (d))
+\item 
+\#define \hyperlink{sha__locl_8h_ae63ecd55803ea629ae5afc0d67962b1f}{F\+\_\+20\+\_\+39}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)~((b) $^\wedge$ (\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}) $^\wedge$ (d))
+\item 
+\#define \hyperlink{sha__locl_8h_a754122a10b1bd8cefc39784e7e233b8a}{F\+\_\+40\+\_\+59}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)~(((b) \& (\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})) $\vert$ (((b)$\vert$(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})) \& (d)))
+\item 
+\#define \hyperlink{sha__locl_8h_a750ba50babddd25bec4055589637a010}{F\+\_\+60\+\_\+79}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)~\hyperlink{sha__locl_8h_ae63ecd55803ea629ae5afc0d67962b1f}{F\+\_\+20\+\_\+39}(b,\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},d)
+\item 
+\#define \hyperlink{sha__locl_8h_a6b903622aab652796820a6033a7a2174}{B\+O\+D\+Y\+\_\+00\+\_\+15}(i,  \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f,  xi)
+\item 
+\#define \hyperlink{sha__locl_8h_acaeff0148a159cfa887538d56ea285b6}{B\+O\+D\+Y\+\_\+16\+\_\+19}(i,  \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f,  xi,  xa,  xb,  xc,  xd)
+\item 
+\#define \hyperlink{sha__locl_8h_a59fe5a09b1eeca1f40e6ca9ee42f5b41}{B\+O\+D\+Y\+\_\+20\+\_\+31}(i,  \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f,  xi,  xa,  xb,  xc,  xd)
+\item 
+\#define \hyperlink{sha__locl_8h_af304d9ed59d0d4c79dc724345ccbbb07}{B\+O\+D\+Y\+\_\+32\+\_\+39}(i,  \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f,  xa,  xb,  xc,  xd)
+\item 
+\#define \hyperlink{sha__locl_8h_a7fd913f71a4c904ecee6341292a119ca}{B\+O\+D\+Y\+\_\+40\+\_\+59}(i,  \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f,  xa,  xb,  xc,  xd)
+\item 
+\#define \hyperlink{sha__locl_8h_a828ba8d34e534276c691efb82232c32b}{B\+O\+D\+Y\+\_\+60\+\_\+79}(i,  \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e},  f,  xa,  xb,  xc,  xd)
+\item 
+\#define \hyperlink{sha__locl_8h_a140a10d67d5b6669caf436cb802a9257}{X}(i)  ~XX\#\#i
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{sha__locl_8h_a26572e2fa4cde3e05a0e3900624a750b}{fips\+\_\+md\+\_\+init\+\_\+ctx} (\hyperlink{include_2openssl_2sha_8h_ac6f64d25a935642ec2c99612d7879819}{S\+H\+A1}, \hyperlink{include_2openssl_2sha_8h_ab97a03fce1479256029c9dcac64e4a22}{S\+HA})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN@{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN}}
+\index{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN@{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN}{DATA_ORDER_IS_BIG_ENDIAN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+B\+I\+G\+\_\+\+E\+N\+D\+I\+AN}\hypertarget{sha__locl_8h_aac8f225368bee71ed6c7393934774ef6}{}\label{sha__locl_8h_aac8f225368bee71ed6c7393934774ef6}
+
+
+Definition at line 65 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+L\+O\+NG@{H\+A\+S\+H\+\_\+\+L\+O\+NG}}
+\index{H\+A\+S\+H\+\_\+\+L\+O\+NG@{H\+A\+S\+H\+\_\+\+L\+O\+NG}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+L\+O\+NG}{HASH_LONG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+L\+O\+NG~{\bf S\+H\+A\+\_\+\+L\+O\+NG}}\hypertarget{sha__locl_8h_ae0d20ce75e492887693e8f4a356de4a6}{}\label{sha__locl_8h_ae0d20ce75e492887693e8f4a356de4a6}
+
+
+Definition at line 67 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+C\+TX@{H\+A\+S\+H\+\_\+\+C\+TX}}
+\index{H\+A\+S\+H\+\_\+\+C\+TX@{H\+A\+S\+H\+\_\+\+C\+TX}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+C\+TX}{HASH_CTX}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+C\+TX~{\bf S\+H\+A\+\_\+\+C\+TX}}\hypertarget{sha__locl_8h_a2f6de7b310d150fd97d2b7073168f9cb}{}\label{sha__locl_8h_a2f6de7b310d150fd97d2b7073168f9cb}
+
+
+Definition at line 68 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK@{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}}
+\index{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK@{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}{HASH_CBLOCK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK~{\bf S\+H\+A\+\_\+\+C\+B\+L\+O\+CK}}\hypertarget{sha__locl_8h_a8393f24e21d095ecc17486160ec74d76}{}\label{sha__locl_8h_a8393f24e21d095ecc17486160ec74d76}
+
+
+Definition at line 69 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG@{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}}
+\index{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG@{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}{HASH_MAKE_STRING}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_ac08c7b37bc6530316949a4364a20e9c3}{}\label{sha__locl_8h_ac08c7b37bc6530316949a4364a20e9c3}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{    \(\backslash\)
+        unsigned \textcolor{keywordtype}{long} ll;               \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->h0; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));     \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->h1; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));     \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->h2; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));     \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->h3; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));     \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->h4; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));     \(\backslash\)
+        \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+
+
+Definition at line 70 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0}}
+\index{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0}{INIT_DATA_h0}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h0~0x67452301\+UL}\hypertarget{sha__locl_8h_a9e6448ccb76976da4e123c8388924253}{}\label{sha__locl_8h_a9e6448ccb76976da4e123c8388924253}
+
+
+Definition at line 119 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1}}
+\index{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1}{INIT_DATA_h1}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h1~0xefcdab89\+UL}\hypertarget{sha__locl_8h_a1bb79876b4bd5302fc2b34c400ce5e08}{}\label{sha__locl_8h_a1bb79876b4bd5302fc2b34c400ce5e08}
+
+
+Definition at line 120 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2}}
+\index{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2}{INIT_DATA_h2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h2~0x98badcfe\+UL}\hypertarget{sha__locl_8h_ae9fcb8ac944b40f94581f2c20abb5f86}{}\label{sha__locl_8h_ae9fcb8ac944b40f94581f2c20abb5f86}
+
+
+Definition at line 121 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3}}
+\index{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3}{INIT_DATA_h3}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h3~0x10325476\+UL}\hypertarget{sha__locl_8h_aeddeb6e441fa66ff4d3193a7712844a2}{}\label{sha__locl_8h_aeddeb6e441fa66ff4d3193a7712844a2}
+
+
+Definition at line 122 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4}}
+\index{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4@{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4}{INIT_DATA_h4}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+h4~0xc3d2e1f0\+UL}\hypertarget{sha__locl_8h_af38fe1a5e84d9bf274b5147ad818fde2}{}\label{sha__locl_8h_af38fe1a5e84d9bf274b5147ad818fde2}
+
+
+Definition at line 123 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!K\+\_\+00\+\_\+19@{K\+\_\+00\+\_\+19}}
+\index{K\+\_\+00\+\_\+19@{K\+\_\+00\+\_\+19}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{K\+\_\+00\+\_\+19}{K_00_19}}]{\setlength{\rightskip}{0pt plus 5cm}\#define K\+\_\+00\+\_\+19~0x5a827999\+UL}\hypertarget{sha__locl_8h_a64e072a45caae94e9ca750ca135aaeae}{}\label{sha__locl_8h_a64e072a45caae94e9ca750ca135aaeae}
+
+
+Definition at line 140 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!K\+\_\+20\+\_\+39@{K\+\_\+20\+\_\+39}}
+\index{K\+\_\+20\+\_\+39@{K\+\_\+20\+\_\+39}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{K\+\_\+20\+\_\+39}{K_20_39}}]{\setlength{\rightskip}{0pt plus 5cm}\#define K\+\_\+20\+\_\+39~0x6ed9eba1\+UL}\hypertarget{sha__locl_8h_a658f7fa3b12dc5b32223c628df9147b1}{}\label{sha__locl_8h_a658f7fa3b12dc5b32223c628df9147b1}
+
+
+Definition at line 141 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!K\+\_\+40\+\_\+59@{K\+\_\+40\+\_\+59}}
+\index{K\+\_\+40\+\_\+59@{K\+\_\+40\+\_\+59}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{K\+\_\+40\+\_\+59}{K_40_59}}]{\setlength{\rightskip}{0pt plus 5cm}\#define K\+\_\+40\+\_\+59~0x8f1bbcdc\+UL}\hypertarget{sha__locl_8h_a48c3de4625dc773168303792d9da3938}{}\label{sha__locl_8h_a48c3de4625dc773168303792d9da3938}
+
+
+Definition at line 142 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!K\+\_\+60\+\_\+79@{K\+\_\+60\+\_\+79}}
+\index{K\+\_\+60\+\_\+79@{K\+\_\+60\+\_\+79}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{K\+\_\+60\+\_\+79}{K_60_79}}]{\setlength{\rightskip}{0pt plus 5cm}\#define K\+\_\+60\+\_\+79~0xca62c1d6\+UL}\hypertarget{sha__locl_8h_a161cd54d440a7d1a9e979cfb26375186}{}\label{sha__locl_8h_a161cd54d440a7d1a9e979cfb26375186}
+
+
+Definition at line 143 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!F\+\_\+00\+\_\+19@{F\+\_\+00\+\_\+19}}
+\index{F\+\_\+00\+\_\+19@{F\+\_\+00\+\_\+19}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{F\+\_\+00\+\_\+19}{F_00_19}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+00\+\_\+19(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~(((({\bf c}) $^\wedge$ (d)) \& (b)) $^\wedge$ (d))}\hypertarget{sha__locl_8h_a6ad619db7c2d51625c352287e11b3bf7}{}\label{sha__locl_8h_a6ad619db7c2d51625c352287e11b3bf7}
+
+
+Definition at line 152 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!F\+\_\+20\+\_\+39@{F\+\_\+20\+\_\+39}}
+\index{F\+\_\+20\+\_\+39@{F\+\_\+20\+\_\+39}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{F\+\_\+20\+\_\+39}{F_20_39}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+20\+\_\+39(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~((b) $^\wedge$ ({\bf c}) $^\wedge$ (d))}\hypertarget{sha__locl_8h_ae63ecd55803ea629ae5afc0d67962b1f}{}\label{sha__locl_8h_ae63ecd55803ea629ae5afc0d67962b1f}
+
+
+Definition at line 153 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!F\+\_\+40\+\_\+59@{F\+\_\+40\+\_\+59}}
+\index{F\+\_\+40\+\_\+59@{F\+\_\+40\+\_\+59}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{F\+\_\+40\+\_\+59}{F_40_59}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+40\+\_\+59(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~(((b) \& ({\bf c})) $\vert$ (((b)$\vert$({\bf c})) \& (d)))}\hypertarget{sha__locl_8h_a754122a10b1bd8cefc39784e7e233b8a}{}\label{sha__locl_8h_a754122a10b1bd8cefc39784e7e233b8a}
+
+
+Definition at line 154 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!F\+\_\+60\+\_\+79@{F\+\_\+60\+\_\+79}}
+\index{F\+\_\+60\+\_\+79@{F\+\_\+60\+\_\+79}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{F\+\_\+60\+\_\+79}{F_60_79}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+60\+\_\+79(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~{\bf F\+\_\+20\+\_\+39}(b,{\bf c},d)}\hypertarget{sha__locl_8h_a750ba50babddd25bec4055589637a010}{}\label{sha__locl_8h_a750ba50babddd25bec4055589637a010}
+
+
+Definition at line 155 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!B\+O\+D\+Y\+\_\+00\+\_\+15@{B\+O\+D\+Y\+\_\+00\+\_\+15}}
+\index{B\+O\+D\+Y\+\_\+00\+\_\+15@{B\+O\+D\+Y\+\_\+00\+\_\+15}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+O\+D\+Y\+\_\+00\+\_\+15}{BODY_00_15}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+O\+D\+Y\+\_\+00\+\_\+15(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f, }
+\item[{}]{xi}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_a6b903622aab652796820a6033a7a2174}{}\label{sha__locl_8h_a6b903622aab652796820a6033a7a2174}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(f)=xi+(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})+\hyperlink{sha__locl_8h_a64e072a45caae94e9ca750ca135aaeae}{K\_00\_19}+\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}),5)+\hyperlink{sha__locl_8h_a6ad619db7c2d51625c352287e11b3bf7}{F\_00\_19}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d)); \(\backslash\)
+        (b)=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((b),30);
+\end{DoxyCode}
+
+
+Definition at line 159 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!B\+O\+D\+Y\+\_\+16\+\_\+19@{B\+O\+D\+Y\+\_\+16\+\_\+19}}
+\index{B\+O\+D\+Y\+\_\+16\+\_\+19@{B\+O\+D\+Y\+\_\+16\+\_\+19}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+O\+D\+Y\+\_\+16\+\_\+19}{BODY_16_19}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+O\+D\+Y\+\_\+16\+\_\+19(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f, }
+\item[{}]{xi, }
+\item[{}]{xa, }
+\item[{}]{xb, }
+\item[{}]{xc, }
+\item[{}]{xd}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_acaeff0148a159cfa887538d56ea285b6}{}\label{sha__locl_8h_acaeff0148a159cfa887538d56ea285b6}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+Xupdate(f,xi,xa,xb,xc,xd); \(\backslash\)
+        (f)+=(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})+\hyperlink{sha__locl_8h_a64e072a45caae94e9ca750ca135aaeae}{K\_00\_19}+\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}),5)+\hyperlink{sha__locl_8h_a6ad619db7c2d51625c352287e11b3bf7}{F\_00\_19}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d)); \(\backslash\)
+        (b)=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((b),30);
+\end{DoxyCode}
+
+
+Definition at line 163 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!B\+O\+D\+Y\+\_\+20\+\_\+31@{B\+O\+D\+Y\+\_\+20\+\_\+31}}
+\index{B\+O\+D\+Y\+\_\+20\+\_\+31@{B\+O\+D\+Y\+\_\+20\+\_\+31}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+O\+D\+Y\+\_\+20\+\_\+31}{BODY_20_31}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+O\+D\+Y\+\_\+20\+\_\+31(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f, }
+\item[{}]{xi, }
+\item[{}]{xa, }
+\item[{}]{xb, }
+\item[{}]{xc, }
+\item[{}]{xd}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_a59fe5a09b1eeca1f40e6ca9ee42f5b41}{}\label{sha__locl_8h_a59fe5a09b1eeca1f40e6ca9ee42f5b41}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+Xupdate(f,xi,xa,xb,xc,xd); \(\backslash\)
+        (f)+=(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})+\hyperlink{sha__locl_8h_a658f7fa3b12dc5b32223c628df9147b1}{K\_20\_39}+\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}),5)+\hyperlink{sha__locl_8h_ae63ecd55803ea629ae5afc0d67962b1f}{F\_20\_39}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d)); \(\backslash\)
+        (b)=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((b),30);
+\end{DoxyCode}
+
+
+Definition at line 168 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!B\+O\+D\+Y\+\_\+32\+\_\+39@{B\+O\+D\+Y\+\_\+32\+\_\+39}}
+\index{B\+O\+D\+Y\+\_\+32\+\_\+39@{B\+O\+D\+Y\+\_\+32\+\_\+39}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+O\+D\+Y\+\_\+32\+\_\+39}{BODY_32_39}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+O\+D\+Y\+\_\+32\+\_\+39(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f, }
+\item[{}]{xa, }
+\item[{}]{xb, }
+\item[{}]{xc, }
+\item[{}]{xd}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_af304d9ed59d0d4c79dc724345ccbbb07}{}\label{sha__locl_8h_af304d9ed59d0d4c79dc724345ccbbb07}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+Xupdate(f,xa,xa,xb,xc,xd); \(\backslash\)
+        (f)+=(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})+\hyperlink{sha__locl_8h_a658f7fa3b12dc5b32223c628df9147b1}{K\_20\_39}+\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}),5)+\hyperlink{sha__locl_8h_ae63ecd55803ea629ae5afc0d67962b1f}{F\_20\_39}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d)); \(\backslash\)
+        (b)=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((b),30);
+\end{DoxyCode}
+
+
+Definition at line 173 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!B\+O\+D\+Y\+\_\+40\+\_\+59@{B\+O\+D\+Y\+\_\+40\+\_\+59}}
+\index{B\+O\+D\+Y\+\_\+40\+\_\+59@{B\+O\+D\+Y\+\_\+40\+\_\+59}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+O\+D\+Y\+\_\+40\+\_\+59}{BODY_40_59}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+O\+D\+Y\+\_\+40\+\_\+59(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f, }
+\item[{}]{xa, }
+\item[{}]{xb, }
+\item[{}]{xc, }
+\item[{}]{xd}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_a7fd913f71a4c904ecee6341292a119ca}{}\label{sha__locl_8h_a7fd913f71a4c904ecee6341292a119ca}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+Xupdate(f,xa,xa,xb,xc,xd); \(\backslash\)
+        (f)+=(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})+\hyperlink{sha__locl_8h_a48c3de4625dc773168303792d9da3938}{K\_40\_59}+\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}),5)+\hyperlink{sha__locl_8h_a754122a10b1bd8cefc39784e7e233b8a}{F\_40\_59}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d)); \(\backslash\)
+        (b)=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((b),30);
+\end{DoxyCode}
+
+
+Definition at line 178 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!B\+O\+D\+Y\+\_\+60\+\_\+79@{B\+O\+D\+Y\+\_\+60\+\_\+79}}
+\index{B\+O\+D\+Y\+\_\+60\+\_\+79@{B\+O\+D\+Y\+\_\+60\+\_\+79}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{B\+O\+D\+Y\+\_\+60\+\_\+79}{BODY_60_79}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+O\+D\+Y\+\_\+60\+\_\+79(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{{\bf e}, }
+\item[{}]{f, }
+\item[{}]{xa, }
+\item[{}]{xb, }
+\item[{}]{xc, }
+\item[{}]{xd}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_a828ba8d34e534276c691efb82232c32b}{}\label{sha__locl_8h_a828ba8d34e534276c691efb82232c32b}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+Xupdate(f,xa,xa,xb,xc,xd); \(\backslash\)
+        (f)=xa+(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})+\hyperlink{sha__locl_8h_a161cd54d440a7d1a9e979cfb26375186}{K\_60\_79}+\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}),5)+\hyperlink{sha__locl_8h_a750ba50babddd25bec4055589637a010}{F\_60\_79}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d)); \(\backslash\)
+        (b)=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}((b),30);
+\end{DoxyCode}
+
+
+Definition at line 183 of file sha\+\_\+locl.\+h.
+
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!X@{X}}
+\index{X@{X}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{X}{X}}]{\setlength{\rightskip}{0pt plus 5cm}\#define X(
+\begin{DoxyParamCaption}
+\item[{}]{i}
+\end{DoxyParamCaption}
+)~XX\#\#i}\hypertarget{sha__locl_8h_a140a10d67d5b6669caf436cb802a9257}{}\label{sha__locl_8h_a140a10d67d5b6669caf436cb802a9257}
+
+
+Definition at line 201 of file sha\+\_\+locl.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}!fips\+\_\+md\+\_\+init\+\_\+ctx@{fips\+\_\+md\+\_\+init\+\_\+ctx}}
+\index{fips\+\_\+md\+\_\+init\+\_\+ctx@{fips\+\_\+md\+\_\+init\+\_\+ctx}!sha\+\_\+locl.\+h@{sha\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{fips\+\_\+md\+\_\+init\+\_\+ctx(\+S\+H\+A1, S\+H\+A)}{fips_md_init_ctx(SHA1, SHA)}}]{\setlength{\rightskip}{0pt plus 5cm}fips\+\_\+md\+\_\+init\+\_\+ctx (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+H\+A1}}]{, }
+\item[{{\bf S\+HA}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{sha__locl_8h_a26572e2fa4cde3e05a0e3900624a750b}{}\label{sha__locl_8h_a26572e2fa4cde3e05a0e3900624a750b}
+
+
+Definition at line 128 of file sha\+\_\+locl.\+h.
+
+
+\begin{DoxyCode}
+130 \{
+131     memset(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}, 0, \textcolor{keyword}{sizeof}(*\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}));
+132     \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}->h0 = \hyperlink{sha__locl_8h_a9e6448ccb76976da4e123c8388924253}{INIT\_DATA\_h0};
+133     \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}->h1 = \hyperlink{sha__locl_8h_a1bb79876b4bd5302fc2b34c400ce5e08}{INIT\_DATA\_h1};
+134     \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}->h2 = \hyperlink{sha__locl_8h_ae9fcb8ac944b40f94581f2c20abb5f86}{INIT\_DATA\_h2};
+135     \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}->h3 = \hyperlink{sha__locl_8h_aeddeb6e441fa66ff4d3193a7712844a2}{INIT\_DATA\_h3};
+136     \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}->h4 = \hyperlink{sha__locl_8h_af38fe1a5e84d9bf274b5147ad818fde2}{INIT\_DATA\_h4};
+137     \textcolor{keywordflow}{return} 1;
+138 \}
+\end{DoxyCode}

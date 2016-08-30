@@ -1,0 +1,42 @@
+\hypertarget{s2n__stream__cipher__rc4_8c}{}\section{s2n-\/master/crypto/s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.c File Reference}
+\label{s2n__stream__cipher__rc4_8c}\index{s2n-\/master/crypto/s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c@{s2n-\/master/crypto/s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c}}
+{\ttfamily \#include $<$openssl/rc4.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+cipher.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stream__cipher__rc4_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__cipher}{s2n\+\_\+cipher} \hyperlink{s2n__stream__cipher__rc4_8c_a0b687c26b503f09b9af96abe9cb4e350}{s2n\+\_\+rc4}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c@{s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c}!s2n\+\_\+rc4@{s2n\+\_\+rc4}}
+\index{s2n\+\_\+rc4@{s2n\+\_\+rc4}!s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c@{s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rc4}{s2n_rc4}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher} s2n\+\_\+rc4}\hypertarget{s2n__stream__cipher__rc4_8c_a0b687c26b503f09b9af96abe9cb4e350}{}\label{s2n__stream__cipher__rc4_8c_a0b687c26b503f09b9af96abe9cb4e350}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    .type = S2N\_STREAM,
+    .key\_material\_size = 16,
+    .io.stream = \{
+                  .decrypt = s2n\_stream\_cipher\_rc4\_endecrypt,
+                  .encrypt = s2n\_stream\_cipher\_rc4\_endecrypt\},
+    .init = s2n\_stream\_cipher\_rc4\_init,
+    .get\_decryption\_key = s2n\_stream\_cipher\_rc4\_get\_key,
+    .get\_encryption\_key = s2n\_stream\_cipher\_rc4\_get\_key,
+    .destroy\_key = s2n\_stream\_cipher\_rc4\_destroy\_key,
+\}
+\end{DoxyCode}
+
+
+Definition at line 47 of file s2n\+\_\+stream\+\_\+cipher\+\_\+rc4.\+c.
+

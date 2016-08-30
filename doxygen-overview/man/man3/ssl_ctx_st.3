@@ -1,0 +1,701 @@
+.TH "ssl_ctx_st" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ssl_ctx_st \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ssl\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list_by_id"
+.br
+.ti -1c
+.RI "\fBLHASH_OF\fP (\fBSSL_SESSION\fP)*sessions"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*extra_certs"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_COMP\fP)*comp_methods"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_NAME\fP)*client_CA"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSRTP_PROTECTION_PROFILE\fP)*srtp_profiles"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*cipher_list_by_id"
+.br
+.ti -1c
+.RI "\fBLHASH_OF\fP (\fBSSL_SESSION\fP)*sessions"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*extra_certs"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_COMP\fP)*comp_methods"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_NAME\fP)*client_CA"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSRTP_PROTECTION_PROFILE\fP)*srtp_profiles"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const \fBSSL_METHOD\fP * \fBmethod\fP"
+.br
+.ti -1c
+.RI "struct \fBx509_store_st\fP * \fBcert_store\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBsession_cache_size\fP"
+.br
+.ti -1c
+.RI "struct \fBssl_session_st\fP * \fBsession_cache_head\fP"
+.br
+.ti -1c
+.RI "struct \fBssl_session_st\fP * \fBsession_cache_tail\fP"
+.br
+.ti -1c
+.RI "int \fBsession_cache_mode\fP"
+.br
+.ti -1c
+.RI "long \fBsession_timeout\fP"
+.br
+.ti -1c
+.RI "int(* \fBnew_session_cb\fP )(struct \fBssl_st\fP *ssl, \fBSSL_SESSION\fP *sess)"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBremove_session_cb\fP )(struct \fBssl_ctx_st\fP *ctx, \fBSSL_SESSION\fP *sess)"
+.br
+.ti -1c
+.RI "\fBSSL_SESSION\fP *(* \fBget_session_cb\fP )(struct \fBssl_st\fP *ssl, unsigned char *data, int \fBlen\fP, int *copy)"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   int \fBsess_connect\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_connect_renegotiate\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_connect_good\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_accept\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_accept_renegotiate\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_accept_good\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_miss\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_timeout\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_cache_full\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_hit\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_cb_hit\fP"
+.br
+.ti -1c
+.RI "} \fBstats\fP"
+.br
+.ti -1c
+.RI "int \fBreferences\fP"
+.br
+.ti -1c
+.RI "int(* \fBapp_verify_callback\fP )(\fBX509_STORE_CTX\fP *, \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBapp_verify_arg\fP"
+.br
+.ti -1c
+.RI "\fBpem_password_cb\fP * \fBdefault_passwd_callback\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBdefault_passwd_callback_userdata\fP"
+.br
+.ti -1c
+.RI "int(* \fBclient_cert_cb\fP )(\fBSSL\fP *ssl, \fBX509\fP **x509, \fBEVP_PKEY\fP **pkey)"
+.br
+.ti -1c
+.RI "int(* \fBapp_gen_cookie_cb\fP )(\fBSSL\fP *ssl, unsigned char *cookie, unsigned int *cookie_len)"
+.br
+.ti -1c
+.RI "int(* \fBapp_verify_cookie_cb\fP )(\fBSSL\fP *ssl, unsigned char *cookie, unsigned int cookie_len)"
+.br
+.ti -1c
+.RI "\fBCRYPTO_EX_DATA\fP \fBex_data\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_MD\fP * \fBrsa_md5\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_MD\fP * \fBmd5\fP"
+.br
+.ti -1c
+.RI "const \fBEVP_MD\fP * \fBsha1\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBinfo_callback\fP )(const \fBSSL\fP *ssl, int \fBtype\fP, int val)"
+.br
+.ti -1c
+.RI "unsigned long \fBoptions\fP"
+.br
+.ti -1c
+.RI "unsigned long \fBmode\fP"
+.br
+.ti -1c
+.RI "long \fBmax_cert_list\fP"
+.br
+.ti -1c
+.RI "struct \fBcert_st\fP * \fBcert\fP"
+.br
+.ti -1c
+.RI "int \fBread_ahead\fP"
+.br
+.ti -1c
+.RI "\fBvoid\fP(* \fBmsg_callback\fP )(int write_p, int \fBversion\fP, int content_type, const \fBvoid\fP *buf, size_t \fBlen\fP, \fBSSL\fP *ssl, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBmsg_callback_arg\fP"
+.br
+.ti -1c
+.RI "int \fBverify_mode\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBsid_ctx_length\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBsid_ctx\fP [\fBSSL_MAX_SID_CTX_LENGTH\fP]"
+.br
+.ti -1c
+.RI "int(* \fBdefault_verify_callback\fP )(int ok, \fBX509_STORE_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBGEN_SESSION_CB\fP \fBgenerate_session_id\fP"
+.br
+.ti -1c
+.RI "\fBX509_VERIFY_PARAM\fP * \fBparam\fP"
+.br
+.ti -1c
+.RI "int \fBquiet_shutdown\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBmax_send_fragment\fP"
+.br
+.ti -1c
+.RI "\fBENGINE\fP * \fBclient_cert_engine\fP"
+.br
+.ti -1c
+.RI "int(* \fBtlsext_servername_callback\fP )(\fBSSL\fP *, int *, \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtlsext_servername_arg\fP"
+.br
+.ti -1c
+.RI "unsigned char \fBtlsext_tick_key_name\fP [16]"
+.br
+.ti -1c
+.RI "unsigned char \fBtlsext_tick_hmac_key\fP [16]"
+.br
+.ti -1c
+.RI "unsigned char \fBtlsext_tick_aes_key\fP [16]"
+.br
+.ti -1c
+.RI "int(* \fBtlsext_ticket_key_cb\fP )(\fBSSL\fP *ssl, unsigned char *name, unsigned char *iv, \fBEVP_CIPHER_CTX\fP *ectx, \fBHMAC_CTX\fP *hctx, int enc)"
+.br
+.ti -1c
+.RI "int(* \fBtlsext_status_cb\fP )(\fBSSL\fP *ssl, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtlsext_status_arg\fP"
+.br
+.ti -1c
+.RI "int(* \fBtlsext_opaque_prf_input_callback\fP )(\fBSSL\fP *, \fBvoid\fP *peerinput, size_t \fBlen\fP, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBtlsext_opaque_prf_input_callback_arg\fP"
+.br
+.ti -1c
+.RI "char * \fBpsk_identity_hint\fP"
+.br
+.ti -1c
+.RI "unsigned int(* \fBpsk_client_callback\fP )(\fBSSL\fP *ssl, const char *hint, char *identity, unsigned int max_identity_len, unsigned char *psk, unsigned int max_psk_len)"
+.br
+.ti -1c
+.RI "unsigned int(* \fBpsk_server_callback\fP )(\fBSSL\fP *ssl, const char *identity, unsigned char *psk, unsigned int max_psk_len)"
+.br
+.ti -1c
+.RI "unsigned int \fBfreelist_max_len\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_buf_freelist_st\fP * \fBwbuf_freelist\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_buf_freelist_st\fP * \fBrbuf_freelist\fP"
+.br
+.ti -1c
+.RI "\fBSRP_CTX\fP \fBsrp_ctx\fP"
+.br
+.ti -1c
+.RI "int(* \fBnext_protos_advertised_cb\fP )(\fBSSL\fP *s, const unsigned char **buf, unsigned int *\fBlen\fP, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBnext_protos_advertised_cb_arg\fP"
+.br
+.ti -1c
+.RI "int(* \fBnext_proto_select_cb\fP )(\fBSSL\fP *s, unsigned char **out, unsigned char *outlen, const unsigned char *in, unsigned int inlen, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBnext_proto_select_cb_arg\fP"
+.br
+.ti -1c
+.RI "int(* \fBalpn_select_cb\fP )(\fBSSL\fP *s, const unsigned char **out, unsigned char *outlen, const unsigned char *in, unsigned int inlen, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBalpn_select_cb_arg\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBalpn_client_proto_list\fP"
+.br
+.ti -1c
+.RI "unsigned \fBalpn_client_proto_list_len\fP"
+.br
+.ti -1c
+.RI "size_t \fBtlsext_ecpointformatlist_length\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBtlsext_ecpointformatlist\fP"
+.br
+.ti -1c
+.RI "size_t \fBtlsext_ellipticcurvelist_length\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBtlsext_ellipticcurvelist\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   int \fBsess_connect\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_connect_renegotiate\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_connect_good\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_accept\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_accept_renegotiate\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_accept_good\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_miss\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_timeout\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_cache_full\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_hit\fP"
+.br
+.ti -1c
+.RI "   int \fBsess_cb_hit\fP"
+.br
+.ti -1c
+.RI "} \fBstats\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 925 of file ssl\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "LHASH_OF (\fBSSL_SESSION\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBSSL_COMP\fP)"
+
+.SS "STACK_OF (\fBX509_NAME\fP)"
+
+.SS "STACK_OF (\fBSRTP_PROTECTION_PROFILE\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "LHASH_OF (\fBSSL_SESSION\fP)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBSSL_COMP\fP)"
+
+.SS "STACK_OF (\fBX509_NAME\fP)"
+
+.SS "STACK_OF (\fBSRTP_PROTECTION_PROFILE\fP)"
+
+.SH "Field Documentation"
+.PP 
+.SS "const \fBSSL_METHOD\fP * method"
+
+.PP
+Definition at line 926 of file ssl\&.h\&.
+.SS "struct \fBx509_store_st\fP * cert_store"
+
+.PP
+Definition at line 930 of file ssl\&.h\&.
+.SS "unsigned long session_cache_size"
+
+.PP
+Definition at line 936 of file ssl\&.h\&.
+.SS "struct \fBssl_session_st\fP * session_cache_head"
+
+.PP
+Definition at line 937 of file ssl\&.h\&.
+.SS "struct \fBssl_session_st\fP * session_cache_tail"
+
+.PP
+Definition at line 938 of file ssl\&.h\&.
+.SS "int session_cache_mode"
+
+.PP
+Definition at line 944 of file ssl\&.h\&.
+.SS "long session_timeout"
+
+.PP
+Definition at line 950 of file ssl\&.h\&.
+.SS "int(* new_session_cb)(struct \fBssl_st\fP *ssl, \fBSSL_SESSION\fP *sess)"
+
+.PP
+Definition at line 960 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* remove_session_cb)(struct \fBssl_ctx_st\fP *ctx, \fBSSL_SESSION\fP *sess)"
+
+.PP
+Definition at line 961 of file ssl\&.h\&.
+.SS "\fBSSL_SESSION\fP *(* get_session_cb)(struct \fBssl_st\fP *ssl, unsigned char *data, int \fBlen\fP, int *copy)"
+
+.PP
+Definition at line 962 of file ssl\&.h\&.
+.SS "int sess_connect"
+
+.PP
+Definition at line 965 of file ssl\&.h\&.
+.SS "int sess_connect_renegotiate"
+
+.PP
+Definition at line 966 of file ssl\&.h\&.
+.SS "int sess_connect_good"
+
+.PP
+Definition at line 967 of file ssl\&.h\&.
+.SS "int sess_accept"
+
+.PP
+Definition at line 968 of file ssl\&.h\&.
+.SS "int sess_accept_renegotiate"
+
+.PP
+Definition at line 969 of file ssl\&.h\&.
+.SS "int sess_accept_good"
+
+.PP
+Definition at line 970 of file ssl\&.h\&.
+.SS "int sess_miss"
+
+.PP
+Definition at line 971 of file ssl\&.h\&.
+.SS "int sess_timeout"
+
+.PP
+Definition at line 972 of file ssl\&.h\&.
+.SS "int sess_cache_full"
+
+.PP
+Definition at line 973 of file ssl\&.h\&.
+.SS "int sess_hit"
+
+.PP
+Definition at line 974 of file ssl\&.h\&.
+.SS "int sess_cb_hit"
+
+.PP
+Definition at line 975 of file ssl\&.h\&.
+.SS "struct { \&.\&.\&. }   stats"
+
+.SS "int references"
+
+.PP
+Definition at line 982 of file ssl\&.h\&.
+.SS "int(* app_verify_callback)(\fBX509_STORE_CTX\fP *, \fBvoid\fP *)"
+
+.PP
+Definition at line 985 of file ssl\&.h\&.
+.SS "\fBvoid\fP * app_verify_arg"
+
+.PP
+Definition at line 986 of file ssl\&.h\&.
+.SS "\fBpem_password_cb\fP * default_passwd_callback"
+
+.PP
+Definition at line 993 of file ssl\&.h\&.
+.SS "\fBvoid\fP * default_passwd_callback_userdata"
+
+.PP
+Definition at line 996 of file ssl\&.h\&.
+.SS "int(* client_cert_cb)(\fBSSL\fP *ssl, \fBX509\fP **x509, \fBEVP_PKEY\fP **pkey)"
+
+.PP
+Definition at line 999 of file ssl\&.h\&.
+.SS "int(* app_gen_cookie_cb)(\fBSSL\fP *ssl, unsigned char *cookie, unsigned int *cookie_len)"
+
+.PP
+Definition at line 1002 of file ssl\&.h\&.
+.SS "int(* app_verify_cookie_cb)(\fBSSL\fP *ssl, unsigned char *cookie, unsigned int cookie_len)"
+
+.PP
+Definition at line 1006 of file ssl\&.h\&.
+.SS "\fBCRYPTO_EX_DATA\fP ex_data"
+
+.PP
+Definition at line 1009 of file ssl\&.h\&.
+.SS "const \fBEVP_MD\fP * rsa_md5"
+
+.PP
+Definition at line 1011 of file ssl\&.h\&.
+.SS "const \fBEVP_MD\fP * md5"
+
+.PP
+Definition at line 1012 of file ssl\&.h\&.
+.SS "const \fBEVP_MD\fP * sha1"
+
+.PP
+Definition at line 1013 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* info_callback)(const \fBSSL\fP *ssl, int \fBtype\fP, int val)"
+
+.PP
+Definition at line 1021 of file ssl\&.h\&.
+.SS "unsigned long options"
+
+.PP
+Definition at line 1031 of file ssl\&.h\&.
+.SS "unsigned long mode"
+
+.PP
+Definition at line 1032 of file ssl\&.h\&.
+.SS "long max_cert_list"
+
+.PP
+Definition at line 1033 of file ssl\&.h\&.
+.SS "struct \fBcert_st\fP * cert"
+
+.PP
+Definition at line 1035 of file ssl\&.h\&.
+.SS "int read_ahead"
+
+.PP
+Definition at line 1036 of file ssl\&.h\&.
+.SS "\fBvoid\fP(* msg_callback)(int write_p, int \fBversion\fP, int content_type, const \fBvoid\fP *buf, size_t \fBlen\fP, \fBSSL\fP *ssl, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 1039 of file ssl\&.h\&.
+.SS "\fBvoid\fP * msg_callback_arg"
+
+.PP
+Definition at line 1041 of file ssl\&.h\&.
+.SS "int verify_mode"
+
+.PP
+Definition at line 1043 of file ssl\&.h\&.
+.SS "unsigned int sid_ctx_length"
+
+.PP
+Definition at line 1044 of file ssl\&.h\&.
+.SS "unsigned char sid_ctx"
+
+.PP
+Definition at line 1045 of file ssl\&.h\&.
+.SS "int(* default_verify_callback)(int ok, \fBX509_STORE_CTX\fP *ctx)"
+
+.PP
+Definition at line 1047 of file ssl\&.h\&.
+.SS "\fBGEN_SESSION_CB\fP generate_session_id"
+
+.PP
+Definition at line 1050 of file ssl\&.h\&.
+.SS "\fBX509_VERIFY_PARAM\fP * param"
+
+.PP
+Definition at line 1052 of file ssl\&.h\&.
+.SS "int quiet_shutdown"
+
+.PP
+Definition at line 1059 of file ssl\&.h\&.
+.SS "unsigned int max_send_fragment"
+
+.PP
+Definition at line 1065 of file ssl\&.h\&.
+.SS "\fBENGINE\fP * client_cert_engine"
+
+.PP
+Definition at line 1071 of file ssl\&.h\&.
+.SS "int(* tlsext_servername_callback)(\fBSSL\fP *, int *, \fBvoid\fP *)"
+
+.PP
+Definition at line 1076 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tlsext_servername_arg"
+
+.PP
+Definition at line 1077 of file ssl\&.h\&.
+.SS "unsigned char tlsext_tick_key_name"
+
+.PP
+Definition at line 1079 of file ssl\&.h\&.
+.SS "unsigned char tlsext_tick_hmac_key"
+
+.PP
+Definition at line 1080 of file ssl\&.h\&.
+.SS "unsigned char tlsext_tick_aes_key"
+
+.PP
+Definition at line 1081 of file ssl\&.h\&.
+.SS "int(* tlsext_ticket_key_cb)(\fBSSL\fP *ssl, unsigned char *name, unsigned char *iv, \fBEVP_CIPHER_CTX\fP *ectx, \fBHMAC_CTX\fP *hctx, int enc)"
+
+.PP
+Definition at line 1083 of file ssl\&.h\&.
+.SS "int(* tlsext_status_cb)(\fBSSL\fP *ssl, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 1090 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tlsext_status_arg"
+
+.PP
+Definition at line 1091 of file ssl\&.h\&.
+.SS "int(* tlsext_opaque_prf_input_callback)(\fBSSL\fP *, \fBvoid\fP *peerinput, size_t \fBlen\fP, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 1094 of file ssl\&.h\&.
+.SS "\fBvoid\fP * tlsext_opaque_prf_input_callback_arg"
+
+.PP
+Definition at line 1096 of file ssl\&.h\&.
+.SS "char * psk_identity_hint"
+
+.PP
+Definition at line 1100 of file ssl\&.h\&.
+.SS "unsigned int(* psk_client_callback)(\fBSSL\fP *ssl, const char *hint, char *identity, unsigned int max_identity_len, unsigned char *psk, unsigned int max_psk_len)"
+
+.PP
+Definition at line 1101 of file ssl\&.h\&.
+.SS "unsigned int(* psk_server_callback)(\fBSSL\fP *ssl, const char *identity, unsigned char *psk, unsigned int max_psk_len)"
+
+.PP
+Definition at line 1106 of file ssl\&.h\&.
+.SS "unsigned int freelist_max_len"
+
+.PP
+Definition at line 1113 of file ssl\&.h\&.
+.SS "struct \fBssl3_buf_freelist_st\fP * wbuf_freelist"
+
+.PP
+Definition at line 1114 of file ssl\&.h\&.
+.SS "struct \fBssl3_buf_freelist_st\fP * rbuf_freelist"
+
+.PP
+Definition at line 1115 of file ssl\&.h\&.
+.SS "\fBSRP_CTX\fP srp_ctx"
+
+.PP
+Definition at line 1118 of file ssl\&.h\&.
+.SS "int(* next_protos_advertised_cb)(\fBSSL\fP *s, const unsigned char **buf, unsigned int *\fBlen\fP, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 1131 of file ssl\&.h\&.
+.SS "\fBvoid\fP * next_protos_advertised_cb_arg"
+
+.PP
+Definition at line 1133 of file ssl\&.h\&.
+.SS "int(* next_proto_select_cb)(\fBSSL\fP *s, unsigned char **out, unsigned char *outlen, const unsigned char *in, unsigned int inlen, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 1138 of file ssl\&.h\&.
+.SS "\fBvoid\fP * next_proto_select_cb_arg"
+
+.PP
+Definition at line 1142 of file ssl\&.h\&.
+.SS "int(* alpn_select_cb)(\fBSSL\fP *s, const unsigned char **out, unsigned char *outlen, const unsigned char *in, unsigned int inlen, \fBvoid\fP *arg)"
+
+.PP
+Definition at line 1162 of file ssl\&.h\&.
+.SS "\fBvoid\fP * alpn_select_cb_arg"
+
+.PP
+Definition at line 1167 of file ssl\&.h\&.
+.SS "unsigned char * alpn_client_proto_list"
+
+.PP
+Definition at line 1173 of file ssl\&.h\&.
+.SS "unsigned alpn_client_proto_list_len"
+
+.PP
+Definition at line 1174 of file ssl\&.h\&.
+.SS "size_t tlsext_ecpointformatlist_length"
+
+.PP
+Definition at line 1178 of file ssl\&.h\&.
+.SS "unsigned char * tlsext_ecpointformatlist"
+
+.PP
+Definition at line 1179 of file ssl\&.h\&.
+.SS "size_t tlsext_ellipticcurvelist_length"
+
+.PP
+Definition at line 1180 of file ssl\&.h\&.
+.SS "unsigned char * tlsext_ellipticcurvelist"
+
+.PP
+Definition at line 1181 of file ssl\&.h\&.
+.SS "struct { \&.\&.\&. }   stats"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

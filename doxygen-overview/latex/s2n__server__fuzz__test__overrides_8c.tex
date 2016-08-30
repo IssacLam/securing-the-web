@@ -1,0 +1,188 @@
+\hypertarget{s2n__server__fuzz__test__overrides_8c}{}\section{s2n-\/master/tests/fuzz/\+L\+D\+\_\+\+P\+R\+E\+L\+O\+A\+D/s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.c File Reference}
+\label{s2n__server__fuzz__test__overrides_8c}\index{s2n-\/master/tests/fuzz/\+L\+D\+\_\+\+P\+R\+E\+L\+O\+A\+D/s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n-\/master/tests/fuzz/\+L\+D\+\_\+\+P\+R\+E\+L\+O\+A\+D/s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}}
+{\ttfamily \#include $<$dlfcn.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/rsa.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+rsa.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test__overrides_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__server__fuzz__test__overrides_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+time\+\_\+t \hyperlink{s2n__server__fuzz__test__overrides_8c_a840ddd268669df5b1e15c04cebbd6210}{time} (time\+\_\+t $\ast$\+\_\+\+\_\+timer)
+\item 
+int \hyperlink{s2n__server__fuzz__test__overrides_8c_a98268d307074f7fab28fbff3a4b8e796}{R\+S\+A\+\_\+verify} (int dtype, const unsigned char $\ast$m, unsigned int m\+\_\+len, const unsigned char $\ast$sigbuf, unsigned int siglen, \hyperlink{crypto_2ossl__typ_8h_a9ad4496a11f0a9f686bea793cb97f8b5}{R\+SA} $\ast$rsa)
+\item 
+int \hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\+\_\+constant\+\_\+time\+\_\+equals} (const uint8\+\_\+t $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const uint8\+\_\+t $\ast$b, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{s2n__server__fuzz__test__overrides_8c_a4894ba367df6cc84ab8907adde93178c}{s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}!\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}}
+\index{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}!s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}{_GNU_SOURCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}\hypertarget{s2n__server__fuzz__test__overrides_8c_a369266c24eacffb87046522897a570d5}{}\label{s2n__server__fuzz__test__overrides_8c_a369266c24eacffb87046522897a570d5}
+
+
+Definition at line 16 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}!time@{time}}
+\index{time@{time}!s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{time(time\+\_\+t $\ast$\+\_\+\+\_\+timer)}{time(time_t *__timer)}}]{\setlength{\rightskip}{0pt plus 5cm}time\+\_\+t time (
+\begin{DoxyParamCaption}
+\item[{time\+\_\+t $\ast$}]{\+\_\+\+\_\+timer}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__fuzz__test__overrides_8c_a840ddd268669df5b1e15c04cebbd6210}{}\label{s2n__server__fuzz__test__overrides_8c_a840ddd268669df5b1e15c04cebbd6210}
+
+
+Definition at line 26 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+27 \{
+28     \textcolor{comment}{/* Always assume the time is zero when fuzzing the server, this is to ensure that Fuzz tests are
+       deterministic and}
+29 \textcolor{comment}{     * don't depend on the time the test was run.}
+30 \textcolor{comment}{     */}
+31     \textcolor{keywordflow}{return} 0;
+32 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test__overrides_8c_a840ddd268669df5b1e15c04cebbd6210_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}!R\+S\+A\+\_\+verify@{R\+S\+A\+\_\+verify}}
+\index{R\+S\+A\+\_\+verify@{R\+S\+A\+\_\+verify}!s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{R\+S\+A\+\_\+verify(int dtype, const unsigned char $\ast$m, unsigned int m\+\_\+len, const unsigned char $\ast$sigbuf, unsigned int siglen, R\+S\+A $\ast$rsa)}{RSA_verify(int dtype, const unsigned char *m, unsigned int m_len, const unsigned char *sigbuf, unsigned int siglen, RSA *rsa)}}]{\setlength{\rightskip}{0pt plus 5cm}int R\+S\+A\+\_\+verify (
+\begin{DoxyParamCaption}
+\item[{int}]{dtype, }
+\item[{const unsigned char $\ast$}]{m, }
+\item[{unsigned int}]{m\+\_\+len, }
+\item[{const unsigned char $\ast$}]{sigbuf, }
+\item[{unsigned int}]{siglen, }
+\item[{{\bf R\+SA} $\ast$}]{rsa}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__fuzz__test__overrides_8c_a98268d307074f7fab28fbff3a4b8e796}{}\label{s2n__server__fuzz__test__overrides_8c_a98268d307074f7fab28fbff3a4b8e796}
+
+
+Definition at line 35 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+37 \{
+38     \textcolor{comment}{/* Always assume that the RSA\_verify function passes */}
+39     \textcolor{keywordflow}{return} 1;
+40 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test__overrides_8c_a98268d307074f7fab28fbff3a4b8e796_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}!s2n\+\_\+constant\+\_\+time\+\_\+equals@{s2n\+\_\+constant\+\_\+time\+\_\+equals}}
+\index{s2n\+\_\+constant\+\_\+time\+\_\+equals@{s2n\+\_\+constant\+\_\+time\+\_\+equals}!s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+constant\+\_\+time\+\_\+equals(const uint8\+\_\+t $\ast$a, const uint8\+\_\+t $\ast$b, uint32\+\_\+t len)}{s2n_constant_time_equals(const uint8_t *a, const uint8_t *b, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+constant\+\_\+time\+\_\+equals (
+\begin{DoxyParamCaption}
+\item[{const uint8\+\_\+t $\ast$}]{a, }
+\item[{const uint8\+\_\+t $\ast$}]{b, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{}\label{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}
+
+
+Definition at line 42 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+43 \{
+44     \textcolor{comment}{/* Allow all signatures checked with s2n\_constant\_time\_equals to always pass verification even if they
+       are invalid}
+45 \textcolor{comment}{     * in order to aid code coverage with server fuzz test.}
+46 \textcolor{comment}{     */}
+47     \textcolor{keywordflow}{return} !0;
+48 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}!s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv@{s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv}}
+\index{s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv@{s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv}!s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv(struct s2n\+\_\+connection $\ast$conn)}{s2n_rsa_client_key_recv(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+rsa\+\_\+client\+\_\+key\+\_\+recv (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__fuzz__test__overrides_8c_a4894ba367df6cc84ab8907adde93178c}{}\label{s2n__server__fuzz__test__overrides_8c_a4894ba367df6cc84ab8907adde93178c}
+
+
+Definition at line 50 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test\+\_\+overrides.\+c.
+
+
+\begin{DoxyCode}
+51 \{
+52     \textcolor{comment}{/* Perform the original function */}
+53     \textcolor{keyword}{typedef} int (*orig\_s2n\_rsa\_client\_key\_recv\_func\_type)(\textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn);
+54     orig\_s2n\_rsa\_client\_key\_recv\_func\_type orig\_s2n\_rsa\_client\_key\_recv;
+55     orig\_s2n\_rsa\_client\_key\_recv = (orig\_s2n\_rsa\_client\_key\_recv\_func\_type) dlsym(RTLD\_NEXT, \textcolor{stringliteral}{"
+      s2n\_rsa\_client\_key\_recv"});
+56     \textcolor{keywordtype}{int} original\_return\_code = orig\_s2n\_rsa\_client\_key\_recv(conn);
+57 
+58     \textcolor{comment}{/* Then, overwrite the RSA Failed flag to false before returning, this will help fuzzing code coverage.
+       */}
+59     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a65e2d8c6247963b90c9c2e3d574b0319}{rsa\_failed} = 0;
+60 
+61     \textcolor{keywordflow}{return} original\_return\_code;
+62 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=349pt]{s2n__server__fuzz__test__overrides_8c_a4894ba367df6cc84ab8907adde93178c_icgraph}
+\end{center}
+\end{figure}
+
+

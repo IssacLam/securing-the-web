@@ -1,0 +1,77 @@
+.TH "s2n-master/tests/unit/s2n_safety_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_safety_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 172 of file s2n_safety_test\&.c\&.
+.PP
+.nf
+173 {
+174     BEGIN_TEST();
+175 
+176     EXPECT_FAILURE(failure_gte());
+177     EXPECT_FAILURE(failure_lte());
+178     EXPECT_FAILURE(failure_gt());
+179     EXPECT_FAILURE(failure_lt());
+180     EXPECT_FAILURE(failure_notnull());
+181     EXPECT_FAILURE(failure_memcpy());
+182     EXPECT_FAILURE(failure_inclusive_range_too_high());
+183     EXPECT_FAILURE(failure_inclusive_range_too_low());
+184     EXPECT_FAILURE(failure_exclusive_range_too_high());
+185     EXPECT_FAILURE(failure_exclusive_range_too_low());
+186     EXPECT_FAILURE(failure_exclusive_range_eq_high());
+187     EXPECT_FAILURE(failure_exclusive_range_eq_low());
+188 
+189     EXPECT_SUCCESS(success_gte());
+190     EXPECT_SUCCESS(success_lte());
+191     EXPECT_SUCCESS(success_gt());
+192     EXPECT_SUCCESS(success_lt());
+193     EXPECT_SUCCESS(success_notnull());
+194     EXPECT_SUCCESS(success_memcpy());
+195     EXPECT_SUCCESS(success_inclusive_range());
+196     EXPECT_SUCCESS(success_exclusive_range());
+197 
+198     uint8_t a[4] = { 1, 2, 3, 4 };
+199     uint8_t b[4] = { 1, 2, 3, 4 };
+200     uint8_t c[4] = { 5, 6, 7, 8 };
+201     uint8_t d[4] = { 5, 6, 7, 8 };
+202     uint8_t e[4] = { 1, 2, 3, 4 };
+203 
+204     EXPECT_EQUAL(s2n_constant_time_equals(a, b, sizeof(a)), 1);
+205     EXPECT_EQUAL(s2n_constant_time_equals(a, c, sizeof(a)), 0);
+206 
+207     EXPECT_SUCCESS(s2n_constant_time_copy_or_dont(a, c, sizeof(a), 0));
+208     EXPECT_EQUAL(s2n_constant_time_equals(a, c, sizeof(a)), 1);
+209 
+210     for (int i = 1; i < 256; i++) {
+211         EXPECT_SUCCESS(s2n_constant_time_copy_or_dont(b, d, sizeof(a), i));
+212         EXPECT_EQUAL(s2n_constant_time_equals(b, d, sizeof(a)), 0);
+213         EXPECT_EQUAL(s2n_constant_time_equals(b, e, sizeof(a)), 1);
+214     }
+215 
+216     END_TEST();
+217 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

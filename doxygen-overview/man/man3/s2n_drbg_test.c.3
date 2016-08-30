@@ -1,0 +1,271 @@
+.TH "s2n-master/tests/unit/s2n_drbg_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_drbg_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <inttypes\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include <openssl/aes\&.h>\fP
+.br
+\fC#include 'crypto/s2n_drbg\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_timer\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBnist_fake_urandom_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_stuffer\fP \fBnist_reference_entropy\fP"
+.br
+.ti -1c
+.RI "const char \fBnist_reference_entropy_hex\fP []"
+.br
+.ti -1c
+.RI "int \fBentropy_fd\fP = \-1"
+.br
+.ti -1c
+.RI "const char \fBnist_reference_personalization_strings_hex\fP []"
+.br
+.ti -1c
+.RI "const char \fBnist_reference_values_hex\fP []"
+.br
+.ti -1c
+.RI "const char \fBnist_reference_returned_bits_hex\fP []"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int nist_fake_urandom_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 149 of file s2n_drbg_test\&.c\&.
+.PP
+.nf
+150 {
+151     /* At first, we use entropy data provided by the NIST test vectors */
+152     GUARD(s2n_stuffer_read(&nist_reference_entropy, blob));
+153 
+154     return 0;
+155 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 157 of file s2n_drbg_test\&.c\&.
+.PP
+.nf
+158 {
+159     uint8_t data[256] = { 0 };
+160     struct s2n_drbg drbg = {{ 0 }};
+161     struct s2n_blob blob = {\&.data = data, \&.size = 64 };
+162     struct s2n_timer timer;
+163     uint64_t drbg_nanoseconds;
+164     uint64_t urandom_nanoseconds;
+165     struct s2n_stuffer nist_reference_personalization_strings;
+166     struct s2n_stuffer nist_reference_returned_bits;
+167     struct s2n_stuffer nist_reference_values;
+168     struct s2n_config *config;
+169 
+170     BEGIN_TEST();
+171 
+172     EXPECT_NOT_NULL(config = s2n_config_new())
+173 
+174     /* Open /dev/urandom */
+175     EXPECT_TRUE(entropy_fd = open("/dev/urandom", O_RDONLY));
+176 
+177     /* Convert the hex entropy data into binary */
+178     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_hex_string(&nist_reference_entropy, nist_reference_entropy_hex));
+179     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_hex_string(&nist_reference_personalization_strings, nist_reference_personalization_strings_hex));
+180     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_hex_string(&nist_reference_returned_bits, nist_reference_returned_bits_hex));
+181     EXPECT_SUCCESS(s2n_stuffer_alloc_ro_from_hex_string(&nist_reference_values, nist_reference_values_hex));
+182 
+183     /* Check everything against the NIST vectors */
+184     for (int i = 0; i < 14; i++) {
+185         uint8_t ps[32];
+186         struct s2n_drbg nist_drbg = { \&.entropy_generator = nist_fake_urandom_data };
+187         struct s2n_blob personalization_string = {\&.data = ps, \&.size = 32};
+188         /* Read the next personalization string */
+189         EXPECT_SUCCESS(s2n_stuffer_read(&nist_reference_personalization_strings, &personalization_string));
+190 
+191         /* Instantiate the DRBG */
+192         EXPECT_SUCCESS(s2n_drbg_instantiate(&nist_drbg, &personalization_string));
+193 
+194         uint8_t nist_v[16];
+195 
+196         GUARD(s2n_stuffer_read_bytes(&nist_reference_values, nist_v, sizeof(nist_v)));
+197         EXPECT_TRUE(memcmp(nist_v, nist_drbg\&.v, sizeof(nist_drbg\&.v)) == 0);
+198 
+199         /* Generate 512 bits (FIRST CALL) */
+200         uint8_t out[64];
+201         struct s2n_blob generated = {\&.data = out, \&.size = 64 };
+202         EXPECT_SUCCESS(s2n_drbg_generate(&nist_drbg, &generated));
+203 
+204         GUARD(s2n_stuffer_read_bytes(&nist_reference_values, nist_v, sizeof(nist_v)));
+205         EXPECT_TRUE(memcmp(nist_v, nist_drbg\&.v, sizeof(nist_drbg\&.v)) == 0);
+206 
+207         /* Generate another 512 bits (SECOND CALL) */
+208         EXPECT_SUCCESS(s2n_drbg_generate(&nist_drbg, &generated));
+209 
+210         GUARD(s2n_stuffer_read_bytes(&nist_reference_values, nist_v, sizeof(nist_v)));
+211         EXPECT_TRUE(memcmp(nist_v, nist_drbg\&.v, sizeof(nist_drbg\&.v)) == 0);
+212 
+213         uint8_t nist_returned_bits[64];
+214         GUARD(s2n_stuffer_read_bytes(&nist_reference_returned_bits, nist_returned_bits, sizeof(nist_returned_bits)));
+215         EXPECT_TRUE(memcmp(nist_returned_bits, out, sizeof(nist_returned_bits)) == 0);
+216 
+217         EXPECT_SUCCESS(s2n_drbg_wipe(&nist_drbg));
+218     }
+219 
+220     EXPECT_SUCCESS(s2n_drbg_instantiate(&drbg, &blob));
+221 
+222     /* Use the DRBG for 32MB of data */
+223     EXPECT_SUCCESS(s2n_timer_start(config, &timer));
+224     for (int i = 0; i < 500000; i++) {
+225         EXPECT_SUCCESS(s2n_drbg_generate(&drbg, &blob));
+226     }
+227     EXPECT_SUCCESS(s2n_timer_reset(config, &timer, &drbg_nanoseconds));
+228 
+229     /* Use urandom for 32MB of data */
+230     EXPECT_SUCCESS(s2n_timer_start(config, &timer));
+231     for (int i = 0; i < 500000; i++) {
+232         EXPECT_SUCCESS(s2n_get_urandom_data(&blob));
+233     }
+234     EXPECT_SUCCESS(s2n_timer_reset(config, &timer, &urandom_nanoseconds));
+235 
+236     /* Confirm that the DRBG is faster than urandom when rdrand is enabled */
+237     if (s2n_cpu_supports_rdrand()) {
+238         EXPECT_TRUE(drbg_nanoseconds < urandom_nanoseconds);
+239     }
+240 
+241     /* NOTE: s2n_random_test also includes monobit tests for this DRBG */
+242 
+243     /* the DRBG state is 128 bytes, test that we can get more than that */
+244     blob\&.size = 129;
+245     for (int i = 0; i < 10; i++) {
+246         EXPECT_SUCCESS(s2n_drbg_generate(&drbg, &blob));
+247     }
+248 
+249     EXPECT_SUCCESS(s2n_drbg_wipe(&drbg));
+250 
+251     EXPECT_SUCCESS(s2n_stuffer_free(&nist_reference_entropy));
+252     EXPECT_SUCCESS(s2n_stuffer_free(&nist_reference_personalization_strings));
+253     EXPECT_SUCCESS(s2n_stuffer_free(&nist_reference_returned_bits));
+254     EXPECT_SUCCESS(s2n_stuffer_free(&nist_reference_values));
+255 
+256     END_TEST();
+257 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBs2n_stuffer\fP nist_reference_entropy"
+
+.PP
+Definition at line 46 of file s2n_drbg_test\&.c\&.
+.SS "const char nist_reference_entropy_hex[]"
+
+.PP
+Definition at line 47 of file s2n_drbg_test\&.c\&.
+.SS "int entropy_fd = \-1"
+
+.PP
+Definition at line 94 of file s2n_drbg_test\&.c\&.
+.SS "const char nist_reference_personalization_strings_hex[]"
+\fBInitial value:\fP
+.PP
+.nf
+=
+"07ca7a007b53f014d7f10461d6c97b5c8b0c502d3461d583f99efec69f121cd2"
+"99f2d501dd183f5657d8b8061bf4f0988de3bc2719f41281cf08d9bcc99f0dcb"
+"617d6463eaf3849e13b89a7f9805edff3ea1f0aa7ad71e7de7af3481bfeba7f5"
+"7f7d81a5c72f9e3498de183329d6b2291792ac8c81e690200387305aba8987c7"
+"0c70a20b690bf5d586b284aa752ec73055e039233089a30efdd6218a1e49f548"
+"1fe2b0ce3a1896017e30753064e1c0e1341b673569c739a199cd218fe64665d0"
+"2703e1dca9926995705229cc8a8c9d958bcdbfd5f3e09eeb349b5135686aeed1"
+"9ca4b8e6cdec1ecd9546508542c84936ff2aa1a4dab969613139c01e35f36d71"
+"0f533937857dc9f97fefa142c95445b484e1f259a488e9fa38a46e49d693c4b6"
+"950472ba4b3b6979ba4d2a1ad51db7732eb3337b28270fdb7f99018144734f72"
+"06bd36977e09cc13d7c9edc9a285043f7c00575610e9b95fd3754a4b7c561fb7"
+"6dacec09cc407ddf545c4d54c77efd712f65be8ba5ecbc9fa6bdf29243eed72e"
+"85facc571d2c6eb257437e1d3b77b5fba4a125606440181b8387f9a4fb1a7fbf"
+"2c4e73ad2597b027dd04c6056db1189b7a0d8e9fece52237cb7fc2511509c4eb"
+"717c4de30c0ac7b831807cb1fcf4ab37f1734683a723d183fcfe5fc8a4c6c7e5"
+.fi
+.PP
+Definition at line 96 of file s2n_drbg_test\&.c\&.
+.SS "const char nist_reference_values_hex[]"
+\fBInitial value:\fP
+.PP
+.nf
+=
+"462eaef2ff6d82aec55f451776700e4c" "010cd7c293306adbe9798f2f65bdfb01" "f6f808dd7e199b3ce8497d63515092df"
+"1e574e0a9b220668776a109ecec959f5" "f47380b9e6d8ce485a5bb9f890331f89" "f2b475b29ed8aca7f3a69477212153e3"
+"d63aa6ddf10dfb6934b7a745456f2056" "29c05402d0dd6ff1d171c523e6066b3d" "fb15e2dfd607439797e29f9ea9a24788"
+"601d313b010af1930132417697d9e27e" "b17422b4a74cc83de34c7196cd232355" "b63cf4e0894e185eb7ef572c2adacf98"
+"a7ec1f62b063acd9904d2ca4b26e755c" "b98e1a708027be7d5f0ff46f775ceece" "5b5adf71f7d8c85a011acc778c4e3d6f"
+"6536d316f19bd244ca1a2deba572face" "0ce6ba1487b38261f306c84642338b53" "a19af0020f46085ca3caf34b2cb4f1f5"
+"cac724dc3e214ff8d0ac4f60ee2dfded" "67138c2c7a488b2f4449b03192aa54f8" "d10073624d73847284c91b46e28b83c3"
+"edadadc2ad451ea48ab9619d6c89cdcb" "24f64c09499b4803a03aadf0e34240ca" "8ac5b02284cac91bb39e14bd3d38ae2b"
+"31f21cce9f11c7e9047e3ebad7c23a1b" "6b59014f0e7e8df5f7456017841e9c63" "4cfc026d6bc19e9674ec7002bf0baf62"
+"d871c3f06cdf34c0cebb8b405aa79be7" "6af76a8c51f305b88249af9db4eacfe4" "ff77327ab3761736e40f79ca0a6660e2"
+"9eedbc9923b20434c175c066ed3584ba" "06ebe4bd2ea20c39ef8f4f66796816bb" "497b437274f3d7cee04b163c10233aec"
+"7fca6267fd42102de5baacb7b4409565" "1310719710bd2c3468f8000fad5b6f4c" "34e5d8e0f7e6c28718a5f27ac086516b"
+"9948b0263f2c91756050fad1f5d7876f" "9aff44fbc0f539186d13e81a9b233786" "0a86ad5766efe6d3fa01a9ac4ec9090d"
+"a022dfed4c805b8f2c15d81693edfb53" "9d4f527ab03ff0c4abe7e442572fc0bb" "5fc9cb9e3cd694c6b08bb99256062814"
+"faa46432da44e336bd782edd85ccfa83" "c17b86c7fd8e5a2131f515fb0ab62c9b" "619ff6d15579a1cb4bc9c96f6be8f4e5"
+.fi
+.PP
+Definition at line 113 of file s2n_drbg_test\&.c\&.
+.SS "const char nist_reference_returned_bits_hex[]"
+\fBInitial value:\fP
+.PP
+.nf
+=
+"bba1ef50b4bad288897f02ac2706ee1e01488dcbe9b3d8a637921f5e788faed3b23db63d590ceaa7607a2179192bea9aeaa85d048e7e108fee666dc646af5f0e"
+"b9ecf5521d38f9212578f9dd32af38089b45812ca96e661fc8e1be0b2f4b54215f52c9c93a6f76efee4521cb316378403108a6bf2724fdc93bc4d2db60a2de83"
+"ce4bec8241dd1ce12d7fa18bd1a3188b43892392b7dcae7228a851afef9c9728c587167b6df28c895a67af35b6fd84ad076efcd70d1c59c49fa7c0f7ed87bc82"
+"94001b011830bc6a911fa23bc1fd0dac8c0acd0e856ab4497ad072e54fe3b47bc06890e7e7babd4912af1e7da96e90523b75dd86d9a4ba4d88107de607e52534"
+"d0619996c88423a740f04dfdad3bfc131bf3601fc43022e89957bf8b9a1ad8702bc8fbb2004e7ab02550777818e11f03fab48458424ae5c8cc8cb73436657292"
+"a2613ddb75107ef3fe9fc392061a52ea2304af7aed6dedec3aee626e1ab2bf989ce7d6484555941e9a4013036c4605c564f17d4d1369e1e12d28b877d2125d99"
+"48460543d08b3331f0c7bcf786be06a276efc757bedce0f428323d54206931f18c3c7c606c0ff8e673f3d1367c7d50db2ed002120ff05623d2deddd037c125a4"
+"037a0305532b6bd2a51057962f23dbfd4660be8e5b7a448b1168be3bf8598a301fb517a4714b7826162fc0fcdae08800e967f638ff1ad1da39282d3454d93075"
+"035c19396d603b52222c16af6c6bc1c07a1a518f578b59943ffad73ca14948b7a8dde117e5c571506d57fd08e3a067a2ae3bde2240c2399f160c5cc5a2f5d582"
+"e17674172397369025d6b7811b69b6e62dfb8ab94852cc96bde1371fcedbe5fe31a11589f4e57183fb46883d93c647e36f70f8d5a536f8fb0d428dcfd7722e4e"
+"cbedccaa88b22e39fb0e14bf15dc05e4e1b7002fa0cffe7803e3f6bcf6a03f3faa51ce5b3ccb0d341533d335e20f9f71e90f83fef06ecfe93ed056f5d6851306"
+"116bd7ab4030379cd6f50e85a04182775292fa9619c38b7418a19b8e7855f29efffdf7a2b8b1d9d3d96ea85a6d56302014dd3bcbe401ada5b0e3cf2f66dce9cd"
+"51e0b54c109884baecd1884f7bafc846ace216b6fd97eb1ca70b563e62c4a2f22b55561152f379326ef2999e9746f25043a02402d3e47b4a58e747c222b7a081"
+"7c41adf941656cfb9f24409d6cc4d578d43930b3e23ec801a59c53d999401bc0cb3e5b8797b2770a8a8f51ff594b7b17d9e694d5e36644508d16cb2554057adc"
+"ac054570b081cf53b39b0a2faa21ee9b554c05ff9055843ac0eb9031d1de324701ad4cf2875623e0bf4184de4aea20070be1cb586880ac87fbb7e414b4b128d0"
+.fi
+.PP
+Definition at line 130 of file s2n_drbg_test\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

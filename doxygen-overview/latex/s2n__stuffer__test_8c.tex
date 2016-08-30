@@ -1,0 +1,146 @@
+\hypertarget{s2n__stuffer__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+test.c File Reference}
+\label{s2n__stuffer__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+stuffer\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 22 of file s2n\+\_\+stuffer\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+23 \{
+24     uint8\_t entropy[2048];
+25     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} stuffer;
+26     uint8\_t \hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8};
+27     uint16\_t \hyperlink{aes__locl_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16};
+28     uint32\_t \hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32};
+29     uint64\_t \hyperlink{modes__lcl_8h_ad758b7a5c3f18ed79d2fcd23d9f16357}{u64};
+30 
+31     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+32 
+33     \textcolor{comment}{/* Create a 100 byte stuffer */}
+34     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a32c836a77ead9490bde10e13dcbed39c}{s2n\_stuffer\_alloc}(&stuffer, 100));
+35 
+36     \textcolor{comment}{/* Try to write 101 bytes */}
+37     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} in = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = entropy,.size = 101 \};
+38     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&stuffer, &in));
+39 
+40     \textcolor{comment}{/* Try to write 101 1-byte ints bytes */}
+41     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 100; i++) \{
+42         uint64\_t value = i * (0xff / 100);
+43         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(&stuffer, value));
+44     \}
+45     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(&stuffer, 1));
+46 
+47     \textcolor{comment}{/* Read those back, and expect the same results */}
+48     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 100; i++) \{
+49         uint64\_t value = i * (0xff / 100);
+50         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(&stuffer, &u8));
+51         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u8);
+52     \}
+53     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(&stuffer, &u8));
+54 
+55     \textcolor{comment}{/* Try to write 51 2-byte ints bytes */}
+56     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+57     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 50; i++) \{
+58         uint64\_t value = i * (0xffff / 50);
+59         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(&stuffer, value));
+60     \}
+61     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(&stuffer, 1));
+62 
+63     \textcolor{comment}{/* Read those back, and expect the same results */}
+64     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 50; i++) \{
+65         uint64\_t value = i * (0xffff / 50);
+66         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(&stuffer, &u16));
+67         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u16);
+68     \}
+69     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(&stuffer, &u16));
+70 
+71     \textcolor{comment}{/* Try to write 34 3-byte ints bytes */}
+72     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+73     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 33; i++) \{
+74         uint64\_t value = i * (0xffffff / 33);
+75         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(&stuffer, value));
+76     \}
+77     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(&stuffer, 1));
+78 
+79     \textcolor{comment}{/* Read those back, and expect the same results */}
+80     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 33; i++) \{
+81         uint64\_t value = i * (0xffffff / 33);
+82         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a71787bb6eeba3413137cde42d32a0f6c}{s2n\_stuffer\_read\_uint24}(&stuffer, &u32));
+83         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u32);
+84     \}
+85     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_a788c22abe22da96107393257193632c5}{s2n\_stuffer\_read\_uint16}(&stuffer, &u16));
+86 
+87     \textcolor{comment}{/* Try to write 26 4-byte ints bytes */}
+88     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+89     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 25; i++) \{
+90         uint64\_t value = i * (0xffffffff / 25);
+91         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a958a82fb4dfe3517bcfd95f46807f715}{s2n\_stuffer\_write\_uint32}(&stuffer, value));
+92     \}
+93     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_a958a82fb4dfe3517bcfd95f46807f715}{s2n\_stuffer\_write\_uint32}(&stuffer, 1));
+94 
+95     \textcolor{comment}{/* Read those back, and expect the same results */}
+96     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 25; i++) \{
+97         uint64\_t value = i * (0xffffffff / 25);
+98         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a7cf35b0d626c422e4fa414bda44f51bb}{s2n\_stuffer\_read\_uint32}(&stuffer, &u32));
+99         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u32);
+100     \}
+101     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_a7cf35b0d626c422e4fa414bda44f51bb}{s2n\_stuffer\_read\_uint32}(&stuffer, &u32));
+102 
+103     \textcolor{comment}{/* Try to write 13 8-byte ints bytes */}
+104     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+105     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 12; i++) \{
+106         uint64\_t value = i * (0xffffffffffffffff / 12);
+107         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af5be81568462bd6626c1d00a939ff30d}{s2n\_stuffer\_write\_uint64}(&stuffer, value));
+108     \}
+109     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_af5be81568462bd6626c1d00a939ff30d}{s2n\_stuffer\_write\_uint64}(&stuffer, 1));
+110 
+111     \textcolor{comment}{/* Read those back, and expect the same results */}
+112     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 12; i++) \{
+113         uint64\_t value = i * (0xffffffffffffffff / 12);
+114         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ae1122959189bd03c92af5fd134016977}{s2n\_stuffer\_read\_uint64}(&stuffer, &u64));
+115         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u64);
+116     \}
+117     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8c_ae1122959189bd03c92af5fd134016977}{s2n\_stuffer\_read\_uint64}(&stuffer, &u64));
+118 
+119     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a008ec0ad933873877ad7e471b3443278}{s2n\_stuffer\_free}(&stuffer));
+120 
+121     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+122 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

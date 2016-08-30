@@ -1,0 +1,99 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/seed/seed.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/seed/seed.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBseed_key_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSEED_BLOCK_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSEED_KEY_LENGTH\fP   16"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBseed_key_st\fP \fBSEED_KEY_SCHEDULE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_set_key\fP (const unsigned char rawkey[\fBSEED_KEY_LENGTH\fP], \fBSEED_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_encrypt\fP (const unsigned char s[\fBSEED_BLOCK_SIZE\fP], unsigned char d[\fBSEED_BLOCK_SIZE\fP], const \fBSEED_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_decrypt\fP (const unsigned char s[\fBSEED_BLOCK_SIZE\fP], unsigned char d[\fBSEED_BLOCK_SIZE\fP], const \fBSEED_KEY_SCHEDULE\fP *ks)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_ecb_encrypt\fP (const unsigned char *in, unsigned char *out, const \fBSEED_KEY_SCHEDULE\fP *ks, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_cbc_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBSEED_KEY_SCHEDULE\fP *ks, unsigned char ivec[\fBSEED_BLOCK_SIZE\fP], int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_cfb128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBSEED_KEY_SCHEDULE\fP *ks, unsigned char ivec[\fBSEED_BLOCK_SIZE\fP], int *\fBnum\fP, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSEED_ofb128_encrypt\fP (const unsigned char *in, unsigned char *out, size_t \fBlen\fP, const \fBSEED_KEY_SCHEDULE\fP *ks, unsigned char ivec[\fBSEED_BLOCK_SIZE\fP], int *\fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SEED_BLOCK_SIZE   16"
+
+.PP
+Definition at line 102 of file seed\&.h\&.
+.SS "#define SEED_KEY_LENGTH   16"
+
+.PP
+Definition at line 103 of file seed\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBseed_key_st\fP  \fBSEED_KEY_SCHEDULE\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP SEED_set_key (const unsigned char rawkey[SEED_KEY_LENGTH], \fBSEED_KEY_SCHEDULE\fP * ks)"
+
+.SS "\fBvoid\fP SEED_encrypt (const unsigned char s[SEED_BLOCK_SIZE], unsigned char d[SEED_BLOCK_SIZE], const \fBSEED_KEY_SCHEDULE\fP * ks)"
+
+.SS "\fBvoid\fP SEED_decrypt (const unsigned char s[SEED_BLOCK_SIZE], unsigned char d[SEED_BLOCK_SIZE], const \fBSEED_KEY_SCHEDULE\fP * ks)"
+
+.SS "\fBvoid\fP SEED_ecb_encrypt (const unsigned char * in, unsigned char * out, const \fBSEED_KEY_SCHEDULE\fP * ks, int enc)"
+
+.SS "\fBvoid\fP SEED_cbc_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBSEED_KEY_SCHEDULE\fP * ks, unsigned char ivec[SEED_BLOCK_SIZE], int enc)"
+
+.SS "\fBvoid\fP SEED_cfb128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBSEED_KEY_SCHEDULE\fP * ks, unsigned char ivec[SEED_BLOCK_SIZE], int * num, int enc)"
+
+.SS "\fBvoid\fP SEED_ofb128_encrypt (const unsigned char * in, unsigned char * out, size_t len, const \fBSEED_KEY_SCHEDULE\fP * ks, unsigned char ivec[SEED_BLOCK_SIZE], int * num)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

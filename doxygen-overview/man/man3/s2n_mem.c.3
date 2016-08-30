@@ -1,0 +1,152 @@
+.TH "s2n-master/utils/s2n_mem.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/utils/s2n_mem.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <sys/mman\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_mem_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_alloc\fP (struct \fBs2n_blob\fP *b, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_realloc\fP (struct \fBs2n_blob\fP *b, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_free\fP (struct \fBs2n_blob\fP *b)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_mem_init (\fBvoid\fP)"
+
+.PP
+Definition at line 30 of file s2n_mem\&.c\&.
+.PP
+.nf
+31 {
+32     GUARD(page_size = sysconf(_SC_PAGESIZE));
+33     if (getenv("S2N_DONT_MLOCK")) {
+34         use_mlock = 0;
+35     }
+36 
+37     return 0;
+38 }
+.fi
+.SS "int s2n_alloc (struct \fBs2n_blob\fP * b, uint32_t size)"
+
+.PP
+Definition at line 40 of file s2n_mem\&.c\&.
+.PP
+.nf
+41 {
+42     b->data = NULL;
+43     b->size = 0;
+44     b->allocated = 0;
+45     b->mlocked = 0;
+46     GUARD(s2n_realloc(b, size));
+47     return 0;
+48 }
+.fi
+.SS "int s2n_realloc (struct \fBs2n_blob\fP * b, uint32_t size)"
+
+.PP
+Definition at line 50 of file s2n_mem\&.c\&.
+.PP
+.nf
+51 {
+52     if (size == 0) {
+53         return s2n_free(b);
+54     }
+55 
+56     if (size < b->allocated) {
+57         b->size = size;
+58         return 0;
+59     }
+60 
+61     uint32_t allocate = page_size * ((size + (page_size - 1)) / page_size);
+62 
+63     void *data;
+64     if (posix_memalign(&data, page_size, allocate)) {
+65         S2N_ERROR(S2N_ERR_ALLOC);
+66     }
+67 
+68     if (b->size) {
+69         memcpy_check(data, b->data, b->size);
+70         GUARD(s2n_free(b));
+71     }
+72 
+73     b->data = data;
+74     b->size = size;
+75     b->allocated = allocate;
+76 
+77 #ifdef MADV_DONTDUMP
+78     if (madvise(b->data, size, MADV_DONTDUMP) < 0) {
+79         GUARD(s2n_free(b));
+80         S2N_ERROR(S2N_ERR_MADVISE);
+81     }
+82 #endif
+83     if (use_mlock == 0) {
+84         return 0;
+85     }
+86 
+87     if (mlock(b->data, size) < 0) {
+88         GUARD(s2n_free(b));
+89         S2N_ERROR(S2N_ERR_MLOCK);
+90     }
+91     b->mlocked = 1;
+92 
+93     return 0;
+94 }
+.fi
+.SS "int s2n_free (struct \fBs2n_blob\fP * b)"
+
+.PP
+Definition at line 96 of file s2n_mem\&.c\&.
+.PP
+.nf
+97 {
+98     int munlock_rc = 0;
+99     if (b->mlocked) {
+100         munlock_rc = munlock(b->data, b->size);
+101     }
+102 
+103     free(b->data);
+104     b->data = NULL;
+105     b->size = 0;
+106     b->allocated = 0;
+107 
+108     if (munlock_rc < 0) {
+109         S2N_ERROR(S2N_ERR_MUNLOCK);
+110     }
+111     b->mlocked = 0;
+112 
+113     return 0;
+114 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,165 @@
+\hypertarget{s2n__server__fuzz__test_8c}{}\section{s2n-\/master/tests/fuzz/s2n\+\_\+server\+\_\+fuzz\+\_\+test.c File Reference}
+\label{s2n__server__fuzz__test_8c}\index{s2n-\/master/tests/fuzz/s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c@{s2n-\/master/tests/fuzz/s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c}}
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}api/s2n.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+crypto.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls\+\_\+parameters.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__server__fuzz__test_8c_ab4d51e660cd18e9b881a804ba252d9d7}{L\+L\+V\+M\+Fuzzer\+Initialize} (const uint8\+\_\+t $\ast$buf, size\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{s2n__server__fuzz__test_8c_aea409319c7706f2cf28137757e2c36d4}{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input} (const uint8\+\_\+t $\ast$buf, size\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c}!L\+L\+V\+M\+Fuzzer\+Initialize@{L\+L\+V\+M\+Fuzzer\+Initialize}}
+\index{L\+L\+V\+M\+Fuzzer\+Initialize@{L\+L\+V\+M\+Fuzzer\+Initialize}!s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{L\+L\+V\+M\+Fuzzer\+Initialize(const uint8\+\_\+t $\ast$buf, size\+\_\+t len)}{LLVMFuzzerInitialize(const uint8_t *buf, size_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int L\+L\+V\+M\+Fuzzer\+Initialize (
+\begin{DoxyParamCaption}
+\item[{const uint8\+\_\+t $\ast$}]{buf, }
+\item[{size\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__fuzz__test_8c_ab4d51e660cd18e9b881a804ba252d9d7}{}\label{s2n__server__fuzz__test_8c_ab4d51e660cd18e9b881a804ba252d9d7}
+
+
+Definition at line 133 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+134 \{
+135     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_abc620f8194383c6fcddd911edcf7d692}{s2n\_init}());
+136     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(setenv(\textcolor{stringliteral}{"S2N\_ENABLE\_CLIENT\_MODE"}, \textcolor{stringliteral}{"1"}, 0));
+137     \textcolor{keywordflow}{return} 0;
+138 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test_8c_ab4d51e660cd18e9b881a804ba252d9d7_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c}!L\+L\+V\+M\+Fuzzer\+Test\+One\+Input@{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input}}
+\index{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input@{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input}!s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c@{s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{L\+L\+V\+M\+Fuzzer\+Test\+One\+Input(const uint8\+\_\+t $\ast$buf, size\+\_\+t len)}{LLVMFuzzerTestOneInput(const uint8_t *buf, size_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int L\+L\+V\+M\+Fuzzer\+Test\+One\+Input (
+\begin{DoxyParamCaption}
+\item[{const uint8\+\_\+t $\ast$}]{buf, }
+\item[{size\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__fuzz__test_8c_aea409319c7706f2cf28137757e2c36d4}{}\label{s2n__server__fuzz__test_8c_aea409319c7706f2cf28137757e2c36d4}
+
+
+Definition at line 140 of file s2n\+\_\+server\+\_\+fuzz\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+141 \{
+142     \textcolor{keywordflow}{if}(\hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len} < \hyperlink{s2n__tls__parameters_8h_a7cc7782f30cb9ee302929d979826c557}{S2N\_TLS\_RECORD\_HEADER\_LENGTH})\{
+143         \textcolor{keywordflow}{return} 0;
+144     \}
+145 
+146     \textcolor{comment}{/* Set up File Descriptors from client to server */}
+147     \textcolor{keywordtype}{int} client\_to\_server[2];
+148     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(pipe(client\_to\_server));
+149 
+150     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 2; i++) \{
+151         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(fcntl(client\_to\_server[i], F\_SETFL, fcntl(client\_to\_server[i], F\_GETFL) | O\_NONBLOCK));
+152     \}
+153 
+154     \textcolor{comment}{/* Set up Server Config */}
+155     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *server\_config;
+156     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(server\_config = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}());
+157     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(server\_config, 
+      certificate\_chain, private\_key));
+158     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a82513564c95dc7a4174c3d04eb043564}{s2n\_config\_add\_dhparams}(server\_config, 
+      \hyperlink{structs2n__config_abdbd12d9095df20e7e63ef00b353db7c}{dhparams}));
+159 
+160     \textcolor{comment}{/* Set up Server Connection */}
+161     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *server\_conn;
+162     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(server\_conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+163     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(server\_conn, client\_to\_server[0]));
+164     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(server\_conn, server\_config));
+165     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(server\_conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+166     server\_conn->\hyperlink{structs2n__connection_a8c0b95ab06c950bd9afd8444922d98a3}{delay} = 0;
+167 
+168     \textcolor{comment}{/* Set Server write FD to -1, to skip writing data since server out data is never read. */}
+169     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(server\_conn, -1));
+170 
+171     \textcolor{comment}{/* Set up Client Connection */}
+172     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *client\_conn;
+173     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(client\_conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT}));
+174     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(client\_conn, client\_to\_server[1]));
+175 
+176     \textcolor{comment}{/* Write data to client out file descriptor so that it is recieved by the server */}
+177     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} *client\_out = &client\_conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out};
+178     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(client\_out, buf, 
+      \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}));
+179     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} client\_blocked;
+180     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__send_8c_a76828dc199bf174409532010ccbf2a07}{s2n\_flush}(client\_conn, &client\_blocked));
+181     \hyperlink{s2n__safety_8h_a286ad9b0d46f4af176671cda1ed6f58a}{eq\_check}(client\_blocked, \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED});
+182 
+183     \textcolor{comment}{/* Let Server receive data and attempt Negotiation */}
+184     \textcolor{keywordtype}{int} num\_attempted\_negotiations = 0;
+185     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} server\_blocked;
+186     \textcolor{keywordflow}{do} \{
+187         \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(server\_conn, &server\_blocked);
+188         num\_attempted\_negotiations += 1;
+189     \} \textcolor{keywordflow}{while}(!server\_blocked && num\_attempted\_negotiations < MAX\_NEGOTIATION\_ATTEMPTS);
+190 
+191     \textcolor{comment}{/* Clean up */}
+192     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(server\_conn));
+193     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(client\_conn));
+194 
+195     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 2; i++) \{
+196         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(close(client\_to\_server[i]));
+197     \}
+198 
+199     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a25b7d82e94f572b657be3936196222c3}{s2n\_config\_free}(server\_config));
+200     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(server\_conn));
+201     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(client\_conn));
+202 
+203     \textcolor{keywordflow}{return} 0;
+204 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__fuzz__test_8c_aea409319c7706f2cf28137757e2c36d4_cgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,141 @@
+.TH "s2n_handshake" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n_handshake \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <s2n_handshake\&.h>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBINITIAL\fP, \fBFULL_WITH_PFS\fP, \fBFULL_WITH_PFS_WITH_STATUS\fP, \fBFULL_NO_PFS\fP, \fBFULL_NO_PFS_WITH_STATUS\fP, \fBRESUME\fP }"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_stuffer\fP \fBio\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_hash_state\fP \fBmd5\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_hash_state\fP \fBsha1\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_hash_state\fP \fBsha256\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_hash_state\fP \fBsha384\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBserver_finished\fP [\fBS2N_SSL_FINISHED_LEN\fP]"
+.br
+.ti -1c
+.RI "uint8_t \fBclient_finished\fP [\fBS2N_SSL_FINISHED_LEN\fP]"
+.br
+.ti -1c
+.RI "enum s2n_handshake:: { \&.\&.\&. }  \fBhandshake_type\fP"
+.br
+.ti -1c
+.RI "int \fBmessage_number\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBrsa_failed\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 46 of file s2n_handshake\&.h\&.
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIINITIAL \fP\fP
+.TP
+\fB\fIFULL_WITH_PFS \fP\fP
+.TP
+\fB\fIFULL_WITH_PFS_WITH_STATUS \fP\fP
+.TP
+\fB\fIFULL_NO_PFS \fP\fP
+.TP
+\fB\fIFULL_NO_PFS_WITH_STATUS \fP\fP
+.TP
+\fB\fIRESUME \fP\fP
+.PP
+Definition at line 57 of file s2n_handshake\&.h\&.
+.PP
+.nf
+57          {
+58         /* Dummy handshake that we always start out with */
+59         INITIAL,
+60 
+61         /* A Full handshake with forward secrecy */
+62         FULL_WITH_PFS,
+63 
+64         /* A full handshake with forward secrecy and an OCSP response */
+65         FULL_WITH_PFS_WITH_STATUS,
+66 
+67         /* A full handshake with no forward secrecy */
+68         FULL_NO_PFS,
+69 
+70         /* A full handshake with no forward secrecy, but with an OCSP response */
+71         FULL_NO_PFS_WITH_STATUS,
+72 
+73         /* A resumption handshake */
+74         RESUME
+75     } handshake_type;
+.fi
+.SH "Field Documentation"
+.PP 
+.SS "struct \fBs2n_stuffer\fP io"
+
+.PP
+Definition at line 47 of file s2n_handshake\&.h\&.
+.SS "struct \fBs2n_hash_state\fP md5"
+
+.PP
+Definition at line 49 of file s2n_handshake\&.h\&.
+.SS "struct \fBs2n_hash_state\fP sha1"
+
+.PP
+Definition at line 50 of file s2n_handshake\&.h\&.
+.SS "struct \fBs2n_hash_state\fP sha256"
+
+.PP
+Definition at line 51 of file s2n_handshake\&.h\&.
+.SS "struct \fBs2n_hash_state\fP sha384"
+
+.PP
+Definition at line 52 of file s2n_handshake\&.h\&.
+.SS "uint8_t server_finished[\fBS2N_SSL_FINISHED_LEN\fP]"
+
+.PP
+Definition at line 54 of file s2n_handshake\&.h\&.
+.SS "uint8_t client_finished[\fBS2N_SSL_FINISHED_LEN\fP]"
+
+.PP
+Definition at line 55 of file s2n_handshake\&.h\&.
+.SS "enum { \&.\&.\&. }   handshake_type"
+
+.SS "int message_number"
+
+.PP
+Definition at line 78 of file s2n_handshake\&.h\&.
+.SS "uint8_t rsa_failed"
+
+.PP
+Definition at line 81 of file s2n_handshake\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

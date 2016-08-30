@@ -1,0 +1,1475 @@
+\hypertarget{_mac_socket_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\+Get\+H\+T\+T\+PS.src/\+Mac\+Socket.cpp File Reference}
+\label{_mac_socket_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\+Get\+H\+T\+T\+P\+S.\+src/\+Mac\+Socket.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\+Get\+H\+T\+T\+P\+S.\+src/\+Mac\+Socket.\+cpp}}
+{\ttfamily \#include \char`\"{}Mac\+Socket.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$Threads.\+h$>$}\\*
+{\ttfamily \#include $<$Open\+Transport.\+h$>$}\\*
+{\ttfamily \#include $<$Open\+Tp\+T\+Internet.\+h$>$}\\*
+{\ttfamily \#include $<$Open\+Tpt\+Client.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}C\+P\+String\+Utils.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Error\+Handling.\+hpp\char`\"{}}\\*
+Include dependency graph for Mac\+Socket.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_mac_socket_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_socket_struct}{Socket\+Struct}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_mac_socket_8cpp_ae77b725935e67d1fdc6d152793218947}{k\+Max\+Num\+Sockets}~4
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_socket_struct}{Socket\+Struct} \hyperlink{_mac_socket_8cpp_a3a4706c1a8485a08be74ceba6a1406d2}{Socket\+Struct}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{_mac_socket_8cpp_a6527b479fbca90183d32fb94c3f3e3f0}{Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info} (const int in\+Socket\+Num, int $\ast$out\+Socket\+Err\+Code, char $\ast$out\+Socket\+Err\+String, const int in\+Socket\+Err\+String\+Max\+Length)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{_mac_socket_8cpp_a55408ec00f7c52b2d313e22b267f80b1}{Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr} (const int in\+Socket\+Num, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$in\+New\+Ref\+Ptr)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{_mac_socket_8cpp_a50dd521146c522f845077d23e7475155}{Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port} (const int in\+Socket\+Num, char $\ast$out\+I\+P\+And\+Port, const int in\+I\+P\+And\+Port\+Length)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{_mac_socket_8cpp_a49949cc29d06954fc7b99d51d57c7740}{Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port} (const int in\+Socket\+Num, char $\ast$out\+I\+P\+And\+Port, const int in\+I\+P\+And\+Port\+Length)
+\item 
+Boolean \hyperlink{_mac_socket_8cpp_a398e104ab81c50f4d7a57bbefdba9cf2}{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing} (const int in\+Socket\+Num)
+\item 
+Boolean \hyperlink{_mac_socket_8cpp_a5b7ac2a15df89bc85db21a34e8c84a7b}{Mac\+Socket\+\_\+\+Listen\+Completed} (const int in\+Socket\+Num)
+\item 
+Boolean \hyperlink{_mac_socket_8cpp_ad008fe9affadb9707055e4d23122b537}{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open} (const int in\+Socket\+Num)
+\item 
+Boolean \hyperlink{_mac_socket_8cpp_a18c50df5067288a5de68032b56a97d9b}{Mac\+Socket\+\_\+\+Local\+End\+Is\+Open} (const int in\+Socket\+Num)
+\item 
+O\+S\+Err \hyperlink{_mac_socket_8cpp_a91d52f2a1e1d9a99d8ce34322d58b30f}{Mac\+Socket\+\_\+\+Startup} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+O\+S\+Err \hyperlink{_mac_socket_8cpp_a77c99e91e5f0f081168da67afe0555cb}{Mac\+Socket\+\_\+\+Shutdown} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+O\+S\+Err \hyperlink{_mac_socket_8cpp_a9199d71ef00996fe1a945e38ae988fac}{Mac\+Socket\+\_\+socket} (int $\ast$out\+Socket\+Num, const Boolean in\+Do\+Thread\+Switching, const long in\+Timeout\+Ticks, \hyperlink{_mac_socket_8h_a3de3c9c68d7cdefacdabc4cb07ac8a15}{Mac\+Socket\+\_\+\+Idle\+Wait\+Callback} in\+Idle\+Wait\+Callback, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$in\+User\+Ref\+Ptr)
+\item 
+O\+S\+Err \hyperlink{_mac_socket_8cpp_a8565bb1922884ae26cf68a1afd80abb6}{Mac\+Socket\+\_\+listen} (const int in\+Socket\+Num, const int in\+Port\+Num)
+\item 
+O\+S\+Err \hyperlink{_mac_socket_8cpp_a83d3eb3355c78c206f549c81024f0d89}{Mac\+Socket\+\_\+connect} (const int in\+Socket\+Num, char $\ast$in\+Target\+Address\+And\+Port)
+\item 
+O\+S\+Err \hyperlink{_mac_socket_8cpp_ae7060b6ecc78644c7fd6d9c973dc0efc}{Mac\+Socket\+\_\+close} (const int in\+Socket\+Num)
+\item 
+int \hyperlink{_mac_socket_8cpp_a26588e3597fc7583970e06f320cbc64b}{Mac\+Socket\+\_\+recv} (const int in\+Socket\+Num, \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$out\+Buff, int out\+Buff\+Length, const Boolean in\+Block)
+\item 
+int \hyperlink{_mac_socket_8cpp_a20d246abc67ee33512d71f96184a9cb1}{Mac\+Socket\+\_\+send} (const int in\+Socket\+Num, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$in\+Buff, int in\+Buff\+Length)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!k\+Max\+Num\+Sockets@{k\+Max\+Num\+Sockets}}
+\index{k\+Max\+Num\+Sockets@{k\+Max\+Num\+Sockets}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+Max\+Num\+Sockets}{kMaxNumSockets}}]{\setlength{\rightskip}{0pt plus 5cm}\#define k\+Max\+Num\+Sockets~4}\hypertarget{_mac_socket_8cpp_ae77b725935e67d1fdc6d152793218947}{}\label{_mac_socket_8cpp_ae77b725935e67d1fdc6d152793218947}
+
+
+Definition at line 96 of file Mac\+Socket.\+cpp.
+
+
+
+\subsection{Typedef Documentation}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Socket\+Struct@{Socket\+Struct}}
+\index{Socket\+Struct@{Socket\+Struct}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Socket\+Struct}{SocketStruct}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Socket\+Struct} {\bf Socket\+Struct}}\hypertarget{_mac_socket_8cpp_a3a4706c1a8485a08be74ceba6a1406d2}{}\label{_mac_socket_8cpp_a3a4706c1a8485a08be74ceba6a1406d2}
+
+
+Definition at line 141 of file Mac\+Socket.\+cpp.
+
+
+
+\subsection{Function Documentation}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info@{Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info}}
+\index{Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info@{Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info(const int in\+Socket\+Num, int $\ast$out\+Socket\+Err\+Code, char $\ast$out\+Socket\+Err\+String, const int in\+Socket\+Err\+String\+Max\+Length)}{MacSocket_GetSocketErrorInfo(const int inSocketNum, int *outSocketErrCode, char *outSocketErrString, const int inSocketErrStringMaxLength)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} Mac\+Socket\+\_\+\+Get\+Socket\+Error\+Info (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{int $\ast$}]{out\+Socket\+Err\+Code, }
+\item[{char $\ast$}]{out\+Socket\+Err\+String, }
+\item[{const int}]{in\+Socket\+Err\+String\+Max\+Length}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a6527b479fbca90183d32fb94c3f3e3f0}{}\label{_mac_socket_8cpp_a6527b479fbca90183d32fb94c3f3e3f0}
+
+
+Definition at line 166 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+167 \{
+168     \textcolor{keywordflow}{if} (outSocketErrCode != nil)
+169     \{
+170         *outSocketErrCode = -1;
+171     \}
+172     
+173     \textcolor{keywordflow}{if} (outSocketErrString != nil)
+174     \{
+175         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},outSocketErrString,inSocketErrStringMaxLength);
+176     \}
+177     
+178     
+179     \textcolor{keywordflow}{if} (SocketIndexIsValid(inSocketNum))
+180     \{
+181     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+182     
+183         
+184         \textcolor{keywordflow}{if} (outSocketErrCode != nil)
+185         \{
+186             *outSocketErrCode = theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError};
+187         \}
+188 
+189         \textcolor{keywordflow}{if} (outSocketErrString != nil)
+190         \{
+191             \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},outSocketErrString,
+      inSocketErrStringMaxLength);
+192         \}
+193     \}
+194 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_mac_socket_8cpp_a6527b479fbca90183d32fb94c3f3e3f0_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr@{Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr}}
+\index{Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr@{Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr(const int in\+Socket\+Num, void $\ast$in\+New\+Ref\+Ptr)}{MacSocket_SetUserRefPtr(const int inSocketNum, void *inNewRefPtr)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} Mac\+Socket\+\_\+\+Set\+User\+Ref\+Ptr (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{{\bf void} $\ast$}]{in\+New\+Ref\+Ptr}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a55408ec00f7c52b2d313e22b267f80b1}{}\label{_mac_socket_8cpp_a55408ec00f7c52b2d313e22b267f80b1}
+
+
+Definition at line 197 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+198 \{
+199     \textcolor{keywordflow}{if} (SocketIndexIsValid(inSocketNum))
+200     \{
+201     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+202 
+203         theSocketStruct->\hyperlink{struct_socket_struct_ad4f85b13ba101a9d94dfdf6ad4bae473}{mUserRefPtr} = inNewRefPtr;
+204     \}
+205 \}
+\end{DoxyCode}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port@{Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port}}
+\index{Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port@{Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port(const int in\+Socket\+Num, char $\ast$out\+I\+P\+And\+Port, const int in\+I\+P\+And\+Port\+Length)}{MacSocket_GetLocalIPAndPort(const int inSocketNum, char *outIPAndPort, const int inIPAndPortLength)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} Mac\+Socket\+\_\+\+Get\+Local\+I\+P\+And\+Port (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{char $\ast$}]{out\+I\+P\+And\+Port, }
+\item[{const int}]{in\+I\+P\+And\+Port\+Length}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a50dd521146c522f845077d23e7475155}{}\label{_mac_socket_8cpp_a50dd521146c522f845077d23e7475155}
+
+
+Definition at line 209 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+210 \{
+211     \textcolor{keywordflow}{if} (outIPAndPort != nil && SocketIndexIsValid(inSocketNum))
+212     \{
+213     \textcolor{keywordtype}{char}            tempString[256];
+214     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+215     
+216         
+217         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},tempString,\textcolor{keyword}{sizeof}(tempString));
+218 
+219         \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo} != nil)
+220         \{
+221         InetAddress     *theInetAddress = (InetAddress *) theSocketStruct->
+      \hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo}->addr.buf;
+222         InetHost        theInetHost = theInetAddress->fHost;
+223             
+224             if (theInetHost == 0)
+225             \{
+226             InetInterfaceInfo   theInetInterfaceInfo;
+227                 
+228                 \textcolor{keywordflow}{if} (::OTInetGetInterfaceInfo(&theInetInterfaceInfo,kDefaultInetInterface) == noErr)
+229                 \{
+230                     theInetHost = theInetInterfaceInfo.fAddress;
+231                 \}
+232             \}
+233         
+234             ::OTInetHostToString(theInetHost,tempString);
+235             
+236             \hyperlink{_c_p_string_utils_8cpp_a5a59076beb65283c27a32e2a441b83a5}{ConcatCStrToCStr}(\textcolor{stringliteral}{":"},tempString,\textcolor{keyword}{sizeof}(tempString));
+237             \hyperlink{_c_p_string_utils_8cpp_a58f67ce1b74a750bf1d9d22b87155b7e}{ConcatLongIntToCStr}(theInetAddress->fPort,tempString,\textcolor{keyword}{sizeof}(tempString));
+238         \}
+239         
+240         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(tempString,outIPAndPort,inIPAndPortLength);
+241     \}
+242 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_mac_socket_8cpp_a50dd521146c522f845077d23e7475155_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port@{Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port}}
+\index{Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port@{Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port(const int in\+Socket\+Num, char $\ast$out\+I\+P\+And\+Port, const int in\+I\+P\+And\+Port\+Length)}{MacSocket_GetRemoteIPAndPort(const int inSocketNum, char *outIPAndPort, const int inIPAndPortLength)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} Mac\+Socket\+\_\+\+Get\+Remote\+I\+P\+And\+Port (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{char $\ast$}]{out\+I\+P\+And\+Port, }
+\item[{const int}]{in\+I\+P\+And\+Port\+Length}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a49949cc29d06954fc7b99d51d57c7740}{}\label{_mac_socket_8cpp_a49949cc29d06954fc7b99d51d57c7740}
+
+
+Definition at line 246 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+247 \{
+248     \textcolor{keywordflow}{if} (outIPAndPort != nil && SocketIndexIsValid(inSocketNum))
+249     \{
+250     \textcolor{keywordtype}{char}            tempString[256];
+251     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+252     
+253         
+254         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},tempString,\textcolor{keyword}{sizeof}(tempString));
+255 
+256         \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo} != nil)
+257         \{
+258         InetAddress     *theInetAddress = (InetAddress *) theSocketStruct->
+      \hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo}->addr.buf;
+259         InetHost        theInetHost = theInetAddress->fHost;
+260             
+261             if (theInetHost == 0)
+262             \{
+263             InetInterfaceInfo   theInetInterfaceInfo;
+264                 
+265                 \textcolor{keywordflow}{if} (::OTInetGetInterfaceInfo(&theInetInterfaceInfo,kDefaultInetInterface) == noErr)
+266                 \{
+267                     theInetHost = theInetInterfaceInfo.fAddress;
+268                 \}
+269             \}
+270         
+271             ::OTInetHostToString(theInetHost,tempString);
+272             
+273             \hyperlink{_c_p_string_utils_8cpp_a5a59076beb65283c27a32e2a441b83a5}{ConcatCStrToCStr}(\textcolor{stringliteral}{":"},tempString,\textcolor{keyword}{sizeof}(tempString));
+274             \hyperlink{_c_p_string_utils_8cpp_a58f67ce1b74a750bf1d9d22b87155b7e}{ConcatLongIntToCStr}(theInetAddress->fPort,tempString,\textcolor{keyword}{sizeof}(tempString));
+275         \}
+276         
+277         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(tempString,outIPAndPort,inIPAndPortLength);
+278     \}
+279 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_mac_socket_8cpp_a49949cc29d06954fc7b99d51d57c7740_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing@{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing}}
+\index{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing@{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing(const int in\+Socket\+Num)}{MacSocket_RemoteEndIsClosing(const int inSocketNum)}}]{\setlength{\rightskip}{0pt plus 5cm}Boolean Mac\+Socket\+\_\+\+Remote\+End\+Is\+Closing (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a398e104ab81c50f4d7a57bbefdba9cf2}{}\label{_mac_socket_8cpp_a398e104ab81c50f4d7a57bbefdba9cf2}
+
+
+Definition at line 283 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+284 \{
+285 Boolean     theResult = \textcolor{keyword}{false};
+286 
+287     \textcolor{keywordflow}{if} (SocketIndexIsValid(inSocketNum))
+288     \{
+289     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+290 
+291         theResult = theSocketStruct->\hyperlink{struct_socket_struct_aa8058ed78e968a4dfeb45e9b62524d27}{mReceivedTOrdRel};
+292     \}
+293 
+294     \textcolor{keywordflow}{return}(theResult);
+295 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=319pt]{_mac_socket_8cpp_a398e104ab81c50f4d7a57bbefdba9cf2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Listen\+Completed@{Mac\+Socket\+\_\+\+Listen\+Completed}}
+\index{Mac\+Socket\+\_\+\+Listen\+Completed@{Mac\+Socket\+\_\+\+Listen\+Completed}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Listen\+Completed(const int in\+Socket\+Num)}{MacSocket_ListenCompleted(const int inSocketNum)}}]{\setlength{\rightskip}{0pt plus 5cm}Boolean Mac\+Socket\+\_\+\+Listen\+Completed (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a5b7ac2a15df89bc85db21a34e8c84a7b}{}\label{_mac_socket_8cpp_a5b7ac2a15df89bc85db21a34e8c84a7b}
+
+
+Definition at line 299 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+300 \{
+301 Boolean     theResult = \textcolor{keyword}{false};
+302 
+303     \textcolor{keywordflow}{if} (SocketIndexIsValid(inSocketNum))
+304     \{
+305     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+306 
+307         theResult = theSocketStruct->\hyperlink{struct_socket_struct_a45eede39761f530b51360215c2a65ed0}{mReceivedTPassCon};
+308     \}
+309 
+310     \textcolor{keywordflow}{return}(theResult);
+311 \}
+\end{DoxyCode}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open@{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open}}
+\index{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open@{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open(const int in\+Socket\+Num)}{MacSocket_RemoteEndIsOpen(const int inSocketNum)}}]{\setlength{\rightskip}{0pt plus 5cm}Boolean Mac\+Socket\+\_\+\+Remote\+End\+Is\+Open (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_ad008fe9affadb9707055e4d23122b537}{}\label{_mac_socket_8cpp_ad008fe9affadb9707055e4d23122b537}
+
+
+Definition at line 315 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+316 \{
+317     \textcolor{keywordflow}{if} (SocketIndexIsValid(inSocketNum))
+318     \{
+319     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+320     
+321         \textcolor{keywordflow}{return}(theSocketStruct->\hyperlink{struct_socket_struct_af1876c043ddf26093b398fb92e9177ce}{mRemoteEndIsConnected});
+322     \}
+323     
+324     \textcolor{keywordflow}{else}
+325     \{
+326         \textcolor{keywordflow}{return}(\textcolor{keyword}{false});
+327     \}
+328 \}
+\end{DoxyCode}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Local\+End\+Is\+Open@{Mac\+Socket\+\_\+\+Local\+End\+Is\+Open}}
+\index{Mac\+Socket\+\_\+\+Local\+End\+Is\+Open@{Mac\+Socket\+\_\+\+Local\+End\+Is\+Open}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Local\+End\+Is\+Open(const int in\+Socket\+Num)}{MacSocket_LocalEndIsOpen(const int inSocketNum)}}]{\setlength{\rightskip}{0pt plus 5cm}Boolean Mac\+Socket\+\_\+\+Local\+End\+Is\+Open (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a18c50df5067288a5de68032b56a97d9b}{}\label{_mac_socket_8cpp_a18c50df5067288a5de68032b56a97d9b}
+
+
+Definition at line 332 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+333 \{
+334     \textcolor{keywordflow}{if} (SocketIndexIsValid(inSocketNum))
+335     \{
+336     \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[inSocketNum]);
+337     
+338         \textcolor{keywordflow}{return}(theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected});
+339     \}
+340     
+341     \textcolor{keywordflow}{else}
+342     \{
+343         \textcolor{keywordflow}{return}(\textcolor{keyword}{false});
+344     \}
+345 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_mac_socket_8cpp_a18c50df5067288a5de68032b56a97d9b_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Startup@{Mac\+Socket\+\_\+\+Startup}}
+\index{Mac\+Socket\+\_\+\+Startup@{Mac\+Socket\+\_\+\+Startup}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Startup(void)}{MacSocket_Startup(void)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err Mac\+Socket\+\_\+\+Startup (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a91d52f2a1e1d9a99d8ce34322d58b30f}{}\label{_mac_socket_8cpp_a91d52f2a1e1d9a99d8ce34322d58b30f}
+
+
+Definition at line 622 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+623 \{
+624     \textcolor{keywordflow}{if} (!sSocketsSetup)
+625     \{
+626         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;i < \hyperlink{_mac_socket_8cpp_ae77b725935e67d1fdc6d152793218947}{kMaxNumSockets};i++)
+627         \{
+628             InitSocket(&(sSockets[i]));
+629         \}
+630 
+631         ::InitOpenTransport();
+632         
+633         sSocketsSetup = \textcolor{keyword}{true};
+634     \}
+635     
+636     
+637     \textcolor{keywordflow}{return}(noErr);
+638 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=257pt]{_mac_socket_8cpp_a91d52f2a1e1d9a99d8ce34322d58b30f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+\+Shutdown@{Mac\+Socket\+\_\+\+Shutdown}}
+\index{Mac\+Socket\+\_\+\+Shutdown@{Mac\+Socket\+\_\+\+Shutdown}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+\+Shutdown(void)}{MacSocket_Shutdown(void)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err Mac\+Socket\+\_\+\+Shutdown (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a77c99e91e5f0f081168da67afe0555cb}{}\label{_mac_socket_8cpp_a77c99e91e5f0f081168da67afe0555cb}
+
+
+Definition at line 644 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+645 \{
+646     \textcolor{keywordflow}{if} (sSocketsSetup)
+647     \{
+648         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;i < \hyperlink{_mac_socket_8cpp_ae77b725935e67d1fdc6d152793218947}{kMaxNumSockets};i++)
+649         \{
+650         \hyperlink{struct_socket_struct}{SocketStruct} *theSocketStruct = &(sSockets[i]);
+651         
+652             \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a6932ba163e69b1162b0fec5b695f249d}{mIsInUse})
+653             \{
+654                 \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef} != kOTInvalidEndpointRef)
+655                 \{
+656                 OTResult    theOTResult;
+657                 
+658                 
+659                     \textcolor{comment}{//  Since we're killing the endpoint, I don't bother to send the disconnect (sorry!)}
+660 
+661 \textcolor{comment}{/*}
+662 \textcolor{comment}{                    if (theSocketStruct->mLocalEndIsConnected)}
+663 \textcolor{comment}{                    \{}
+664 \textcolor{comment}{                        //  This is an abortive action, so we do a hard disconnect instead of an
+       OTSndOrderlyDisconnect}
+665 \textcolor{comment}{                        }
+666 \textcolor{comment}{                        theOTResult = ::OTSndDisconnect(theSocketStruct->mEndPointRef, nil);}
+667 \textcolor{comment}{                        }
+668 \textcolor{comment}{                        //  Now we have to watch for T\_DISCONNECTCOMPLETE event}
+669 \textcolor{comment}{                        }
+670 \textcolor{comment}{                        theSocketStruct->mLocalEndIsConnected = false;}
+671 \textcolor{comment}{                    \}}
+672 \textcolor{comment}{*/}                  
+673                     
+674                     theOTResult = ::OTCloseProvider(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+675                     
+676                     
+677                     theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef} = kOTInvalidEndpointRef;
+678                 \}
+679                 
+680                 \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo} != nil)
+681                 \{
+682                     ::OTFree((\textcolor{keywordtype}{void} *) theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo},T\_BIND)
+      ;
+683                     
+684                     theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo} = nil;
+685                 \}
+686                 
+687                 \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo} != nil)
+688                 \{
+689                     ::OTFree((\textcolor{keywordtype}{void} *) theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo},T\_BIND);
+690                     
+691                     theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo} = nil;
+692                 \}
+693                 
+694                 \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo} != nil)
+695                 \{
+696                     ::OTFree((\textcolor{keywordtype}{void} *) theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo},T\_CALL);
+697                     
+698                     theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo} = nil;
+699                 \}
+700                 
+701                 
+702             \}
+703         \}
+704         
+705         ::CloseOpenTransport();
+706 
+707         sSocketsSetup = \textcolor{keyword}{false};
+708     \}
+709     
+710     \textcolor{keywordflow}{return}(noErr);
+711 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{_mac_socket_8cpp_a77c99e91e5f0f081168da67afe0555cb_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+socket@{Mac\+Socket\+\_\+socket}}
+\index{Mac\+Socket\+\_\+socket@{Mac\+Socket\+\_\+socket}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+socket(int $\ast$out\+Socket\+Num, const Boolean in\+Do\+Thread\+Switching, const long in\+Timeout\+Ticks, Mac\+Socket\+\_\+\+Idle\+Wait\+Callback in\+Idle\+Wait\+Callback, void $\ast$in\+User\+Ref\+Ptr)}{MacSocket_socket(int *outSocketNum, const Boolean inDoThreadSwitching, const long inTimeoutTicks, MacSocket_IdleWaitCallback inIdleWaitCallback, void *inUserRefPtr)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err Mac\+Socket\+\_\+socket (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{out\+Socket\+Num, }
+\item[{const Boolean}]{in\+Do\+Thread\+Switching, }
+\item[{const long}]{in\+Timeout\+Ticks, }
+\item[{{\bf Mac\+Socket\+\_\+\+Idle\+Wait\+Callback}}]{in\+Idle\+Wait\+Callback, }
+\item[{{\bf void} $\ast$}]{in\+User\+Ref\+Ptr}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a9199d71ef00996fe1a945e38ae988fac}{}\label{_mac_socket_8cpp_a9199d71ef00996fe1a945e38ae988fac}
+
+
+Definition at line 720 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+721 \{
+722 \textcolor{comment}{//  Gotta roll support back in for threads eventually.....}
+723 
+724 \textcolor{preprocessor}{#pragma unused(inDoThreadSwitching)}
+725 
+726 
+727 OSErr   errCode = noErr;
+728 
+729     
+730     \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(outSocketNum,\textcolor{stringliteral}{"MacSocket\_socket: Bad parameter,
+       outSocketNum == nil"});
+731     
+732     *outSocketNum = -1;
+733     
+734     
+735     \textcolor{comment}{//  Find an unused socket}
+736     
+737     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0;i < \hyperlink{_mac_socket_8cpp_ae77b725935e67d1fdc6d152793218947}{kMaxNumSockets};i++)
+738     \{
+739         \textcolor{keywordflow}{if} (sSockets[i].mIsInUse == \textcolor{keyword}{false})
+740         \{
+741         OTResult        theOTResult;
+742         \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = &(sSockets[i]);
+743         
+744             
+745             InitSocket(theSocketStruct);
+746             
+747             theSocketStruct->\hyperlink{struct_socket_struct_a69f986725d1044656cb7cc5c6604f3b7}{mIdleWaitCallback} = inIdleWaitCallback;
+748             theSocketStruct->\hyperlink{struct_socket_struct_ad4f85b13ba101a9d94dfdf6ad4bae473}{mUserRefPtr} = inUserRefPtr;
+749             
+750             theSocketStruct->\hyperlink{struct_socket_struct_ad5246a549c7d7a3440f47b6f6071ce59}{mTimeoutTicks} = inTimeoutTicks;
+751             
+752 
+753             \textcolor{comment}{//  Set up OT endpoint}
+754             
+755             PrepareForAsyncOperation(theSocketStruct,T\_OPENCOMPLETE);
+756             
+757             theOTResult = ::OTAsyncOpenEndpoint(OTCreateConfiguration(kTCPName),0,nil,OTNonYieldingNotifier
+      ,(\textcolor{keywordtype}{void} *) theSocketStruct);
+758             
+759             \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_socket: Can't create OT endpoint, OTAsyncOpenEndpoint() = "},theOTResult);
+760             
+761             \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(MyBusyWait(theSocketStruct,\textcolor{keyword}{false},&theOTResult,&(theSocketStruct->
+      \hyperlink{struct_socket_struct_af5ac66865315fa67519302739077223c}{mReceivedTOpenComplete})));
+762                                                                                         
+763             \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_socket: Can't create OT endpoint, OTAsyncOpenEndpoint() = "},theOTResult);
+764             
+765             
+766             *outSocketNum = i;
+767             
+768             errCode = noErr;
+769             
+770             theSocketStruct->\hyperlink{struct_socket_struct_a6932ba163e69b1162b0fec5b695f249d}{mIsInUse} = \textcolor{keyword}{true};
+771             
+772             \textcolor{keywordflow}{break};
+773         \}
+774         
+775         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i == kMaxNumSockets - 1)
+776         \{
+777             \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_socket: No sockets available"});
+778         \}
+779     \}
+780 
+781 
+782 EXITPOINT:
+783     
+784     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = errCode;
+785     
+786     \textcolor{keywordflow}{return}(errCode);
+787 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{_mac_socket_8cpp_a9199d71ef00996fe1a945e38ae988fac_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+listen@{Mac\+Socket\+\_\+listen}}
+\index{Mac\+Socket\+\_\+listen@{Mac\+Socket\+\_\+listen}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+listen(const int in\+Socket\+Num, const int in\+Port\+Num)}{MacSocket_listen(const int inSocketNum, const int inPortNum)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err Mac\+Socket\+\_\+listen (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{const int}]{in\+Port\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a8565bb1922884ae26cf68a1afd80abb6}{}\label{_mac_socket_8cpp_a8565bb1922884ae26cf68a1afd80abb6}
+
+
+Definition at line 792 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+793 \{
+794 OSErr           errCode = noErr;
+795 \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = nil;
+796 
+797 
+798     \textcolor{keywordflow}{if} (!SocketIndexIsValid(inSocketNum))
+799     \{
+800         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_listen: Invalid socket number specified"});
+801     \}
+802 
+803 
+804     theSocketStruct = &(sSockets[inSocketNum]);
+805 
+806 
+807 OTResult        theOTResult;
+808     
+809     
+810     \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo} == nil)
+811     \{
+812         theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo} = (TBind *) ::OTAlloc(theSocketStruct
+      ->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},T\_BIND,T\_ADDR,&theOTResult);
+813                                                                                     
+814         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't allocate OT T\_BIND structure, OTAlloc() = "},theOTResult);
+815         \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo},\textcolor{stringliteral}{"MacSocket\_listen: Can't allocate OT T\_BIND structure,
+       OTAlloc() returned nil"});
+816     \}
+817     
+818     \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo} == nil)
+819     \{
+820         theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo} = (TBind *) ::OTAlloc(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},T\_BIND,T\_ADDR,&theOTResult);
+821                                                                                     
+822         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't allocate OT T\_BIND structure, OTAlloc() = "},theOTResult);
+823         \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo},\textcolor{stringliteral}{"MacSocket\_listen: Can't allocate OT T\_BIND structure, OTAlloc()
+       returned nil"});
+824     \}
+825     
+826     \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo} == nil)
+827     \{
+828         theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo} = (TCall *) ::OTAlloc(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},T\_CALL,T\_ADDR,&theOTResult);
+829                                                                                     
+830         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't allocate OT T\_CALL structure, OTAlloc() = "},theOTResult);
+831         \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(theSocketStruct->
+      \hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo},\textcolor{stringliteral}{"MacSocket\_listen: Can't allocate OT T\_CALL structure, OTAlloc() returned
+       nil"});
+832     \}
+833     
+834 
+835     \textcolor{keywordflow}{if} (!theSocketStruct->\hyperlink{struct_socket_struct_afc08fe4eacc3f47dcb7dee3bb9e08662}{mEndpointIsBound})
+836     \{
+837     InetInterfaceInfo   theInetInterfaceInfo;
+838         
+839         theOTResult = ::OTInetGetInterfaceInfo(&theInetInterfaceInfo,kDefaultInetInterface);
+840                                                                                     
+841         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't determine OT interface info, OTInetGetInterfaceInfo() = "},theOTResult);
+842 
+843 
+844     InetAddress *theInetAddress = (InetAddress *) theSocketStruct->
+      \hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo}->addr.buf;
+845         
+846 \textcolor{comment}{//      theInetAddress->fAddressType = AF\_INET;}
+847 \textcolor{comment}{//      theInetAddress->fPort = inPortNum;}
+848 \textcolor{comment}{//      theInetAddress->fHost = theInetInterfaceInfo.fAddress;}
+849         
+850         ::OTInitInetAddress(theInetAddress,inPortNum,theInetInterfaceInfo.fAddress);
+851 
+852         theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo}->addr.len = \textcolor{keyword}{sizeof}(InetAddress);
+853         
+854         theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo}->qlen = 1;
+855         
+856         
+857         theOTResult = ::OTSetSynchronous(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+858                                                                                     
+859         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't set OT endpoint mode, OTSetSynchronous() = "},theOTResult);
+860         
+861         theOTResult = NegotiateIPReuseAddrOption(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},\textcolor{keyword}{true});
+862                                                                                     
+863         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't set OT IP address reuse flag, NegotiateIPReuseAddrOption() = "},theOTResult);
+864         
+865         theOTResult = ::OTSetAsynchronous(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+866                                                                                     
+867         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't set OT endpoint mode, OTSetAsynchronous() = "},theOTResult);
+868 
+869         
+870         PrepareForAsyncOperation(theSocketStruct,T\_BINDCOMPLETE);
+871                 
+872         theOTResult = ::OTBind(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},theSocketStruct->
+      \hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo},theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo});
+873                                                                                     
+874         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't bind OT endpoint, OTBind() = "},theOTResult);
+875         
+876         \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(MyBusyWait(theSocketStruct,\textcolor{keyword}{false},&theOTResult,&(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa3eba4ea12efa788e1932096fc562be2}{mReceivedTBindComplete})));
+877                                                                                     
+878         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't bind OT endpoint, OTBind() = "},theOTResult);
+879         
+880         
+881         theSocketStruct->\hyperlink{struct_socket_struct_afc08fe4eacc3f47dcb7dee3bb9e08662}{mEndpointIsBound} = \textcolor{keyword}{true};
+882     \}
+883 
+884 
+885     PrepareForAsyncOperation(theSocketStruct,T\_LISTEN);
+886 
+887     theOTResult = ::OTListen(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},theSocketStruct->
+      \hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo});
+888     
+889     \textcolor{keywordflow}{if} (theOTResult == noErr)
+890     \{
+891         PrepareForAsyncOperation(theSocketStruct,T\_PASSCON);
+892         
+893         theOTResult = ::OTAccept(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo});
+894         
+895         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't begin OT accept, OTAccept() = "},theOTResult);
+896         
+897         \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(MyBusyWait(theSocketStruct,\textcolor{keyword}{false},&theOTResult,&(theSocketStruct->
+      \hyperlink{struct_socket_struct_a45eede39761f530b51360215c2a65ed0}{mReceivedTPassCon})));
+898                                                                                     
+899         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_listen: Can't accept OT connection, OTAccept() = "},theOTResult);
+900     \}
+901     
+902     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (theOTResult == kOTNoDataErr)
+903     \{
+904         theOTResult = noErr;
+905     \}
+906     
+907     \textcolor{keywordflow}{else}
+908     \{
+909         \hyperlink{_error_handling_8hpp_abbc2f61b7f1a165c23ee9ce9110d7bf5}{SetErrorMessageAndLongIntAndBail}(\textcolor{stringliteral}{"MacSocket\_listen: Can't begin OT
+       listen, OTListen() = "},theOTResult);
+910     \}
+911 
+912 
+913     errCode = noErr;
+914 
+915 
+916 EXITPOINT:
+917     
+918     \textcolor{keywordflow}{if} (theSocketStruct != nil)
+919     \{
+920         theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = noErr;
+921         
+922         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+923 
+924         \textcolor{keywordflow}{if} (errCode != noErr)
+925         \{
+926             theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = errCode;
+927             
+928             \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\hyperlink{_error_handling_8cpp_a98c7958fea7cb23f86e262d397bebad6}{GetErrorMessage}(),theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+929         \}
+930     \}
+931     
+932     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = errCode;
+933     
+934     \textcolor{keywordflow}{return}(errCode);
+935 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{_mac_socket_8cpp_a8565bb1922884ae26cf68a1afd80abb6_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+connect@{Mac\+Socket\+\_\+connect}}
+\index{Mac\+Socket\+\_\+connect@{Mac\+Socket\+\_\+connect}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+connect(const int in\+Socket\+Num, char $\ast$in\+Target\+Address\+And\+Port)}{MacSocket_connect(const int inSocketNum, char *inTargetAddressAndPort)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err Mac\+Socket\+\_\+connect (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{char $\ast$}]{in\+Target\+Address\+And\+Port}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a83d3eb3355c78c206f549c81024f0d89}{}\label{_mac_socket_8cpp_a83d3eb3355c78c206f549c81024f0d89}
+
+
+Definition at line 940 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+941 \{
+942 OSErr           errCode = noErr;
+943 \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = nil;
+944 
+945 
+946     \textcolor{keywordflow}{if} (!SocketIndexIsValid(inSocketNum))
+947     \{
+948         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_connect: Invalid socket number specified"});
+949     \}
+950 
+951     theSocketStruct = &(sSockets[inSocketNum]);
+952 
+953     \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_afc08fe4eacc3f47dcb7dee3bb9e08662}{mEndpointIsBound})
+954     \{
+955         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_connect: Socket previously bound"});
+956     \}
+957 
+958     
+959 OTResult        theOTResult;
+960 
+961     theSocketStruct->\hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo} = (TBind *) ::OTAlloc(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},T\_BIND,T\_ADDR,&theOTResult);
+962                                                                                 
+963     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't allocate OT T\_BIND structure, OTAlloc() = "},theOTResult);
+964     \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a2bb0e26ca8f37a048829a12a0906c003}{mBindRequestedAddrInfo},\textcolor{stringliteral}{"MacSocket\_connect: Can't allocate OT T\_BIND structure,
+       OTAlloc() returned nil"});
+965     
+966 
+967     theSocketStruct->\hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo} = (TBind *) ::OTAlloc(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},T\_BIND,T\_ADDR,&theOTResult);
+968                                                                                 
+969     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't allocate OT T\_BIND structure, OTAlloc() = "},theOTResult);
+970     \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo},\textcolor{stringliteral}{"MacSocket\_connect: Can't allocate OT T\_BIND structure, OTAlloc()
+       returned nil"});
+971 
+972 
+973     theSocketStruct->\hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo} = (TCall *) ::OTAlloc(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},T\_CALL,T\_ADDR,&theOTResult);
+974                                                                                 
+975     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't allocate OT T\_CALL structure, OTAlloc() = "},theOTResult);
+976     \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(theSocketStruct->
+      \hyperlink{struct_socket_struct_ad26a6adec64806cda0086fa72c35f1c0}{mRemoteAddrInfo},\textcolor{stringliteral}{"MacSocket\_connect: Can't allocate OT T\_CALL structure, OTAlloc() returned
+       nil"});
+977 
+978     
+979     PrepareForAsyncOperation(theSocketStruct,T\_BINDCOMPLETE);
+980 
+981     theOTResult = ::OTBind(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},nil,theSocketStruct->
+      \hyperlink{struct_socket_struct_a65e6ebf0a795e33a6537fb27d8afc23b}{mAssignedAddrInfo});
+982                                                                                 
+983     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't bind OT endpoint, OTBind() = "},theOTResult);
+984     
+985     \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(MyBusyWait(theSocketStruct,\textcolor{keyword}{false},&theOTResult,&(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa3eba4ea12efa788e1932096fc562be2}{mReceivedTBindComplete})));
+986                                                                                 
+987     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't bind OT endpoint, OTBind() = "},theOTResult);
+988     
+989     theSocketStruct->\hyperlink{struct_socket_struct_afc08fe4eacc3f47dcb7dee3bb9e08662}{mEndpointIsBound} = \textcolor{keyword}{true};
+990     
+991 
+992 TCall       sndCall;
+993 DNSAddress  hostDNSAddress;
+994     
+995     \textcolor{comment}{//  Set up target address}
+996     
+997     sndCall.addr.buf = (UInt8 *) &hostDNSAddress;
+998     sndCall.addr.len = ::OTInitDNSAddress(&hostDNSAddress,inTargetAddressAndPort);
+999     sndCall.opt.buf = nil;
+1000     sndCall.opt.len = 0;
+1001     sndCall.udata.buf = nil;
+1002     sndCall.udata.len = 0;
+1003     sndCall.sequence = 0;
+1004         
+1005     \textcolor{comment}{//  Connect!}
+1006     
+1007     PrepareForAsyncOperation(theSocketStruct,T\_CONNECT);
+1008 
+1009     theOTResult = ::OTConnect(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},&sndCall,nil);
+1010     
+1011     \textcolor{keywordflow}{if} (theOTResult == kOTNoDataErr)
+1012     \{
+1013         theOTResult = noErr;
+1014     \}
+1015                                                 
+1016     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't connect OT endpoint, OTConnect() = "},theOTResult);
+1017     
+1018     \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(MyBusyWait(theSocketStruct,\textcolor{keyword}{false},&theOTResult,&(theSocketStruct->
+      \hyperlink{struct_socket_struct_a6d76324df5329ea99df49489b7e24ad2}{mReceivedTConnect})));
+1019     
+1020     \textcolor{keywordflow}{if} (theOTResult == \hyperlink{_mac_socket_8h_a68c01102755fc7d1c810bb0b0635fa90aa024bfbbe141d0e07e7d8d6e0869ba7a}{kMacSocket\_TimeoutErr})
+1021     \{
+1022         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_connect: Can't connect OT endpoint,
+       OTConnect() = kMacSocket\_TimeoutErr"});
+1023     \}
+1024     
+1025     \textcolor{keywordflow}{else}
+1026     \{
+1027         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't connect OT endpoint, OTConnect() = "},theOTResult);
+1028     \}
+1029 
+1030     theOTResult = ::OTRcvConnect(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},nil);
+1031                                                 
+1032     \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_connect: Can't complete connect on OT endpoint, OTRcvConnect() = "},theOTResult);
+1033 
+1034 
+1035     errCode = noErr;
+1036 
+1037 
+1038 \textcolor{preprocessor}{#ifdef MACSOCKET\_DEBUG}
+1039     printf(\textcolor{stringliteral}{"MacSocket\_connect: connect completed\(\backslash\)n"});
+1040 \textcolor{preprocessor}{#endif}
+1041 
+1042 EXITPOINT:
+1043     
+1044     \textcolor{keywordflow}{if} (theSocketStruct != nil)
+1045     \{
+1046         theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = noErr;
+1047         
+1048         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1049 
+1050         \textcolor{keywordflow}{if} (errCode != noErr)
+1051         \{
+1052             theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = errCode;
+1053             
+1054             \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\hyperlink{_error_handling_8cpp_a98c7958fea7cb23f86e262d397bebad6}{GetErrorMessage}(),theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1055         \}
+1056     \}
+1057     
+1058     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = errCode;
+1059     
+1060     \textcolor{keywordflow}{return}(errCode);
+1061 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=317pt]{_mac_socket_8cpp_a83d3eb3355c78c206f549c81024f0d89_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{_mac_socket_8cpp_a83d3eb3355c78c206f549c81024f0d89_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+close@{Mac\+Socket\+\_\+close}}
+\index{Mac\+Socket\+\_\+close@{Mac\+Socket\+\_\+close}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+close(const int in\+Socket\+Num)}{MacSocket_close(const int inSocketNum)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err Mac\+Socket\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_ae7060b6ecc78644c7fd6d9c973dc0efc}{}\label{_mac_socket_8cpp_ae7060b6ecc78644c7fd6d9c973dc0efc}
+
+
+Definition at line 1068 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+1069 \{
+1070 OSErr           errCode = noErr;
+1071 \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = nil;
+1072 
+1073 
+1074     \textcolor{keywordflow}{if} (!SocketIndexIsValid(inSocketNum))
+1075     \{
+1076         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_close: Invalid socket number specified"});
+1077     \}
+1078 
+1079 
+1080     theSocketStruct = &(sSockets[inSocketNum]);
+1081     
+1082     \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef} != kOTInvalidEndpointRef)
+1083     \{
+1084     OTResult        theOTResult = noErr;
+1085     
+1086         \textcolor{comment}{//  Try to play nice}
+1087         
+1088         \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_aa8058ed78e968a4dfeb45e9b62524d27}{mReceivedTOrdRel})
+1089         \{
+1090             \textcolor{comment}{//  Already did an OTRcvOrderlyDisconnect() in the notifier}
+1091         
+1092             \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected})
+1093             \{
+1094                 theOTResult = ::OTSndOrderlyDisconnect(theSocketStruct->
+      \hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+1095                 
+1096                 theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected} = \textcolor{keyword}{false};
+1097             \}
+1098         \}
+1099         
+1100         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected})
+1101         \{
+1102             theOTResult = ::OTSndOrderlyDisconnect(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+1103             
+1104             theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected} = \textcolor{keyword}{false};
+1105             
+1106             \textcolor{comment}{//  Wait for other end to hang up too!}
+1107             
+1108 \textcolor{comment}{//          PrepareForAsyncOperation(theSocketStruct,T\_ORDREL);}
+1109 \textcolor{comment}{//}
+1110 \textcolor{comment}{//          errCode = MyBusyWait(theSocketStruct,false,&theOTResult,&(theSocketStruct->mReceivedTOrdRel));}
+1111         \}
+1112         
+1113         
+1114         \textcolor{keywordflow}{if} (theOTResult != noErr)
+1115         \{
+1116             ::OTCloseProvider(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+1117         \}
+1118         
+1119         \textcolor{keywordflow}{else}
+1120         \{
+1121             theOTResult = ::OTCloseProvider(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef});
+1122         \}
+1123 
+1124         theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef} = kOTInvalidEndpointRef;
+1125         
+1126         errCode = theOTResult;
+1127     \}
+1128 
+1129 
+1130     theSocketStruct->\hyperlink{struct_socket_struct_a6932ba163e69b1162b0fec5b695f249d}{mIsInUse} = \textcolor{keyword}{false};
+1131 
+1132     
+1133 EXITPOINT:
+1134     
+1135     \textcolor{keywordflow}{if} (theSocketStruct != nil)
+1136     \{
+1137         theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = noErr;
+1138         
+1139         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1140 
+1141         \textcolor{keywordflow}{if} (errCode != noErr)
+1142         \{
+1143             theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = errCode;
+1144             
+1145             \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\hyperlink{_error_handling_8cpp_a98c7958fea7cb23f86e262d397bebad6}{GetErrorMessage}(),theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1146         \}
+1147     \}
+1148 
+1149     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = errCode;
+1150         
+1151     \textcolor{keywordflow}{return}(errCode);
+1152 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{_mac_socket_8cpp_ae7060b6ecc78644c7fd6d9c973dc0efc_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{_mac_socket_8cpp_ae7060b6ecc78644c7fd6d9c973dc0efc_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+recv@{Mac\+Socket\+\_\+recv}}
+\index{Mac\+Socket\+\_\+recv@{Mac\+Socket\+\_\+recv}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+recv(const int in\+Socket\+Num, void $\ast$out\+Buff, int out\+Buff\+Length, const Boolean in\+Block)}{MacSocket_recv(const int inSocketNum, void *outBuff, int outBuffLength, const Boolean inBlock)}}]{\setlength{\rightskip}{0pt plus 5cm}int Mac\+Socket\+\_\+recv (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{{\bf void} $\ast$}]{out\+Buff, }
+\item[{int}]{out\+Buff\+Length, }
+\item[{const Boolean}]{in\+Block}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a26588e3597fc7583970e06f320cbc64b}{}\label{_mac_socket_8cpp_a26588e3597fc7583970e06f320cbc64b}
+
+
+Definition at line 1159 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+1160 \{
+1161 OSErr           errCode = noErr;
+1162 \textcolor{keywordtype}{int}             totalBytesRead = 0;
+1163 \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = nil;
+1164 
+1165     
+1166     \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(outBuff,\textcolor{stringliteral}{"MacSocket\_recv: Bad parameter, outBuff
+       = nil"});
+1167     
+1168     \textcolor{keywordflow}{if} (outBuffLength <= 0)
+1169     \{
+1170         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_recv: Bad parameter, outBuffLength <= 0"});
+1171     \}
+1172     
+1173     \textcolor{keywordflow}{if} (!SocketIndexIsValid(inSocketNum))
+1174     \{
+1175         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_recv: Invalid socket number specified"});
+1176     \}
+1177 
+1178     theSocketStruct = &(sSockets[inSocketNum]);
+1179 
+1180     \textcolor{keywordflow}{if} (!theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected})
+1181     \{
+1182         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_recv: Socket not connected"});
+1183     \}
+1184 
+1185     \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_aa8058ed78e968a4dfeb45e9b62524d27}{mReceivedTOrdRel})
+1186     \{
+1187         totalBytesRead = 0;
+1188         
+1189         \textcolor{keywordflow}{goto} EXITPOINT;
+1190     \}
+1191 
+1192     
+1193     PrepareForAsyncOperation(theSocketStruct,0);
+1194     
+1195     \textcolor{keywordflow}{for} (;;)
+1196     \{
+1197     \textcolor{keywordtype}{int}         bytesRead;
+1198     OTResult    theOTResult;
+1199     
+1200     
+1201         theOTResult = ::OTRcv(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},(\textcolor{keywordtype}{void} *) ((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}) outBuff +
+       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}) totalBytesRead),outBuffLength - totalBytesRead,nil);
+1202         
+1203         \textcolor{keywordflow}{if} (theOTResult >= 0)
+1204         \{
+1205             bytesRead = theOTResult;
+1206             
+1207 \textcolor{preprocessor}{#ifdef MACSOCKET\_DEBUG}
+1208     printf(\textcolor{stringliteral}{"MacSocket\_recv: read %d bytes in part\(\backslash\)n"},bytesRead);
+1209 \textcolor{preprocessor}{#endif}
+1210         \}
+1211         
+1212         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (theOTResult == kOTNoDataErr)
+1213         \{
+1214             bytesRead = 0;
+1215         \}
+1216         
+1217         \textcolor{keywordflow}{else}
+1218         \{
+1219             \hyperlink{_error_handling_8hpp_abbc2f61b7f1a165c23ee9ce9110d7bf5}{SetErrorMessageAndLongIntAndBail}(\textcolor{stringliteral}{"MacSocket\_recv: Can't receive
+       OT data, OTRcv() = "},theOTResult);
+1220         \}
+1221         
+1222         
+1223         totalBytesRead += bytesRead;
+1224         
+1225         
+1226         \textcolor{keywordflow}{if} (totalBytesRead <= 0)
+1227         \{
+1228             \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_aa8058ed78e968a4dfeb45e9b62524d27}{mReceivedTOrdRel})
+1229             \{
+1230                 \textcolor{keywordflow}{break};
+1231             \}
+1232             
+1233             \textcolor{comment}{//  This seems pretty stupid to me now.  Maybe I'll delete this blocking garbage.}
+1234             
+1235             \textcolor{keywordflow}{if} (inBlock)
+1236             \{
+1237                 \textcolor{keywordflow}{if} (TimeoutElapsed(theSocketStruct))
+1238                 \{
+1239                     \hyperlink{_error_handling_8hpp_aa29f59451ec8efdfdf05ca3db1773b8a}{SetErrorCodeAndMessageAndBail}(
+      \hyperlink{_mac_socket_8h_a68c01102755fc7d1c810bb0b0635fa90aa024bfbbe141d0e07e7d8d6e0869ba7a}{kMacSocket\_TimeoutErr},\textcolor{stringliteral}{"MacSocket\_recv: Receive operation timed-out"});
+1240                 \}
+1241                 
+1242                 \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a69f986725d1044656cb7cc5c6604f3b7}{mIdleWaitCallback} != nil)
+1243                 \{
+1244                     theOTResult = (*(theSocketStruct->\hyperlink{struct_socket_struct_a69f986725d1044656cb7cc5c6604f3b7}{mIdleWaitCallback}))(theSocketStruct
+      ->\hyperlink{struct_socket_struct_ad4f85b13ba101a9d94dfdf6ad4bae473}{mUserRefPtr});
+1245                     
+1246                     \hyperlink{_error_handling_8hpp_a118fad8e4bc3f6f3c8d1e47eaddcee6a}{SetErrorMessageAndBailIfError}(theOTResult,\textcolor{stringliteral}{"MacSocket\_recv:
+       User cancelled operation"});
+1247                 \}
+1248                 
+1249                 \textcolor{keywordflow}{continue};
+1250             \}
+1251         \}
+1252         
+1253         
+1254         \textcolor{keywordflow}{break};
+1255     \}
+1256     
+1257     errCode = noErr;
+1258 
+1259 
+1260 \textcolor{preprocessor}{#ifdef MACSOCKET\_DEBUG}
+1261     printf(\textcolor{stringliteral}{"MacSocket\_recv: read %d bytes in total\(\backslash\)n"},totalBytesRead);
+1262 \textcolor{preprocessor}{#endif}
+1263     
+1264     
+1265 EXITPOINT:
+1266     
+1267     \textcolor{keywordflow}{if} (theSocketStruct != nil)
+1268     \{
+1269         theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = noErr;
+1270         
+1271         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1272 
+1273         \textcolor{keywordflow}{if} (errCode != noErr)
+1274         \{
+1275             theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = errCode;
+1276             
+1277             \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\hyperlink{_error_handling_8cpp_a98c7958fea7cb23f86e262d397bebad6}{GetErrorMessage}(),theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1278         \}
+1279     \}
+1280 
+1281     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = errCode;
+1282     
+1283     \textcolor{keywordflow}{return}(totalBytesRead);
+1284 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=301pt]{_mac_socket_8cpp_a26588e3597fc7583970e06f320cbc64b_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!Mac\+Socket\+\_\+send@{Mac\+Socket\+\_\+send}}
+\index{Mac\+Socket\+\_\+send@{Mac\+Socket\+\_\+send}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{Mac\+Socket\+\_\+send(const int in\+Socket\+Num, const void $\ast$in\+Buff, int in\+Buff\+Length)}{MacSocket_send(const int inSocketNum, const void *inBuff, int inBuffLength)}}]{\setlength{\rightskip}{0pt plus 5cm}int Mac\+Socket\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{const int}]{in\+Socket\+Num, }
+\item[{const {\bf void} $\ast$}]{in\+Buff, }
+\item[{int}]{in\+Buff\+Length}
+\end{DoxyParamCaption}
+)}\hypertarget{_mac_socket_8cpp_a20d246abc67ee33512d71f96184a9cb1}{}\label{_mac_socket_8cpp_a20d246abc67ee33512d71f96184a9cb1}
+
+
+Definition at line 1290 of file Mac\+Socket.\+cpp.
+
+
+\begin{DoxyCode}
+1291 \{
+1292 OSErr           errCode = noErr;
+1293 \textcolor{keywordtype}{int}             bytesSent = 0;
+1294 \hyperlink{struct_socket_struct}{SocketStruct}    *theSocketStruct = nil;
+1295 
+1296 
+1297     \hyperlink{_error_handling_8hpp_a792b7061a295fc6f2a04dc813ebbf6dd}{SetErrorMessageAndBailIfNil}(inBuff,\textcolor{stringliteral}{"MacSocket\_send: Bad parameter, inBuff =
+       nil"});
+1298     
+1299     \textcolor{keywordflow}{if} (inBuffLength <= 0)
+1300     \{
+1301         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_send: Bad parameter, inBuffLength <= 0"});
+1302     \}
+1303 
+1304     \textcolor{keywordflow}{if} (!SocketIndexIsValid(inSocketNum))
+1305     \{
+1306         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_send: Invalid socket number specified"});
+1307     \}
+1308     
+1309 
+1310     theSocketStruct = &(sSockets[inSocketNum]);
+1311     
+1312     \textcolor{keywordflow}{if} (!theSocketStruct->\hyperlink{struct_socket_struct_abd38b54aecec4466a61e8318990191f6}{mLocalEndIsConnected})
+1313     \{
+1314         \hyperlink{_error_handling_8hpp_ae11c756a09c19ce3cc6a62107eb31995}{SetErrorMessageAndBail}(\textcolor{stringliteral}{"MacSocket\_send: Socket not connected"});
+1315     \}
+1316 
+1317 
+1318 OTResult        theOTResult;
+1319     
+1320 
+1321     PrepareForAsyncOperation(theSocketStruct,0);
+1322 
+1323     \textcolor{keywordflow}{while} (bytesSent < inBuffLength)
+1324     \{
+1325         \textcolor{keywordflow}{if} (theSocketStruct->\hyperlink{struct_socket_struct_a69f986725d1044656cb7cc5c6604f3b7}{mIdleWaitCallback} != nil)
+1326         \{
+1327             theOTResult = (*(theSocketStruct->\hyperlink{struct_socket_struct_a69f986725d1044656cb7cc5c6604f3b7}{mIdleWaitCallback}))(theSocketStruct->
+      \hyperlink{struct_socket_struct_ad4f85b13ba101a9d94dfdf6ad4bae473}{mUserRefPtr});
+1328             
+1329             \hyperlink{_error_handling_8hpp_a118fad8e4bc3f6f3c8d1e47eaddcee6a}{SetErrorMessageAndBailIfError}(theOTResult,\textcolor{stringliteral}{"MacSocket\_send: User
+       cancelled"});
+1330         \}
+1331 
+1332 
+1333         theOTResult = ::OTSnd(theSocketStruct->\hyperlink{struct_socket_struct_aa7508a8f247a125cafcf3ad164c6912c}{mEndPointRef},(\textcolor{keywordtype}{void} *) ((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}) inBuff + 
+      bytesSent),inBuffLength - bytesSent,0);
+1334         
+1335         \textcolor{keywordflow}{if} (theOTResult >= 0)
+1336         \{
+1337             bytesSent += theOTResult;
+1338             
+1339             theOTResult = noErr;
+1340             
+1341             \textcolor{comment}{//  Reset timer....}
+1342             
+1343             PrepareForAsyncOperation(theSocketStruct,0);
+1344         \}
+1345         
+1346         \textcolor{keywordflow}{if} (theOTResult == kOTFlowErr)
+1347         \{
+1348             \textcolor{keywordflow}{if} (TimeoutElapsed(theSocketStruct))
+1349             \{
+1350                 \hyperlink{_error_handling_8hpp_aa29f59451ec8efdfdf05ca3db1773b8a}{SetErrorCodeAndMessageAndBail}(
+      \hyperlink{_mac_socket_8h_a68c01102755fc7d1c810bb0b0635fa90aa024bfbbe141d0e07e7d8d6e0869ba7a}{kMacSocket\_TimeoutErr},\textcolor{stringliteral}{"MacSocket\_send: Send timed-out"})
+1351             \}
+1352 
+1353             theOTResult = noErr;
+1354         \}
+1355                                                     
+1356         \hyperlink{_error_handling_8hpp_a0d0630d202664d0e25605730a82f307d}{SetErrorMessageAndLongIntAndBailIfError}(theOTResult,\textcolor{stringliteral}{"
+      MacSocket\_send: Can't send OT data, OTSnd() = "},theOTResult);
+1357     \}
+1358 
+1359     
+1360     errCode = noErr;
+1361 
+1362 \textcolor{preprocessor}{#ifdef MACSOCKET\_DEBUG}
+1363     printf(\textcolor{stringliteral}{"MacSocket\_send: sent %d bytes\(\backslash\)n"},bytesSent);
+1364 \textcolor{preprocessor}{#endif}
+1365     
+1366     
+1367 EXITPOINT:
+1368     
+1369     \textcolor{keywordflow}{if} (theSocketStruct != nil)
+1370     \{
+1371         theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = noErr;
+1372         
+1373         \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{""},theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1374 
+1375         \textcolor{keywordflow}{if} (errCode != noErr)
+1376         \{
+1377             theSocketStruct->\hyperlink{struct_socket_struct_a1b6ada1030d74c096be4da81d64f7958}{mLastError} = errCode;
+1378             
+1379             \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\hyperlink{_error_handling_8cpp_a98c7958fea7cb23f86e262d397bebad6}{GetErrorMessage}(),theSocketStruct->
+      \hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage},\textcolor{keyword}{sizeof}(theSocketStruct->\hyperlink{struct_socket_struct_a113aebf6f923d429a5ac322124a70d90}{mErrMessage}));
+1380         \}
+1381     \}
+1382     
+1383     \textcolor{keywordflow}{if} (errCode != noErr)
+1384     \{
+1385         ::SysBeep(1);
+1386     \}
+1387     
+1388     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = errCode;
+1389     
+1390     \textcolor{keywordflow}{return}(bytesSent);
+1391 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{_mac_socket_8cpp_a20d246abc67ee33512d71f96184a9cb1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}!errno@{errno}}
+\index{errno@{errno}!Mac\+Socket.\+cpp@{Mac\+Socket.\+cpp}}
+\subsubsection[{\texorpdfstring{errno}{errno}}]{\setlength{\rightskip}{0pt plus 5cm}int errno}\hypertarget{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{}\label{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}

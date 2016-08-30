@@ -1,0 +1,420 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/lhash.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/lhash.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBlhash_node_st\fP"
+.br
+.ti -1c
+.RI "struct \fBlhash_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDECLARE_LHASH_HASH_FN\fP(name,  o_type)   unsigned long name##_LHASH_HASH(const \fBvoid\fP *);"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_LHASH_HASH_FN\fP(name,  o_type)"
+.br
+.ti -1c
+.RI "#define \fBLHASH_HASH_FN\fP(name)   name##_LHASH_HASH"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_LHASH_COMP_FN\fP(name,  o_type)   int name##_LHASH_COMP(const \fBvoid\fP *, const \fBvoid\fP *);"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_LHASH_COMP_FN\fP(name,  o_type)"
+.br
+.ti -1c
+.RI "#define \fBLHASH_COMP_FN\fP(name)   name##_LHASH_COMP"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_LHASH_DOALL_FN\fP(name,  o_type)   \fBvoid\fP name##_LHASH_DOALL(\fBvoid\fP *);"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_LHASH_DOALL_FN\fP(name,  o_type)"
+.br
+.ti -1c
+.RI "#define \fBLHASH_DOALL_FN\fP(name)   name##_LHASH_DOALL"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_LHASH_DOALL_ARG_FN\fP(name,  o_type,  a_type)   \fBvoid\fP name##_LHASH_DOALL_ARG(\fBvoid\fP *, \fBvoid\fP *);"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_LHASH_DOALL_ARG_FN\fP(name,  o_type,  a_type)"
+.br
+.ti -1c
+.RI "#define \fBLHASH_DOALL_ARG_FN\fP(name)   name##_LHASH_DOALL_ARG"
+.br
+.ti -1c
+.RI "#define \fBLH_LOAD_MULT\fP   256"
+.br
+.ti -1c
+.RI "#define \fBlh_error\fP(lh)       ((lh)\->error)"
+.br
+.ti -1c
+.RI "#define \fBLHASH_OF\fP(\fBtype\fP)   struct lhash_st_##\fBtype\fP"
+.br
+.ti -1c
+.RI "#define \fBDECLARE_LHASH_OF\fP(\fBtype\fP)   \fBLHASH_OF\fP(\fBtype\fP) { int dummy; }"
+.br
+.ti -1c
+.RI "#define \fBCHECKED_LHASH_OF\fP(\fBtype\fP,  lh)   ((\fB_LHASH\fP *)\fBCHECKED_PTR_OF\fP(\fBLHASH_OF\fP(\fBtype\fP),lh))"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_new\fP(\fBtype\fP,  name)   ((\fBLHASH_OF\fP(\fBtype\fP) *)\fBlh_new\fP(\fBLHASH_HASH_FN\fP(name), \fBLHASH_COMP_FN\fP(name)))"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_error\fP(\fBtype\fP,  lh)   \fBlh_error\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP,lh))"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_insert\fP(\fBtype\fP,  lh,  inst)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_retrieve\fP(\fBtype\fP,  lh,  inst)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_delete\fP(\fBtype\fP,  lh,  inst)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_doall\fP(\fBtype\fP,  lh,  fn)   \fBlh_doall\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), fn)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_doall_arg\fP(\fBtype\fP,  lh,  fn,  arg_type,  arg)   \fBlh_doall_arg\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), fn, \fBCHECKED_PTR_OF\fP(arg_type, arg))"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_num_items\fP(\fBtype\fP,  lh)   \fBlh_num_items\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh))"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_down_load\fP(\fBtype\fP,  lh)   (\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh)\->down_load)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_node_stats_bio\fP(\fBtype\fP,  lh,  out)   \fBlh_node_stats_bio\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), out)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_node_usage_stats_bio\fP(\fBtype\fP,  lh,  out)   \fBlh_node_usage_stats_bio\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), out)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_stats_bio\fP(\fBtype\fP,  lh,  out)   \fBlh_stats_bio\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), out)"
+.br
+.ti -1c
+.RI "#define \fBLHM_lh_free\fP(\fBtype\fP,  lh)   \fBlh_free\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBlhash_node_st\fP \fBLHASH_NODE\fP"
+.br
+.ti -1c
+.RI "typedef int(* \fBLHASH_COMP_FN_TYPE\fP) (const \fBvoid\fP *, const \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "typedef unsigned long(* \fBLHASH_HASH_FN_TYPE\fP) (const \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBLHASH_DOALL_FN_TYPE\fP) (\fBvoid\fP *)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP(* \fBLHASH_DOALL_ARG_FN_TYPE\fP) (\fBvoid\fP *, \fBvoid\fP *)"
+.br
+.ti -1c
+.RI "typedef struct \fBlhash_st\fP \fB_LHASH\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB_LHASH\fP * \fBlh_new\fP (\fBLHASH_HASH_FN_TYPE\fP h, \fBLHASH_COMP_FN_TYPE\fP \fBc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_free\fP (\fB_LHASH\fP *lh)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlh_insert\fP (\fB_LHASH\fP *lh, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlh_delete\fP (\fB_LHASH\fP *lh, const \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBlh_retrieve\fP (\fB_LHASH\fP *lh, const \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_doall\fP (\fB_LHASH\fP *lh, \fBLHASH_DOALL_FN_TYPE\fP func)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_doall_arg\fP (\fB_LHASH\fP *lh, \fBLHASH_DOALL_ARG_FN_TYPE\fP func, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "unsigned long \fBlh_strhash\fP (const char *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBlh_num_items\fP (const \fB_LHASH\fP *lh)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_stats\fP (const \fB_LHASH\fP *lh, FILE *out)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_node_stats\fP (const \fB_LHASH\fP *lh, FILE *out)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_node_usage_stats\fP (const \fB_LHASH\fP *lh, FILE *out)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_stats_bio\fP (const \fB_LHASH\fP *lh, \fBBIO\fP *out)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_node_stats_bio\fP (const \fB_LHASH\fP *lh, \fBBIO\fP *out)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBlh_node_usage_stats_bio\fP (const \fB_LHASH\fP *lh, \fBBIO\fP *out)"
+.br
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBOPENSSL_STRING\fP)"
+.br
+.ti -1c
+.RI "\fBDECLARE_LHASH_OF\fP (\fBOPENSSL_CSTRING\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DECLARE_LHASH_HASH_FN(name, o_type)   unsigned long name##_LHASH_HASH(const \fBvoid\fP *);"
+
+.PP
+Definition at line 102 of file lhash\&.h\&.
+.SS "#define IMPLEMENT_LHASH_HASH_FN(name, o_type)"
+\fBValue:\fP
+.PP
+.nf
+unsigned long name##_LHASH_HASH(const void *arg) { \
+                const o_type *a = arg; \
+                return name##_hash(a); }
+.fi
+.PP
+Definition at line 104 of file lhash\&.h\&.
+.SS "#define LHASH_HASH_FN(name)   name##_LHASH_HASH"
+
+.PP
+Definition at line 108 of file lhash\&.h\&.
+.SS "#define DECLARE_LHASH_COMP_FN(name, o_type)   int name##_LHASH_COMP(const \fBvoid\fP *, const \fBvoid\fP *);"
+
+.PP
+Definition at line 111 of file lhash\&.h\&.
+.SS "#define IMPLEMENT_LHASH_COMP_FN(name, o_type)"
+\fBValue:\fP
+.PP
+.nf
+int name##_LHASH_COMP(const void *arg1, const void *arg2) { \
+                const o_type *a = arg1;             \
+                const o_type *b = arg2; \
+                return name##_cmp(a,b); }
+.fi
+.PP
+Definition at line 113 of file lhash\&.h\&.
+.SS "#define LHASH_COMP_FN(name)   name##_LHASH_COMP"
+
+.PP
+Definition at line 118 of file lhash\&.h\&.
+.SS "#define DECLARE_LHASH_DOALL_FN(name, o_type)   \fBvoid\fP name##_LHASH_DOALL(\fBvoid\fP *);"
+
+.PP
+Definition at line 121 of file lhash\&.h\&.
+.SS "#define IMPLEMENT_LHASH_DOALL_FN(name, o_type)"
+\fBValue:\fP
+.PP
+.nf
+void name##_LHASH_DOALL(void *arg) { \
+                o_type *a = arg; \
+                name##_doall(a); }
+.fi
+.PP
+Definition at line 123 of file lhash\&.h\&.
+.SS "#define LHASH_DOALL_FN(name)   name##_LHASH_DOALL"
+
+.PP
+Definition at line 127 of file lhash\&.h\&.
+.SS "#define DECLARE_LHASH_DOALL_ARG_FN(name, o_type, a_type)   \fBvoid\fP name##_LHASH_DOALL_ARG(\fBvoid\fP *, \fBvoid\fP *);"
+
+.PP
+Definition at line 130 of file lhash\&.h\&.
+.SS "#define IMPLEMENT_LHASH_DOALL_ARG_FN(name, o_type, a_type)"
+\fBValue:\fP
+.PP
+.nf
+void name##_LHASH_DOALL_ARG(void *arg1, void *arg2) { \
+                o_type *a = arg1; \
+                a_type *b = arg2; \
+                name##_doall_arg(a, b); }
+.fi
+.PP
+Definition at line 132 of file lhash\&.h\&.
+.SS "#define LHASH_DOALL_ARG_FN(name)   name##_LHASH_DOALL_ARG"
+
+.PP
+Definition at line 137 of file lhash\&.h\&.
+.SS "#define LH_LOAD_MULT   256"
+
+.PP
+Definition at line 167 of file lhash\&.h\&.
+.SS "#define lh_error(lh)   ((lh)\->error)"
+
+.PP
+Definition at line 173 of file lhash\&.h\&.
+.SS "#define LHASH_OF(\fBtype\fP)   struct lhash_st_##\fBtype\fP"
+
+.PP
+Definition at line 199 of file lhash\&.h\&.
+.SS "#define DECLARE_LHASH_OF(\fBtype\fP)   \fBLHASH_OF\fP(\fBtype\fP) { int dummy; }"
+
+.PP
+Definition at line 201 of file lhash\&.h\&.
+.SS "#define CHECKED_LHASH_OF(\fBtype\fP, lh)   ((\fB_LHASH\fP *)\fBCHECKED_PTR_OF\fP(\fBLHASH_OF\fP(\fBtype\fP),lh))"
+
+.PP
+Definition at line 203 of file lhash\&.h\&.
+.SS "#define LHM_lh_new(\fBtype\fP, name)   ((\fBLHASH_OF\fP(\fBtype\fP) *)\fBlh_new\fP(\fBLHASH_HASH_FN\fP(name), \fBLHASH_COMP_FN\fP(name)))"
+
+.PP
+Definition at line 207 of file lhash\&.h\&.
+.SS "#define LHM_lh_error(\fBtype\fP, lh)   \fBlh_error\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP,lh))"
+
+.PP
+Definition at line 209 of file lhash\&.h\&.
+.SS "#define LHM_lh_insert(\fBtype\fP, lh, inst)"
+\fBValue:\fP
+.PP
+.nf
+((type *)lh_insert(CHECKED_LHASH_OF(type, lh), \
+                     CHECKED_PTR_OF(type, inst)))
+.fi
+.PP
+Definition at line 211 of file lhash\&.h\&.
+.SS "#define LHM_lh_retrieve(\fBtype\fP, lh, inst)"
+\fBValue:\fP
+.PP
+.nf
+((type *)lh_retrieve(CHECKED_LHASH_OF(type, lh), \
+                       CHECKED_PTR_OF(type, inst)))
+.fi
+.PP
+Definition at line 214 of file lhash\&.h\&.
+.SS "#define LHM_lh_delete(\fBtype\fP, lh, inst)"
+\fBValue:\fP
+.PP
+.nf
+((type *)lh_delete(CHECKED_LHASH_OF(type, lh),                        \
+                     CHECKED_PTR_OF(type, inst)))
+.fi
+.PP
+Definition at line 217 of file lhash\&.h\&.
+.SS "#define LHM_lh_doall(\fBtype\fP, lh, fn)   \fBlh_doall\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), fn)"
+
+.PP
+Definition at line 220 of file lhash\&.h\&.
+.SS "#define LHM_lh_doall_arg(\fBtype\fP, lh, fn, arg_type, arg)   \fBlh_doall_arg\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), fn, \fBCHECKED_PTR_OF\fP(arg_type, arg))"
+
+.PP
+Definition at line 221 of file lhash\&.h\&.
+.SS "#define LHM_lh_num_items(\fBtype\fP, lh)   \fBlh_num_items\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh))"
+
+.PP
+Definition at line 223 of file lhash\&.h\&.
+.SS "#define LHM_lh_down_load(\fBtype\fP, lh)   (\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh)\->down_load)"
+
+.PP
+Definition at line 224 of file lhash\&.h\&.
+.SS "#define LHM_lh_node_stats_bio(\fBtype\fP, lh, out)   \fBlh_node_stats_bio\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), out)"
+
+.PP
+Definition at line 225 of file lhash\&.h\&.
+.SS "#define LHM_lh_node_usage_stats_bio(\fBtype\fP, lh, out)   \fBlh_node_usage_stats_bio\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), out)"
+
+.PP
+Definition at line 227 of file lhash\&.h\&.
+.SS "#define LHM_lh_stats_bio(\fBtype\fP, lh, out)   \fBlh_stats_bio\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh), out)"
+
+.PP
+Definition at line 229 of file lhash\&.h\&.
+.SS "#define LHM_lh_free(\fBtype\fP, lh)   \fBlh_free\fP(\fBCHECKED_LHASH_OF\fP(\fBtype\fP, lh))"
+
+.PP
+Definition at line 231 of file lhash\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBlhash_node_st\fP  \fBLHASH_NODE\fP"
+
+.SS "typedef int(* LHASH_COMP_FN_TYPE) (const \fBvoid\fP *, const \fBvoid\fP *)"
+
+.PP
+Definition at line 87 of file lhash\&.h\&.
+.SS "typedef unsigned long(* LHASH_HASH_FN_TYPE) (const \fBvoid\fP *)"
+
+.PP
+Definition at line 88 of file lhash\&.h\&.
+.SS "typedef \fBvoid\fP(* LHASH_DOALL_FN_TYPE) (\fBvoid\fP *)"
+
+.PP
+Definition at line 89 of file lhash\&.h\&.
+.SS "typedef \fBvoid\fP(* LHASH_DOALL_ARG_FN_TYPE) (\fBvoid\fP *, \fBvoid\fP *)"
+
+.PP
+Definition at line 90 of file lhash\&.h\&.
+.SS "typedef struct \fBlhash_st\fP  \fB_LHASH\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fB_LHASH\fP* lh_new (\fBLHASH_HASH_FN_TYPE\fP h, \fBLHASH_COMP_FN_TYPE\fP c)"
+
+.SS "\fBvoid\fP lh_free (\fB_LHASH\fP * lh)"
+
+.SS "\fBvoid\fP* lh_insert (\fB_LHASH\fP * lh, \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP* lh_delete (\fB_LHASH\fP * lh, const \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP* lh_retrieve (\fB_LHASH\fP * lh, const \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP lh_doall (\fB_LHASH\fP * lh, \fBLHASH_DOALL_FN_TYPE\fP func)"
+
+.SS "\fBvoid\fP lh_doall_arg (\fB_LHASH\fP * lh, \fBLHASH_DOALL_ARG_FN_TYPE\fP func, \fBvoid\fP * arg)"
+
+.SS "unsigned long lh_strhash (const char * c)"
+
+.SS "unsigned long lh_num_items (const \fB_LHASH\fP * lh)"
+
+.SS "\fBvoid\fP lh_stats (const \fB_LHASH\fP * lh, FILE * out)"
+
+.SS "\fBvoid\fP lh_node_stats (const \fB_LHASH\fP * lh, FILE * out)"
+
+.SS "\fBvoid\fP lh_node_usage_stats (const \fB_LHASH\fP * lh, FILE * out)"
+
+.SS "\fBvoid\fP lh_stats_bio (const \fB_LHASH\fP * lh, \fBBIO\fP * out)"
+
+.SS "\fBvoid\fP lh_node_stats_bio (const \fB_LHASH\fP * lh, \fBBIO\fP * out)"
+
+.SS "\fBvoid\fP lh_node_usage_stats_bio (const \fB_LHASH\fP * lh, \fBBIO\fP * out)"
+
+.SS "DECLARE_LHASH_OF (\fBOPENSSL_STRING\fP)"
+
+.SS "DECLARE_LHASH_OF (\fBOPENSSL_CSTRING\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

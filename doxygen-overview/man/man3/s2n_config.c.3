@@ -1,0 +1,768 @@
+.TH "s2n-master/tls/s2n_config.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_config.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <strings\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBS2N_CLOCK\fP   CLOCK_MONOTONIC"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBget_nanoseconds_since_epoch\fP (\fBvoid\fP *data, uint64_t *nanoseconds)"
+.br
+.ti -1c
+.RI "struct \fBs2n_config\fP * \fBs2n_config_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free_cert_chain_and_key\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free_dhparams\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_free\fP (struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cipher_preferences\fP (struct \fBs2n_config\fP *\fBconfig\fP, const char *\fBversion\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_protocol_preferences\fP (struct \fBs2n_config\fP *\fBconfig\fP, const char *const *protocols, int protocol_count)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_status_request_type\fP (struct \fBs2n_config\fP *\fBconfig\fP, \fBs2n_status_request_type\fP \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_cert_chain_and_key_with_status\fP (struct \fBs2n_config\fP *\fBconfig\fP, char *cert_chain_pem, char *private_key_pem, const uint8_t *status, uint32_t \fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_cert_chain_and_key\fP (struct \fBs2n_config\fP *\fBconfig\fP, char *cert_chain_pem, char *private_key_pem)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_add_dhparams\fP (struct \fBs2n_config\fP *\fBconfig\fP, char *dhparams_pem)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_nanoseconds_since_epoch_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*nanoseconds_since_epoch)(\fBvoid\fP *, uint64_t *), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cache_store_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*\fBcache_store\fP)(\fBvoid\fP *, uint64_t ttl_in_seconds, const \fBvoid\fP *key, uint64_t key_size, const \fBvoid\fP *value, uint64_t value_size), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cache_retrieve_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*\fBcache_retrieve\fP)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size, \fBvoid\fP *value, uint64_t *value_size), \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "int \fBs2n_config_set_cache_delete_callback\fP (struct \fBs2n_config\fP *\fBconfig\fP, int(*\fBcache_delete\fP)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size), \fBvoid\fP *data)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "uint8_t \fBwire_format_20140601\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20140601\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20141001\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwire_format_20150202\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20150202\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwire_format_20150214\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20150214\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwire_format_20160411\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20160411\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwire_format_20150306\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20150306\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwire_format_20160804\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_20160804\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwire_format_test_all\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_cipher_preferences\fP \fBcipher_preferences_test_all\fP"
+.br
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   const char * \fBversion\fP"
+.br
+.ti -1c
+.RI "   struct \fBs2n_cipher_preferences\fP * \fBpreferences\fP"
+.br
+.ti -1c
+.RI "} \fBselection\fP []"
+.br
+.ti -1c
+.RI "struct \fBs2n_config\fP \fBs2n_default_config\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define S2N_CLOCK   CLOCK_MONOTONIC"
+
+.PP
+Definition at line 53 of file s2n_config\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int get_nanoseconds_since_epoch (\fBvoid\fP * data, uint64_t * nanoseconds)"
+
+.PP
+Definition at line 56 of file s2n_config\&.c\&.
+.PP
+.nf
+57 {
+58     struct timespec current_time;
+59 
+60     GUARD(clock_gettime(S2N_CLOCK, &current_time));
+61 
+62     *nanoseconds = current_time\&.tv_sec * 1000000000;
+63     *nanoseconds += current_time\&.tv_nsec;
+64 
+65     return 0;
+66 }
+.fi
+.SS "struct \fBs2n_config\fP* s2n_config_new (\fBvoid\fP)"
+
+.PP
+Definition at line 217 of file s2n_config\&.c\&.
+.PP
+.nf
+218 {
+219     struct s2n_blob allocator;
+220     struct s2n_config *new_config;
+221 
+222     GUARD_PTR(s2n_alloc(&allocator, sizeof(struct s2n_config)));
+223 
+224     new_config = (struct s2n_config *)(void *)allocator\&.data;
+225     new_config->cert_and_key_pairs = NULL;
+226     new_config->dhparams = NULL;
+227     new_config->application_protocols\&.data = NULL;
+228     new_config->application_protocols\&.size = 0;
+229     new_config->status_request_type = S2N_STATUS_REQUEST_NONE;
+230     new_config->nanoseconds_since_epoch = get_nanoseconds_since_epoch;
+231     new_config->cache_store = NULL;
+232     new_config->cache_store_data = NULL;
+233     new_config->cache_retrieve = NULL;
+234     new_config->cache_retrieve_data = NULL;
+235     new_config->cache_delete = NULL;
+236     new_config->cache_delete_data = NULL;
+237 
+238     GUARD_PTR(s2n_config_set_cipher_preferences(new_config, "default"));
+239 
+240     return new_config;
+241 }
+.fi
+.SS "int s2n_config_free_cert_chain_and_key (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 243 of file s2n_config\&.c\&.
+.PP
+.nf
+244 {
+245     struct s2n_blob b = {
+246         \&.data = (uint8_t *) config->cert_and_key_pairs,
+247         \&.size = sizeof(struct s2n_cert_chain_and_key)
+248     };
+249 
+250     /* If there were cert and key pairs set, walk the chain and free the certs */
+251     if (config->cert_and_key_pairs) {
+252         struct s2n_cert_chain *node = config->cert_and_key_pairs->head;
+253         while (node) {
+254             struct s2n_blob n = {
+255                 \&.data = (uint8_t *) node,
+256                 \&.size = sizeof(struct s2n_cert_chain)
+257             };
+258             /* Free the cert */
+259             GUARD(s2n_free(&node->cert));
+260             /* Advance to next */
+261             node = node->next;
+262             /* Free the node */
+263             GUARD(s2n_free(&n));
+264         }
+265         GUARD(s2n_rsa_private_key_free(&config->cert_and_key_pairs->private_key));
+266         GUARD(s2n_free(&config->cert_and_key_pairs->ocsp_status));
+267     }
+268 
+269     GUARD(s2n_free(&b));
+270     return 0;
+271 }
+.fi
+.SS "int s2n_config_free_dhparams (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 273 of file s2n_config\&.c\&.
+.PP
+.nf
+274 {
+275     struct s2n_blob b = {
+276         \&.data = (uint8_t *) config->dhparams,
+277         \&.size = sizeof(struct s2n_dh_params)
+278     };
+279 
+280     if (config->dhparams) {
+281         GUARD(s2n_dh_params_free(config->dhparams));
+282     }
+283 
+284     GUARD(s2n_free(&b));
+285     return 0;
+286 }
+.fi
+.SS "int s2n_config_free (struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 288 of file s2n_config\&.c\&.
+.PP
+.nf
+289 {
+290     struct s2n_blob b = {\&.data = (uint8_t *) config,\&.size = sizeof(struct s2n_config) };
+291 
+292     GUARD(s2n_config_free_cert_chain_and_key(config));
+293     GUARD(s2n_config_free_dhparams(config));
+294     GUARD(s2n_free(&config->application_protocols));
+295 
+296     GUARD(s2n_free(&b));
+297     return 0;
+298 }
+.fi
+.SS "int s2n_config_set_cipher_preferences (struct \fBs2n_config\fP * config, const char * version)"
+
+.PP
+Definition at line 300 of file s2n_config\&.c\&.
+.PP
+.nf
+301 {
+302     for (int i = 0; selection[i]\&.version != NULL; i++) {
+303         if (!strcasecmp(version, selection[i]\&.version)) {
+304             config->cipher_preferences = selection[i]\&.preferences;
+305             return 0;
+306         }
+307     }
+308 
+309     S2N_ERROR(S2N_ERR_INVALID_CIPHER_PREFERENCES);
+310 }
+.fi
+.SS "int s2n_config_set_protocol_preferences (struct \fBs2n_config\fP * config, const char *const * protocols, int protocol_count)"
+
+.PP
+Definition at line 312 of file s2n_config\&.c\&.
+.PP
+.nf
+313 {
+314     struct s2n_stuffer protocol_stuffer;
+315 
+316     GUARD(s2n_free(&config->application_protocols));
+317 
+318     if (protocols == NULL || protocol_count == 0) {
+319         /* NULL value indicates no prference, so nothing to do */
+320         return 0;
+321     }
+322 
+323     GUARD(s2n_stuffer_growable_alloc(&protocol_stuffer, 256));
+324     for (int i = 0; i < protocol_count; i++) {
+325         size_t length = strlen(protocols[i]);
+326         uint8_t protocol[255];
+327 
+328         if (length > 255 || (s2n_stuffer_data_available(&protocol_stuffer) + length + 1) > 65535) {
+329             return S2N_ERR_APPLICATION_PROTOCOL_TOO_LONG;
+330         }
+331         memcpy_check(protocol, protocols[i], length);
+332         GUARD(s2n_stuffer_write_uint8(&protocol_stuffer, length));
+333         GUARD(s2n_stuffer_write_bytes(&protocol_stuffer, protocol, length));
+334     }
+335 
+336     uint32_t size = s2n_stuffer_data_available(&protocol_stuffer);
+337     /* config->application_protocols blob now owns this data */
+338     config->application_protocols\&.size = size;
+339     config->application_protocols\&.data = s2n_stuffer_raw_read(&protocol_stuffer, size);
+340     notnull_check(config->application_protocols\&.data);
+341 
+342     return 0;
+343 }
+.fi
+.SS "int s2n_config_set_status_request_type (struct \fBs2n_config\fP * config, \fBs2n_status_request_type\fP type)"
+
+.PP
+Definition at line 345 of file s2n_config\&.c\&.
+.PP
+.nf
+346 {
+347     config->status_request_type = type;
+348 
+349     return 0;
+350 }
+.fi
+.SS "int s2n_config_add_cert_chain_and_key_with_status (struct \fBs2n_config\fP * config, char * cert_chain_pem, char * private_key_pem, const uint8_t * status, uint32_t length)"
+
+.PP
+Definition at line 352 of file s2n_config\&.c\&.
+.PP
+.nf
+353 {
+354     struct s2n_stuffer chain_in_stuffer, cert_out_stuffer, key_in_stuffer, key_out_stuffer;
+355     struct s2n_blob key_blob;
+356     struct s2n_blob mem;
+357 
+358     /* Allocate the memory for the chain and key struct */
+359     GUARD(s2n_alloc(&mem, sizeof(struct s2n_cert_chain_and_key)));
+360     config->cert_and_key_pairs = (struct s2n_cert_chain_and_key *)(void *)mem\&.data;
+361     config->cert_and_key_pairs->ocsp_status\&.data = NULL;
+362     config->cert_and_key_pairs->ocsp_status\&.size = 0;
+363 
+364     /* Put the private key pem in a stuffer */
+365     GUARD(s2n_stuffer_alloc_ro_from_string(&key_in_stuffer, private_key_pem));
+366     GUARD(s2n_stuffer_growable_alloc(&key_out_stuffer, strlen(private_key_pem)));
+367 
+368     /* Convert pem to asn1 and asn1 to the private key */
+369     GUARD(s2n_stuffer_rsa_private_key_from_pem(&key_in_stuffer, &key_out_stuffer));
+370     GUARD(s2n_stuffer_free(&key_in_stuffer));
+371     key_blob\&.size = s2n_stuffer_data_available(&key_out_stuffer);
+372     key_blob\&.data = s2n_stuffer_raw_read(&key_out_stuffer, key_blob\&.size);
+373     notnull_check(key_blob\&.data);
+374     GUARD(s2n_asn1der_to_rsa_private_key(&config->cert_and_key_pairs->private_key, &key_blob));
+375     GUARD(s2n_stuffer_free(&key_out_stuffer));
+376 
+377     /* Turn the chain into a stuffer */
+378     GUARD(s2n_stuffer_alloc_ro_from_string(&chain_in_stuffer, cert_chain_pem));
+379     GUARD(s2n_stuffer_growable_alloc(&cert_out_stuffer, 2048));
+380 
+381     struct s2n_cert_chain **insert = &config->cert_and_key_pairs->head;
+382     uint32_t chain_size = 0;
+383     do {
+384         struct s2n_cert_chain *new_node;
+385 
+386         if (s2n_stuffer_certificate_from_pem(&chain_in_stuffer, &cert_out_stuffer) < 0) {
+387             if (chain_size == 0) {
+388                 S2N_ERROR(S2N_ERR_NO_CERTIFICATE_IN_PEM);
+389             }
+390             break;
+391         }
+392 
+393         GUARD(s2n_alloc(&mem, sizeof(struct s2n_cert_chain)));
+394         new_node = (struct s2n_cert_chain *)(void *)mem\&.data;
+395 
+396         GUARD(s2n_alloc(&new_node->cert, s2n_stuffer_data_available(&cert_out_stuffer)));
+397         GUARD(s2n_stuffer_read(&cert_out_stuffer, &new_node->cert));
+398 
+399         /* Additional 3 bytes for the length field in the protocol */
+400         chain_size += new_node->cert\&.size + 3;
+401         new_node->next = NULL;
+402         *insert = new_node;
+403         insert = &new_node->next;
+404     } while (s2n_stuffer_data_available(&chain_in_stuffer));
+405 
+406     GUARD(s2n_stuffer_free(&chain_in_stuffer));
+407     GUARD(s2n_stuffer_free(&cert_out_stuffer));
+408 
+409     config->cert_and_key_pairs->chain_size = chain_size;
+410 
+411     if (status && length > 0) {
+412         GUARD(s2n_alloc(&config->cert_and_key_pairs->ocsp_status, length));
+413         memcpy_check(config->cert_and_key_pairs->ocsp_status\&.data, status, length);
+414     }
+415 
+416     return 0;
+417 }
+.fi
+.SS "int s2n_config_add_cert_chain_and_key (struct \fBs2n_config\fP * config, char * cert_chain_pem, char * private_key_pem)"
+
+.PP
+Definition at line 419 of file s2n_config\&.c\&.
+.PP
+.nf
+420 {
+421     GUARD(s2n_config_add_cert_chain_and_key_with_status(config, cert_chain_pem, private_key_pem, NULL, 0));
+422 
+423     return 0;
+424 }
+.fi
+.SS "int s2n_config_add_dhparams (struct \fBs2n_config\fP * config, char * dhparams_pem)"
+
+.PP
+Definition at line 426 of file s2n_config\&.c\&.
+.PP
+.nf
+427 {
+428     struct s2n_stuffer dhparams_in_stuffer, dhparams_out_stuffer;
+429     struct s2n_blob dhparams_blob;
+430     struct s2n_blob mem;
+431 
+432     /* Allocate the memory for the chain and key struct */
+433     GUARD(s2n_alloc(&mem, sizeof(struct s2n_dh_params)));
+434     config->dhparams = (struct s2n_dh_params *)(void *)mem\&.data;
+435 
+436     GUARD(s2n_stuffer_alloc_ro_from_string(&dhparams_in_stuffer, dhparams_pem));
+437     GUARD(s2n_stuffer_growable_alloc(&dhparams_out_stuffer, strlen(dhparams_pem)));
+438 
+439     /* Convert pem to asn1 and asn1 to the private key */
+440     GUARD(s2n_stuffer_dhparams_from_pem(&dhparams_in_stuffer, &dhparams_out_stuffer));
+441 
+442     GUARD(s2n_stuffer_free(&dhparams_in_stuffer));
+443 
+444     dhparams_blob\&.size = s2n_stuffer_data_available(&dhparams_out_stuffer);
+445     dhparams_blob\&.data = s2n_stuffer_raw_read(&dhparams_out_stuffer, dhparams_blob\&.size);
+446     notnull_check(dhparams_blob\&.data);
+447 
+448     GUARD(s2n_pkcs3_to_dh_params(config->dhparams, &dhparams_blob));
+449 
+450     GUARD(s2n_free(&dhparams_blob));
+451 
+452     return 0;
+453 }
+.fi
+.SS "int s2n_config_set_nanoseconds_since_epoch_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, uint64_t *) nanoseconds_since_epoch, \fBvoid\fP * data)"
+
+.PP
+Definition at line 455 of file s2n_config\&.c\&.
+.PP
+.nf
+456 {
+457     notnull_check(nanoseconds_since_epoch);
+458 
+459     config->nanoseconds_since_epoch = nanoseconds_since_epoch;
+460     config->data_for_nanoseconds_since_epoch = data;
+461 
+462     return 0;
+463 }
+.fi
+.SS "int s2n_config_set_cache_store_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, uint64_t ttl_in_seconds, const \fBvoid\fP *key, uint64_t key_size, const \fBvoid\fP *value, uint64_t value_size) cache_store, \fBvoid\fP * data)"
+
+.PP
+Definition at line 465 of file s2n_config\&.c\&.
+.PP
+.nf
+468 {
+469     notnull_check(cache_store);
+470 
+471     config->cache_store = cache_store;
+472     config->cache_store_data = data;
+473 
+474     return 0;
+475 }
+.fi
+.SS "int s2n_config_set_cache_retrieve_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size, \fBvoid\fP *value, uint64_t *value_size) cache_retrieve, \fBvoid\fP * data)"
+
+.PP
+Definition at line 477 of file s2n_config\&.c\&.
+.PP
+.nf
+479 {
+480     notnull_check(cache_retrieve);
+481 
+482     config->cache_retrieve = cache_retrieve;
+483     config->cache_retrieve_data = data;
+484 
+485     return 0;
+486 }
+.fi
+.SS "int s2n_config_set_cache_delete_callback (struct \fBs2n_config\fP * config, int(*)(\fBvoid\fP *, const \fBvoid\fP *key, uint64_t key_size) cache_delete, \fBvoid\fP * data)"
+
+.PP
+Definition at line 488 of file s2n_config\&.c\&.
+.PP
+.nf
+489 {
+490     notnull_check(cache_delete);
+491 
+492     config->cache_delete = cache_delete;
+493     config->cache_delete_data = data;
+494 
+495     return 0;
+496 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "uint8_t wire_format_20140601[]"
+\fBInitial value:\fP
+.PP
+.nf
+=
+    { TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA,
+    TLS_RSA_WITH_3DES_EDE_CBC_SHA, TLS_RSA_WITH_RC4_128_SHA, TLS_RSA_WITH_RC4_128_MD5
+}
+.fi
+.PP
+Definition at line 71 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20140601"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20140601) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20140601,
+    \&.minimum_protocol_version = S2N_SSLv3
+}
+.fi
+.PP
+Definition at line 76 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20141001"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20140601) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20140601,
+    \&.minimum_protocol_version = S2N_TLS10
+}
+.fi
+.PP
+Definition at line 83 of file s2n_config\&.c\&.
+.SS "uint8_t wire_format_20150202[]"
+\fBInitial value:\fP
+.PP
+.nf
+=
+    { TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA,
+    TLS_RSA_WITH_3DES_EDE_CBC_SHA
+}
+.fi
+.PP
+Definition at line 90 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20150202"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20150202) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20150202,
+    \&.minimum_protocol_version = S2N_TLS10
+}
+.fi
+.PP
+Definition at line 95 of file s2n_config\&.c\&.
+.SS "uint8_t wire_format_20150214[]"
+\fBInitial value:\fP
+.PP
+.nf
+= { TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
+    TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA
+}
+.fi
+.PP
+Definition at line 102 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20150214"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20150214) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20150214,
+    \&.minimum_protocol_version = S2N_TLS10
+}
+.fi
+.PP
+Definition at line 106 of file s2n_config\&.c\&.
+.SS "uint8_t wire_format_20160411[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+    TLS_RSA_WITH_AES_128_CBC_SHA,
+    TLS_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_RSA_WITH_AES_256_GCM_SHA384,
+    TLS_RSA_WITH_AES_128_CBC_SHA256,
+    TLS_RSA_WITH_AES_256_CBC_SHA,
+    TLS_RSA_WITH_AES_256_CBC_SHA256,
+    TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+}
+.fi
+.PP
+Definition at line 113 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20160411"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20160411) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20160411,
+    \&.minimum_protocol_version = S2N_TLS10
+}
+.fi
+.PP
+Definition at line 129 of file s2n_config\&.c\&.
+.SS "uint8_t wire_format_20150306[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+    TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+    TLS_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_RSA_WITH_AES_128_CBC_SHA256,
+    TLS_RSA_WITH_AES_128_CBC_SHA,
+    TLS_RSA_WITH_3DES_EDE_CBC_SHA
+}
+.fi
+.PP
+Definition at line 136 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20150306"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20150306) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20150306,
+    \&.minimum_protocol_version = S2N_TLS10
+}
+.fi
+.PP
+Definition at line 149 of file s2n_config\&.c\&.
+.SS "uint8_t wire_format_20160804[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+    TLS_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_RSA_WITH_AES_256_GCM_SHA384,
+    TLS_RSA_WITH_AES_128_CBC_SHA,
+    TLS_RSA_WITH_AES_128_CBC_SHA256,
+    TLS_RSA_WITH_AES_256_CBC_SHA,
+    TLS_RSA_WITH_AES_256_CBC_SHA256,
+    TLS_RSA_WITH_3DES_EDE_CBC_SHA
+}
+.fi
+.PP
+Definition at line 155 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_20160804"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_20160804) / S2N_TLS_CIPHER_SUITE_LEN,
+    \&.wire_format = wire_format_20160804,
+    \&.minimum_protocol_version = S2N_TLS10
+}
+.fi
+.PP
+Definition at line 171 of file s2n_config\&.c\&.
+.SS "uint8_t wire_format_test_all[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    TLS_RSA_WITH_RC4_128_MD5, TLS_RSA_WITH_RC4_128_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA, TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
+    TLS_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA,
+    TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256,
+    TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256,
+    TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384
+}
+.fi
+.PP
+Definition at line 178 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP cipher_preferences_test_all"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.count = sizeof(wire_format_test_all),
+    \&.wire_format = wire_format_test_all,
+    \&.minimum_protocol_version = S2N_SSLv3
+}
+.fi
+.PP
+Definition at line 188 of file s2n_config\&.c\&.
+.SS "const char* version"
+
+.PP
+Definition at line 195 of file s2n_config\&.c\&.
+.SS "struct \fBs2n_cipher_preferences\fP* preferences"
+
+.PP
+Definition at line 196 of file s2n_config\&.c\&.
+.SS "struct { \&.\&.\&. }   selection[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    {
+    "default", &cipher_preferences_20150306}, {
+    "20140601", &cipher_preferences_20140601}, {
+    "20141001", &cipher_preferences_20141001}, {
+    "20150202", &cipher_preferences_20150202}, {
+    "20150214", &cipher_preferences_20150214}, {
+    "20150306", &cipher_preferences_20150306}, {
+    "20160411", &cipher_preferences_20160411}, {
+    "20160804", &cipher_preferences_20160804}, {
+    "test_all", &cipher_preferences_test_all}, {
+    NULL, NULL}
+}
+.fi
+.SS "struct \fBs2n_config\fP s2n_default_config"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.cert_and_key_pairs = NULL,
+    \&.cipher_preferences = &cipher_preferences_20150306,
+    \&.nanoseconds_since_epoch = get_nanoseconds_since_epoch,
+}
+.fi
+.PP
+Definition at line 211 of file s2n_config\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

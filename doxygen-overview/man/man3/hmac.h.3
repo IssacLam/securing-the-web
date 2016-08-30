@@ -1,0 +1,112 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/hmac.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/hmac.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/evp\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhmac_ctx_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHMAC_MAX_MD_CBLOCK\fP   128/* largest known is \fBSHA512\fP */"
+.br
+.ti -1c
+.RI "#define \fBHMAC_size\fP(\fBe\fP)       (\fBEVP_MD_size\fP((\fBe\fP)\->md))"
+.br
+.ti -1c
+.RI "#define \fBHMAC_cleanup\fP(ctx)   \fBHMAC_CTX_cleanup\fP(ctx)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBhmac_ctx_st\fP \fBHMAC_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBHMAC_CTX_init\fP (\fBHMAC_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBHMAC_CTX_cleanup\fP (\fBHMAC_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBHMAC_Init\fP (\fBHMAC_CTX\fP *ctx, const \fBvoid\fP *key, int \fBlen\fP, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBHMAC_Init_ex\fP (\fBHMAC_CTX\fP *ctx, const \fBvoid\fP *key, int \fBlen\fP, const \fBEVP_MD\fP *md, \fBENGINE\fP *impl)"
+.br
+.ti -1c
+.RI "int \fBHMAC_Update\fP (\fBHMAC_CTX\fP *ctx, const unsigned char *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBHMAC_Final\fP (\fBHMAC_CTX\fP *ctx, unsigned char *md, unsigned int *\fBlen\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBHMAC\fP (const \fBEVP_MD\fP *evp_md, const \fBvoid\fP *key, int key_len, const unsigned char *d, size_t n, unsigned char *md, unsigned int *md_len)"
+.br
+.ti -1c
+.RI "int \fBHMAC_CTX_copy\fP (\fBHMAC_CTX\fP *dctx, \fBHMAC_CTX\fP *sctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBHMAC_CTX_set_flags\fP (\fBHMAC_CTX\fP *ctx, unsigned long \fBflags\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define HMAC_MAX_MD_CBLOCK   128/* largest known is \fBSHA512\fP */"
+
+.PP
+Definition at line 69 of file hmac\&.h\&.
+.SS "#define HMAC_size(\fBe\fP)   (\fBEVP_MD_size\fP((\fBe\fP)\->md))"
+
+.PP
+Definition at line 84 of file hmac\&.h\&.
+.SS "#define HMAC_cleanup(ctx)   \fBHMAC_CTX_cleanup\fP(ctx)"
+
+.PP
+Definition at line 90 of file hmac\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBhmac_ctx_st\fP  \fBHMAC_CTX\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP HMAC_CTX_init (\fBHMAC_CTX\fP * ctx)"
+
+.SS "\fBvoid\fP HMAC_CTX_cleanup (\fBHMAC_CTX\fP * ctx)"
+
+.SS "int HMAC_Init (\fBHMAC_CTX\fP * ctx, const \fBvoid\fP * key, int len, const \fBEVP_MD\fP * md)"
+
+.SS "int HMAC_Init_ex (\fBHMAC_CTX\fP * ctx, const \fBvoid\fP * key, int len, const \fBEVP_MD\fP * md, \fBENGINE\fP * impl)"
+
+.SS "int HMAC_Update (\fBHMAC_CTX\fP * ctx, const unsigned char * data, size_t len)"
+
+.SS "int HMAC_Final (\fBHMAC_CTX\fP * ctx, unsigned char * md, unsigned int * len)"
+
+.SS "unsigned char* HMAC (const \fBEVP_MD\fP * evp_md, const \fBvoid\fP * key, int key_len, const unsigned char * d, size_t n, unsigned char * md, unsigned int * md_len)"
+
+.SS "int HMAC_CTX_copy (\fBHMAC_CTX\fP * dctx, \fBHMAC_CTX\fP * sctx)"
+
+.SS "\fBvoid\fP HMAC_CTX_set_flags (\fBHMAC_CTX\fP * ctx, unsigned long flags)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

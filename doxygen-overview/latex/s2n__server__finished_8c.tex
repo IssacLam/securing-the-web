@@ -1,0 +1,126 @@
+\hypertarget{s2n__server__finished_8c}{}\section{s2n-\/master/tls/s2n\+\_\+server\+\_\+finished.c File Reference}
+\label{s2n__server__finished_8c}\index{s2n-\/master/tls/s2n\+\_\+server\+\_\+finished.\+c@{s2n-\/master/tls/s2n\+\_\+server\+\_\+finished.\+c}}
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+resume.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+server\+\_\+finished.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__finished_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__server__finished_8c_adae4d52456ffeb3a606ed1fb545539e4}{s2n\+\_\+server\+\_\+finished\+\_\+recv} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__server__finished_8c_a1faebdea4c42a7b27ce347885b9bd9ee}{s2n\+\_\+server\+\_\+finished\+\_\+send} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+server\+\_\+finished.\+c@{s2n\+\_\+server\+\_\+finished.\+c}!s2n\+\_\+server\+\_\+finished\+\_\+recv@{s2n\+\_\+server\+\_\+finished\+\_\+recv}}
+\index{s2n\+\_\+server\+\_\+finished\+\_\+recv@{s2n\+\_\+server\+\_\+finished\+\_\+recv}!s2n\+\_\+server\+\_\+finished.\+c@{s2n\+\_\+server\+\_\+finished.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+server\+\_\+finished\+\_\+recv(struct s2n\+\_\+connection $\ast$conn)}{s2n_server_finished_recv(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+server\+\_\+finished\+\_\+recv (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__finished_8c_adae4d52456ffeb3a606ed1fb545539e4}{}\label{s2n__server__finished_8c_adae4d52456ffeb3a606ed1fb545539e4}
+
+
+Definition at line 28 of file s2n\+\_\+server\+\_\+finished.\+c.
+
+
+\begin{DoxyCode}
+29 \{
+30     uint8\_t *our\_version;
+31     \textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length} = \hyperlink{tls_2s2n__crypto_8h_a325fdff46d03553d7962ab1a878bcec1}{S2N\_TLS\_FINISHED\_LEN};
+32     our\_version = conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a93637661124329bd2a8b9110e00c6766}{server\_finished};
+33 
+34     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} == \hyperlink{s2n_8h_a457805749bd152786e9e344a5b22ab67}{S2N\_SSLv3}) \{
+35         length = \hyperlink{tls_2s2n__crypto_8h_a687b2e6f366133714257fc7e9d6537bd}{S2N\_SSL\_FINISHED\_LEN};
+36     \}
+37 
+38     uint8\_t *their\_version = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&conn->
+      \hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, length);
+39     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(their\_version);
+40 
+41     \textcolor{keywordflow}{if} (!\hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(our\_version, their\_version, length)) \{
+42         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374ad61ca0bcc8f9f8bf3e065de30ad547fb}{S2N\_ERR\_BAD\_MESSAGE});
+43     \}
+44 
+45     \textcolor{keywordflow}{return} 0;
+46 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__finished_8c_adae4d52456ffeb3a606ed1fb545539e4_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+server\+\_\+finished.\+c@{s2n\+\_\+server\+\_\+finished.\+c}!s2n\+\_\+server\+\_\+finished\+\_\+send@{s2n\+\_\+server\+\_\+finished\+\_\+send}}
+\index{s2n\+\_\+server\+\_\+finished\+\_\+send@{s2n\+\_\+server\+\_\+finished\+\_\+send}!s2n\+\_\+server\+\_\+finished.\+c@{s2n\+\_\+server\+\_\+finished.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+server\+\_\+finished\+\_\+send(struct s2n\+\_\+connection $\ast$conn)}{s2n_server_finished_send(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+server\+\_\+finished\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__server__finished_8c_a1faebdea4c42a7b27ce347885b9bd9ee}{}\label{s2n__server__finished_8c_a1faebdea4c42a7b27ce347885b9bd9ee}
+
+
+Definition at line 48 of file s2n\+\_\+server\+\_\+finished.\+c.
+
+
+\begin{DoxyCode}
+49 \{
+50     uint8\_t *our\_version;
+51     \textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length} = \hyperlink{tls_2s2n__crypto_8h_a325fdff46d03553d7962ab1a878bcec1}{S2N\_TLS\_FINISHED\_LEN};
+52 
+53     \textcolor{comment}{/* Compute the finished message */}
+54     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__prf_8c_a4d977ca107f8b2ac76823eb6281ca69b}{s2n\_prf\_server\_finished}(conn));
+55 
+56     our\_version = conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a93637661124329bd2a8b9110e00c6766}{server\_finished};
+57 
+58     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} == \hyperlink{s2n_8h_a457805749bd152786e9e344a5b22ab67}{S2N\_SSLv3}) \{
+59         length = \hyperlink{tls_2s2n__crypto_8h_a687b2e6f366133714257fc7e9d6537bd}{S2N\_SSL\_FINISHED\_LEN};
+60     \}
+61 
+62     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, our\_version, length));
+63 
+64     \textcolor{comment}{/* Zero the sequence number */}
+65     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} seq = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.
+      \hyperlink{structs2n__crypto__parameters_a286710aff413808336b2f294554c7e55}{server\_sequence\_number},.size = \hyperlink{tls_2s2n__crypto_8h_ab6af529d3a237c0d8d2f67edcf831c25}{S2N\_TLS\_SEQUENCE\_NUM\_LEN} \};
+66     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__blob_8c_a241c17ca2593704ff88734d13659a877}{s2n\_blob\_zero}(&seq));
+67 
+68     \textcolor{comment}{/* Update the secure state to active, and point the client at the active state */}
+69     conn->\hyperlink{structs2n__connection_abfab1f3796089e3576e73286c0b6889c}{server} = &conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure};
+70 
+71     \textcolor{keywordflow}{if} (conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} == RESUME) \{
+72         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__prf_8c_a1425bb608ed69a0cc582af0a57955e1f}{s2n\_prf\_key\_expansion}(conn));
+73     \}
+74 
+75     \textcolor{keywordflow}{return} 0;
+76 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__server__finished_8c_a1faebdea4c42a7b27ce347885b9bd9ee_cgraph}
+\end{center}
+\end{figure}
+
+

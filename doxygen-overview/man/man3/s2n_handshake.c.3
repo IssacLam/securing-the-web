@@ -1,0 +1,101 @@
+.TH "s2n-master/tls/s2n_handshake.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_handshake.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_handshake_write_header\fP (struct \fBs2n_connection\fP *conn, uint8_t message_type)"
+.br
+.ti -1c
+.RI "int \fBs2n_handshake_finish_header\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_handshake_parse_header\fP (struct \fBs2n_connection\fP *conn, uint8_t *message_type, uint32_t *\fBlength\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_handshake_write_header (struct \fBs2n_connection\fP * conn, uint8_t message_type)"
+
+.PP
+Definition at line 27 of file s2n_handshake\&.c\&.
+.PP
+.nf
+28 {
+29     if (s2n_stuffer_data_available(&conn->handshake\&.io)) {
+30         S2N_ERROR(S2N_ERR_HANDSHAKE_STATE);
+31     }
+32 
+33     /* Write the message header */
+34     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, message_type));
+35 
+36     /* Leave the length blank for now */
+37     uint16_t length = 0;
+38     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, length));
+39 
+40     return 0;
+41 }
+.fi
+.SS "int s2n_handshake_finish_header (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 43 of file s2n_handshake\&.c\&.
+.PP
+.nf
+44 {
+45     uint16_t length = s2n_stuffer_data_available(&conn->handshake\&.io);
+46     if (length < TLS_HANDSHAKE_HEADER_LENGTH) {
+47         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+48     }
+49 
+50     uint16_t payload = length - TLS_HANDSHAKE_HEADER_LENGTH;
+51 
+52     /* Write the message header */
+53     GUARD(s2n_stuffer_rewrite(&conn->handshake\&.io));
+54     GUARD(s2n_stuffer_skip_write(&conn->handshake\&.io, 1));
+55     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, payload));
+56     GUARD(s2n_stuffer_skip_write(&conn->handshake\&.io, payload));
+57 
+58     return 0;
+59 }
+.fi
+.SS "int s2n_handshake_parse_header (struct \fBs2n_connection\fP * conn, uint8_t * message_type, uint32_t * length)"
+
+.PP
+Definition at line 61 of file s2n_handshake\&.c\&.
+.PP
+.nf
+62 {
+63     if (s2n_stuffer_data_available(&conn->handshake\&.io) < TLS_HANDSHAKE_HEADER_LENGTH) {
+64         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+65     }
+66 
+67     /* read the message header */
+68     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, message_type));
+69     GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, length));
+70 
+71     return 0;
+72 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

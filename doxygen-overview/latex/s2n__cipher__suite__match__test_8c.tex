@@ -1,0 +1,185 @@
+\hypertarget{s2n__cipher__suite__match__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.c File Reference}
+\label{s2n__cipher__suite__match__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suite__match__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__cipher__suite__match__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c@{s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c@{s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__cipher__suite__match__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__cipher__suite__match__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 23 of file s2n\+\_\+cipher\+\_\+suite\+\_\+match\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+24 \{
+25     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+26 
+27     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(setenv(\textcolor{stringliteral}{"S2N\_ENABLE\_CLIENT\_MODE"}, \textcolor{stringliteral}{"1"}, 0));
+28 
+29     \{
+30         \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+31         uint8\_t wire[2];
+32         \textcolor{keywordtype}{int} count;
+33         \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT}));
+34 
+35         count = 0;
+36         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 0xffff; i++) \{
+37             wire[0] = (i >> 8);
+38             wire[1] = i & 0xff;
+39 
+40             \textcolor{keywordflow}{if} (\hyperlink{s2n__cipher__suites_8c_a1fde427e44c9343e87af779ca1666b9e}{s2n\_set\_cipher\_as\_client}(conn, wire) == 0) \{
+41                 count++;
+42             \}
+43         \}
+44 
+45         \textcolor{comment}{/* We should have exactly 22 cipher suites */}
+46         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(count, 22);
+47 
+48         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+49     \}
+50 
+51     \textcolor{comment}{/* Test server cipher selection and scsv detection */}
+52     \{
+53         \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+54         \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}));
+55 
+56         uint8\_t wire\_ciphers[] = \{
+57             \hyperlink{s2n__tls__parameters_8h_a29697092bb88cacb9c5306be52beeefc}{TLS\_RSA\_WITH\_RC4\_128\_MD5},
+58             \hyperlink{s2n__tls__parameters_8h_aba17cf5182609e28dca3c493ac066734}{TLS\_RSA\_WITH\_RC4\_128\_SHA},
+59             \hyperlink{s2n__tls__parameters_8h_ae93cd5c8ebf49d2d1586e7d5f180cd78}{TLS\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+60             \hyperlink{s2n__tls__parameters_8h_a067a9a52266f1e6505ec90a36f0c4fd6}{TLS\_DHE\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+61             \hyperlink{s2n__tls__parameters_8h_a160e2286953c5ca7c436f2c9df205313}{TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+62             \hyperlink{s2n__tls__parameters_8h_aab1a72487e5a66ec94a42eb8e88a09f7}{TLS\_DHE\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+63             \hyperlink{s2n__tls__parameters_8h_a30ca15463d73a648cb95ea79e64606e3}{TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+64             \hyperlink{s2n__tls__parameters_8h_a65276549afb8b9be55964d1b16d7299a}{TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+65             \hyperlink{s2n__tls__parameters_8h_a54355abc9101b3aa02477e02f76b46bd}{TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+66             \hyperlink{s2n__tls__parameters_8h_a049cb14aa5985691cbcf3e9414141878}{TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA256},
+67             \hyperlink{s2n__tls__parameters_8h_a7a57810f4fe1339ae63ca4771661ad04}{TLS\_DHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+68             \hyperlink{s2n__tls__parameters_8h_a5c8a49fea187f9bc19c43520f22d960b}{TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256},
+69             \hyperlink{s2n__tls__parameters_8h_a47cae4f1051ae290a4706ed1107c6606}{TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256},
+70             \hyperlink{s2n__tls__parameters_8h_a275538776fa5a59590823e1c671aed67}{TLS\_RSA\_WITH\_AES\_256\_GCM\_SHA384},
+71             \hyperlink{s2n__tls__parameters_8h_a7f0f5245bc820bbc208a4b30e3ea3302}{TLS\_ECDHE\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+72             \hyperlink{s2n__tls__parameters_8h_a61caecb35301de4dba9ea87288f58b91}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+73             \hyperlink{s2n__tls__parameters_8h_a9889f63e65374add6ecf1b0243c381f4}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+74             \hyperlink{s2n__tls__parameters_8h_acdd0b724733e8b6e408cc7ce53b6d0db}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+75             \hyperlink{s2n__tls__parameters_8h_ab25ddd336d25df6621b1436be12450eb}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384},
+76             \hyperlink{s2n__tls__parameters_8h_a3654359382307a986b1834a812c69f64}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256},
+77             \hyperlink{s2n__tls__parameters_8h_a5d287e13f2484dd37398fa342fdef7b4}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384},
+78         \};
+79 
+80         uint8\_t wire\_ciphers\_fallback[] = \{
+81             \hyperlink{s2n__tls__parameters_8h_a29697092bb88cacb9c5306be52beeefc}{TLS\_RSA\_WITH\_RC4\_128\_MD5},
+82             \hyperlink{s2n__tls__parameters_8h_aba17cf5182609e28dca3c493ac066734}{TLS\_RSA\_WITH\_RC4\_128\_SHA},
+83             \hyperlink{s2n__tls__parameters_8h_ae93cd5c8ebf49d2d1586e7d5f180cd78}{TLS\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+84             \hyperlink{s2n__tls__parameters_8h_a067a9a52266f1e6505ec90a36f0c4fd6}{TLS\_DHE\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+85             \hyperlink{s2n__tls__parameters_8h_a160e2286953c5ca7c436f2c9df205313}{TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+86             \hyperlink{s2n__tls__parameters_8h_aab1a72487e5a66ec94a42eb8e88a09f7}{TLS\_DHE\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+87             \hyperlink{s2n__tls__parameters_8h_a30ca15463d73a648cb95ea79e64606e3}{TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+88             \hyperlink{s2n__tls__parameters_8h_a65276549afb8b9be55964d1b16d7299a}{TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+89             \hyperlink{s2n__tls__parameters_8h_a54355abc9101b3aa02477e02f76b46bd}{TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+90             \hyperlink{s2n__tls__parameters_8h_a049cb14aa5985691cbcf3e9414141878}{TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA256},
+91             \hyperlink{s2n__tls__parameters_8h_a7a57810f4fe1339ae63ca4771661ad04}{TLS\_DHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+92             \hyperlink{s2n__tls__parameters_8h_a5c8a49fea187f9bc19c43520f22d960b}{TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256},
+93             \hyperlink{s2n__tls__parameters_8h_a47cae4f1051ae290a4706ed1107c6606}{TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256},
+94             \hyperlink{s2n__tls__parameters_8h_a275538776fa5a59590823e1c671aed67}{TLS\_RSA\_WITH\_AES\_256\_GCM\_SHA384},
+95             \hyperlink{s2n__tls__parameters_8h_a7f0f5245bc820bbc208a4b30e3ea3302}{TLS\_ECDHE\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+96             \hyperlink{s2n__tls__parameters_8h_a61caecb35301de4dba9ea87288f58b91}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+97             \hyperlink{s2n__tls__parameters_8h_a9889f63e65374add6ecf1b0243c381f4}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+98             \hyperlink{s2n__tls__parameters_8h_acdd0b724733e8b6e408cc7ce53b6d0db}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+99             \hyperlink{s2n__tls__parameters_8h_ab25ddd336d25df6621b1436be12450eb}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384},
+100             \hyperlink{s2n__tls__parameters_8h_a3654359382307a986b1834a812c69f64}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256},
+101             \hyperlink{s2n__tls__parameters_8h_a5d287e13f2484dd37398fa342fdef7b4}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384},
+102             \hyperlink{s2n__tls__parameters_8h_a54ee4a3fc25431ee89f7690629ea400e}{TLS\_FALLBACK\_SCSV}, \textcolor{comment}{/* At the end to verify it isn't missed */}
+103         \};
+104 
+105         uint8\_t wire\_ciphers\_renegotiation[] = \{
+106             \hyperlink{s2n__tls__parameters_8h_a29697092bb88cacb9c5306be52beeefc}{TLS\_RSA\_WITH\_RC4\_128\_MD5},
+107             \hyperlink{s2n__tls__parameters_8h_aba17cf5182609e28dca3c493ac066734}{TLS\_RSA\_WITH\_RC4\_128\_SHA},
+108             \hyperlink{s2n__tls__parameters_8h_ae93cd5c8ebf49d2d1586e7d5f180cd78}{TLS\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+109             \hyperlink{s2n__tls__parameters_8h_a067a9a52266f1e6505ec90a36f0c4fd6}{TLS\_DHE\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+110             \hyperlink{s2n__tls__parameters_8h_a160e2286953c5ca7c436f2c9df205313}{TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+111             \hyperlink{s2n__tls__parameters_8h_aab1a72487e5a66ec94a42eb8e88a09f7}{TLS\_DHE\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+112             \hyperlink{s2n__tls__parameters_8h_a30ca15463d73a648cb95ea79e64606e3}{TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+113             \hyperlink{s2n__tls__parameters_8h_a65276549afb8b9be55964d1b16d7299a}{TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+114             \hyperlink{s2n__tls__parameters_8h_a54355abc9101b3aa02477e02f76b46bd}{TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+115             \hyperlink{s2n__tls__parameters_8h_a049cb14aa5985691cbcf3e9414141878}{TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA256},
+116             \hyperlink{s2n__tls__parameters_8h_a7a57810f4fe1339ae63ca4771661ad04}{TLS\_DHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+117             \hyperlink{s2n__tls__parameters_8h_a5c8a49fea187f9bc19c43520f22d960b}{TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256},
+118             \hyperlink{s2n__tls__parameters_8h_a47cae4f1051ae290a4706ed1107c6606}{TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256},
+119             \hyperlink{s2n__tls__parameters_8h_a275538776fa5a59590823e1c671aed67}{TLS\_RSA\_WITH\_AES\_256\_GCM\_SHA384},
+120             \hyperlink{s2n__tls__parameters_8h_a7f0f5245bc820bbc208a4b30e3ea3302}{TLS\_ECDHE\_RSA\_WITH\_3DES\_EDE\_CBC\_SHA},
+121             \hyperlink{s2n__tls__parameters_8h_a61caecb35301de4dba9ea87288f58b91}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA},
+122             \hyperlink{s2n__tls__parameters_8h_a9889f63e65374add6ecf1b0243c381f4}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA},
+123             \hyperlink{s2n__tls__parameters_8h_acdd0b724733e8b6e408cc7ce53b6d0db}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256},
+124             \hyperlink{s2n__tls__parameters_8h_ab25ddd336d25df6621b1436be12450eb}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384},
+125             \hyperlink{s2n__tls__parameters_8h_a3654359382307a986b1834a812c69f64}{TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256},
+126             \hyperlink{s2n__tls__parameters_8h_a5d287e13f2484dd37398fa342fdef7b4}{TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384},
+127             \hyperlink{s2n__tls__parameters_8h_ada0b6681bb0250388a3ee284783a1a06}{TLS\_EMPTY\_RENEGOTIATION\_INFO\_SCSV}, \textcolor{comment}{/* At the end to verify it
+       isn't missed */}
+128         \};
+129 
+130         \textcolor{keyword}{const} uint8\_t cipher\_count = \textcolor{keyword}{sizeof}(wire\_ciphers) / 
+      \hyperlink{tls_2s2n__crypto_8h_aad5e2a880d4b55cf5450393843a17cf8}{S2N\_TLS\_CIPHER\_SUITE\_LEN};
+131         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__cipher__suites_8c_a786e7c2f58d929af6012129893c03e63}{s2n\_set\_cipher\_as\_tls\_server}(conn, 
+      wire\_ciphers, cipher\_count));
+132         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(conn->\hyperlink{structs2n__connection_a579beb899db6aa0c25366672938b2216}{secure\_renegotiation}, 0);
+133         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+134 
+135         \textcolor{keyword}{const} uint8\_t cipher\_count\_renegotiation = \textcolor{keyword}{sizeof}(wire\_ciphers\_renegotiation) / 
+      \hyperlink{tls_2s2n__crypto_8h_aad5e2a880d4b55cf5450393843a17cf8}{S2N\_TLS\_CIPHER\_SUITE\_LEN};
+136         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__cipher__suites_8c_a786e7c2f58d929af6012129893c03e63}{s2n\_set\_cipher\_as\_tls\_server}(conn, 
+      wire\_ciphers\_renegotiation, cipher\_count\_renegotiation));
+137         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(conn->\hyperlink{structs2n__connection_a579beb899db6aa0c25366672938b2216}{secure\_renegotiation}, 1);
+138         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+139 
+140         \textcolor{keyword}{const} uint8\_t cipher\_count\_fallback = \textcolor{keyword}{sizeof}(wire\_ciphers\_fallback) / 
+      \hyperlink{tls_2s2n__crypto_8h_aad5e2a880d4b55cf5450393843a17cf8}{S2N\_TLS\_CIPHER\_SUITE\_LEN};
+141         \textcolor{comment}{/* Simulate a TLSv11 client to trigger the fallback error */}
+142         conn->\hyperlink{structs2n__connection_a29289057caf9ad21e99bd972da14acc3}{client\_protocol\_version} = \hyperlink{s2n_8h_a2e4a51448d3a9ea14b506ac2573f9bae}{S2N\_TLS11};
+143         \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__cipher__suites_8c_a786e7c2f58d929af6012129893c03e63}{s2n\_set\_cipher\_as\_tls\_server}(conn, 
+      wire\_ciphers\_fallback, cipher\_count\_fallback));
+144         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(conn->\hyperlink{structs2n__connection_a579beb899db6aa0c25366672938b2216}{secure\_renegotiation}, 0);
+145         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+146 
+147         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+148     \}
+149 
+150     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+151 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__cipher__suite__match__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

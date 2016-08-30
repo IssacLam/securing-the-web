@@ -1,0 +1,73 @@
+.TH "s2n-master/tests/unit/s2n_override_openssl_random_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_override_openssl_random_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'crypto/s2n_dhe\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 37 of file s2n_override_openssl_random_test\&.c\&.
+.PP
+.nf
+38 {
+39     struct s2n_stuffer dhparams_in, dhparams_out;
+40     struct s2n_dh_params dh_params;
+41     struct s2n_blob b;
+42 
+43     BEGIN_TEST();
+44 
+45     EXPECT_EQUAL(s2n_get_private_random_bytes_used(), 0);
+46 
+47     /* Parse the DH params */
+48     b\&.data = dhparams;
+49     b\&.size = sizeof(dhparams);
+50     EXPECT_SUCCESS(s2n_stuffer_alloc(&dhparams_in, sizeof(dhparams)));
+51     EXPECT_SUCCESS(s2n_stuffer_alloc(&dhparams_out, sizeof(dhparams)));
+52     EXPECT_SUCCESS(s2n_stuffer_write(&dhparams_in, &b));
+53     EXPECT_SUCCESS(s2n_stuffer_dhparams_from_pem(&dhparams_in, &dhparams_out));
+54     b\&.size = s2n_stuffer_data_available(&dhparams_out);
+55     b\&.data = s2n_stuffer_raw_read(&dhparams_out, b\&.size);
+56     EXPECT_SUCCESS(s2n_pkcs3_to_dh_params(&dh_params, &b));
+57 
+58     EXPECT_SUCCESS(s2n_dh_generate_ephemeral_key(&dh_params));
+59     
+60     /* Verify that our DRBG is called and that over-riding works */
+61     EXPECT_NOT_EQUAL(s2n_get_private_random_bytes_used(), 0);
+62 
+63     EXPECT_SUCCESS(s2n_dh_params_free(&dh_params));
+64     EXPECT_SUCCESS(s2n_stuffer_free(&dhparams_out));
+65     EXPECT_SUCCESS(s2n_stuffer_free(&dhparams_in));
+66 
+67     END_TEST();
+68 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

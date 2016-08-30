@@ -1,0 +1,106 @@
+\hypertarget{aes__locl_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/aes/aes\+\_\+locl.h File Reference}
+\label{aes__locl_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/aes/aes\+\_\+locl.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/aes/aes\+\_\+locl.\+h}}
+{\ttfamily \#include $<$openssl/e\+\_\+os2.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+Include dependency graph for aes\+\_\+locl.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{aes__locl_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{aes__locl_8h_add03ff597bcc3979b5d82eaab61820cd}{G\+E\+T\+U32}(pt)~(((\hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32})(pt)\mbox{[}0\mbox{]} $<$$<$ 24) $^\wedge$ ((\hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32})(pt)\mbox{[}1\mbox{]} $<$$<$ 16) $^\wedge$ ((\hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32})(pt)\mbox{[}2\mbox{]} $<$$<$  8) $^\wedge$ ((\hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32})(pt)\mbox{[}3\mbox{]}))
+\item 
+\#define \hyperlink{aes__locl_8h_a081bd53ea4c159e9ce643966d05d2730}{P\+U\+T\+U32}(ct,  st)~\{ (ct)\mbox{[}0\mbox{]} = (\hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8})((st) $>$$>$ 24); (ct)\mbox{[}1\mbox{]} = (\hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8})((st) $>$$>$ 16); (ct)\mbox{[}2\mbox{]} = (\hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8})((st) $>$$>$  8); (ct)\mbox{[}3\mbox{]} = (\hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8})(st); \}
+\item 
+\#define \hyperlink{aes__locl_8h_a49848aa36770ff54f52e72f0d39f1352}{M\+A\+X\+KC}~(256/32)
+\item 
+\#define \hyperlink{aes__locl_8h_a3882c756e366cff449a995d1c29f2f08}{M\+A\+X\+KB}~(256/8)
+\item 
+\#define \hyperlink{aes__locl_8h_a17ab5105587fbe33637579d0418ea42b}{M\+A\+X\+NR}~14
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned int \hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32}
+\item 
+typedef unsigned short \hyperlink{aes__locl_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}
+\item 
+typedef unsigned char \hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!G\+E\+T\+U32@{G\+E\+T\+U32}}
+\index{G\+E\+T\+U32@{G\+E\+T\+U32}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+U32}{GETU32}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+E\+T\+U32(
+\begin{DoxyParamCaption}
+\item[{}]{pt}
+\end{DoxyParamCaption}
+)~((({\bf u32})(pt)\mbox{[}0\mbox{]} $<$$<$ 24) $^\wedge$ (({\bf u32})(pt)\mbox{[}1\mbox{]} $<$$<$ 16) $^\wedge$ (({\bf u32})(pt)\mbox{[}2\mbox{]} $<$$<$  8) $^\wedge$ (({\bf u32})(pt)\mbox{[}3\mbox{]}))}\hypertarget{aes__locl_8h_add03ff597bcc3979b5d82eaab61820cd}{}\label{aes__locl_8h_add03ff597bcc3979b5d82eaab61820cd}
+
+
+Definition at line 70 of file aes\+\_\+locl.\+h.
+
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!P\+U\+T\+U32@{P\+U\+T\+U32}}
+\index{P\+U\+T\+U32@{P\+U\+T\+U32}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{P\+U\+T\+U32}{PUTU32}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+U\+T\+U32(
+\begin{DoxyParamCaption}
+\item[{}]{ct, }
+\item[{}]{st}
+\end{DoxyParamCaption}
+)~\{ (ct)\mbox{[}0\mbox{]} = ({\bf u8})((st) $>$$>$ 24); (ct)\mbox{[}1\mbox{]} = ({\bf u8})((st) $>$$>$ 16); (ct)\mbox{[}2\mbox{]} = ({\bf u8})((st) $>$$>$  8); (ct)\mbox{[}3\mbox{]} = ({\bf u8})(st); \}}\hypertarget{aes__locl_8h_a081bd53ea4c159e9ce643966d05d2730}{}\label{aes__locl_8h_a081bd53ea4c159e9ce643966d05d2730}
+
+
+Definition at line 71 of file aes\+\_\+locl.\+h.
+
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!M\+A\+X\+KC@{M\+A\+X\+KC}}
+\index{M\+A\+X\+KC@{M\+A\+X\+KC}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+KC}{MAXKC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+KC~(256/32)}\hypertarget{aes__locl_8h_a49848aa36770ff54f52e72f0d39f1352}{}\label{aes__locl_8h_a49848aa36770ff54f52e72f0d39f1352}
+
+
+Definition at line 82 of file aes\+\_\+locl.\+h.
+
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!M\+A\+X\+KB@{M\+A\+X\+KB}}
+\index{M\+A\+X\+KB@{M\+A\+X\+KB}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+KB}{MAXKB}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+KB~(256/8)}\hypertarget{aes__locl_8h_a3882c756e366cff449a995d1c29f2f08}{}\label{aes__locl_8h_a3882c756e366cff449a995d1c29f2f08}
+
+
+Definition at line 83 of file aes\+\_\+locl.\+h.
+
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!M\+A\+X\+NR@{M\+A\+X\+NR}}
+\index{M\+A\+X\+NR@{M\+A\+X\+NR}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+NR}{MAXNR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+NR~14}\hypertarget{aes__locl_8h_a17ab5105587fbe33637579d0418ea42b}{}\label{aes__locl_8h_a17ab5105587fbe33637579d0418ea42b}
+
+
+Definition at line 84 of file aes\+\_\+locl.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!u32@{u32}}
+\index{u32@{u32}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{u32}{u32}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned int {\bf u32}}\hypertarget{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{}\label{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}
+
+
+Definition at line 77 of file aes\+\_\+locl.\+h.
+
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!u16@{u16}}
+\index{u16@{u16}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{u16}{u16}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned short {\bf u16}}\hypertarget{aes__locl_8h_a9e6c91d77e24643b888dbd1a1a590054}{}\label{aes__locl_8h_a9e6c91d77e24643b888dbd1a1a590054}
+
+
+Definition at line 79 of file aes\+\_\+locl.\+h.
+
+\index{aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}!u8@{u8}}
+\index{u8@{u8}!aes\+\_\+locl.\+h@{aes\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{u8}{u8}}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned char {\bf u8}}\hypertarget{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{}\label{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}
+
+
+Definition at line 80 of file aes\+\_\+locl.\+h.
+

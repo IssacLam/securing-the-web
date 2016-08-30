@@ -1,0 +1,1979 @@
+.TH "cms.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cms.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCMS_SIGNERINFO_ISSUER_SERIAL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_SIGNERINFO_KEYIDENTIFIER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_NONE\fP   \-1"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_TRANS\fP   0"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_AGREE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_KEK\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_PASS\fP   3"
+.br
+.ti -1c
+.RI "#define \fBCMS_RECIPINFO_OTHER\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCMS_TEXT\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOCERTS\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBCMS_NO_CONTENT_VERIFY\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBCMS_NO_ATTR_VERIFY\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOSIGS\fP   (\fBCMS_NO_CONTENT_VERIFY\fP|\fBCMS_NO_ATTR_VERIFY\fP)"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOINTERN\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBCMS_NO_SIGNER_CERT_VERIFY\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOVERIFY\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBCMS_DETACHED\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBCMS_BINARY\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOATTR\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOSMIMECAP\fP   0x200"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOOLDMIMETYPE\fP   0x400"
+.br
+.ti -1c
+.RI "#define \fBCMS_CRLFEOL\fP   0x800"
+.br
+.ti -1c
+.RI "#define \fBCMS_STREAM\fP   0x1000"
+.br
+.ti -1c
+.RI "#define \fBCMS_NOCRL\fP   0x2000"
+.br
+.ti -1c
+.RI "#define \fBCMS_PARTIAL\fP   0x4000"
+.br
+.ti -1c
+.RI "#define \fBCMS_REUSE_DIGEST\fP   0x8000"
+.br
+.ti -1c
+.RI "#define \fBCMS_USE_KEYID\fP   0x10000"
+.br
+.ti -1c
+.RI "#define \fBCMS_DEBUG_DECRYPT\fP   0x20000"
+.br
+.ti -1c
+.RI "#define \fBCMS_KEY_PARAM\fP   0x40000"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CHECK_CONTENT\fP   99"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD0_CERT\fP   164"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD0_RECIPIENT_KEY\fP   100"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD0_RECIPIENT_PASSWORD\fP   165"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD1_RECEIPTREQUEST\fP   158"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD1_RECIPIENT_CERT\fP   101"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD1_SIGNER\fP   102"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ADD1_SIGNINGTIME\fP   103"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_COMPRESS\fP   104"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_COMPRESSEDDATA_CREATE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_COMPRESSEDDATA_INIT_BIO\fP   106"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_COPY_CONTENT\fP   107"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_COPY_MESSAGEDIGEST\fP   108"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DATA\fP   109"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DATAFINAL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DATAINIT\fP   111"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DECRYPT\fP   112"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DECRYPT_SET1_KEY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DECRYPT_SET1_PASSWORD\fP   166"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DECRYPT_SET1_PKEY\fP   114"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DIGESTALGORITHM_FIND_CTX\fP   115"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DIGESTALGORITHM_INIT_BIO\fP   116"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DIGESTEDDATA_DO_FINAL\fP   117"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_DIGEST_VERIFY\fP   118"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENCODE_RECEIPT\fP   161"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENCRYPT\fP   119"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENCRYPTEDCONTENT_INIT_BIO\fP   120"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENCRYPTEDDATA_DECRYPT\fP   121"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENCRYPTEDDATA_ENCRYPT\fP   122"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENCRYPTEDDATA_SET1_KEY\fP   123"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENVELOPEDDATA_CREATE\fP   124"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENVELOPEDDATA_INIT_BIO\fP   125"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENVELOPED_DATA_INIT\fP   126"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_ENV_ASN1_CTRL\fP   171"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_FINAL\fP   127"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_GET0_CERTIFICATE_CHOICES\fP   128"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_GET0_CONTENT\fP   129"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_GET0_ECONTENT_TYPE\fP   130"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_GET0_ENVELOPED\fP   131"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_GET0_REVOCATION_CHOICES\fP   132"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_GET0_SIGNED\fP   133"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_MSGSIGDIGEST_ADD1\fP   162"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECEIPTREQUEST_CREATE0\fP   159"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECEIPT_VERIFY\fP   160"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_DECRYPT\fP   134"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_ENCRYPT\fP   169"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KARI_ENCRYPT\fP   178"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KARI_GET0_ALG\fP   175"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KARI_GET0_ORIG_ID\fP   173"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KARI_GET0_REKS\fP   172"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KARI_ORIG_ID_CMP\fP   174"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KEKRI_DECRYPT\fP   135"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KEKRI_ENCRYPT\fP   136"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KEKRI_GET0_ID\fP   137"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KEKRI_ID_CMP\fP   138"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KTRI_CERT_CMP\fP   139"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KTRI_DECRYPT\fP   140"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KTRI_ENCRYPT\fP   141"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KTRI_GET0_ALGS\fP   142"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_KTRI_GET0_SIGNER_ID\fP   143"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_PWRI_CRYPT\fP   167"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_SET0_KEY\fP   144"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_SET0_PASSWORD\fP   168"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_RECIPIENTINFO_SET0_PKEY\fP   145"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SD_ASN1_CTRL\fP   170"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SET1_IAS\fP   176"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SET1_KEYID\fP   177"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SET1_SIGNERIDENTIFIER\fP   146"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SET_DETACHED\fP   147"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGN\fP   148"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGNED_DATA_INIT\fP   149"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGNERINFO_CONTENT_SIGN\fP   150"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGNERINFO_SIGN\fP   151"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGNERINFO_VERIFY\fP   152"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGNERINFO_VERIFY_CERT\fP   153"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGNERINFO_VERIFY_CONTENT\fP   154"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_SIGN_RECEIPT\fP   163"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_STREAM\fP   155"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_UNCOMPRESS\fP   156"
+.br
+.ti -1c
+.RI "#define \fBCMS_F_CMS_VERIFY\fP   157"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_ADD_SIGNER_ERROR\fP   99"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CERTIFICATE_ALREADY_PRESENT\fP   175"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CERTIFICATE_HAS_NO_KEYID\fP   160"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CERTIFICATE_VERIFY_ERROR\fP   100"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CIPHER_INITIALISATION_ERROR\fP   101"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CIPHER_PARAMETER_INITIALISATION_ERROR\fP   102"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CMS_DATAFINAL_ERROR\fP   103"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CMS_LIB\fP   104"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENTIDENTIFIER_MISMATCH\fP   170"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENT_NOT_FOUND\fP   105"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENT_TYPE_MISMATCH\fP   171"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENT_TYPE_NOT_COMPRESSED_DATA\fP   106"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENT_TYPE_NOT_ENVELOPED_DATA\fP   107"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENT_TYPE_NOT_SIGNED_DATA\fP   108"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CONTENT_VERIFY_ERROR\fP   109"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CTRL_ERROR\fP   110"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_CTRL_FAILURE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_DECRYPT_ERROR\fP   112"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_DIGEST_ERROR\fP   161"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_ERROR_GETTING_PUBLIC_KEY\fP   113"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_ERROR_READING_MESSAGEDIGEST_ATTRIBUTE\fP   114"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_ERROR_SETTING_KEY\fP   115"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_ERROR_SETTING_RECIPIENTINFO\fP   116"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_INVALID_ENCRYPTED_KEY_LENGTH\fP   117"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_INVALID_KEY_ENCRYPTION_PARAMETER\fP   176"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_INVALID_KEY_LENGTH\fP   118"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_MD_BIO_INIT_ERROR\fP   119"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_MESSAGEDIGEST_ATTRIBUTE_WRONG_LENGTH\fP   120"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_MESSAGEDIGEST_WRONG_LENGTH\fP   121"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_MSGSIGDIGEST_ERROR\fP   172"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_MSGSIGDIGEST_VERIFICATION_FAILURE\fP   162"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_MSGSIGDIGEST_WRONG_LENGTH\fP   163"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NEED_ONE_SIGNER\fP   164"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_A_SIGNED_RECEIPT\fP   165"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_ENCRYPTED_DATA\fP   122"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_KEK\fP   123"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_KEY_AGREEMENT\fP   181"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_KEY_TRANSPORT\fP   124"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_PWRI\fP   177"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NOT_SUPPORTED_FOR_THIS_KEY_TYPE\fP   125"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_CIPHER\fP   126"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_CONTENT\fP   127"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_CONTENT_TYPE\fP   173"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_DEFAULT_DIGEST\fP   128"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_DIGEST_SET\fP   129"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_KEY\fP   130"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_KEY_OR_CERT\fP   174"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_MATCHING_DIGEST\fP   131"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_MATCHING_RECIPIENT\fP   132"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_MATCHING_SIGNATURE\fP   166"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_MSGSIGDIGEST\fP   167"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_PASSWORD\fP   178"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_PRIVATE_KEY\fP   133"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_PUBLIC_KEY\fP   134"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_RECEIPT_REQUEST\fP   168"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_NO_SIGNERS\fP   135"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_PRIVATE_KEY_DOES_NOT_MATCH_CERTIFICATE\fP   136"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_RECEIPT_DECODE_ERROR\fP   169"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_RECIPIENT_ERROR\fP   137"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_SIGNER_CERTIFICATE_NOT_FOUND\fP   138"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_SIGNFINAL_ERROR\fP   139"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_SMIME_TEXT_ERROR\fP   140"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_STORE_INIT_ERROR\fP   141"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_TYPE_NOT_COMPRESSED_DATA\fP   142"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_TYPE_NOT_DATA\fP   143"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_TYPE_NOT_DIGESTED_DATA\fP   144"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_TYPE_NOT_ENCRYPTED_DATA\fP   145"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_TYPE_NOT_ENVELOPED_DATA\fP   146"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNABLE_TO_FINALIZE_CONTEXT\fP   147"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNKNOWN_CIPHER\fP   148"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNKNOWN_DIGEST_ALGORIHM\fP   149"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNKNOWN_ID\fP   150"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_COMPRESSION_ALGORITHM\fP   151"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_CONTENT_TYPE\fP   152"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_KEK_ALGORITHM\fP   153"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_KEY_ENCRYPTION_ALGORITHM\fP   179"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_RECIPIENT_TYPE\fP   154"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_RECPIENTINFO_TYPE\fP   155"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNSUPPORTED_TYPE\fP   156"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNWRAP_ERROR\fP   157"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_UNWRAP_FAILURE\fP   180"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_VERIFICATION_FAILURE\fP   158"
+.br
+.ti -1c
+.RI "#define \fBCMS_R_WRAP_ERROR\fP   159"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBCMS_ContentInfo_st\fP \fBCMS_ContentInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_SignerInfo_st\fP \fBCMS_SignerInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_CertificateChoices\fP \fBCMS_CertificateChoices\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_RevocationInfoChoice_st\fP \fBCMS_RevocationInfoChoice\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_RecipientInfo_st\fP \fBCMS_RecipientInfo\fP"
+.br
+.ti -1c
+.RI "typedef struct CMS_ReceiptRequest_st \fBCMS_ReceiptRequest\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_Receipt_st\fP \fBCMS_Receipt\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_RecipientEncryptedKey_st\fP \fBCMS_RecipientEncryptedKey\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBCMS_OtherKeyAttribute_st\fP \fBCMS_OtherKeyAttribute\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBASN1_OBJECT\fP * \fBCMS_get0_type\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBCMS_dataInit\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *icont)"
+.br
+.ti -1c
+.RI "int \fBCMS_dataFinal\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP ** \fBCMS_get0_content\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_is_detached\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_set_detached\fP (\fBCMS_ContentInfo\fP *cms, int detached)"
+.br
+.ti -1c
+.RI "int \fBCMS_stream\fP (unsigned char ***boundary, \fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBd2i_CMS_bio\fP (\fBBIO\fP *\fBbp\fP, \fBCMS_ContentInfo\fP **cms)"
+.br
+.ti -1c
+.RI "int \fBi2d_CMS_bio\fP (\fBBIO\fP *\fBbp\fP, \fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_CMS\fP (\fBBIO\fP *out, \fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBi2d_CMS_bio_stream\fP (\fBBIO\fP *out, \fBCMS_ContentInfo\fP *cms, \fBBIO\fP *in, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBPEM_write_bio_CMS_stream\fP (\fBBIO\fP *out, \fBCMS_ContentInfo\fP *cms, \fBBIO\fP *in, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBSMIME_read_CMS\fP (\fBBIO\fP *bio, \fBBIO\fP **bcont)"
+.br
+.ti -1c
+.RI "int \fBSMIME_write_CMS\fP (\fBBIO\fP *bio, \fBCMS_ContentInfo\fP *cms, \fBBIO\fP *data, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_final\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *data, \fBBIO\fP *dcont, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_sign\fP (\fBX509\fP *signcert, \fBEVP_PKEY\fP *pkey, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBBIO\fP *data, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_sign_receipt\fP (\fBCMS_SignerInfo\fP *si, \fBX509\fP *signcert, \fBEVP_PKEY\fP *pkey, \fBSTACK_OF\fP(\fBX509\fP)*certs, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_data\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *out, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_data_create\fP (\fBBIO\fP *in, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_digest_verify\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *dcont, \fBBIO\fP *out, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_digest_create\fP (\fBBIO\fP *in, const \fBEVP_MD\fP *md, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_EncryptedData_decrypt\fP (\fBCMS_ContentInfo\fP *cms, const unsigned char *key, size_t keylen, \fBBIO\fP *dcont, \fBBIO\fP *out, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_EncryptedData_encrypt\fP (\fBBIO\fP *in, const \fBEVP_CIPHER\fP *cipher, const unsigned char *key, size_t keylen, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_EncryptedData_set1_key\fP (\fBCMS_ContentInfo\fP *cms, const \fBEVP_CIPHER\fP *ciph, const unsigned char *key, size_t keylen)"
+.br
+.ti -1c
+.RI "int \fBCMS_verify\fP (\fBCMS_ContentInfo\fP *cms, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *store, \fBBIO\fP *dcont, \fBBIO\fP *out, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_verify_receipt\fP (\fBCMS_ContentInfo\fP *rcms, \fBCMS_ContentInfo\fP *ocms, \fBSTACK_OF\fP(\fBX509\fP)*certs, \fBX509_STORE\fP *store, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509\fP)*CMS_get0_signers(\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_encrypt\fP (\fBSTACK_OF\fP(\fBX509\fP)*certs, \fBBIO\fP *in, const \fBEVP_CIPHER\fP *cipher, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_decrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBEVP_PKEY\fP *pkey, \fBX509\fP *cert, \fBBIO\fP *dcont, \fBBIO\fP *out, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_decrypt_set1_pkey\fP (\fBCMS_ContentInfo\fP *cms, \fBEVP_PKEY\fP *pk, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_decrypt_set1_key\fP (\fBCMS_ContentInfo\fP *cms, unsigned char *key, size_t keylen, unsigned char *id, size_t idlen)"
+.br
+.ti -1c
+.RI "int \fBCMS_decrypt_set1_password\fP (\fBCMS_ContentInfo\fP *cms, unsigned char *\fBpass\fP, \fBossl_ssize_t\fP \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBCMS_RecipientInfo\fP)*CMS_get0_RecipientInfos(\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_type\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBCMS_RecipientInfo_get0_pkey_ctx\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_EnvelopedData_create\fP (const \fBEVP_CIPHER\fP *cipher)"
+.br
+.ti -1c
+.RI "\fBCMS_RecipientInfo\fP * \fBCMS_add1_recipient_cert\fP (\fBCMS_ContentInfo\fP *cms, \fBX509\fP *recip, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_set0_pkey\fP (\fBCMS_RecipientInfo\fP *ri, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_ktri_cert_cmp\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_ktri_get0_algs\fP (\fBCMS_RecipientInfo\fP *ri, \fBEVP_PKEY\fP **pk, \fBX509\fP **recip, \fBX509_ALGOR\fP **palg)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_ktri_get0_signer_id\fP (\fBCMS_RecipientInfo\fP *ri, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "\fBCMS_RecipientInfo\fP * \fBCMS_add0_recipient_key\fP (\fBCMS_ContentInfo\fP *cms, int \fBnid\fP, unsigned char *key, size_t keylen, unsigned char *id, size_t idlen, \fBASN1_GENERALIZEDTIME\fP *date, \fBASN1_OBJECT\fP *otherTypeId, \fBASN1_TYPE\fP *otherType)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kekri_get0_id\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509_ALGOR\fP **palg, \fBASN1_OCTET_STRING\fP **pid, \fBASN1_GENERALIZEDTIME\fP **pdate, \fBASN1_OBJECT\fP **potherid, \fBASN1_TYPE\fP **pothertype)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_set0_key\fP (\fBCMS_RecipientInfo\fP *ri, unsigned char *key, size_t keylen)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kekri_id_cmp\fP (\fBCMS_RecipientInfo\fP *ri, const unsigned char *id, size_t idlen)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_set0_password\fP (\fBCMS_RecipientInfo\fP *ri, unsigned char *\fBpass\fP, \fBossl_ssize_t\fP \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_RecipientInfo\fP * \fBCMS_add0_recipient_password\fP (\fBCMS_ContentInfo\fP *cms, int iter, int wrap_nid, int pbe_nid, unsigned char *\fBpass\fP, \fBossl_ssize_t\fP \fBpasslen\fP, const \fBEVP_CIPHER\fP *kekciph)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_decrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_encrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_uncompress\fP (\fBCMS_ContentInfo\fP *cms, \fBBIO\fP *dcont, \fBBIO\fP *out, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBCMS_ContentInfo\fP * \fBCMS_compress\fP (\fBBIO\fP *in, int comp_nid, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_set1_eContentType\fP (\fBCMS_ContentInfo\fP *cms, const \fBASN1_OBJECT\fP *oid)"
+.br
+.ti -1c
+.RI "const \fBASN1_OBJECT\fP * \fBCMS_get0_eContentType\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBCMS_CertificateChoices\fP * \fBCMS_add0_CertificateChoices\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_add0_cert\fP (\fBCMS_ContentInfo\fP *cms, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_add1_cert\fP (\fBCMS_ContentInfo\fP *cms, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "\fBCMS_RevocationInfoChoice\fP * \fBCMS_add0_RevocationInfoChoice\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_add0_crl\fP (\fBCMS_ContentInfo\fP *cms, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "int \fBCMS_add1_crl\fP (\fBCMS_ContentInfo\fP *cms, \fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBX509_CRL\fP)*CMS_get1_crls(\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignedData_init\fP (\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBCMS_SignerInfo\fP * \fBCMS_add1_signer\fP (\fBCMS_ContentInfo\fP *cms, \fBX509\fP *signer, \fBEVP_PKEY\fP *pk, const \fBEVP_MD\fP *md, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY_CTX\fP * \fBCMS_SignerInfo_get0_pkey_ctx\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "\fBEVP_MD_CTX\fP * \fBCMS_SignerInfo_get0_md_ctx\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBCMS_SignerInfo\fP)*CMS_get0_SignerInfos(\fBCMS_ContentInfo\fP *cms)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCMS_SignerInfo_set1_signer_cert\fP (\fBCMS_SignerInfo\fP *si, \fBX509\fP *signer)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_get0_signer_id\fP (\fBCMS_SignerInfo\fP *si, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_cert_cmp\fP (\fBCMS_SignerInfo\fP *si, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_set1_signers_certs\fP (\fBCMS_ContentInfo\fP *cms, \fBSTACK_OF\fP(\fBX509\fP)*certs, unsigned int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCMS_SignerInfo_get0_algs\fP (\fBCMS_SignerInfo\fP *si, \fBEVP_PKEY\fP **pk, \fBX509\fP **signer, \fBX509_ALGOR\fP **pdig, \fBX509_ALGOR\fP **psig)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBCMS_SignerInfo_get0_signature\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_sign\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_verify\fP (\fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBCMS_SignerInfo_verify_content\fP (\fBCMS_SignerInfo\fP *si, \fBBIO\fP *\fBchain\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_add_smimecap\fP (\fBCMS_SignerInfo\fP *si, \fBSTACK_OF\fP(\fBX509_ALGOR\fP)*algs)"
+.br
+.ti -1c
+.RI "int \fBCMS_add_simple_smimecap\fP (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)**algs, int algnid, int keysize)"
+.br
+.ti -1c
+.RI "int \fBCMS_add_standard_smimecap\fP (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)**smcap)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_get_attr_count\fP (const \fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_get_attr_by_NID\fP (const \fBCMS_SignerInfo\fP *si, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_get_attr_by_OBJ\fP (const \fBCMS_SignerInfo\fP *si, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBCMS_signed_get_attr\fP (const \fBCMS_SignerInfo\fP *si, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBCMS_signed_delete_attr\fP (\fBCMS_SignerInfo\fP *si, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_add1_attr\fP (\fBCMS_SignerInfo\fP *si, \fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_add1_attr_by_OBJ\fP (\fBCMS_SignerInfo\fP *si, const \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const \fBvoid\fP *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_add1_attr_by_NID\fP (\fBCMS_SignerInfo\fP *si, int \fBnid\fP, int \fBtype\fP, const \fBvoid\fP *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_signed_add1_attr_by_txt\fP (\fBCMS_SignerInfo\fP *si, const char *\fBattrname\fP, int \fBtype\fP, const \fBvoid\fP *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCMS_signed_get0_data_by_OBJ\fP (\fBCMS_SignerInfo\fP *si, \fBASN1_OBJECT\fP *oid, int lastpos, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_get_attr_count\fP (const \fBCMS_SignerInfo\fP *si)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_get_attr_by_NID\fP (const \fBCMS_SignerInfo\fP *si, int \fBnid\fP, int lastpos)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_get_attr_by_OBJ\fP (const \fBCMS_SignerInfo\fP *si, \fBASN1_OBJECT\fP *\fBobj\fP, int lastpos)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBCMS_unsigned_get_attr\fP (const \fBCMS_SignerInfo\fP *si, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "\fBX509_ATTRIBUTE\fP * \fBCMS_unsigned_delete_attr\fP (\fBCMS_SignerInfo\fP *si, int \fBloc\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_add1_attr\fP (\fBCMS_SignerInfo\fP *si, \fBX509_ATTRIBUTE\fP *\fBattr\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_add1_attr_by_OBJ\fP (\fBCMS_SignerInfo\fP *si, const \fBASN1_OBJECT\fP *\fBobj\fP, int \fBtype\fP, const \fBvoid\fP *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_add1_attr_by_NID\fP (\fBCMS_SignerInfo\fP *si, int \fBnid\fP, int \fBtype\fP, const \fBvoid\fP *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_unsigned_add1_attr_by_txt\fP (\fBCMS_SignerInfo\fP *si, const char *\fBattrname\fP, int \fBtype\fP, const \fBvoid\fP *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBCMS_unsigned_get0_data_by_OBJ\fP (\fBCMS_SignerInfo\fP *si, \fBASN1_OBJECT\fP *oid, int lastpos, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_get0_alg\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509_ALGOR\fP **palg, \fBASN1_OCTET_STRING\fP **pukm)"
+.br
+.ti -1c
+.RI "* \fBCMS_RecipientInfo_kari_get0_reks\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_get0_orig_id\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509_ALGOR\fP **pubalg, \fBASN1_BIT_STRING\fP **pubkey, \fBASN1_OCTET_STRING\fP **keyid, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_orig_id_cmp\fP (\fBCMS_RecipientInfo\fP *ri, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientEncryptedKey_get0_id\fP (\fBCMS_RecipientEncryptedKey\fP *rek, \fBASN1_OCTET_STRING\fP **keyid, \fBASN1_GENERALIZEDTIME\fP **tm, \fBCMS_OtherKeyAttribute\fP **other, \fBX509_NAME\fP **issuer, \fBASN1_INTEGER\fP **sno)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientEncryptedKey_cert_cmp\fP (\fBCMS_RecipientEncryptedKey\fP *rek, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_set0_pkey\fP (\fBCMS_RecipientInfo\fP *ri, \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "\fBEVP_CIPHER_CTX\fP * \fBCMS_RecipientInfo_kari_get0_ctx\fP (\fBCMS_RecipientInfo\fP *ri)"
+.br
+.ti -1c
+.RI "int \fBCMS_RecipientInfo_kari_decrypt\fP (\fBCMS_ContentInfo\fP *cms, \fBCMS_RecipientInfo\fP *ri, \fBCMS_RecipientEncryptedKey\fP *rek)"
+.br
+.ti -1c
+.RI "int \fBCMS_SharedInfo_encode\fP (unsigned char **pder, \fBX509_ALGOR\fP *kekalg, \fBASN1_OCTET_STRING\fP *ukm, int keylen)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_CMS_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CMS_BINARY   0x80"
+
+.PP
+Definition at line 107 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_CRLFEOL   0x800"
+
+.PP
+Definition at line 111 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_DEBUG_DECRYPT   0x20000"
+
+.PP
+Definition at line 117 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_DETACHED   0x40"
+
+.PP
+Definition at line 106 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CHECK_CONTENT   99"
+
+.PP
+Definition at line 386 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD0_CERT   164"
+
+.PP
+Definition at line 387 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD0_RECIPIENT_KEY   100"
+
+.PP
+Definition at line 388 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD0_RECIPIENT_PASSWORD   165"
+
+.PP
+Definition at line 389 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD1_RECEIPTREQUEST   158"
+
+.PP
+Definition at line 390 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD1_RECIPIENT_CERT   101"
+
+.PP
+Definition at line 391 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD1_SIGNER   102"
+
+.PP
+Definition at line 392 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ADD1_SIGNINGTIME   103"
+
+.PP
+Definition at line 393 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_COMPRESS   104"
+
+.PP
+Definition at line 394 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_COMPRESSEDDATA_CREATE   105"
+
+.PP
+Definition at line 395 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_COMPRESSEDDATA_INIT_BIO   106"
+
+.PP
+Definition at line 396 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_COPY_CONTENT   107"
+
+.PP
+Definition at line 397 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_COPY_MESSAGEDIGEST   108"
+
+.PP
+Definition at line 398 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DATA   109"
+
+.PP
+Definition at line 399 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DATAFINAL   110"
+
+.PP
+Definition at line 400 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DATAINIT   111"
+
+.PP
+Definition at line 401 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DECRYPT   112"
+
+.PP
+Definition at line 402 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DECRYPT_SET1_KEY   113"
+
+.PP
+Definition at line 403 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DECRYPT_SET1_PASSWORD   166"
+
+.PP
+Definition at line 404 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DECRYPT_SET1_PKEY   114"
+
+.PP
+Definition at line 405 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DIGEST_VERIFY   118"
+
+.PP
+Definition at line 409 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DIGESTALGORITHM_FIND_CTX   115"
+
+.PP
+Definition at line 406 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DIGESTALGORITHM_INIT_BIO   116"
+
+.PP
+Definition at line 407 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_DIGESTEDDATA_DO_FINAL   117"
+
+.PP
+Definition at line 408 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENCODE_RECEIPT   161"
+
+.PP
+Definition at line 410 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENCRYPT   119"
+
+.PP
+Definition at line 411 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENCRYPTEDCONTENT_INIT_BIO   120"
+
+.PP
+Definition at line 412 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENCRYPTEDDATA_DECRYPT   121"
+
+.PP
+Definition at line 413 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENCRYPTEDDATA_ENCRYPT   122"
+
+.PP
+Definition at line 414 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENCRYPTEDDATA_SET1_KEY   123"
+
+.PP
+Definition at line 415 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENV_ASN1_CTRL   171"
+
+.PP
+Definition at line 419 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENVELOPED_DATA_INIT   126"
+
+.PP
+Definition at line 418 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENVELOPEDDATA_CREATE   124"
+
+.PP
+Definition at line 416 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_ENVELOPEDDATA_INIT_BIO   125"
+
+.PP
+Definition at line 417 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_FINAL   127"
+
+.PP
+Definition at line 420 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_GET0_CERTIFICATE_CHOICES   128"
+
+.PP
+Definition at line 421 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_GET0_CONTENT   129"
+
+.PP
+Definition at line 422 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_GET0_ECONTENT_TYPE   130"
+
+.PP
+Definition at line 423 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_GET0_ENVELOPED   131"
+
+.PP
+Definition at line 424 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_GET0_REVOCATION_CHOICES   132"
+
+.PP
+Definition at line 425 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_GET0_SIGNED   133"
+
+.PP
+Definition at line 426 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_MSGSIGDIGEST_ADD1   162"
+
+.PP
+Definition at line 427 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECEIPT_VERIFY   160"
+
+.PP
+Definition at line 429 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECEIPTREQUEST_CREATE0   159"
+
+.PP
+Definition at line 428 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_DECRYPT   134"
+
+.PP
+Definition at line 430 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_ENCRYPT   169"
+
+.PP
+Definition at line 431 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KARI_ENCRYPT   178"
+
+.PP
+Definition at line 432 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KARI_GET0_ALG   175"
+
+.PP
+Definition at line 433 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KARI_GET0_ORIG_ID   173"
+
+.PP
+Definition at line 434 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KARI_GET0_REKS   172"
+
+.PP
+Definition at line 435 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KARI_ORIG_ID_CMP   174"
+
+.PP
+Definition at line 436 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KEKRI_DECRYPT   135"
+
+.PP
+Definition at line 437 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KEKRI_ENCRYPT   136"
+
+.PP
+Definition at line 438 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KEKRI_GET0_ID   137"
+
+.PP
+Definition at line 439 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KEKRI_ID_CMP   138"
+
+.PP
+Definition at line 440 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KTRI_CERT_CMP   139"
+
+.PP
+Definition at line 441 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KTRI_DECRYPT   140"
+
+.PP
+Definition at line 442 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KTRI_ENCRYPT   141"
+
+.PP
+Definition at line 443 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KTRI_GET0_ALGS   142"
+
+.PP
+Definition at line 444 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_KTRI_GET0_SIGNER_ID   143"
+
+.PP
+Definition at line 445 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_PWRI_CRYPT   167"
+
+.PP
+Definition at line 446 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_SET0_KEY   144"
+
+.PP
+Definition at line 447 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_SET0_PASSWORD   168"
+
+.PP
+Definition at line 448 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_RECIPIENTINFO_SET0_PKEY   145"
+
+.PP
+Definition at line 449 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SD_ASN1_CTRL   170"
+
+.PP
+Definition at line 450 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SET1_IAS   176"
+
+.PP
+Definition at line 451 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SET1_KEYID   177"
+
+.PP
+Definition at line 452 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SET1_SIGNERIDENTIFIER   146"
+
+.PP
+Definition at line 453 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SET_DETACHED   147"
+
+.PP
+Definition at line 454 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGN   148"
+
+.PP
+Definition at line 455 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGN_RECEIPT   163"
+
+.PP
+Definition at line 462 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGNED_DATA_INIT   149"
+
+.PP
+Definition at line 456 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGNERINFO_CONTENT_SIGN   150"
+
+.PP
+Definition at line 457 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGNERINFO_SIGN   151"
+
+.PP
+Definition at line 458 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGNERINFO_VERIFY   152"
+
+.PP
+Definition at line 459 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGNERINFO_VERIFY_CERT   153"
+
+.PP
+Definition at line 460 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_SIGNERINFO_VERIFY_CONTENT   154"
+
+.PP
+Definition at line 461 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_STREAM   155"
+
+.PP
+Definition at line 463 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_UNCOMPRESS   156"
+
+.PP
+Definition at line 464 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_F_CMS_VERIFY   157"
+
+.PP
+Definition at line 465 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_KEY_PARAM   0x40000"
+
+.PP
+Definition at line 118 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NO_ATTR_VERIFY   0x8"
+
+.PP
+Definition at line 100 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NO_CONTENT_VERIFY   0x4"
+
+.PP
+Definition at line 99 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NO_SIGNER_CERT_VERIFY   0x20"
+
+.PP
+Definition at line 104 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOATTR   0x100"
+
+.PP
+Definition at line 108 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOCERTS   0x2"
+
+.PP
+Definition at line 98 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOCRL   0x2000"
+
+.PP
+Definition at line 113 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOINTERN   0x10"
+
+.PP
+Definition at line 103 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOOLDMIMETYPE   0x400"
+
+.PP
+Definition at line 110 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOSIGS   (\fBCMS_NO_CONTENT_VERIFY\fP|\fBCMS_NO_ATTR_VERIFY\fP)"
+
+.PP
+Definition at line 101 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOSMIMECAP   0x200"
+
+.PP
+Definition at line 109 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_NOVERIFY   0x20"
+
+.PP
+Definition at line 105 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_PARTIAL   0x4000"
+
+.PP
+Definition at line 114 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_ADD_SIGNER_ERROR   99"
+
+.PP
+Definition at line 468 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CERTIFICATE_ALREADY_PRESENT   175"
+
+.PP
+Definition at line 469 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CERTIFICATE_HAS_NO_KEYID   160"
+
+.PP
+Definition at line 470 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CERTIFICATE_VERIFY_ERROR   100"
+
+.PP
+Definition at line 471 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CIPHER_INITIALISATION_ERROR   101"
+
+.PP
+Definition at line 472 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CIPHER_PARAMETER_INITIALISATION_ERROR   102"
+
+.PP
+Definition at line 473 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CMS_DATAFINAL_ERROR   103"
+
+.PP
+Definition at line 474 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CMS_LIB   104"
+
+.PP
+Definition at line 475 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENT_NOT_FOUND   105"
+
+.PP
+Definition at line 477 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENT_TYPE_MISMATCH   171"
+
+.PP
+Definition at line 478 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENT_TYPE_NOT_COMPRESSED_DATA   106"
+
+.PP
+Definition at line 479 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENT_TYPE_NOT_ENVELOPED_DATA   107"
+
+.PP
+Definition at line 480 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENT_TYPE_NOT_SIGNED_DATA   108"
+
+.PP
+Definition at line 481 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENT_VERIFY_ERROR   109"
+
+.PP
+Definition at line 482 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CONTENTIDENTIFIER_MISMATCH   170"
+
+.PP
+Definition at line 476 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CTRL_ERROR   110"
+
+.PP
+Definition at line 483 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_CTRL_FAILURE   111"
+
+.PP
+Definition at line 484 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_DECRYPT_ERROR   112"
+
+.PP
+Definition at line 485 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_DIGEST_ERROR   161"
+
+.PP
+Definition at line 486 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_ERROR_GETTING_PUBLIC_KEY   113"
+
+.PP
+Definition at line 487 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_ERROR_READING_MESSAGEDIGEST_ATTRIBUTE   114"
+
+.PP
+Definition at line 488 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_ERROR_SETTING_KEY   115"
+
+.PP
+Definition at line 489 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_ERROR_SETTING_RECIPIENTINFO   116"
+
+.PP
+Definition at line 490 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_INVALID_ENCRYPTED_KEY_LENGTH   117"
+
+.PP
+Definition at line 491 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_INVALID_KEY_ENCRYPTION_PARAMETER   176"
+
+.PP
+Definition at line 492 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_INVALID_KEY_LENGTH   118"
+
+.PP
+Definition at line 493 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_MD_BIO_INIT_ERROR   119"
+
+.PP
+Definition at line 494 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_MESSAGEDIGEST_ATTRIBUTE_WRONG_LENGTH   120"
+
+.PP
+Definition at line 495 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_MESSAGEDIGEST_WRONG_LENGTH   121"
+
+.PP
+Definition at line 496 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_MSGSIGDIGEST_ERROR   172"
+
+.PP
+Definition at line 497 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_MSGSIGDIGEST_VERIFICATION_FAILURE   162"
+
+.PP
+Definition at line 498 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_MSGSIGDIGEST_WRONG_LENGTH   163"
+
+.PP
+Definition at line 499 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NEED_ONE_SIGNER   164"
+
+.PP
+Definition at line 500 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_CIPHER   126"
+
+.PP
+Definition at line 508 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_CONTENT   127"
+
+.PP
+Definition at line 509 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_CONTENT_TYPE   173"
+
+.PP
+Definition at line 510 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_DEFAULT_DIGEST   128"
+
+.PP
+Definition at line 511 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_DIGEST_SET   129"
+
+.PP
+Definition at line 512 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_KEY   130"
+
+.PP
+Definition at line 513 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_KEY_OR_CERT   174"
+
+.PP
+Definition at line 514 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_MATCHING_DIGEST   131"
+
+.PP
+Definition at line 515 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_MATCHING_RECIPIENT   132"
+
+.PP
+Definition at line 516 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_MATCHING_SIGNATURE   166"
+
+.PP
+Definition at line 517 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_MSGSIGDIGEST   167"
+
+.PP
+Definition at line 518 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_PASSWORD   178"
+
+.PP
+Definition at line 519 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_PRIVATE_KEY   133"
+
+.PP
+Definition at line 520 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_PUBLIC_KEY   134"
+
+.PP
+Definition at line 521 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_RECEIPT_REQUEST   168"
+
+.PP
+Definition at line 522 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NO_SIGNERS   135"
+
+.PP
+Definition at line 523 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_A_SIGNED_RECEIPT   165"
+
+.PP
+Definition at line 501 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_ENCRYPTED_DATA   122"
+
+.PP
+Definition at line 502 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_KEK   123"
+
+.PP
+Definition at line 503 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_KEY_AGREEMENT   181"
+
+.PP
+Definition at line 504 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_KEY_TRANSPORT   124"
+
+.PP
+Definition at line 505 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_PWRI   177"
+
+.PP
+Definition at line 506 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_NOT_SUPPORTED_FOR_THIS_KEY_TYPE   125"
+
+.PP
+Definition at line 507 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_PRIVATE_KEY_DOES_NOT_MATCH_CERTIFICATE   136"
+
+.PP
+Definition at line 524 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_RECEIPT_DECODE_ERROR   169"
+
+.PP
+Definition at line 525 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_RECIPIENT_ERROR   137"
+
+.PP
+Definition at line 526 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_SIGNER_CERTIFICATE_NOT_FOUND   138"
+
+.PP
+Definition at line 527 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_SIGNFINAL_ERROR   139"
+
+.PP
+Definition at line 528 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_SMIME_TEXT_ERROR   140"
+
+.PP
+Definition at line 529 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_STORE_INIT_ERROR   141"
+
+.PP
+Definition at line 530 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_TYPE_NOT_COMPRESSED_DATA   142"
+
+.PP
+Definition at line 531 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_TYPE_NOT_DATA   143"
+
+.PP
+Definition at line 532 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_TYPE_NOT_DIGESTED_DATA   144"
+
+.PP
+Definition at line 533 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_TYPE_NOT_ENCRYPTED_DATA   145"
+
+.PP
+Definition at line 534 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_TYPE_NOT_ENVELOPED_DATA   146"
+
+.PP
+Definition at line 535 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNABLE_TO_FINALIZE_CONTEXT   147"
+
+.PP
+Definition at line 536 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNKNOWN_CIPHER   148"
+
+.PP
+Definition at line 537 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNKNOWN_DIGEST_ALGORIHM   149"
+
+.PP
+Definition at line 538 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNKNOWN_ID   150"
+
+.PP
+Definition at line 539 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_COMPRESSION_ALGORITHM   151"
+
+.PP
+Definition at line 540 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_CONTENT_TYPE   152"
+
+.PP
+Definition at line 541 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_KEK_ALGORITHM   153"
+
+.PP
+Definition at line 542 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_KEY_ENCRYPTION_ALGORITHM   179"
+
+.PP
+Definition at line 543 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_RECIPIENT_TYPE   154"
+
+.PP
+Definition at line 544 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_RECPIENTINFO_TYPE   155"
+
+.PP
+Definition at line 545 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNSUPPORTED_TYPE   156"
+
+.PP
+Definition at line 546 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNWRAP_ERROR   157"
+
+.PP
+Definition at line 547 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_UNWRAP_FAILURE   180"
+
+.PP
+Definition at line 548 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_VERIFICATION_FAILURE   158"
+
+.PP
+Definition at line 549 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_R_WRAP_ERROR   159"
+
+.PP
+Definition at line 550 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_RECIPINFO_AGREE   1"
+
+.PP
+Definition at line 90 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_RECIPINFO_KEK   2"
+
+.PP
+Definition at line 91 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_RECIPINFO_NONE   \-1"
+
+.PP
+Definition at line 88 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_RECIPINFO_OTHER   4"
+
+.PP
+Definition at line 93 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_RECIPINFO_PASS   3"
+
+.PP
+Definition at line 92 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_RECIPINFO_TRANS   0"
+
+.PP
+Definition at line 89 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_REUSE_DIGEST   0x8000"
+
+.PP
+Definition at line 115 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_SIGNERINFO_ISSUER_SERIAL   0"
+
+.PP
+Definition at line 85 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_SIGNERINFO_KEYIDENTIFIER   1"
+
+.PP
+Definition at line 86 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_STREAM   0x1000"
+
+.PP
+Definition at line 112 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_TEXT   0x1"
+
+.PP
+Definition at line 97 of file include/openssl/cms\&.h\&.
+.SS "#define CMS_USE_KEYID   0x10000"
+
+.PP
+Definition at line 116 of file include/openssl/cms\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBCMS_CertificateChoices\fP \fBCMS_CertificateChoices\fP"
+
+.PP
+Definition at line 70 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_ContentInfo_st\fP \fBCMS_ContentInfo\fP"
+
+.PP
+Definition at line 68 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_OtherKeyAttribute_st\fP \fBCMS_OtherKeyAttribute\fP"
+
+.PP
+Definition at line 76 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_Receipt_st\fP \fBCMS_Receipt\fP"
+
+.PP
+Definition at line 74 of file include/openssl/cms\&.h\&.
+.SS "typedef struct CMS_ReceiptRequest_st \fBCMS_ReceiptRequest\fP"
+
+.PP
+Definition at line 73 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_RecipientEncryptedKey_st\fP \fBCMS_RecipientEncryptedKey\fP"
+
+.PP
+Definition at line 75 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_RecipientInfo_st\fP \fBCMS_RecipientInfo\fP"
+
+.PP
+Definition at line 72 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_RevocationInfoChoice_st\fP \fBCMS_RevocationInfoChoice\fP"
+
+.PP
+Definition at line 71 of file include/openssl/cms\&.h\&.
+.SS "typedef struct \fBCMS_SignerInfo_st\fP \fBCMS_SignerInfo\fP"
+
+.PP
+Definition at line 69 of file include/openssl/cms\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBIO\fP* BIO_new_CMS (\fBBIO\fP * out, \fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_add0_cert (\fBCMS_ContentInfo\fP * cms, \fBX509\fP * cert)"
+
+.SS "\fBCMS_CertificateChoices\fP* CMS_add0_CertificateChoices (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_add0_crl (\fBCMS_ContentInfo\fP * cms, \fBX509_CRL\fP * crl)"
+
+.SS "\fBCMS_RecipientInfo\fP* CMS_add0_recipient_key (\fBCMS_ContentInfo\fP * cms, int nid, unsigned char * key, size_t keylen, unsigned char * id, size_t idlen, \fBASN1_GENERALIZEDTIME\fP * date, \fBASN1_OBJECT\fP * otherTypeId, \fBASN1_TYPE\fP * otherType)"
+
+.SS "\fBCMS_RecipientInfo\fP* CMS_add0_recipient_password (\fBCMS_ContentInfo\fP * cms, int iter, int wrap_nid, int pbe_nid, unsigned char * pass, \fBossl_ssize_t\fP passlen, const \fBEVP_CIPHER\fP * kekciph)"
+
+.SS "\fBCMS_RevocationInfoChoice\fP* CMS_add0_RevocationInfoChoice (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_add1_cert (\fBCMS_ContentInfo\fP * cms, \fBX509\fP * cert)"
+
+.SS "int CMS_add1_crl (\fBCMS_ContentInfo\fP * cms, \fBX509_CRL\fP * crl)"
+
+.SS "\fBCMS_RecipientInfo\fP* CMS_add1_recipient_cert (\fBCMS_ContentInfo\fP * cms, \fBX509\fP * recip, unsigned int flags)"
+
+.SS "\fBCMS_SignerInfo\fP* CMS_add1_signer (\fBCMS_ContentInfo\fP * cms, \fBX509\fP * signer, \fBEVP_PKEY\fP * pk, const \fBEVP_MD\fP * md, unsigned int flags)"
+
+.SS "int CMS_add_simple_smimecap (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)** algs, int algnid, int keysize)"
+
+.SS "int CMS_add_smimecap (\fBCMS_SignerInfo\fP * si, \fBSTACK_OF\fP(\fBX509_ALGOR\fP)* algs)"
+
+.SS "int CMS_add_standard_smimecap (\fBSTACK_OF\fP(\fBX509_ALGOR\fP)** smcap)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_compress (\fBBIO\fP * in, int comp_nid, unsigned int flags)"
+
+.SS "int CMS_data (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * out, unsigned int flags)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_data_create (\fBBIO\fP * in, unsigned int flags)"
+
+.SS "int CMS_dataFinal (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * bio)"
+
+.SS "\fBBIO\fP* CMS_dataInit (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * icont)"
+
+.SS "int CMS_decrypt (\fBCMS_ContentInfo\fP * cms, \fBEVP_PKEY\fP * pkey, \fBX509\fP * cert, \fBBIO\fP * dcont, \fBBIO\fP * out, unsigned int flags)"
+
+.SS "int CMS_decrypt_set1_key (\fBCMS_ContentInfo\fP * cms, unsigned char * key, size_t keylen, unsigned char * id, size_t idlen)"
+
+.SS "int CMS_decrypt_set1_password (\fBCMS_ContentInfo\fP * cms, unsigned char * pass, \fBossl_ssize_t\fP passlen)"
+
+.SS "int CMS_decrypt_set1_pkey (\fBCMS_ContentInfo\fP * cms, \fBEVP_PKEY\fP * pk, \fBX509\fP * cert)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_digest_create (\fBBIO\fP * in, const \fBEVP_MD\fP * md, unsigned int flags)"
+
+.SS "int CMS_digest_verify (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * dcont, \fBBIO\fP * out, unsigned int flags)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_encrypt (\fBSTACK_OF\fP(\fBX509\fP)* certs, \fBBIO\fP * in, const \fBEVP_CIPHER\fP * cipher, unsigned int flags)"
+
+.SS "int CMS_EncryptedData_decrypt (\fBCMS_ContentInfo\fP * cms, const unsigned char * key, size_t keylen, \fBBIO\fP * dcont, \fBBIO\fP * out, unsigned int flags)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_EncryptedData_encrypt (\fBBIO\fP * in, const \fBEVP_CIPHER\fP * cipher, const unsigned char * key, size_t keylen, unsigned int flags)"
+
+.SS "int CMS_EncryptedData_set1_key (\fBCMS_ContentInfo\fP * cms, const \fBEVP_CIPHER\fP * ciph, const unsigned char * key, size_t keylen)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_EnvelopedData_create (const \fBEVP_CIPHER\fP * cipher)"
+
+.SS "int CMS_final (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * data, \fBBIO\fP * dcont, unsigned int flags)"
+
+.SS "\fBASN1_OCTET_STRING\fP** CMS_get0_content (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "const \fBASN1_OBJECT\fP* CMS_get0_eContentType (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "const \fBASN1_OBJECT\fP* CMS_get0_type (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_is_detached (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_RecipientEncryptedKey_cert_cmp (\fBCMS_RecipientEncryptedKey\fP * rek, \fBX509\fP * cert)"
+
+.SS "int CMS_RecipientEncryptedKey_get0_id (\fBCMS_RecipientEncryptedKey\fP * rek, \fBASN1_OCTET_STRING\fP ** keyid, \fBASN1_GENERALIZEDTIME\fP ** tm, \fBCMS_OtherKeyAttribute\fP ** other, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.SS "int CMS_RecipientInfo_decrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri)"
+
+.SS "int CMS_RecipientInfo_encrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri)"
+
+.SS "\fBEVP_PKEY_CTX\fP* CMS_RecipientInfo_get0_pkey_ctx (\fBCMS_RecipientInfo\fP * ri)"
+
+.SS "int CMS_RecipientInfo_kari_decrypt (\fBCMS_ContentInfo\fP * cms, \fBCMS_RecipientInfo\fP * ri, \fBCMS_RecipientEncryptedKey\fP * rek)"
+
+.SS "int CMS_RecipientInfo_kari_get0_alg (\fBCMS_RecipientInfo\fP * ri, \fBX509_ALGOR\fP ** palg, \fBASN1_OCTET_STRING\fP ** pukm)"
+
+.SS "\fBEVP_CIPHER_CTX\fP* CMS_RecipientInfo_kari_get0_ctx (\fBCMS_RecipientInfo\fP * ri)"
+
+.SS "int CMS_RecipientInfo_kari_get0_orig_id (\fBCMS_RecipientInfo\fP * ri, \fBX509_ALGOR\fP ** pubalg, \fBASN1_BIT_STRING\fP ** pubkey, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.SS "* CMS_RecipientInfo_kari_get0_reks (\fBCMS_RecipientInfo\fP * ri)"
+
+.SS "int CMS_RecipientInfo_kari_orig_id_cmp (\fBCMS_RecipientInfo\fP * ri, \fBX509\fP * cert)"
+
+.SS "int CMS_RecipientInfo_kari_set0_pkey (\fBCMS_RecipientInfo\fP * ri, \fBEVP_PKEY\fP * pk)"
+
+.SS "int CMS_RecipientInfo_kekri_get0_id (\fBCMS_RecipientInfo\fP * ri, \fBX509_ALGOR\fP ** palg, \fBASN1_OCTET_STRING\fP ** pid, \fBASN1_GENERALIZEDTIME\fP ** pdate, \fBASN1_OBJECT\fP ** potherid, \fBASN1_TYPE\fP ** pothertype)"
+
+.SS "int CMS_RecipientInfo_kekri_id_cmp (\fBCMS_RecipientInfo\fP * ri, const unsigned char * id, size_t idlen)"
+
+.SS "int CMS_RecipientInfo_ktri_cert_cmp (\fBCMS_RecipientInfo\fP * ri, \fBX509\fP * cert)"
+
+.SS "int CMS_RecipientInfo_ktri_get0_algs (\fBCMS_RecipientInfo\fP * ri, \fBEVP_PKEY\fP ** pk, \fBX509\fP ** recip, \fBX509_ALGOR\fP ** palg)"
+
+.SS "int CMS_RecipientInfo_ktri_get0_signer_id (\fBCMS_RecipientInfo\fP * ri, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.SS "int CMS_RecipientInfo_set0_key (\fBCMS_RecipientInfo\fP * ri, unsigned char * key, size_t keylen)"
+
+.SS "int CMS_RecipientInfo_set0_password (\fBCMS_RecipientInfo\fP * ri, unsigned char * pass, \fBossl_ssize_t\fP passlen)"
+
+.SS "int CMS_RecipientInfo_set0_pkey (\fBCMS_RecipientInfo\fP * ri, \fBEVP_PKEY\fP * pkey)"
+
+.SS "int CMS_RecipientInfo_type (\fBCMS_RecipientInfo\fP * ri)"
+
+.SS "int CMS_set1_eContentType (\fBCMS_ContentInfo\fP * cms, const \fBASN1_OBJECT\fP * oid)"
+
+.SS "int CMS_set1_signers_certs (\fBCMS_ContentInfo\fP * cms, \fBSTACK_OF\fP(\fBX509\fP)* certs, unsigned int flags)"
+
+.SS "int CMS_set_detached (\fBCMS_ContentInfo\fP * cms, int detached)"
+
+.SS "int CMS_SharedInfo_encode (unsigned char ** pder, \fBX509_ALGOR\fP * kekalg, \fBASN1_OCTET_STRING\fP * ukm, int keylen)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_sign (\fBX509\fP * signcert, \fBEVP_PKEY\fP * pkey, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBBIO\fP * data, unsigned int flags)"
+
+.SS "\fBCMS_ContentInfo\fP* CMS_sign_receipt (\fBCMS_SignerInfo\fP * si, \fBX509\fP * signcert, \fBEVP_PKEY\fP * pkey, \fBSTACK_OF\fP(\fBX509\fP)* certs, unsigned int flags)"
+
+.SS "int CMS_signed_add1_attr (\fBCMS_SignerInfo\fP * si, \fBX509_ATTRIBUTE\fP * attr)"
+
+.SS "int CMS_signed_add1_attr_by_NID (\fBCMS_SignerInfo\fP * si, int nid, int type, const \fBvoid\fP * bytes, int len)"
+
+.SS "int CMS_signed_add1_attr_by_OBJ (\fBCMS_SignerInfo\fP * si, const \fBASN1_OBJECT\fP * obj, int type, const \fBvoid\fP * bytes, int len)"
+
+.SS "int CMS_signed_add1_attr_by_txt (\fBCMS_SignerInfo\fP * si, const char * attrname, int type, const \fBvoid\fP * bytes, int len)"
+
+.SS "\fBX509_ATTRIBUTE\fP* CMS_signed_delete_attr (\fBCMS_SignerInfo\fP * si, int loc)"
+
+.SS "\fBvoid\fP* CMS_signed_get0_data_by_OBJ (\fBCMS_SignerInfo\fP * si, \fBASN1_OBJECT\fP * oid, int lastpos, int type)"
+
+.SS "\fBX509_ATTRIBUTE\fP* CMS_signed_get_attr (const \fBCMS_SignerInfo\fP * si, int loc)"
+
+.SS "int CMS_signed_get_attr_by_NID (const \fBCMS_SignerInfo\fP * si, int nid, int lastpos)"
+
+.SS "int CMS_signed_get_attr_by_OBJ (const \fBCMS_SignerInfo\fP * si, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.SS "int CMS_signed_get_attr_count (const \fBCMS_SignerInfo\fP * si)"
+
+.SS "int CMS_SignedData_init (\fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_SignerInfo_cert_cmp (\fBCMS_SignerInfo\fP * si, \fBX509\fP * cert)"
+
+.SS "\fBvoid\fP CMS_SignerInfo_get0_algs (\fBCMS_SignerInfo\fP * si, \fBEVP_PKEY\fP ** pk, \fBX509\fP ** signer, \fBX509_ALGOR\fP ** pdig, \fBX509_ALGOR\fP ** psig)"
+
+.SS "\fBEVP_MD_CTX\fP* CMS_SignerInfo_get0_md_ctx (\fBCMS_SignerInfo\fP * si)"
+
+.SS "\fBEVP_PKEY_CTX\fP* CMS_SignerInfo_get0_pkey_ctx (\fBCMS_SignerInfo\fP * si)"
+
+.SS "\fBASN1_OCTET_STRING\fP* CMS_SignerInfo_get0_signature (\fBCMS_SignerInfo\fP * si)"
+
+.SS "int CMS_SignerInfo_get0_signer_id (\fBCMS_SignerInfo\fP * si, \fBASN1_OCTET_STRING\fP ** keyid, \fBX509_NAME\fP ** issuer, \fBASN1_INTEGER\fP ** sno)"
+
+.SS "\fBvoid\fP CMS_SignerInfo_set1_signer_cert (\fBCMS_SignerInfo\fP * si, \fBX509\fP * signer)"
+
+.SS "int CMS_SignerInfo_sign (\fBCMS_SignerInfo\fP * si)"
+
+.SS "int CMS_SignerInfo_verify (\fBCMS_SignerInfo\fP * si)"
+
+.SS "int CMS_SignerInfo_verify_content (\fBCMS_SignerInfo\fP * si, \fBBIO\fP * chain)"
+
+.SS "int CMS_stream (unsigned char *** boundary, \fBCMS_ContentInfo\fP * cms)"
+
+.SS "int CMS_uncompress (\fBCMS_ContentInfo\fP * cms, \fBBIO\fP * dcont, \fBBIO\fP * out, unsigned int flags)"
+
+.SS "int CMS_unsigned_add1_attr (\fBCMS_SignerInfo\fP * si, \fBX509_ATTRIBUTE\fP * attr)"
+
+.SS "int CMS_unsigned_add1_attr_by_NID (\fBCMS_SignerInfo\fP * si, int nid, int type, const \fBvoid\fP * bytes, int len)"
+
+.SS "int CMS_unsigned_add1_attr_by_OBJ (\fBCMS_SignerInfo\fP * si, const \fBASN1_OBJECT\fP * obj, int type, const \fBvoid\fP * bytes, int len)"
+
+.SS "int CMS_unsigned_add1_attr_by_txt (\fBCMS_SignerInfo\fP * si, const char * attrname, int type, const \fBvoid\fP * bytes, int len)"
+
+.SS "\fBX509_ATTRIBUTE\fP* CMS_unsigned_delete_attr (\fBCMS_SignerInfo\fP * si, int loc)"
+
+.SS "\fBvoid\fP* CMS_unsigned_get0_data_by_OBJ (\fBCMS_SignerInfo\fP * si, \fBASN1_OBJECT\fP * oid, int lastpos, int type)"
+
+.SS "\fBX509_ATTRIBUTE\fP* CMS_unsigned_get_attr (const \fBCMS_SignerInfo\fP * si, int loc)"
+
+.SS "int CMS_unsigned_get_attr_by_NID (const \fBCMS_SignerInfo\fP * si, int nid, int lastpos)"
+
+.SS "int CMS_unsigned_get_attr_by_OBJ (const \fBCMS_SignerInfo\fP * si, \fBASN1_OBJECT\fP * obj, int lastpos)"
+
+.SS "int CMS_unsigned_get_attr_count (const \fBCMS_SignerInfo\fP * si)"
+
+.SS "int CMS_verify (\fBCMS_ContentInfo\fP * cms, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * store, \fBBIO\fP * dcont, \fBBIO\fP * out, unsigned int flags)"
+
+.SS "int CMS_verify_receipt (\fBCMS_ContentInfo\fP * rcms, \fBCMS_ContentInfo\fP * ocms, \fBSTACK_OF\fP(\fBX509\fP)* certs, \fBX509_STORE\fP * store, unsigned int flags)"
+
+.SS "\fBCMS_ContentInfo\fP* d2i_CMS_bio (\fBBIO\fP * bp, \fBCMS_ContentInfo\fP ** cms)"
+
+.SS "\fBvoid\fP ERR_load_CMS_strings (\fBvoid\fP)"
+
+.SS "int i2d_CMS_bio (\fBBIO\fP * bp, \fBCMS_ContentInfo\fP * cms)"
+
+.SS "int i2d_CMS_bio_stream (\fBBIO\fP * out, \fBCMS_ContentInfo\fP * cms, \fBBIO\fP * in, int flags)"
+
+.SS "int PEM_write_bio_CMS_stream (\fBBIO\fP * out, \fBCMS_ContentInfo\fP * cms, \fBBIO\fP * in, int flags)"
+
+.SS "\fBCMS_ContentInfo\fP* SMIME_read_CMS (\fBBIO\fP * bio, \fBBIO\fP ** bcont)"
+
+.SS "int SMIME_write_CMS (\fBBIO\fP * bio, \fBCMS_ContentInfo\fP * cms, \fBBIO\fP * data, int flags)"
+
+.SS "STACK_OF (\fBX509\fP)"
+
+.SS "STACK_OF (\fBCMS_RecipientInfo\fP)"
+
+.SS "STACK_OF (\fBX509_CRL\fP)"
+
+.SS "STACK_OF (\fBCMS_SignerInfo\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

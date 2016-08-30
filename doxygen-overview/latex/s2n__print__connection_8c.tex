@@ -1,0 +1,81 @@
+\hypertarget{s2n__print__connection_8c}{}\section{s2n-\/master/tests/testlib/s2n\+\_\+print\+\_\+connection.c File Reference}
+\label{s2n__print__connection_8c}\index{s2n-\/master/tests/testlib/s2n\+\_\+print\+\_\+connection.\+c@{s2n-\/master/tests/testlib/s2n\+\_\+print\+\_\+connection.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}testlib/s2n\+\_\+testlib.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+print\+\_\+connection.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__print__connection_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2n__print__connection_8c_a444dd08e471959c18195eb6236de37a2}{s2n\+\_\+print\+\_\+connection} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, const char $\ast$marker)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+print\+\_\+connection.\+c@{s2n\+\_\+print\+\_\+connection.\+c}!s2n\+\_\+print\+\_\+connection@{s2n\+\_\+print\+\_\+connection}}
+\index{s2n\+\_\+print\+\_\+connection@{s2n\+\_\+print\+\_\+connection}!s2n\+\_\+print\+\_\+connection.\+c@{s2n\+\_\+print\+\_\+connection.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+print\+\_\+connection(struct s2n\+\_\+connection $\ast$conn, const char $\ast$marker)}{s2n_print_connection(struct s2n_connection *conn, const char *marker)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} s2n\+\_\+print\+\_\+connection (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{const char $\ast$}]{marker}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__print__connection_8c_a444dd08e471959c18195eb6236de37a2}{}\label{s2n__print__connection_8c_a444dd08e471959c18195eb6236de37a2}
+
+
+Definition at line 21 of file s2n\+\_\+print\+\_\+connection.\+c.
+
+
+\begin{DoxyCode}
+22 \{
+23     \textcolor{keywordtype}{int} i;
+24 
+25     printf(\textcolor{stringliteral}{"marker: %s\(\backslash\)n"}, marker);
+26     printf(\textcolor{stringliteral}{"HEADER IN Stuffer (write: %d, read: %d, size: %d)\(\backslash\)n"}, conn->
+      \hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}.\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}, conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}.
+      \hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}, conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+27     \textcolor{keywordflow}{for} (i = 0; i < conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}; i++) \{
+28         printf(\textcolor{stringliteral}{"%02x"}, conn->\hyperlink{structs2n__connection_a005c1df7387f2c53061e9c9432f70aca}{header\_in}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[i]);
+29         \textcolor{keywordflow}{if} ((i + 1) % 8 == 0) \{
+30             printf(\textcolor{stringliteral}{" "});
+31         \}
+32         \textcolor{keywordflow}{if} ((i + 1) % 40 == 0) \{
+33             printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+34         \}
+35     \}
+36     printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+37  
+38     printf(\textcolor{stringliteral}{"IN Stuffer (write: %d, read: %d, size: %d)\(\backslash\)n"}, conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}.
+      \hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}, conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}.\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}, conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+39     \textcolor{keywordflow}{for} (i = 0; i < conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}.\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}; i++) \{
+40         printf(\textcolor{stringliteral}{"%02x"}, conn->\hyperlink{structs2n__connection_a556c2665a42d6fd91dd28fc73d50d21e}{in}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[i]);
+41         \textcolor{keywordflow}{if} ((i + 1) % 8 == 0) \{
+42             printf(\textcolor{stringliteral}{" "});
+43         \}
+44         \textcolor{keywordflow}{if} ((i + 1) % 40 == 0) \{
+45             printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+46         \}
+47     \}
+48     printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+49 
+50     printf(\textcolor{stringliteral}{"OUT Stuffer (write: %d, read: %d, size: %d)\(\backslash\)n"}, conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}.
+      \hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}, conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}.\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}, conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+51     \textcolor{keywordflow}{for} (i = 0; i < conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}.\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}; i++) \{
+52         printf(\textcolor{stringliteral}{"%02x"}, conn->\hyperlink{structs2n__connection_aa4edd9e7ae7d0068c43a8c3d54073da0}{out}.\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[i]);
+53         \textcolor{keywordflow}{if} ((i + 1) % 8 == 0) \{
+54             printf(\textcolor{stringliteral}{" "});
+55         \}
+56         \textcolor{keywordflow}{if} ((i + 1) % 40 == 0) \{
+57             printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+58         \}
+59     \}
+60     printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+61 \}
+\end{DoxyCode}

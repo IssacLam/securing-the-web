@@ -1,0 +1,2972 @@
+.TH "bio.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+bio.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdarg\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBbio_method_st\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_st\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_f_buffer_ctx_struct\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_dgram_sctp_sndinfo\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_dgram_sctp_rcvinfo\fP"
+.br
+.ti -1c
+.RI "struct \fBbio_dgram_sctp_prinfo\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBIO_TYPE_NONE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_MEM\fP   (1|0x0400)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_FILE\fP   (2|0x0400)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_FD\fP   (4|0x0400|0x0100)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_SOCKET\fP   (5|0x0400|0x0100)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_NULL\fP   (6|0x0400)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_SSL\fP   (7|0x0200)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_MD\fP   (8|0x0200)/* passive filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_BUFFER\fP   (9|0x0200)/* filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_CIPHER\fP   (10|0x0200)/* filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_BASE64\fP   (11|0x0200)/* filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_CONNECT\fP   (12|0x0400|0x0100)/* socket \- connect */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_ACCEPT\fP   (13|0x0400|0x0100)/* socket for accept */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_PROXY_CLIENT\fP   (14|0x0200)/* client proxy BIO */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_PROXY_SERVER\fP   (15|0x0200)/* server proxy BIO */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_NBIO_TEST\fP   (16|0x0200)/* server proxy BIO */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_NULL_FILTER\fP   (17|0x0200)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_BER\fP   (18|0x0200)/* BER \-> bin filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_BIO\fP   (19|0x0400)/* (half a) BIO pair */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_LINEBUFFER\fP   (20|0x0200)/* filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_DGRAM\fP   (21|0x0400|0x0100)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_DGRAM_SCTP\fP   (24|0x0400|0x0100)"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_ASN1\fP   (22|0x0200)/* filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_COMP\fP   (23|0x0200)/* filter */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_DESCRIPTOR\fP   0x0100/* socket, fd, connect or accept */"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_FILTER\fP   0x0200"
+.br
+.ti -1c
+.RI "#define \fBBIO_TYPE_SOURCE_SINK\fP   0x0400"
+.br
+.ti -1c
+.RI "#define \fBBIO_NOCLOSE\fP   0x00"
+.br
+.ti -1c
+.RI "#define \fBBIO_CLOSE\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_RESET\fP   1/* opt \- rewind/zero etc */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_EOF\fP   2/* opt \- are we at the eof */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_INFO\fP   3/* opt \- extra tit\-\fBbits\fP */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_SET\fP   4/* man \- set the 'IO' \fBtype\fP */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_GET\fP   5/* man \- get the 'IO' \fBtype\fP */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_PUSH\fP   6/* opt \- internal, used to signify change */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_POP\fP   7/* opt \- internal, used to signify change */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_GET_CLOSE\fP   8/* man \- set the 'close' on free */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_SET_CLOSE\fP   9/* man \- set the 'close' on free */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_PENDING\fP   10/* opt \- is their more data buffered */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_FLUSH\fP   11/* opt \- 'flush' buffered output */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DUP\fP   12/* man \- extra stuff for 'duped' \fBBIO\fP */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_WPENDING\fP   13/* opt \- number \fBof\fP \fBbytes\fP still to write */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_SET_CALLBACK\fP   14/* opt \- set callback function */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_GET_CALLBACK\fP   15/* opt \- set callback function */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_SET_FILENAME\fP   30/* \fBBIO_s_file\fP special */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_CONNECT\fP   31/* \fBBIO\fP dgram special */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_CONNECTED\fP"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_RECV_TIMEOUT\fP   33/* setsockopt, essentially */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_RECV_TIMEOUT\fP   34/* getsockopt, essentially */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_SEND_TIMEOUT\fP   35/* setsockopt, essentially */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_SEND_TIMEOUT\fP   36/* getsockopt, essentially */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_RECV_TIMER_EXP\fP   37/* flag whether the last */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_SEND_TIMER_EXP\fP   38/* \fBI\fP/O operation tiemd out */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_MTU_DISCOVER\fP   39/* set DF bit on egress packets */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_QUERY_MTU\fP   40/* as kernel for current MTU */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_FALLBACK_MTU\fP   47"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_MTU\fP   41/* get cached value for MTU */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_MTU\fP"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_MTU_EXCEEDED\fP"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_PEER\fP   46"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_PEER\fP   44/* Destination for the data */"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_NEXT_TIMEOUT\fP"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SET_DONT_FRAG\fP   48"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_GET_MTU_OVERHEAD\fP   49"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_SET_IN_HANDSHAKE\fP   50"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_ADD_AUTH_KEY\fP   51"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_NEXT_AUTH_KEY\fP   52"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_AUTH_CCS_RCVD\fP   53"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_GET_SNDINFO\fP   60"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_SET_SNDINFO\fP   61"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_GET_RCVINFO\fP   62"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_SET_RCVINFO\fP   63"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_GET_PRINFO\fP   64"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_SET_PRINFO\fP   65"
+.br
+.ti -1c
+.RI "#define \fBBIO_CTRL_DGRAM_SCTP_SAVE_SHUTDOWN\fP   70"
+.br
+.ti -1c
+.RI "#define \fBBIO_FP_READ\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBBIO_FP_WRITE\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBBIO_FP_APPEND\fP   0x08"
+.br
+.ti -1c
+.RI "#define \fBBIO_FP_TEXT\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_READ\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_WRITE\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_IO_SPECIAL\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_RWS\fP   (\fBBIO_FLAGS_READ\fP|\fBBIO_FLAGS_WRITE\fP|\fBBIO_FLAGS_IO_SPECIAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_SHOULD_RETRY\fP   0x08"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_UPLINK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBBIO_GHBN_CTRL_HITS\fP   1"
+.br
+.ti -1c
+.RI "#define \fBBIO_GHBN_CTRL_MISSES\fP   2"
+.br
+.ti -1c
+.RI "#define \fBBIO_GHBN_CTRL_CACHE_SIZE\fP   3"
+.br
+.ti -1c
+.RI "#define \fBBIO_GHBN_CTRL_GET_ENTRY\fP   4"
+.br
+.ti -1c
+.RI "#define \fBBIO_GHBN_CTRL_FLUSH\fP   5"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_BASE64_NO_NL\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBBIO_FLAGS_MEM_RDONLY\fP   0x200"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_flags\fP(b)   \fBBIO_test_flags\fP(b, ~(0x0))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_retry_special\fP(b)   \fBBIO_set_flags\fP(b, (\fBBIO_FLAGS_IO_SPECIAL\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_retry_read\fP(b)   \fBBIO_set_flags\fP(b, (\fBBIO_FLAGS_READ\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_retry_write\fP(b)   \fBBIO_set_flags\fP(b, (\fBBIO_FLAGS_WRITE\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_clear_retry_flags\fP(b)   \fBBIO_clear_flags\fP(b, (\fBBIO_FLAGS_RWS\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_retry_flags\fP(b)   \fBBIO_test_flags\fP(b, (\fBBIO_FLAGS_RWS\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_should_read\fP(\fBa\fP)                           \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_READ\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_should_write\fP(\fBa\fP)                         \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_WRITE\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_should_io_special\fP(\fBa\fP)               \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_IO_SPECIAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_retry_type\fP(\fBa\fP)                             \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_RWS\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_should_retry\fP(\fBa\fP)                         \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_SHOULD_RETRY\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_RR_SSL_X509_LOOKUP\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBBIO_RR_CONNECT\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBBIO_RR_ACCEPT\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_FREE\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_READ\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_WRITE\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_PUTS\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_GETS\fP   0x05"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_CTRL\fP   0x06"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_RETURN\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBBIO_CB_return\fP(\fBa\fP)   ((\fBa\fP)|\fBBIO_CB_RETURN\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_cb_pre\fP(\fBa\fP)     (!((\fBa\fP)&\fBBIO_CB_RETURN\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_cb_post\fP(\fBa\fP)   ((\fBa\fP)&\fBBIO_CB_RETURN\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_BEFORE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_GET_IP\fP   2"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_GET_PORT\fP   3"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_CREATE_SOCKET\fP   4"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_CONNECT\fP   5"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_OK\fP   6"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_BLOCKED_CONNECT\fP   7"
+.br
+.ti -1c
+.RI "#define \fBBIO_CONN_S_NBIO\fP   8"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_CONNECT\fP   100"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_DO_STATE_MACHINE\fP   101"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_NBIO\fP   102"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_PROXY_PARAM\fP   103"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_FD\fP   104"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_FD\fP   105"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_FILE_PTR\fP   106"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_FILE_PTR\fP   107"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_FILENAME\fP   108"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_SSL\fP   109"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_SSL\fP   110"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_MD\fP   111"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_MD\fP   112"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_CIPHER_STATUS\fP   113"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_BUF_MEM\fP   114"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_BUF_MEM_PTR\fP   115"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_BUFF_NUM_LINES\fP   116"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_BUFF_SIZE\fP   117"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_ACCEPT\fP   118"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SSL_MODE\fP   119"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_MD_CTX\fP   120"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_PROXY_PARAM\fP   121"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_BUFF_READ_DATA\fP   122/* data to read first */"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_CONNECT\fP   123"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_ACCEPT\fP   124"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_SSL_RENEGOTIATE_BYTES\fP   125"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_SSL_NUM_RENEGOTIATES\fP   126"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_SSL_RENEGOTIATE_TIMEOUT\fP   127"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_FILE_SEEK\fP   128"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_CIPHER_CTX\fP   129"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_BUF_MEM_EOF_RETURN\fP"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_BIND_MODE\fP   131"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_BIND_MODE\fP   132"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_FILE_TELL\fP   133"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_SOCKS\fP   134"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_SOCKS\fP   135"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_WRITE_BUF_SIZE\fP   136/* for \fBBIO_s_bio\fP */"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_WRITE_BUF_SIZE\fP   137"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_MAKE_BIO_PAIR\fP   138"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_DESTROY_BIO_PAIR\fP   139"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_WRITE_GUARANTEE\fP   140"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_READ_REQUEST\fP   141"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SHUTDOWN_WR\fP   142"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_NREAD0\fP   143"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_NREAD\fP   144"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_NWRITE0\fP   145"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_NWRITE\fP   146"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_RESET_READ_REQUEST\fP   147"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_MD_CTX\fP   148"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_PREFIX\fP   149"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_PREFIX\fP   150"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_SUFFIX\fP   151"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_SUFFIX\fP   152"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_SET_EX_ARG\fP   153"
+.br
+.ti -1c
+.RI "#define \fBBIO_C_GET_EX_ARG\fP   154"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_app_data\fP(s,  arg)                 \fBBIO_set_ex_data\fP(s,0,arg)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_app_data\fP(s)                         \fBBIO_get_ex_data\fP(s,0)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_conn_hostname\fP(b,  name)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,0,(char *)name)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_conn_port\fP(b,  port)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,1,(char *)port)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_conn_ip\fP(b,  ip)         \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,2,(char *)ip)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_conn_int_port\fP(b,  port)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,3,(char *)port)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_conn_hostname\fP(b)   \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,0)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_conn_port\fP(b)           \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,1)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_conn_ip\fP(b)                             \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,2)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_conn_int_port\fP(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,3,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_nbio\fP(b,  n)             \fBBIO_ctrl\fP(b,\fBBIO_C_SET_NBIO\fP,(n),NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_accept_port\fP(b,  name)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_ACCEPT\fP,0,(char *)name)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_accept_port\fP(b)   \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_ACCEPT\fP,0)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_nbio_accept\fP(b,  n)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_ACCEPT\fP,1,(n)?(\fBvoid\fP *)'a':NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_accept_bios\fP(b,  bio)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_ACCEPT\fP,2,(char *)bio)"
+.br
+.ti -1c
+.RI "#define \fBBIO_BIND_NORMAL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBBIO_BIND_REUSEADDR_IF_UNUSED\fP   1"
+.br
+.ti -1c
+.RI "#define \fBBIO_BIND_REUSEADDR\fP   2"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_bind_mode\fP(b,  mode)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BIND_MODE\fP,mode,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_bind_mode\fP(b,  mode)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_BIND_MODE\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_do_connect\fP(b)             \fBBIO_do_handshake\fP(b)"
+.br
+.ti -1c
+.RI "#define \fBBIO_do_accept\fP(b)               \fBBIO_do_handshake\fP(b)"
+.br
+.ti -1c
+.RI "#define \fBBIO_do_handshake\fP(b)         \fBBIO_ctrl\fP(b,\fBBIO_C_DO_STATE_MACHINE\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_url\fP(b,  url)           \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,0,(char *)(url))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_proxies\fP(b,  \fBp\fP)       \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,1,(char *)(\fBp\fP))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_filter_bio\fP(b,  s)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,2,(char *)(s))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_proxy_cb\fP(b,  \fBcb\fP)   \fBBIO_callback_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,3,(\fBvoid\fP *(*\fBcb\fP)()))"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_proxy_header\fP(b,  sk)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,4,(char *)sk)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_no_connect_return\fP(b,  bool)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,5,bool)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_proxy_header\fP(b,  skp)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,0,(char *)skp)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_proxies\fP(b,  pxy_p)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,1,(char *)(pxy_p))"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_url\fP(b,  url)           \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,2,(char *)(url))"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_no_connect_return\fP(b)       \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,5,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_fd\fP(b,  fd,  \fBc\fP)           \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_FD\fP,\fBc\fP,fd)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_fd\fP(b,  \fBc\fP)                 \fBBIO_ctrl\fP(b,\fBBIO_C_GET_FD\fP,0,(char *)\fBc\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_fp\fP(b,  \fBfp\fP,  \fBc\fP)           \fBBIO_ctrl\fP(b,\fBBIO_C_SET_FILE_PTR\fP,\fBc\fP,(char *)\fBfp\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_fp\fP(b,  fpp)             \fBBIO_ctrl\fP(b,\fBBIO_C_GET_FILE_PTR\fP,0,(char *)fpp)"
+.br
+.ti -1c
+.RI "#define \fBBIO_seek\fP(b,  ofs)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_FILE_SEEK\fP,ofs,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_tell\fP(b)         (int)\fBBIO_ctrl\fP(b,\fBBIO_C_FILE_TELL\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_read_filename\fP(b,  name)"
+.br
+.ti -1c
+.RI "#define \fBBIO_write_filename\fP(b,  name)"
+.br
+.ti -1c
+.RI "#define \fBBIO_append_filename\fP(b,  name)"
+.br
+.ti -1c
+.RI "#define \fBBIO_rw_filename\fP(b,  name)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_ssl\fP(b,  ssl,  \fBc\fP)       \fBBIO_ctrl\fP(b,\fBBIO_C_SET_SSL\fP,\fBc\fP,(char *)ssl)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_ssl\fP(b,  sslp)         \fBBIO_ctrl\fP(b,\fBBIO_C_GET_SSL\fP,0,(char *)sslp)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_ssl_mode\fP(b,  client)           \fBBIO_ctrl\fP(b,\fBBIO_C_SSL_MODE\fP,client,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_ssl_renegotiate_bytes\fP(b,  \fBnum\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_SSL_RENEGOTIATE_BYTES\fP,\fBnum\fP,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_num_renegotiates\fP(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_SSL_NUM_RENEGOTIATES\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_ssl_renegotiate_timeout\fP(b,  seconds)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_SSL_RENEGOTIATE_TIMEOUT\fP,seconds,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_mem_data\fP(b,  \fBpp\fP)   \fBBIO_ctrl\fP(b,\fBBIO_CTRL_INFO\fP,0,(char *)\fBpp\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_mem_buf\fP(b,  bm,  \fBc\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUF_MEM\fP,\fBc\fP,(char *)bm)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_mem_ptr\fP(b,  \fBpp\fP)     \fBBIO_ctrl\fP(b,\fBBIO_C_GET_BUF_MEM_PTR\fP,0,(char *)\fBpp\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_mem_eof_return\fP(b,  v)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUF_MEM_EOF_RETURN\fP,v,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_buffer_num_lines\fP(b)         \fBBIO_ctrl\fP(b,\fBBIO_C_GET_BUFF_NUM_LINES\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_buffer_size\fP(b,  size)         \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUFF_SIZE\fP,size,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_read_buffer_size\fP(b,  size)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_BUFF_SIZE\fP,size,0)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_write_buffer_size\fP(b,  size)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_BUFF_SIZE\fP,size,1)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_buffer_read_data\fP(b,  buf,  \fBnum\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUFF_READ_DATA\fP,\fBnum\fP,buf)"
+.br
+.ti -1c
+.RI "#define \fBBIO_dup_state\fP(b,  ret)       \fBBIO_ctrl\fP(b,\fBBIO_CTRL_DUP\fP,0,(char *)(ret))"
+.br
+.ti -1c
+.RI "#define \fBBIO_reset\fP(b)                       (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_RESET\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_eof\fP(b)                           (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_EOF\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_close\fP(b,  \fBc\fP)           (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_SET_CLOSE\fP,(\fBc\fP),NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_close\fP(b)               (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_GET_CLOSE\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_pending\fP(b)                   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_PENDING\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_wpending\fP(b)                 (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_WPENDING\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_flush\fP(b)                       (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_FLUSH\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_info_callback\fP(b,  cbp)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_info_callback\fP(b,  \fBcb\fP)   (int)\fBBIO_callback_ctrl\fP(b,\fBBIO_CTRL_SET_CALLBACK\fP,\fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_buffer_get_num_lines\fP(b)   \fBBIO_ctrl\fP(b,\fBBIO_CTRL_GET\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_set_write_buf_size\fP(b,  size)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_SET_WRITE_BUF_SIZE\fP,size,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_write_buf_size\fP(b,  size)   (size_t)\fBBIO_ctrl\fP(b,\fBBIO_C_GET_WRITE_BUF_SIZE\fP,size,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_make_bio_pair\fP(b1,  b2)     (int)\fBBIO_ctrl\fP(b1,\fBBIO_C_MAKE_BIO_PAIR\fP,0,b2)"
+.br
+.ti -1c
+.RI "#define \fBBIO_destroy_bio_pair\fP(b)       (int)\fBBIO_ctrl\fP(b,\fBBIO_C_DESTROY_BIO_PAIR\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_shutdown_wr\fP(b)   (int)\fBBIO_ctrl\fP(b, \fBBIO_C_SHUTDOWN_WR\fP, 0, NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_write_guarantee\fP(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_GET_WRITE_GUARANTEE\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_get_read_request\fP(b)       (int)\fBBIO_ctrl\fP(b,\fBBIO_C_GET_READ_REQUEST\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_ctrl_dgram_connect\fP(b,  peer)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_DGRAM_CONNECT\fP,0, (char *)peer)"
+.br
+.ti -1c
+.RI "#define \fBBIO_ctrl_set_connected\fP(b,  state,  peer)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_SET_CONNECTED\fP, state, (char *)peer)"
+.br
+.ti -1c
+.RI "#define \fBBIO_dgram_recv_timedout\fP(b)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_GET_RECV_TIMER_EXP\fP, 0, NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_dgram_send_timedout\fP(b)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_GET_SEND_TIMER_EXP\fP, 0, NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_dgram_get_peer\fP(b,  peer)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_GET_PEER\fP, 0, (char *)peer)"
+.br
+.ti -1c
+.RI "#define \fBBIO_dgram_set_peer\fP(b,  peer)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_SET_PEER\fP, 0, (char *)peer)"
+.br
+.ti -1c
+.RI "#define \fBBIO_dgram_get_mtu_overhead\fP(b)   (unsigned int)\fBBIO_ctrl\fP((b), \fBBIO_CTRL_DGRAM_GET_MTU_OVERHEAD\fP, 0, NULL)"
+.br
+.ti -1c
+.RI "#define \fBBIO_s_file_internal\fP   \fBBIO_s_file\fP"
+.br
+.ti -1c
+.RI "#define \fB__bio_h__attr__\fP(\fBx\fP)"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_ACPT_STATE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_ACCEPT\fP   101"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_BER_GET_HEADER\fP   102"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_CALLBACK_CTRL\fP   131"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_CTRL\fP   103"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_GETHOSTBYNAME\fP   120"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_GETS\fP   104"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_GET_ACCEPT_SOCKET\fP   105"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_GET_HOST_IP\fP   106"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_GET_PORT\fP   107"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_MAKE_PAIR\fP   121"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NEW\fP   108"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NEW_FILE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NEW_MEM_BUF\fP   126"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NREAD\fP   123"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NREAD0\fP   124"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NWRITE\fP   125"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_NWRITE0\fP   122"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_PUTS\fP   110"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_READ\fP   111"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_SOCK_INIT\fP   112"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BIO_WRITE\fP   113"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_BUFFER_CTRL\fP   114"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_CONN_CTRL\fP   127"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_CONN_STATE\fP   115"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_DGRAM_SCTP_READ\fP   132"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_DGRAM_SCTP_WRITE\fP   133"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_FILE_CTRL\fP   116"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_FILE_READ\fP   130"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_LINEBUFFER_CTRL\fP   129"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_MEM_READ\fP   128"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_MEM_WRITE\fP   117"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_SSL_NEW\fP   118"
+.br
+.ti -1c
+.RI "#define \fBBIO_F_WSASTARTUP\fP   119"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_ACCEPT_ERROR\fP   100"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_BAD_FOPEN_MODE\fP   101"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_BAD_HOSTNAME_LOOKUP\fP   102"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_BROKEN_PIPE\fP   124"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_CONNECT_ERROR\fP   103"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_EOF_ON_MEMORY_BIO\fP   127"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_ERROR_SETTING_NBIO\fP   104"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_ERROR_SETTING_NBIO_ON_ACCEPTED_SOCKET\fP   105"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_ERROR_SETTING_NBIO_ON_ACCEPT_SOCKET\fP   106"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_GETHOSTBYNAME_ADDR_IS_NOT_AF_INET\fP   107"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_INVALID_ARGUMENT\fP   125"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_INVALID_IP_ADDRESS\fP   108"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_IN_USE\fP   123"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_KEEPALIVE\fP   109"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NBIO_CONNECT_ERROR\fP   110"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NO_ACCEPT_PORT_SPECIFIED\fP   111"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NO_HOSTNAME_SPECIFIED\fP   112"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NO_PORT_DEFINED\fP   113"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NO_PORT_SPECIFIED\fP   114"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NO_SUCH_FILE\fP   128"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_NULL_PARAMETER\fP   115"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_TAG_MISMATCH\fP   116"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_UNABLE_TO_BIND_SOCKET\fP   117"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_UNABLE_TO_CREATE_SOCKET\fP   118"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_UNABLE_TO_LISTEN_SOCKET\fP   119"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_UNINITIALIZED\fP   120"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_UNSUPPORTED_METHOD\fP   121"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_WRITE_TO_READ_ONLY_BIO\fP   126"
+.br
+.ti -1c
+.RI "#define \fBBIO_R_WSASTARTUP\fP   122"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBbio_st\fP \fBBIO\fP"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP \fBbio_info_cb\fP(struct \fBbio_st\fP *, int, const char *, int, long, long)"
+.br
+.ti -1c
+.RI "typedef struct \fBbio_method_st\fP \fBBIO_METHOD\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBbio_f_buffer_ctx_struct\fP \fBBIO_F_BUFFER_CTX\fP"
+.br
+.ti -1c
+.RI "typedef int \fBasn1_ps_func\fP(\fBBIO\fP *b, unsigned char **pbuf, int *plen, \fBvoid\fP *parg)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_set_flags\fP (\fBBIO\fP *b, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_test_flags\fP (const \fBBIO\fP *b, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_clear_flags\fP (\fBBIO\fP *b, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_set_callback\fP (\fBBIO\fP *b, long(*callback)(struct \fBbio_st\fP *, int, const char *,                                                                                                                                                       int, long, long))"
+.br
+.ti -1c
+.RI "char * \fBBIO_get_callback_arg\fP (const \fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_set_callback_arg\fP (\fBBIO\fP *b, char *arg)"
+.br
+.ti -1c
+.RI "const char * \fBBIO_method_name\fP (const \fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBBIO_method_type\fP (const \fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "size_t \fBBIO_ctrl_pending\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "size_t \fBBIO_ctrl_wpending\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "size_t \fBBIO_ctrl_get_write_guarantee\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "size_t \fBBIO_ctrl_get_read_request\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBBIO_ctrl_reset_read_request\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBBIO_set_ex_data\fP (\fBBIO\fP *bio, int idx, \fBvoid\fP *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBBIO_get_ex_data\fP (\fBBIO\fP *bio, int idx)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBBIO_number_read\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "unsigned long \fBBIO_number_written\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_set_prefix\fP (\fBBIO\fP *b, \fBasn1_ps_func\fP *prefix, \fBasn1_ps_func\fP *prefix_free)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_get_prefix\fP (\fBBIO\fP *b, \fBasn1_ps_func\fP **pprefix, \fBasn1_ps_func\fP **pprefix_free)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_set_suffix\fP (\fBBIO\fP *b, \fBasn1_ps_func\fP *suffix, \fBasn1_ps_func\fP *suffix_free)"
+.br
+.ti -1c
+.RI "int \fBBIO_asn1_get_suffix\fP (\fBBIO\fP *b, \fBasn1_ps_func\fP **psuffix, \fBasn1_ps_func\fP **psuffix_free)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_file\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_file\fP (const char *filename, const char *mode)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_fp\fP (FILE *stream, int close_flag)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new\fP (\fBBIO_METHOD\fP *\fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_set\fP (\fBBIO\fP *\fBa\fP, \fBBIO_METHOD\fP *\fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_free\fP (\fBBIO\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_vfree\fP (\fBBIO\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_read\fP (\fBBIO\fP *b, \fBvoid\fP *data, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_gets\fP (\fBBIO\fP *\fBbp\fP, char *buf, int size)"
+.br
+.ti -1c
+.RI "int \fBBIO_write\fP (\fBBIO\fP *b, const \fBvoid\fP *data, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_puts\fP (\fBBIO\fP *\fBbp\fP, const char *buf)"
+.br
+.ti -1c
+.RI "int \fBBIO_indent\fP (\fBBIO\fP *b, int indent, int max)"
+.br
+.ti -1c
+.RI "long \fBBIO_ctrl\fP (\fBBIO\fP *\fBbp\fP, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long \fBBIO_callback_ctrl\fP (\fBBIO\fP *b, int cmd, \fBvoid\fP(*\fBfp\fP)(struct \fBbio_st\fP *, int, const char *, int,                                                                                                                                   long, long))"
+.br
+.ti -1c
+.RI "char * \fBBIO_ptr_ctrl\fP (\fBBIO\fP *\fBbp\fP, int cmd, long larg)"
+.br
+.ti -1c
+.RI "long \fBBIO_int_ctrl\fP (\fBBIO\fP *\fBbp\fP, int cmd, long larg, int iarg)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_push\fP (\fBBIO\fP *b, \fBBIO\fP *append)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_pop\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_free_all\fP (\fBBIO\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_find_type\fP (\fBBIO\fP *b, int bio_type)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_next\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_get_retry_BIO\fP (\fBBIO\fP *bio, int *reason)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_retry_reason\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_dup_chain\fP (\fBBIO\fP *in)"
+.br
+.ti -1c
+.RI "int \fBBIO_nread0\fP (\fBBIO\fP *bio, char **buf)"
+.br
+.ti -1c
+.RI "int \fBBIO_nread\fP (\fBBIO\fP *bio, char **buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_nwrite0\fP (\fBBIO\fP *bio, char **buf)"
+.br
+.ti -1c
+.RI "int \fBBIO_nwrite\fP (\fBBIO\fP *bio, char **buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "long \fBBIO_debug_callback\fP (\fBBIO\fP *bio, int cmd, const char *argp, int argi, long argl, long ret)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_mem\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_mem_buf\fP (const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_socket\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_connect\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_accept\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_fd\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_log\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_bio\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_null\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_f_null\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_f_buffer\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_f_nbio_test\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_datagram\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBBIO_METHOD\fP * \fBBIO_s_datagram_sctp\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_sock_should_retry\fP (int i)"
+.br
+.ti -1c
+.RI "int \fBBIO_sock_non_fatal_error\fP (int error)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_non_fatal_error\fP (int error)"
+.br
+.ti -1c
+.RI "int \fBBIO_fd_should_retry\fP (int i)"
+.br
+.ti -1c
+.RI "int \fBBIO_fd_non_fatal_error\fP (int error)"
+.br
+.ti -1c
+.RI "int \fBBIO_dump_cb\fP (int(*\fBcb\fP)(const \fBvoid\fP *data, size_t \fBlen\fP, \fBvoid\fP *\fBu\fP), \fBvoid\fP *\fBu\fP, const char *s, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_dump_indent_cb\fP (int(*\fBcb\fP)(const \fBvoid\fP *data, size_t \fBlen\fP, \fBvoid\fP *\fBu\fP), \fBvoid\fP *\fBu\fP, const char *s, int \fBlen\fP, int indent)"
+.br
+.ti -1c
+.RI "int \fBBIO_dump\fP (\fBBIO\fP *b, const char *\fBbytes\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_dump_indent\fP (\fBBIO\fP *b, const char *\fBbytes\fP, int \fBlen\fP, int indent)"
+.br
+.ti -1c
+.RI "int \fBBIO_dump_fp\fP (FILE *\fBfp\fP, const char *s, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_dump_indent_fp\fP (FILE *\fBfp\fP, const char *s, int \fBlen\fP, int indent)"
+.br
+.ti -1c
+.RI "int \fBBIO_hex_string\fP (\fBBIO\fP *out, int indent, int width, unsigned char *data, int datalen)"
+.br
+.ti -1c
+.RI "struct hostent * \fBBIO_gethostbyname\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBBIO_sock_error\fP (int sock)"
+.br
+.ti -1c
+.RI "int \fBBIO_socket_ioctl\fP (int fd, long \fBtype\fP, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "int \fBBIO_socket_nbio\fP (int fd, int mode)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_port\fP (const char *str, unsigned short *port_ptr)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_host_ip\fP (const char *str, unsigned char *ip)"
+.br
+.ti -1c
+.RI "int \fBBIO_get_accept_socket\fP (char *host_port, int mode)"
+.br
+.ti -1c
+.RI "int \fBBIO_accept\fP (int sock, char **ip_port)"
+.br
+.ti -1c
+.RI "int \fBBIO_sock_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_sock_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBBIO_set_tcp_ndelay\fP (int sock, int turn_on)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_socket\fP (int sock, int close_flag)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_dgram\fP (int fd, int close_flag)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_dgram_sctp\fP (int fd, int close_flag)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_is_sctp\fP (\fBBIO\fP *bio)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_sctp_notification_cb\fP (\fBBIO\fP *b, \fBvoid\fP(*handle_notifications)(\fBBIO\fP *bio,                                                                                                                                                                                                                                                           \fBvoid\fP                                                                                                                                                                                                                                                           *context,                                                                                                                                                                                                                                                           \fBvoid\fP *buf), \fBvoid\fP *context)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_sctp_wait_for_dry\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBBIO_dgram_sctp_msg_waiting\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_fd\fP (int fd, int close_flag)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_connect\fP (const char *host_port)"
+.br
+.ti -1c
+.RI "\fBBIO\fP * \fBBIO_new_accept\fP (const char *host_port)"
+.br
+.ti -1c
+.RI "int \fBBIO_new_bio_pair\fP (\fBBIO\fP **bio1, size_t writebuf1, \fBBIO\fP **bio2, size_t writebuf2)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBBIO_copy_next_retry\fP (\fBBIO\fP *b)"
+.br
+.ti -1c
+.RI "int \fBBIO_printf\fP (\fBBIO\fP *bio, const char *\fBformat\fP,\&.\&.\&.) \fB__bio_h__attr__\fP((__format__(__printf__"
+.br
+.ti -1c
+.RI "int int \fBBIO_vprintf\fP (\fBBIO\fP *bio, const char *\fBformat\fP, va_list args) \fB__bio_h__attr__\fP((__format__(__printf__"
+.br
+.ti -1c
+.RI "int int int \fBBIO_snprintf\fP (char *buf, size_t n, const char *\fBformat\fP,\&.\&.\&.) \fB__bio_h__attr__\fP((__format__(__printf__"
+.br
+.ti -1c
+.RI "int int int int \fBBIO_vsnprintf\fP (char *buf, size_t n, const char *\fBformat\fP, va_list args) \fB__bio_h__attr__\fP((__format__(__printf__"
+.br
+.ti -1c
+.RI "int int int int \fBvoid\fP \fBERR_load_BIO_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "long(*)(struct \fBbio_st\fP *, int, const char *, int, long, long) \fBBIO_get_callback\fP (const \fBBIO\fP *b)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define __bio_h__attr__(\fBx\fP)"
+
+.PP
+Definition at line 792 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_append_filename(b, name)"
+\fBValue:\fP
+.PP
+.nf
+BIO_ctrl(b,BIO_C_SET_FILENAME, \
+                BIO_CLOSE|BIO_FP_APPEND,name)
+.fi
+.PP
+Definition at line 547 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_BIND_NORMAL   0"
+
+.PP
+Definition at line 493 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_BIND_REUSEADDR   2"
+
+.PP
+Definition at line 495 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_BIND_REUSEADDR_IF_UNUSED   1"
+
+.PP
+Definition at line 494 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_buffer_get_num_lines(b)   \fBBIO_ctrl\fP(b,\fBBIO_CTRL_GET\fP,0,NULL)"
+
+.PP
+Definition at line 602 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_DESTROY_BIO_PAIR   139"
+
+.PP
+Definition at line 452 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_DO_STATE_MACHINE   101"
+
+.PP
+Definition at line 412 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_FILE_SEEK   128"
+
+.PP
+Definition at line 439 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_FILE_TELL   133"
+
+.PP
+Definition at line 445 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_ACCEPT   124"
+
+.PP
+Definition at line 435 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_BIND_MODE   132"
+
+.PP
+Definition at line 444 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_BUF_MEM_PTR   115"
+
+.PP
+Definition at line 426 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_BUFF_NUM_LINES   116"
+
+.PP
+Definition at line 427 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_CIPHER_CTX   129"
+
+.PP
+Definition at line 440 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_CIPHER_STATUS   113"
+
+.PP
+Definition at line 424 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_CONNECT   123"
+
+.PP
+Definition at line 434 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_EX_ARG   154"
+
+.PP
+Definition at line 469 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_FD   105"
+
+.PP
+Definition at line 416 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_FILE_PTR   107"
+
+.PP
+Definition at line 418 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_MD   112"
+
+.PP
+Definition at line 423 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_MD_CTX   120"
+
+.PP
+Definition at line 431 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_PREFIX   150"
+
+.PP
+Definition at line 464 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_PROXY_PARAM   121"
+
+.PP
+Definition at line 432 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_READ_REQUEST   141"
+
+.PP
+Definition at line 454 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_SOCKS   134"
+
+.PP
+Definition at line 446 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_SSL   110"
+
+.PP
+Definition at line 421 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_SSL_NUM_RENEGOTIATES   126"
+
+.PP
+Definition at line 437 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_SUFFIX   152"
+
+.PP
+Definition at line 466 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_WRITE_BUF_SIZE   137"
+
+.PP
+Definition at line 450 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_GET_WRITE_GUARANTEE   140"
+
+.PP
+Definition at line 453 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_MAKE_BIO_PAIR   138"
+
+.PP
+Definition at line 451 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_NREAD   144"
+
+.PP
+Definition at line 457 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_NREAD0   143"
+
+.PP
+Definition at line 456 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_NWRITE   146"
+
+.PP
+Definition at line 459 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_NWRITE0   145"
+
+.PP
+Definition at line 458 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_RESET_READ_REQUEST   147"
+
+.PP
+Definition at line 460 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_ACCEPT   118"
+
+.PP
+Definition at line 429 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_BIND_MODE   131"
+
+.PP
+Definition at line 443 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_BUF_MEM   114"
+
+.PP
+Definition at line 425 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_BUF_MEM_EOF_RETURN"
+\fBValue:\fP
+.PP
+.nf
+130/* return end of input
+                                                     * value */
+.fi
+.PP
+Definition at line 441 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_BUFF_READ_DATA   122/* data to read first */"
+
+.PP
+Definition at line 433 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_BUFF_SIZE   117"
+
+.PP
+Definition at line 428 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_CONNECT   100"
+
+.PP
+Definition at line 411 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_EX_ARG   153"
+
+.PP
+Definition at line 468 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_FD   104"
+
+.PP
+Definition at line 415 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_FILE_PTR   106"
+
+.PP
+Definition at line 417 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_FILENAME   108"
+
+.PP
+Definition at line 419 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_MD   111"
+
+.PP
+Definition at line 422 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_MD_CTX   148"
+
+.PP
+Definition at line 461 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_NBIO   102"
+
+.PP
+Definition at line 413 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_PREFIX   149"
+
+.PP
+Definition at line 463 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_PROXY_PARAM   103"
+
+.PP
+Definition at line 414 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_SOCKS   135"
+
+.PP
+Definition at line 447 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_SSL   109"
+
+.PP
+Definition at line 420 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_SSL_RENEGOTIATE_BYTES   125"
+
+.PP
+Definition at line 436 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_SSL_RENEGOTIATE_TIMEOUT   127"
+
+.PP
+Definition at line 438 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_SUFFIX   151"
+
+.PP
+Definition at line 465 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SET_WRITE_BUF_SIZE   136/* for \fBBIO_s_bio\fP */"
+
+.PP
+Definition at line 449 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SHUTDOWN_WR   142"
+
+.PP
+Definition at line 455 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_C_SSL_MODE   119"
+
+.PP
+Definition at line 430 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_CTRL   0x06"
+
+.PP
+Definition at line 287 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_FREE   0x01"
+
+.PP
+Definition at line 282 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_GETS   0x05"
+
+.PP
+Definition at line 286 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_cb_post(\fBa\fP)   ((\fBa\fP)&\fBBIO_CB_RETURN\fP)"
+
+.PP
+Definition at line 296 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_cb_pre(\fBa\fP)   (!((\fBa\fP)&\fBBIO_CB_RETURN\fP))"
+
+.PP
+Definition at line 295 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_PUTS   0x04"
+
+.PP
+Definition at line 285 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_READ   0x02"
+
+.PP
+Definition at line 283 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_RETURN   0x80"
+
+.PP
+Definition at line 293 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_return(\fBa\fP)   ((\fBa\fP)|\fBBIO_CB_RETURN\fP)"
+
+.PP
+Definition at line 294 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CB_WRITE   0x03"
+
+.PP
+Definition at line 284 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_clear_retry_flags(b)   \fBBIO_clear_flags\fP(b, (\fBBIO_FLAGS_RWS\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+
+.PP
+Definition at line 253 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CLOSE   0x01"
+
+.PP
+Definition at line 121 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_BEFORE   1"
+
+.PP
+Definition at line 399 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_BLOCKED_CONNECT   7"
+
+.PP
+Definition at line 405 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_CONNECT   5"
+
+.PP
+Definition at line 403 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_CREATE_SOCKET   4"
+
+.PP
+Definition at line 402 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_GET_IP   2"
+
+.PP
+Definition at line 400 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_GET_PORT   3"
+
+.PP
+Definition at line 401 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_NBIO   8"
+
+.PP
+Definition at line 406 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CONN_S_OK   6"
+
+.PP
+Definition at line 404 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_CONNECT   31/* \fBBIO\fP dgram special */"
+
+.PP
+Definition at line 146 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_ctrl_dgram_connect(b, peer)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_DGRAM_CONNECT\fP,0, (char *)peer)"
+
+.PP
+Definition at line 618 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_FALLBACK_MTU   47"
+
+.PP
+Definition at line 162 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_MTU   41/* get cached value for MTU */"
+
+.PP
+Definition at line 163 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_MTU_OVERHEAD   49"
+
+.PP
+Definition at line 179 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_PEER   46"
+
+.PP
+Definition at line 172 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_RECV_TIMEOUT   34/* getsockopt, essentially */"
+
+.PP
+Definition at line 150 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_RECV_TIMER_EXP   37/* flag whether the last */"
+
+.PP
+Definition at line 154 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_SEND_TIMEOUT   36/* getsockopt, essentially */"
+
+.PP
+Definition at line 152 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_GET_SEND_TIMER_EXP   38/* \fBI\fP/O operation tiemd out */"
+
+.PP
+Definition at line 155 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_MTU_DISCOVER   39/* set DF bit on egress packets */"
+
+.PP
+Definition at line 158 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_MTU_EXCEEDED"
+\fBValue:\fP
+.PP
+.nf
+43/* check whether the MTU was
+                                              * exceed in the previous write
+                                              * operation */
+.fi
+.PP
+Definition at line 168 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_QUERY_MTU   40/* as kernel for current MTU */"
+
+.PP
+Definition at line 161 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_ADD_AUTH_KEY   51"
+
+.PP
+Definition at line 184 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_AUTH_CCS_RCVD   53"
+
+.PP
+Definition at line 186 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_GET_PRINFO   64"
+
+.PP
+Definition at line 191 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_GET_RCVINFO   62"
+
+.PP
+Definition at line 189 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_GET_SNDINFO   60"
+
+.PP
+Definition at line 187 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_NEXT_AUTH_KEY   52"
+
+.PP
+Definition at line 185 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_SAVE_SHUTDOWN   70"
+
+.PP
+Definition at line 193 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_SET_IN_HANDSHAKE   50"
+
+.PP
+Definition at line 183 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_SET_PRINFO   65"
+
+.PP
+Definition at line 192 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_SET_RCVINFO   63"
+
+.PP
+Definition at line 190 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SCTP_SET_SNDINFO   61"
+
+.PP
+Definition at line 188 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_CONNECTED"
+\fBValue:\fP
+.PP
+.nf
+32/* allow for an externally connected
+                                         * socket to be passed in */
+.fi
+.PP
+Definition at line 147 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_DONT_FRAG   48"
+
+.PP
+Definition at line 177 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_MTU"
+\fBValue:\fP
+.PP
+.nf
+42/* set cached value for MTU\&.
+                                              * want to use this if asking
+                                              * the kernel fails */
+.fi
+.PP
+Definition at line 164 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT"
+\fBValue:\fP
+.PP
+.nf
+45/* Next DTLS handshake timeout
+                                              * to adjust socket timeouts */
+.fi
+.PP
+Definition at line 175 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_PEER   44/* Destination for the data */"
+
+.PP
+Definition at line 173 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_RECV_TIMEOUT   33/* setsockopt, essentially */"
+
+.PP
+Definition at line 149 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DGRAM_SET_SEND_TIMEOUT   35/* setsockopt, essentially */"
+
+.PP
+Definition at line 151 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_DUP   12/* man \- extra stuff for 'duped' \fBBIO\fP */"
+
+.PP
+Definition at line 137 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_EOF   2/* opt \- are we at the eof */"
+
+.PP
+Definition at line 127 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_FLUSH   11/* opt \- 'flush' buffered output */"
+
+.PP
+Definition at line 136 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_GET   5/* man \- get the 'IO' \fBtype\fP */"
+
+.PP
+Definition at line 130 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_GET_CALLBACK   15/* opt \- set callback function */"
+
+.PP
+Definition at line 141 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_GET_CLOSE   8/* man \- set the 'close' on free */"
+
+.PP
+Definition at line 133 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_INFO   3/* opt \- extra tit\-\fBbits\fP */"
+
+.PP
+Definition at line 128 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_PENDING   10/* opt \- is their more data buffered */"
+
+.PP
+Definition at line 135 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_POP   7/* opt \- internal, used to signify change */"
+
+.PP
+Definition at line 132 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_PUSH   6/* opt \- internal, used to signify change */"
+
+.PP
+Definition at line 131 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_RESET   1/* opt \- rewind/zero etc */"
+
+.PP
+Definition at line 126 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_SET   4/* man \- set the 'IO' \fBtype\fP */"
+
+.PP
+Definition at line 129 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_SET_CALLBACK   14/* opt \- set callback function */"
+
+.PP
+Definition at line 140 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_SET_CLOSE   9/* man \- set the 'close' on free */"
+
+.PP
+Definition at line 134 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_ctrl_set_connected(b, state, peer)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_SET_CONNECTED\fP, state, (char *)peer)"
+
+.PP
+Definition at line 620 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_SET_FILENAME   30/* \fBBIO_s_file\fP special */"
+
+.PP
+Definition at line 143 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_CTRL_WPENDING   13/* opt \- number \fBof\fP \fBbytes\fP still to write */"
+
+.PP
+Definition at line 138 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_destroy_bio_pair(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_DESTROY_BIO_PAIR\fP,0,NULL)"
+
+.PP
+Definition at line 608 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_dgram_get_mtu_overhead(b)   (unsigned int)\fBBIO_ctrl\fP((b), \fBBIO_CTRL_DGRAM_GET_MTU_OVERHEAD\fP, 0, NULL)"
+
+.PP
+Definition at line 630 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_dgram_get_peer(b, peer)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_GET_PEER\fP, 0, (char *)peer)"
+
+.PP
+Definition at line 626 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_dgram_recv_timedout(b)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_GET_RECV_TIMER_EXP\fP, 0, NULL)"
+
+.PP
+Definition at line 622 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_dgram_send_timedout(b)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_GET_SEND_TIMER_EXP\fP, 0, NULL)"
+
+.PP
+Definition at line 624 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_dgram_set_peer(b, peer)   (int)\fBBIO_ctrl\fP(b, \fBBIO_CTRL_DGRAM_SET_PEER\fP, 0, (char *)peer)"
+
+.PP
+Definition at line 628 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_do_accept(b)   \fBBIO_do_handshake\fP(b)"
+
+.PP
+Definition at line 501 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_do_connect(b)   \fBBIO_do_handshake\fP(b)"
+
+.PP
+Definition at line 500 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_do_handshake(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_DO_STATE_MACHINE\fP,0,NULL)"
+
+.PP
+Definition at line 502 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_dup_state(b, ret)   \fBBIO_ctrl\fP(b,\fBBIO_CTRL_DUP\fP,0,(char *)(ret))"
+
+.PP
+Definition at line 585 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_eof(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_EOF\fP,0,NULL)"
+
+.PP
+Definition at line 588 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_ACPT_STATE   100"
+
+.PP
+Definition at line 814 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_ACCEPT   101"
+
+.PP
+Definition at line 815 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_BER_GET_HEADER   102"
+
+.PP
+Definition at line 816 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_CALLBACK_CTRL   131"
+
+.PP
+Definition at line 817 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_CTRL   103"
+
+.PP
+Definition at line 818 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_GET_ACCEPT_SOCKET   105"
+
+.PP
+Definition at line 821 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_GET_HOST_IP   106"
+
+.PP
+Definition at line 822 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_GET_PORT   107"
+
+.PP
+Definition at line 823 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_GETHOSTBYNAME   120"
+
+.PP
+Definition at line 819 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_GETS   104"
+
+.PP
+Definition at line 820 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_MAKE_PAIR   121"
+
+.PP
+Definition at line 824 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NEW   108"
+
+.PP
+Definition at line 825 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NEW_FILE   109"
+
+.PP
+Definition at line 826 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NEW_MEM_BUF   126"
+
+.PP
+Definition at line 827 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NREAD   123"
+
+.PP
+Definition at line 828 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NREAD0   124"
+
+.PP
+Definition at line 829 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NWRITE   125"
+
+.PP
+Definition at line 830 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_NWRITE0   122"
+
+.PP
+Definition at line 831 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_PUTS   110"
+
+.PP
+Definition at line 832 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_READ   111"
+
+.PP
+Definition at line 833 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_SOCK_INIT   112"
+
+.PP
+Definition at line 834 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BIO_WRITE   113"
+
+.PP
+Definition at line 835 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_BUFFER_CTRL   114"
+
+.PP
+Definition at line 836 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_CONN_CTRL   127"
+
+.PP
+Definition at line 837 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_CONN_STATE   115"
+
+.PP
+Definition at line 838 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_DGRAM_SCTP_READ   132"
+
+.PP
+Definition at line 839 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_DGRAM_SCTP_WRITE   133"
+
+.PP
+Definition at line 840 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_FILE_CTRL   116"
+
+.PP
+Definition at line 841 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_FILE_READ   130"
+
+.PP
+Definition at line 842 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_LINEBUFFER_CTRL   129"
+
+.PP
+Definition at line 843 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_MEM_READ   128"
+
+.PP
+Definition at line 844 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_MEM_WRITE   117"
+
+.PP
+Definition at line 845 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_SSL_NEW   118"
+
+.PP
+Definition at line 846 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_F_WSASTARTUP   119"
+
+.PP
+Definition at line 847 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_BASE64_NO_NL   0x100"
+
+.PP
+Definition at line 230 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_IO_SPECIAL   0x04"
+
+.PP
+Definition at line 204 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_MEM_RDONLY   0x200"
+
+.PP
+Definition at line 236 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_READ   0x01"
+
+.PP
+Definition at line 202 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_RWS   (\fBBIO_FLAGS_READ\fP|\fBBIO_FLAGS_WRITE\fP|\fBBIO_FLAGS_IO_SPECIAL\fP)"
+
+.PP
+Definition at line 205 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_SHOULD_RETRY   0x08"
+
+.PP
+Definition at line 206 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_UPLINK   0"
+
+.PP
+Definition at line 212 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FLAGS_WRITE   0x02"
+
+.PP
+Definition at line 203 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_flush(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_FLUSH\fP,0,NULL)"
+
+.PP
+Definition at line 596 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FP_APPEND   0x08"
+
+.PP
+Definition at line 199 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FP_READ   0x02"
+
+.PP
+Definition at line 197 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FP_TEXT   0x10"
+
+.PP
+Definition at line 200 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_FP_WRITE   0x04"
+
+.PP
+Definition at line 198 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_accept_port(b)   \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_ACCEPT\fP,0)"
+
+.PP
+Definition at line 488 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_app_data(s)   \fBBIO_get_ex_data\fP(s,0)"
+
+.PP
+Definition at line 472 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_bind_mode(b, mode)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_BIND_MODE\fP,0,NULL)"
+
+.PP
+Definition at line 497 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_buffer_num_lines(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_BUFF_NUM_LINES\fP,0,NULL)"
+
+.PP
+Definition at line 578 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_close(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_GET_CLOSE\fP,0,NULL)"
+
+.PP
+Definition at line 590 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_conn_hostname(b)   \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,0)"
+
+.PP
+Definition at line 479 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_conn_int_port(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,3,NULL)"
+
+.PP
+Definition at line 482 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_conn_ip(b)   \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,2)"
+
+.PP
+Definition at line 481 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_conn_port(b)   \fBBIO_ptr_ctrl\fP(b,\fBBIO_C_GET_CONNECT\fP,1)"
+
+.PP
+Definition at line 480 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_fd(b, \fBc\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_FD\fP,0,(char *)\fBc\fP)"
+
+.PP
+Definition at line 521 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_flags(b)   \fBBIO_test_flags\fP(b, ~(0x0))"
+
+.PP
+Definition at line 244 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_fp(b, fpp)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_FILE_PTR\fP,0,(char *)fpp)"
+
+.PP
+Definition at line 525 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_info_callback(b, cbp)"
+\fBValue:\fP
+.PP
+.nf
+(int)BIO_ctrl(b,BIO_CTRL_GET_CALLBACK,0, \
+                                                   cbp)
+.fi
+.PP
+Definition at line 597 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_mem_data(b, \fBpp\fP)   \fBBIO_ctrl\fP(b,\fBBIO_CTRL_INFO\fP,0,(char *)\fBpp\fP)"
+
+.PP
+Definition at line 571 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_mem_ptr(b, \fBpp\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_BUF_MEM_PTR\fP,0,(char *)\fBpp\fP)"
+
+.PP
+Definition at line 573 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_no_connect_return(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,5,NULL)"
+
+.PP
+Definition at line 517 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_num_renegotiates(b)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_SSL_NUM_RENEGOTIATES\fP,0,NULL)"
+
+.PP
+Definition at line 563 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_proxies(b, pxy_p)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,1,(char *)(pxy_p))"
+
+.PP
+Definition at line 515 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_proxy_header(b, skp)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,0,(char *)skp)"
+
+.PP
+Definition at line 514 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_read_request(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_GET_READ_REQUEST\fP,0,NULL)"
+
+.PP
+Definition at line 612 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_retry_flags(b)   \fBBIO_test_flags\fP(b, (\fBBIO_FLAGS_RWS\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+
+.PP
+Definition at line 255 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_ssl(b, sslp)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_SSL\fP,0,(char *)sslp)"
+
+.PP
+Definition at line 559 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_url(b, url)   \fBBIO_ctrl\fP(b,\fBBIO_C_GET_PROXY_PARAM\fP,2,(char *)(url))"
+
+.PP
+Definition at line 516 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_write_buf_size(b, size)   (size_t)\fBBIO_ctrl\fP(b,\fBBIO_C_GET_WRITE_BUF_SIZE\fP,size,NULL)"
+
+.PP
+Definition at line 606 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_get_write_guarantee(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_GET_WRITE_GUARANTEE\fP,0,NULL)"
+
+.PP
+Definition at line 611 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_GHBN_CTRL_CACHE_SIZE   3"
+
+.PP
+Definition at line 218 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_GHBN_CTRL_FLUSH   5"
+
+.PP
+Definition at line 220 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_GHBN_CTRL_GET_ENTRY   4"
+
+.PP
+Definition at line 219 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_GHBN_CTRL_HITS   1"
+
+.PP
+Definition at line 216 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_GHBN_CTRL_MISSES   2"
+
+.PP
+Definition at line 217 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_make_bio_pair(b1, b2)   (int)\fBBIO_ctrl\fP(b1,\fBBIO_C_MAKE_BIO_PAIR\fP,0,b2)"
+
+.PP
+Definition at line 607 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_NOCLOSE   0x00"
+
+.PP
+Definition at line 120 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_pending(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_PENDING\fP,0,NULL)"
+
+.PP
+Definition at line 591 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_ACCEPT_ERROR   100"
+
+.PP
+Definition at line 850 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_BAD_FOPEN_MODE   101"
+
+.PP
+Definition at line 851 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_BAD_HOSTNAME_LOOKUP   102"
+
+.PP
+Definition at line 852 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_BROKEN_PIPE   124"
+
+.PP
+Definition at line 853 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_CONNECT_ERROR   103"
+
+.PP
+Definition at line 854 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_EOF_ON_MEMORY_BIO   127"
+
+.PP
+Definition at line 855 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_ERROR_SETTING_NBIO   104"
+
+.PP
+Definition at line 856 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_ERROR_SETTING_NBIO_ON_ACCEPT_SOCKET   106"
+
+.PP
+Definition at line 858 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_ERROR_SETTING_NBIO_ON_ACCEPTED_SOCKET   105"
+
+.PP
+Definition at line 857 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_GETHOSTBYNAME_ADDR_IS_NOT_AF_INET   107"
+
+.PP
+Definition at line 859 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_IN_USE   123"
+
+.PP
+Definition at line 862 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_INVALID_ARGUMENT   125"
+
+.PP
+Definition at line 860 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_INVALID_IP_ADDRESS   108"
+
+.PP
+Definition at line 861 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_KEEPALIVE   109"
+
+.PP
+Definition at line 863 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NBIO_CONNECT_ERROR   110"
+
+.PP
+Definition at line 864 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NO_ACCEPT_PORT_SPECIFIED   111"
+
+.PP
+Definition at line 865 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NO_HOSTNAME_SPECIFIED   112"
+
+.PP
+Definition at line 866 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NO_PORT_DEFINED   113"
+
+.PP
+Definition at line 867 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NO_PORT_SPECIFIED   114"
+
+.PP
+Definition at line 868 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NO_SUCH_FILE   128"
+
+.PP
+Definition at line 869 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_NULL_PARAMETER   115"
+
+.PP
+Definition at line 870 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_TAG_MISMATCH   116"
+
+.PP
+Definition at line 871 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_UNABLE_TO_BIND_SOCKET   117"
+
+.PP
+Definition at line 872 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_UNABLE_TO_CREATE_SOCKET   118"
+
+.PP
+Definition at line 873 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_UNABLE_TO_LISTEN_SOCKET   119"
+
+.PP
+Definition at line 874 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_UNINITIALIZED   120"
+
+.PP
+Definition at line 875 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_UNSUPPORTED_METHOD   121"
+
+.PP
+Definition at line 876 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_WRITE_TO_READ_ONLY_BIO   126"
+
+.PP
+Definition at line 877 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_R_WSASTARTUP   122"
+
+.PP
+Definition at line 878 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_read_filename(b, name)"
+\fBValue:\fP
+.PP
+.nf
+BIO_ctrl(b,BIO_C_SET_FILENAME, \
+                BIO_CLOSE|BIO_FP_READ,(char *)name)
+.fi
+.PP
+Definition at line 542 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_reset(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_RESET\fP,0,NULL)"
+
+.PP
+Definition at line 587 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_retry_type(\fBa\fP)   \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_RWS\fP)"
+
+.PP
+Definition at line 262 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_RR_ACCEPT   0x03"
+
+.PP
+Definition at line 279 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_RR_CONNECT   0x02"
+
+.PP
+Definition at line 277 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_RR_SSL_X509_LOOKUP   0x01"
+
+.PP
+Definition at line 275 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_rw_filename(b, name)"
+\fBValue:\fP
+.PP
+.nf
+BIO_ctrl(b,BIO_C_SET_FILENAME, \
+                BIO_CLOSE|BIO_FP_READ|BIO_FP_WRITE,name)
+.fi
+.PP
+Definition at line 549 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_s_file_internal   \fBBIO_s_file\fP"
+
+.PP
+Definition at line 657 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_seek(b, ofs)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_FILE_SEEK\fP,ofs,NULL)"
+
+.PP
+Definition at line 528 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_accept_bios(b, bio)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_ACCEPT\fP,2,(char *)bio)"
+
+.PP
+Definition at line 491 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_accept_port(b, name)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_ACCEPT\fP,0,(char *)name)"
+
+.PP
+Definition at line 487 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_app_data(s, arg)   \fBBIO_set_ex_data\fP(s,0,arg)"
+
+.PP
+Definition at line 471 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_bind_mode(b, mode)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BIND_MODE\fP,mode,NULL)"
+
+.PP
+Definition at line 496 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_buffer_read_data(b, buf, \fBnum\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUFF_READ_DATA\fP,\fBnum\fP,buf)"
+
+.PP
+Definition at line 582 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_buffer_size(b, size)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUFF_SIZE\fP,size,NULL)"
+
+.PP
+Definition at line 579 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_close(b, \fBc\fP)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_SET_CLOSE\fP,(\fBc\fP),NULL)"
+
+.PP
+Definition at line 589 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_conn_hostname(b, name)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,0,(char *)name)"
+
+.PP
+Definition at line 475 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_conn_int_port(b, port)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,3,(char *)port)"
+
+.PP
+Definition at line 478 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_conn_ip(b, ip)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,2,(char *)ip)"
+
+.PP
+Definition at line 477 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_conn_port(b, port)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_CONNECT\fP,1,(char *)port)"
+
+.PP
+Definition at line 476 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_fd(b, fd, \fBc\fP)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_FD\fP,\fBc\fP,fd)"
+
+.PP
+Definition at line 520 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_filter_bio(b, s)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,2,(char *)(s))"
+
+.PP
+Definition at line 508 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_fp(b, \fBfp\fP, \fBc\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_FILE_PTR\fP,\fBc\fP,(char *)\fBfp\fP)"
+
+.PP
+Definition at line 524 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_info_callback(b, \fBcb\fP)   (int)\fBBIO_callback_ctrl\fP(b,\fBBIO_CTRL_SET_CALLBACK\fP,\fBcb\fP)"
+
+.PP
+Definition at line 599 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_mem_buf(b, bm, \fBc\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUF_MEM\fP,\fBc\fP,(char *)bm)"
+
+.PP
+Definition at line 572 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_mem_eof_return(b, v)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_BUF_MEM_EOF_RETURN\fP,v,NULL)"
+
+.PP
+Definition at line 574 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_nbio(b, n)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_NBIO\fP,(n),NULL)"
+
+.PP
+Definition at line 484 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_nbio_accept(b, n)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_ACCEPT\fP,1,(n)?(\fBvoid\fP *)'a':NULL)"
+
+.PP
+Definition at line 490 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_no_connect_return(b, bool)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,5,bool)"
+
+.PP
+Definition at line 512 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_proxies(b, \fBp\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,1,(char *)(\fBp\fP))"
+
+.PP
+Definition at line 506 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_proxy_cb(b, \fBcb\fP)   \fBBIO_callback_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,3,(\fBvoid\fP *(*\fBcb\fP)()))"
+
+.PP
+Definition at line 510 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_proxy_header(b, sk)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,4,(char *)sk)"
+
+.PP
+Definition at line 511 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_read_buffer_size(b, size)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_BUFF_SIZE\fP,size,0)"
+
+.PP
+Definition at line 580 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_retry_read(b)   \fBBIO_set_flags\fP(b, (\fBBIO_FLAGS_READ\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+
+.PP
+Definition at line 247 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_retry_special(b)   \fBBIO_set_flags\fP(b, (\fBBIO_FLAGS_IO_SPECIAL\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+
+.PP
+Definition at line 245 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_retry_write(b)   \fBBIO_set_flags\fP(b, (\fBBIO_FLAGS_WRITE\fP|\fBBIO_FLAGS_SHOULD_RETRY\fP))"
+
+.PP
+Definition at line 249 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_ssl(b, ssl, \fBc\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_SSL\fP,\fBc\fP,(char *)ssl)"
+
+.PP
+Definition at line 558 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_ssl_mode(b, client)   \fBBIO_ctrl\fP(b,\fBBIO_C_SSL_MODE\fP,client,NULL)"
+
+.PP
+Definition at line 560 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_ssl_renegotiate_bytes(b, \fBnum\fP)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_SSL_RENEGOTIATE_BYTES\fP,\fBnum\fP,NULL)"
+
+.PP
+Definition at line 561 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_ssl_renegotiate_timeout(b, seconds)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_SSL_RENEGOTIATE_TIMEOUT\fP,seconds,NULL)"
+
+.PP
+Definition at line 565 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_url(b, url)   \fBBIO_ctrl\fP(b,\fBBIO_C_SET_PROXY_PARAM\fP,0,(char *)(url))"
+
+.PP
+Definition at line 505 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_write_buf_size(b, size)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_SET_WRITE_BUF_SIZE\fP,size,NULL)"
+
+.PP
+Definition at line 605 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_set_write_buffer_size(b, size)   \fBBIO_int_ctrl\fP(b,\fBBIO_C_SET_BUFF_SIZE\fP,size,1)"
+
+.PP
+Definition at line 581 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_should_io_special(\fBa\fP)   \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_IO_SPECIAL\fP)"
+
+.PP
+Definition at line 261 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_should_read(\fBa\fP)   \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_READ\fP)"
+
+.PP
+Definition at line 259 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_should_retry(\fBa\fP)   \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_SHOULD_RETRY\fP)"
+
+.PP
+Definition at line 263 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_should_write(\fBa\fP)   \fBBIO_test_flags\fP(\fBa\fP, \fBBIO_FLAGS_WRITE\fP)"
+
+.PP
+Definition at line 260 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_shutdown_wr(b)   (int)\fBBIO_ctrl\fP(b, \fBBIO_C_SHUTDOWN_WR\fP, 0, NULL)"
+
+.PP
+Definition at line 609 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_tell(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_C_FILE_TELL\fP,0,NULL)"
+
+.PP
+Definition at line 529 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_ACCEPT   (13|0x0400|0x0100)/* socket for accept */"
+
+.PP
+Definition at line 97 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_ASN1   (22|0x0200)/* filter */"
+
+.PP
+Definition at line 109 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_BASE64   (11|0x0200)/* filter */"
+
+.PP
+Definition at line 95 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_BER   (18|0x0200)/* BER \-> bin filter */"
+
+.PP
+Definition at line 102 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_BIO   (19|0x0400)/* (half a) BIO pair */"
+
+.PP
+Definition at line 103 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_BUFFER   (9|0x0200)/* filter */"
+
+.PP
+Definition at line 93 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_CIPHER   (10|0x0200)/* filter */"
+
+.PP
+Definition at line 94 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_COMP   (23|0x0200)/* filter */"
+
+.PP
+Definition at line 110 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_CONNECT   (12|0x0400|0x0100)/* socket \- connect */"
+
+.PP
+Definition at line 96 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_DESCRIPTOR   0x0100/* socket, fd, connect or accept */"
+
+.PP
+Definition at line 112 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_DGRAM   (21|0x0400|0x0100)"
+
+.PP
+Definition at line 105 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_DGRAM_SCTP   (24|0x0400|0x0100)"
+
+.PP
+Definition at line 107 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_FD   (4|0x0400|0x0100)"
+
+.PP
+Definition at line 88 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_FILE   (2|0x0400)"
+
+.PP
+Definition at line 86 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_FILTER   0x0200"
+
+.PP
+Definition at line 113 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_LINEBUFFER   (20|0x0200)/* filter */"
+
+.PP
+Definition at line 104 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_MD   (8|0x0200)/* passive filter */"
+
+.PP
+Definition at line 92 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_MEM   (1|0x0400)"
+
+.PP
+Definition at line 85 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_NBIO_TEST   (16|0x0200)/* server proxy BIO */"
+
+.PP
+Definition at line 100 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_NONE   0"
+
+.PP
+Definition at line 84 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_NULL   (6|0x0400)"
+
+.PP
+Definition at line 90 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_NULL_FILTER   (17|0x0200)"
+
+.PP
+Definition at line 101 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_PROXY_CLIENT   (14|0x0200)/* client proxy BIO */"
+
+.PP
+Definition at line 98 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_PROXY_SERVER   (15|0x0200)/* server proxy BIO */"
+
+.PP
+Definition at line 99 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_SOCKET   (5|0x0400|0x0100)"
+
+.PP
+Definition at line 89 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_SOURCE_SINK   0x0400"
+
+.PP
+Definition at line 114 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_TYPE_SSL   (7|0x0200)"
+
+.PP
+Definition at line 91 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_wpending(b)   (int)\fBBIO_ctrl\fP(b,\fBBIO_CTRL_WPENDING\fP,0,NULL)"
+
+.PP
+Definition at line 592 of file include/openssl/bio\&.h\&.
+.SS "#define BIO_write_filename(b, name)"
+\fBValue:\fP
+.PP
+.nf
+BIO_ctrl(b,BIO_C_SET_FILENAME, \
+                BIO_CLOSE|BIO_FP_WRITE,name)
+.fi
+.PP
+Definition at line 545 of file include/openssl/bio\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int asn1_ps_func(\fBBIO\fP *b, unsigned char **pbuf, int *plen, \fBvoid\fP *parg)"
+
+.PP
+Definition at line 370 of file include/openssl/bio\&.h\&.
+.SS "typedef struct \fBbio_st\fP \fBBIO\fP"
+
+.PP
+Definition at line 238 of file include/openssl/bio\&.h\&.
+.SS "typedef struct \fBbio_f_buffer_ctx_struct\fP  \fBBIO_F_BUFFER_CTX\fP"
+
+.SS "typedef \fBvoid\fP bio_info_cb(struct \fBbio_st\fP *, int, const char *, int, long, long)"
+
+.PP
+Definition at line 309 of file include/openssl/bio\&.h\&.
+.SS "typedef struct \fBbio_method_st\fP  \fBBIO_METHOD\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int BIO_accept (int sock, char ** ip_port)"
+
+.SS "int BIO_asn1_get_prefix (\fBBIO\fP * b, \fBasn1_ps_func\fP ** pprefix, \fBasn1_ps_func\fP ** pprefix_free)"
+
+.SS "int BIO_asn1_get_suffix (\fBBIO\fP * b, \fBasn1_ps_func\fP ** psuffix, \fBasn1_ps_func\fP ** psuffix_free)"
+
+.SS "int BIO_asn1_set_prefix (\fBBIO\fP * b, \fBasn1_ps_func\fP * prefix, \fBasn1_ps_func\fP * prefix_free)"
+
+.SS "int BIO_asn1_set_suffix (\fBBIO\fP * b, \fBasn1_ps_func\fP * suffix, \fBasn1_ps_func\fP * suffix_free)"
+
+.SS "long BIO_callback_ctrl (\fBBIO\fP * b, int cmd, \fBvoid\fP(*)(struct \fBbio_st\fP *, int, const char *, int,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   long, long) fp)"
+
+.SS "\fBvoid\fP BIO_clear_flags (\fBBIO\fP * b, int flags)"
+
+.SS "\fBvoid\fP BIO_copy_next_retry (\fBBIO\fP * b)"
+
+.SS "long BIO_ctrl (\fBBIO\fP * bp, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "size_t BIO_ctrl_get_read_request (\fBBIO\fP * b)"
+
+.SS "size_t BIO_ctrl_get_write_guarantee (\fBBIO\fP * b)"
+
+.SS "size_t BIO_ctrl_pending (\fBBIO\fP * b)"
+
+.SS "int BIO_ctrl_reset_read_request (\fBBIO\fP * b)"
+
+.SS "size_t BIO_ctrl_wpending (\fBBIO\fP * b)"
+
+.SS "long BIO_debug_callback (\fBBIO\fP * bio, int cmd, const char * argp, int argi, long argl, long ret)"
+
+.SS "int BIO_dgram_is_sctp (\fBBIO\fP * bio)"
+
+.SS "int BIO_dgram_non_fatal_error (int error)"
+
+.SS "int BIO_dgram_sctp_msg_waiting (\fBBIO\fP * b)"
+
+.SS "int BIO_dgram_sctp_notification_cb (\fBBIO\fP * b, \fBvoid\fP(*)(\fBBIO\fP *bio,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBvoid\fP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   *context,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \fBvoid\fP *buf) handle_notifications, \fBvoid\fP * context)"
+
+.SS "int BIO_dgram_sctp_wait_for_dry (\fBBIO\fP * b)"
+
+.SS "int BIO_dump (\fBBIO\fP * b, const char * bytes, int len)"
+
+.SS "int BIO_dump_cb (int(*)(const \fBvoid\fP *data, size_t \fBlen\fP, \fBvoid\fP *\fBu\fP) cb, \fBvoid\fP * u, const char * s, int len)"
+
+.SS "int BIO_dump_fp (FILE * fp, const char * s, int len)"
+
+.SS "int BIO_dump_indent (\fBBIO\fP * b, const char * bytes, int len, int indent)"
+
+.SS "int BIO_dump_indent_cb (int(*)(const \fBvoid\fP *data, size_t \fBlen\fP, \fBvoid\fP *\fBu\fP) cb, \fBvoid\fP * u, const char * s, int len, int indent)"
+
+.SS "int BIO_dump_indent_fp (FILE * fp, const char * s, int len, int indent)"
+
+.SS "\fBBIO\fP* BIO_dup_chain (\fBBIO\fP * in)"
+
+.SS "\fBBIO_METHOD\fP* BIO_f_buffer (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_f_nbio_test (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_f_null (\fBvoid\fP)"
+
+.SS "int BIO_fd_non_fatal_error (int error)"
+
+.SS "int BIO_fd_should_retry (int i)"
+
+.SS "\fBBIO\fP* BIO_find_type (\fBBIO\fP * b, int bio_type)"
+
+.SS "int BIO_free (\fBBIO\fP * a)"
+
+.SS "\fBvoid\fP BIO_free_all (\fBBIO\fP * a)"
+
+.SS "int BIO_get_accept_socket (char * host_port, int mode)"
+
+.SS "char* BIO_get_callback_arg (const \fBBIO\fP * b)"
+
+.SS "\fBvoid\fP* BIO_get_ex_data (\fBBIO\fP * bio, int idx)"
+
+.SS "int BIO_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int BIO_get_host_ip (const char * str, unsigned char * ip)"
+
+.SS "int BIO_get_port (const char * str, unsigned short * port_ptr)"
+
+.SS "\fBBIO\fP* BIO_get_retry_BIO (\fBBIO\fP * bio, int * reason)"
+
+.SS "int BIO_get_retry_reason (\fBBIO\fP * bio)"
+
+.SS "struct hostent* BIO_gethostbyname (const char * name)"
+
+.SS "int BIO_gets (\fBBIO\fP * bp, char * buf, int size)"
+
+.SS "int BIO_hex_string (\fBBIO\fP * out, int indent, int width, unsigned char * data, int datalen)"
+
+.SS "int BIO_indent (\fBBIO\fP * b, int indent, int max)"
+
+.SS "long BIO_int_ctrl (\fBBIO\fP * bp, int cmd, long larg, int iarg)"
+
+.SS "const char* BIO_method_name (const \fBBIO\fP * b)"
+
+.SS "int BIO_method_type (const \fBBIO\fP * b)"
+
+.SS "\fBBIO\fP* BIO_new (\fBBIO_METHOD\fP * type)"
+
+.SS "\fBBIO\fP* BIO_new_accept (const char * host_port)"
+
+.SS "int BIO_new_bio_pair (\fBBIO\fP ** bio1, size_t writebuf1, \fBBIO\fP ** bio2, size_t writebuf2)"
+
+.SS "\fBBIO\fP* BIO_new_connect (const char * host_port)"
+
+.SS "\fBBIO\fP* BIO_new_dgram (int fd, int close_flag)"
+
+.SS "\fBBIO\fP* BIO_new_dgram_sctp (int fd, int close_flag)"
+
+.SS "\fBBIO\fP* BIO_new_fd (int fd, int close_flag)"
+
+.SS "\fBBIO\fP* BIO_new_file (const char * filename, const char * mode)"
+
+.SS "\fBBIO\fP* BIO_new_fp (FILE * stream, int close_flag)"
+
+.SS "\fBBIO\fP* BIO_new_mem_buf (const \fBvoid\fP * buf, int len)"
+
+.SS "\fBBIO\fP* BIO_new_socket (int sock, int close_flag)"
+
+.SS "\fBBIO\fP* BIO_next (\fBBIO\fP * b)"
+
+.SS "int BIO_nread (\fBBIO\fP * bio, char ** buf, int num)"
+
+.SS "int BIO_nread0 (\fBBIO\fP * bio, char ** buf)"
+
+.SS "unsigned long BIO_number_read (\fBBIO\fP * bio)"
+
+.SS "unsigned long BIO_number_written (\fBBIO\fP * bio)"
+
+.SS "int BIO_nwrite (\fBBIO\fP * bio, char ** buf, int num)"
+
+.SS "int BIO_nwrite0 (\fBBIO\fP * bio, char ** buf)"
+
+.SS "\fBBIO\fP* BIO_pop (\fBBIO\fP * b)"
+
+.SS "int BIO_printf (\fBBIO\fP * bio, const char * format,  \&.\&.\&.)"
+
+.SS "char* BIO_ptr_ctrl (\fBBIO\fP * bp, int cmd, long larg)"
+
+.SS "\fBBIO\fP* BIO_push (\fBBIO\fP * b, \fBBIO\fP * append)"
+
+.SS "int BIO_puts (\fBBIO\fP * bp, const char * buf)"
+
+.SS "int BIO_read (\fBBIO\fP * b, \fBvoid\fP * data, int len)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_accept (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_bio (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_connect (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_datagram (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_datagram_sctp (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_fd (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_file (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_log (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_mem (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_null (\fBvoid\fP)"
+
+.SS "\fBBIO_METHOD\fP* BIO_s_socket (\fBvoid\fP)"
+
+.SS "int BIO_set (\fBBIO\fP * a, \fBBIO_METHOD\fP * type)"
+
+.SS "\fBvoid\fP BIO_set_callback (\fBBIO\fP * b, long(*)(struct \fBbio_st\fP *, int, const char *,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   int, long, long) callback)"
+
+.SS "\fBvoid\fP BIO_set_callback_arg (\fBBIO\fP * b, char * arg)"
+
+.SS "int BIO_set_ex_data (\fBBIO\fP * bio, int idx, \fBvoid\fP * data)"
+
+.SS "\fBvoid\fP BIO_set_flags (\fBBIO\fP * b, int flags)"
+
+.SS "int BIO_set_tcp_ndelay (int sock, int turn_on)"
+
+.SS "int int int BIO_snprintf (char * buf, size_t n, const char * format,  \&.\&.\&.)"
+
+.SS "\fBvoid\fP BIO_sock_cleanup (\fBvoid\fP)"
+
+.SS "int BIO_sock_error (int sock)"
+
+.SS "int BIO_sock_init (\fBvoid\fP)"
+
+.SS "int BIO_sock_non_fatal_error (int error)"
+
+.SS "int BIO_sock_should_retry (int i)"
+
+.SS "int BIO_socket_ioctl (int fd, long type, \fBvoid\fP * arg)"
+
+.SS "int BIO_socket_nbio (int fd, int mode)"
+
+.SS "int BIO_test_flags (const \fBBIO\fP * b, int flags)"
+
+.SS "\fBvoid\fP BIO_vfree (\fBBIO\fP * a)"
+
+.SS "int int BIO_vprintf (\fBBIO\fP * bio, const char * format, va_list args)"
+
+.SS "int int int int BIO_vsnprintf (char * buf, size_t n, const char * format, va_list args)"
+
+.SS "int BIO_write (\fBBIO\fP * b, const \fBvoid\fP * data, int len)"
+
+.SS "int int int int \fBvoid\fP ERR_load_BIO_strings (\fBvoid\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "long(*)(struct \fBbio_st\fP *, int, const char *, int, long, long) BIO_get_callback(const \fBBIO\fP *b)"
+
+.PP
+Definition at line 298 of file include/openssl/bio\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

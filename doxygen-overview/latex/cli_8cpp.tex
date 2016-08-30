@@ -1,0 +1,184 @@
+\hypertarget{cli_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/demos/ssl/cli.cpp File Reference}
+\label{cli_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/demos/ssl/cli.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/demos/ssl/cli.\+cpp}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$memory.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\+h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\+h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\\*
+{\ttfamily \#include $<$netdb.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/crypto.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/x509.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/pem.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ssl.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/err.\+h$>$}\\*
+Include dependency graph for cli.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cli_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{C\+H\+K\+\_\+\+N\+U\+LL}(\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})~if ((\hyperlink{include_2openssl_2pem_8h_a97dc7cf0c4554cbe9a4b58bfe9a749f5}{x})==N\+U\+LL) exit (1)
+\item 
+\#define \hyperlink{cli_8cpp_aa091ab859ba22622551371e9eb1300fe}{C\+H\+K\+\_\+\+E\+RR}(err,  s)~if ((err)==-\/1) \{ perror(s); exit(1); \}
+\item 
+\#define \hyperlink{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}{C\+H\+K\+\_\+\+S\+SL}(err)~if ((err)==-\/1) \{ \hyperlink{include_2openssl_2err_8h_ae677e395b09f61df20dd6ed7a89c8a2c}{E\+R\+R\+\_\+print\+\_\+errors\+\_\+fp}(stderr); exit(2); \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{cli_8cpp_acdef7a1fd863a6d3770c1268cb06add3}{main} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{cli.\+cpp@{cli.\+cpp}!C\+H\+K\+\_\+\+N\+U\+LL@{C\+H\+K\+\_\+\+N\+U\+LL}}
+\index{C\+H\+K\+\_\+\+N\+U\+LL@{C\+H\+K\+\_\+\+N\+U\+LL}!cli.\+cpp@{cli.\+cpp}}
+\subsubsection[{\texorpdfstring{C\+H\+K\+\_\+\+N\+U\+LL}{CHK_NULL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+H\+K\+\_\+\+N\+U\+LL(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~if (({\bf x})==N\+U\+LL) exit (1)}\hypertarget{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{}\label{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}
+
+
+Definition at line 24 of file cli.\+cpp.
+
+\index{cli.\+cpp@{cli.\+cpp}!C\+H\+K\+\_\+\+E\+RR@{C\+H\+K\+\_\+\+E\+RR}}
+\index{C\+H\+K\+\_\+\+E\+RR@{C\+H\+K\+\_\+\+E\+RR}!cli.\+cpp@{cli.\+cpp}}
+\subsubsection[{\texorpdfstring{C\+H\+K\+\_\+\+E\+RR}{CHK_ERR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+H\+K\+\_\+\+E\+RR(
+\begin{DoxyParamCaption}
+\item[{}]{err, }
+\item[{}]{s}
+\end{DoxyParamCaption}
+)~if ((err)==-\/1) \{ perror(s); exit(1); \}}\hypertarget{cli_8cpp_aa091ab859ba22622551371e9eb1300fe}{}\label{cli_8cpp_aa091ab859ba22622551371e9eb1300fe}
+
+
+Definition at line 25 of file cli.\+cpp.
+
+\index{cli.\+cpp@{cli.\+cpp}!C\+H\+K\+\_\+\+S\+SL@{C\+H\+K\+\_\+\+S\+SL}}
+\index{C\+H\+K\+\_\+\+S\+SL@{C\+H\+K\+\_\+\+S\+SL}!cli.\+cpp@{cli.\+cpp}}
+\subsubsection[{\texorpdfstring{C\+H\+K\+\_\+\+S\+SL}{CHK_SSL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+H\+K\+\_\+\+S\+SL(
+\begin{DoxyParamCaption}
+\item[{}]{err}
+\end{DoxyParamCaption}
+)~if ((err)==-\/1) \{ {\bf E\+R\+R\+\_\+print\+\_\+errors\+\_\+fp}(stderr); exit(2); \}}\hypertarget{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}{}\label{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}
+
+
+Definition at line 26 of file cli.\+cpp.
+
+
+
+\subsection{Function Documentation}
+\index{cli.\+cpp@{cli.\+cpp}!main@{main}}
+\index{main@{main}!cli.\+cpp@{cli.\+cpp}}
+\subsubsection[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{cli_8cpp_acdef7a1fd863a6d3770c1268cb06add3}{}\label{cli_8cpp_acdef7a1fd863a6d3770c1268cb06add3}
+
+
+Definition at line 28 of file cli.\+cpp.
+
+
+\begin{DoxyCode}
+29 \{
+30   \textcolor{keywordtype}{int} err;
+31   \textcolor{keywordtype}{int} sd;
+32   \textcolor{keyword}{struct }sockaddr\_in sa;
+33   \hyperlink{structssl__ctx__st}{SSL\_CTX}* ctx;
+34   \hyperlink{structssl__st}{SSL}*     ssl;
+35   \hyperlink{structx509__st}{X509}*    \hyperlink{s2n__fragmentation__coalescing__test_8c_a6f8e086c4374b9500a7200a82eb494df}{server\_cert};
+36   \textcolor{keywordtype}{char}*    str;
+37   \textcolor{keywordtype}{char}     buf [4096];
+38   \hyperlink{structssl__method__st}{SSL\_METHOD} *meth;
+39 
+40   \hyperlink{include_2openssl_2ssl_8h_aa6dbc21131f20b0dee3adc58f3f4e7cd}{SSLeay\_add\_ssl\_algorithms}();
+41   meth = \hyperlink{include_2openssl_2ssl_8h_ae546d8f29b7cbf1e50d7aecb47b98d88}{SSLv2\_client\_method}();
+42   \hyperlink{include_2openssl_2ssl_8h_accb99e9f2be3b424cda1854c15f04a0f}{SSL\_load\_error\_strings}();
+43   ctx = \hyperlink{include_2openssl_2ssl_8h_a4f19b32a7539849b34cab831fc4ea869}{SSL\_CTX\_new} (meth);                        \hyperlink{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{CHK\_NULL}(ctx);
+44 
+45   \hyperlink{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}{CHK\_SSL}(err);
+46   
+47   \textcolor{comment}{/* ----------------------------------------------- */}
+48   \textcolor{comment}{/* Create a socket and connect to server using normal socket calls. */}
+49   
+50   sd = socket (AF\_INET, SOCK\_STREAM, 0);       \hyperlink{cli_8cpp_aa091ab859ba22622551371e9eb1300fe}{CHK\_ERR}(sd, \textcolor{stringliteral}{"socket"});
+51  
+52   memset (&sa, \textcolor{charliteral}{'\(\backslash\)0'}, \textcolor{keyword}{sizeof}(sa));
+53   sa.sin\_family      = AF\_INET;
+54   sa.sin\_addr.s\_addr = inet\_addr (\textcolor{stringliteral}{"127.0.0.1"});   \textcolor{comment}{/* Server IP */}
+55   sa.sin\_port        = htons     (1111);          \textcolor{comment}{/* Server Port number */}
+56   
+57   err = connect(sd, (\textcolor{keyword}{struct} sockaddr*) &sa,
+58         \textcolor{keyword}{sizeof}(sa));                   \hyperlink{cli_8cpp_aa091ab859ba22622551371e9eb1300fe}{CHK\_ERR}(err, \textcolor{stringliteral}{"connect"});
+59 
+60   \textcolor{comment}{/* ----------------------------------------------- */}
+61   \textcolor{comment}{/* Now we have TCP conncetion. Start SSL negotiation. */}
+62   
+63   ssl = \hyperlink{include_2openssl_2ssl_8h_a1874e8b72da196e3300b265937aa6da4}{SSL\_new} (ctx);                         \hyperlink{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{CHK\_NULL}(ssl);    
+64   \hyperlink{include_2openssl_2ssl_8h_a8b2968941090031b610cc8340da79743}{SSL\_set\_fd} (ssl, sd);
+65   err = \hyperlink{include_2openssl_2ssl_8h_a652e4f10d91b1ba4f994b0c8e19c7585}{SSL\_connect} (ssl);                     \hyperlink{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}{CHK\_SSL}(err);
+66     
+67   \textcolor{comment}{/* Following two steps are optional and not required for}
+68 \textcolor{comment}{     data exchange to be successful. */}
+69   
+70   \textcolor{comment}{/* Get the cipher - opt */}
+71 
+72   printf (\textcolor{stringliteral}{"SSL connection using %s\(\backslash\)n"}, \hyperlink{include_2openssl_2ssl_8h_ac7cc576c30a48c7d07efb794361dfe21}{SSL\_get\_cipher} (ssl));
+73   
+74   \textcolor{comment}{/* Get server's certificate (note: beware of dynamic allocation) - opt */}
+75 
+76   server\_cert = SSL\_get\_peer\_certificate (ssl);       \hyperlink{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{CHK\_NULL}(server\_cert);
+77   printf (\textcolor{stringliteral}{"Server certificate:\(\backslash\)n"});
+78   
+79   str = \hyperlink{crypto_2x509_2x509_8h_a5f4ca5972b28da5c63da204422fb9636}{X509\_NAME\_oneline} (\hyperlink{crypto_2x509_2x509_8h_aff52c219295ce864fb20f88050f9963c}{X509\_get\_subject\_name} (server\_cert),0,0);
+80   \hyperlink{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{CHK\_NULL}(str);
+81   printf (\textcolor{stringliteral}{"\(\backslash\)t subject: %s\(\backslash\)n"}, str);
+82   \hyperlink{crypto_2crypto_8h_adc4794298fcd8ac85a7c5012ba242473}{OPENSSL\_free} (str);
+83 
+84   str = \hyperlink{crypto_2x509_2x509_8h_a5f4ca5972b28da5c63da204422fb9636}{X509\_NAME\_oneline} (\hyperlink{crypto_2x509_2x509_8h_ade3220b850537708545f660ee272d4e4}{X509\_get\_issuer\_name}  (server\_cert),0,0);
+85   \hyperlink{cli_8cpp_a3d6d377a4b9232b677b770822c3a6ed3}{CHK\_NULL}(str);
+86   printf (\textcolor{stringliteral}{"\(\backslash\)t issuer: %s\(\backslash\)n"}, str);
+87   \hyperlink{crypto_2crypto_8h_adc4794298fcd8ac85a7c5012ba242473}{OPENSSL\_free} (str);
+88 
+89   \textcolor{comment}{/* We could do all sorts of certificate verification stuff here before}
+90 \textcolor{comment}{     deallocating the certificate. */}
+91 
+92   X509\_free (server\_cert);
+93   
+94   \textcolor{comment}{/* --------------------------------------------------- */}
+95   \textcolor{comment}{/* DATA EXCHANGE - Send a message and receive a reply. */}
+96 
+97   err = \hyperlink{include_2openssl_2ssl_8h_ab1bc7aefe47a9d6801b113165ac8b1f0}{SSL\_write} (ssl, \textcolor{stringliteral}{"Hello World!"}, strlen(\textcolor{stringliteral}{"Hello World!"}));  
+      \hyperlink{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}{CHK\_SSL}(err);
+98   
+99   err = \hyperlink{include_2openssl_2ssl_8h_a52e9679615a056e80c5d9bbb3324e1ca}{SSL\_read} (ssl, buf, \textcolor{keyword}{sizeof}(buf) - 1);                     
+      \hyperlink{cli_8cpp_afd2737d414d1bf29a4b7e319851c4746}{CHK\_SSL}(err);
+100   buf[err] = \textcolor{charliteral}{'\(\backslash\)0'};
+101   printf (\textcolor{stringliteral}{"Got %d chars:'%s'\(\backslash\)n"}, err, buf);
+102   \hyperlink{include_2openssl_2ssl_8h_a5fd3b0e4c14b4aeb1fd044e10c25266b}{SSL\_shutdown} (ssl);  \textcolor{comment}{/* send SSL/TLS close\_notify */}
+103 
+104   \textcolor{comment}{/* Clean up. */}
+105 
+106   close (sd);
+107   \hyperlink{include_2openssl_2ssl_8h_add9f91511b7a494f4910b0e3567d7d99}{SSL\_free} (ssl);
+108   \hyperlink{include_2openssl_2ssl_8h_ab78736366f5d2176ff31cc266467c7d7}{SSL\_CTX\_free} (ctx);
+109 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{cli_8cpp_acdef7a1fd863a6d3770c1268cb06add3_cgraph}
+\end{center}
+\end{figure}
+
+

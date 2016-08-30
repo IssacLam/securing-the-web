@@ -14,8 +14,6 @@ static char dhparams[] =
 "HI5CnYmkAwJ6+FSWGaZQDi8bgerFk9RWwwIBAg==\n"
 "-----END DH PARAMETERS-----\n";
 
-
-
 int main(){
     struct s2n_config *config = s2n_config_new();
     __CPROVER_assert(config != NULL, "ERROR: s2n_config_new()");

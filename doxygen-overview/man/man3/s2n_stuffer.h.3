@@ -1,0 +1,1002 @@
+.TH "s2n-master/stuffer/s2n_stuffer.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/stuffer/s2n_stuffer.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_stuffer\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBs2n_stuffer_data_available\fP(s)     ((s)\->write_cursor \- (s)\->read_cursor)"
+.br
+.ti -1c
+.RI "#define \fBs2n_stuffer_space_remaining\fP(s)   ((s)\->blob\&.size \- (s)\->write_cursor)"
+.br
+.ti -1c
+.RI "#define \fBs2n_stuffer_write_char\fP(stuffer,  \fBc\fP)   \fBs2n_stuffer_write_uint8\fP( (stuffer), (uint8_t) (\fBc\fP) )"
+.br
+.ti -1c
+.RI "#define \fBs2n_stuffer_read_char\fP(stuffer,  \fBc\fP)   \fBs2n_stuffer_read_uint8\fP( (stuffer), (uint8_t *) (\fBc\fP) )"
+.br
+.ti -1c
+.RI "#define \fBs2n_stuffer_write_str\fP(stuffer,  \fBc\fP)   \fBs2n_stuffer_write_bytes\fP( (stuffer), (const uint8_t *) (\fBc\fP), strlen((\fBc\fP)) )"
+.br
+.ti -1c
+.RI "#define \fBs2n_stuffer_write_text\fP(stuffer,  \fBc\fP,  n)   \fBs2n_stuffer_write_bytes\fP( (stuffer), (const uint8_t *) (\fBc\fP), (n) )"
+.br
+.ti -1c
+.RI "#define \fBs2n_stuffer_read_text\fP(stuffer,  \fBc\fP,  n)   \fBs2n_stuffer_read_bytes\fP( (stuffer), (uint8_t *) (\fBc\fP), (n) )"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_stuffer_init\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_blob\fP *in)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_alloc\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_growable_alloc\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_free\fP (struct \fBs2n_stuffer\fP *stuffer)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_resize\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_reread\fP (struct \fBs2n_stuffer\fP *stuffer)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_rewrite\fP (struct \fBs2n_stuffer\fP *stuffer)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_wipe\fP (struct \fBs2n_stuffer\fP *stuffer)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_wipe_n\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t n)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_erase_and_read\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write\fP (struct \fBs2n_stuffer\fP *stuffer, const struct \fBs2n_blob\fP *in)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_bytes\fP (struct \fBs2n_stuffer\fP *stuffer, uint8_t *out, uint32_t n)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_bytes\fP (struct \fBs2n_stuffer\fP *stuffer, const uint8_t *in, const uint32_t n)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_skip_read\fP (struct \fBs2n_stuffer\fP *stuffer, uint32_t n)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_skip_write\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t n)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBs2n_stuffer_raw_write\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t data_len)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBs2n_stuffer_raw_read\fP (struct \fBs2n_stuffer\fP *stuffer, uint32_t data_len)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_recv_from_fd\fP (struct \fBs2n_stuffer\fP *stuffer, int rfd, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_send_to_fd\fP (struct \fBs2n_stuffer\fP *stuffer, int wfd, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint8\fP (struct \fBs2n_stuffer\fP *stuffer, uint8_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint16\fP (struct \fBs2n_stuffer\fP *stuffer, uint16_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint24\fP (struct \fBs2n_stuffer\fP *stuffer, uint32_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint32\fP (struct \fBs2n_stuffer\fP *stuffer, uint32_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_uint64\fP (struct \fBs2n_stuffer\fP *stuffer, uint64_t *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint8\fP (struct \fBs2n_stuffer\fP *stuffer, const uint8_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint16\fP (struct \fBs2n_stuffer\fP *stuffer, const uint16_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint24\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint32\fP (struct \fBs2n_stuffer\fP *stuffer, const uint32_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_uint64\fP (struct \fBs2n_stuffer\fP *stuffer, const uint64_t \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_copy\fP (struct \fBs2n_stuffer\fP *from, struct \fBs2n_stuffer\fP *to, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_base64\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_stuffer\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_write_base64\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_stuffer\fP *in)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_peek_char\fP (struct \fBs2n_stuffer\fP *stuffer, char *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_read_token\fP (struct \fBs2n_stuffer\fP *stuffer, struct \fBs2n_stuffer\fP *token, char delim)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_skip_whitespace\fP (struct \fBs2n_stuffer\fP *stuffer)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_alloc_ro_from_string\fP (struct \fBs2n_stuffer\fP *stuffer, const char *str)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_rsa_private_key_from_pem\fP (struct \fBs2n_stuffer\fP *pem, struct \fBs2n_stuffer\fP *asn1)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_certificate_from_pem\fP (struct \fBs2n_stuffer\fP *pem, struct \fBs2n_stuffer\fP *asn1)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_dhparams_from_pem\fP (struct \fBs2n_stuffer\fP *pem, struct \fBs2n_stuffer\fP *pkcs3)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define s2n_stuffer_data_available(s)   ((s)\->write_cursor \- (s)\->read_cursor)"
+
+.PP
+Definition at line 45 of file s2n_stuffer\&.h\&.
+.SS "#define s2n_stuffer_space_remaining(s)   ((s)\->blob\&.size \- (s)\->write_cursor)"
+
+.PP
+Definition at line 46 of file s2n_stuffer\&.h\&.
+.SS "#define s2n_stuffer_write_char(stuffer, \fBc\fP)   \fBs2n_stuffer_write_uint8\fP( (stuffer), (uint8_t) (\fBc\fP) )"
+
+.PP
+Definition at line 99 of file s2n_stuffer\&.h\&.
+.SS "#define s2n_stuffer_read_char(stuffer, \fBc\fP)   \fBs2n_stuffer_read_uint8\fP( (stuffer), (uint8_t *) (\fBc\fP) )"
+
+.PP
+Definition at line 100 of file s2n_stuffer\&.h\&.
+.SS "#define s2n_stuffer_write_str(stuffer, \fBc\fP)   \fBs2n_stuffer_write_bytes\fP( (stuffer), (const uint8_t *) (\fBc\fP), strlen((\fBc\fP)) )"
+
+.PP
+Definition at line 101 of file s2n_stuffer\&.h\&.
+.SS "#define s2n_stuffer_write_text(stuffer, \fBc\fP, n)   \fBs2n_stuffer_write_bytes\fP( (stuffer), (const uint8_t *) (\fBc\fP), (n) )"
+
+.PP
+Definition at line 102 of file s2n_stuffer\&.h\&.
+.SS "#define s2n_stuffer_read_text(stuffer, \fBc\fP, n)   \fBs2n_stuffer_read_bytes\fP( (stuffer), (uint8_t *) (\fBc\fP), (n) )"
+
+.PP
+Definition at line 103 of file s2n_stuffer\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_stuffer_init (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_blob\fP * in)"
+
+.PP
+Definition at line 29 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+30 {
+31     stuffer->blob\&.data = in->data;
+32     stuffer->blob\&.size = in->size;
+33     stuffer->wiped = 1;
+34     stuffer->alloced = 0;
+35     stuffer->growable = 0;
+36     stuffer->tainted = 0;
+37     stuffer->read_cursor = 0;
+38     stuffer->write_cursor = 0;
+39 
+40     return 0;
+41 }
+.fi
+.SS "int s2n_stuffer_alloc (struct \fBs2n_stuffer\fP * stuffer, const uint32_t size)"
+
+.PP
+Definition at line 43 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+44 {
+45 
+46     GUARD(s2n_alloc(&stuffer->blob, size));
+47     GUARD(s2n_stuffer_init(stuffer, &stuffer->blob));
+48 
+49     stuffer->alloced = 1;
+50 
+51     return 0;
+52 }
+.fi
+.SS "int s2n_stuffer_growable_alloc (struct \fBs2n_stuffer\fP * stuffer, const uint32_t size)"
+
+.PP
+Definition at line 54 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+55 {
+56     GUARD(s2n_stuffer_alloc(stuffer, size));
+57 
+58     stuffer->growable = 1;
+59 
+60     return 0;
+61 }
+.fi
+.SS "int s2n_stuffer_free (struct \fBs2n_stuffer\fP * stuffer)"
+
+.PP
+Definition at line 63 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+64 {
+65     if (stuffer->alloced == 0) {
+66         return 0;
+67     }
+68     if (stuffer->wiped == 0) {
+69         GUARD(s2n_stuffer_wipe(stuffer));
+70     }
+71 
+72     GUARD(s2n_free(&stuffer->blob));
+73 
+74     stuffer->blob\&.data = NULL;
+75     stuffer->blob\&.size = 0;
+76 
+77     return 0;
+78 }
+.fi
+.SS "int s2n_stuffer_resize (struct \fBs2n_stuffer\fP * stuffer, const uint32_t size)"
+
+.PP
+Definition at line 80 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+81 {
+82     if (stuffer->growable == 0) {
+83         S2N_ERROR(S2N_ERR_RESIZE_STATIC_STUFFER);
+84     }
+85     if (stuffer->tainted == 1) {
+86         S2N_ERROR(S2N_ERR_RESIZE_TAINTED_STUFFER);
+87     }
+88     if (size == stuffer->blob\&.size) {
+89         return 0;
+90     }
+91     if (size < stuffer->blob\&.size) {
+92         GUARD(s2n_stuffer_wipe_n(stuffer, stuffer->blob\&.size - size));
+93     }
+94 
+95     GUARD(s2n_realloc(&stuffer->blob, size));
+96 
+97     stuffer->blob\&.size = size;
+98 
+99     return 0;
+100 }
+.fi
+.SS "int s2n_stuffer_reread (struct \fBs2n_stuffer\fP * stuffer)"
+
+.PP
+Definition at line 110 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+111 {
+112     stuffer->read_cursor = 0;
+113     return 0;
+114 }
+.fi
+.SS "int s2n_stuffer_rewrite (struct \fBs2n_stuffer\fP * stuffer)"
+
+.PP
+Definition at line 102 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+103 {
+104     stuffer->write_cursor = 0;
+105     stuffer->read_cursor = 0;
+106 
+107     return 0;
+108 }
+.fi
+.SS "int s2n_stuffer_wipe (struct \fBs2n_stuffer\fP * stuffer)"
+
+.PP
+Definition at line 133 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+134 {
+135     stuffer->tainted = 0;
+136     return s2n_stuffer_wipe_n(stuffer, stuffer->write_cursor);
+137 }
+.fi
+.SS "int s2n_stuffer_wipe_n (struct \fBs2n_stuffer\fP * stuffer, const uint32_t n)"
+
+.PP
+Definition at line 116 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+117 {
+118     uint32_t n = MIN(size, stuffer->write_cursor);
+119 
+120     /* Use '0' instead of 0 precisely to prevent C string compatibility */
+121     memset_check(stuffer->blob\&.data + stuffer->write_cursor - n, '0', n);
+122     stuffer->write_cursor -= n;
+123 
+124     if (stuffer->write_cursor == 0) {
+125         stuffer->wiped = 1;
+126     }
+127 
+128     stuffer->read_cursor = MIN(stuffer->read_cursor, stuffer->write_cursor);
+129 
+130     return 0;
+131 }
+.fi
+.SS "int s2n_stuffer_read (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 158 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+159 {
+160     notnull_check(out);
+161 
+162     return s2n_stuffer_read_bytes(stuffer, out->data, out->size);
+163 }
+.fi
+.SS "int s2n_stuffer_erase_and_read (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 165 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+166 {
+167     GUARD(s2n_stuffer_skip_read(stuffer, out->size));
+168 
+169     void *ptr = stuffer->blob\&.data + stuffer->read_cursor - out->size;
+170     if (ptr == NULL) {
+171         return -1;
+172     }
+173 
+174     memcpy_check(out->data, ptr, out->size);
+175     memset(ptr, 0, out->size);
+176 
+177     return 0;
+178 }
+.fi
+.SS "int s2n_stuffer_write (struct \fBs2n_stuffer\fP * stuffer, const struct \fBs2n_blob\fP * in)"
+
+.PP
+Definition at line 219 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+220 {
+221     return s2n_stuffer_write_bytes(stuffer, in->data, in->size);
+222 }
+.fi
+.SS "int s2n_stuffer_read_bytes (struct \fBs2n_stuffer\fP * stuffer, uint8_t * out, uint32_t n)"
+
+.PP
+Definition at line 180 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+181 {
+182     GUARD(s2n_stuffer_skip_read(stuffer, size));
+183 
+184     void *ptr = stuffer->blob\&.data + stuffer->read_cursor - size;
+185     notnull_check(ptr);
+186 
+187     memcpy_check(data, ptr, size);
+188 
+189     return 0;
+190 }
+.fi
+.SS "int s2n_stuffer_write_bytes (struct \fBs2n_stuffer\fP * stuffer, const uint8_t * in, const uint32_t n)"
+
+.PP
+Definition at line 224 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+225 {
+226     GUARD(s2n_stuffer_skip_write(stuffer, size));
+227 
+228     void *ptr = stuffer->blob\&.data + stuffer->write_cursor - size;
+229     if (ptr == NULL) {
+230         return -1;
+231     }
+232 
+233     if (ptr == data) {
+234         return 0;
+235     }
+236 
+237     memcpy_check(ptr, data, size);
+238 
+239     return 0;
+240 }
+.fi
+.SS "int s2n_stuffer_skip_read (struct \fBs2n_stuffer\fP * stuffer, uint32_t n)"
+
+.PP
+Definition at line 139 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+140 {
+141     if (s2n_stuffer_data_available(stuffer) < n) {
+142         S2N_ERROR(S2N_ERR_STUFFER_OUT_OF_DATA);
+143     }
+144 
+145     stuffer->read_cursor += n;
+146     return 0;
+147 }
+.fi
+.SS "int s2n_stuffer_skip_write (struct \fBs2n_stuffer\fP * stuffer, const uint32_t n)"
+
+.PP
+Definition at line 192 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+193 {
+194     if (s2n_stuffer_space_remaining(stuffer) < n) {
+195         if (stuffer->growable) {
+196             /* Always grow a stuffer by at least 1k */
+197             uint32_t growth = MAX(n, 1024);
+198 
+199             GUARD(s2n_stuffer_resize(stuffer, stuffer->blob\&.size + growth));
+200         } else {
+201             S2N_ERROR(S2N_ERR_STUFFER_IS_FULL);
+202         }
+203     }
+204 
+205     stuffer->write_cursor += n;
+206     stuffer->wiped = 0;
+207     return 0;
+208 }
+.fi
+.SS "\fBvoid\fP* s2n_stuffer_raw_write (struct \fBs2n_stuffer\fP * stuffer, const uint32_t data_len)"
+
+.PP
+Definition at line 210 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+211 {
+212     GUARD_PTR(s2n_stuffer_skip_write(stuffer, data_len));
+213 
+214     stuffer->tainted = 1;
+215 
+216     return stuffer->blob\&.data + stuffer->write_cursor - data_len;
+217 }
+.fi
+.SS "\fBvoid\fP* s2n_stuffer_raw_read (struct \fBs2n_stuffer\fP * stuffer, uint32_t data_len)"
+
+.PP
+Definition at line 149 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+150 {
+151     GUARD_PTR(s2n_stuffer_skip_read(stuffer, data_len));
+152 
+153     stuffer->tainted = 1;
+154 
+155     return stuffer->blob\&.data + stuffer->read_cursor - data_len;
+156 }
+.fi
+.SS "int s2n_stuffer_recv_from_fd (struct \fBs2n_stuffer\fP * stuffer, int rfd, uint32_t len)"
+
+.PP
+Definition at line 29 of file s2n_stuffer_file\&.c\&.
+.PP
+.nf
+30 {
+31 
+32     /* Make sure we have enough space to write */
+33     GUARD(s2n_stuffer_skip_write(stuffer, len));
+34 
+35     /* "undo" the skip write */
+36     stuffer->write_cursor -= len;
+37 
+38   READ:
+39     errno = 0;
+40     int r = read(rfd, stuffer->blob\&.data + stuffer->write_cursor, len);
+41     if (r < 0) {
+42         if (errno == EINTR) {
+43             goto READ;
+44         }
+45         return -1;
+46     }
+47 
+48     /* Record just how many bytes we have written */
+49     stuffer->write_cursor += r;
+50     stuffer->wiped = 0;
+51 
+52     return r;
+53 }
+.fi
+.SS "int s2n_stuffer_send_to_fd (struct \fBs2n_stuffer\fP * stuffer, int wfd, uint32_t len)"
+
+.PP
+Definition at line 55 of file s2n_stuffer_file\&.c\&.
+.PP
+.nf
+56 {
+57     /* Make sure we even have the data */
+58     GUARD(s2n_stuffer_skip_read(stuffer, len));
+59 
+60     /* "undo" the skip read */
+61     stuffer->read_cursor -= len;
+62 
+63   WRITE:
+64     errno = 0;
+65     int w = write(wfd, stuffer->blob\&.data + stuffer->read_cursor, len);
+66     if (w < 0) {
+67         if (errno == EINTR) {
+68             goto WRITE;
+69         }
+70         return -1;
+71     }
+72 
+73     stuffer->read_cursor += w;
+74 
+75     return w;
+76 }
+.fi
+.SS "int s2n_stuffer_read_uint8 (struct \fBs2n_stuffer\fP * stuffer, uint8_t * u)"
+
+.PP
+Definition at line 242 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+243 {
+244     GUARD(s2n_stuffer_read_bytes(stuffer, u, 1));
+245 
+246     return 0;
+247 }
+.fi
+.SS "int s2n_stuffer_read_uint16 (struct \fBs2n_stuffer\fP * stuffer, uint16_t * u)"
+
+.PP
+Definition at line 256 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+257 {
+258     uint8_t data[2];
+259 
+260     GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
+261 
+262     *u = data[0] << 8;
+263     *u |= data[1];
+264 
+265     return 0;
+266 }
+.fi
+.SS "int s2n_stuffer_read_uint24 (struct \fBs2n_stuffer\fP * stuffer, uint32_t * u)"
+
+.PP
+Definition at line 277 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+278 {
+279     uint8_t data[3];
+280 
+281     GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
+282 
+283     *u = data[0] << 16;
+284     *u |= data[1] << 8;
+285     *u |= data[2];
+286 
+287     return 0;
+288 }
+.fi
+.SS "int s2n_stuffer_read_uint32 (struct \fBs2n_stuffer\fP * stuffer, uint32_t * u)"
+
+.PP
+Definition at line 299 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+300 {
+301     uint8_t data[4];
+302 
+303     GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
+304 
+305     *u = ((uint32_t) data[0]) << 24;
+306     *u |= data[1] << 16;
+307     *u |= data[2] << 8;
+308     *u |= data[3];
+309 
+310     return 0;
+311 }
+.fi
+.SS "int s2n_stuffer_read_uint64 (struct \fBs2n_stuffer\fP * stuffer, uint64_t * u)"
+
+.PP
+Definition at line 322 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+323 {
+324     uint8_t data[8];
+325 
+326     GUARD(s2n_stuffer_read_bytes(stuffer, data, sizeof(data)));
+327 
+328     *u = ((uint64_t) data[0]) << 56;
+329     *u |= ((uint64_t) data[1]) << 48;
+330     *u |= ((uint64_t) data[2]) << 40;
+331     *u |= ((uint64_t) data[3]) << 32;
+332     *u |= ((uint64_t) data[4]) << 24;
+333     *u |= ((uint64_t) data[5]) << 16;
+334     *u |= ((uint64_t) data[6]) << 8;
+335     *u |= data[7];
+336 
+337     return 0;
+338 }
+.fi
+.SS "int s2n_stuffer_write_uint8 (struct \fBs2n_stuffer\fP * stuffer, const uint8_t u)"
+
+.PP
+Definition at line 249 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+250 {
+251     GUARD(s2n_stuffer_write_bytes(stuffer, &u, 1));
+252 
+253     return 0;
+254 }
+.fi
+.SS "int s2n_stuffer_write_uint16 (struct \fBs2n_stuffer\fP * stuffer, const uint16_t u)"
+
+.PP
+Definition at line 268 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+269 {
+270     uint8_t data[2] = { u >> 8, u & 0xff };
+271 
+272     GUARD(s2n_stuffer_write_bytes(stuffer, data, sizeof(data)));
+273 
+274     return 0;
+275 }
+.fi
+.SS "int s2n_stuffer_write_uint24 (struct \fBs2n_stuffer\fP * stuffer, const uint32_t u)"
+
+.PP
+Definition at line 290 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+291 {
+292     uint8_t data[3] = { u >> 16, u >> 8, u & 0xff };
+293 
+294     GUARD(s2n_stuffer_write_bytes(stuffer, data, sizeof(data)));
+295 
+296     return 0;
+297 }
+.fi
+.SS "int s2n_stuffer_write_uint32 (struct \fBs2n_stuffer\fP * stuffer, const uint32_t u)"
+
+.PP
+Definition at line 313 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+314 {
+315     uint8_t data[4] = { u >> 24, u >> 16, u >> 8, u & 0xff };
+316 
+317     GUARD(s2n_stuffer_write_bytes(stuffer, data, sizeof(data)));
+318 
+319     return 0;
+320 }
+.fi
+.SS "int s2n_stuffer_write_uint64 (struct \fBs2n_stuffer\fP * stuffer, const uint64_t u)"
+
+.PP
+Definition at line 340 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+341 {
+342     uint8_t data[8] = { u >> 56, u >> 48, u >> 40, u >> 32, u >> 24, u >> 16, u >> 8, u & 0xff };
+343 
+344     GUARD(s2n_stuffer_write_bytes(stuffer, data, sizeof(data)));
+345 
+346     return 0;
+347 }
+.fi
+.SS "int s2n_stuffer_copy (struct \fBs2n_stuffer\fP * from, struct \fBs2n_stuffer\fP * to, uint32_t len)"
+
+.PP
+Definition at line 349 of file s2n_stuffer\&.c\&.
+.PP
+.nf
+350 {
+351     GUARD(s2n_stuffer_skip_read(from, len));
+352 
+353     GUARD(s2n_stuffer_skip_write(to, len));
+354 
+355     uint8_t *from_ptr = from->blob\&.data + from->read_cursor - len;
+356     uint8_t *to_ptr = to->blob\&.data + to->write_cursor - len;
+357 
+358     memcpy_check(to_ptr, from_ptr, len);
+359 
+360     return 0;
+361 }
+.fi
+.SS "int s2n_stuffer_read_base64 (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_stuffer\fP * out)"
+NOTE: In general, shift before masking\&. This avoids needing to worry about how the signed bit may be handled\&. 
+.PP
+Definition at line 70 of file s2n_stuffer_base64\&.c\&.
+.PP
+.nf
+71 {
+72     uint8_t pad[4];
+73     int bytes_this_round = 3;
+74     struct s2n_blob o = {\&.data = pad,\&.size = sizeof(pad) };
+75 
+76     do {
+77         if (s2n_stuffer_data_available(stuffer) < 4) {
+78             break;
+79         }
+80 
+81         GUARD(s2n_stuffer_read(stuffer, &o));
+82 
+83         uint8_t value1 = b64_inverse[o\&.data[0]];
+84         uint8_t value2 = b64_inverse[o\&.data[1]];
+85         uint8_t value3 = b64_inverse[o\&.data[2]];
+86         uint8_t value4 = b64_inverse[o\&.data[3]];
+87 
+88         /* Terminate cleanly if we encounter a non-base64 character */
+89         if (value1 == 255) {
+90             /* Undo the read */
+91             stuffer->read_cursor -= 4;
+92             return 0;
+93         }
+94 
+95         /* The first two characters can never be '=' and in general
+96          * everything has to be a valid character\&. 
+97          */
+98         if (value1 == 64 || value2 == 64 || value2 == 255 || value3 == 255 || value4 == 255) {
+99             S2N_ERROR(S2N_ERR_INVALID_BASE64);
+100         }
+101 
+102         if (o\&.data[2] == '=') {
+103             /* If there is only one output byte, then the second value
+104              * should have none of its bottom four bits set\&.
+105              */
+106             if (o\&.data[3] != '=' || value2 & 0x0f) {
+107                 S2N_ERROR(S2N_ERR_INVALID_BASE64);
+108             }
+109             bytes_this_round = 1;
+110             value3 = 0;
+111             value4 = 0;
+112         } else if (o\&.data[3] == '=') {
+113             /* The last two bits of the final value should be unset */
+114             if (value3 & 0x03) {
+115                 S2N_ERROR(S2N_ERR_INVALID_BASE64);
+116             }
+117 
+118             bytes_this_round = 2;
+119             value4 = 0;
+120         }
+121 
+122         /* value1 maps to the first 6 bits of the first data byte */
+123         /* value2's top two bits are the rest */
+124         uint8_t c = ((value1 << 2) & 0xfc) | ((value2 >> 4) & 0x03);
+125         GUARD(s2n_stuffer_write_uint8(out, c));
+126 
+127         if (bytes_this_round > 1) {
+128             /* Put the next four bits in the second data byte */
+129             /* Put the next four bits in the third data byte */
+130             c = ((value2 << 4) & 0xf0) | ((value3 >> 2) & 0x0f);
+131             GUARD(s2n_stuffer_write_uint8(out, c));
+132         }
+133 
+134         if (bytes_this_round > 2) {
+135             /* Put the next two bits in the third data byte */
+136             /* Put the next six bits in the fourth data byte */
+137             c = ((value3 << 6) & 0xc0) | (value4 & 0x3f);
+138             GUARD(s2n_stuffer_write_uint8(out, c));
+139         }
+140 
+141     } while (bytes_this_round == 3);
+142 
+143     return 0;
+144 }
+.fi
+.SS "int s2n_stuffer_write_base64 (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_stuffer\fP * in)"
+
+.PP
+Definition at line 146 of file s2n_stuffer_base64\&.c\&.
+.PP
+.nf
+147 {
+148     uint8_t outpad[4];
+149     uint8_t inpad[3];
+150     struct s2n_blob o = {\&.data = outpad,\&.size = sizeof(outpad) };
+151     struct s2n_blob i = {\&.data = inpad,\&.size = sizeof(inpad) };
+152 
+153     while (s2n_stuffer_data_available(in) > 2) {
+154         GUARD(s2n_stuffer_read(in, &i));
+155 
+156         /* Take the top 6-bits of the first data byte  */
+157         o\&.data[0] = b64[(i\&.data[0] >> 2) & 0x3f];
+158 
+159         /* Take the bottom 2-bits of the first data byte -  0b00110000 = 0x30
+160          * and take the top 4-bits of the second data byte - 0b00001111 = 0x0f 
+161          */
+162         o\&.data[1] = b64[((i\&.data[0] << 4) & 0x30) | ((i\&.data[1] >> 4) & 0x0f)];
+163 
+164         /* Take the bottom 4-bits of the second data byte - 0b00111100 = 0x3c
+165          * and take the top 2-bits of the third data byte - 0b00000011 = 0x03 
+166          */
+167         o\&.data[2] = b64[((i\&.data[1] << 2) & 0x3c) | ((i\&.data[2] >> 6) & 0x03)];
+168 
+169         /* Take the bottom 6-bits of the second data byte - 0b00111111 = 0x3f
+170          */
+171         o\&.data[3] = b64[i\&.data[2] & 0x3f];
+172 
+173         GUARD(s2n_stuffer_write(stuffer, &o));
+174     }
+175 
+176     if (s2n_stuffer_data_available(in)) {
+177         /* Read just one byte */
+178         i\&.size = 1;
+179         GUARD(s2n_stuffer_read(in, &i));
+180         uint8_t c = i\&.data[0];
+181 
+182         /* We at least one data byte left to encode, encode
+183          * its first six bits 
+184          */
+185         o\&.data[0] = b64[(c >> 2) & 0x3f];
+186 
+187         /* And our end has to be an equals */
+188         o\&.data[3] = '=';
+189 
+190         /* How many bytes are actually left? */
+191         if (s2n_stuffer_data_available(in) == 0) {
+192             /* We just have the last two bits to deal with */
+193             o\&.data[1] = b64[(c << 4) & 0x30];
+194             o\&.data[2] = '=';
+195         } else {
+196             /* Read the last byte */
+197             GUARD(s2n_stuffer_read(in, &i));
+198 
+199             o\&.data[1] = b64[((c << 4) & 0x30) | ((i\&.data[0] >> 4) & 0x0f)];
+200             o\&.data[2] = b64[((i\&.data[0] << 2) & 0x3c)];
+201         }
+202 
+203         GUARD(s2n_stuffer_write(stuffer, &o));
+204     }
+205 
+206     return 0;
+207 }
+.fi
+.SS "int s2n_stuffer_peek_char (struct \fBs2n_stuffer\fP * stuffer, char * c)"
+
+.PP
+Definition at line 23 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+24 {
+25     int r = s2n_stuffer_read_uint8(s2n_stuffer, (uint8_t *) c);
+26     if (r == 0) {
+27         s2n_stuffer->read_cursor--;
+28     }
+29     return r;
+30 }
+.fi
+.SS "int s2n_stuffer_read_token (struct \fBs2n_stuffer\fP * stuffer, struct \fBs2n_stuffer\fP * token, char delim)"
+
+.PP
+Definition at line 52 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+53 {
+54     int token_size = 0;
+55 
+56     while ((stuffer->read_cursor + token_size) < stuffer->write_cursor) {
+57         if (stuffer->blob\&.data[stuffer->read_cursor + token_size] == delim) {
+58             break;
+59         }
+60 
+61         token_size++;
+62     }
+63 
+64     GUARD(s2n_stuffer_copy(stuffer, token, token_size));
+65 
+66     /* Consume the delimiter too */
+67     if (stuffer->read_cursor < stuffer->write_cursor) {
+68         stuffer->read_cursor++;
+69     }
+70 
+71     return 0;
+72 }
+.fi
+.SS "int s2n_stuffer_skip_whitespace (struct \fBs2n_stuffer\fP * stuffer)"
+
+.PP
+Definition at line 32 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+33 {
+34     int skipped = 0;
+35     while (s2n_stuffer->read_cursor < s2n_stuffer->write_cursor) {
+36         switch (s2n_stuffer->blob\&.data[s2n_stuffer->read_cursor]) {
+37         case ' ':              /* We don't use isspace, because it changes under locales */
+38         case '\t':
+39         case '\n':
+40         case '\r':
+41             s2n_stuffer->read_cursor += 1;
+42             skipped += 1;
+43             break;
+44         default:
+45             return skipped;
+46         }
+47     }
+48 
+49     return skipped;
+50 }
+.fi
+.SS "int s2n_stuffer_alloc_ro_from_string (struct \fBs2n_stuffer\fP * stuffer, const char * str)"
+
+.PP
+Definition at line 74 of file s2n_stuffer_text\&.c\&.
+.PP
+.nf
+75 {
+76     uint32_t length = strlen(str);
+77 
+78     GUARD(s2n_stuffer_alloc(stuffer, length + 1));
+79     return s2n_stuffer_write_bytes(stuffer, (const uint8_t *)str, length);
+80 }
+.fi
+.SS "int s2n_stuffer_rsa_private_key_from_pem (struct \fBs2n_stuffer\fP * pem, struct \fBs2n_stuffer\fP * asn1)"
+
+.PP
+Definition at line 99 of file s2n_stuffer_pem\&.c\&.
+.PP
+.nf
+100 {
+101     return s2n_stuffer_data_from_pem(pem, asn1, "RSA PRIVATE KEY");
+102 }
+.fi
+.SS "int s2n_stuffer_certificate_from_pem (struct \fBs2n_stuffer\fP * pem, struct \fBs2n_stuffer\fP * asn1)"
+
+.PP
+Definition at line 104 of file s2n_stuffer_pem\&.c\&.
+.PP
+.nf
+105 {
+106     return s2n_stuffer_data_from_pem(pem, asn1, "CERTIFICATE");
+107 }
+.fi
+.SS "int s2n_stuffer_dhparams_from_pem (struct \fBs2n_stuffer\fP * pem, struct \fBs2n_stuffer\fP * pkcs3)"
+
+.PP
+Definition at line 109 of file s2n_stuffer_pem\&.c\&.
+.PP
+.nf
+110 {
+111     return s2n_stuffer_data_from_pem(pem, pkcs3, "DH PARAMETERS");
+112 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

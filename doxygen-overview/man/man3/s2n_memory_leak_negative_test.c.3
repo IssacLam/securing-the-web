@@ -1,0 +1,141 @@
+.TH "s2n-master/tests/fuzz/s2n_memory_leak_negative_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/fuzz/s2n_memory_leak_negative_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include 'api/s2n\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_crypto\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 's2n_test\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBLLVMFuzzerInitialize\fP (const uint8_t *buf, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBLLVMFuzzerTestOneInput\fP (const uint8_t *buf, size_t \fBlen\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int LLVMFuzzerInitialize (const uint8_t * buf, size_t len)"
+
+.PP
+Definition at line 133 of file s2n_memory_leak_negative_test\&.c\&.
+.PP
+.nf
+134 {
+135     GUARD(s2n_init());
+136     GUARD(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+137     return 0;
+138 }
+.fi
+.SS "int LLVMFuzzerTestOneInput (const uint8_t * buf, size_t len)"
+
+.PP
+Definition at line 140 of file s2n_memory_leak_negative_test\&.c\&.
+.PP
+.nf
+141 {
+142     if(len < S2N_TLS_RECORD_HEADER_LENGTH){
+143         return 0;
+144     }
+145 
+146     /* Set up File Descriptors from client to server */
+147     int client_to_server[2];
+148     GUARD(pipe(client_to_server));
+149 
+150     for (int i = 0; i < 2; i++) {
+151         GUARD(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK));
+152     }
+153 
+154     /* Set up Server Config */
+155     struct s2n_config *server_config;
+156     notnull_check(server_config = s2n_config_new());
+157     GUARD(s2n_config_add_cert_chain_and_key(server_config, certificate_chain, private_key));
+158     GUARD(s2n_config_add_dhparams(server_config, dhparams));
+159 
+160     /* Set up Server Connection */
+161     struct s2n_connection *server_conn;
+162     notnull_check(server_conn = s2n_connection_new(S2N_SERVER));
+163     GUARD(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+164     GUARD(s2n_connection_set_config(server_conn, server_config));
+165     GUARD(s2n_connection_set_blinding(server_conn, S2N_SELF_SERVICE_BLINDING));
+166     server_conn->delay = 0;
+167 
+168     /* Set Server write FD to -1, to skip writing data since server out data is never read\&. */
+169     GUARD(s2n_connection_set_write_fd(server_conn, -1));
+170 
+171     /* Set up Client Connection */
+172     struct s2n_connection *client_conn;
+173     notnull_check(client_conn = s2n_connection_new(S2N_CLIENT));
+174     GUARD(s2n_connection_set_write_fd(client_conn, client_to_server[1]));
+175 
+176     /* Write data to client out file descriptor so that it is recieved by the server */
+177     struct s2n_stuffer *client_out = &client_conn->out;
+178     GUARD(s2n_stuffer_write_bytes(client_out, buf, len));
+179     s2n_blocked_status client_blocked;
+180     GUARD(s2n_flush(client_conn, &client_blocked));
+181     eq_check(client_blocked, S2N_NOT_BLOCKED);
+182 
+183     /* Let Server receive data and attempt Negotiation */
+184     int num_attempted_negotiations = 0;
+185     s2n_blocked_status server_blocked;
+186     do {
+187         s2n_negotiate(server_conn, &server_blocked);
+188         num_attempted_negotiations += 1;
+189     } while(!server_blocked && num_attempted_negotiations < MAX_NEGOTIATION_ATTEMPTS);
+190 
+191     /* Clean up */
+192     GUARD(s2n_connection_wipe(server_conn));
+193     GUARD(s2n_connection_wipe(client_conn));
+194 
+195     for (int i = 0; i < 2; i++) {
+196         GUARD(close(client_to_server[i]));
+197     }
+198 
+199     GUARD(s2n_config_free(server_config));
+200     GUARD(s2n_connection_free(server_conn));
+201     GUARD(s2n_connection_free(client_conn));
+202 
+203     return 0;
+204 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

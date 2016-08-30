@@ -1,0 +1,2635 @@
+.TH "tls1.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tls1.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/buffer\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBtls_session_ticket_ext_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS1_ALLOW_EXPERIMENTAL_CIPHERSUITES\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLS1_VERSION\fP   0x0301"
+.br
+.ti -1c
+.RI "#define \fBTLS1_1_VERSION\fP   0x0302"
+.br
+.ti -1c
+.RI "#define \fBTLS1_2_VERSION\fP   0x0303"
+.br
+.ti -1c
+.RI "#define \fBTLS_MAX_VERSION\fP   \fBTLS1_2_VERSION\fP"
+.br
+.ti -1c
+.RI "#define \fBTLS1_VERSION_MAJOR\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBTLS1_VERSION_MINOR\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBTLS1_1_VERSION_MAJOR\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBTLS1_1_VERSION_MINOR\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBTLS1_2_VERSION_MAJOR\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBTLS1_2_VERSION_MINOR\fP   0x03"
+.br
+.ti -1c
+.RI "#define \fBTLS1_get_version\fP(s)   ((s\->\fBversion\fP >> 8) == \fBTLS1_VERSION_MAJOR\fP ? s\->\fBversion\fP : 0)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_get_client_version\fP(s)   ((s\->client_version >> 8) == \fBTLS1_VERSION_MAJOR\fP ? s\->client_version : 0)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_DECRYPTION_FAILED\fP   21"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_RECORD_OVERFLOW\fP   22"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_UNKNOWN_CA\fP   48/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_ACCESS_DENIED\fP   49/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_DECODE_ERROR\fP   50/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_DECRYPT_ERROR\fP   51"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_EXPORT_RESTRICTION\fP   60/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_PROTOCOL_VERSION\fP   70/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_INSUFFICIENT_SECURITY\fP   71/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_INTERNAL_ERROR\fP   80/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_INAPPROPRIATE_FALLBACK\fP   86/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_USER_CANCELLED\fP   90"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_NO_RENEGOTIATION\fP   100"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_UNSUPPORTED_EXTENSION\fP   110"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_CERTIFICATE_UNOBTAINABLE\fP   111"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_UNRECOGNIZED_NAME\fP   112"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_BAD_CERTIFICATE_STATUS_RESPONSE\fP   113"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_BAD_CERTIFICATE_HASH_VALUE\fP   114"
+.br
+.ti -1c
+.RI "#define \fBTLS1_AD_UNKNOWN_PSK_IDENTITY\fP   115/* fatal */"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_server_name\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_max_fragment_length\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_client_certificate_url\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_trusted_ca_keys\fP   3"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_truncated_hmac\fP   4"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_status_request\fP   5"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_user_mapping\fP   6"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_client_authz\fP   7"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_server_authz\fP   8"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_cert_type\fP   9"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_elliptic_curves\fP   10"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_ec_point_formats\fP   11"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_srp\fP   12"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_signature_algorithms\fP   13"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_use_srtp\fP   14"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_heartbeat\fP   15"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_application_layer_protocol_negotiation\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_padding\fP   21"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_session_ticket\fP   35"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_renegotiate\fP   0xff01"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_TYPE_next_proto_neg\fP   13172"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_NAMETYPE_host_name\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_STATUSTYPE_ocsp\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_ECPOINTFORMAT_first\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_ECPOINTFORMAT_uncompressed\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_ECPOINTFORMAT_ansiX962_compressed_prime\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_ECPOINTFORMAT_ansiX962_compressed_char2\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_ECPOINTFORMAT_last\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_signature_anonymous\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_signature_rsa\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_signature_dsa\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_signature_ecdsa\fP   3"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_signature_num\fP   4"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_none\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_md5\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_sha1\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_sha224\fP   3"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_sha256\fP   4"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_sha384\fP   5"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_sha512\fP   6"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_hash_num\fP   7"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_nid_unknown\fP   0x1000000"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_curve_P_256\fP   23"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_curve_P_384\fP   24"
+.br
+.ti -1c
+.RI "#define \fBTLSEXT_MAXLEN_host_name\fP   255"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_host_name\fP(s,  name)   \fBSSL_ctrl\fP(s,\fBSSL_CTRL_SET_TLSEXT_HOSTNAME\fP,\fBTLSEXT_NAMETYPE_host_name\fP,(char *)name)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_debug_callback\fP(ssl,  \fBcb\fP)   \fBSSL_callback_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_DEBUG_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_debug_arg\fP(ssl,  arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_DEBUG_ARG\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_status_type\fP(ssl,  \fBtype\fP)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_TYPE\fP,\fBtype\fP, NULL)"
+.br
+.ti -1c
+.RI "#define \fBSSL_get_tlsext_status_exts\fP(ssl,  arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_GET_TLSEXT_STATUS_REQ_EXTS\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_status_exts\fP(ssl,  arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_EXTS\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_get_tlsext_status_ids\fP(ssl,  arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_GET_TLSEXT_STATUS_REQ_IDS\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_status_ids\fP(ssl,  arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_IDS\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_get_tlsext_status_ocsp_resp\fP(ssl,  arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_GET_TLSEXT_STATUS_REQ_OCSP_RESP\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_status_ocsp_resp\fP(ssl,  arg,  arglen)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_OCSP_RESP\fP,arglen, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_servername_callback\fP(ctx,  \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_SERVERNAME_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_ERR_OK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_ERR_ALERT_WARNING\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_ERR_ALERT_FATAL\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_ERR_NOACK\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_servername_arg\fP(ctx,  arg)   \fBSSL_CTX_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_SERVERNAME_ARG\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_get_tlsext_ticket_keys\fP(ctx,  keys,  keylen)   \fBSSL_CTX_ctrl\fP((ctx),\fBSSL_CTRL_GET_TLSEXT_TICKET_KEYS\fP,(keylen),(keys))"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_ticket_keys\fP(ctx,  keys,  keylen)   \fBSSL_CTX_ctrl\fP((ctx),\fBSSL_CTRL_SET_TLSEXT_TICKET_KEYS\fP,(keylen),(keys))"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_status_cb\fP(ssl,  \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_status_arg\fP(ssl,  arg)   \fBSSL_CTX_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_CB_ARG\fP,0, (\fBvoid\fP *)arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_opaque_prf_input\fP(s,  src,  \fBlen\fP)   \fBSSL_ctrl\fP(s,\fBSSL_CTRL_SET_TLSEXT_OPAQUE_PRF_INPUT\fP, \fBlen\fP, src)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_opaque_prf_input_callback\fP(ctx,  \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_OPAQUE_PRF_INPUT_CB\fP, (\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_opaque_prf_input_callback_arg\fP(ctx,  arg)   \fBSSL_CTX_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_OPAQUE_PRF_INPUT_CB_ARG\fP, 0, arg)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CTX_set_tlsext_ticket_key_cb\fP(ssl,  \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_TICKET_KEY_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_HB_ENABLED\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_HB_DONT_SEND_REQUESTS\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSEXT_HB_DONT_RECV_REQUESTS\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBSSL_get_tlsext_heartbeat_pending\fP(ssl)   \fBSSL_ctrl\fP((ssl),\fBSSL_CTRL_GET_TLS_EXT_HEARTBEAT_PENDING\fP,0,NULL)"
+.br
+.ti -1c
+.RI "#define \fBSSL_set_tlsext_heartbeat_no_requests\fP(ssl,  arg)   \fBSSL_ctrl\fP((ssl),\fBSSL_CTRL_SET_TLS_EXT_HEARTBEAT_NO_REQUESTS\fP,arg,NULL)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_PSK_WITH_RC4_128_SHA\fP   0x0300008A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_PSK_WITH_3DES_EDE_CBC_SHA\fP   0x0300008B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_PSK_WITH_AES_128_CBC_SHA\fP   0x0300008C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_PSK_WITH_AES_256_CBC_SHA\fP   0x0300008D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_EXPORT1024_WITH_RC4_56_MD5\fP"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_EXPORT1024_WITH_RC2_CBC_56_MD5\fP"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_EXPORT1024_WITH_DES_CBC_SHA\fP   0x03000062"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA\fP   0x03000063"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_EXPORT1024_WITH_RC4_56_SHA\fP   0x03000064"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_EXPORT1024_WITH_RC4_56_SHA\fP   0x03000065"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_RC4_128_SHA\fP   0x03000066"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_AES_128_SHA\fP   0x0300002F"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_AES_128_SHA\fP   0x03000030"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_AES_128_SHA\fP   0x03000031"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_AES_128_SHA\fP   0x03000032"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_AES_128_SHA\fP   0x03000033"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_AES_128_SHA\fP   0x03000034"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_AES_256_SHA\fP   0x03000035"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_AES_256_SHA\fP   0x03000036"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_AES_256_SHA\fP   0x03000037"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_AES_256_SHA\fP   0x03000038"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_AES_256_SHA\fP   0x03000039"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_AES_256_SHA\fP   0x0300003A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_NULL_SHA256\fP   0x0300003B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_AES_128_SHA256\fP   0x0300003C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_AES_256_SHA256\fP   0x0300003D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_AES_128_SHA256\fP   0x0300003E"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_AES_128_SHA256\fP   0x0300003F"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_AES_128_SHA256\fP   0x03000040"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_CAMELLIA_128_CBC_SHA\fP   0x03000041"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_CAMELLIA_128_CBC_SHA\fP   0x03000042"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_CAMELLIA_128_CBC_SHA\fP   0x03000043"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA\fP   0x03000044"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA\fP   0x03000045"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_CAMELLIA_128_CBC_SHA\fP   0x03000046"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_AES_128_SHA256\fP   0x03000067"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_AES_256_SHA256\fP   0x03000068"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_AES_256_SHA256\fP   0x03000069"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_AES_256_SHA256\fP   0x0300006A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_AES_256_SHA256\fP   0x0300006B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_AES_128_SHA256\fP   0x0300006C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_AES_256_SHA256\fP   0x0300006D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_CAMELLIA_256_CBC_SHA\fP   0x03000084"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_CAMELLIA_256_CBC_SHA\fP   0x03000085"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_CAMELLIA_256_CBC_SHA\fP   0x03000086"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA\fP   0x03000087"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA\fP   0x03000088"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_CAMELLIA_256_CBC_SHA\fP   0x03000089"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_SEED_SHA\fP   0x03000096"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_SEED_SHA\fP   0x03000097"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_SEED_SHA\fP   0x03000098"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_SEED_SHA\fP   0x03000099"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_SEED_SHA\fP   0x0300009A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_SEED_SHA\fP   0x0300009B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_AES_128_GCM_SHA256\fP   0x0300009C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_RSA_WITH_AES_256_GCM_SHA384\fP   0x0300009D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_AES_128_GCM_SHA256\fP   0x0300009E"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_RSA_WITH_AES_256_GCM_SHA384\fP   0x0300009F"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_AES_128_GCM_SHA256\fP   0x030000A0"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_RSA_WITH_AES_256_GCM_SHA384\fP   0x030000A1"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_AES_128_GCM_SHA256\fP   0x030000A2"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DHE_DSS_WITH_AES_256_GCM_SHA384\fP   0x030000A3"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_AES_128_GCM_SHA256\fP   0x030000A4"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_DH_DSS_WITH_AES_256_GCM_SHA384\fP   0x030000A5"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_AES_128_GCM_SHA256\fP   0x030000A6"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ADH_WITH_AES_256_GCM_SHA384\fP   0x030000A7"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_NULL_SHA\fP   0x0300C001"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_RC4_128_SHA\fP   0x0300C002"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_DES_192_CBC3_SHA\fP   0x0300C003"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_AES_128_CBC_SHA\fP   0x0300C004"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_AES_256_CBC_SHA\fP   0x0300C005"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_NULL_SHA\fP   0x0300C006"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_RC4_128_SHA\fP   0x0300C007"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA\fP   0x0300C008"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_AES_128_CBC_SHA\fP   0x0300C009"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_AES_256_CBC_SHA\fP   0x0300C00A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_NULL_SHA\fP   0x0300C00B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_RC4_128_SHA\fP   0x0300C00C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_DES_192_CBC3_SHA\fP   0x0300C00D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_AES_128_CBC_SHA\fP   0x0300C00E"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_AES_256_CBC_SHA\fP   0x0300C00F"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_NULL_SHA\fP   0x0300C010"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_RC4_128_SHA\fP   0x0300C011"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_DES_192_CBC3_SHA\fP   0x0300C012"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_AES_128_CBC_SHA\fP   0x0300C013"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_AES_256_CBC_SHA\fP   0x0300C014"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_anon_WITH_NULL_SHA\fP   0x0300C015"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_anon_WITH_RC4_128_SHA\fP   0x0300C016"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_anon_WITH_DES_192_CBC3_SHA\fP   0x0300C017"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_anon_WITH_AES_128_CBC_SHA\fP   0x0300C018"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_anon_WITH_AES_256_CBC_SHA\fP   0x0300C019"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_WITH_3DES_EDE_CBC_SHA\fP   0x0300C01A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA\fP   0x0300C01B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA\fP   0x0300C01C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_WITH_AES_128_CBC_SHA\fP   0x0300C01D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_RSA_WITH_AES_128_CBC_SHA\fP   0x0300C01E"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_DSS_WITH_AES_128_CBC_SHA\fP   0x0300C01F"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_WITH_AES_256_CBC_SHA\fP   0x0300C020"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_RSA_WITH_AES_256_CBC_SHA\fP   0x0300C021"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_SRP_SHA_DSS_WITH_AES_256_CBC_SHA\fP   0x0300C022"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_AES_128_SHA256\fP   0x0300C023"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_AES_256_SHA384\fP   0x0300C024"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_AES_128_SHA256\fP   0x0300C025"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_AES_256_SHA384\fP   0x0300C026"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_AES_128_SHA256\fP   0x0300C027"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_AES_256_SHA384\fP   0x0300C028"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_AES_128_SHA256\fP   0x0300C029"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_AES_256_SHA384\fP   0x0300C02A"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256\fP   0x0300C02B"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\fP   0x0300C02C"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_AES_128_GCM_SHA256\fP   0x0300C02D"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_ECDSA_WITH_AES_256_GCM_SHA384\fP   0x0300C02E"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_AES_128_GCM_SHA256\fP   0x0300C02F"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDHE_RSA_WITH_AES_256_GCM_SHA384\fP   0x0300C030"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_AES_128_GCM_SHA256\fP   0x0300C031"
+.br
+.ti -1c
+.RI "#define \fBTLS1_CK_ECDH_RSA_WITH_AES_256_GCM_SHA384\fP   0x0300C032"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_EXPORT1024_WITH_RC4_56_MD5\fP   'EXP1024\-\fBRC4\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_EXPORT1024_WITH_RC2_CBC_56_MD5\fP   'EXP1024\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_EXPORT1024_WITH_DES_CBC_SHA\fP   'EXP1024\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA\fP   'EXP1024\-DHE\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_EXPORT1024_WITH_RC4_56_SHA\fP   'EXP1024\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_EXPORT1024_WITH_RC4_56_SHA\fP   'EXP1024\-DHE\-DSS\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_RC4_128_SHA\fP   'DHE\-DSS\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_AES_128_SHA\fP   'AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_AES_128_SHA\fP   'DH\-DSS\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_AES_128_SHA\fP   'DH\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_AES_128_SHA\fP   'DHE\-DSS\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_AES_128_SHA\fP   'DHE\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_AES_128_SHA\fP   'ADH\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_AES_256_SHA\fP   'AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_AES_256_SHA\fP   'DH\-DSS\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_AES_256_SHA\fP   'DH\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_AES_256_SHA\fP   'DHE\-DSS\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_AES_256_SHA\fP   'DHE\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_AES_256_SHA\fP   'ADH\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_NULL_SHA\fP   'ECDH\-ECDSA\-NULL\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_RC4_128_SHA\fP   'ECDH\-ECDSA\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_DES_192_CBC3_SHA\fP   'ECDH\-ECDSA\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_AES_128_CBC_SHA\fP   'ECDH\-ECDSA\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_AES_256_CBC_SHA\fP   'ECDH\-ECDSA\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_NULL_SHA\fP   'ECDHE\-ECDSA\-NULL\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_RC4_128_SHA\fP   'ECDHE\-ECDSA\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA\fP   'ECDHE\-ECDSA\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_AES_128_CBC_SHA\fP   'ECDHE\-ECDSA\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CBC_SHA\fP   'ECDHE\-ECDSA\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_NULL_SHA\fP   'ECDH\-\fBRSA\fP\-NULL\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_RC4_128_SHA\fP   'ECDH\-\fBRSA\fP\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_DES_192_CBC3_SHA\fP   'ECDH\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_AES_128_CBC_SHA\fP   'ECDH\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_AES_256_CBC_SHA\fP   'ECDH\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_NULL_SHA\fP   'ECDHE\-\fBRSA\fP\-NULL\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_RC4_128_SHA\fP   'ECDHE\-\fBRSA\fP\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_DES_192_CBC3_SHA\fP   'ECDHE\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_AES_128_CBC_SHA\fP   'ECDHE\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_AES_256_CBC_SHA\fP   'ECDHE\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_anon_WITH_NULL_SHA\fP   'AECDH\-NULL\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_anon_WITH_RC4_128_SHA\fP   'AECDH\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_anon_WITH_DES_192_CBC3_SHA\fP   'AECDH\-DES\-CBC3\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_anon_WITH_AES_128_CBC_SHA\fP   'AECDH\-AES128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_anon_WITH_AES_256_CBC_SHA\fP   'AECDH\-AES256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_PSK_WITH_RC4_128_SHA\fP   'PSK\-\fBRC4\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_PSK_WITH_3DES_EDE_CBC_SHA\fP   'PSK\-3DES\-EDE\-CBC\-SHA'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_PSK_WITH_AES_128_CBC_SHA\fP   'PSK\-AES128\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_PSK_WITH_AES_256_CBC_SHA\fP   'PSK\-AES256\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_WITH_3DES_EDE_CBC_SHA\fP   'SRP\-3DES\-EDE\-CBC\-SHA'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA\fP   'SRP\-\fBRSA\fP\-3DES\-EDE\-CBC\-SHA'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA\fP   'SRP\-DSS\-3DES\-EDE\-CBC\-SHA'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_WITH_AES_128_CBC_SHA\fP   'SRP\-AES\-128\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_RSA_WITH_AES_128_CBC_SHA\fP   'SRP\-\fBRSA\fP\-AES\-128\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_DSS_WITH_AES_128_CBC_SHA\fP   'SRP\-DSS\-AES\-128\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_WITH_AES_256_CBC_SHA\fP   'SRP\-AES\-256\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_RSA_WITH_AES_256_CBC_SHA\fP   'SRP\-\fBRSA\fP\-AES\-256\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_SRP_SHA_DSS_WITH_AES_256_CBC_SHA\fP   'SRP\-DSS\-AES\-256\-\fBCBC\fP\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_CAMELLIA_128_CBC_SHA\fP   'CAMELLIA128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_CAMELLIA_128_CBC_SHA\fP   'DH\-DSS\-CAMELLIA128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_CAMELLIA_128_CBC_SHA\fP   'DH\-\fBRSA\fP\-CAMELLIA128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA\fP   'DHE\-DSS\-CAMELLIA128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA\fP   'DHE\-\fBRSA\fP\-CAMELLIA128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_CAMELLIA_128_CBC_SHA\fP   'ADH\-CAMELLIA128\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_CAMELLIA_256_CBC_SHA\fP   'CAMELLIA256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_CAMELLIA_256_CBC_SHA\fP   'DH\-DSS\-CAMELLIA256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_CAMELLIA_256_CBC_SHA\fP   'DH\-\fBRSA\fP\-CAMELLIA256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA\fP   'DHE\-DSS\-CAMELLIA256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA\fP   'DHE\-\fBRSA\fP\-CAMELLIA256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_CAMELLIA_256_CBC_SHA\fP   'ADH\-CAMELLIA256\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_SEED_SHA\fP   'SEED\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_SEED_SHA\fP   'DH\-DSS\-SEED\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_SEED_SHA\fP   'DH\-\fBRSA\fP\-SEED\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_SEED_SHA\fP   'DHE\-DSS\-SEED\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_SEED_SHA\fP   'DHE\-\fBRSA\fP\-SEED\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_SEED_SHA\fP   'ADH\-SEED\-\fBSHA\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_NULL_SHA256\fP   'NULL\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_AES_128_SHA256\fP   'AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_AES_256_SHA256\fP   'AES256\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_AES_128_SHA256\fP   'DH\-DSS\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_AES_128_SHA256\fP   'DH\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_AES_128_SHA256\fP   'DHE\-DSS\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_AES_128_SHA256\fP   'DHE\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_AES_256_SHA256\fP   'DH\-DSS\-AES256\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_AES_256_SHA256\fP   'DH\-\fBRSA\fP\-AES256\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_AES_256_SHA256\fP   'DHE\-DSS\-AES256\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_AES_256_SHA256\fP   'DHE\-\fBRSA\fP\-AES256\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_AES_128_SHA256\fP   'ADH\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_AES_256_SHA256\fP   'ADH\-AES256\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_AES_128_GCM_SHA256\fP   'AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_RSA_WITH_AES_256_GCM_SHA384\fP   'AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_AES_128_GCM_SHA256\fP   'DHE\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_RSA_WITH_AES_256_GCM_SHA384\fP   'DHE\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_AES_128_GCM_SHA256\fP   'DH\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_RSA_WITH_AES_256_GCM_SHA384\fP   'DH\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_AES_128_GCM_SHA256\fP   'DHE\-DSS\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DHE_DSS_WITH_AES_256_GCM_SHA384\fP   'DHE\-DSS\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_AES_128_GCM_SHA256\fP   'DH\-DSS\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_DH_DSS_WITH_AES_256_GCM_SHA384\fP   'DH\-DSS\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_AES_128_GCM_SHA256\fP   'ADH\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ADH_WITH_AES_256_GCM_SHA384\fP   'ADH\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_AES_128_SHA256\fP   'ECDHE\-ECDSA\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_AES_256_SHA384\fP   'ECDHE\-ECDSA\-AES256\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_AES_128_SHA256\fP   'ECDH\-ECDSA\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_AES_256_SHA384\fP   'ECDH\-ECDSA\-AES256\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_AES_128_SHA256\fP   'ECDHE\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_AES_256_SHA384\fP   'ECDHE\-\fBRSA\fP\-AES256\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_AES_128_SHA256\fP   'ECDH\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_AES_256_SHA384\fP   'ECDH\-\fBRSA\fP\-AES256\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256\fP   'ECDHE\-ECDSA\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\fP   'ECDHE\-ECDSA\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_AES_128_GCM_SHA256\fP   'ECDH\-ECDSA\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_ECDSA_WITH_AES_256_GCM_SHA384\fP   'ECDH\-ECDSA\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_AES_128_GCM_SHA256\fP   'ECDHE\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDHE_RSA_WITH_AES_256_GCM_SHA384\fP   'ECDHE\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_AES_128_GCM_SHA256\fP   'ECDH\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS1_TXT_ECDH_RSA_WITH_AES_256_GCM_SHA384\fP   'ECDH\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_RSA_SIGN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_DSS_SIGN\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_RSA_FIXED_DH\fP   3"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_DSS_FIXED_DH\fP   4"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_ECDSA_SIGN\fP   64"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_RSA_FIXED_ECDH\fP   65"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_ECDSA_FIXED_ECDH\fP   66"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_GOST94_SIGN\fP   21"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_GOST01_SIGN\fP   22"
+.br
+.ti -1c
+.RI "#define \fBTLS_CT_NUMBER\fP   9"
+.br
+.ti -1c
+.RI "#define \fBTLS1_FINISH_MAC_LENGTH\fP   12"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_MAX_CONST_SIZE\fP   20"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_CLIENT_FINISH_CONST\fP   'client finished'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_CLIENT_FINISH_CONST_SIZE\fP   15"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_SERVER_FINISH_CONST\fP   'server finished'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_SERVER_FINISH_CONST_SIZE\fP   15"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_SERVER_WRITE_KEY_CONST\fP   'server write key'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_SERVER_WRITE_KEY_CONST_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_KEY_EXPANSION_CONST\fP   'key expansion'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_KEY_EXPANSION_CONST_SIZE\fP   13"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_CLIENT_WRITE_KEY_CONST\fP   'client write key'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_CLIENT_WRITE_KEY_CONST_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_SERVER_WRITE_KEY_CONST\fP   'server write key'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_SERVER_WRITE_KEY_CONST_SIZE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_IV_BLOCK_CONST\fP   'IV block'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_IV_BLOCK_CONST_SIZE\fP   8"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_MASTER_SECRET_CONST\fP   'master secret'"
+.br
+.ti -1c
+.RI "#define \fBTLS_MD_MASTER_SECRET_CONST_SIZE\fP   13"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBSSL_get_servername\fP (const \fBSSL\fP *s, const int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBSSL_get_servername_type\fP (const \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBSSL_export_keying_material\fP (\fBSSL\fP *s, unsigned char *out, size_t olen, const char *label, size_t llen, const unsigned char *\fBp\fP, size_t plen, int use_context)"
+.br
+.ti -1c
+.RI "int \fBSSL_get_sigalgs\fP (\fBSSL\fP *s, int idx, int *psign, int *phash, int *psignandhash, unsigned char *rsig, unsigned char *rhash)"
+.br
+.ti -1c
+.RI "int \fBSSL_get_shared_sigalgs\fP (\fBSSL\fP *s, int idx, int *psign, int *phash, int *psignandhash, unsigned char *rsig, unsigned char *rhash)"
+.br
+.ti -1c
+.RI "int \fBSSL_check_chain\fP (\fBSSL\fP *s, \fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pk, \fBSTACK_OF\fP(\fBX509\fP)*\fBchain\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SSL_CTX_get_tlsext_ticket_keys(ctx, keys, keylen)   \fBSSL_CTX_ctrl\fP((ctx),\fBSSL_CTRL_GET_TLSEXT_TICKET_KEYS\fP,(keylen),(keys))"
+
+.PP
+Definition at line 374 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_opaque_prf_input_callback(ctx, \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_OPAQUE_PRF_INPUT_CB\fP, (\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+
+.PP
+Definition at line 387 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_opaque_prf_input_callback_arg(ctx, arg)   \fBSSL_CTX_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_OPAQUE_PRF_INPUT_CB_ARG\fP, 0, arg)"
+
+.PP
+Definition at line 389 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_servername_arg(ctx, arg)   \fBSSL_CTX_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_SERVERNAME_ARG\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 371 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_servername_callback(ctx, \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ctx,\fBSSL_CTRL_SET_TLSEXT_SERVERNAME_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+
+.PP
+Definition at line 363 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_status_arg(ssl, arg)   \fBSSL_CTX_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_CB_ARG\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 382 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_status_cb(ssl, \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+
+.PP
+Definition at line 379 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_ticket_key_cb(ssl, \fBcb\fP)   \fBSSL_CTX_callback_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_TICKET_KEY_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+
+.PP
+Definition at line 392 of file ssl/tls1\&.h\&.
+.SS "#define SSL_CTX_set_tlsext_ticket_keys(ctx, keys, keylen)   \fBSSL_CTX_ctrl\fP((ctx),\fBSSL_CTRL_SET_TLSEXT_TICKET_KEYS\fP,(keylen),(keys))"
+
+.PP
+Definition at line 376 of file ssl/tls1\&.h\&.
+.SS "#define SSL_get_tlsext_heartbeat_pending(ssl)   \fBSSL_ctrl\fP((ssl),\fBSSL_CTRL_GET_TLS_EXT_HEARTBEAT_PENDING\fP,0,NULL)"
+
+.PP
+Definition at line 400 of file ssl/tls1\&.h\&.
+.SS "#define SSL_get_tlsext_status_exts(ssl, arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_GET_TLSEXT_STATUS_REQ_EXTS\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 345 of file ssl/tls1\&.h\&.
+.SS "#define SSL_get_tlsext_status_ids(ssl, arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_GET_TLSEXT_STATUS_REQ_IDS\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 351 of file ssl/tls1\&.h\&.
+.SS "#define SSL_get_tlsext_status_ocsp_resp(ssl, arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_GET_TLSEXT_STATUS_REQ_OCSP_RESP\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 357 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_debug_arg(ssl, arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_DEBUG_ARG\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 339 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_debug_callback(ssl, \fBcb\fP)   \fBSSL_callback_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_DEBUG_CB\fP,(\fBvoid\fP (*)(\fBvoid\fP))\fBcb\fP)"
+
+.PP
+Definition at line 336 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_heartbeat_no_requests(ssl, arg)   \fBSSL_ctrl\fP((ssl),\fBSSL_CTRL_SET_TLS_EXT_HEARTBEAT_NO_REQUESTS\fP,arg,NULL)"
+
+.PP
+Definition at line 402 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_host_name(s, name)   \fBSSL_ctrl\fP(s,\fBSSL_CTRL_SET_TLSEXT_HOSTNAME\fP,\fBTLSEXT_NAMETYPE_host_name\fP,(char *)name)"
+
+.PP
+Definition at line 333 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_opaque_prf_input(s, src, \fBlen\fP)   \fBSSL_ctrl\fP(s,\fBSSL_CTRL_SET_TLSEXT_OPAQUE_PRF_INPUT\fP, \fBlen\fP, src)"
+
+.PP
+Definition at line 385 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_status_exts(ssl, arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_EXTS\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 348 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_status_ids(ssl, arg)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_IDS\fP,0, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 354 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_status_ocsp_resp(ssl, arg, arglen)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_OCSP_RESP\fP,arglen, (\fBvoid\fP *)arg)"
+
+.PP
+Definition at line 360 of file ssl/tls1\&.h\&.
+.SS "#define SSL_set_tlsext_status_type(ssl, \fBtype\fP)   \fBSSL_ctrl\fP(ssl,\fBSSL_CTRL_SET_TLSEXT_STATUS_REQ_TYPE\fP,\fBtype\fP, NULL)"
+
+.PP
+Definition at line 342 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_ERR_ALERT_FATAL   2"
+
+.PP
+Definition at line 368 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_ERR_ALERT_WARNING   1"
+
+.PP
+Definition at line 367 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_ERR_NOACK   3"
+
+.PP
+Definition at line 369 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_ERR_OK   0"
+
+.PP
+Definition at line 366 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_HB_DONT_RECV_REQUESTS   0x04"
+
+.PP
+Definition at line 398 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_HB_DONT_SEND_REQUESTS   0x02"
+
+.PP
+Definition at line 397 of file ssl/tls1\&.h\&.
+.SS "#define SSL_TLSEXT_HB_ENABLED   0x01"
+
+.PP
+Definition at line 396 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_1_VERSION   0x0302"
+
+.PP
+Definition at line 163 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_1_VERSION_MAJOR   0x03"
+
+.PP
+Definition at line 170 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_1_VERSION_MINOR   0x02"
+
+.PP
+Definition at line 171 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_2_VERSION   0x0303"
+
+.PP
+Definition at line 164 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_2_VERSION_MAJOR   0x03"
+
+.PP
+Definition at line 173 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_2_VERSION_MINOR   0x03"
+
+.PP
+Definition at line 174 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_ACCESS_DENIED   49/* fatal */"
+
+.PP
+Definition at line 185 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_BAD_CERTIFICATE_HASH_VALUE   114"
+
+.PP
+Definition at line 200 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_BAD_CERTIFICATE_STATUS_RESPONSE   113"
+
+.PP
+Definition at line 199 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_CERTIFICATE_UNOBTAINABLE   111"
+
+.PP
+Definition at line 197 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_DECODE_ERROR   50/* fatal */"
+
+.PP
+Definition at line 186 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_DECRYPT_ERROR   51"
+
+.PP
+Definition at line 187 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_DECRYPTION_FAILED   21"
+
+.PP
+Definition at line 182 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_EXPORT_RESTRICTION   60/* fatal */"
+
+.PP
+Definition at line 188 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_INAPPROPRIATE_FALLBACK   86/* fatal */"
+
+.PP
+Definition at line 192 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_INSUFFICIENT_SECURITY   71/* fatal */"
+
+.PP
+Definition at line 190 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_INTERNAL_ERROR   80/* fatal */"
+
+.PP
+Definition at line 191 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_NO_RENEGOTIATION   100"
+
+.PP
+Definition at line 194 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_PROTOCOL_VERSION   70/* fatal */"
+
+.PP
+Definition at line 189 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_RECORD_OVERFLOW   22"
+
+.PP
+Definition at line 183 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_UNKNOWN_CA   48/* fatal */"
+
+.PP
+Definition at line 184 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_UNKNOWN_PSK_IDENTITY   115/* fatal */"
+
+.PP
+Definition at line 201 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_UNRECOGNIZED_NAME   112"
+
+.PP
+Definition at line 198 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_UNSUPPORTED_EXTENSION   110"
+
+.PP
+Definition at line 196 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_AD_USER_CANCELLED   90"
+
+.PP
+Definition at line 193 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_ALLOW_EXPERIMENTAL_CIPHERSUITES   0"
+
+.PP
+Definition at line 160 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_AES_128_GCM_SHA256   0x030000A6"
+
+.PP
+Definition at line 497 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_AES_128_SHA   0x03000034"
+
+.PP
+Definition at line 436 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_AES_128_SHA256   0x0300006C"
+
+.PP
+Definition at line 467 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_AES_256_GCM_SHA384   0x030000A7"
+
+.PP
+Definition at line 498 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_AES_256_SHA   0x0300003A"
+
+.PP
+Definition at line 443 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_AES_256_SHA256   0x0300006D"
+
+.PP
+Definition at line 468 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_CAMELLIA_128_CBC_SHA   0x03000046"
+
+.PP
+Definition at line 459 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_CAMELLIA_256_CBC_SHA   0x03000089"
+
+.PP
+Definition at line 476 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ADH_WITH_SEED_SHA   0x0300009B"
+
+.PP
+Definition at line 484 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_AES_128_GCM_SHA256   0x030000A4"
+
+.PP
+Definition at line 495 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_AES_128_SHA   0x03000030"
+
+.PP
+Definition at line 432 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_AES_128_SHA256   0x0300003E"
+
+.PP
+Definition at line 449 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_AES_256_GCM_SHA384   0x030000A5"
+
+.PP
+Definition at line 496 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_AES_256_SHA   0x03000036"
+
+.PP
+Definition at line 439 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_AES_256_SHA256   0x03000068"
+
+.PP
+Definition at line 463 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_CAMELLIA_128_CBC_SHA   0x03000042"
+
+.PP
+Definition at line 455 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_CAMELLIA_256_CBC_SHA   0x03000085"
+
+.PP
+Definition at line 472 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_DSS_WITH_SEED_SHA   0x03000097"
+
+.PP
+Definition at line 480 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_AES_128_GCM_SHA256   0x030000A0"
+
+.PP
+Definition at line 491 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_AES_128_SHA   0x03000031"
+
+.PP
+Definition at line 433 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_AES_128_SHA256   0x0300003F"
+
+.PP
+Definition at line 450 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_AES_256_GCM_SHA384   0x030000A1"
+
+.PP
+Definition at line 492 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_AES_256_SHA   0x03000037"
+
+.PP
+Definition at line 440 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_AES_256_SHA256   0x03000069"
+
+.PP
+Definition at line 464 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_CAMELLIA_128_CBC_SHA   0x03000043"
+
+.PP
+Definition at line 456 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_CAMELLIA_256_CBC_SHA   0x03000086"
+
+.PP
+Definition at line 473 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DH_RSA_WITH_SEED_SHA   0x03000098"
+
+.PP
+Definition at line 481 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA   0x03000063"
+
+.PP
+Definition at line 425 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_EXPORT1024_WITH_RC4_56_SHA   0x03000065"
+
+.PP
+Definition at line 427 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_AES_128_GCM_SHA256   0x030000A2"
+
+.PP
+Definition at line 493 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_AES_128_SHA   0x03000032"
+
+.PP
+Definition at line 434 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_AES_128_SHA256   0x03000040"
+
+.PP
+Definition at line 451 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_AES_256_GCM_SHA384   0x030000A3"
+
+.PP
+Definition at line 494 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_AES_256_SHA   0x03000038"
+
+.PP
+Definition at line 441 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_AES_256_SHA256   0x0300006A"
+
+.PP
+Definition at line 465 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA   0x03000044"
+
+.PP
+Definition at line 457 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA   0x03000087"
+
+.PP
+Definition at line 474 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_RC4_128_SHA   0x03000066"
+
+.PP
+Definition at line 428 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_DSS_WITH_SEED_SHA   0x03000099"
+
+.PP
+Definition at line 482 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_AES_128_GCM_SHA256   0x0300009E"
+
+.PP
+Definition at line 489 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_AES_128_SHA   0x03000033"
+
+.PP
+Definition at line 435 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_AES_128_SHA256   0x03000067"
+
+.PP
+Definition at line 462 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_AES_256_GCM_SHA384   0x0300009F"
+
+.PP
+Definition at line 490 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_AES_256_SHA   0x03000039"
+
+.PP
+Definition at line 442 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_AES_256_SHA256   0x0300006B"
+
+.PP
+Definition at line 466 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA   0x03000045"
+
+.PP
+Definition at line 458 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA   0x03000088"
+
+.PP
+Definition at line 475 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_DHE_RSA_WITH_SEED_SHA   0x0300009A"
+
+.PP
+Definition at line 483 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_anon_WITH_AES_128_CBC_SHA   0x0300C018"
+
+.PP
+Definition at line 531 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_anon_WITH_AES_256_CBC_SHA   0x0300C019"
+
+.PP
+Definition at line 532 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_anon_WITH_DES_192_CBC3_SHA   0x0300C017"
+
+.PP
+Definition at line 530 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_anon_WITH_NULL_SHA   0x0300C015"
+
+.PP
+Definition at line 528 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_anon_WITH_RC4_128_SHA   0x0300C016"
+
+.PP
+Definition at line 529 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_AES_128_CBC_SHA   0x0300C004"
+
+.PP
+Definition at line 507 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_AES_128_GCM_SHA256   0x0300C02D"
+
+.PP
+Definition at line 559 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_AES_128_SHA256   0x0300C025"
+
+.PP
+Definition at line 549 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_AES_256_CBC_SHA   0x0300C005"
+
+.PP
+Definition at line 508 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_AES_256_GCM_SHA384   0x0300C02E"
+
+.PP
+Definition at line 560 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_AES_256_SHA384   0x0300C026"
+
+.PP
+Definition at line 550 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_DES_192_CBC3_SHA   0x0300C003"
+
+.PP
+Definition at line 506 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_NULL_SHA   0x0300C001"
+
+.PP
+Definition at line 504 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_ECDSA_WITH_RC4_128_SHA   0x0300C002"
+
+.PP
+Definition at line 505 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_AES_128_CBC_SHA   0x0300C00E"
+
+.PP
+Definition at line 519 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_AES_128_GCM_SHA256   0x0300C031"
+
+.PP
+Definition at line 563 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_AES_128_SHA256   0x0300C029"
+
+.PP
+Definition at line 553 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_AES_256_CBC_SHA   0x0300C00F"
+
+.PP
+Definition at line 520 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_AES_256_GCM_SHA384   0x0300C032"
+
+.PP
+Definition at line 564 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_AES_256_SHA384   0x0300C02A"
+
+.PP
+Definition at line 554 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_DES_192_CBC3_SHA   0x0300C00D"
+
+.PP
+Definition at line 518 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_NULL_SHA   0x0300C00B"
+
+.PP
+Definition at line 516 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDH_RSA_WITH_RC4_128_SHA   0x0300C00C"
+
+.PP
+Definition at line 517 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_AES_128_CBC_SHA   0x0300C009"
+
+.PP
+Definition at line 513 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256   0x0300C02B"
+
+.PP
+Definition at line 557 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_AES_128_SHA256   0x0300C023"
+
+.PP
+Definition at line 547 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_AES_256_CBC_SHA   0x0300C00A"
+
+.PP
+Definition at line 514 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384   0x0300C02C"
+
+.PP
+Definition at line 558 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_AES_256_SHA384   0x0300C024"
+
+.PP
+Definition at line 548 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA   0x0300C008"
+
+.PP
+Definition at line 512 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_NULL_SHA   0x0300C006"
+
+.PP
+Definition at line 510 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_ECDSA_WITH_RC4_128_SHA   0x0300C007"
+
+.PP
+Definition at line 511 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_AES_128_CBC_SHA   0x0300C013"
+
+.PP
+Definition at line 525 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_AES_128_GCM_SHA256   0x0300C02F"
+
+.PP
+Definition at line 561 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_AES_128_SHA256   0x0300C027"
+
+.PP
+Definition at line 551 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_AES_256_CBC_SHA   0x0300C014"
+
+.PP
+Definition at line 526 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_AES_256_GCM_SHA384   0x0300C030"
+
+.PP
+Definition at line 562 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_AES_256_SHA384   0x0300C028"
+
+.PP
+Definition at line 552 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_DES_192_CBC3_SHA   0x0300C012"
+
+.PP
+Definition at line 524 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_NULL_SHA   0x0300C010"
+
+.PP
+Definition at line 522 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_ECDHE_RSA_WITH_RC4_128_SHA   0x0300C011"
+
+.PP
+Definition at line 523 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_PSK_WITH_3DES_EDE_CBC_SHA   0x0300008B"
+
+.PP
+Definition at line 409 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_PSK_WITH_AES_128_CBC_SHA   0x0300008C"
+
+.PP
+Definition at line 410 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_PSK_WITH_AES_256_CBC_SHA   0x0300008D"
+
+.PP
+Definition at line 411 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_PSK_WITH_RC4_128_SHA   0x0300008A"
+
+.PP
+Definition at line 408 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_EXPORT1024_WITH_DES_CBC_SHA   0x03000062"
+
+.PP
+Definition at line 424 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_EXPORT1024_WITH_RC2_CBC_56_MD5"
+\fBValue:\fP
+.PP
+.nf
+0x03000061/* not in
+                                                                    * ID */
+.fi
+.PP
+Definition at line 422 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_EXPORT1024_WITH_RC4_56_MD5"
+\fBValue:\fP
+.PP
+.nf
+0x03000060/* not in
+                                                                    * ID */
+.fi
+.PP
+Definition at line 420 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_EXPORT1024_WITH_RC4_56_SHA   0x03000064"
+
+.PP
+Definition at line 426 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_AES_128_GCM_SHA256   0x0300009C"
+
+.PP
+Definition at line 487 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_AES_128_SHA   0x0300002F"
+
+.PP
+Definition at line 431 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_AES_128_SHA256   0x0300003C"
+
+.PP
+Definition at line 447 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_AES_256_GCM_SHA384   0x0300009D"
+
+.PP
+Definition at line 488 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_AES_256_SHA   0x03000035"
+
+.PP
+Definition at line 438 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_AES_256_SHA256   0x0300003D"
+
+.PP
+Definition at line 448 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_CAMELLIA_128_CBC_SHA   0x03000041"
+
+.PP
+Definition at line 454 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_CAMELLIA_256_CBC_SHA   0x03000084"
+
+.PP
+Definition at line 471 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_NULL_SHA256   0x0300003B"
+
+.PP
+Definition at line 446 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_RSA_WITH_SEED_SHA   0x03000096"
+
+.PP
+Definition at line 479 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA   0x0300C01C"
+
+.PP
+Definition at line 537 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_DSS_WITH_AES_128_CBC_SHA   0x0300C01F"
+
+.PP
+Definition at line 540 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_DSS_WITH_AES_256_CBC_SHA   0x0300C022"
+
+.PP
+Definition at line 543 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA   0x0300C01B"
+
+.PP
+Definition at line 536 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_RSA_WITH_AES_128_CBC_SHA   0x0300C01E"
+
+.PP
+Definition at line 539 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_RSA_WITH_AES_256_CBC_SHA   0x0300C021"
+
+.PP
+Definition at line 542 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_WITH_3DES_EDE_CBC_SHA   0x0300C01A"
+
+.PP
+Definition at line 535 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_WITH_AES_128_CBC_SHA   0x0300C01D"
+
+.PP
+Definition at line 538 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_CK_SRP_SHA_WITH_AES_256_CBC_SHA   0x0300C020"
+
+.PP
+Definition at line 541 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_FINISH_MAC_LENGTH   12"
+
+.PP
+Definition at line 731 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_get_client_version(s)   ((s\->client_version >> 8) == \fBTLS1_VERSION_MAJOR\fP ? s\->client_version : 0)"
+
+.PP
+Definition at line 179 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_get_version(s)   ((s\->\fBversion\fP >> 8) == \fBTLS1_VERSION_MAJOR\fP ? s\->\fBversion\fP : 0)"
+
+.PP
+Definition at line 176 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_AES_128_GCM_SHA256   'ADH\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 692 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_AES_128_SHA   'ADH\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 586 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_AES_128_SHA256   'ADH\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 678 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_AES_256_GCM_SHA384   'ADH\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 693 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_AES_256_SHA   'ADH\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 593 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_AES_256_SHA256   'ADH\-AES256\-\fBSHA256\fP'"
+
+.PP
+Definition at line 679 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_CAMELLIA_128_CBC_SHA   'ADH\-CAMELLIA128\-\fBSHA\fP'"
+
+.PP
+Definition at line 649 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_CAMELLIA_256_CBC_SHA   'ADH\-CAMELLIA256\-\fBSHA\fP'"
+
+.PP
+Definition at line 656 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ADH_WITH_SEED_SHA   'ADH\-SEED\-\fBSHA\fP'"
+
+.PP
+Definition at line 664 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_AES_128_GCM_SHA256   'DH\-DSS\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 690 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_AES_128_SHA   'DH\-DSS\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 582 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_AES_128_SHA256   'DH\-DSS\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 670 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_AES_256_GCM_SHA384   'DH\-DSS\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 691 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_AES_256_SHA   'DH\-DSS\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 589 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_AES_256_SHA256   'DH\-DSS\-AES256\-\fBSHA256\fP'"
+
+.PP
+Definition at line 674 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_CAMELLIA_128_CBC_SHA   'DH\-DSS\-CAMELLIA128\-\fBSHA\fP'"
+
+.PP
+Definition at line 645 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_CAMELLIA_256_CBC_SHA   'DH\-DSS\-CAMELLIA256\-\fBSHA\fP'"
+
+.PP
+Definition at line 652 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_DSS_WITH_SEED_SHA   'DH\-DSS\-SEED\-\fBSHA\fP'"
+
+.PP
+Definition at line 660 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_AES_128_GCM_SHA256   'DH\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 686 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_AES_128_SHA   'DH\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 583 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_AES_128_SHA256   'DH\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 671 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_AES_256_GCM_SHA384   'DH\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 687 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_AES_256_SHA   'DH\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 590 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_AES_256_SHA256   'DH\-\fBRSA\fP\-AES256\-\fBSHA256\fP'"
+
+.PP
+Definition at line 675 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_CAMELLIA_128_CBC_SHA   'DH\-\fBRSA\fP\-CAMELLIA128\-\fBSHA\fP'"
+
+.PP
+Definition at line 646 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_CAMELLIA_256_CBC_SHA   'DH\-\fBRSA\fP\-CAMELLIA256\-\fBSHA\fP'"
+
+.PP
+Definition at line 653 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DH_RSA_WITH_SEED_SHA   'DH\-\fBRSA\fP\-SEED\-\fBSHA\fP'"
+
+.PP
+Definition at line 661 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA   'EXP1024\-DHE\-DSS\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 575 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_EXPORT1024_WITH_RC4_56_SHA   'EXP1024\-DHE\-DSS\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 577 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_AES_128_GCM_SHA256   'DHE\-DSS\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 688 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_AES_128_SHA   'DHE\-DSS\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 584 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_AES_128_SHA256   'DHE\-DSS\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 672 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_AES_256_GCM_SHA384   'DHE\-DSS\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 689 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_AES_256_SHA   'DHE\-DSS\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 591 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_AES_256_SHA256   'DHE\-DSS\-AES256\-\fBSHA256\fP'"
+
+.PP
+Definition at line 676 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA   'DHE\-DSS\-CAMELLIA128\-\fBSHA\fP'"
+
+.PP
+Definition at line 647 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA   'DHE\-DSS\-CAMELLIA256\-\fBSHA\fP'"
+
+.PP
+Definition at line 654 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_RC4_128_SHA   'DHE\-DSS\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 578 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_DSS_WITH_SEED_SHA   'DHE\-DSS\-SEED\-\fBSHA\fP'"
+
+.PP
+Definition at line 662 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_AES_128_GCM_SHA256   'DHE\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 684 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_AES_128_SHA   'DHE\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 585 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_AES_128_SHA256   'DHE\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 673 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_AES_256_GCM_SHA384   'DHE\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 685 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_AES_256_SHA   'DHE\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 592 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_AES_256_SHA256   'DHE\-\fBRSA\fP\-AES256\-\fBSHA256\fP'"
+
+.PP
+Definition at line 677 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA   'DHE\-\fBRSA\fP\-CAMELLIA128\-\fBSHA\fP'"
+
+.PP
+Definition at line 648 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA   'DHE\-\fBRSA\fP\-CAMELLIA256\-\fBSHA\fP'"
+
+.PP
+Definition at line 655 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_DHE_RSA_WITH_SEED_SHA   'DHE\-\fBRSA\fP\-SEED\-\fBSHA\fP'"
+
+.PP
+Definition at line 663 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_anon_WITH_AES_128_CBC_SHA   'AECDH\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 623 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_anon_WITH_AES_256_CBC_SHA   'AECDH\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 624 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_anon_WITH_DES_192_CBC3_SHA   'AECDH\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 622 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_anon_WITH_NULL_SHA   'AECDH\-NULL\-\fBSHA\fP'"
+
+.PP
+Definition at line 620 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_anon_WITH_RC4_128_SHA   'AECDH\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 621 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_AES_128_CBC_SHA   'ECDH\-ECDSA\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 599 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_AES_128_GCM_SHA256   'ECDH\-ECDSA\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 709 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_AES_128_SHA256   'ECDH\-ECDSA\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 699 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_AES_256_CBC_SHA   'ECDH\-ECDSA\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 600 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_AES_256_GCM_SHA384   'ECDH\-ECDSA\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 710 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_AES_256_SHA384   'ECDH\-ECDSA\-AES256\-\fBSHA384\fP'"
+
+.PP
+Definition at line 700 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_DES_192_CBC3_SHA   'ECDH\-ECDSA\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 598 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_NULL_SHA   'ECDH\-ECDSA\-NULL\-\fBSHA\fP'"
+
+.PP
+Definition at line 596 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_ECDSA_WITH_RC4_128_SHA   'ECDH\-ECDSA\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 597 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_AES_128_CBC_SHA   'ECDH\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 611 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_AES_128_GCM_SHA256   'ECDH\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 713 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_AES_128_SHA256   'ECDH\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 703 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_AES_256_CBC_SHA   'ECDH\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 612 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_AES_256_GCM_SHA384   'ECDH\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 714 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_AES_256_SHA384   'ECDH\-\fBRSA\fP\-AES256\-\fBSHA384\fP'"
+
+.PP
+Definition at line 704 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_DES_192_CBC3_SHA   'ECDH\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 610 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_NULL_SHA   'ECDH\-\fBRSA\fP\-NULL\-\fBSHA\fP'"
+
+.PP
+Definition at line 608 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDH_RSA_WITH_RC4_128_SHA   'ECDH\-\fBRSA\fP\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 609 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_CBC_SHA   'ECDHE\-ECDSA\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 605 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256   'ECDHE\-ECDSA\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 707 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_SHA256   'ECDHE\-ECDSA\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 697 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CBC_SHA   'ECDHE\-ECDSA\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 606 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384   'ECDHE\-ECDSA\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 708 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_SHA384   'ECDHE\-ECDSA\-AES256\-\fBSHA384\fP'"
+
+.PP
+Definition at line 698 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA   'ECDHE\-ECDSA\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 604 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_NULL_SHA   'ECDHE\-ECDSA\-NULL\-\fBSHA\fP'"
+
+.PP
+Definition at line 602 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_ECDSA_WITH_RC4_128_SHA   'ECDHE\-ECDSA\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 603 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_AES_128_CBC_SHA   'ECDHE\-\fBRSA\fP\-AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 617 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_AES_128_GCM_SHA256   'ECDHE\-\fBRSA\fP\-AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 711 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_AES_128_SHA256   'ECDHE\-\fBRSA\fP\-AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 701 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_AES_256_CBC_SHA   'ECDHE\-\fBRSA\fP\-AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 618 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_AES_256_GCM_SHA384   'ECDHE\-\fBRSA\fP\-AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 712 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_AES_256_SHA384   'ECDHE\-\fBRSA\fP\-AES256\-\fBSHA384\fP'"
+
+.PP
+Definition at line 702 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_DES_192_CBC3_SHA   'ECDHE\-\fBRSA\fP\-DES\-CBC3\-\fBSHA\fP'"
+
+.PP
+Definition at line 616 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_NULL_SHA   'ECDHE\-\fBRSA\fP\-NULL\-\fBSHA\fP'"
+
+.PP
+Definition at line 614 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_ECDHE_RSA_WITH_RC4_128_SHA   'ECDHE\-\fBRSA\fP\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 615 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_PSK_WITH_3DES_EDE_CBC_SHA   'PSK\-3DES\-EDE\-CBC\-SHA'"
+
+.PP
+Definition at line 628 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_PSK_WITH_AES_128_CBC_SHA   'PSK\-AES128\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 629 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_PSK_WITH_AES_256_CBC_SHA   'PSK\-AES256\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 630 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_PSK_WITH_RC4_128_SHA   'PSK\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 627 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_EXPORT1024_WITH_DES_CBC_SHA   'EXP1024\-DES\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 574 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_EXPORT1024_WITH_RC2_CBC_56_MD5   'EXP1024\-RC2\-\fBCBC\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 573 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_EXPORT1024_WITH_RC4_56_MD5   'EXP1024\-\fBRC4\fP\-\fBMD5\fP'"
+
+.PP
+Definition at line 572 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_EXPORT1024_WITH_RC4_56_SHA   'EXP1024\-\fBRC4\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 576 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_AES_128_GCM_SHA256   'AES128\-GCM\-\fBSHA256\fP'"
+
+.PP
+Definition at line 682 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_AES_128_SHA   'AES128\-\fBSHA\fP'"
+
+.PP
+Definition at line 581 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_AES_128_SHA256   'AES128\-\fBSHA256\fP'"
+
+.PP
+Definition at line 668 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_AES_256_GCM_SHA384   'AES256\-GCM\-\fBSHA384\fP'"
+
+.PP
+Definition at line 683 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_AES_256_SHA   'AES256\-\fBSHA\fP'"
+
+.PP
+Definition at line 588 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_AES_256_SHA256   'AES256\-\fBSHA256\fP'"
+
+.PP
+Definition at line 669 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_CAMELLIA_128_CBC_SHA   'CAMELLIA128\-\fBSHA\fP'"
+
+.PP
+Definition at line 644 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_CAMELLIA_256_CBC_SHA   'CAMELLIA256\-\fBSHA\fP'"
+
+.PP
+Definition at line 651 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_NULL_SHA256   'NULL\-\fBSHA256\fP'"
+
+.PP
+Definition at line 667 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_RSA_WITH_SEED_SHA   'SEED\-\fBSHA\fP'"
+
+.PP
+Definition at line 659 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA   'SRP\-DSS\-3DES\-EDE\-CBC\-SHA'"
+
+.PP
+Definition at line 635 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_DSS_WITH_AES_128_CBC_SHA   'SRP\-DSS\-AES\-128\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 638 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_DSS_WITH_AES_256_CBC_SHA   'SRP\-DSS\-AES\-256\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 641 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA   'SRP\-\fBRSA\fP\-3DES\-EDE\-CBC\-SHA'"
+
+.PP
+Definition at line 634 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_RSA_WITH_AES_128_CBC_SHA   'SRP\-\fBRSA\fP\-AES\-128\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 637 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_RSA_WITH_AES_256_CBC_SHA   'SRP\-\fBRSA\fP\-AES\-256\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 640 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_WITH_3DES_EDE_CBC_SHA   'SRP\-3DES\-EDE\-CBC\-SHA'"
+
+.PP
+Definition at line 633 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_WITH_AES_128_CBC_SHA   'SRP\-AES\-128\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 636 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_TXT_SRP_SHA_WITH_AES_256_CBC_SHA   'SRP\-AES\-256\-\fBCBC\fP\-\fBSHA\fP'"
+
+.PP
+Definition at line 639 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_VERSION   0x0301"
+
+.PP
+Definition at line 162 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_VERSION_MAJOR   0x03"
+
+.PP
+Definition at line 167 of file ssl/tls1\&.h\&.
+.SS "#define TLS1_VERSION_MINOR   0x01"
+
+.PP
+Definition at line 168 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_DSS_FIXED_DH   4"
+
+.PP
+Definition at line 719 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_DSS_SIGN   2"
+
+.PP
+Definition at line 717 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_ECDSA_FIXED_ECDH   66"
+
+.PP
+Definition at line 722 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_ECDSA_SIGN   64"
+
+.PP
+Definition at line 720 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_GOST01_SIGN   22"
+
+.PP
+Definition at line 724 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_GOST94_SIGN   21"
+
+.PP
+Definition at line 723 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_NUMBER   9"
+
+.PP
+Definition at line 729 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_RSA_FIXED_DH   3"
+
+.PP
+Definition at line 718 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_RSA_FIXED_ECDH   65"
+
+.PP
+Definition at line 721 of file ssl/tls1\&.h\&.
+.SS "#define TLS_CT_RSA_SIGN   1"
+
+.PP
+Definition at line 716 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MAX_VERSION   \fBTLS1_2_VERSION\fP"
+
+.PP
+Definition at line 165 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_CLIENT_FINISH_CONST   'client finished'"
+
+.PP
+Definition at line 734 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_CLIENT_FINISH_CONST_SIZE   15"
+
+.PP
+Definition at line 735 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_CLIENT_WRITE_KEY_CONST   'client write key'"
+
+.PP
+Definition at line 742 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_CLIENT_WRITE_KEY_CONST_SIZE   16"
+
+.PP
+Definition at line 743 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_IV_BLOCK_CONST   'IV block'"
+
+.PP
+Definition at line 746 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_IV_BLOCK_CONST_SIZE   8"
+
+.PP
+Definition at line 747 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_KEY_EXPANSION_CONST   'key expansion'"
+
+.PP
+Definition at line 740 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_KEY_EXPANSION_CONST_SIZE   13"
+
+.PP
+Definition at line 741 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_MASTER_SECRET_CONST   'master secret'"
+
+.PP
+Definition at line 748 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_MASTER_SECRET_CONST_SIZE   13"
+
+.PP
+Definition at line 749 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_MAX_CONST_SIZE   20"
+
+.PP
+Definition at line 733 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_SERVER_FINISH_CONST   'server finished'"
+
+.PP
+Definition at line 736 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_SERVER_FINISH_CONST_SIZE   15"
+
+.PP
+Definition at line 737 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_SERVER_WRITE_KEY_CONST   'server write key'"
+
+.PP
+Definition at line 744 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_SERVER_WRITE_KEY_CONST   'server write key'"
+
+.PP
+Definition at line 744 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_SERVER_WRITE_KEY_CONST_SIZE   16"
+
+.PP
+Definition at line 745 of file ssl/tls1\&.h\&.
+.SS "#define TLS_MD_SERVER_WRITE_KEY_CONST_SIZE   16"
+
+.PP
+Definition at line 745 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_curve_P_256   23"
+
+.PP
+Definition at line 302 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_curve_P_384   24"
+
+.PP
+Definition at line 303 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_ECPOINTFORMAT_ansiX962_compressed_char2   2"
+
+.PP
+Definition at line 273 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_ECPOINTFORMAT_ansiX962_compressed_prime   1"
+
+.PP
+Definition at line 272 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_ECPOINTFORMAT_first   0"
+
+.PP
+Definition at line 270 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_ECPOINTFORMAT_last   2"
+
+.PP
+Definition at line 274 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_ECPOINTFORMAT_uncompressed   0"
+
+.PP
+Definition at line 271 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_md5   1"
+
+.PP
+Definition at line 286 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_none   0"
+
+.PP
+Definition at line 285 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_num   7"
+
+.PP
+Definition at line 295 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_sha1   2"
+
+.PP
+Definition at line 287 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_sha224   3"
+
+.PP
+Definition at line 288 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_sha256   4"
+
+.PP
+Definition at line 289 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_sha384   5"
+
+.PP
+Definition at line 290 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_hash_sha512   6"
+
+.PP
+Definition at line 291 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_MAXLEN_host_name   255"
+
+.PP
+Definition at line 307 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_NAMETYPE_host_name   0"
+
+.PP
+Definition at line 265 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_nid_unknown   0x1000000"
+
+.PP
+Definition at line 298 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_signature_anonymous   0"
+
+.PP
+Definition at line 277 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_signature_dsa   2"
+
+.PP
+Definition at line 279 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_signature_ecdsa   3"
+
+.PP
+Definition at line 280 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_signature_num   4"
+
+.PP
+Definition at line 283 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_signature_rsa   1"
+
+.PP
+Definition at line 278 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_STATUSTYPE_ocsp   1"
+
+.PP
+Definition at line 267 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_application_layer_protocol_negotiation   16"
+
+.PP
+Definition at line 235 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_cert_type   9"
+
+.PP
+Definition at line 216 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_client_authz   7"
+
+.PP
+Definition at line 213 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_client_certificate_url   2"
+
+.PP
+Definition at line 206 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_ec_point_formats   11"
+
+.PP
+Definition at line 220 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_elliptic_curves   10"
+
+.PP
+Definition at line 219 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_heartbeat   15"
+
+.PP
+Definition at line 232 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_max_fragment_length   1"
+
+.PP
+Definition at line 205 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_next_proto_neg   13172"
+
+.PP
+Definition at line 261 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_padding   21"
+
+.PP
+Definition at line 241 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_renegotiate   0xff01"
+
+.PP
+Definition at line 257 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_server_authz   8"
+
+.PP
+Definition at line 214 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_server_name   0"
+
+.PP
+Definition at line 204 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_session_ticket   35"
+
+.PP
+Definition at line 244 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_signature_algorithms   13"
+
+.PP
+Definition at line 226 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_srp   12"
+
+.PP
+Definition at line 223 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_status_request   5"
+
+.PP
+Definition at line 209 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_truncated_hmac   4"
+
+.PP
+Definition at line 208 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_trusted_ca_keys   3"
+
+.PP
+Definition at line 207 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_use_srtp   14"
+
+.PP
+Definition at line 229 of file ssl/tls1\&.h\&.
+.SS "#define TLSEXT_TYPE_user_mapping   6"
+
+.PP
+Definition at line 211 of file ssl/tls1\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int SSL_check_chain (\fBSSL\fP * s, \fBX509\fP * x, \fBEVP_PKEY\fP * pk, \fBSTACK_OF\fP(\fBX509\fP)* chain)"
+
+.SS "int SSL_export_keying_material (\fBSSL\fP * s, unsigned char * out, size_t olen, const char * label, size_t llen, const unsigned char * p, size_t plen, int use_context)"
+
+.SS "const char* SSL_get_servername (const \fBSSL\fP * s, const int type)"
+
+.SS "int SSL_get_servername_type (const \fBSSL\fP * s)"
+
+.SS "int SSL_get_shared_sigalgs (\fBSSL\fP * s, int idx, int * psign, int * phash, int * psignandhash, unsigned char * rsig, unsigned char * rhash)"
+
+.SS "int SSL_get_sigalgs (\fBSSL\fP * s, int idx, int * psign, int * phash, int * psignandhash, unsigned char * rsig, unsigned char * rhash)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

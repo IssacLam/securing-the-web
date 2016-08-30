@@ -1,0 +1,262 @@
+\hypertarget{md4__locl_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/md4/md4\+\_\+locl.h File Reference}
+\label{md4__locl_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/md4/md4\+\_\+locl.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/md4/md4\+\_\+locl.\+h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/md4.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}md32\+\_\+common.\+h\char`\"{}}\\*
+Include dependency graph for md4\+\_\+locl.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{md4__locl_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{md4__locl_8h_aba9165b4f14f699ec02664c2d119a34e}{M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2}~2        /$\ast$ default to 32 \hyperlink{include_2openssl_2x509v3_8h_ab3c186980893d6836a68407d221ae9c9}{bits} $\ast$/
+\item 
+\#define \hyperlink{md4__locl_8h_a99fbfe65067f7dd96c78d7efc87694b2}{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN}
+\item 
+\#define \hyperlink{md4__locl_8h_ae0d20ce75e492887693e8f4a356de4a6}{H\+A\+S\+H\+\_\+\+L\+O\+NG}~\hyperlink{include_2openssl_2md4_8h_ad1088f1ba76d4b0e1ac5b25152319e89}{M\+D4\+\_\+\+L\+O\+NG}
+\item 
+\#define \hyperlink{md4__locl_8h_a2f6de7b310d150fd97d2b7073168f9cb}{H\+A\+S\+H\+\_\+\+C\+TX}~\hyperlink{crypto_2md4_2md4_8h_a304a0316e739d70b9d117dcb782bfc13}{M\+D4\+\_\+\+C\+TX}
+\item 
+\#define \hyperlink{md4__locl_8h_a8393f24e21d095ecc17486160ec74d76}{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}~\hyperlink{include_2openssl_2md4_8h_a7cf465fa57d5b77b7152e4f57fc847cc}{M\+D4\+\_\+\+C\+B\+L\+O\+CK}
+\item 
+\#define \hyperlink{md4__locl_8h_aff56e6812dd2a8d0b940648e0fa81ad0}{H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE}~\hyperlink{include_2openssl_2md4_8h_a18f0dec15aebfd7b88284df7324b8396}{M\+D4\+\_\+\+Update}
+\item 
+\#define \hyperlink{md4__locl_8h_af21eeed8d0790d7b95a52ad72b0c967b}{H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM}~\hyperlink{include_2openssl_2md4_8h_af7527184b6fba94f711c2935bc638524}{M\+D4\+\_\+\+Transform}
+\item 
+\#define \hyperlink{md4__locl_8h_a39d4ae0e5c8461a027bc433be2baa23f}{H\+A\+S\+H\+\_\+\+F\+I\+N\+AL}~\hyperlink{include_2openssl_2md4_8h_aa9a472b51da0ebc0c06a225523674414}{M\+D4\+\_\+\+Final}
+\item 
+\#define \hyperlink{md4__locl_8h_ac08c7b37bc6530316949a4364a20e9c3}{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  s)  
+\item 
+\#define \hyperlink{md4__locl_8h_a052b0b348d1f827d0cf3084f35d80e23}{H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER}~\hyperlink{md4__locl_8h_a8ff3ba2b33992fe7844f6fa4aacbc1ec}{md4\+\_\+block\+\_\+data\+\_\+order}
+\item 
+\#define \hyperlink{md4__locl_8h_a35b60425b240dd78743ef304221cfa31}{F}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)            ~((((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}) $^\wedge$ (d)) \& (b)) $^\wedge$ (d))
+\item 
+\#define \hyperlink{md4__locl_8h_a9420c9432bfc673fd1ac20111f6e920a}{G}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)            ~(((b) \& (\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})) $\vert$ ((b) \& (d)) $\vert$ ((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}) \& (d)))
+\item 
+\#define \hyperlink{md4__locl_8h_a30dc58d16ff51a19a9bbc49103252220}{H}(b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d)            ~((b) $^\wedge$ (\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}) $^\wedge$ (d))
+\item 
+\#define \hyperlink{md4__locl_8h_a41b9cdbb90e375e3882ef2b31af390fb}{R0}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  k,  s,  \hyperlink{include_2openssl_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})
+\item 
+\#define \hyperlink{md4__locl_8h_a66e7be5c2f61eb61d7f4c2c19f0f7f3e}{R1}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  k,  s,  \hyperlink{include_2openssl_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})
+\item 
+\#define \hyperlink{md4__locl_8h_aaa71820c98424d5d7f208003c5fa0aa8}{R2}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},  b,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  d,  k,  s,  \hyperlink{include_2openssl_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{md4__locl_8h_a8ff3ba2b33992fe7844f6fa4aacbc1ec}{md4\+\_\+block\+\_\+data\+\_\+order} (\hyperlink{crypto_2md4_2md4_8h_a304a0316e739d70b9d117dcb782bfc13}{M\+D4\+\_\+\+C\+TX} $\ast$\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$\hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p}, size\+\_\+t \hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2@{M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2}}
+\index{M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2@{M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2}{MD4_LONG_LOG2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+D4\+\_\+\+L\+O\+N\+G\+\_\+\+L\+O\+G2~2        /$\ast$ default to 32 {\bf bits} $\ast$/}\hypertarget{md4__locl_8h_aba9165b4f14f699ec02664c2d119a34e}{}\label{md4__locl_8h_aba9165b4f14f699ec02664c2d119a34e}
+
+
+Definition at line 65 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN@{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN}}
+\index{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN@{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN}{DATA_ORDER_IS_LITTLE_ENDIAN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+A\+T\+A\+\_\+\+O\+R\+D\+E\+R\+\_\+\+I\+S\+\_\+\+L\+I\+T\+T\+L\+E\+\_\+\+E\+N\+D\+I\+AN}\hypertarget{md4__locl_8h_a99fbfe65067f7dd96c78d7efc87694b2}{}\label{md4__locl_8h_a99fbfe65067f7dd96c78d7efc87694b2}
+
+
+Definition at line 70 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+L\+O\+NG@{H\+A\+S\+H\+\_\+\+L\+O\+NG}}
+\index{H\+A\+S\+H\+\_\+\+L\+O\+NG@{H\+A\+S\+H\+\_\+\+L\+O\+NG}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+L\+O\+NG}{HASH_LONG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+L\+O\+NG~{\bf M\+D4\+\_\+\+L\+O\+NG}}\hypertarget{md4__locl_8h_ae0d20ce75e492887693e8f4a356de4a6}{}\label{md4__locl_8h_ae0d20ce75e492887693e8f4a356de4a6}
+
+
+Definition at line 72 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+C\+TX@{H\+A\+S\+H\+\_\+\+C\+TX}}
+\index{H\+A\+S\+H\+\_\+\+C\+TX@{H\+A\+S\+H\+\_\+\+C\+TX}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+C\+TX}{HASH_CTX}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+C\+TX~{\bf M\+D4\+\_\+\+C\+TX}}\hypertarget{md4__locl_8h_a2f6de7b310d150fd97d2b7073168f9cb}{}\label{md4__locl_8h_a2f6de7b310d150fd97d2b7073168f9cb}
+
+
+Definition at line 73 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK@{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}}
+\index{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK@{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK}{HASH_CBLOCK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+C\+B\+L\+O\+CK~{\bf M\+D4\+\_\+\+C\+B\+L\+O\+CK}}\hypertarget{md4__locl_8h_a8393f24e21d095ecc17486160ec74d76}{}\label{md4__locl_8h_a8393f24e21d095ecc17486160ec74d76}
+
+
+Definition at line 74 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE@{H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE}}
+\index{H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE@{H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE}{HASH_UPDATE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+U\+P\+D\+A\+TE~{\bf M\+D4\+\_\+\+Update}}\hypertarget{md4__locl_8h_aff56e6812dd2a8d0b940648e0fa81ad0}{}\label{md4__locl_8h_aff56e6812dd2a8d0b940648e0fa81ad0}
+
+
+Definition at line 75 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM@{H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM}}
+\index{H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM@{H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM}{HASH_TRANSFORM}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+T\+R\+A\+N\+S\+F\+O\+RM~{\bf M\+D4\+\_\+\+Transform}}\hypertarget{md4__locl_8h_af21eeed8d0790d7b95a52ad72b0c967b}{}\label{md4__locl_8h_af21eeed8d0790d7b95a52ad72b0c967b}
+
+
+Definition at line 76 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+F\+I\+N\+AL@{H\+A\+S\+H\+\_\+\+F\+I\+N\+AL}}
+\index{H\+A\+S\+H\+\_\+\+F\+I\+N\+AL@{H\+A\+S\+H\+\_\+\+F\+I\+N\+AL}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+F\+I\+N\+AL}{HASH_FINAL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+F\+I\+N\+AL~{\bf M\+D4\+\_\+\+Final}}\hypertarget{md4__locl_8h_a39d4ae0e5c8461a027bc433be2baa23f}{}\label{md4__locl_8h_a39d4ae0e5c8461a027bc433be2baa23f}
+
+
+Definition at line 77 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG@{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}}
+\index{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG@{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG}{HASH_MAKE_STRING}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+M\+A\+K\+E\+\_\+\+S\+T\+R\+I\+NG(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{md4__locl_8h_ac08c7b37bc6530316949a4364a20e9c3}{}\label{md4__locl_8h_ac08c7b37bc6530316949a4364a20e9c3}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{    \(\backslash\)
+        unsigned \textcolor{keywordtype}{long} ll;               \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->A; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));      \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->B; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));      \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->C; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));      \(\backslash\)
+        ll=(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})->D; (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})HOST\_l2c(ll,(s));      \(\backslash\)
+        \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+
+
+Definition at line 78 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER@{H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER}}
+\index{H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER@{H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER}{HASH_BLOCK_DATA_ORDER}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+S\+H\+\_\+\+B\+L\+O\+C\+K\+\_\+\+D\+A\+T\+A\+\_\+\+O\+R\+D\+ER~{\bf md4\+\_\+block\+\_\+data\+\_\+order}}\hypertarget{md4__locl_8h_a052b0b348d1f827d0cf3084f35d80e23}{}\label{md4__locl_8h_a052b0b348d1f827d0cf3084f35d80e23}
+
+
+Definition at line 85 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!F@{F}}
+\index{F@{F}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{F}{F}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~(((({\bf c}) $^\wedge$ (d)) \& (b)) $^\wedge$ (d))}\hypertarget{md4__locl_8h_a35b60425b240dd78743ef304221cfa31}{}\label{md4__locl_8h_a35b60425b240dd78743ef304221cfa31}
+
+
+Definition at line 99 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!G@{G}}
+\index{G@{G}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{G}{G}}]{\setlength{\rightskip}{0pt plus 5cm}\#define G(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~(((b) \& ({\bf c})) $\vert$ ((b) \& (d)) $\vert$ (({\bf c}) \& (d)))}\hypertarget{md4__locl_8h_a9420c9432bfc673fd1ac20111f6e920a}{}\label{md4__locl_8h_a9420c9432bfc673fd1ac20111f6e920a}
+
+
+Definition at line 100 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!H@{H}}
+\index{H@{H}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{H}{H}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H(
+\begin{DoxyParamCaption}
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)~((b) $^\wedge$ ({\bf c}) $^\wedge$ (d))}\hypertarget{md4__locl_8h_a30dc58d16ff51a19a9bbc49103252220}{}\label{md4__locl_8h_a30dc58d16ff51a19a9bbc49103252220}
+
+
+Definition at line 101 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!R0@{R0}}
+\index{R0@{R0}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{R0}{R0}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R0(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{k, }
+\item[{}]{s, }
+\item[{}]{{\bf t}}
+\end{DoxyParamCaption}
+)}\hypertarget{md4__locl_8h_a41b9cdbb90e375e3882ef2b31af390fb}{}\label{md4__locl_8h_a41b9cdbb90e375e3882ef2b31af390fb}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+        a+=((k)+(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})+\hyperlink{md4__locl_8h_a35b60425b240dd78743ef304221cfa31}{F}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d))); \(\backslash\)
+        a=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},s); \};
+\end{DoxyCode}
+
+
+Definition at line 103 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!R1@{R1}}
+\index{R1@{R1}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{R1}{R1}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R1(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{k, }
+\item[{}]{s, }
+\item[{}]{{\bf t}}
+\end{DoxyParamCaption}
+)}\hypertarget{md4__locl_8h_a66e7be5c2f61eb61d7f4c2c19f0f7f3e}{}\label{md4__locl_8h_a66e7be5c2f61eb61d7f4c2c19f0f7f3e}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+        a+=((k)+(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})+\hyperlink{md4__locl_8h_a9420c9432bfc673fd1ac20111f6e920a}{G}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d))); \(\backslash\)
+        a=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},s); \};\(\backslash\)
+\end{DoxyCode}
+
+
+Definition at line 107 of file md4\+\_\+locl.\+h.
+
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!R2@{R2}}
+\index{R2@{R2}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{R2}{R2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R2(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf a}, }
+\item[{}]{b, }
+\item[{}]{{\bf c}, }
+\item[{}]{d, }
+\item[{}]{k, }
+\item[{}]{s, }
+\item[{}]{{\bf t}}
+\end{DoxyParamCaption}
+)}\hypertarget{md4__locl_8h_aaa71820c98424d5d7f208003c5fa0aa8}{}\label{md4__locl_8h_aaa71820c98424d5d7f208003c5fa0aa8}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+        a+=((k)+(\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t})+\hyperlink{md4__locl_8h_a30dc58d16ff51a19a9bbc49103252220}{H}((b),(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}),(d))); \(\backslash\)
+        a=\hyperlink{des__locl_8h_a7046ed0292bca5501c61eae1f116f1c3}{ROTATE}(\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a},s); \};
+\end{DoxyCode}
+
+
+Definition at line 111 of file md4\+\_\+locl.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}!md4\+\_\+block\+\_\+data\+\_\+order@{md4\+\_\+block\+\_\+data\+\_\+order}}
+\index{md4\+\_\+block\+\_\+data\+\_\+order@{md4\+\_\+block\+\_\+data\+\_\+order}!md4\+\_\+locl.\+h@{md4\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{md4\+\_\+block\+\_\+data\+\_\+order(\+M\+D4\+\_\+\+C\+T\+X $\ast$c, const void $\ast$p, size\+\_\+t num)}{md4_block_data_order(MD4_CTX *c, const void *p, size_t num)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} md4\+\_\+block\+\_\+data\+\_\+order (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+D4\+\_\+\+C\+TX} $\ast$}]{c, }
+\item[{const {\bf void} $\ast$}]{p, }
+\item[{size\+\_\+t}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{md4__locl_8h_a8ff3ba2b33992fe7844f6fa4aacbc1ec}{}\label{md4__locl_8h_a8ff3ba2b33992fe7844f6fa4aacbc1ec}

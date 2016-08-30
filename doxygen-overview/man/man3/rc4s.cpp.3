@@ -1,0 +1,69 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/rc4/rc4s.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/rc4/rc4s.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/rc4\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP main (int argc, char * argv[])"
+
+.PP
+Definition at line 37 of file rc4s\&.cpp\&.
+.PP
+.nf
+38     {
+39     unsigned char buffer[1024];
+40     RC4_KEY ctx;
+41     unsigned long s1,s2,e1,e2;
+42     unsigned char k[16];
+43     unsigned long data[2];
+44     unsigned char iv[8];
+45     int i,num=64,numm;
+46     int j=0;
+47 
+48     if (argc >= 2)
+49         num=atoi(argv[1]);
+50 
+51     if (num == 0) num=256;
+52     if (num > 1024-16) num=1024-16;
+53     numm=num+8;
+54 
+55     for (j=0; j<6; j++)
+56         {
+57         for (i=0; i<10; i++) 
+58             {
+59             RC4(&ctx,numm,buffer,buffer);
+60             GetTSC(s1);
+61             RC4(&ctx,numm,buffer,buffer);
+62             GetTSC(e1);
+63             GetTSC(s2);
+64             RC4(&ctx,num,buffer,buffer);
+65             GetTSC(e2);
+66             RC4(&ctx,num,buffer,buffer);
+67             }
+68 
+69         printf("RC4 (%d bytes) %d %d (%d) - 8 bytes\n",num,
+70             e1-s1,e2-s2,(e1-s1)-(e2-s2));
+71         }
+72     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

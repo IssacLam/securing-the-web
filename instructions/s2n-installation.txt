@@ -1,0 +1,31 @@
+# 1. Download the latest version of s2n from s2n Github repository
+$ git clone https://github.com/awslabs/s2n.git
+
+# 2. Move to s2n/libcrypto-build directory
+$ cd s2n/libcrypto-build
+
+# 3. Building s2n with OpenSSL-1.0.2 and download the latest version of OpenSSL
+$ curl -LO https://www.openssl.org/source/openssl-1.0.2-latest.tar.gz
+$ tar -xzvf openssl-1.0.2-latest.tar.gz
+
+# 4. Build openssl's libcrypto 
+$ cd openssl-1.0.2h
+$ ./Configure darwin64-x86_64-cc -fPIC no-shared no-libunbound no-gmp         \ 
+		      no-jpake no-krb5 no-md2 no-rc5 no-rfc3779 no-sctp no-ssl-trace  \ 
+			  no-store no-zlib no-hw no-mdc2 no-seed no-idea                  \
+			  enable-ec-nist_64_gcc_128 no-camellia no-bf no-ripemd no-dsa    \
+			  no-ssl2 no-ssl3 no-capieng -DSSL_FORBID_ENULL -DOPENSSL_NO_DTLS1\
+			  -DOPENSSL_NO_HEARTBEATS --prefix=`pwd`/../../libcrypto-root/
+$ make depend
+$ make
+$ make install
+
+# 5. Move to the main s2n directory
+$ cd ../../
+
+# 6. Build s2n
+$ make
+
+# 7. Relink the dynamic library for the s2n's examples
+$ install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib bin/s2nc
+$ install_name_tool -change libs2n.dylib @executable_path/../lib/libs2n.dylib bin/s2nd

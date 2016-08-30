@@ -1,0 +1,220 @@
+\hypertarget{s__apps_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/apps/s\+\_\+apps.h File Reference}
+\label{s__apps_8h}\index{s2n-\/master/libcrypto-\/build/openssl/apps/s\+\_\+apps.\+h@{s2n-\/master/libcrypto-\/build/openssl/apps/s\+\_\+apps.\+h}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+Include dependency graph for s\+\_\+apps.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=278pt]{s__apps_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s__apps_8h_a614217d263be1fb1a5f76e2ff7be19a2}{P\+O\+RT}~4433
+\item 
+\#define \hyperlink{s__apps_8h_a41d23fa74c77453e61601bbcc33d531b}{P\+O\+R\+T\+\_\+\+S\+TR}~\char`\"{}4433\char`\"{}
+\item 
+\#define \hyperlink{s__apps_8h_a14127f9d1b035bc2e42ae79134875552}{P\+R\+O\+T\+O\+C\+OL}~\char`\"{}tcp\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct ssl\+\_\+excert\+\_\+st \hyperlink{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s__apps_8h_a33766f9b1598e2cd78fa04f0088decdd}{do\+\_\+server} (int port, int \hyperlink{include_2openssl_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type}, int $\ast$ret, int($\ast$\hyperlink{include_2openssl_2pem_8h_a921d6e42da41258bdbb0d8184d7554a2}{cb})(char $\ast$hostname, int s, int stype,                                                                                           unsigned char $\ast$context), unsigned char $\ast$context, int naccept)
+\item 
+int \hyperlink{s__apps_8h_a60ded9b8ee2c3e0c085a2aa43dc764e1}{ssl\+\_\+print\+\_\+tmp\+\_\+key} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$out, \hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$s)
+\item 
+int \hyperlink{s__apps_8h_a040c5f510694bd8d806645b7f3901273}{init\+\_\+client} (int $\ast$sock, char $\ast$server, int port, int \hyperlink{include_2openssl_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type})
+\item 
+int \hyperlink{s__apps_8h_a47c2d30f3d5443ba9a3930369ca05257}{should\+\_\+retry} (int i)
+\item 
+int \hyperlink{s__apps_8h_aa1df8b2b6aa6559ff3288942417f3518}{extract\+\_\+port} (char $\ast$str, short $\ast$port\+\_\+ptr)
+\item 
+int \hyperlink{s__apps_8h_a257eacbf3ae53eacbe0c0fcdc339a8e9}{extract\+\_\+host\+\_\+port} (char $\ast$str, char $\ast$$\ast$host\+\_\+ptr, unsigned char $\ast$ip, short $\ast$\hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p})
+\item 
+long \hyperlink{e__os_8h_a9bf82f2bf6a77e81125eeaa7ee405322}{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK} \hyperlink{s__apps_8h_ad3f6caf5075595026fe9af89fcccdae3}{bio\+\_\+dump\+\_\+callback} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio, int cmd, const char $\ast$argp, int argi, long argl, long ret)
+\item 
+int \hyperlink{e__os_8h_a9bf82f2bf6a77e81125eeaa7ee405322}{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK} \hyperlink{s__apps_8h_a697f8101929ae6545c5ed2bdb4761a50}{generate\+\_\+cookie\+\_\+callback} (\hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$ssl, unsigned char $\ast$cookie, unsigned int $\ast$cookie\+\_\+len)
+\item 
+int \hyperlink{e__os_8h_a9bf82f2bf6a77e81125eeaa7ee405322}{M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK} \hyperlink{s__apps_8h_a605a1b8ac092ec9f662f61c9215236aa}{verify\+\_\+cookie\+\_\+callback} (\hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$ssl, unsigned char $\ast$cookie, unsigned int cookie\+\_\+len)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s__apps_8h_af9745a9ddf30b622bb6415bde3e88b48}{ssl\+\_\+ctx\+\_\+set\+\_\+excert} (\hyperlink{crypto_2ossl__typ_8h_a1a21892c1193ee6eb572c2c72d3924ca}{S\+S\+L\+\_\+\+C\+TX} $\ast$ctx, \hyperlink{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$exc)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s__apps_8h_ae76546be188b4dff3bf3bc8ac8e0db09}{ssl\+\_\+excert\+\_\+free} (\hyperlink{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$exc)
+\item 
+int \hyperlink{s__apps_8h_a4040eda5fb79a88fb91a4dbf03aa53b2}{args\+\_\+excert} (char $\ast$$\ast$$\ast$pargs, int $\ast$pargc, int $\ast$badarg, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err, \hyperlink{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$$\ast$pexc)
+\item 
+int \hyperlink{s__apps_8h_a62a955e28f379d89cb26ee9906ccd0f8}{load\+\_\+excert} (\hyperlink{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$$\ast$pexc, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$err)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s__apps_8h_ae274bce4b15bd2f8c015957c6be28bb8}{print\+\_\+ssl\+\_\+summary} (\hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio, \hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$s)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!P\+O\+RT@{P\+O\+RT}}
+\index{P\+O\+RT@{P\+O\+RT}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{P\+O\+RT}{PORT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+RT~4433}\hypertarget{s__apps_8h_a614217d263be1fb1a5f76e2ff7be19a2}{}\label{s__apps_8h_a614217d263be1fb1a5f76e2ff7be19a2}
+
+
+Definition at line 150 of file s\+\_\+apps.\+h.
+
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!P\+O\+R\+T\+\_\+\+S\+TR@{P\+O\+R\+T\+\_\+\+S\+TR}}
+\index{P\+O\+R\+T\+\_\+\+S\+TR@{P\+O\+R\+T\+\_\+\+S\+TR}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{P\+O\+R\+T\+\_\+\+S\+TR}{PORT_STR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+R\+T\+\_\+\+S\+TR~\char`\"{}4433\char`\"{}}\hypertarget{s__apps_8h_a41d23fa74c77453e61601bbcc33d531b}{}\label{s__apps_8h_a41d23fa74c77453e61601bbcc33d531b}
+
+
+Definition at line 151 of file s\+\_\+apps.\+h.
+
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!P\+R\+O\+T\+O\+C\+OL@{P\+R\+O\+T\+O\+C\+OL}}
+\index{P\+R\+O\+T\+O\+C\+OL@{P\+R\+O\+T\+O\+C\+OL}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{P\+R\+O\+T\+O\+C\+OL}{PROTOCOL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+R\+O\+T\+O\+C\+OL~\char`\"{}tcp\char`\"{}}\hypertarget{s__apps_8h_a14127f9d1b035bc2e42ae79134875552}{}\label{s__apps_8h_a14127f9d1b035bc2e42ae79134875552}
+
+
+Definition at line 152 of file s\+\_\+apps.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!S\+S\+L\+\_\+\+E\+X\+C\+E\+RT@{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT}}
+\index{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT@{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{S\+S\+L\+\_\+\+E\+X\+C\+E\+RT}{SSL_EXCERT}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct ssl\+\_\+excert\+\_\+st {\bf S\+S\+L\+\_\+\+E\+X\+C\+E\+RT}}\hypertarget{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}{}\label{s__apps_8h_a390ff3e7dd10e85d1d301de9d1356f58}
+
+
+Definition at line 192 of file s\+\_\+apps.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!do\+\_\+server@{do\+\_\+server}}
+\index{do\+\_\+server@{do\+\_\+server}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{do\+\_\+server(int port, int type, int $\ast$ret, int($\ast$cb)(char $\ast$hostname, int s, int stype,                                                                                           unsigned char $\ast$context), unsigned char $\ast$context, int naccept)}{do_server(int port, int type, int *ret, int(*cb)(char *hostname, int s, int stype,                                                                                           unsigned char *context), unsigned char *context, int naccept)}}]{\setlength{\rightskip}{0pt plus 5cm}int do\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{int}]{type, }
+\item[{int $\ast$}]{ret, }
+\item[{int($\ast$)(char $\ast$hostname, int s, int stype,                                                                                                                                                                                                                                                                                                                                                                   unsigned char $\ast$context)}]{cb, }
+\item[{unsigned char $\ast$}]{context, }
+\item[{int}]{naccept}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a33766f9b1598e2cd78fa04f0088decdd}{}\label{s__apps_8h_a33766f9b1598e2cd78fa04f0088decdd}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!ssl\+\_\+print\+\_\+tmp\+\_\+key@{ssl\+\_\+print\+\_\+tmp\+\_\+key}}
+\index{ssl\+\_\+print\+\_\+tmp\+\_\+key@{ssl\+\_\+print\+\_\+tmp\+\_\+key}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{ssl\+\_\+print\+\_\+tmp\+\_\+key(\+B\+I\+O $\ast$out, S\+S\+L $\ast$s)}{ssl_print_tmp_key(BIO *out, SSL *s)}}]{\setlength{\rightskip}{0pt plus 5cm}int ssl\+\_\+print\+\_\+tmp\+\_\+key (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{out, }
+\item[{{\bf S\+SL} $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a60ded9b8ee2c3e0c085a2aa43dc764e1}{}\label{s__apps_8h_a60ded9b8ee2c3e0c085a2aa43dc764e1}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!init\+\_\+client@{init\+\_\+client}}
+\index{init\+\_\+client@{init\+\_\+client}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{init\+\_\+client(int $\ast$sock, char $\ast$server, int port, int type)}{init_client(int *sock, char *server, int port, int type)}}]{\setlength{\rightskip}{0pt plus 5cm}int init\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{sock, }
+\item[{char $\ast$}]{server, }
+\item[{int}]{port, }
+\item[{int}]{type}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a040c5f510694bd8d806645b7f3901273}{}\label{s__apps_8h_a040c5f510694bd8d806645b7f3901273}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!should\+\_\+retry@{should\+\_\+retry}}
+\index{should\+\_\+retry@{should\+\_\+retry}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{should\+\_\+retry(int i)}{should_retry(int i)}}]{\setlength{\rightskip}{0pt plus 5cm}int should\+\_\+retry (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a47c2d30f3d5443ba9a3930369ca05257}{}\label{s__apps_8h_a47c2d30f3d5443ba9a3930369ca05257}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!extract\+\_\+port@{extract\+\_\+port}}
+\index{extract\+\_\+port@{extract\+\_\+port}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{extract\+\_\+port(char $\ast$str, short $\ast$port\+\_\+ptr)}{extract_port(char *str, short *port_ptr)}}]{\setlength{\rightskip}{0pt plus 5cm}int extract\+\_\+port (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str, }
+\item[{short $\ast$}]{port\+\_\+ptr}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_aa1df8b2b6aa6559ff3288942417f3518}{}\label{s__apps_8h_aa1df8b2b6aa6559ff3288942417f3518}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!extract\+\_\+host\+\_\+port@{extract\+\_\+host\+\_\+port}}
+\index{extract\+\_\+host\+\_\+port@{extract\+\_\+host\+\_\+port}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{extract\+\_\+host\+\_\+port(char $\ast$str, char $\ast$$\ast$host\+\_\+ptr, unsigned char $\ast$ip, short $\ast$p)}{extract_host_port(char *str, char **host_ptr, unsigned char *ip, short *p)}}]{\setlength{\rightskip}{0pt plus 5cm}int extract\+\_\+host\+\_\+port (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str, }
+\item[{char $\ast$$\ast$}]{host\+\_\+ptr, }
+\item[{unsigned char $\ast$}]{ip, }
+\item[{short $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a257eacbf3ae53eacbe0c0fcdc339a8e9}{}\label{s__apps_8h_a257eacbf3ae53eacbe0c0fcdc339a8e9}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!bio\+\_\+dump\+\_\+callback@{bio\+\_\+dump\+\_\+callback}}
+\index{bio\+\_\+dump\+\_\+callback@{bio\+\_\+dump\+\_\+callback}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{bio\+\_\+dump\+\_\+callback(\+B\+I\+O $\ast$bio, int cmd, const char $\ast$argp, int argi, long argl, long ret)}{bio_dump_callback(BIO *bio, int cmd, const char *argp, int argi, long argl, long ret)}}]{\setlength{\rightskip}{0pt plus 5cm}long {\bf M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK} bio\+\_\+dump\+\_\+callback (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{bio, }
+\item[{int}]{cmd, }
+\item[{const char $\ast$}]{argp, }
+\item[{int}]{argi, }
+\item[{long}]{argl, }
+\item[{long}]{ret}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_ad3f6caf5075595026fe9af89fcccdae3}{}\label{s__apps_8h_ad3f6caf5075595026fe9af89fcccdae3}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!generate\+\_\+cookie\+\_\+callback@{generate\+\_\+cookie\+\_\+callback}}
+\index{generate\+\_\+cookie\+\_\+callback@{generate\+\_\+cookie\+\_\+callback}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{generate\+\_\+cookie\+\_\+callback(\+S\+S\+L $\ast$ssl, unsigned char $\ast$cookie, unsigned int $\ast$cookie\+\_\+len)}{generate_cookie_callback(SSL *ssl, unsigned char *cookie, unsigned int *cookie_len)}}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK} generate\+\_\+cookie\+\_\+callback (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+SL} $\ast$}]{ssl, }
+\item[{unsigned char $\ast$}]{cookie, }
+\item[{unsigned int $\ast$}]{cookie\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a697f8101929ae6545c5ed2bdb4761a50}{}\label{s__apps_8h_a697f8101929ae6545c5ed2bdb4761a50}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!verify\+\_\+cookie\+\_\+callback@{verify\+\_\+cookie\+\_\+callback}}
+\index{verify\+\_\+cookie\+\_\+callback@{verify\+\_\+cookie\+\_\+callback}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{verify\+\_\+cookie\+\_\+callback(\+S\+S\+L $\ast$ssl, unsigned char $\ast$cookie, unsigned int cookie\+\_\+len)}{verify_cookie_callback(SSL *ssl, unsigned char *cookie, unsigned int cookie_len)}}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf M\+S\+\_\+\+C\+A\+L\+L\+B\+A\+CK} verify\+\_\+cookie\+\_\+callback (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+SL} $\ast$}]{ssl, }
+\item[{unsigned char $\ast$}]{cookie, }
+\item[{unsigned int}]{cookie\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a605a1b8ac092ec9f662f61c9215236aa}{}\label{s__apps_8h_a605a1b8ac092ec9f662f61c9215236aa}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!ssl\+\_\+ctx\+\_\+set\+\_\+excert@{ssl\+\_\+ctx\+\_\+set\+\_\+excert}}
+\index{ssl\+\_\+ctx\+\_\+set\+\_\+excert@{ssl\+\_\+ctx\+\_\+set\+\_\+excert}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{ssl\+\_\+ctx\+\_\+set\+\_\+excert(\+S\+S\+L\+\_\+\+C\+T\+X $\ast$ctx, S\+S\+L\+\_\+\+E\+X\+C\+E\+R\+T $\ast$exc)}{ssl_ctx_set_excert(SSL_CTX *ctx, SSL_EXCERT *exc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} ssl\+\_\+ctx\+\_\+set\+\_\+excert (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+S\+L\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{{\bf S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$}]{exc}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_af9745a9ddf30b622bb6415bde3e88b48}{}\label{s__apps_8h_af9745a9ddf30b622bb6415bde3e88b48}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!ssl\+\_\+excert\+\_\+free@{ssl\+\_\+excert\+\_\+free}}
+\index{ssl\+\_\+excert\+\_\+free@{ssl\+\_\+excert\+\_\+free}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{ssl\+\_\+excert\+\_\+free(\+S\+S\+L\+\_\+\+E\+X\+C\+E\+R\+T $\ast$exc)}{ssl_excert_free(SSL_EXCERT *exc)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} ssl\+\_\+excert\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$}]{exc}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_ae76546be188b4dff3bf3bc8ac8e0db09}{}\label{s__apps_8h_ae76546be188b4dff3bf3bc8ac8e0db09}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!args\+\_\+excert@{args\+\_\+excert}}
+\index{args\+\_\+excert@{args\+\_\+excert}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{args\+\_\+excert(char $\ast$$\ast$$\ast$pargs, int $\ast$pargc, int $\ast$badarg, B\+I\+O $\ast$err, S\+S\+L\+\_\+\+E\+X\+C\+E\+R\+T $\ast$$\ast$pexc)}{args_excert(char ***pargs, int *pargc, int *badarg, BIO *err, SSL_EXCERT **pexc)}}]{\setlength{\rightskip}{0pt plus 5cm}int args\+\_\+excert (
+\begin{DoxyParamCaption}
+\item[{char $\ast$$\ast$$\ast$}]{pargs, }
+\item[{int $\ast$}]{pargc, }
+\item[{int $\ast$}]{badarg, }
+\item[{{\bf B\+IO} $\ast$}]{err, }
+\item[{{\bf S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$$\ast$}]{pexc}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a4040eda5fb79a88fb91a4dbf03aa53b2}{}\label{s__apps_8h_a4040eda5fb79a88fb91a4dbf03aa53b2}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!load\+\_\+excert@{load\+\_\+excert}}
+\index{load\+\_\+excert@{load\+\_\+excert}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+excert(\+S\+S\+L\+\_\+\+E\+X\+C\+E\+R\+T $\ast$$\ast$pexc, B\+I\+O $\ast$err)}{load_excert(SSL_EXCERT **pexc, BIO *err)}}]{\setlength{\rightskip}{0pt plus 5cm}int load\+\_\+excert (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+S\+L\+\_\+\+E\+X\+C\+E\+RT} $\ast$$\ast$}]{pexc, }
+\item[{{\bf B\+IO} $\ast$}]{err}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_a62a955e28f379d89cb26ee9906ccd0f8}{}\label{s__apps_8h_a62a955e28f379d89cb26ee9906ccd0f8}
+\index{s\+\_\+apps.\+h@{s\+\_\+apps.\+h}!print\+\_\+ssl\+\_\+summary@{print\+\_\+ssl\+\_\+summary}}
+\index{print\+\_\+ssl\+\_\+summary@{print\+\_\+ssl\+\_\+summary}!s\+\_\+apps.\+h@{s\+\_\+apps.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+ssl\+\_\+summary(\+B\+I\+O $\ast$bio, S\+S\+L $\ast$s)}{print_ssl_summary(BIO *bio, SSL *s)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} print\+\_\+ssl\+\_\+summary (
+\begin{DoxyParamCaption}
+\item[{{\bf B\+IO} $\ast$}]{bio, }
+\item[{{\bf S\+SL} $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{s__apps_8h_ae274bce4b15bd2f8c015957c6be28bb8}{}\label{s__apps_8h_ae274bce4b15bd2f8c015957c6be28bb8}

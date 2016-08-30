@@ -1,0 +1,131 @@
+\hypertarget{s2n__safety_8c}{}\section{s2n-\/master/utils/s2n\+\_\+safety.c File Reference}
+\label{s2n__safety_8c}\index{s2n-\/master/utils/s2n\+\_\+safety.\+c@{s2n-\/master/utils/s2n\+\_\+safety.\+c}}
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$sys/syscall.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+safety.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__safety_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__safety_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}~/$\ast$ For syscall on Linux $\ast$/
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+pid\+\_\+t \hyperlink{s2n__safety_8c_a0f60ded5620e91b547970661d673096b}{s2n\+\_\+actual\+\_\+getpid} ()
+\item 
+int \hyperlink{s2n__safety_8c_a407f3056ab784369c0ccb3359532669a}{s2n\+\_\+constant\+\_\+time\+\_\+equals} (const uint8\+\_\+t $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const uint8\+\_\+t $\ast$b, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6}{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont} (uint8\+\_\+t $\ast$\hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}, const uint8\+\_\+t $\ast$b, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, uint8\+\_\+t dont)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}!\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}}
+\index{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}!s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}}
+\subsubsection[{\texorpdfstring{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}{_GNU_SOURCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE~/$\ast$ For syscall on Linux $\ast$/}\hypertarget{s2n__safety_8c_a369266c24eacffb87046522897a570d5}{}\label{s2n__safety_8c_a369266c24eacffb87046522897a570d5}
+
+
+Definition at line 16 of file s2n\+\_\+safety.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}!s2n\+\_\+actual\+\_\+getpid@{s2n\+\_\+actual\+\_\+getpid}}
+\index{s2n\+\_\+actual\+\_\+getpid@{s2n\+\_\+actual\+\_\+getpid}!s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+actual\+\_\+getpid()}{s2n_actual_getpid()}}]{\setlength{\rightskip}{0pt plus 5cm}pid\+\_\+t s2n\+\_\+actual\+\_\+getpid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety_8c_a0f60ded5620e91b547970661d673096b}{}\label{s2n__safety_8c_a0f60ded5620e91b547970661d673096b}
+Get the process id
+
+Returns\+: The process ID of the current process 
+
+Definition at line 30 of file s2n\+\_\+safety.\+c.
+
+
+\begin{DoxyCode}
+31 \{
+32 \textcolor{preprocessor}{#if defined(\_\_GNUC\_\_) && defined(SYS\_getpid)}
+33     \textcolor{comment}{/* http://yarchive.net/comp/linux/getpid\_caching.html */}
+34     \textcolor{keywordflow}{return} (pid\_t) syscall(SYS\_getpid);
+35 \textcolor{preprocessor}{#else}
+36     \textcolor{keywordflow}{return} getpid();
+37 \textcolor{preprocessor}{#endif}
+38 \}
+\end{DoxyCode}
+\index{s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}!s2n\+\_\+constant\+\_\+time\+\_\+equals@{s2n\+\_\+constant\+\_\+time\+\_\+equals}}
+\index{s2n\+\_\+constant\+\_\+time\+\_\+equals@{s2n\+\_\+constant\+\_\+time\+\_\+equals}!s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+constant\+\_\+time\+\_\+equals(const uint8\+\_\+t $\ast$a, const uint8\+\_\+t $\ast$b, uint32\+\_\+t len)}{s2n_constant_time_equals(const uint8_t *a, const uint8_t *b, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+constant\+\_\+time\+\_\+equals (
+\begin{DoxyParamCaption}
+\item[{const uint8\+\_\+t $\ast$}]{a, }
+\item[{const uint8\+\_\+t $\ast$}]{b, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety_8c_a407f3056ab784369c0ccb3359532669a}{}\label{s2n__safety_8c_a407f3056ab784369c0ccb3359532669a}
+
+
+Definition at line 40 of file s2n\+\_\+safety.\+c.
+
+
+\begin{DoxyCode}
+41 \{
+42     uint8\_t xor = 0;
+43     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}; i++) \{
+44         xor |= \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}[i] ^ b[i];
+45     \}
+46 
+47     \textcolor{keywordflow}{return} !xor;
+48 \}
+\end{DoxyCode}
+\index{s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}!s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont@{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont}}
+\index{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont@{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont}!s2n\+\_\+safety.\+c@{s2n\+\_\+safety.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont(uint8\+\_\+t $\ast$a, const uint8\+\_\+t $\ast$b, uint32\+\_\+t len, uint8\+\_\+t dont)}{s2n_constant_time_copy_or_dont(uint8_t *a, const uint8_t *b, uint32_t len, uint8_t dont)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+constant\+\_\+time\+\_\+copy\+\_\+or\+\_\+dont (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t $\ast$}]{a, }
+\item[{const uint8\+\_\+t $\ast$}]{b, }
+\item[{uint32\+\_\+t}]{len, }
+\item[{uint8\+\_\+t}]{dont}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6}{}\label{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6}
+
+
+Definition at line 50 of file s2n\+\_\+safety.\+c.
+
+
+\begin{DoxyCode}
+51 \{
+52     uint8\_t mask = ~(0xff << ((!dont) * 8));
+53 
+54     \textcolor{comment}{/* dont = 0 : mask = 0xff */}
+55     \textcolor{comment}{/* dont > 0 : mask = 0x00 */}
+56 
+57     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}; i++) \{
+58         uint8\_t old = \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}[i];
+59         uint8\_t diff = (old ^ b[i]) & mask;
+60         \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}[i] = old ^ diff;
+61     \}
+62 
+63     \textcolor{keywordflow}{return} 0;
+64 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6_icgraph}
+\end{center}
+\end{figure}
+
+

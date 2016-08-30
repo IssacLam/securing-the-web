@@ -1,0 +1,305 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/sha.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/sha.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSHAstate_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSHA256state_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSHA512state_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSHA_LONG\fP   unsigned int"
+.br
+.ti -1c
+.RI "#define \fBSHA_LBLOCK\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSHA_CBLOCK\fP"
+.br
+.ti -1c
+.RI "#define \fBSHA_LAST_BLOCK\fP   (\fBSHA_CBLOCK\fP\-8)"
+.br
+.ti -1c
+.RI "#define \fBSHA_DIGEST_LENGTH\fP   20"
+.br
+.ti -1c
+.RI "#define \fBSHA256_CBLOCK\fP"
+.br
+.ti -1c
+.RI "#define \fBSHA224_DIGEST_LENGTH\fP   28"
+.br
+.ti -1c
+.RI "#define \fBSHA256_DIGEST_LENGTH\fP   32"
+.br
+.ti -1c
+.RI "#define \fBSHA384_DIGEST_LENGTH\fP   48"
+.br
+.ti -1c
+.RI "#define \fBSHA512_DIGEST_LENGTH\fP   64"
+.br
+.ti -1c
+.RI "#define \fBSHA512_CBLOCK\fP   (\fBSHA_LBLOCK\fP*8)"
+.br
+.ti -1c
+.RI "#define \fBSHA_LONG64\fP   unsigned long long"
+.br
+.ti -1c
+.RI "#define \fBU64\fP(C)         C##ULL"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBSHAstate_st\fP \fBSHA_CTX\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSHA256state_st\fP \fBSHA256_CTX\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSHA512state_st\fP \fBSHA512_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBSHA_Init\fP (\fBSHA_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA_Update\fP (\fBSHA_CTX\fP *\fBc\fP, const \fBvoid\fP *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA_Final\fP (unsigned char *md, \fBSHA_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSHA_Transform\fP (\fBSHA_CTX\fP *\fBc\fP, const unsigned char *data)"
+.br
+.ti -1c
+.RI "int \fBSHA1_Init\fP (\fBSHA_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA1_Update\fP (\fBSHA_CTX\fP *\fBc\fP, const \fBvoid\fP *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA1_Final\fP (unsigned char *md, \fBSHA_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA1\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSHA1_Transform\fP (\fBSHA_CTX\fP *\fBc\fP, const unsigned char *data)"
+.br
+.ti -1c
+.RI "int \fBSHA224_Init\fP (\fBSHA256_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA224_Update\fP (\fBSHA256_CTX\fP *\fBc\fP, const \fBvoid\fP *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA224_Final\fP (unsigned char *md, \fBSHA256_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA224\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "int \fBSHA256_Init\fP (\fBSHA256_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA256_Update\fP (\fBSHA256_CTX\fP *\fBc\fP, const \fBvoid\fP *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA256_Final\fP (unsigned char *md, \fBSHA256_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA256\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSHA256_Transform\fP (\fBSHA256_CTX\fP *\fBc\fP, const unsigned char *data)"
+.br
+.ti -1c
+.RI "int \fBSHA384_Init\fP (\fBSHA512_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA384_Update\fP (\fBSHA512_CTX\fP *\fBc\fP, const \fBvoid\fP *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA384_Final\fP (unsigned char *md, \fBSHA512_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA384\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "int \fBSHA512_Init\fP (\fBSHA512_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA512_Update\fP (\fBSHA512_CTX\fP *\fBc\fP, const \fBvoid\fP *data, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBSHA512_Final\fP (unsigned char *md, \fBSHA512_CTX\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBSHA512\fP (const unsigned char *d, size_t n, unsigned char *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBSHA512_Transform\fP (\fBSHA512_CTX\fP *\fBc\fP, const unsigned char *data)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SHA_LONG   unsigned int"
+
+.PP
+Definition at line 90 of file sha\&.h\&.
+.SS "#define SHA_LBLOCK   16"
+
+.PP
+Definition at line 93 of file sha\&.h\&.
+.SS "#define SHA_CBLOCK"
+\fBValue:\fP
+.PP
+.nf
+(SHA_LBLOCK*4)/* SHA treats input data as a
+                                        * contiguous array of 32 bit wide
+                                        * big-endian values\&. */
+.fi
+.PP
+Definition at line 94 of file sha\&.h\&.
+.SS "#define SHA_LAST_BLOCK   (\fBSHA_CBLOCK\fP\-8)"
+
+.PP
+Definition at line 97 of file sha\&.h\&.
+.SS "#define SHA_DIGEST_LENGTH   20"
+
+.PP
+Definition at line 98 of file sha\&.h\&.
+.SS "#define SHA256_CBLOCK"
+\fBValue:\fP
+.PP
+.nf
+(SHA_LBLOCK*4)/* SHA-256 treats input data as a
+                                        * contiguous array of 32 bit wide
+                                        * big-endian values\&. */
+.fi
+.PP
+Definition at line 128 of file sha\&.h\&.
+.SS "#define SHA224_DIGEST_LENGTH   28"
+
+.PP
+Definition at line 131 of file sha\&.h\&.
+.SS "#define SHA256_DIGEST_LENGTH   32"
+
+.PP
+Definition at line 132 of file sha\&.h\&.
+.SS "#define SHA384_DIGEST_LENGTH   48"
+
+.PP
+Definition at line 157 of file sha\&.h\&.
+.SS "#define SHA512_DIGEST_LENGTH   64"
+
+.PP
+Definition at line 158 of file sha\&.h\&.
+.SS "#define SHA512_CBLOCK   (\fBSHA_LBLOCK\fP*8)"
+
+.PP
+Definition at line 171 of file sha\&.h\&.
+.SS "#define SHA_LONG64   unsigned long long"
+
+.PP
+Definition at line 179 of file sha\&.h\&.
+.SS "#define U64(C)   C##ULL"
+
+.PP
+Definition at line 180 of file sha\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBSHAstate_st\fP  \fBSHA_CTX\fP"
+
+.SS "typedef struct \fBSHA256state_st\fP  \fBSHA256_CTX\fP"
+
+.SS "typedef struct \fBSHA512state_st\fP  \fBSHA512_CTX\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "int SHA_Init (\fBSHA_CTX\fP * c)"
+
+.SS "int SHA_Update (\fBSHA_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SS "int SHA_Final (unsigned char * md, \fBSHA_CTX\fP * c)"
+
+.SS "unsigned char* SHA (const unsigned char * d, size_t n, unsigned char * md)"
+
+.SS "\fBvoid\fP SHA_Transform (\fBSHA_CTX\fP * c, const unsigned char * data)"
+
+.SS "int SHA1_Init (\fBSHA_CTX\fP * c)"
+
+.SS "int SHA1_Update (\fBSHA_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SS "int SHA1_Final (unsigned char * md, \fBSHA_CTX\fP * c)"
+
+.SS "unsigned char* SHA1 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.SS "\fBvoid\fP SHA1_Transform (\fBSHA_CTX\fP * c, const unsigned char * data)"
+
+.SS "int SHA224_Init (\fBSHA256_CTX\fP * c)"
+
+.SS "int SHA224_Update (\fBSHA256_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SS "int SHA224_Final (unsigned char * md, \fBSHA256_CTX\fP * c)"
+
+.SS "unsigned char* SHA224 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.SS "int SHA256_Init (\fBSHA256_CTX\fP * c)"
+
+.SS "int SHA256_Update (\fBSHA256_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SS "int SHA256_Final (unsigned char * md, \fBSHA256_CTX\fP * c)"
+
+.SS "unsigned char* SHA256 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.SS "\fBvoid\fP SHA256_Transform (\fBSHA256_CTX\fP * c, const unsigned char * data)"
+
+.SS "int SHA384_Init (\fBSHA512_CTX\fP * c)"
+
+.SS "int SHA384_Update (\fBSHA512_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SS "int SHA384_Final (unsigned char * md, \fBSHA512_CTX\fP * c)"
+
+.SS "unsigned char* SHA384 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.SS "int SHA512_Init (\fBSHA512_CTX\fP * c)"
+
+.SS "int SHA512_Update (\fBSHA512_CTX\fP * c, const \fBvoid\fP * data, size_t len)"
+
+.SS "int SHA512_Final (unsigned char * md, \fBSHA512_CTX\fP * c)"
+
+.SS "unsigned char* SHA512 (const unsigned char * d, size_t n, unsigned char * md)"
+
+.SS "\fBvoid\fP SHA512_Transform (\fBSHA512_CTX\fP * c, const unsigned char * data)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,78 @@
+.TH "cmac.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cmac.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/evp\&.h>\fP
+.br
+
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct CMAC_CTX_st \fBCMAC_CTX\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCMAC_CTX\fP * \fBCMAC_CTX_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCMAC_CTX_cleanup\fP (\fBCMAC_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBCMAC_CTX_free\fP (\fBCMAC_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "\fBEVP_CIPHER_CTX\fP * \fBCMAC_CTX_get0_cipher_ctx\fP (\fBCMAC_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBCMAC_CTX_copy\fP (\fBCMAC_CTX\fP *out, const \fBCMAC_CTX\fP *in)"
+.br
+.ti -1c
+.RI "int \fBCMAC_Init\fP (\fBCMAC_CTX\fP *ctx, const \fBvoid\fP *key, size_t keylen, const \fBEVP_CIPHER\fP *cipher, \fBENGINE\fP *impl)"
+.br
+.ti -1c
+.RI "int \fBCMAC_Update\fP (\fBCMAC_CTX\fP *ctx, const \fBvoid\fP *data, size_t dlen)"
+.br
+.ti -1c
+.RI "int \fBCMAC_Final\fP (\fBCMAC_CTX\fP *ctx, unsigned char *out, size_t *poutlen)"
+.br
+.ti -1c
+.RI "int \fBCMAC_resume\fP (\fBCMAC_CTX\fP *ctx)"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct CMAC_CTX_st \fBCMAC_CTX\fP"
+
+.PP
+Definition at line 65 of file crypto/cmac/cmac\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP CMAC_CTX_cleanup (\fBCMAC_CTX\fP * ctx)"
+
+.SS "int CMAC_CTX_copy (\fBCMAC_CTX\fP * out, const \fBCMAC_CTX\fP * in)"
+
+.SS "\fBvoid\fP CMAC_CTX_free (\fBCMAC_CTX\fP * ctx)"
+
+.SS "\fBEVP_CIPHER_CTX\fP* CMAC_CTX_get0_cipher_ctx (\fBCMAC_CTX\fP * ctx)"
+
+.SS "\fBCMAC_CTX\fP* CMAC_CTX_new (\fBvoid\fP)"
+
+.SS "int CMAC_Final (\fBCMAC_CTX\fP * ctx, unsigned char * out, size_t * poutlen)"
+
+.SS "int CMAC_Init (\fBCMAC_CTX\fP * ctx, const \fBvoid\fP * key, size_t keylen, const \fBEVP_CIPHER\fP * cipher, \fBENGINE\fP * impl)"
+
+.SS "int CMAC_resume (\fBCMAC_CTX\fP * ctx)"
+
+.SS "int CMAC_Update (\fBCMAC_CTX\fP * ctx, const \fBvoid\fP * data, size_t dlen)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

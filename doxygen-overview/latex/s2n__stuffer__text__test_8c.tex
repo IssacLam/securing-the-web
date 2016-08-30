@@ -1,0 +1,114 @@
+\hypertarget{s2n__stuffer__text__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+text\+\_\+test.c File Reference}
+\label{s2n__stuffer__text__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__text__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__text__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__stuffer__text__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 23 of file s2n\+\_\+stuffer\+\_\+text\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+24 \{
+25 \textcolor{preprocessor}{#if 0}
+26     \textcolor{keywordtype}{char} pad[5120];
+27     \textcolor{keywordtype}{char} text[] = \textcolor{stringliteral}{"    This is some text\(\backslash\)r\(\backslash\)n\(\backslash\)tmore text"};
+28     \textcolor{keywordtype}{char} tokenpad[6];
+29     \textcolor{keywordtype}{char} fields[] = \textcolor{stringliteral}{"one,two,three"};
+30     \textcolor{keywordtype}{char} out[1024];
+31     \textcolor{keywordtype}{char} \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c};
+32     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} stuffer, token;
+33     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} pblob, tblob;
+34 
+35     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+36 
+37     \textcolor{comment}{/* Create a stuffer */}
+38     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__blob_8c_a1d3a7f2981b29945a491b6b8cf791c87}{s2n\_blob\_init}(&tblob, (uint8\_t *)tokenpad, \textcolor{keyword}{sizeof}(tokenpad)))
+      ;
+39     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&token, &tblob));
+40     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__blob_8c_a1d3a7f2981b29945a491b6b8cf791c87}{s2n\_blob\_init}(&pblob, (uint8\_t *)pad, \textcolor{keyword}{sizeof}(pad)));
+41     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&stuffer, &pblob));
+42     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a4b4cf89c8bbe6a76472fae7b7ebe00fb}{s2n\_stuffer\_write\_text}(&stuffer, text, \textcolor{keyword}{sizeof}(text))
+      );
+43 
+44     \textcolor{comment}{/* Skip 4 bytes of whitespace */}
+45     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__stuffer_8h_a8e22f14d515c11f01fba8f748c096532}{s2n\_stuffer\_skip\_whitespace}(&stuffer), 4);
+46 
+47     \textcolor{comment}{/* Skip 4 bytes of whitespace */}
+48     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_ab090e316ef5eca9ce16cca3520a94e7e}{s2n\_stuffer\_peek\_char}(&stuffer, &c));
+49     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(c, \textcolor{charliteral}{'T'});
+50 
+51     \textcolor{comment}{/* Read the next 17 chars */}
+52     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a4c9455e6274a31b000efd812062ac28e}{s2n\_stuffer\_read\_text}(&stuffer, out, 17));
+53     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(out, \textcolor{stringliteral}{"This is some text"}, 17), 0);
+54 
+55     \textcolor{comment}{/* Skip 3 bytes of whitespace */}
+56     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__stuffer_8h_a8e22f14d515c11f01fba8f748c096532}{s2n\_stuffer\_skip\_whitespace}(&stuffer), 3);
+57 
+58     \textcolor{comment}{/* Read the next 10 chars (including the terminating zero) */}
+59     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a4c9455e6274a31b000efd812062ac28e}{s2n\_stuffer\_read\_text}(&stuffer, out, 10));
+60     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(out, \textcolor{stringliteral}{"more text"}, 10), 0);
+61 
+62     \textcolor{comment}{/* Test end of stream behaviour */}
+63     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a8e22f14d515c11f01fba8f748c096532}{s2n\_stuffer\_skip\_whitespace}(&stuffer));
+64     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8h_ab090e316ef5eca9ce16cca3520a94e7e}{s2n\_stuffer\_peek\_char}(&stuffer, &c));
+65     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer_8h_ae3e8cee389bfcee6b200ae947c8317ee}{s2n\_stuffer\_read\_char}(&stuffer, &c));
+66 
+67     \textcolor{comment}{/* Start a new buffer */}
+68     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&stuffer, &pblob));
+69     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a4b4cf89c8bbe6a76472fae7b7ebe00fb}{s2n\_stuffer\_write\_text}(&stuffer, fields, strlen(
+      fields)));
+70 
+71     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a5ab3277576af346c7a22e5824fcb3027}{s2n\_stuffer\_read\_token}(&stuffer, &token, \textcolor{charliteral}{','}));
+72     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(\textcolor{stringliteral}{"one"}, token.blob.data, 3), 0);
+73 
+74     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&token, &tblob));
+75     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a5ab3277576af346c7a22e5824fcb3027}{s2n\_stuffer\_read\_token}(&stuffer, &token, \textcolor{charliteral}{','}));
+76     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(\textcolor{stringliteral}{"two"}, token.blob.data, 3), 0);
+77 
+78     \textcolor{comment}{/* Check for end-of-stream termination */}
+79     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&token, &tblob));
+80     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8h_a5ab3277576af346c7a22e5824fcb3027}{s2n\_stuffer\_read\_token}(&stuffer, &token, \textcolor{charliteral}{','}));
+81     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(\textcolor{stringliteral}{"three"}, token.blob.data, 5), 0);
+82 
+83     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+84 \textcolor{preprocessor}{#endif}
+85     \textcolor{keywordflow}{return} 0;
+86 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__text__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

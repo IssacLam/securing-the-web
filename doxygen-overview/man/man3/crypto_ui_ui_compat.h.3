@@ -1,0 +1,52 @@
+.TH "ui_compat.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ui_compat.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+\fC#include <openssl/ui\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBdes_read_pw_string\fP(b,  l,  \fBp\fP,  v)   \fB_ossl_old_des_read_pw_string\fP((b),(l),(\fBp\fP),(v))"
+.br
+.ti -1c
+.RI "#define \fBdes_read_pw\fP(b,  bf,  s,  \fBp\fP,  v)   \fB_ossl_old_des_read_pw\fP((b),(bf),(s),(\fBp\fP),(v))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fB_ossl_old_des_read_pw_string\fP (char *buf, int \fBlength\fP, const char *prompt, int verify)"
+.br
+.ti -1c
+.RI "int \fB_ossl_old_des_read_pw\fP (char *buf, char *buff, int size, const char *prompt, int verify)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define des_read_pw(b, bf, s, \fBp\fP, v)   \fB_ossl_old_des_read_pw\fP((b),(bf),(s),(\fBp\fP),(v))"
+
+.PP
+Definition at line 77 of file crypto/ui/ui_compat\&.h\&.
+.SS "#define des_read_pw_string(b, l, \fBp\fP, v)   \fB_ossl_old_des_read_pw_string\fP((b),(l),(\fBp\fP),(v))"
+
+.PP
+Definition at line 75 of file crypto/ui/ui_compat\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int _ossl_old_des_read_pw (char * buf, char * buff, int size, const char * prompt, int verify)"
+
+.SS "int _ossl_old_des_read_pw_string (char * buf, int length, const char * prompt, int verify)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

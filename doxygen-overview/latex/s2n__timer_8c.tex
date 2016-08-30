@@ -1,0 +1,142 @@
+\hypertarget{s2n__timer_8c}{}\section{s2n-\/master/utils/s2n\+\_\+timer.c File Reference}
+\label{s2n__timer_8c}\index{s2n-\/master/utils/s2n\+\_\+timer.\+c@{s2n-\/master/utils/s2n\+\_\+timer.\+c}}
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+timer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+config.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+timer.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__timer_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}{s2n\+\_\+timer\+\_\+start} (struct \hyperlink{structs2n__config}{s2n\+\_\+config} $\ast$\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config}, struct \hyperlink{structs2n__timer}{s2n\+\_\+timer} $\ast$timer)
+\item 
+int \hyperlink{s2n__timer_8c_aae9740ae7fe7b0a3a82ce18cbaa866a6}{s2n\+\_\+timer\+\_\+elapsed} (struct \hyperlink{structs2n__config}{s2n\+\_\+config} $\ast$\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config}, struct \hyperlink{structs2n__timer}{s2n\+\_\+timer} $\ast$timer, uint64\+\_\+t $\ast$nanoseconds)
+\item 
+int \hyperlink{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}{s2n\+\_\+timer\+\_\+reset} (struct \hyperlink{structs2n__config}{s2n\+\_\+config} $\ast$\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config}, struct \hyperlink{structs2n__timer}{s2n\+\_\+timer} $\ast$timer, uint64\+\_\+t $\ast$nanoseconds)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+timer.\+c@{s2n\+\_\+timer.\+c}!s2n\+\_\+timer\+\_\+start@{s2n\+\_\+timer\+\_\+start}}
+\index{s2n\+\_\+timer\+\_\+start@{s2n\+\_\+timer\+\_\+start}!s2n\+\_\+timer.\+c@{s2n\+\_\+timer.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+timer\+\_\+start(struct s2n\+\_\+config $\ast$config, struct s2n\+\_\+timer $\ast$timer)}{s2n_timer_start(struct s2n_config *config, struct s2n_timer *timer)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+timer\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+config} $\ast$}]{config, }
+\item[{struct {\bf s2n\+\_\+timer} $\ast$}]{timer}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}{}\label{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}
+
+
+Definition at line 21 of file s2n\+\_\+timer.\+c.
+
+
+\begin{DoxyCode}
+22 \{
+23     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(config->\hyperlink{structs2n__config_a5c13684f60b915be42223586e6c42e5c}{nanoseconds\_since\_epoch}(config->
+      \hyperlink{structs2n__config_a462e69eaecd0176f077b385c9dd1477b}{data\_for\_nanoseconds\_since\_epoch}, &timer->\hyperlink{structs2n__timer_a5d34a8f2dfe25421b2b473a5fd37b0ed}{time}));
+24 
+25     \textcolor{keywordflow}{return} 0;
+26 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+timer.\+c@{s2n\+\_\+timer.\+c}!s2n\+\_\+timer\+\_\+elapsed@{s2n\+\_\+timer\+\_\+elapsed}}
+\index{s2n\+\_\+timer\+\_\+elapsed@{s2n\+\_\+timer\+\_\+elapsed}!s2n\+\_\+timer.\+c@{s2n\+\_\+timer.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+timer\+\_\+elapsed(struct s2n\+\_\+config $\ast$config, struct s2n\+\_\+timer $\ast$timer, uint64\+\_\+t $\ast$nanoseconds)}{s2n_timer_elapsed(struct s2n_config *config, struct s2n_timer *timer, uint64_t *nanoseconds)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+timer\+\_\+elapsed (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+config} $\ast$}]{config, }
+\item[{struct {\bf s2n\+\_\+timer} $\ast$}]{timer, }
+\item[{uint64\+\_\+t $\ast$}]{nanoseconds}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__timer_8c_aae9740ae7fe7b0a3a82ce18cbaa866a6}{}\label{s2n__timer_8c_aae9740ae7fe7b0a3a82ce18cbaa866a6}
+
+
+Definition at line 28 of file s2n\+\_\+timer.\+c.
+
+
+\begin{DoxyCode}
+29 \{
+30     uint64\_t current\_time;
+31 
+32     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(config->\hyperlink{structs2n__config_a5c13684f60b915be42223586e6c42e5c}{nanoseconds\_since\_epoch}(config->
+      \hyperlink{structs2n__config_a462e69eaecd0176f077b385c9dd1477b}{data\_for\_nanoseconds\_since\_epoch}, &current\_time));
+33 
+34     *nanoseconds = current\_time - timer->\hyperlink{structs2n__timer_a5d34a8f2dfe25421b2b473a5fd37b0ed}{time};
+35 
+36     \textcolor{keywordflow}{return} 0;
+37 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__timer_8c_aae9740ae7fe7b0a3a82ce18cbaa866a6_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+timer.\+c@{s2n\+\_\+timer.\+c}!s2n\+\_\+timer\+\_\+reset@{s2n\+\_\+timer\+\_\+reset}}
+\index{s2n\+\_\+timer\+\_\+reset@{s2n\+\_\+timer\+\_\+reset}!s2n\+\_\+timer.\+c@{s2n\+\_\+timer.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+timer\+\_\+reset(struct s2n\+\_\+config $\ast$config, struct s2n\+\_\+timer $\ast$timer, uint64\+\_\+t $\ast$nanoseconds)}{s2n_timer_reset(struct s2n_config *config, struct s2n_timer *timer, uint64_t *nanoseconds)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+timer\+\_\+reset (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+config} $\ast$}]{config, }
+\item[{struct {\bf s2n\+\_\+timer} $\ast$}]{timer, }
+\item[{uint64\+\_\+t $\ast$}]{nanoseconds}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}{}\label{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810}
+
+
+Definition at line 39 of file s2n\+\_\+timer.\+c.
+
+
+\begin{DoxyCode}
+40 \{
+41     uint64\_t previous\_time = timer->\hyperlink{structs2n__timer_a5d34a8f2dfe25421b2b473a5fd37b0ed}{time};
+42 
+43     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__timer_8c_a78c722b16f52af289f500f2f6e471904}{s2n\_timer\_start}(config, timer));
+44 
+45     *nanoseconds = timer->\hyperlink{structs2n__timer_a5d34a8f2dfe25421b2b473a5fd37b0ed}{time} - previous\_time;
+46 
+47     \textcolor{keywordflow}{return} 0;
+48 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=289pt]{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{s2n__timer_8c_a26b3fc71c0b8d26916fc3ede36b9e810_icgraph}
+\end{center}
+\end{figure}
+
+

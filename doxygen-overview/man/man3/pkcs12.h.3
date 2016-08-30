@@ -1,0 +1,868 @@
+.TH "s2n-master/libcrypto-build/openssl/include/openssl/pkcs12.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/include/openssl/pkcs12.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBPKCS12_MAC_DATA\fP"
+.br
+.ti -1c
+.RI "struct \fBPKCS12\fP"
+.br
+.ti -1c
+.RI "struct \fBPKCS12_SAFEBAG\fP"
+.br
+.ti -1c
+.RI "struct \fBpkcs12_bag_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPKCS12_KEY_ID\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_IV_ID\fP   2"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_MAC_ID\fP   3"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_DEFAULT_ITER\fP   \fBPKCS5_DEFAULT_ITER\fP"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_MAC_KEY_LENGTH\fP   20"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_SALT_LEN\fP   8"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_key_gen\fP   \fBPKCS12_key_gen_asc\fP"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_add_friendlyname\fP   \fBPKCS12_add_friendlyname_asc\fP"
+.br
+.ti -1c
+.RI "#define \fBKEY_EX\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBKEY_SIG\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_ERROR\fP   0"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_OK\fP   1"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_x5092certbag\fP   \fBPKCS12_x5092certbag\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_x509crl2certbag\fP   \fBPKCS12_x509crl2certbag\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_certbag2x509\fP   \fBPKCS12_certbag2x509\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_certbag2x509crl\fP   \fBPKCS12_certbag2x509crl\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_unpack_p7data\fP   PKCS12_unpack_p7data"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_pack_authsafes\fP   \fBPKCS12_pack_authsafes\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_unpack_authsafes\fP   PKCS12_unpack_authsafes"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_unpack_p7encdata\fP   PKCS12_unpack_p7encdata"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_decrypt_skey\fP   \fBPKCS12_decrypt_skey\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS8_decrypt\fP   \fBPKCS8_decrypt\fP"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_bag_type\fP(bg)   \fBOBJ_obj2nid\fP((bg)\->\fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_cert_bag_type\fP(bg)   \fBOBJ_obj2nid\fP((bg)\->value\&.bag\->\fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBM_PKCS12_crl_bag_type\fP   \fBM_PKCS12_cert_bag_type\fP"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_get_attr\fP(bag,  attr_nid)   \fBPKCS12_get_attr_gen\fP(bag\->attrib, attr_nid)"
+.br
+.ti -1c
+.RI "#define \fBPKCS8_get_attr\fP(p8,  attr_nid)   \fBPKCS12_get_attr_gen\fP(p8\->attributes, attr_nid)"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_mac_present\fP(p12)   ((p12)\->mac ? 1 : 0)"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PARSE_BAG\fP   129"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PARSE_BAGS\fP   103"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ADD_FRIENDLYNAME\fP   100"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ADD_FRIENDLYNAME_ASC\fP   127"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ADD_FRIENDLYNAME_UNI\fP   102"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ADD_LOCALKEYID\fP   104"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_CREATE\fP   105"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_GEN_MAC\fP   107"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_INIT\fP   109"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ITEM_DECRYPT_D2I\fP   106"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ITEM_I2D_ENCRYPT\fP   108"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_ITEM_PACK_SAFEBAG\fP   117"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_KEY_GEN_ASC\fP   110"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_KEY_GEN_UNI\fP   111"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_MAKE_KEYBAG\fP   112"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_MAKE_SHKEYBAG\fP   113"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_NEWPASS\fP   128"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_PACK_P7DATA\fP   114"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_PACK_P7ENCDATA\fP   115"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_PARSE\fP   118"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_PBE_CRYPT\fP   119"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_PBE_KEYIVGEN\fP   120"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_SETUP_MAC\fP   122"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_SET_MAC\fP   123"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_UNPACK_AUTHSAFES\fP   130"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_UNPACK_P7DATA\fP   131"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS12_VERIFY_MAC\fP   126"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS8_ADD_KEYUSAGE\fP   124"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_F_PKCS8_ENCRYPT\fP   125"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_CANT_PACK_STRUCTURE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_CONTENT_TYPE_NOT_DATA\fP   121"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_DECODE_ERROR\fP   101"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_ENCODE_ERROR\fP   102"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_ENCRYPT_ERROR\fP   103"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_ERROR_SETTING_ENCRYPTED_DATA_TYPE\fP   120"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_INVALID_NULL_ARGUMENT\fP   104"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_INVALID_NULL_PKCS12_POINTER\fP   105"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_IV_GEN_ERROR\fP   106"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_KEY_GEN_ERROR\fP   107"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_MAC_ABSENT\fP   108"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_MAC_GENERATION_ERROR\fP   109"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_MAC_SETUP_ERROR\fP   110"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_MAC_STRING_SET_ERROR\fP   111"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_MAC_VERIFY_ERROR\fP   112"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_MAC_VERIFY_FAILURE\fP   113"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_PARSE_ERROR\fP   114"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_PKCS12_ALGOR_CIPHERINIT_ERROR\fP   115"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_PKCS12_CIPHERFINAL_ERROR\fP   116"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_PKCS12_PBE_CRYPT_ERROR\fP   117"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_UNKNOWN_DIGEST_ALGORITHM\fP   118"
+.br
+.ti -1c
+.RI "#define \fBPKCS12_R_UNSUPPORTED_PKCS12_MODE\fP   119"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBpkcs12_bag_st\fP \fBPKCS12_BAGS\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_x5092certbag\fP (\fBX509\fP *x509)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_x509crl2certbag\fP (\fBX509_CRL\fP *crl)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBPKCS12_certbag2x509\fP (\fBPKCS12_SAFEBAG\fP *bag)"
+.br
+.ti -1c
+.RI "\fBX509_CRL\fP * \fBPKCS12_certbag2x509crl\fP (\fBPKCS12_SAFEBAG\fP *bag)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_item_pack_safebag\fP (\fBvoid\fP *\fBobj\fP, const \fBASN1_ITEM\fP *it, int nid1, int nid2)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_MAKE_KEYBAG\fP (\fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBPKCS8_decrypt\fP (\fBX509_SIG\fP *p8, const char *\fBpass\fP, int \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS8_PRIV_KEY_INFO\fP * \fBPKCS12_decrypt_skey\fP (\fBPKCS12_SAFEBAG\fP *bag, const char *\fBpass\fP, int \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "\fBX509_SIG\fP * \fBPKCS8_encrypt\fP (int pbe_nid, const \fBEVP_CIPHER\fP *cipher, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int iter, \fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_MAKE_SHKEYBAG\fP (int pbe_nid, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int iter, \fBPKCS8_PRIV_KEY_INFO\fP *p8)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS12_pack_p7data\fP (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)*sk)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBPKCS12_SAFEBAG\fP)*PKCS12_unpack_p7data(\fBPKCS7\fP *p7)"
+.br
+.ti -1c
+.RI "\fBPKCS7\fP * \fBPKCS12_pack_p7encdata\fP (int pbe_nid, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int iter, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)*bags)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_pack_authsafes\fP (\fBPKCS12\fP *p12, \fBSTACK_OF\fP(\fBPKCS7\fP)*safes)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBPKCS7\fP)*PKCS12_unpack_authsafes(\fBPKCS12\fP *p12)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_add_localkeyid\fP (\fBPKCS12_SAFEBAG\fP *bag, unsigned char *name, int namelen)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_add_friendlyname_asc\fP (\fBPKCS12_SAFEBAG\fP *bag, const char *name, int namelen)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_add_CSPName_asc\fP (\fBPKCS12_SAFEBAG\fP *bag, const char *name, int namelen)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_add_friendlyname_uni\fP (\fBPKCS12_SAFEBAG\fP *bag, const unsigned char *name, int namelen)"
+.br
+.ti -1c
+.RI "int \fBPKCS8_add_keyusage\fP (\fBPKCS8_PRIV_KEY_INFO\fP *p8, int \fBusage\fP)"
+.br
+.ti -1c
+.RI "\fBASN1_TYPE\fP * \fBPKCS12_get_attr_gen\fP (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)*attrs, int attr_nid)"
+.br
+.ti -1c
+.RI "char * \fBPKCS12_get_friendlyname\fP (\fBPKCS12_SAFEBAG\fP *bag)"
+.br
+.ti -1c
+.RI "unsigned char * \fBPKCS12_pbe_crypt\fP (\fBX509_ALGOR\fP *algor, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *in, int inlen, unsigned char **data, int *datalen, int en_de)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBPKCS12_item_decrypt_d2i\fP (\fBX509_ALGOR\fP *algor, const \fBASN1_ITEM\fP *it, const char *\fBpass\fP, int \fBpasslen\fP, \fBASN1_OCTET_STRING\fP *oct, int zbuf)"
+.br
+.ti -1c
+.RI "\fBASN1_OCTET_STRING\fP * \fBPKCS12_item_i2d_encrypt\fP (\fBX509_ALGOR\fP *algor, const \fBASN1_ITEM\fP *it, const char *\fBpass\fP, int \fBpasslen\fP, \fBvoid\fP *\fBobj\fP, int zbuf)"
+.br
+.ti -1c
+.RI "\fBPKCS12\fP * \fBPKCS12_init\fP (int mode)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_key_gen_asc\fP (const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int id, int iter, int n, unsigned char *out, const \fBEVP_MD\fP *md_type)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_key_gen_uni\fP (unsigned char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int id, int iter, int n, unsigned char *out, const \fBEVP_MD\fP *md_type)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_PBE_keyivgen\fP (\fBEVP_CIPHER_CTX\fP *ctx, const char *\fBpass\fP, int \fBpasslen\fP, \fBASN1_TYPE\fP *param, const \fBEVP_CIPHER\fP *cipher, const \fBEVP_MD\fP *md_type, int en_de)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_gen_mac\fP (\fBPKCS12\fP *p12, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *mac, unsigned int *maclen)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_verify_mac\fP (\fBPKCS12\fP *p12, const char *\fBpass\fP, int \fBpasslen\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_set_mac\fP (\fBPKCS12\fP *p12, const char *\fBpass\fP, int \fBpasslen\fP, unsigned char *salt, int saltlen, int iter, const \fBEVP_MD\fP *md_type)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_setup_mac\fP (\fBPKCS12\fP *p12, int iter, unsigned char *salt, int saltlen, const \fBEVP_MD\fP *md_type)"
+.br
+.ti -1c
+.RI "unsigned char * \fBOPENSSL_asc2uni\fP (const char *asc, int asclen, unsigned char **uni, int *unilen)"
+.br
+.ti -1c
+.RI "char * \fBOPENSSL_uni2asc\fP (unsigned char *uni, int unilen)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBPKCS12_PBE_add\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_parse\fP (\fBPKCS12\fP *p12, const char *\fBpass\fP, \fBEVP_PKEY\fP **pkey, \fBX509\fP **cert, \fBSTACK_OF\fP(\fBX509\fP)**ca)"
+.br
+.ti -1c
+.RI "\fBPKCS12\fP * \fBPKCS12_create\fP (char *\fBpass\fP, char *name, \fBEVP_PKEY\fP *pkey, \fBX509\fP *cert, \fBSTACK_OF\fP(\fBX509\fP)*ca, int nid_key, int nid_cert, int iter, int mac_iter, int keytype)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_add_cert\fP (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)**pbags, \fBX509\fP *cert)"
+.br
+.ti -1c
+.RI "\fBPKCS12_SAFEBAG\fP * \fBPKCS12_add_key\fP (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)**pbags, \fBEVP_PKEY\fP *key, int key_usage, int iter, int key_nid, char *\fBpass\fP)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_add_safe\fP (\fBSTACK_OF\fP(\fBPKCS7\fP)**psafes, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)*bags, int safe_nid, int iter, char *\fBpass\fP)"
+.br
+.ti -1c
+.RI "\fBPKCS12\fP * \fBPKCS12_add_safes\fP (\fBSTACK_OF\fP(\fBPKCS7\fP)*safes, int p7_nid)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS12_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS12\fP *p12)"
+.br
+.ti -1c
+.RI "int \fBi2d_PKCS12_fp\fP (FILE *\fBfp\fP, \fBPKCS12\fP *p12)"
+.br
+.ti -1c
+.RI "\fBPKCS12\fP * \fBd2i_PKCS12_bio\fP (\fBBIO\fP *\fBbp\fP, \fBPKCS12\fP **p12)"
+.br
+.ti -1c
+.RI "\fBPKCS12\fP * \fBd2i_PKCS12_fp\fP (FILE *\fBfp\fP, \fBPKCS12\fP **p12)"
+.br
+.ti -1c
+.RI "int \fBPKCS12_newpass\fP (\fBPKCS12\fP *p12, const char *oldpass, const char *newpass)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_PKCS12_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBpass\fP"
+.br
+.ti -1c
+.RI "const char int \fBpasslen\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define PKCS12_KEY_ID   1"
+
+.PP
+Definition at line 70 of file pkcs12\&.h\&.
+.SS "#define PKCS12_IV_ID   2"
+
+.PP
+Definition at line 71 of file pkcs12\&.h\&.
+.SS "#define PKCS12_MAC_ID   3"
+
+.PP
+Definition at line 72 of file pkcs12\&.h\&.
+.SS "#define PKCS12_DEFAULT_ITER   \fBPKCS5_DEFAULT_ITER\fP"
+
+.PP
+Definition at line 76 of file pkcs12\&.h\&.
+.SS "#define PKCS12_MAC_KEY_LENGTH   20"
+
+.PP
+Definition at line 79 of file pkcs12\&.h\&.
+.SS "#define PKCS12_SALT_LEN   8"
+
+.PP
+Definition at line 81 of file pkcs12\&.h\&.
+.SS "#define PKCS12_key_gen   \fBPKCS12_key_gen_asc\fP"
+
+.PP
+Definition at line 93 of file pkcs12\&.h\&.
+.SS "#define PKCS12_add_friendlyname   \fBPKCS12_add_friendlyname_asc\fP"
+
+.PP
+Definition at line 94 of file pkcs12\&.h\&.
+.SS "#define KEY_EX   0x10"
+
+.PP
+Definition at line 99 of file pkcs12\&.h\&.
+.SS "#define KEY_SIG   0x80"
+
+.PP
+Definition at line 100 of file pkcs12\&.h\&.
+.SS "#define PKCS12_ERROR   0"
+
+.PP
+Definition at line 141 of file pkcs12\&.h\&.
+.SS "#define PKCS12_OK   1"
+
+.PP
+Definition at line 142 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_x5092certbag   \fBPKCS12_x5092certbag\fP"
+
+.PP
+Definition at line 146 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_x509crl2certbag   \fBPKCS12_x509crl2certbag\fP"
+
+.PP
+Definition at line 147 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_certbag2x509   \fBPKCS12_certbag2x509\fP"
+
+.PP
+Definition at line 149 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_certbag2x509crl   \fBPKCS12_certbag2x509crl\fP"
+
+.PP
+Definition at line 150 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_unpack_p7data   PKCS12_unpack_p7data"
+
+.PP
+Definition at line 152 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_pack_authsafes   \fBPKCS12_pack_authsafes\fP"
+
+.PP
+Definition at line 153 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_unpack_authsafes   PKCS12_unpack_authsafes"
+
+.PP
+Definition at line 154 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_unpack_p7encdata   PKCS12_unpack_p7encdata"
+
+.PP
+Definition at line 155 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_decrypt_skey   \fBPKCS12_decrypt_skey\fP"
+
+.PP
+Definition at line 157 of file pkcs12\&.h\&.
+.SS "#define M_PKCS8_decrypt   \fBPKCS8_decrypt\fP"
+
+.PP
+Definition at line 158 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_bag_type(bg)   \fBOBJ_obj2nid\fP((bg)\->\fBtype\fP)"
+
+.PP
+Definition at line 160 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_cert_bag_type(bg)   \fBOBJ_obj2nid\fP((bg)\->value\&.bag\->\fBtype\fP)"
+
+.PP
+Definition at line 161 of file pkcs12\&.h\&.
+.SS "#define M_PKCS12_crl_bag_type   \fBM_PKCS12_cert_bag_type\fP"
+
+.PP
+Definition at line 162 of file pkcs12\&.h\&.
+.SS "#define PKCS12_get_attr(bag, attr_nid)   \fBPKCS12_get_attr_gen\fP(bag\->attrib, attr_nid)"
+
+.PP
+Definition at line 164 of file pkcs12\&.h\&.
+.SS "#define PKCS8_get_attr(p8, attr_nid)   \fBPKCS12_get_attr_gen\fP(p8\->attributes, attr_nid)"
+
+.PP
+Definition at line 167 of file pkcs12\&.h\&.
+.SS "#define PKCS12_mac_present(p12)   ((p12)\->mac ? 1 : 0)"
+
+.PP
+Definition at line 170 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PARSE_BAG   129"
+
+.PP
+Definition at line 285 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PARSE_BAGS   103"
+
+.PP
+Definition at line 286 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ADD_FRIENDLYNAME   100"
+
+.PP
+Definition at line 287 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ADD_FRIENDLYNAME_ASC   127"
+
+.PP
+Definition at line 288 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ADD_FRIENDLYNAME_UNI   102"
+
+.PP
+Definition at line 289 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ADD_LOCALKEYID   104"
+
+.PP
+Definition at line 290 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_CREATE   105"
+
+.PP
+Definition at line 291 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_GEN_MAC   107"
+
+.PP
+Definition at line 292 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_INIT   109"
+
+.PP
+Definition at line 293 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ITEM_DECRYPT_D2I   106"
+
+.PP
+Definition at line 294 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ITEM_I2D_ENCRYPT   108"
+
+.PP
+Definition at line 295 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_ITEM_PACK_SAFEBAG   117"
+
+.PP
+Definition at line 296 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_KEY_GEN_ASC   110"
+
+.PP
+Definition at line 297 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_KEY_GEN_UNI   111"
+
+.PP
+Definition at line 298 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_MAKE_KEYBAG   112"
+
+.PP
+Definition at line 299 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_MAKE_SHKEYBAG   113"
+
+.PP
+Definition at line 300 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_NEWPASS   128"
+
+.PP
+Definition at line 301 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_PACK_P7DATA   114"
+
+.PP
+Definition at line 302 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_PACK_P7ENCDATA   115"
+
+.PP
+Definition at line 303 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_PARSE   118"
+
+.PP
+Definition at line 304 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_PBE_CRYPT   119"
+
+.PP
+Definition at line 305 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_PBE_KEYIVGEN   120"
+
+.PP
+Definition at line 306 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_SETUP_MAC   122"
+
+.PP
+Definition at line 307 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_SET_MAC   123"
+
+.PP
+Definition at line 308 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_UNPACK_AUTHSAFES   130"
+
+.PP
+Definition at line 309 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_UNPACK_P7DATA   131"
+
+.PP
+Definition at line 310 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS12_VERIFY_MAC   126"
+
+.PP
+Definition at line 311 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS8_ADD_KEYUSAGE   124"
+
+.PP
+Definition at line 312 of file pkcs12\&.h\&.
+.SS "#define PKCS12_F_PKCS8_ENCRYPT   125"
+
+.PP
+Definition at line 313 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_CANT_PACK_STRUCTURE   100"
+
+.PP
+Definition at line 316 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_CONTENT_TYPE_NOT_DATA   121"
+
+.PP
+Definition at line 317 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_DECODE_ERROR   101"
+
+.PP
+Definition at line 318 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_ENCODE_ERROR   102"
+
+.PP
+Definition at line 319 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_ENCRYPT_ERROR   103"
+
+.PP
+Definition at line 320 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_ERROR_SETTING_ENCRYPTED_DATA_TYPE   120"
+
+.PP
+Definition at line 321 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_INVALID_NULL_ARGUMENT   104"
+
+.PP
+Definition at line 322 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_INVALID_NULL_PKCS12_POINTER   105"
+
+.PP
+Definition at line 323 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_IV_GEN_ERROR   106"
+
+.PP
+Definition at line 324 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_KEY_GEN_ERROR   107"
+
+.PP
+Definition at line 325 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_MAC_ABSENT   108"
+
+.PP
+Definition at line 326 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_MAC_GENERATION_ERROR   109"
+
+.PP
+Definition at line 327 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_MAC_SETUP_ERROR   110"
+
+.PP
+Definition at line 328 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_MAC_STRING_SET_ERROR   111"
+
+.PP
+Definition at line 329 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_MAC_VERIFY_ERROR   112"
+
+.PP
+Definition at line 330 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_MAC_VERIFY_FAILURE   113"
+
+.PP
+Definition at line 331 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_PARSE_ERROR   114"
+
+.PP
+Definition at line 332 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_PKCS12_ALGOR_CIPHERINIT_ERROR   115"
+
+.PP
+Definition at line 333 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_PKCS12_CIPHERFINAL_ERROR   116"
+
+.PP
+Definition at line 334 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_PKCS12_PBE_CRYPT_ERROR   117"
+
+.PP
+Definition at line 335 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_UNKNOWN_DIGEST_ALGORITHM   118"
+
+.PP
+Definition at line 336 of file pkcs12\&.h\&.
+.SS "#define PKCS12_R_UNSUPPORTED_PKCS12_MODE   119"
+
+.PP
+Definition at line 337 of file pkcs12\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBpkcs12_bag_st\fP  \fBPKCS12_BAGS\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_x5092certbag (\fBX509\fP * x509)"
+
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_x509crl2certbag (\fBX509_CRL\fP * crl)"
+
+.SS "\fBX509\fP* PKCS12_certbag2x509 (\fBPKCS12_SAFEBAG\fP * bag)"
+
+.SS "\fBX509_CRL\fP* PKCS12_certbag2x509crl (\fBPKCS12_SAFEBAG\fP * bag)"
+
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_item_pack_safebag (\fBvoid\fP * obj, const \fBASN1_ITEM\fP * it, int nid1, int nid2)"
+
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_MAKE_KEYBAG (\fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* PKCS8_decrypt (\fBX509_SIG\fP * p8, const char * pass, int passlen)"
+
+.SS "\fBPKCS8_PRIV_KEY_INFO\fP* PKCS12_decrypt_skey (\fBPKCS12_SAFEBAG\fP * bag, const char * pass, int passlen)"
+
+.SS "\fBX509_SIG\fP* PKCS8_encrypt (int pbe_nid, const \fBEVP_CIPHER\fP * cipher, const char * pass, int passlen, unsigned char * salt, int saltlen, int iter, \fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_MAKE_SHKEYBAG (int pbe_nid, const char * pass, int passlen, unsigned char * salt, int saltlen, int iter, \fBPKCS8_PRIV_KEY_INFO\fP * p8)"
+
+.SS "\fBPKCS7\fP* PKCS12_pack_p7data (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)* sk)"
+
+.SS "STACK_OF (\fBPKCS12_SAFEBAG\fP)"
+
+.SS "\fBPKCS7\fP* PKCS12_pack_p7encdata (int pbe_nid, const char * pass, int passlen, unsigned char * salt, int saltlen, int iter, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)* bags)"
+
+.SS "int PKCS12_pack_authsafes (\fBPKCS12\fP * p12, \fBSTACK_OF\fP(\fBPKCS7\fP)* safes)"
+
+.SS "STACK_OF (\fBPKCS7\fP)"
+
+.SS "int PKCS12_add_localkeyid (\fBPKCS12_SAFEBAG\fP * bag, unsigned char * name, int namelen)"
+
+.SS "int PKCS12_add_friendlyname_asc (\fBPKCS12_SAFEBAG\fP * bag, const char * name, int namelen)"
+
+.SS "int PKCS12_add_CSPName_asc (\fBPKCS12_SAFEBAG\fP * bag, const char * name, int namelen)"
+
+.SS "int PKCS12_add_friendlyname_uni (\fBPKCS12_SAFEBAG\fP * bag, const unsigned char * name, int namelen)"
+
+.SS "int PKCS8_add_keyusage (\fBPKCS8_PRIV_KEY_INFO\fP * p8, int usage)"
+
+.SS "\fBASN1_TYPE\fP* PKCS12_get_attr_gen (\fBSTACK_OF\fP(\fBX509_ATTRIBUTE\fP)* attrs, int attr_nid)"
+
+.SS "char* PKCS12_get_friendlyname (\fBPKCS12_SAFEBAG\fP * bag)"
+
+.SS "unsigned char* PKCS12_pbe_crypt (\fBX509_ALGOR\fP * algor, const char * pass, int passlen, unsigned char * in, int inlen, unsigned char ** data, int * datalen, int en_de)"
+
+.SS "\fBvoid\fP* PKCS12_item_decrypt_d2i (\fBX509_ALGOR\fP * algor, const \fBASN1_ITEM\fP * it, const char * pass, int passlen, \fBASN1_OCTET_STRING\fP * oct, int zbuf)"
+
+.SS "\fBASN1_OCTET_STRING\fP* PKCS12_item_i2d_encrypt (\fBX509_ALGOR\fP * algor, const \fBASN1_ITEM\fP * it, const char * pass, int passlen, \fBvoid\fP * obj, int zbuf)"
+
+.SS "\fBPKCS12\fP* PKCS12_init (int mode)"
+
+.SS "int PKCS12_key_gen_asc (const char * pass, int passlen, unsigned char * salt, int saltlen, int id, int iter, int n, unsigned char * out, const \fBEVP_MD\fP * md_type)"
+
+.SS "int PKCS12_key_gen_uni (unsigned char * pass, int passlen, unsigned char * salt, int saltlen, int id, int iter, int n, unsigned char * out, const \fBEVP_MD\fP * md_type)"
+
+.SS "int PKCS12_PBE_keyivgen (\fBEVP_CIPHER_CTX\fP * ctx, const char * pass, int passlen, \fBASN1_TYPE\fP * param, const \fBEVP_CIPHER\fP * cipher, const \fBEVP_MD\fP * md_type, int en_de)"
+
+.SS "int PKCS12_gen_mac (\fBPKCS12\fP * p12, const char * pass, int passlen, unsigned char * mac, unsigned int * maclen)"
+
+.SS "int PKCS12_verify_mac (\fBPKCS12\fP * p12, const char * pass, int passlen)"
+
+.SS "int PKCS12_set_mac (\fBPKCS12\fP * p12, const char * pass, int passlen, unsigned char * salt, int saltlen, int iter, const \fBEVP_MD\fP * md_type)"
+
+.SS "int PKCS12_setup_mac (\fBPKCS12\fP * p12, int iter, unsigned char * salt, int saltlen, const \fBEVP_MD\fP * md_type)"
+
+.SS "unsigned char* OPENSSL_asc2uni (const char * asc, int asclen, unsigned char ** uni, int * unilen)"
+
+.SS "char* OPENSSL_uni2asc (unsigned char * uni, int unilen)"
+
+.SS "\fBvoid\fP PKCS12_PBE_add (\fBvoid\fP)"
+
+.SS "int PKCS12_parse (\fBPKCS12\fP * p12, const char * pass, \fBEVP_PKEY\fP ** pkey, \fBX509\fP ** cert, \fBSTACK_OF\fP(\fBX509\fP)** ca)"
+
+.SS "\fBPKCS12\fP* PKCS12_create (char * pass, char * name, \fBEVP_PKEY\fP * pkey, \fBX509\fP * cert, \fBSTACK_OF\fP(\fBX509\fP)* ca, int nid_key, int nid_cert, int iter, int mac_iter, int keytype)"
+
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_add_cert (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)** pbags, \fBX509\fP * cert)"
+
+.SS "\fBPKCS12_SAFEBAG\fP* PKCS12_add_key (\fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)** pbags, \fBEVP_PKEY\fP * key, int key_usage, int iter, int key_nid, char * pass)"
+
+.SS "int PKCS12_add_safe (\fBSTACK_OF\fP(\fBPKCS7\fP)** psafes, \fBSTACK_OF\fP(\fBPKCS12_SAFEBAG\fP)* bags, int safe_nid, int iter, char * pass)"
+
+.SS "\fBPKCS12\fP* PKCS12_add_safes (\fBSTACK_OF\fP(\fBPKCS7\fP)* safes, int p7_nid)"
+
+.SS "int i2d_PKCS12_bio (\fBBIO\fP * bp, \fBPKCS12\fP * p12)"
+
+.SS "int i2d_PKCS12_fp (FILE * fp, \fBPKCS12\fP * p12)"
+
+.SS "\fBPKCS12\fP* d2i_PKCS12_bio (\fBBIO\fP * bp, \fBPKCS12\fP ** p12)"
+
+.SS "\fBPKCS12\fP* d2i_PKCS12_fp (FILE * fp, \fBPKCS12\fP ** p12)"
+
+.SS "int PKCS12_newpass (\fBPKCS12\fP * p12, const char * oldpass, const char * newpass)"
+
+.SS "\fBvoid\fP ERR_load_PKCS12_strings (\fBvoid\fP)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "const char* pass"
+
+.PP
+Definition at line 196 of file pkcs12\&.h\&.
+.SS "const char int passlen"
+
+.PP
+Definition at line 196 of file pkcs12\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

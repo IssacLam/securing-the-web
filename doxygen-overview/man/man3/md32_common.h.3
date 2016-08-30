@@ -1,0 +1,159 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/md32_common.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/md32_common.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBROTATE\fP(\fBa\fP,  n)         (((\fBa\fP)<<(n))|(((\fBa\fP)&0xffffffff)>>(32\-(n))))"
+.br
+.ti -1c
+.RI "#define \fBMD32_REG_T\fP   int"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBHASH_UPDATE\fP (\fBHASH_CTX\fP *\fBc\fP, const \fBvoid\fP *data_, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBHASH_TRANSFORM\fP (\fBHASH_CTX\fP *\fBc\fP, const unsigned char *data)"
+.br
+.ti -1c
+.RI "int \fBHASH_FINAL\fP (unsigned char *md, \fBHASH_CTX\fP *\fBc\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ROTATE(\fBa\fP, n)   (((\fBa\fP)<<(n))|(((\fBa\fP)&0xffffffff)>>(32\-(n))))"
+
+.PP
+Definition at line 195 of file md32_common\&.h\&.
+.SS "#define MD32_REG_T   int"
+
+.PP
+Definition at line 426 of file md32_common\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int HASH_UPDATE (\fBHASH_CTX\fP * c, const \fBvoid\fP * data_, size_t len)"
+
+.PP
+Definition at line 300 of file md32_common\&.h\&.
+.PP
+.nf
+301 {
+302     const unsigned char *data = data_;
+303     unsigned char *p;
+304     HASH_LONG l;
+305     size_t n;
+306 
+307     if (len == 0)
+308         return 1;
+309 
+310     l = (c->Nl + (((HASH_LONG) len) << 3)) & 0xffffffffUL;
+311     /*
+312      * 95-05-24 eay Fixed a bug with the overflow handling, thanks to Wei Dai
+313      * <weidai@eskimo\&.com> for pointing it out\&.
+314      */
+315     if (l < c->Nl)              /* overflow */
+316         c->Nh++;
+317     c->Nh += (HASH_LONG) (len >> 29); /* might cause compiler warning on
+318                                        * 16-bit */
+319     c->Nl = l;
+320 
+321     n = c->num;
+322     if (n != 0) {
+323         p = (unsigned char *)c->data;
+324 
+325         if (len >= HASH_CBLOCK || len + n >= HASH_CBLOCK) {
+326             memcpy(p + n, data, HASH_CBLOCK - n);
+327             HASH_BLOCK_DATA_ORDER(c, p, 1);
+328             n = HASH_CBLOCK - n;
+329             data += n;
+330             len -= n;
+331             c->num = 0;
+332             memset(p, 0, HASH_CBLOCK); /* keep it zeroed */
+333         } else {
+334             memcpy(p + n, data, len);
+335             c->num += (unsigned int)len;
+336             return 1;
+337         }
+338     }
+339 
+340     n = len / HASH_CBLOCK;
+341     if (n > 0) {
+342         HASH_BLOCK_DATA_ORDER(c, data, n);
+343         n *= HASH_CBLOCK;
+344         data += n;
+345         len -= n;
+346     }
+347 
+348     if (len != 0) {
+349         p = (unsigned char *)c->data;
+350         c->num = (unsigned int)len;
+351         memcpy(p, data, len);
+352     }
+353     return 1;
+354 }
+.fi
+.SS "\fBvoid\fP HASH_TRANSFORM (\fBHASH_CTX\fP * c, const unsigned char * data)"
+
+.PP
+Definition at line 356 of file md32_common\&.h\&.
+.PP
+.nf
+357 {
+358     HASH_BLOCK_DATA_ORDER(c, data, 1);
+359 }
+.fi
+.SS "int HASH_FINAL (unsigned char * md, \fBHASH_CTX\fP * c)"
+
+.PP
+Definition at line 361 of file md32_common\&.h\&.
+.PP
+.nf
+362 {
+363     unsigned char *p = (unsigned char *)c->data;
+364     size_t n = c->num;
+365 
+366     p[n] = 0x80;                /* there is always room for one */
+367     n++;
+368 
+369     if (n > (HASH_CBLOCK - 8)) {
+370         memset(p + n, 0, HASH_CBLOCK - n);
+371         n = 0;
+372         HASH_BLOCK_DATA_ORDER(c, p, 1);
+373     }
+374     memset(p + n, 0, HASH_CBLOCK - 8 - n);
+375 
+376     p += HASH_CBLOCK - 8;
+377 #if   defined(DATA_ORDER_IS_BIG_ENDIAN)
+378     (void)HOST_l2c(c->Nh, p);
+379     (void)HOST_l2c(c->Nl, p);
+380 #elif defined(DATA_ORDER_IS_LITTLE_ENDIAN)
+381     (void)HOST_l2c(c->Nl, p);
+382     (void)HOST_l2c(c->Nh, p);
+383 #endif
+384     p -= HASH_CBLOCK;
+385     HASH_BLOCK_DATA_ORDER(c, p, 1);
+386     c->num = 0;
+387     memset(p, 0, HASH_CBLOCK);
+388 
+389 #ifndef HASH_MAKE_STRING
+390 # error "HASH_MAKE_STRING must be defined!"
+391 #else
+392     HASH_MAKE_STRING(c, md);
+393 #endif
+394 
+395     return 1;
+396 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

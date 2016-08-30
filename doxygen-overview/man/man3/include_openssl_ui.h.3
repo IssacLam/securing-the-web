@@ -1,0 +1,559 @@
+.TH "ui.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ui.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/crypto\&.h>\fP
+.br
+\fC#include <openssl/safestack\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUI_INPUT_FLAG_ECHO\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBUI_INPUT_FLAG_DEFAULT_PWD\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBUI_INPUT_FLAG_USER_BASE\fP   16"
+.br
+.ti -1c
+.RI "#define \fBUI_CTRL_PRINT_ERRORS\fP   1"
+.br
+.ti -1c
+.RI "#define \fBUI_CTRL_IS_REDOABLE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBUI_set_app_data\fP(s,  arg)                 \fBUI_set_ex_data\fP(s,0,arg)"
+.br
+.ti -1c
+.RI "#define \fBUI_get_app_data\fP(s)                         \fBUI_get_ex_data\fP(s,0)"
+.br
+.ti -1c
+.RI "#define \fBUI_F_GENERAL_ALLOCATE_BOOLEAN\fP   108"
+.br
+.ti -1c
+.RI "#define \fBUI_F_GENERAL_ALLOCATE_PROMPT\fP   109"
+.br
+.ti -1c
+.RI "#define \fBUI_F_GENERAL_ALLOCATE_STRING\fP   100"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_CTRL\fP   111"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_DUP_ERROR_STRING\fP   101"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_DUP_INFO_STRING\fP   102"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_DUP_INPUT_BOOLEAN\fP   110"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_DUP_INPUT_STRING\fP   103"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_DUP_VERIFY_STRING\fP   106"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_GET0_RESULT\fP   107"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_NEW_METHOD\fP   104"
+.br
+.ti -1c
+.RI "#define \fBUI_F_UI_SET_RESULT\fP   105"
+.br
+.ti -1c
+.RI "#define \fBUI_R_COMMON_OK_AND_CANCEL_CHARACTERS\fP   104"
+.br
+.ti -1c
+.RI "#define \fBUI_R_INDEX_TOO_LARGE\fP   102"
+.br
+.ti -1c
+.RI "#define \fBUI_R_INDEX_TOO_SMALL\fP   103"
+.br
+.ti -1c
+.RI "#define \fBUI_R_NO_RESULT_BUFFER\fP   105"
+.br
+.ti -1c
+.RI "#define \fBUI_R_RESULT_TOO_LARGE\fP   100"
+.br
+.ti -1c
+.RI "#define \fBUI_R_RESULT_TOO_SMALL\fP   101"
+.br
+.ti -1c
+.RI "#define \fBUI_R_UNKNOWN_CONTROL_COMMAND\fP   106"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBui_string_st\fP \fBUI_STRING\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBUI_string_types\fP { \fBUIT_NONE\fP = 0, \fBUIT_PROMPT\fP, \fBUIT_VERIFY\fP, \fBUIT_BOOLEAN\fP, \fBUIT_INFO\fP, \fBUIT_ERROR\fP, \fBUIT_NONE\fP = 0, \fBUIT_PROMPT\fP, \fBUIT_VERIFY\fP, \fBUIT_BOOLEAN\fP, \fBUIT_INFO\fP, \fBUIT_ERROR\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBUI\fP * \fBUI_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBUI\fP * \fBUI_new_method\fP (const \fBUI_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBUI_free\fP (\fBUI\fP *ui)"
+.br
+.ti -1c
+.RI "int \fBUI_add_input_string\fP (\fBUI\fP *ui, const char *prompt, int \fBflags\fP, char *result_buf, int minsize, int maxsize)"
+.br
+.ti -1c
+.RI "int \fBUI_dup_input_string\fP (\fBUI\fP *ui, const char *prompt, int \fBflags\fP, char *result_buf, int minsize, int maxsize)"
+.br
+.ti -1c
+.RI "int \fBUI_add_verify_string\fP (\fBUI\fP *ui, const char *prompt, int \fBflags\fP, char *result_buf, int minsize, int maxsize, const char *test_buf)"
+.br
+.ti -1c
+.RI "int \fBUI_dup_verify_string\fP (\fBUI\fP *ui, const char *prompt, int \fBflags\fP, char *result_buf, int minsize, int maxsize, const char *test_buf)"
+.br
+.ti -1c
+.RI "int \fBUI_add_input_boolean\fP (\fBUI\fP *ui, const char *prompt, const char *action_desc, const char *ok_chars, const char *cancel_chars, int \fBflags\fP, char *result_buf)"
+.br
+.ti -1c
+.RI "int \fBUI_dup_input_boolean\fP (\fBUI\fP *ui, const char *prompt, const char *action_desc, const char *ok_chars, const char *cancel_chars, int \fBflags\fP, char *result_buf)"
+.br
+.ti -1c
+.RI "int \fBUI_add_info_string\fP (\fBUI\fP *ui, const char *text)"
+.br
+.ti -1c
+.RI "int \fBUI_dup_info_string\fP (\fBUI\fP *ui, const char *text)"
+.br
+.ti -1c
+.RI "int \fBUI_add_error_string\fP (\fBUI\fP *ui, const char *text)"
+.br
+.ti -1c
+.RI "int \fBUI_dup_error_string\fP (\fBUI\fP *ui, const char *text)"
+.br
+.ti -1c
+.RI "char * \fBUI_construct_prompt\fP (\fBUI\fP *ui_method, const char *object_desc, const char *object_name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBUI_add_user_data\fP (\fBUI\fP *ui, \fBvoid\fP *user_data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBUI_get0_user_data\fP (\fBUI\fP *ui)"
+.br
+.ti -1c
+.RI "const char * \fBUI_get0_result\fP (\fBUI\fP *ui, int i)"
+.br
+.ti -1c
+.RI "int \fBUI_process\fP (\fBUI\fP *ui)"
+.br
+.ti -1c
+.RI "int \fBUI_ctrl\fP (\fBUI\fP *ui, int cmd, long i, \fBvoid\fP *\fBp\fP, \fBvoid\fP(*f)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBUI_get_ex_new_index\fP (long argl, \fBvoid\fP *argp, \fBCRYPTO_EX_new\fP *new_func, \fBCRYPTO_EX_dup\fP *dup_func, \fBCRYPTO_EX_free\fP *\fBfree_func\fP)"
+.br
+.ti -1c
+.RI "int \fBUI_set_ex_data\fP (\fBUI\fP *r, int idx, \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "\fBvoid\fP * \fBUI_get_ex_data\fP (\fBUI\fP *r, int idx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBUI_set_default_method\fP (const \fBUI_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "const \fBUI_METHOD\fP * \fBUI_get_default_method\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBUI_METHOD\fP * \fBUI_get_method\fP (\fBUI\fP *ui)"
+.br
+.ti -1c
+.RI "const \fBUI_METHOD\fP * \fBUI_set_method\fP (\fBUI\fP *ui, const \fBUI_METHOD\fP *meth)"
+.br
+.ti -1c
+.RI "\fBUI_METHOD\fP * \fBUI_OpenSSL\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBUI_METHOD\fP * \fBUI_create_method\fP (char *name)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBUI_destroy_method\fP (\fBUI_METHOD\fP *ui_method)"
+.br
+.ti -1c
+.RI "int \fBUI_method_set_opener\fP (\fBUI_METHOD\fP *method, int(*opener)(\fBUI\fP *ui))"
+.br
+.ti -1c
+.RI "int \fBUI_method_set_writer\fP (\fBUI_METHOD\fP *method, int(*writer)(\fBUI\fP *ui, \fBUI_STRING\fP *uis))"
+.br
+.ti -1c
+.RI "int \fBUI_method_set_flusher\fP (\fBUI_METHOD\fP *method, int(*flusher)(\fBUI\fP *ui))"
+.br
+.ti -1c
+.RI "int \fBUI_method_set_reader\fP (\fBUI_METHOD\fP *method, int(*reader)(\fBUI\fP *ui, \fBUI_STRING\fP *uis))"
+.br
+.ti -1c
+.RI "int \fBUI_method_set_closer\fP (\fBUI_METHOD\fP *method, int(*closer)(\fBUI\fP *ui))"
+.br
+.ti -1c
+.RI "int \fBUI_method_set_prompt_constructor\fP (\fBUI_METHOD\fP *method, char *(*prompt_constructor)(\fBUI\fP *ui,                                                                                                                                                                                                                                                               const char                                                                                                                                                                                                                                                               *object_desc,                                                                                                                                                                                                                                                               const char                                                                                                                                                                                                                                                               *object_name))"
+.br
+.ti -1c
+.RI "enum \fBUI_string_types\fP \fBUI_get_string_type\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "int \fBUI_get_input_flags\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "const char * \fBUI_get0_output_string\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "const char * \fBUI_get0_action_string\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "const char * \fBUI_get0_result_string\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "const char * \fBUI_get0_test_string\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "int \fBUI_get_result_minsize\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "int \fBUI_get_result_maxsize\fP (\fBUI_STRING\fP *uis)"
+.br
+.ti -1c
+.RI "int \fBUI_set_result\fP (\fBUI\fP *ui, \fBUI_STRING\fP *uis, const char *result)"
+.br
+.ti -1c
+.RI "int \fBUI_UTIL_read_pw_string\fP (char *buf, int \fBlength\fP, const char *prompt, int verify)"
+.br
+.ti -1c
+.RI "int \fBUI_UTIL_read_pw\fP (char *buf, char *buff, int size, const char *prompt, int verify)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_UI_strings\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int(*)(\fBUI\fP *) \fBUI_method_get_opener\fP (\fBUI_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "int(*)(\fBUI\fP *, \fBUI_STRING\fP *) \fBUI_method_get_writer\fP (\fBUI_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "int(*)(\fBUI\fP *) \fBUI_method_get_flusher\fP (\fBUI_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "int(*)(\fBUI\fP *, \fBUI_STRING\fP *) \fBUI_method_get_reader\fP (\fBUI_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "int(*)(\fBUI\fP *) \fBUI_method_get_closer\fP (\fBUI_METHOD\fP *method)"
+.br
+.ti -1c
+.RI "char *(*)(\fBUI\fP *, const char *, const char *) \fBUI_method_get_prompt_constructor\fP (\fBUI_METHOD\fP *method)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define UI_CTRL_IS_REDOABLE   2"
+
+.PP
+Definition at line 238 of file include/openssl/ui\&.h\&.
+.SS "#define UI_CTRL_PRINT_ERRORS   1"
+
+.PP
+Definition at line 232 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_GENERAL_ALLOCATE_BOOLEAN   108"
+
+.PP
+Definition at line 390 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_GENERAL_ALLOCATE_PROMPT   109"
+
+.PP
+Definition at line 391 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_GENERAL_ALLOCATE_STRING   100"
+
+.PP
+Definition at line 392 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_CTRL   111"
+
+.PP
+Definition at line 393 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_DUP_ERROR_STRING   101"
+
+.PP
+Definition at line 394 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_DUP_INFO_STRING   102"
+
+.PP
+Definition at line 395 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_DUP_INPUT_BOOLEAN   110"
+
+.PP
+Definition at line 396 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_DUP_INPUT_STRING   103"
+
+.PP
+Definition at line 397 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_DUP_VERIFY_STRING   106"
+
+.PP
+Definition at line 398 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_GET0_RESULT   107"
+
+.PP
+Definition at line 399 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_NEW_METHOD   104"
+
+.PP
+Definition at line 400 of file include/openssl/ui\&.h\&.
+.SS "#define UI_F_UI_SET_RESULT   105"
+
+.PP
+Definition at line 401 of file include/openssl/ui\&.h\&.
+.SS "#define UI_get_app_data(s)   \fBUI_get_ex_data\fP(s,0)"
+
+.PP
+Definition at line 242 of file include/openssl/ui\&.h\&.
+.SS "#define UI_INPUT_FLAG_DEFAULT_PWD   0x02"
+
+.PP
+Definition at line 163 of file include/openssl/ui\&.h\&.
+.SS "#define UI_INPUT_FLAG_ECHO   0x01"
+
+.PP
+Definition at line 155 of file include/openssl/ui\&.h\&.
+.SS "#define UI_INPUT_FLAG_USER_BASE   16"
+
+.PP
+Definition at line 175 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_COMMON_OK_AND_CANCEL_CHARACTERS   104"
+
+.PP
+Definition at line 404 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_INDEX_TOO_LARGE   102"
+
+.PP
+Definition at line 405 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_INDEX_TOO_SMALL   103"
+
+.PP
+Definition at line 406 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_NO_RESULT_BUFFER   105"
+
+.PP
+Definition at line 407 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_RESULT_TOO_LARGE   100"
+
+.PP
+Definition at line 408 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_RESULT_TOO_SMALL   101"
+
+.PP
+Definition at line 409 of file include/openssl/ui\&.h\&.
+.SS "#define UI_R_UNKNOWN_CONTROL_COMMAND   106"
+
+.PP
+Definition at line 410 of file include/openssl/ui\&.h\&.
+.SS "#define UI_set_app_data(s, arg)   \fBUI_set_ex_data\fP(s,0,arg)"
+
+.PP
+Definition at line 241 of file include/openssl/ui\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBui_string_st\fP \fBUI_STRING\fP"
+
+.PP
+Definition at line 304 of file include/openssl/ui\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBUI_string_types\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIUIT_NONE \fP\fP
+.TP
+\fB\fIUIT_PROMPT \fP\fP
+.TP
+\fB\fIUIT_VERIFY \fP\fP
+.TP
+\fB\fIUIT_BOOLEAN \fP\fP
+.TP
+\fB\fIUIT_INFO \fP\fP
+.TP
+\fB\fIUIT_ERROR \fP\fP
+.TP
+\fB\fIUIT_NONE \fP\fP
+.TP
+\fB\fIUIT_PROMPT \fP\fP
+.TP
+\fB\fIUIT_VERIFY \fP\fP
+.TP
+\fB\fIUIT_BOOLEAN \fP\fP
+.TP
+\fB\fIUIT_INFO \fP\fP
+.TP
+\fB\fIUIT_ERROR \fP\fP
+.PP
+Definition at line 311 of file include/openssl/ui\&.h\&.
+.PP
+.nf
+311                      {
+312     UIT_NONE = 0,
+313     UIT_PROMPT,                 /* Prompt for a string */
+314     UIT_VERIFY,                 /* Prompt for a string and verify */
+315     UIT_BOOLEAN,                /* Prompt for a yes/no response */
+316     UIT_INFO,                   /* Send info to the user */
+317     UIT_ERROR                   /* Send an error message to the user */
+318 };
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ERR_load_UI_strings (\fBvoid\fP)"
+
+.SS "int UI_add_error_string (\fBUI\fP * ui, const char * text)"
+
+.SS "int UI_add_info_string (\fBUI\fP * ui, const char * text)"
+
+.SS "int UI_add_input_boolean (\fBUI\fP * ui, const char * prompt, const char * action_desc, const char * ok_chars, const char * cancel_chars, int flags, char * result_buf)"
+
+.SS "int UI_add_input_string (\fBUI\fP * ui, const char * prompt, int flags, char * result_buf, int minsize, int maxsize)"
+
+.SS "\fBvoid\fP* UI_add_user_data (\fBUI\fP * ui, \fBvoid\fP * user_data)"
+
+.SS "int UI_add_verify_string (\fBUI\fP * ui, const char * prompt, int flags, char * result_buf, int minsize, int maxsize, const char * test_buf)"
+
+.SS "char* UI_construct_prompt (\fBUI\fP * ui_method, const char * object_desc, const char * object_name)"
+
+.SS "\fBUI_METHOD\fP* UI_create_method (char * name)"
+
+.SS "int UI_ctrl (\fBUI\fP * ui, int cmd, long i, \fBvoid\fP * p, \fBvoid\fP(*)(\fBvoid\fP) f)"
+
+.SS "\fBvoid\fP UI_destroy_method (\fBUI_METHOD\fP * ui_method)"
+
+.SS "int UI_dup_error_string (\fBUI\fP * ui, const char * text)"
+
+.SS "int UI_dup_info_string (\fBUI\fP * ui, const char * text)"
+
+.SS "int UI_dup_input_boolean (\fBUI\fP * ui, const char * prompt, const char * action_desc, const char * ok_chars, const char * cancel_chars, int flags, char * result_buf)"
+
+.SS "int UI_dup_input_string (\fBUI\fP * ui, const char * prompt, int flags, char * result_buf, int minsize, int maxsize)"
+
+.SS "int UI_dup_verify_string (\fBUI\fP * ui, const char * prompt, int flags, char * result_buf, int minsize, int maxsize, const char * test_buf)"
+
+.SS "\fBvoid\fP UI_free (\fBUI\fP * ui)"
+
+.SS "const char* UI_get0_action_string (\fBUI_STRING\fP * uis)"
+
+.SS "const char* UI_get0_output_string (\fBUI_STRING\fP * uis)"
+
+.SS "const char* UI_get0_result (\fBUI\fP * ui, int i)"
+
+.SS "const char* UI_get0_result_string (\fBUI_STRING\fP * uis)"
+
+.SS "const char* UI_get0_test_string (\fBUI_STRING\fP * uis)"
+
+.SS "\fBvoid\fP* UI_get0_user_data (\fBUI\fP * ui)"
+
+.SS "const \fBUI_METHOD\fP* UI_get_default_method (\fBvoid\fP)"
+
+.SS "\fBvoid\fP* UI_get_ex_data (\fBUI\fP * r, int idx)"
+
+.SS "int UI_get_ex_new_index (long argl, \fBvoid\fP * argp, \fBCRYPTO_EX_new\fP * new_func, \fBCRYPTO_EX_dup\fP * dup_func, \fBCRYPTO_EX_free\fP * free_func)"
+
+.SS "int UI_get_input_flags (\fBUI_STRING\fP * uis)"
+
+.SS "const \fBUI_METHOD\fP* UI_get_method (\fBUI\fP * ui)"
+
+.SS "int UI_get_result_maxsize (\fBUI_STRING\fP * uis)"
+
+.SS "int UI_get_result_minsize (\fBUI_STRING\fP * uis)"
+
+.SS "enum \fBUI_string_types\fP UI_get_string_type (\fBUI_STRING\fP * uis)"
+
+.SS "int UI_method_set_closer (\fBUI_METHOD\fP * method, int(*)(\fBUI\fP *ui) closer)"
+
+.SS "int UI_method_set_flusher (\fBUI_METHOD\fP * method, int(*)(\fBUI\fP *ui) flusher)"
+
+.SS "int UI_method_set_opener (\fBUI_METHOD\fP * method, int(*)(\fBUI\fP *ui) opener)"
+
+.SS "int UI_method_set_prompt_constructor (\fBUI_METHOD\fP * method, char *(*)(\fBUI\fP *ui,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   *object_desc,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   const char                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   *object_name) prompt_constructor)"
+
+.SS "int UI_method_set_reader (\fBUI_METHOD\fP * method, int(*)(\fBUI\fP *ui, \fBUI_STRING\fP *uis) reader)"
+
+.SS "int UI_method_set_writer (\fBUI_METHOD\fP * method, int(*)(\fBUI\fP *ui, \fBUI_STRING\fP *uis) writer)"
+
+.SS "\fBUI\fP* UI_new (\fBvoid\fP)"
+
+.SS "\fBUI\fP* UI_new_method (const \fBUI_METHOD\fP * method)"
+
+.SS "\fBUI_METHOD\fP* UI_OpenSSL (\fBvoid\fP)"
+
+.SS "int UI_process (\fBUI\fP * ui)"
+
+.SS "\fBvoid\fP UI_set_default_method (const \fBUI_METHOD\fP * meth)"
+
+.SS "int UI_set_ex_data (\fBUI\fP * r, int idx, \fBvoid\fP * arg)"
+
+.SS "const \fBUI_METHOD\fP* UI_set_method (\fBUI\fP * ui, const \fBUI_METHOD\fP * meth)"
+
+.SS "int UI_set_result (\fBUI\fP * ui, \fBUI_STRING\fP * uis, const char * result)"
+
+.SS "int UI_UTIL_read_pw (char * buf, char * buff, int size, const char * prompt, int verify)"
+
+.SS "int UI_UTIL_read_pw_string (char * buf, int length, const char * prompt, int verify)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "int(*)(\fBUI\fP *) UI_method_get_closer(\fBUI_METHOD\fP *method)"
+
+.PP
+Definition at line 340 of file include/openssl/ui\&.h\&.
+.SS "int(*)(\fBUI\fP *) UI_method_get_flusher(\fBUI_METHOD\fP *method)"
+
+.PP
+Definition at line 338 of file include/openssl/ui\&.h\&.
+.SS "int(*)(\fBUI\fP *) UI_method_get_opener(\fBUI_METHOD\fP *method)"
+
+.PP
+Definition at line 336 of file include/openssl/ui\&.h\&.
+.SS "char*(*)(\fBUI\fP *, const char *, const char *) UI_method_get_prompt_constructor(\fBUI_METHOD\fP *method)"
+
+.PP
+Definition at line 341 of file include/openssl/ui\&.h\&.
+.SS "int(*)(\fBUI\fP *, \fBUI_STRING\fP *) UI_method_get_reader(\fBUI_METHOD\fP *method)"
+
+.PP
+Definition at line 339 of file include/openssl/ui\&.h\&.
+.SS "int(*)(\fBUI\fP *, \fBUI_STRING\fP *) UI_method_get_writer(\fBUI_METHOD\fP *method)"
+
+.PP
+Definition at line 337 of file include/openssl/ui\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

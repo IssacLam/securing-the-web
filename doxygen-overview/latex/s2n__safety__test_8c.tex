@@ -1,0 +1,93 @@
+\hypertarget{s2n__safety__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+safety\+\_\+test.c File Reference}
+\label{s2n__safety__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+safety\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+safety\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+safety\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__safety__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__safety__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+safety\+\_\+test.\+c@{s2n\+\_\+safety\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+safety\+\_\+test.\+c@{s2n\+\_\+safety\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__safety__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__safety__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 172 of file s2n\+\_\+safety\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+173 \{
+174     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+175 
+176     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_gte());
+177     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_lte());
+178     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_gt());
+179     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_lt());
+180     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_notnull());
+181     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_memcpy());
+182     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_inclusive\_range\_too\_high());
+183     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_inclusive\_range\_too\_low());
+184     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_exclusive\_range\_too\_high());
+185     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_exclusive\_range\_too\_low());
+186     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_exclusive\_range\_eq\_high());
+187     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(failure\_exclusive\_range\_eq\_low());
+188 
+189     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_gte());
+190     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_lte());
+191     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_gt());
+192     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_lt());
+193     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_notnull());
+194     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_memcpy());
+195     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_inclusive\_range());
+196     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(success\_exclusive\_range());
+197 
+198     uint8\_t \hyperlink{hpux_8cc_af3e37283d97a42ffc096d8958a745f32}{a}[4] = \{ 1, 2, 3, 4 \};
+199     uint8\_t b[4] = \{ 1, 2, 3, 4 \};
+200     uint8\_t \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}[4] = \{ 5, 6, 7, 8 \};
+201     uint8\_t d[4] = \{ 5, 6, 7, 8 \};
+202     uint8\_t \hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e}[4] = \{ 1, 2, 3, 4 \};
+203 
+204     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(a, b, \textcolor{keyword}{sizeof}(a)), 1);
+205     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(a, c, \textcolor{keyword}{sizeof}(a)), 0);
+206 
+207     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6}{s2n\_constant\_time\_copy\_or\_dont}(a, c, \textcolor{keyword}{sizeof}(
+      a), 0));
+208     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(a, c, \textcolor{keyword}{sizeof}(a)), 1);
+209 
+210     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 256; i++) \{
+211         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__safety_8c_a063290bb9180551299c2ca6a11810be6}{s2n\_constant\_time\_copy\_or\_dont}(b, d, \textcolor{keyword}{
+      sizeof}(a), i));
+212         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(b, d, \textcolor{keyword}{sizeof}(a)), 0);
+213         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__server__fuzz__test__overrides_8c_a407f3056ab784369c0ccb3359532669a}{s2n\_constant\_time\_equals}(b, e, \textcolor{keyword}{sizeof}(a)), 1);
+214     \}
+215 
+216     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+217 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=289pt]{s2n__safety__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

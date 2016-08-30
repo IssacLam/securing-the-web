@@ -1,0 +1,114 @@
+\hypertarget{s2n__ocsp__stapling_8c}{}\section{s2n-\/master/tls/s2n\+\_\+ocsp\+\_\+stapling.c File Reference}
+\label{s2n__ocsp__stapling_8c}\index{s2n-\/master/tls/s2n\+\_\+ocsp\+\_\+stapling.\+c@{s2n-\/master/tls/s2n\+\_\+ocsp\+\_\+stapling.\+c}}
+{\ttfamily \#include $<$strings.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+cipher\+\_\+suites.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+config.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+tls.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+ocsp\+\_\+stapling.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ocsp__stapling_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__ocsp__stapling_8c_af4c440c5d4b149bdc7b42a1fdf06b334}{s2n\+\_\+server\+\_\+status\+\_\+send} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2n__ocsp__stapling_8c_a6688277e6e5d779a28d99ec6d023a949}{s2n\+\_\+server\+\_\+status\+\_\+recv} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+ocsp\+\_\+stapling.\+c@{s2n\+\_\+ocsp\+\_\+stapling.\+c}!s2n\+\_\+server\+\_\+status\+\_\+send@{s2n\+\_\+server\+\_\+status\+\_\+send}}
+\index{s2n\+\_\+server\+\_\+status\+\_\+send@{s2n\+\_\+server\+\_\+status\+\_\+send}!s2n\+\_\+ocsp\+\_\+stapling.\+c@{s2n\+\_\+ocsp\+\_\+stapling.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+server\+\_\+status\+\_\+send(struct s2n\+\_\+connection $\ast$conn)}{s2n_server_status_send(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+server\+\_\+status\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ocsp__stapling_8c_af4c440c5d4b149bdc7b42a1fdf06b334}{}\label{s2n__ocsp__stapling_8c_af4c440c5d4b149bdc7b42a1fdf06b334}
+
+
+Definition at line 27 of file s2n\+\_\+ocsp\+\_\+stapling.\+c.
+
+
+\begin{DoxyCode}
+28 \{
+29     uint32\_t \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length} = conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->\hyperlink{structs2n__config_acd0d45f80129861144d237591eee6c5f}{cert\_and\_key\_pairs}->
+      \hyperlink{structs2n__cert__chain__and__key_a4baf31cc326e006017c66fe41b4194d6}{ocsp\_status}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} + 4;
+30     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, length));
+31 
+32     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, (uint8\_t) \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635a3e83f0e90eef54adc21b3d97a9a0d9b8}{S2N\_STATUS\_REQUEST\_OCSP}));
+33     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aa78701a9bb01def1efcbfa30ba0bdfc9}{s2n\_stuffer\_write\_uint24}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, conn->\hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->\hyperlink{structs2n__config_acd0d45f80129861144d237591eee6c5f}{cert\_and\_key\_pairs}->\hyperlink{structs2n__cert__chain__and__key_a4baf31cc326e006017c66fe41b4194d6}{ocsp\_status}.
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+34     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, &conn->
+      \hyperlink{structs2n__connection_a7d70bb7bed95daae1233293126bb9523}{config}->\hyperlink{structs2n__config_acd0d45f80129861144d237591eee6c5f}{cert\_and\_key\_pairs}->\hyperlink{structs2n__cert__chain__and__key_a4baf31cc326e006017c66fe41b4194d6}{ocsp\_status}));
+35 
+36     \textcolor{keywordflow}{return} 0;
+37 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ocsp__stapling_8c_af4c440c5d4b149bdc7b42a1fdf06b334_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+ocsp\+\_\+stapling.\+c@{s2n\+\_\+ocsp\+\_\+stapling.\+c}!s2n\+\_\+server\+\_\+status\+\_\+recv@{s2n\+\_\+server\+\_\+status\+\_\+recv}}
+\index{s2n\+\_\+server\+\_\+status\+\_\+recv@{s2n\+\_\+server\+\_\+status\+\_\+recv}!s2n\+\_\+ocsp\+\_\+stapling.\+c@{s2n\+\_\+ocsp\+\_\+stapling.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+server\+\_\+status\+\_\+recv(struct s2n\+\_\+connection $\ast$conn)}{s2n_server_status_recv(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+server\+\_\+status\+\_\+recv (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__ocsp__stapling_8c_a6688277e6e5d779a28d99ec6d023a949}{}\label{s2n__ocsp__stapling_8c_a6688277e6e5d779a28d99ec6d023a949}
+
+
+Definition at line 39 of file s2n\+\_\+ocsp\+\_\+stapling.\+c.
+
+
+\begin{DoxyCode}
+40 \{
+41     uint8\_t \hyperlink{crypto_2x509_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type};
+42     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} status = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = NULL,.size = 0 \};
+43 
+44     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a1178687b6091eb483d135c149e87fb0b}{s2n\_stuffer\_read\_uint8}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, &type));
+45     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a71787bb6eeba3413137cde42d32a0f6c}{s2n\_stuffer\_read\_uint24}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, &status.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+46     status.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{s2n__stuffer_8c_a5148294f6ed0bf894afc83a31ee4f8a5}{s2n\_stuffer\_raw\_read}(&conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.
+      \hyperlink{structs2n__handshake_aede0d4a81b6e474b17ea185025c45bfd}{io}, status.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+47     \hyperlink{s2n__safety_8h_a372ad5deb70573456ecde442c0c466be}{notnull\_check}(status.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data});
+48 
+49     \textcolor{keywordflow}{if} (type == \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635a3e83f0e90eef54adc21b3d97a9a0d9b8}{S2N\_STATUS\_REQUEST\_OCSP}) \{
+50         \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__mem_8c_a6fb5d30c5bbbc73694b21821ff2da82f}{s2n\_alloc}(&conn->\hyperlink{structs2n__connection_ab3cd78ec62aea98bf900913bb379d523}{status\_response}, status.
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+51         \hyperlink{s2n__safety_8h_ad77a50a47d8de0b8e6c8d4beffed95b2}{memcpy\_check}(conn->\hyperlink{structs2n__connection_ab3cd78ec62aea98bf900913bb379d523}{status\_response}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, status.
+      \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, status.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+52         conn->\hyperlink{structs2n__connection_ab3cd78ec62aea98bf900913bb379d523}{status\_response}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = status.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size};
+53     \}
+54 
+55     \textcolor{keywordflow}{return} 0;
+56 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__ocsp__stapling_8c_a6688277e6e5d779a28d99ec6d023a949_cgraph}
+\end{center}
+\end{figure}
+
+

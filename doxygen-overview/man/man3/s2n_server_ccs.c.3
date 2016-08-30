@@ -1,0 +1,99 @@
+.TH "s2n-master/tls/s2n_server_ccs.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_server_ccs.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCHANGE_CIPHER_SPEC_TYPE\fP   1"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_server_ccs_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_ccs_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CHANGE_CIPHER_SPEC_TYPE   1"
+
+.PP
+Definition at line 28 of file s2n_server_ccs\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_server_ccs_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 30 of file s2n_server_ccs\&.c\&.
+.PP
+.nf
+31 {
+32     uint8_t type;
+33 
+34     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, &type));
+35     if (type != CHANGE_CIPHER_SPEC_TYPE) {
+36         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+37     }
+38 
+39     /* Zero the sequence number */
+40     struct s2n_blob seq = {\&.data = conn->secure\&.server_sequence_number,\&.size = S2N_TLS_SEQUENCE_NUM_LEN };
+41     GUARD(s2n_blob_zero(&seq));
+42 
+43     /* Compute the finished message */
+44     GUARD(s2n_prf_server_finished(conn));
+45 
+46     /* Update the secure state to active, and point the client at the active state */
+47     conn->server = &conn->secure;
+48 
+49     /* Flush any partial alert messages that were pending */
+50     GUARD(s2n_stuffer_wipe(&conn->alert_in));
+51 
+52     if (conn->handshake\&.handshake_type == RESUME) {
+53         GUARD(s2n_prf_key_expansion(conn));
+54     }
+55 
+56     return 0;
+57 }
+.fi
+.SS "int s2n_server_ccs_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 59 of file s2n_server_ccs\&.c\&.
+.PP
+.nf
+60 {
+61     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, CHANGE_CIPHER_SPEC_TYPE));
+62 
+63     if (conn->handshake\&.handshake_type == RESUME) {
+64         GUARD(s2n_prf_key_expansion(conn));
+65     }
+66 
+67     return 0;
+68 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

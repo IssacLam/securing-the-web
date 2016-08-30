@@ -1,0 +1,133 @@
+.TH "s2n-master/tests/unit/s2n_pem_rsa_dhe_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_pem_rsa_dhe_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'crypto/s2n_rsa\&.h'\fP
+.br
+\fC#include 'crypto/s2n_dhe\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 126 of file s2n_pem_rsa_dhe_test\&.c\&.
+.PP
+.nf
+127 {
+128     struct s2n_stuffer certificate_in, certificate_out;
+129     struct s2n_stuffer dhparams_in, dhparams_out;
+130     struct s2n_stuffer rsa_key_in, rsa_key_out;
+131     struct s2n_blob b;
+132 
+133     BEGIN_TEST();
+134 
+135     EXPECT_SUCCESS(s2n_stuffer_alloc(&certificate_in, sizeof(certificate)));
+136     EXPECT_SUCCESS(s2n_stuffer_alloc(&certificate_out, sizeof(certificate)));
+137     EXPECT_SUCCESS(s2n_stuffer_alloc(&dhparams_in, sizeof(dhparams)));
+138     EXPECT_SUCCESS(s2n_stuffer_alloc(&dhparams_out, sizeof(dhparams)));
+139     EXPECT_SUCCESS(s2n_stuffer_alloc(&rsa_key_in, sizeof(private_key)));
+140     EXPECT_SUCCESS(s2n_stuffer_alloc(&rsa_key_out, sizeof(private_key)));
+141 
+142     b\&.data = certificate;
+143     b\&.size = sizeof(certificate);
+144     EXPECT_SUCCESS(s2n_stuffer_write(&certificate_in, &b));
+145 
+146     b\&.data = private_key;
+147     b\&.size = sizeof(private_key);
+148     EXPECT_SUCCESS(s2n_stuffer_write(&rsa_key_in, &b));
+149 
+150     b\&.data = dhparams;
+151     b\&.size = sizeof(dhparams);
+152     EXPECT_SUCCESS(s2n_stuffer_write(&dhparams_in, &b));
+153 
+154     EXPECT_SUCCESS(s2n_stuffer_certificate_from_pem(&certificate_in, &certificate_out));
+155     EXPECT_SUCCESS(s2n_stuffer_rsa_private_key_from_pem(&rsa_key_in, &rsa_key_out));
+156     EXPECT_SUCCESS(s2n_stuffer_dhparams_from_pem(&dhparams_in, &dhparams_out));
+157 
+158     struct s2n_rsa_private_key priv_key;
+159     struct s2n_rsa_public_key pub_key;
+160 
+161     b\&.size = s2n_stuffer_data_available(&certificate_out);
+162     b\&.data = s2n_stuffer_raw_read(&certificate_out, b\&.size);
+163     EXPECT_SUCCESS(s2n_asn1der_to_rsa_public_key(&pub_key, &b));
+164 
+165     b\&.size = s2n_stuffer_data_available(&rsa_key_out);
+166     b\&.data = s2n_stuffer_raw_read(&rsa_key_out, b\&.size);
+167     EXPECT_SUCCESS(s2n_asn1der_to_rsa_private_key(&priv_key, &b));
+168 
+169     EXPECT_SUCCESS(s2n_rsa_keys_match(&pub_key, &priv_key));
+170 
+171     struct s2n_connection *conn;
+172     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+173     EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(conn->config, (char *)chain, (char *)private_key));
+174 
+175     struct s2n_dh_params dh_params;
+176     b\&.size = s2n_stuffer_data_available(&dhparams_out);
+177     b\&.data = s2n_stuffer_raw_read(&dhparams_out, b\&.size);
+178     EXPECT_SUCCESS(s2n_pkcs3_to_dh_params(&dh_params, &b));
+179 
+180     EXPECT_SUCCESS(s2n_config_add_dhparams(conn->config, (char *)dhparams));
+181 
+182     /* Try signing and verification with RSA */
+183     uint8_t inputpad[] = "Hello world!";
+184     struct s2n_blob signature;
+185     struct s2n_hash_state tls10_one, tls10_two, tls12_one, tls12_two;
+186 
+187     EXPECT_SUCCESS(s2n_hash_init(&tls10_one, S2N_HASH_MD5_SHA1));
+188     EXPECT_SUCCESS(s2n_hash_init(&tls10_two, S2N_HASH_MD5_SHA1));
+189     EXPECT_SUCCESS(s2n_hash_init(&tls12_one, S2N_HASH_SHA1));
+190     EXPECT_SUCCESS(s2n_hash_init(&tls12_two, S2N_HASH_SHA1));
+191 
+192     EXPECT_SUCCESS(s2n_alloc(&signature, s2n_rsa_public_encrypted_size(&pub_key)));
+193 
+194     EXPECT_SUCCESS(s2n_hash_update(&tls10_one, inputpad, sizeof(inputpad)));
+195     EXPECT_SUCCESS(s2n_hash_update(&tls10_two, inputpad, sizeof(inputpad)));
+196     EXPECT_SUCCESS(s2n_rsa_sign(&priv_key, &tls10_one, &signature));
+197     EXPECT_SUCCESS(s2n_rsa_verify(&pub_key, &tls10_two, &signature));
+198 
+199     EXPECT_SUCCESS(s2n_hash_update(&tls12_one, inputpad, sizeof(inputpad)));
+200     EXPECT_SUCCESS(s2n_hash_update(&tls12_two, inputpad, sizeof(inputpad)));
+201     EXPECT_SUCCESS(s2n_rsa_sign(&priv_key, &tls12_one, &signature));
+202     EXPECT_SUCCESS(s2n_rsa_verify(&pub_key, &tls12_two, &signature));
+203 
+204     EXPECT_SUCCESS(s2n_dh_params_free(&dh_params));
+205     EXPECT_SUCCESS(s2n_rsa_private_key_free(&priv_key));
+206     EXPECT_SUCCESS(s2n_rsa_public_key_free(&pub_key));
+207     EXPECT_SUCCESS(s2n_config_free_dhparams(conn->config));
+208     EXPECT_SUCCESS(s2n_config_free_cert_chain_and_key(conn->config));
+209     EXPECT_SUCCESS(s2n_connection_free(conn));
+210     EXPECT_SUCCESS(s2n_free(&signature));
+211     EXPECT_SUCCESS(s2n_stuffer_free(&certificate_in));
+212     EXPECT_SUCCESS(s2n_stuffer_free(&certificate_out));
+213     EXPECT_SUCCESS(s2n_stuffer_free(&dhparams_in));
+214     EXPECT_SUCCESS(s2n_stuffer_free(&dhparams_out));
+215     EXPECT_SUCCESS(s2n_stuffer_free(&rsa_key_in));
+216     EXPECT_SUCCESS(s2n_stuffer_free(&rsa_key_out));
+217 
+218     END_TEST();
+219 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

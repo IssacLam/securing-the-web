@@ -1,0 +1,552 @@
+\hypertarget{s2nc_8c}{}\section{s2n-\/master/bin/s2nc.c File Reference}
+\label{s2nc_8c}\index{s2n-\/master/bin/s2nc.\+c@{s2n-\/master/bin/s2nc.\+c}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\+h$>$}\\*
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\\*
+{\ttfamily \#include $<$sys/poll.\+h$>$}\\*
+{\ttfamily \#include $<$netdb.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$getopt.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for s2nc.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2nc_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage} ()
+\item 
+int \hyperlink{s2nc_8c_adc37832656c6aa5548ab17e981176dab}{echo} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, int sockfd)
+\item 
+int \hyperlink{s2nc_8c_a0c3aa10760d5a237f447120b0968ff99}{negotiate} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+int \hyperlink{s2nc_8c_ad1835a0a190dc5fe4f925bb69443c770}{main} (int argc, char $\ast$const $\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2nc.\+c@{s2nc.\+c}!usage@{usage}}
+\index{usage@{usage}!s2nc.\+c@{s2nc.\+c}}
+\subsubsection[{\texorpdfstring{usage()}{usage()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} usage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{}\label{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}
+
+
+Definition at line 33 of file s2nc.\+c.
+
+
+\begin{DoxyCode}
+34 \{
+35     fprintf(stderr, \textcolor{stringliteral}{"usage: s2nc [options] host [port]\(\backslash\)n"});
+36     fprintf(stderr, \textcolor{stringliteral}{" host: hostname or IP address to connect to\(\backslash\)n"});
+37     fprintf(stderr, \textcolor{stringliteral}{" port: port to connect to\(\backslash\)n"});
+38     fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n Options:\(\backslash\)n\(\backslash\)n"});
+39     fprintf(stderr, \textcolor{stringliteral}{"  -a [protocols]\(\backslash\)n"});
+40     fprintf(stderr, \textcolor{stringliteral}{"  --alpn [protocols]\(\backslash\)n"});
+41     fprintf(stderr, \textcolor{stringliteral}{"    Sets the application protocols supported by this client, as a comma seperated
+       list.\(\backslash\)n"});
+42     fprintf(stderr, \textcolor{stringliteral}{"  -h,--help\(\backslash\)n"});
+43     fprintf(stderr, \textcolor{stringliteral}{"    Display this message and quit.\(\backslash\)n"});
+44     fprintf(stderr, \textcolor{stringliteral}{"  -n [server name]\(\backslash\)n"});
+45     fprintf(stderr, \textcolor{stringliteral}{"  --name [server name]\(\backslash\)n"});
+46     fprintf(stderr, \textcolor{stringliteral}{"    Sets the SNI server name header for this client.  If not specified, the host value
+       is used.\(\backslash\)n"});
+47     fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n"});
+48     fprintf(stderr, \textcolor{stringliteral}{"  --s,--status\(\backslash\)n"});
+49     fprintf(stderr, \textcolor{stringliteral}{"    Request the OCSP status of the remote server certificate\(\backslash\)n"});
+50     fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n"});
+51     exit(1);
+52 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=197pt]{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nc.\+c@{s2nc.\+c}!echo@{echo}}
+\index{echo@{echo}!s2nc.\+c@{s2nc.\+c}}
+\subsubsection[{\texorpdfstring{echo(struct s2n\+\_\+connection $\ast$conn, int sockfd)}{echo(struct s2n_connection *conn, int sockfd)}}]{\setlength{\rightskip}{0pt plus 5cm}int echo (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{int}]{sockfd}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nc_8c_adc37832656c6aa5548ab17e981176dab}{}\label{s2nc_8c_adc37832656c6aa5548ab17e981176dab}
+
+
+Definition at line 87 of file echo.\+c.
+
+
+\begin{DoxyCode}
+88 \{
+89     \textcolor{keyword}{struct }pollfd readers[2];
+90 
+91     readers[0].fd = sockfd;
+92     readers[0].events = POLLIN;
+93     readers[1].fd = STDIN\_FILENO;
+94     readers[1].events = POLLIN;
+95 
+96     \textcolor{comment}{/* Act as a simple proxy between stdin and the SSL connection */}
+97     \textcolor{keywordtype}{int} \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p};
+98     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+99   POLL:
+100     \textcolor{keywordflow}{while} ((p = poll(readers, 2, -1)) > 0) \{
+101         \textcolor{keywordtype}{char} buffer[10240];
+102         \textcolor{keywordtype}{int} bytes\_read, bytes\_written;
+103 
+104         \textcolor{keywordflow}{if} (readers[0].revents & POLLIN) \{
+105             \textcolor{keywordflow}{do} \{
+106                 bytes\_read = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, buffer, 10240, &blocked);
+107                 \textcolor{keywordflow}{if} (bytes\_read == 0) \{
+108                     \textcolor{comment}{/* Connection has been closed */}
+109                     \hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn);
+110                     \textcolor{keywordflow}{return} 0;
+111                 \}
+112                 \textcolor{keywordflow}{if} (bytes\_read < 0) \{
+113                     fprintf(stderr, \textcolor{stringliteral}{"Error reading from connection: '%s' %d\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}), \hyperlink{s2n_8h_a6726a1cbae275671f2751ac610dc5f0f}{s2n\_connection\_get\_alert}(conn))
+      ;
+114                     exit(1);
+115                 \}
+116                 bytes\_written = write(STDOUT\_FILENO, buffer, bytes\_read);
+117                 \textcolor{keywordflow}{if} (bytes\_written <= 0) \{
+118                     fprintf(stderr, \textcolor{stringliteral}{"Error writing to stdout\(\backslash\)n"});
+119                     exit(1);
+120                 \}
+121             \} \textcolor{keywordflow}{while} (blocked);
+122         \}
+123         \textcolor{keywordflow}{if} (readers[1].revents & POLLIN) \{
+124             \textcolor{keywordtype}{int} bytes\_available;
+125             \textcolor{keywordflow}{if} (ioctl(STDIN\_FILENO, FIONREAD, &bytes\_available) < 0) \{
+126                 bytes\_available = 1;
+127             \}
+128             \textcolor{keywordflow}{if} (bytes\_available > \textcolor{keyword}{sizeof}(buffer)) \{
+129                 bytes\_available = \textcolor{keyword}{sizeof}(buffer);
+130             \}
+131 
+132             \textcolor{comment}{/* Read as many bytes as we think we can */}
+133           READ:
+134             bytes\_read = read(STDIN\_FILENO, buffer, bytes\_available);
+135             \textcolor{keywordflow}{if} (bytes\_read < 0) \{
+136                 \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+137                     \textcolor{keywordflow}{goto} READ;
+138                 \}
+139                 fprintf(stderr, \textcolor{stringliteral}{"Error reading from stdin\(\backslash\)n"});
+140                 exit(1);
+141             \}
+142             \textcolor{keywordflow}{if} (bytes\_read == 0) \{
+143                 \textcolor{comment}{/* Exit on EOF */}
+144                 \textcolor{keywordflow}{return} 0;
+145             \}
+146 
+147             \textcolor{keywordtype}{char} *buf\_ptr = buffer;
+148             \textcolor{keywordflow}{do} \{
+149                 bytes\_written = \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, buf\_ptr, bytes\_available, &blocked);
+150                 \textcolor{keywordflow}{if} (bytes\_written < 0) \{
+151                     fprintf(stderr, \textcolor{stringliteral}{"Error writing to connection: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+152                     exit(1);
+153                 \}
+154 
+155                 bytes\_available -= bytes\_written;
+156                 buf\_ptr += bytes\_written;
+157             \} \textcolor{keywordflow}{while} (bytes\_available || blocked);
+158         \}
+159     \}
+160     \textcolor{keywordflow}{if} (p < 0 && \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+161         \textcolor{keywordflow}{goto} POLL;
+162     \}
+163 
+164     \textcolor{keywordflow}{return} 0;
+165 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{s2nc_8c_adc37832656c6aa5548ab17e981176dab_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nc.\+c@{s2nc.\+c}!negotiate@{negotiate}}
+\index{negotiate@{negotiate}!s2nc.\+c@{s2nc.\+c}}
+\subsubsection[{\texorpdfstring{negotiate(struct s2n\+\_\+connection $\ast$conn)}{negotiate(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}int negotiate (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nc_8c_a0c3aa10760d5a237f447120b0968ff99}{}\label{s2nc_8c_a0c3aa10760d5a237f447120b0968ff99}
+
+
+Definition at line 31 of file echo.\+c.
+
+
+\begin{DoxyCode}
+32 \{
+33     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+34     \textcolor{keywordflow}{do} \{
+35         \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked) < 0) \{
+36             fprintf(stderr, \textcolor{stringliteral}{"Failed to negotiate: '%s' %d\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}), \hyperlink{s2n_8h_a6726a1cbae275671f2751ac610dc5f0f}{s2n\_connection\_get\_alert}(conn));
+37             \textcolor{keywordflow}{return} -1;
+38         \}
+39     \} \textcolor{keywordflow}{while} (blocked);
+40 
+41     \textcolor{comment}{/* Now that we've negotiated, print some parameters */}
+42     \textcolor{keywordtype}{int} client\_hello\_version;
+43     \textcolor{keywordtype}{int} client\_protocol\_version;
+44     \textcolor{keywordtype}{int} server\_protocol\_version;
+45     \textcolor{keywordtype}{int} actual\_protocol\_version;
+46 
+47     \textcolor{keywordflow}{if} ((client\_hello\_version = \hyperlink{s2n_8h_a3d4e8c095c40ea7689f14022567cd3e9}{s2n\_connection\_get\_client\_hello\_version}
+      (conn)) < 0) \{
+48         fprintf(stderr, \textcolor{stringliteral}{"Could not get client hello version\(\backslash\)n"});
+49         \textcolor{keywordflow}{return} -1;
+50     \}
+51     \textcolor{keywordflow}{if} ((client\_protocol\_version = \hyperlink{s2n_8h_af15303e1d72a95320b6138edeef7a6ab}{s2n\_connection\_get\_client\_protocol\_version}
+      (conn)) < 0) \{
+52         fprintf(stderr, \textcolor{stringliteral}{"Could not get client protocol version\(\backslash\)n"});
+53         \textcolor{keywordflow}{return} -1;
+54     \}
+55     \textcolor{keywordflow}{if} ((server\_protocol\_version = \hyperlink{s2n_8h_ae2ea6a2e6468883f56459431f2024b0f}{s2n\_connection\_get\_server\_protocol\_version}
+      (conn)) < 0) \{
+56         fprintf(stderr, \textcolor{stringliteral}{"Could not get server protocol version\(\backslash\)n"});
+57         \textcolor{keywordflow}{return} -1;
+58     \}
+59     \textcolor{keywordflow}{if} ((actual\_protocol\_version = \hyperlink{s2n_8h_a4cb9df94e1fe137f10040fbfc1ad98f9}{s2n\_connection\_get\_actual\_protocol\_version}
+      (conn)) < 0) \{
+60         fprintf(stderr, \textcolor{stringliteral}{"Could not get actual protocol version\(\backslash\)n"});
+61         \textcolor{keywordflow}{return} -1;
+62     \}
+63     printf(\textcolor{stringliteral}{"Client hello version: %d\(\backslash\)n"}, client\_hello\_version);
+64     printf(\textcolor{stringliteral}{"Client protocol version: %d\(\backslash\)n"}, client\_protocol\_version);
+65     printf(\textcolor{stringliteral}{"Server protocol version: %d\(\backslash\)n"}, server\_protocol\_version);
+66     printf(\textcolor{stringliteral}{"Actual protocol version: %d\(\backslash\)n"}, actual\_protocol\_version);
+67 
+68     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a541a5e22fc8b6295e4c6bb1692cdd850}{s2n\_get\_server\_name}(conn)) \{
+69         printf(\textcolor{stringliteral}{"Server name: %s\(\backslash\)n"}, \hyperlink{s2n_8h_a541a5e22fc8b6295e4c6bb1692cdd850}{s2n\_get\_server\_name}(conn));
+70     \}
+71 
+72     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn)) \{
+73         printf(\textcolor{stringliteral}{"Application protocol: %s\(\backslash\)n"}, \hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(conn)
+      );
+74     \}
+75 
+76     uint32\_t \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length};
+77     \textcolor{keyword}{const} uint8\_t *status = \hyperlink{s2n_8h_a2b18cd3437636a7a21e10f3d5d09ff9d}{s2n\_connection\_get\_ocsp\_response}(conn, &length)
+      ;
+78     \textcolor{keywordflow}{if} (status && length > 0) \{
+79         fprintf(stderr, \textcolor{stringliteral}{"OCSP response received, length %d\(\backslash\)n"}, length);
+80     \}
+81 
+82     printf(\textcolor{stringliteral}{"Cipher negotiated: %s\(\backslash\)n"}, \hyperlink{s2n_8h_a119c0252cf7edde4d4a5c65f8cd23721}{s2n\_connection\_get\_cipher}(conn));
+83 
+84     \textcolor{keywordflow}{return} 0;
+85 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{s2nc_8c_a0c3aa10760d5a237f447120b0968ff99_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2nc.\+c@{s2nc.\+c}!main@{main}}
+\index{main@{main}!s2nc.\+c@{s2nc.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$const $\ast$argv)}{main(int argc, char *const *argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$const $\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2nc_8c_ad1835a0a190dc5fe4f925bb69443c770}{}\label{s2nc_8c_ad1835a0a190dc5fe4f925bb69443c770}
+
+
+Definition at line 57 of file s2nc.\+c.
+
+
+\begin{DoxyCode}
+58 \{
+59     \textcolor{keyword}{struct }addrinfo hints, *ai\_list, *ai;
+60     \textcolor{keywordtype}{int} r, sockfd = 0;
+61     \textcolor{comment}{/* Optional args */}
+62     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *alpn\_protocols = NULL;
+63     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *server\_name = NULL;
+64     \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635}{s2n\_status\_request\_type} \hyperlink{crypto_2x509_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type} = 
+      \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635aea0f05b257857adc1282f77c5414e35a}{S2N\_STATUS\_REQUEST\_NONE};
+65     \textcolor{comment}{/* required args */}
+66     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *host = NULL;
+67     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *port = \textcolor{stringliteral}{"443"};
+68 
+69     \textcolor{keyword}{static} \textcolor{keyword}{struct }option long\_options[] = \{
+70         \{\textcolor{stringliteral}{"alpn"}, required\_argument, 0, \textcolor{charliteral}{'a'}\},
+71         \{\textcolor{stringliteral}{"help"}, no\_argument, 0, \textcolor{charliteral}{'h'}\},
+72         \{\textcolor{stringliteral}{"name"}, required\_argument, 0, \textcolor{charliteral}{'n'}\},
+73         \{\textcolor{stringliteral}{"status"}, no\_argument, 0, \textcolor{charliteral}{'s'}\},
+74 
+75     \};
+76     \textcolor{keywordflow}{while} (1) \{
+77         \textcolor{keywordtype}{int} option\_index = 0;
+78         \textcolor{keywordtype}{int} \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c} = getopt\_long(argc, argv, \textcolor{stringliteral}{"a:hn:s"}, long\_options, &option\_index);
+79         \textcolor{keywordflow}{if} (c == -1) \{
+80             \textcolor{keywordflow}{break};
+81         \}
+82         \textcolor{keywordflow}{switch} (c) \{
+83         \textcolor{keywordflow}{case} \textcolor{charliteral}{'a'}:
+84             alpn\_protocols = optarg;
+85             \textcolor{keywordflow}{break};
+86         \textcolor{keywordflow}{case} \textcolor{charliteral}{'h'}:
+87             \hyperlink{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage}();
+88             \textcolor{keywordflow}{break};
+89         \textcolor{keywordflow}{case} \textcolor{charliteral}{'n'}:
+90             server\_name = optarg;
+91             \textcolor{keywordflow}{break};
+92         \textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:
+93             type = \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635a3e83f0e90eef54adc21b3d97a9a0d9b8}{S2N\_STATUS\_REQUEST\_OCSP};
+94             \textcolor{keywordflow}{break};
+95         \textcolor{keywordflow}{case} \textcolor{charliteral}{'?'}:
+96         \textcolor{keywordflow}{default}:
+97             \hyperlink{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage}();
+98             \textcolor{keywordflow}{break};
+99         \}
+100     \}
+101 
+102     \textcolor{keywordflow}{if} (optind < argc) \{
+103         host = argv[optind++];
+104     \}
+105     \textcolor{keywordflow}{if} (optind < argc) \{
+106         port = argv[optind++];
+107     \}
+108 
+109     \textcolor{keywordflow}{if} (!host) \{
+110         \hyperlink{s2nc_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage}();
+111     \}
+112 
+113     \textcolor{keywordflow}{if} (!server\_name) \{
+114         server\_name = host;
+115     \}
+116 
+117     memset(&hints, 0, \textcolor{keyword}{sizeof}(hints));
+118 
+119     hints.ai\_family = AF\_UNSPEC;
+120     hints.ai\_socktype = SOCK\_STREAM;
+121 
+122     \textcolor{keywordflow}{if} (signal(SIGPIPE, SIG\_IGN) == SIG\_ERR) \{
+123         fprintf(stderr, \textcolor{stringliteral}{"Error disabling SIGPIPE\(\backslash\)n"});
+124         exit(1);
+125     \}
+126 
+127     \textcolor{keywordflow}{if} ((r = getaddrinfo(host, port, &hints, &ai\_list)) != 0) \{
+128         fprintf(stderr, \textcolor{stringliteral}{"error: %s\(\backslash\)n"}, gai\_strerror(r));
+129         exit(1);
+130     \}
+131 
+132     \textcolor{keywordtype}{int} connected = 0;
+133     \textcolor{keywordflow}{for} (ai = ai\_list; ai != NULL; ai = ai->ai\_next) \{
+134         \textcolor{keywordflow}{if} ((sockfd = socket(ai->ai\_family, ai->ai\_socktype, ai->ai\_protocol)) == -1) \{
+135             \textcolor{keywordflow}{continue};
+136         \}
+137 
+138         \textcolor{keywordflow}{if} (connect(sockfd, ai->ai\_addr, ai->ai\_addrlen) == -1) \{
+139             close(sockfd);
+140             \textcolor{keywordflow}{continue};
+141         \}
+142 
+143         connected = 1;
+144         \textcolor{comment}{/* connect() succeeded */}
+145         \textcolor{keywordflow}{break};
+146     \}
+147 
+148     freeaddrinfo(ai\_list);
+149 
+150     \textcolor{keywordflow}{if} (connected == 0) \{
+151         fprintf(stderr, \textcolor{stringliteral}{"Failed to connect to %s:%s\(\backslash\)n"}, argv[1], port);
+152         close(sockfd);
+153         exit(1);
+154     \}
+155 
+156     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_abc620f8194383c6fcddd911edcf7d692}{s2n\_init}() < 0) \{
+157         fprintf(stderr, \textcolor{stringliteral}{"Error running s2n\_init(): '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+158     \}
+159 
+160     \textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config} = \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}();
+161     \textcolor{keywordflow}{if} (config == NULL) \{
+162         fprintf(stderr, \textcolor{stringliteral}{"Error getting new config: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+163         exit(1);
+164     \}
+165 
+166     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_ae98f2b06b3311e7e845e938392d3505d}{s2n\_config\_set\_status\_request\_type}(config, type) < 0) \{
+167         fprintf(stderr, \textcolor{stringliteral}{"Error setting status request type: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+168         exit(1);
+169     \}
+170 
+171     \textcolor{keywordflow}{if} (alpn\_protocols) \{
+172         \textcolor{comment}{/* Count the number of commas, this tells us how many protocols there}
+173 \textcolor{comment}{           are in the list */}
+174         \textcolor{keyword}{const} \textcolor{keywordtype}{char} *ptr = alpn\_protocols;
+175         \textcolor{keywordtype}{int} protocol\_count = 1;
+176         \textcolor{keywordflow}{while} (*ptr) \{
+177             \textcolor{keywordflow}{if} (*ptr == \textcolor{charliteral}{','}) \{
+178                 protocol\_count++;
+179             \}
+180             ptr++;
+181         \}
+182 
+183         \textcolor{keywordtype}{char} **protocols = malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char} *) * protocol\_count);
+184         \textcolor{keywordflow}{if} (!protocols) \{
+185             fprintf(stderr, \textcolor{stringliteral}{"Error allocating memory\(\backslash\)n"});
+186             exit(1);
+187         \}
+188 
+189         \textcolor{keyword}{const} \textcolor{keywordtype}{char} *next = alpn\_protocols;
+190         \textcolor{keywordtype}{int} index = 0;
+191         \textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length} = 0;
+192         ptr = alpn\_protocols;
+193         \textcolor{keywordflow}{while} (*ptr) \{
+194             \textcolor{keywordflow}{if} (*ptr == \textcolor{charliteral}{','}) \{
+195                 protocols[index] = malloc(length + 1);
+196                 \textcolor{keywordflow}{if} (!protocols[index]) \{
+197                     fprintf(stderr, \textcolor{stringliteral}{"Error allocating memory\(\backslash\)n"});
+198                     exit(1);
+199                 \}
+200                 memcpy(protocols[index], next, length);
+201                 protocols[index][\hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length}] = \textcolor{charliteral}{'\(\backslash\)0'};
+202                 length = 0;
+203                 index++;
+204                 ptr++;
+205                 next = ptr;
+206             \} \textcolor{keywordflow}{else} \{
+207                 length++;
+208                 ptr++;
+209             \}
+210         \}
+211         \textcolor{keywordflow}{if} (ptr != next) \{
+212             protocols[index] = malloc(length + 1);
+213             \textcolor{keywordflow}{if} (!protocols[index]) \{
+214                 fprintf(stderr, \textcolor{stringliteral}{"Error allocating memory\(\backslash\)n"});
+215                 exit(1);
+216             \}
+217             memcpy(protocols[index], next, length);
+218             protocols[index][\hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length}] = \textcolor{charliteral}{'\(\backslash\)0'};
+219         \}
+220         \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a9f5f2fca97444f9c039a3681c2351fb0}{s2n\_config\_set\_protocol\_preferences}(config, (\textcolor{keyword}{const} \textcolor{keywordtype}{char} *\textcolor{keyword}{
+      const} *)protocols, protocol\_count) < 0) \{
+221             fprintf(stderr, \textcolor{stringliteral}{"Failed to set protocol preferences: '%s'\(\backslash\)n"}, 
+      \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(\hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+222             exit(1);
+223         \}
+224         \textcolor{keywordflow}{while} (protocol\_count) \{
+225             protocol\_count--;
+226             free(protocols[protocol\_count]);
+227         \}
+228         free(protocols);
+229     \}
+230 
+231     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT});
+232 
+233     \textcolor{keywordflow}{if} (conn == NULL) \{
+234         fprintf(stderr, \textcolor{stringliteral}{"Error getting new connection: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+235         exit(1);
+236     \}
+237 
+238     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(conn, config) < 0) \{
+239         fprintf(stderr, \textcolor{stringliteral}{"Error setting configuration: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+240         exit(1);
+241     \}
+242 
+243     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a9b37f3c0364e6de9f0b534e624204f62}{s2n\_set\_server\_name}(conn, server\_name) < 0) \{
+244         fprintf(stderr, \textcolor{stringliteral}{"Error setting server name: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+245         exit(1);
+246     \}
+247 
+248     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a80776ecf7e726f52165cdec5e2652d1e}{s2n\_connection\_set\_fd}(conn, sockfd) < 0) \{
+249         fprintf(stderr, \textcolor{stringliteral}{"Error setting file descriptor: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+250         exit(1);
+251     \}
+252 
+253     \textcolor{comment}{/* See echo.c */}
+254     \hyperlink{s2nc_8c_a0c3aa10760d5a237f447120b0968ff99}{negotiate}(conn);
+255 
+256     printf(\textcolor{stringliteral}{"Connected to %s:%s\(\backslash\)n"}, host, port);
+257 
+258     \hyperlink{s2nc_8c_adc37832656c6aa5548ab17e981176dab}{echo}(conn, sockfd);
+259 
+260     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+261     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(conn, &blocked) < 0) \{
+262         fprintf(stderr, \textcolor{stringliteral}{"Error calling s2n\_shutdown: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+263         exit(1);
+264     \}
+265 
+266     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn) < 0) \{
+267         fprintf(stderr, \textcolor{stringliteral}{"Error freeing connection: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+268         exit(1);
+269     \}
+270 
+271     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a25b7d82e94f572b657be3936196222c3}{s2n\_config\_free}(config) < 0) \{
+272         fprintf(stderr, \textcolor{stringliteral}{"Error freeing configuration: '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+273         exit(1);
+274     \}
+275 
+276     \textcolor{keywordflow}{if} (\hyperlink{s2n_8h_a907fdf445e5fb1752f1b18f0ddf935b3}{s2n\_cleanup}() < 0) \{
+277         fprintf(stderr, \textcolor{stringliteral}{"Error running s2n\_cleanup(): '%s'\(\backslash\)n"}, \hyperlink{s2n_8h_ae437dde74e36e51acb16397be23df69b}{s2n\_strerror}(
+      \hyperlink{s2n_8h_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\_errno}, \textcolor{stringliteral}{"EN"}));
+278     \}
+279 
+280     \textcolor{keywordflow}{return} 0;
+281 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{s2nc_8c_ad1835a0a190dc5fe4f925bb69443c770_cgraph}
+\end{center}
+\end{figure}
+
+

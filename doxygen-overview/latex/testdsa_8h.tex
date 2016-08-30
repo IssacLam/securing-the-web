@@ -1,0 +1,137 @@
+\hypertarget{testdsa_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/apps/testdsa.h File Reference}
+\label{testdsa_8h}\index{s2n-\/master/libcrypto-\/build/openssl/apps/testdsa.\+h@{s2n-\/master/libcrypto-\/build/openssl/apps/testdsa.\+h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{crypto_2ossl__typ_8h_aa26536f205a5c5f39111260bf246ed9d}{D\+SA} $\ast$ \hyperlink{testdsa_8h_a071c4399382bf1fb4ae63af4c9a9db19}{get\+\_\+dsa512} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_aa26536f205a5c5f39111260bf246ed9d}{D\+SA} $\ast$ \hyperlink{testdsa_8h_aaaac9d1ba2d881f17f935a46de51f7a1}{get\+\_\+dsa1024} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_aa26536f205a5c5f39111260bf246ed9d}{D\+SA} $\ast$ \hyperlink{testdsa_8h_ab326a27f3dee0f25a718a16505884eb9}{get\+\_\+dsa2048} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{testdsa.\+h@{testdsa.\+h}!get\+\_\+dsa512@{get\+\_\+dsa512}}
+\index{get\+\_\+dsa512@{get\+\_\+dsa512}!testdsa.\+h@{testdsa.\+h}}
+\subsubsection[{\texorpdfstring{get\+\_\+dsa512(void)}{get_dsa512(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+SA} $\ast$ get\+\_\+dsa512 (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{testdsa_8h_a071c4399382bf1fb4ae63af4c9a9db19}{}\label{testdsa_8h_a071c4399382bf1fb4ae63af4c9a9db19}
+
+
+Definition at line 43 of file testdsa.\+h.
+
+
+\begin{DoxyCode}
+44 \{
+45     \hyperlink{structdsa__st}{DSA} *dsa;
+46 
+47     \textcolor{keywordflow}{if} ((dsa = \hyperlink{dsa_8h_a17f81623b8a2b2c8764bba24a0f5be42}{DSA\_new}()) == NULL)
+48         \textcolor{keywordflow}{return} (NULL);
+49     dsa->\hyperlink{structdsa__st_a7a27cca85dea48fc1c9086fe65651ec5}{priv\_key} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa512\_priv, \textcolor{keyword}{sizeof}(dsa512\_priv), NULL);
+50     dsa->\hyperlink{structdsa__st_aad713005343ebfb84e09a7441d655802}{pub\_key} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa512\_pub, \textcolor{keyword}{sizeof}(dsa512\_pub), NULL);
+51     dsa->\hyperlink{structdsa__st_a4ed2e531b9fd8a6ca6ad6804565299a7}{p} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa512\_p, \textcolor{keyword}{sizeof}(dsa512\_p), NULL);
+52     dsa->\hyperlink{structdsa__st_a8d39f39e46b024184dc5a24c3901d32d}{q} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa512\_q, \textcolor{keyword}{sizeof}(dsa512\_q), NULL);
+53     dsa->\hyperlink{structdsa__st_ada27d9fb07daaac14be19b4ce12a7400}{g} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa512\_g, \textcolor{keyword}{sizeof}(dsa512\_g), NULL);
+54     \textcolor{keywordflow}{if} ((dsa->\hyperlink{structdsa__st_a7a27cca85dea48fc1c9086fe65651ec5}{priv\_key} == NULL) || (dsa->\hyperlink{structdsa__st_aad713005343ebfb84e09a7441d655802}{pub\_key} == NULL) || (dsa->
+      \hyperlink{structdsa__st_a4ed2e531b9fd8a6ca6ad6804565299a7}{p} == NULL)
+55         || (dsa->\hyperlink{structdsa__st_a8d39f39e46b024184dc5a24c3901d32d}{q} == NULL) || (dsa->\hyperlink{structdsa__st_ada27d9fb07daaac14be19b4ce12a7400}{g} == NULL))
+56         \textcolor{keywordflow}{return} (NULL);
+57     \textcolor{keywordflow}{return} (dsa);
+58 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{testdsa_8h_a071c4399382bf1fb4ae63af4c9a9db19_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{testdsa.\+h@{testdsa.\+h}!get\+\_\+dsa1024@{get\+\_\+dsa1024}}
+\index{get\+\_\+dsa1024@{get\+\_\+dsa1024}!testdsa.\+h@{testdsa.\+h}}
+\subsubsection[{\texorpdfstring{get\+\_\+dsa1024(void)}{get_dsa1024(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+SA} $\ast$ get\+\_\+dsa1024 (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{testdsa_8h_aaaac9d1ba2d881f17f935a46de51f7a1}{}\label{testdsa_8h_aaaac9d1ba2d881f17f935a46de51f7a1}
+
+
+Definition at line 112 of file testdsa.\+h.
+
+
+\begin{DoxyCode}
+113 \{
+114     \hyperlink{structdsa__st}{DSA} *dsa;
+115 
+116     \textcolor{keywordflow}{if} ((dsa = \hyperlink{dsa_8h_a17f81623b8a2b2c8764bba24a0f5be42}{DSA\_new}()) == NULL)
+117         \textcolor{keywordflow}{return} (NULL);
+118     dsa->\hyperlink{structdsa__st_a7a27cca85dea48fc1c9086fe65651ec5}{priv\_key} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa1024\_priv, \textcolor{keyword}{sizeof}(dsa1024\_priv), NULL);
+119     dsa->\hyperlink{structdsa__st_aad713005343ebfb84e09a7441d655802}{pub\_key} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa1024\_pub, \textcolor{keyword}{sizeof}(dsa1024\_pub), NULL);
+120     dsa->\hyperlink{structdsa__st_a4ed2e531b9fd8a6ca6ad6804565299a7}{p} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa1024\_p, \textcolor{keyword}{sizeof}(dsa1024\_p), NULL);
+121     dsa->\hyperlink{structdsa__st_a8d39f39e46b024184dc5a24c3901d32d}{q} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa1024\_q, \textcolor{keyword}{sizeof}(dsa1024\_q), NULL);
+122     dsa->\hyperlink{structdsa__st_ada27d9fb07daaac14be19b4ce12a7400}{g} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa1024\_g, \textcolor{keyword}{sizeof}(dsa1024\_g), NULL);
+123     \textcolor{keywordflow}{if} ((dsa->\hyperlink{structdsa__st_a7a27cca85dea48fc1c9086fe65651ec5}{priv\_key} == NULL) || (dsa->\hyperlink{structdsa__st_aad713005343ebfb84e09a7441d655802}{pub\_key} == NULL) || (dsa->
+      \hyperlink{structdsa__st_a4ed2e531b9fd8a6ca6ad6804565299a7}{p} == NULL)
+124         || (dsa->\hyperlink{structdsa__st_a8d39f39e46b024184dc5a24c3901d32d}{q} == NULL) || (dsa->\hyperlink{structdsa__st_ada27d9fb07daaac14be19b4ce12a7400}{g} == NULL))
+125         \textcolor{keywordflow}{return} (NULL);
+126     \textcolor{keywordflow}{return} (dsa);
+127 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=255pt]{testdsa_8h_aaaac9d1ba2d881f17f935a46de51f7a1_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{testdsa.\+h@{testdsa.\+h}!get\+\_\+dsa2048@{get\+\_\+dsa2048}}
+\index{get\+\_\+dsa2048@{get\+\_\+dsa2048}!testdsa.\+h@{testdsa.\+h}}
+\subsubsection[{\texorpdfstring{get\+\_\+dsa2048(void)}{get_dsa2048(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+SA} $\ast$ get\+\_\+dsa2048 (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{testdsa_8h_ab326a27f3dee0f25a718a16505884eb9}{}\label{testdsa_8h_ab326a27f3dee0f25a718a16505884eb9}
+
+
+Definition at line 214 of file testdsa.\+h.
+
+
+\begin{DoxyCode}
+215 \{
+216     \hyperlink{structdsa__st}{DSA} *dsa;
+217 
+218     \textcolor{keywordflow}{if} ((dsa = \hyperlink{dsa_8h_a17f81623b8a2b2c8764bba24a0f5be42}{DSA\_new}()) == NULL)
+219         \textcolor{keywordflow}{return} (NULL);
+220     dsa->\hyperlink{structdsa__st_a7a27cca85dea48fc1c9086fe65651ec5}{priv\_key} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa2048\_priv, \textcolor{keyword}{sizeof}(dsa2048\_priv), NULL);
+221     dsa->\hyperlink{structdsa__st_aad713005343ebfb84e09a7441d655802}{pub\_key} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa2048\_pub, \textcolor{keyword}{sizeof}(dsa2048\_pub), NULL);
+222     dsa->\hyperlink{structdsa__st_a4ed2e531b9fd8a6ca6ad6804565299a7}{p} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa2048\_p, \textcolor{keyword}{sizeof}(dsa2048\_p), NULL);
+223     dsa->\hyperlink{structdsa__st_a8d39f39e46b024184dc5a24c3901d32d}{q} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa2048\_q, \textcolor{keyword}{sizeof}(dsa2048\_q), NULL);
+224     dsa->\hyperlink{structdsa__st_ada27d9fb07daaac14be19b4ce12a7400}{g} = \hyperlink{crypto_2bn_2bn_8h_a9ca9a524bd4c4de12ae0947872c5182b}{BN\_bin2bn}(dsa2048\_g, \textcolor{keyword}{sizeof}(dsa2048\_g), NULL);
+225     \textcolor{keywordflow}{if} ((dsa->\hyperlink{structdsa__st_a7a27cca85dea48fc1c9086fe65651ec5}{priv\_key} == NULL) || (dsa->\hyperlink{structdsa__st_aad713005343ebfb84e09a7441d655802}{pub\_key} == NULL) || (dsa->
+      \hyperlink{structdsa__st_a4ed2e531b9fd8a6ca6ad6804565299a7}{p} == NULL)
+226         || (dsa->\hyperlink{structdsa__st_a8d39f39e46b024184dc5a24c3901d32d}{q} == NULL) || (dsa->\hyperlink{structdsa__st_ada27d9fb07daaac14be19b4ce12a7400}{g} == NULL))
+227         \textcolor{keywordflow}{return} (NULL);
+228     \textcolor{keywordflow}{return} (dsa);
+229 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=255pt]{testdsa_8h_ab326a27f3dee0f25a718a16505884eb9_cgraph}
+\end{center}
+\end{figure}
+
+

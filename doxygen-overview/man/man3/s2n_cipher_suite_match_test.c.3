@@ -1,0 +1,164 @@
+.TH "s2n-master/tests/unit/s2n_cipher_suite_match_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_cipher_suite_match_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 23 of file s2n_cipher_suite_match_test\&.c\&.
+.PP
+.nf
+24 {
+25     BEGIN_TEST();
+26 
+27     EXPECT_SUCCESS(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+28 
+29     {
+30         struct s2n_connection *conn;
+31         uint8_t wire[2];
+32         int count;
+33         EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_CLIENT));
+34 
+35         count = 0;
+36         for (int i = 0; i < 0xffff; i++) {
+37             wire[0] = (i >> 8);
+38             wire[1] = i & 0xff;
+39 
+40             if (s2n_set_cipher_as_client(conn, wire) == 0) {
+41                 count++;
+42             }
+43         }
+44 
+45         /* We should have exactly 22 cipher suites */
+46         EXPECT_EQUAL(count, 22);
+47 
+48         EXPECT_SUCCESS(s2n_connection_free(conn));
+49     }
+50 
+51     /* Test server cipher selection and scsv detection */
+52     {
+53         struct s2n_connection *conn;
+54         EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+55 
+56         uint8_t wire_ciphers[] = {
+57             TLS_RSA_WITH_RC4_128_MD5,
+58             TLS_RSA_WITH_RC4_128_SHA,
+59             TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+60             TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
+61             TLS_RSA_WITH_AES_128_CBC_SHA,
+62             TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
+63             TLS_RSA_WITH_AES_256_CBC_SHA,
+64             TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
+65             TLS_RSA_WITH_AES_128_CBC_SHA256,
+66             TLS_RSA_WITH_AES_256_CBC_SHA256,
+67             TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
+68             TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
+69             TLS_RSA_WITH_AES_128_GCM_SHA256,
+70             TLS_RSA_WITH_AES_256_GCM_SHA384,
+71             TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+72             TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+73             TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+74             TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+75             TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+76             TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+77             TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+78         };
+79 
+80         uint8_t wire_ciphers_fallback[] = {
+81             TLS_RSA_WITH_RC4_128_MD5,
+82             TLS_RSA_WITH_RC4_128_SHA,
+83             TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+84             TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
+85             TLS_RSA_WITH_AES_128_CBC_SHA,
+86             TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
+87             TLS_RSA_WITH_AES_256_CBC_SHA,
+88             TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
+89             TLS_RSA_WITH_AES_128_CBC_SHA256,
+90             TLS_RSA_WITH_AES_256_CBC_SHA256,
+91             TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
+92             TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
+93             TLS_RSA_WITH_AES_128_GCM_SHA256,
+94             TLS_RSA_WITH_AES_256_GCM_SHA384,
+95             TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+96             TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+97             TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+98             TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+99             TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+100             TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+101             TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+102             TLS_FALLBACK_SCSV, /* At the end to verify it isn't missed */
+103         };
+104 
+105         uint8_t wire_ciphers_renegotiation[] = {
+106             TLS_RSA_WITH_RC4_128_MD5,
+107             TLS_RSA_WITH_RC4_128_SHA,
+108             TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+109             TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA,
+110             TLS_RSA_WITH_AES_128_CBC_SHA,
+111             TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
+112             TLS_RSA_WITH_AES_256_CBC_SHA,
+113             TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
+114             TLS_RSA_WITH_AES_128_CBC_SHA256,
+115             TLS_RSA_WITH_AES_256_CBC_SHA256,
+116             TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
+117             TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
+118             TLS_RSA_WITH_AES_128_GCM_SHA256,
+119             TLS_RSA_WITH_AES_256_GCM_SHA384,
+120             TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+121             TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+122             TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+123             TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+124             TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+125             TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+126             TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+127             TLS_EMPTY_RENEGOTIATION_INFO_SCSV, /* At the end to verify it isn't missed */
+128         };
+129 
+130         const uint8_t cipher_count = sizeof(wire_ciphers) / S2N_TLS_CIPHER_SUITE_LEN;
+131         EXPECT_SUCCESS(s2n_set_cipher_as_tls_server(conn, wire_ciphers, cipher_count));
+132         EXPECT_EQUAL(conn->secure_renegotiation, 0);
+133         EXPECT_SUCCESS(s2n_connection_wipe(conn));
+134 
+135         const uint8_t cipher_count_renegotiation = sizeof(wire_ciphers_renegotiation) / S2N_TLS_CIPHER_SUITE_LEN;
+136         EXPECT_SUCCESS(s2n_set_cipher_as_tls_server(conn, wire_ciphers_renegotiation, cipher_count_renegotiation));
+137         EXPECT_EQUAL(conn->secure_renegotiation, 1);
+138         EXPECT_SUCCESS(s2n_connection_wipe(conn));
+139 
+140         const uint8_t cipher_count_fallback = sizeof(wire_ciphers_fallback) / S2N_TLS_CIPHER_SUITE_LEN;
+141         /* Simulate a TLSv11 client to trigger the fallback error */
+142         conn->client_protocol_version = S2N_TLS11;
+143         EXPECT_FAILURE(s2n_set_cipher_as_tls_server(conn, wire_ciphers_fallback, cipher_count_fallback));
+144         EXPECT_EQUAL(conn->secure_renegotiation, 0);
+145         EXPECT_SUCCESS(s2n_connection_wipe(conn));
+146 
+147         EXPECT_SUCCESS(s2n_connection_free(conn));
+148     }
+149 
+150     END_TEST();
+151 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

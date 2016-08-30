@@ -1,0 +1,73 @@
+\hypertarget{s2n__aead__cipher__aes__gcm_8c}{}\section{s2n-\/master/crypto/s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.c File Reference}
+\label{s2n__aead__cipher__aes__gcm_8c}\index{s2n-\/master/crypto/s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c@{s2n-\/master/crypto/s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c}}
+{\ttfamily \#include $<$openssl/aes.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/evp.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+cipher.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+crypto.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__aead__cipher__aes__gcm_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__cipher}{s2n\+\_\+cipher} \hyperlink{s2n__aead__cipher__aes__gcm_8c_ad69d1a1adfcd40963920c7f1086e8f0d}{s2n\+\_\+aes128\+\_\+gcm}
+\item 
+struct \hyperlink{structs2n__cipher}{s2n\+\_\+cipher} \hyperlink{s2n__aead__cipher__aes__gcm_8c_a440075ab45e872764dc348731695a233}{s2n\+\_\+aes256\+\_\+gcm}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c@{s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c}!s2n\+\_\+aes128\+\_\+gcm@{s2n\+\_\+aes128\+\_\+gcm}}
+\index{s2n\+\_\+aes128\+\_\+gcm@{s2n\+\_\+aes128\+\_\+gcm}!s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c@{s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+aes128\+\_\+gcm}{s2n_aes128_gcm}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher} s2n\+\_\+aes128\+\_\+gcm}\hypertarget{s2n__aead__cipher__aes__gcm_8c_ad69d1a1adfcd40963920c7f1086e8f0d}{}\label{s2n__aead__cipher__aes__gcm_8c_ad69d1a1adfcd40963920c7f1086e8f0d}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    .key\_material\_size = 16,
+    .type = S2N\_AEAD,
+    .io.aead = \{
+                .record\_iv\_size = \hyperlink{tls_2s2n__crypto_8h_add3117e0ce46cbefc80277387488c02b}{S2N\_TLS\_GCM\_EXPLICIT\_IV\_LEN},
+                .fixed\_iv\_size = \hyperlink{tls_2s2n__crypto_8h_aff9750dd2cce610b3b08288a1d4d7640}{S2N\_TLS\_GCM\_FIXED\_IV\_LEN},
+                .tag\_size = \hyperlink{tls_2s2n__crypto_8h_ac4fe45b744f10ee26b72a42dbfb6c00e}{S2N\_TLS\_GCM\_TAG\_LEN},
+                .decrypt = s2n\_aead\_cipher\_aes\_gcm\_decrypt,
+                .encrypt = s2n\_aead\_cipher\_aes\_gcm\_encrypt\},
+    .init = s2n\_aead\_cipher\_aes\_gcm\_init,
+    .get\_encryption\_key = s2n\_aead\_cipher\_aes128\_gcm\_get\_encryption\_key,
+    .get\_decryption\_key = s2n\_aead\_cipher\_aes128\_gcm\_get\_decryption\_key,
+    .destroy\_key = s2n\_aead\_cipher\_aes\_gcm\_destroy\_key,
+\}
+\end{DoxyCode}
+
+
+Definition at line 168 of file s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c.
+
+\index{s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c@{s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c}!s2n\+\_\+aes256\+\_\+gcm@{s2n\+\_\+aes256\+\_\+gcm}}
+\index{s2n\+\_\+aes256\+\_\+gcm@{s2n\+\_\+aes256\+\_\+gcm}!s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c@{s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+aes256\+\_\+gcm}{s2n_aes256_gcm}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cipher} s2n\+\_\+aes256\+\_\+gcm}\hypertarget{s2n__aead__cipher__aes__gcm_8c_a440075ab45e872764dc348731695a233}{}\label{s2n__aead__cipher__aes__gcm_8c_a440075ab45e872764dc348731695a233}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    .key\_material\_size = 32,
+    .type = S2N\_AEAD,
+    .io.aead = \{
+                .record\_iv\_size = \hyperlink{tls_2s2n__crypto_8h_add3117e0ce46cbefc80277387488c02b}{S2N\_TLS\_GCM\_EXPLICIT\_IV\_LEN},
+                .fixed\_iv\_size = \hyperlink{tls_2s2n__crypto_8h_aff9750dd2cce610b3b08288a1d4d7640}{S2N\_TLS\_GCM\_FIXED\_IV\_LEN},
+                .tag\_size = \hyperlink{tls_2s2n__crypto_8h_ac4fe45b744f10ee26b72a42dbfb6c00e}{S2N\_TLS\_GCM\_TAG\_LEN},
+                .decrypt = s2n\_aead\_cipher\_aes\_gcm\_decrypt,
+                .encrypt = s2n\_aead\_cipher\_aes\_gcm\_encrypt\},
+    .init = s2n\_aead\_cipher\_aes\_gcm\_init,
+    .get\_encryption\_key = s2n\_aead\_cipher\_aes256\_gcm\_get\_encryption\_key,
+    .get\_decryption\_key = s2n\_aead\_cipher\_aes256\_gcm\_get\_decryption\_key,
+    .destroy\_key = s2n\_aead\_cipher\_aes\_gcm\_destroy\_key,
+\}
+\end{DoxyCode}
+
+
+Definition at line 183 of file s2n\+\_\+aead\+\_\+cipher\+\_\+aes\+\_\+gcm.\+c.
+

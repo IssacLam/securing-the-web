@@ -1,0 +1,138 @@
+.TH "s2n-master/tests/unit/s2n_hkdf_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_hkdf_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hkdf\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhkdf_test_vector\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNUM_TESTS\fP   12"
+.br
+.ti -1c
+.RI "#define \fBMAX_OUTPUT_SIZE\fP   82"
+.br
+.ti -1c
+.RI "#define \fBMAX_PSEUDO_RAND_KEY_SIZE\fP   64"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_hkdf_extract\fP (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP *salt, const struct \fBs2n_blob\fP *key, struct \fBs2n_blob\fP *pseudo_rand_key)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define NUM_TESTS   12"
+
+.PP
+Definition at line 29 of file s2n_hkdf_test\&.c\&.
+.SS "#define MAX_OUTPUT_SIZE   82"
+
+.PP
+Definition at line 30 of file s2n_hkdf_test\&.c\&.
+.SS "#define MAX_PSEUDO_RAND_KEY_SIZE   64"
+
+.PP
+Definition at line 31 of file s2n_hkdf_test\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_hkdf_extract (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP * salt, const struct \fBs2n_blob\fP * key, struct \fBs2n_blob\fP * pseudo_rand_key)"
+
+.PP
+Definition at line 31 of file s2n_hkdf\&.c\&.
+.PP
+.nf
+32 {
+33     struct s2n_hmac_state hmac;
+34     pseudo_rand_key->size = s2n_hmac_digest_size(alg);
+35 
+36     GUARD(s2n_hmac_init(&hmac, alg, salt->data, salt->size));
+37     GUARD(s2n_hmac_update(&hmac, key->data, key->size));
+38     GUARD(s2n_hmac_digest(&hmac, pseudo_rand_key->data, pseudo_rand_key->size));
+39 
+40     return 0;
+41 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 520 of file s2n_hkdf_test\&.c\&.
+.PP
+.nf
+521 {
+522     uint8_t prk_pad[MAX_PSEUDO_RAND_KEY_SIZE];
+523     struct s2n_blob prk_result = { \&.data = prk_pad, \&.size = sizeof(prk_pad) };
+524 
+525     uint8_t output_pad[MAX_OUTPUT_SIZE];
+526     struct s2n_blob out_result = { \&.data = output_pad, \&.size = sizeof(output_pad) };
+527 
+528     struct s2n_blob in_key_blob, salt_blob, info_blob, actual_prk_blob, actual_output_blob;
+529 
+530     BEGIN_TEST();
+531 
+532     for (uint8_t i = 0; i < NUM_TESTS; i++) {
+533         struct hkdf_test_vector *test = &tests[i];
+534 
+535         s2n_blob_init(&in_key_blob, test->in_key, test->in_key_len);
+536         s2n_blob_init(&salt_blob, test->salt, test->salt_len);
+537         s2n_blob_init(&info_blob, test->info, test->info_len);
+538         s2n_blob_init(&actual_prk_blob, test->pseudo_rand_key, test->prk_len);
+539         s2n_blob_init(&actual_output_blob, test->output, test->output_len);
+540 
+541         EXPECT_SUCCESS(s2n_hkdf_extract(test->alg, &salt_blob, &in_key_blob, &prk_result));
+542         EXPECT_EQUAL(memcmp(prk_pad, actual_prk_blob\&.data, actual_prk_blob\&.size), 0);
+543 
+544         EXPECT_SUCCESS(s2n_hkdf(test->alg, &salt_blob, &in_key_blob, &info_blob, &out_result));
+545         EXPECT_EQUAL(memcmp(output_pad, actual_output_blob\&.data, actual_output_blob\&.size), 0);
+546     }
+547 
+548     /* This size (5101) is obtained by multiplying the digest size for
+549      * SHA1 (20) by the maximum number of rounds allowed for HKDF (255),
+550      * then adding 1
+551      */
+552     uint8_t error_out_pad[5101];
+553     struct s2n_blob error_out = { \&.data = error_out_pad, \&.size = sizeof(error_out_pad) };
+554     struct s2n_blob zero_out = { \&.data = output_pad, \&.size = 0 };
+555 
+556     s2n_hmac_algorithm alg = S2N_HMAC_SHA1;
+557 
+558     EXPECT_FAILURE(s2n_hkdf(alg, &salt_blob, &in_key_blob, &info_blob, &error_out));
+559     EXPECT_FAILURE(s2n_hkdf(alg, &salt_blob, &in_key_blob, &info_blob, &zero_out));
+560 
+561     END_TEST();
+562 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

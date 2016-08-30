@@ -1,0 +1,246 @@
+\hypertarget{rc2__locl_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/rc2/rc2\+\_\+locl.h File Reference}
+\label{rc2__locl_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/rc2/rc2\+\_\+locl.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/rc2/rc2\+\_\+locl.\+h}}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rc2__locl_8h_a051821f93fbe2e488c389870a3e8dde4}{c2l}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l)            
+\item 
+\#define \hyperlink{rc2__locl_8h_a44097aaa9c60a18f029941bd6b0885ba}{c2ln}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l1,  l2,  n)
+\item 
+\#define \hyperlink{rc2__locl_8h_a0e628ee046442978b78ef2fa1cdee0eb}{l2c}(l,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})            
+\item 
+\#define \hyperlink{rc2__locl_8h_ade9b2d14ab67918b1a7fa357a8cd9c64}{l2cn}(l1,  l2,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  n)
+\item 
+\#define \hyperlink{rc2__locl_8h_a2477f837e7073042537fa249367e5fa6}{n2ln}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l1,  l2,  n)
+\item 
+\#define \hyperlink{rc2__locl_8h_af2b87f0d522a91802373fee6d98287e9}{l2nn}(l1,  l2,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  n)
+\item 
+\#define \hyperlink{rc2__locl_8h_a4354a7c769f81d16cf56c43f43dadcb9}{n2l}(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c},  l)            
+\item 
+\#define \hyperlink{rc2__locl_8h_af1a7e80365b16e784429764931644b85}{l2n}(l,  \hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})            
+\item 
+\#define \hyperlink{rc2__locl_8h_ad00501244583c7499d0cdcb4894ff1de}{C\+\_\+\+R\+C2}(n)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!c2l@{c2l}}
+\index{c2l@{c2l}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{c2l}{c2l}}]{\setlength{\rightskip}{0pt plus 5cm}\#define c2l(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_a051821f93fbe2e488c389870a3e8dde4}{}\label{rc2__locl_8h_a051821f93fbe2e488c389870a3e8dde4}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(l =((\textcolor{keywordtype}{unsigned} long)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))    , \(\backslash\)
+                         l|=((\textcolor{keywordtype}{unsigned} long)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<< 8L, \(\backslash\)
+                         l|=((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long})(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<16L, \(\backslash\)
+                         l|=((\textcolor{keywordtype}{unsigned} long)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<24L)
+\end{DoxyCode}
+
+
+Definition at line 60 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!c2ln@{c2ln}}
+\index{c2ln@{c2ln}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{c2ln}{c2ln}}]{\setlength{\rightskip}{0pt plus 5cm}\#define c2ln(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l1, }
+\item[{}]{l2, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_a44097aaa9c60a18f029941bd6b0885ba}{}\label{rc2__locl_8h_a44097aaa9c60a18f029941bd6b0885ba}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+                        c+=n; \(\backslash\)
+                        l1=l2=0; \(\backslash\)
+                        switch (n) \{ \(\backslash\)
+                        case 8: l2 =((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<24L; \(\backslash\)
+                        case 7: l2|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<16L; \(\backslash\)
+                        case 6: l2|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<< 8L; \(\backslash\)
+                        case 5: l2|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))));     \(\backslash\)
+                        case 4: l1 =((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<24L; \(\backslash\)
+                        case 3: l1|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<16L; \(\backslash\)
+                        case 2: l1|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<< 8L; \(\backslash\)
+                        case 1: l1|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))));     \(\backslash\)
+                                \} \(\backslash\)
+                        \}
+\end{DoxyCode}
+
+
+Definition at line 67 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!l2c@{l2c}}
+\index{l2c@{l2c}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2c}{l2c}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2c(
+\begin{DoxyParamCaption}
+\item[{}]{l, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_a0e628ee046442978b78ef2fa1cdee0eb}{}\label{rc2__locl_8h_a0e628ee046442978b78ef2fa1cdee0eb}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)     )&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>> 8L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>16L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>24L)&0xff))
+\end{DoxyCode}
+
+
+Definition at line 83 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!l2cn@{l2cn}}
+\index{l2cn@{l2cn}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2cn}{l2cn}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2cn(
+\begin{DoxyParamCaption}
+\item[{}]{l1, }
+\item[{}]{l2, }
+\item[{}]{{\bf c}, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_ade9b2d14ab67918b1a7fa357a8cd9c64}{}\label{rc2__locl_8h_ade9b2d14ab67918b1a7fa357a8cd9c64}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+                        c+=n; \(\backslash\)
+                        switch (n) \{ \(\backslash\)
+                        case 8: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>>24L)&0xff); \(\backslash\)
+                        case 7: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>>16L)&0xff); \(\backslash\)
+                        case 6: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>> 8L)&0xff); \(\backslash\)
+                        case 5: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)     )&0xff); \(\backslash\)
+                        case 4: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>>24L)&0xff); \(\backslash\)
+                        case 3: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>>16L)&0xff); \(\backslash\)
+                        case 2: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>> 8L)&0xff); \(\backslash\)
+                        case 1: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)     )&0xff); \(\backslash\)
+                                \} \(\backslash\)
+                        \}
+\end{DoxyCode}
+
+
+Definition at line 90 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!n2ln@{n2ln}}
+\index{n2ln@{n2ln}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{n2ln}{n2ln}}]{\setlength{\rightskip}{0pt plus 5cm}\#define n2ln(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l1, }
+\item[{}]{l2, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_a2477f837e7073042537fa249367e5fa6}{}\label{rc2__locl_8h_a2477f837e7073042537fa249367e5fa6}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+                        c+=n; \(\backslash\)
+                        l1=l2=0; \(\backslash\)
+                        switch (n) \{ \(\backslash\)
+                        case 8: l2 =((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))    ; \(\backslash\)
+                        case 7: l2|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<< 8; \(\backslash\)
+                        case 6: l2|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<16; \(\backslash\)
+                        case 5: l2|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<24; \(\backslash\)
+                        case 4: l1 =((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))    ; \(\backslash\)
+                        case 3: l1|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<< 8; \(\backslash\)
+                        case 2: l1|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<16; \(\backslash\)
+                        case 1: l1|=((\textcolor{keywordtype}{unsigned} long)(*(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))))<<24; \(\backslash\)
+                                \} \(\backslash\)
+                        \}
+\end{DoxyCode}
+
+
+Definition at line 105 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!l2nn@{l2nn}}
+\index{l2nn@{l2nn}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2nn}{l2nn}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2nn(
+\begin{DoxyParamCaption}
+\item[{}]{l1, }
+\item[{}]{l2, }
+\item[{}]{{\bf c}, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_af2b87f0d522a91802373fee6d98287e9}{}\label{rc2__locl_8h_af2b87f0d522a91802373fee6d98287e9}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+                        c+=n; \(\backslash\)
+                        switch (n) \{ \(\backslash\)
+                        case 8: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)    )&0xff); \(\backslash\)
+                        case 7: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>> 8)&0xff); \(\backslash\)
+                        case 6: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>>16)&0xff); \(\backslash\)
+                        case 5: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l2)>>24)&0xff); \(\backslash\)
+                        case 4: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)    )&0xff); \(\backslash\)
+                        case 3: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>> 8)&0xff); \(\backslash\)
+                        case 2: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>>16)&0xff); \(\backslash\)
+                        case 1: *(--(\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c}))=(\textcolor{keywordtype}{unsigned} char)(((l1)>>24)&0xff); \(\backslash\)
+                                \} \(\backslash\)
+                        \}
+\end{DoxyCode}
+
+
+Definition at line 121 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!n2l@{n2l}}
+\index{n2l@{n2l}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{n2l}{n2l}}]{\setlength{\rightskip}{0pt plus 5cm}\#define n2l(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf c}, }
+\item[{}]{l}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_a4354a7c769f81d16cf56c43f43dadcb9}{}\label{rc2__locl_8h_a4354a7c769f81d16cf56c43f43dadcb9}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(l =((\textcolor{keywordtype}{unsigned} long)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<24L, \(\backslash\)
+                         l|=((\textcolor{keywordtype}{unsigned} long)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<<16L, \(\backslash\)
+                         l|=((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long})(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)))<< 8L, \(\backslash\)
+                         l|=((\textcolor{keywordtype}{unsigned} long)(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++))))
+\end{DoxyCode}
+
+
+Definition at line 136 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!l2n@{l2n}}
+\index{l2n@{l2n}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{l2n}{l2n}}]{\setlength{\rightskip}{0pt plus 5cm}\#define l2n(
+\begin{DoxyParamCaption}
+\item[{}]{l, }
+\item[{}]{{\bf c}}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_af1a7e80365b16e784429764931644b85}{}\label{rc2__locl_8h_af1a7e80365b16e784429764931644b85}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(*((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>24L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>>16L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)>> 8L)&0xff), \(\backslash\)
+                         *((\hyperlink{ssl__locl_8h_a0f1453a6148b10d986345d1db98a4d6f}{c})++)=(\textcolor{keywordtype}{unsigned} char)(((l)     )&0xff))
+\end{DoxyCode}
+
+
+Definition at line 142 of file rc2\+\_\+locl.\+h.
+
+\index{rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}!C\+\_\+\+R\+C2@{C\+\_\+\+R\+C2}}
+\index{C\+\_\+\+R\+C2@{C\+\_\+\+R\+C2}!rc2\+\_\+locl.\+h@{rc2\+\_\+locl.\+h}}
+\subsubsection[{\texorpdfstring{C\+\_\+\+R\+C2}{C_RC2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+\_\+\+R\+C2(
+\begin{DoxyParamCaption}
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{rc2__locl_8h_ad00501244583c7499d0cdcb4894ff1de}{}\label{rc2__locl_8h_ad00501244583c7499d0cdcb4894ff1de}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}=(x0+(x1& ~x3)+(x2&x3)+ *(p0++))&0xffff; \(\backslash\)
+        x0=(t<<1)|(t>>15); \(\backslash\)
+        t=(x1+(x2& ~x0)+(x3&x0)+ *(p0++))&0xffff; \(\backslash\)
+        x1=(t<<2)|(t>>14); \(\backslash\)
+        t=(x2+(x3& ~x1)+(x0&x1)+ *(p0++))&0xffff; \(\backslash\)
+        x2=(t<<3)|(t>>13); \(\backslash\)
+        t=(x3+(x0& ~x2)+(x1&x2)+ *(p0++))&0xffff; \(\backslash\)
+        x3=(t<<5)|(t>>11);
+\end{DoxyCode}
+
+
+Definition at line 147 of file rc2\+\_\+locl.\+h.
+

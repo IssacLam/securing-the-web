@@ -1,0 +1,75 @@
+\hypertarget{s2n__aead_8c}{}\section{s2n-\/master/tls/s2n\+\_\+aead.c File Reference}
+\label{s2n__aead_8c}\index{s2n-\/master/tls/s2n\+\_\+aead.\+c@{s2n-\/master/tls/s2n\+\_\+aead.\+c}}
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+record.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+aead.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__aead_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__aead_8c_aafbbe3f24a9f607cc8cb47a6af5a3505}{s2n\+\_\+aead\+\_\+aad\+\_\+init} (const struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn, uint8\+\_\+t $\ast$sequence\+\_\+number, uint8\+\_\+t content\+\_\+type, uint16\+\_\+t record\+\_\+length, struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$ad)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+aead.\+c@{s2n\+\_\+aead.\+c}!s2n\+\_\+aead\+\_\+aad\+\_\+init@{s2n\+\_\+aead\+\_\+aad\+\_\+init}}
+\index{s2n\+\_\+aead\+\_\+aad\+\_\+init@{s2n\+\_\+aead\+\_\+aad\+\_\+init}!s2n\+\_\+aead.\+c@{s2n\+\_\+aead.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+aead\+\_\+aad\+\_\+init(const struct s2n\+\_\+connection $\ast$conn, uint8\+\_\+t $\ast$sequence\+\_\+number, uint8\+\_\+t content\+\_\+type, uint16\+\_\+t record\+\_\+length, struct s2n\+\_\+stuffer $\ast$ad)}{s2n_aead_aad_init(const struct s2n_connection *conn, uint8_t *sequence_number, uint8_t content_type, uint16_t record_length, struct s2n_stuffer *ad)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+aead\+\_\+aad\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf s2n\+\_\+connection} $\ast$}]{conn, }
+\item[{uint8\+\_\+t $\ast$}]{sequence\+\_\+number, }
+\item[{uint8\+\_\+t}]{content\+\_\+type, }
+\item[{uint16\+\_\+t}]{record\+\_\+length, }
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{ad}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__aead_8c_aafbbe3f24a9f607cc8cb47a6af5a3505}{}\label{s2n__aead_8c_aafbbe3f24a9f607cc8cb47a6af5a3505}
+
+
+Definition at line 25 of file s2n\+\_\+aead.\+c.
+
+
+\begin{DoxyCode}
+26 \{
+27     \textcolor{comment}{/* ad = seq\_num || record\_type || version || length */}
+28     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_afe5e2db5400000f371d2245e1e0669eb}{s2n\_stuffer\_write\_bytes}(ad, sequence\_number, 
+      \hyperlink{tls_2s2n__crypto_8h_ab6af529d3a237c0d8d2f67edcf831c25}{S2N\_TLS\_SEQUENCE\_NUM\_LEN}));
+29     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(ad, content\_type));
+30     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(ad, conn->
+      \hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} / 10));
+31     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_aaca63d5bb519a92734bd0287199a7f5a}{s2n\_stuffer\_write\_uint8}(ad, conn->
+      \hyperlink{structs2n__connection_af9b47a1de13de52e7beddb948a40fec1}{actual\_protocol\_version} % 10));
+32     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a9d9c55b0847a8ae81b6379971a13f27f}{s2n\_stuffer\_write\_uint16}(ad, record\_length));
+33 
+34     \textcolor{keywordflow}{return} 0;
+35 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__aead_8c_aafbbe3f24a9f607cc8cb47a6af5a3505_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__aead_8c_aafbbe3f24a9f607cc8cb47a6af5a3505_icgraph}
+\end{center}
+\end{figure}
+
+

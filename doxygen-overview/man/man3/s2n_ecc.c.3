@@ -1,0 +1,300 @@
+.TH "s2n-master/crypto/s2n_ecc.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_ecc.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'crypto/s2n_ecc\&.h'\fP
+.br
+\fC#include <openssl/ec\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/ecdh\&.h>\fP
+.br
+\fC#include <openssl/obj_mac\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'tls/s2n_tls_parameters\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS_EC_CURVE_TYPE_NAMED\fP   3"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_ecc_generate_ephemeral_key\fP (struct \fBs2n_ecc_params\fP *server_ecc_params)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_write_ecc_params\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *out, struct \fBs2n_blob\fP *written)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_read_ecc_params\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *in, struct \fBs2n_blob\fP *read)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_compute_shared_secret_as_server\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *Yc_in, struct \fBs2n_blob\fP *shared_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_compute_shared_secret_as_client\fP (struct \fBs2n_ecc_params\fP *server_ecc_params, struct \fBs2n_stuffer\fP *Yc_out, struct \fBs2n_blob\fP *shared_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_params_free\fP (struct \fBs2n_ecc_params\fP *server_ecc_params)"
+.br
+.ti -1c
+.RI "int \fBs2n_ecc_find_supported_curve\fP (struct \fBs2n_blob\fP *iana_ids, const struct \fBs2n_ecc_named_curve\fP **found)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const struct \fBs2n_ecc_named_curve\fP \fBs2n_ecc_supported_curves\fP [2]"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TLS_EC_CURVE_TYPE_NAMED   3"
+
+.PP
+Definition at line 28 of file s2n_ecc\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_ecc_generate_ephemeral_key (struct \fBs2n_ecc_params\fP * server_ecc_params)"
+
+.PP
+Definition at line 42 of file s2n_ecc\&.c\&.
+.PP
+.nf
+43 {
+44     notnull_check(server_ecc_params->negotiated_curve);
+45     server_ecc_params->ec_key = s2n_ecc_generate_own_key(server_ecc_params->negotiated_curve);
+46     if (server_ecc_params->ec_key == NULL) {
+47         S2N_ERROR(S2N_ERR_ECDHE_GEN_KEY);
+48     }
+49     return 0;
+50 }
+.fi
+.SS "int s2n_ecc_write_ecc_params (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * out, struct \fBs2n_blob\fP * written)"
+
+.PP
+Definition at line 52 of file s2n_ecc\&.c\&.
+.PP
+.nf
+53 {
+54     uint8_t point_len;
+55     struct s2n_blob point;
+56 
+57     /* Remember when the written data starts */
+58     written->data = s2n_stuffer_raw_write(out, 0);
+59     notnull_check(written->data);
+60 
+61     GUARD(s2n_stuffer_write_uint8(out, TLS_EC_CURVE_TYPE_NAMED));
+62     GUARD(s2n_stuffer_write_uint16(out, server_ecc_params->negotiated_curve->iana_id));
+63 
+64     /* Precalculate point length */
+65     GUARD(s2n_ecc_calculate_point_length(EC_KEY_get0_public_key(server_ecc_params->ec_key), EC_KEY_get0_group(server_ecc_params->ec_key), &point_len));
+66 
+67     /* Write point length */
+68     GUARD(s2n_stuffer_write_uint8(out, point_len));
+69 
+70     /* Write the point */
+71     point\&.data = s2n_stuffer_raw_write(out, point_len);
+72     point\&.size = point_len;
+73     notnull_check(point\&.data);
+74     GUARD(s2n_ecc_write_point_data_snug(EC_KEY_get0_public_key(server_ecc_params->ec_key), EC_KEY_get0_group(server_ecc_params->ec_key), &point));
+75 
+76     written->size = 3 + (1 + point_len);
+77 
+78     return 0;
+79 }
+.fi
+.SS "int s2n_ecc_read_ecc_params (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * in, struct \fBs2n_blob\fP * read)"
+
+.PP
+Definition at line 81 of file s2n_ecc\&.c\&.
+.PP
+.nf
+82 {
+83     uint8_t curve_type;
+84     uint8_t point_length;
+85     struct s2n_blob point_blob, curve_blob;
+86     EC_POINT *point;
+87 
+88     /* Remember where we started reading the data */
+89     read->data = s2n_stuffer_raw_read(in, 0);
+90     notnull_check(read->data);
+91 
+92     /* Read the curve */
+93     GUARD(s2n_stuffer_read_uint8(in, &curve_type));
+94     if (curve_type != TLS_EC_CURVE_TYPE_NAMED) {
+95         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+96     }
+97     curve_blob\&.data = s2n_stuffer_raw_read(in, 2);
+98     notnull_check(curve_blob\&.data);
+99 
+100     curve_blob\&.size = 2;
+101     /* Verify that the client supports the server curve */
+102     if (s2n_ecc_find_supported_curve(&curve_blob, &server_ecc_params->negotiated_curve) != 0) {
+103         S2N_ERROR(S2N_ERR_ECDHE_UNSUPPORTED_CURVE);
+104     }
+105     /* Create a key to store the server public point */
+106     server_ecc_params->ec_key = EC_KEY_new_by_curve_name(server_ecc_params->negotiated_curve->libcrypto_nid);
+107     if (server_ecc_params->ec_key == NULL) {
+108         S2N_ERROR(S2N_ERR_ECDHE_UNSUPPORTED_CURVE);
+109     }
+110 
+111     /* Read the point */
+112     GUARD(s2n_stuffer_read_uint8(in, &point_length));
+113     point_blob\&.size = point_length;
+114     point_blob\&.data = s2n_stuffer_raw_read(in, point_blob\&.size);
+115     notnull_check(point_blob\&.data);
+116 
+117     /* Parse and store the server public point */
+118     point = s2n_ecc_blob_to_point(&point_blob, server_ecc_params->ec_key);
+119     if (point == NULL) {
+120         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+121     }
+122     if (EC_KEY_set_public_key(server_ecc_params->ec_key, point) != 1) {
+123         EC_POINT_free(point);
+124         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+125     }
+126     EC_POINT_free(point);
+127 
+128     read->size = 3 + (1 + point_length);
+129 
+130     return 0;
+131 }
+.fi
+.SS "int s2n_ecc_compute_shared_secret_as_server (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * Yc_in, struct \fBs2n_blob\fP * shared_key)"
+
+.PP
+Definition at line 133 of file s2n_ecc\&.c\&.
+.PP
+.nf
+134 {
+135     uint8_t client_public_len;
+136     struct s2n_blob client_public_blob;
+137     EC_POINT *client_public;
+138     int rc;
+139 
+140     GUARD(s2n_stuffer_read_uint8(Yc_in, &client_public_len));
+141     client_public_blob\&.size = client_public_len;
+142     client_public_blob\&.data = s2n_stuffer_raw_read(Yc_in, client_public_blob\&.size);
+143     notnull_check(client_public_blob\&.data);
+144 
+145     /* Parse the client public */
+146     client_public = s2n_ecc_blob_to_point(&client_public_blob, server_ecc_params->ec_key);
+147     if (client_public == NULL) {
+148         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+149     }
+150 
+151     /* Compute the key and free the point */
+152     rc = s2n_ecc_compute_shared_secret(server_ecc_params->ec_key, client_public, shared_key);
+153     EC_POINT_free(client_public);
+154     return rc;
+155 }
+.fi
+.SS "int s2n_ecc_compute_shared_secret_as_client (struct \fBs2n_ecc_params\fP * server_ecc_params, struct \fBs2n_stuffer\fP * Yc_out, struct \fBs2n_blob\fP * shared_key)"
+
+.PP
+Definition at line 157 of file s2n_ecc\&.c\&.
+.PP
+.nf
+158 {
+159     EC_KEY *client_key;
+160 
+161     /* Generate the client key\&. Don't forget to free it\&. */
+162     notnull_check(server_ecc_params->negotiated_curve);
+163     client_key = s2n_ecc_generate_own_key(server_ecc_params->negotiated_curve);
+164     if (client_key == NULL) {
+165         S2N_ERROR(S2N_ERR_ECDHE_GEN_KEY);
+166     }
+167 
+168     /* Compute the shared secret */
+169     if (s2n_ecc_compute_shared_secret(client_key, EC_KEY_get0_public_key(server_ecc_params->ec_key), shared_key) != 0) {
+170         EC_KEY_free(client_key);
+171         S2N_ERROR(S2N_ERR_ECDHE_SHARED_SECRET);
+172     }
+173 
+174     /* Write the client public to Yc */
+175     if (s2n_ecc_write_point_with_length(EC_KEY_get0_public_key(client_key), EC_KEY_get0_group(client_key), Yc_out) != 0) {
+176         EC_KEY_free(client_key);
+177         S2N_ERROR(S2N_ERR_ECDHE_SERIALIZING);
+178     }
+179     EC_KEY_free(client_key);
+180 
+181     return 0;
+182 }
+.fi
+.SS "int s2n_ecc_params_free (struct \fBs2n_ecc_params\fP * server_ecc_params)"
+
+.PP
+Definition at line 184 of file s2n_ecc\&.c\&.
+.PP
+.nf
+185 {
+186     if (server_ecc_params->ec_key != NULL) {
+187         EC_KEY_free(server_ecc_params->ec_key);
+188         server_ecc_params->ec_key = NULL;
+189     }
+190     return 0;
+191 }
+.fi
+.SS "int s2n_ecc_find_supported_curve (struct \fBs2n_blob\fP * iana_ids, const struct \fBs2n_ecc_named_curve\fP ** found)"
+
+.PP
+Definition at line 281 of file s2n_ecc\&.c\&.
+.PP
+.nf
+282 {
+283     struct s2n_stuffer iana_ids_in;
+284 
+285     GUARD(s2n_stuffer_init(&iana_ids_in, iana_ids));
+286     GUARD(s2n_stuffer_write(&iana_ids_in, iana_ids));
+287     for (int i = 0; i < sizeof(s2n_ecc_supported_curves) / sizeof(s2n_ecc_supported_curves[0]); i++) {
+288         const struct s2n_ecc_named_curve *supported_curve = &s2n_ecc_supported_curves[i];
+289         for (int j = 0; j < iana_ids->size / 2; j++) {
+290             uint16_t iana_id;
+291             GUARD(s2n_stuffer_read_uint16(&iana_ids_in, &iana_id));
+292 
+293             if (supported_curve->iana_id == iana_id) {
+294                 *found = supported_curve;
+295                 return 0;
+296             }
+297         }
+298         GUARD(s2n_stuffer_reread(&iana_ids_in));
+299     }
+300 
+301     /* Nothing found */
+302     S2N_ERROR(S2N_ERR_ECDHE_UNSUPPORTED_CURVE);
+303 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "const struct \fBs2n_ecc_named_curve\fP s2n_ecc_supported_curves[2]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    {\&.iana_id = TLS_EC_CURVE_SECP_256_R1,\&.libcrypto_nid = NID_X9_62_prime256v1},
+    {\&.iana_id = TLS_EC_CURVE_SECP_384_R1,\&.libcrypto_nid = NID_secp384r1},
+}
+.fi
+.PP
+Definition at line 30 of file s2n_ecc\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

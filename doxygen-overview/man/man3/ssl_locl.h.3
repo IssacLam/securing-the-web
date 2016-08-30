@@ -1,0 +1,2854 @@
+.TH "s2n-master/libcrypto-build/openssl/ssl/ssl_locl.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/ssl/ssl_locl.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'e_os\&.h'\fP
+.br
+\fC#include <openssl/buffer\&.h>\fP
+.br
+\fC#include <openssl/comp\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/stack\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/dsa\&.h>\fP
+.br
+\fC#include <openssl/err\&.h>\fP
+.br
+\fC#include <openssl/ssl\&.h>\fP
+.br
+\fC#include <openssl/symhacks\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcert_pkey_st\fP"
+.br
+.ti -1c
+.RI "struct \fBcustom_ext_method\fP"
+.br
+.ti -1c
+.RI "struct \fBcustom_ext_methods\fP"
+.br
+.ti -1c
+.RI "struct \fBcert_st\fP"
+.br
+.ti -1c
+.RI "struct \fBsess_cert_st\fP"
+.br
+.ti -1c
+.RI "struct \fBtls_sigalgs_st\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_enc_method\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_comp_st\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_buf_freelist_st\fP"
+.br
+.ti -1c
+.RI "struct \fBssl3_buf_freelist_entry_st\fP"
+.br
+.ti -1c
+.RI "struct \fBopenssl_ssl_test_functions\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBc2l\fP(\fBc\fP,  l)            "
+.br
+.ti -1c
+.RI "#define \fBc2ln\fP(\fBc\fP,  l1,  l2,  n)"
+.br
+.ti -1c
+.RI "#define \fBl2c\fP(l,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBn2l\fP(\fBc\fP,  l)            "
+.br
+.ti -1c
+.RI "#define \fBl2n\fP(l,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBl2n6\fP(l,  \fBc\fP)          "
+.br
+.ti -1c
+.RI "#define \fBl2n8\fP(l,  \fBc\fP)          "
+.br
+.ti -1c
+.RI "#define \fBn2l6\fP(\fBc\fP,  l)          "
+.br
+.ti -1c
+.RI "#define \fBl2cn\fP(l1,  l2,  \fBc\fP,  n)"
+.br
+.ti -1c
+.RI "#define \fBn2s\fP(\fBc\fP,  s)            "
+.br
+.ti -1c
+.RI "#define \fBs2n\fP(s,  \fBc\fP)            "
+.br
+.ti -1c
+.RI "#define \fBn2l3\fP(\fBc\fP,  l)          "
+.br
+.ti -1c
+.RI "#define \fBl2n3\fP(l,  \fBc\fP)          "
+.br
+.ti -1c
+.RI "#define \fBSSL_DECRYPT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENCRYPT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTWO_BYTE_BIT\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBSEC_ESC_BIT\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBTWO_BYTE_MASK\fP   0x7fff"
+.br
+.ti -1c
+.RI "#define \fBTHREE_BYTE_MASK\fP   0x3fff"
+.br
+.ti -1c
+.RI "#define \fBINC32\fP(\fBa\fP)               ((\fBa\fP)=((\fBa\fP)+1)&0xffffffffL)"
+.br
+.ti -1c
+.RI "#define \fBDEC32\fP(\fBa\fP)               ((\fBa\fP)=((\fBa\fP)\-1)&0xffffffffL)"
+.br
+.ti -1c
+.RI "#define \fBMAX_MAC_SIZE\fP   20     /* up from 16 for SSLv3 */"
+.br
+.ti -1c
+.RI "#define \fBSSL_kRSA\fP   0x00000001L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kDHr\fP   0x00000002L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kDHd\fP   0x00000004L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kEDH\fP   0x00000008L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kDHE\fP   \fBSSL_kEDH\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL_kKRB5\fP   0x00000010L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kECDHr\fP   0x00000020L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kECDHe\fP   0x00000040L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kEECDH\fP   0x00000080L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kECDHE\fP   \fBSSL_kEECDH\fP"
+.br
+.ti -1c
+.RI "#define \fBSSL_kPSK\fP   0x00000100L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kGOST\fP   0x00000200L"
+.br
+.ti -1c
+.RI "#define \fBSSL_kSRP\fP   0x00000400L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aRSA\fP   0x00000001L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aDSS\fP   0x00000002L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aNULL\fP   0x00000004L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aDH\fP   0x00000008L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aECDH\fP   0x00000010L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aKRB5\fP   0x00000020L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aECDSA\fP   0x00000040L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aPSK\fP   0x00000080L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aGOST94\fP   0x00000100L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aGOST01\fP   0x00000200L"
+.br
+.ti -1c
+.RI "#define \fBSSL_aSRP\fP   0x00000400L"
+.br
+.ti -1c
+.RI "#define \fBSSL_DES\fP   0x00000001L"
+.br
+.ti -1c
+.RI "#define \fBSSL_3DES\fP   0x00000002L"
+.br
+.ti -1c
+.RI "#define \fBSSL_RC4\fP   0x00000004L"
+.br
+.ti -1c
+.RI "#define \fBSSL_RC2\fP   0x00000008L"
+.br
+.ti -1c
+.RI "#define \fBSSL_IDEA\fP   0x00000010L"
+.br
+.ti -1c
+.RI "#define \fBSSL_eNULL\fP   0x00000020L"
+.br
+.ti -1c
+.RI "#define \fBSSL_AES128\fP   0x00000040L"
+.br
+.ti -1c
+.RI "#define \fBSSL_AES256\fP   0x00000080L"
+.br
+.ti -1c
+.RI "#define \fBSSL_CAMELLIA128\fP   0x00000100L"
+.br
+.ti -1c
+.RI "#define \fBSSL_CAMELLIA256\fP   0x00000200L"
+.br
+.ti -1c
+.RI "#define \fBSSL_eGOST2814789CNT\fP   0x00000400L"
+.br
+.ti -1c
+.RI "#define \fBSSL_SEED\fP   0x00000800L"
+.br
+.ti -1c
+.RI "#define \fBSSL_AES128GCM\fP   0x00001000L"
+.br
+.ti -1c
+.RI "#define \fBSSL_AES256GCM\fP   0x00002000L"
+.br
+.ti -1c
+.RI "#define \fBSSL_AES\fP   (\fBSSL_AES128\fP|\fBSSL_AES256\fP|\fBSSL_AES128GCM\fP|\fBSSL_AES256GCM\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CAMELLIA\fP   (\fBSSL_CAMELLIA128\fP|\fBSSL_CAMELLIA256\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_MD5\fP   0x00000001L"
+.br
+.ti -1c
+.RI "#define \fBSSL_SHA1\fP   0x00000002L"
+.br
+.ti -1c
+.RI "#define \fBSSL_GOST94\fP   0x00000004L"
+.br
+.ti -1c
+.RI "#define \fBSSL_GOST89MAC\fP   0x00000008L"
+.br
+.ti -1c
+.RI "#define \fBSSL_SHA256\fP   0x00000010L"
+.br
+.ti -1c
+.RI "#define \fBSSL_SHA384\fP   0x00000020L"
+.br
+.ti -1c
+.RI "#define \fBSSL_AEAD\fP   0x00000040L"
+.br
+.ti -1c
+.RI "#define \fBSSL_SSLV2\fP   0x00000001UL"
+.br
+.ti -1c
+.RI "#define \fBSSL_SSLV3\fP   0x00000002UL"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSV1\fP   \fBSSL_SSLV3\fP/* for now */"
+.br
+.ti -1c
+.RI "#define \fBSSL_TLSV1_2\fP   0x00000004UL"
+.br
+.ti -1c
+.RI "#define \fBSSL_HANDSHAKE_MAC_MD5\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBSSL_HANDSHAKE_MAC_SHA\fP   0x20"
+.br
+.ti -1c
+.RI "#define \fBSSL_HANDSHAKE_MAC_GOST94\fP   0x40"
+.br
+.ti -1c
+.RI "#define \fBSSL_HANDSHAKE_MAC_SHA256\fP   0x80"
+.br
+.ti -1c
+.RI "#define \fBSSL_HANDSHAKE_MAC_SHA384\fP   0x100"
+.br
+.ti -1c
+.RI "#define \fBSSL_HANDSHAKE_MAC_DEFAULT\fP   (\fBSSL_HANDSHAKE_MAC_MD5\fP | \fBSSL_HANDSHAKE_MAC_SHA\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_MAX_DIGEST\fP   6"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_DGST_MASK\fP   (0xff << TLS1_PRF_DGST_SHIFT)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_DGST_SHIFT\fP   10"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_MD5\fP   (\fBSSL_HANDSHAKE_MAC_MD5\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_SHA1\fP   (\fBSSL_HANDSHAKE_MAC_SHA\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_SHA256\fP   (\fBSSL_HANDSHAKE_MAC_SHA256\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_SHA384\fP   (\fBSSL_HANDSHAKE_MAC_SHA384\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF_GOST94\fP   (\fBSSL_HANDSHAKE_MAC_GOST94\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_PRF\fP   (\fBTLS1_PRF_MD5\fP | \fBTLS1_PRF_SHA1\fP)"
+.br
+.ti -1c
+.RI "#define \fBTLS1_STREAM_MAC\fP   0x04"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXP_MASK\fP   0x00000003L"
+.br
+.ti -1c
+.RI "#define \fBSSL_STRONG_MASK\fP   0x000001fcL"
+.br
+.ti -1c
+.RI "#define \fBSSL_NOT_EXP\fP   0x00000001L"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXPORT\fP   0x00000002L"
+.br
+.ti -1c
+.RI "#define \fBSSL_STRONG_NONE\fP   0x00000004L"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXP40\fP   0x00000008L"
+.br
+.ti -1c
+.RI "#define \fBSSL_MICRO\fP   (\fBSSL_EXP40\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXP56\fP   0x00000010L"
+.br
+.ti -1c
+.RI "#define \fBSSL_MINI\fP   (\fBSSL_EXP56\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_LOW\fP   0x00000020L"
+.br
+.ti -1c
+.RI "#define \fBSSL_MEDIUM\fP   0x00000040L"
+.br
+.ti -1c
+.RI "#define \fBSSL_HIGH\fP   0x00000080L"
+.br
+.ti -1c
+.RI "#define \fBSSL_FIPS\fP   0x00000100L"
+.br
+.ti -1c
+.RI "#define \fBSSL_NOT_DEFAULT\fP   0x00000200L"
+.br
+.ti -1c
+.RI "#define \fBSSL_IS_EXPORT\fP(\fBa\fP)               ((\fBa\fP)&\fBSSL_EXPORT\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_IS_EXPORT56\fP(\fBa\fP)           ((\fBa\fP)&\fBSSL_EXP56\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_IS_EXPORT40\fP(\fBa\fP)           ((\fBa\fP)&\fBSSL_EXP40\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_C_IS_EXPORT\fP(\fBc\fP)           \fBSSL_IS_EXPORT\fP((\fBc\fP)\->algo_strength)"
+.br
+.ti -1c
+.RI "#define \fBSSL_C_IS_EXPORT56\fP(\fBc\fP)       \fBSSL_IS_EXPORT56\fP((\fBc\fP)\->algo_strength)"
+.br
+.ti -1c
+.RI "#define \fBSSL_C_IS_EXPORT40\fP(\fBc\fP)       \fBSSL_IS_EXPORT40\fP((\fBc\fP)\->algo_strength)"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXPORT_KEYLENGTH\fP(\fBa\fP,  s)          "
+.br
+.ti -1c
+.RI "#define \fBSSL_EXPORT_PKEYLENGTH\fP(\fBa\fP)   (\fBSSL_IS_EXPORT40\fP(\fBa\fP) ? 512 : 1024)"
+.br
+.ti -1c
+.RI "#define \fBSSL_C_EXPORT_KEYLENGTH\fP(\fBc\fP)          "
+.br
+.ti -1c
+.RI "#define \fBSSL_C_EXPORT_PKEYLENGTH\fP(\fBc\fP)           \fBSSL_EXPORT_PKEYLENGTH\fP((\fBc\fP)\->algo_strength)"
+.br
+.ti -1c
+.RI "#define \fBSSL_IS_DTLS\fP(s)   (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_DTLS\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_USE_EXPLICIT_IV\fP(s)   (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_EXPLICIT_IV\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_USE_SIGALGS\fP(s)           (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_SIGALGS\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_USE_TLS1_2_CIPHERS\fP(s)             (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_TLS1_2_CIPHERS\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CLIENT_USE_TLS1_2_CIPHERS\fP(s)            "
+.br
+.ti -1c
+.RI "#define \fBSSL_CLIENT_USE_SIGALGS\fP(s)               \fBSSL_CLIENT_USE_TLS1_2_CIPHERS\fP(s)"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_RSA_ENC\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_RSA_SIGN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_DSA_SIGN\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_DH_RSA\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_DH_DSA\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_ECC\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_GOST94\fP   6"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_GOST01\fP   7"
+.br
+.ti -1c
+.RI "#define \fBSSL_PKEY_NUM\fP   8"
+.br
+.ti -1c
+.RI "#define \fBEXPLICIT_PRIME_CURVE_TYPE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBEXPLICIT_CHAR2_CURVE_TYPE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBNAMED_CURVE_TYPE\fP   3"
+.br
+.ti -1c
+.RI "#define \fBtls1_suiteb\fP(s)   (s\->cert\->cert_flags & \fBSSL_CERT_FLAG_SUITEB_128_LOS\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_CERT_FLAGS_CHECK_TLS_STRICT\fP   (\fBSSL_CERT_FLAG_SUITEB_128_LOS\fP|\fBSSL_CERT_FLAG_TLS_STRICT\fP)"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXT_FLAG_RECEIVED\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBSSL_EXT_FLAG_SENT\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBFP_ICC\fP   (int (*)(const \fBvoid\fP *,const \fBvoid\fP *))"
+.br
+.ti -1c
+.RI "#define \fBssl_put_cipher_by_char\fP(ssl,  ciph,  ptr)   ((ssl)\->method\->put_cipher_by_char((ciph),(ptr)))"
+.br
+.ti -1c
+.RI "#define \fBSSL_HM_HEADER_LENGTH\fP(s)   s\->method\->\fBssl3_enc\fP\->hhlen"
+.br
+.ti -1c
+.RI "#define \fBssl_handshake_start\fP(s)   (((unsigned char *)s\->init_buf\->data) + s\->method\->\fBssl3_enc\fP\->hhlen)"
+.br
+.ti -1c
+.RI "#define \fBssl_set_handshake_header\fP(s,  htype,  \fBlen\fP)   s\->method\->\fBssl3_enc\fP\->set_handshake_header(s, htype, \fBlen\fP)"
+.br
+.ti -1c
+.RI "#define \fBssl_do_write\fP(s)   s\->method\->\fBssl3_enc\fP\->do_write(s)"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_FLAG_EXPLICIT_IV\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_FLAG_SIGALGS\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_FLAG_SHA256_PRF\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_FLAG_DTLS\fP   0x8"
+.br
+.ti -1c
+.RI "#define \fBSSL_ENC_FLAG_TLS1_2_CIPHERS\fP   0x10"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_tls_meth_func\fP(\fBversion\fP,  func_name,  s_accept,  s_connect,  s_get_meth,  enc_data)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ssl3_meth_func\fP(func_name,  s_accept,  s_connect,  s_get_meth)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ssl23_meth_func\fP(func_name,  s_accept,  s_connect,  s_get_meth)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ssl2_meth_func\fP(func_name,  s_accept,  s_connect,  s_get_meth)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_dtls1_meth_func\fP(\fBversion\fP,  func_name,  s_accept,  s_connect,  s_get_meth,  enc_data)"
+.br
+.ti -1c
+.RI "#define \fBtlsext_tick_md\fP   \fBEVP_sha256\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBcert_pkey_st\fP \fBCERT_PKEY\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBcert_st\fP \fBCERT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBsess_cert_st\fP \fBSESS_CERT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBssl3_enc_method\fP \fBSSL3_ENC_METHOD\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBssl3_comp_st\fP \fBSSL3_COMP\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBssl3_buf_freelist_st\fP \fBSSL3_BUF_FREELIST\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBssl3_buf_freelist_entry_st\fP \fBSSL3_BUF_FREELIST_ENTRY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSSL_METHOD\fP * \fBssl_bad_method\fP (int ver)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_clear_cipher_ctx\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_clear_bad_session\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBCERT\fP * \fBssl_cert_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBCERT\fP * \fBssl_cert_dup\fP (\fBCERT\fP *cert)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_set_default_md\fP (\fBCERT\fP *cert)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_inst\fP (\fBCERT\fP **o)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_clear_certs\fP (\fBCERT\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_free\fP (\fBCERT\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "\fBSESS_CERT\fP * \fBssl_sess_cert_new\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_sess_cert_free\fP (\fBSESS_CERT\fP *sc)"
+.br
+.ti -1c
+.RI "int \fBssl_set_peer_cert_type\fP (\fBSESS_CERT\fP *\fBc\fP, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_get_new_session\fP (\fBSSL\fP *s, int session)"
+.br
+.ti -1c
+.RI "int \fBssl_get_prev_session\fP (\fBSSL\fP *s, unsigned char *session, int \fBlen\fP, const unsigned char *limit)"
+.br
+.ti -1c
+.RI "\fBSSL_SESSION\fP * \fBssl_session_dup\fP (\fBSSL_SESSION\fP *src, int ticket)"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_id_cmp\fP (const \fBSSL_CIPHER\fP *\fBa\fP, const \fBSSL_CIPHER\fP *b)"
+.br
+.ti -1c
+.RI "\fBDECLARE_OBJ_BSEARCH_GLOBAL_CMP_FN\fP (\fBSSL_CIPHER\fP, \fBSSL_CIPHER\fP, ssl_cipher_id)"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_ptr_id_cmp\fP (const \fBSSL_CIPHER\fP *const *ap, const \fBSSL_CIPHER\fP *const *\fBbp\fP)"
+.br
+.ti -1c
+.RI "\fBSTACK_OF\fP (\fBSSL_CIPHER\fP)*ssl_bytes_to_cipher_list(\fBSSL\fP *s"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_list_to_bytes\fP (\fBSSL\fP *s, \fBSTACK_OF\fP(\fBSSL_CIPHER\fP)*sk, unsigned char *\fBp\fP, int(*put_cb)(const \fBSSL_CIPHER\fP *,                                                                                                                                                                       unsigned char *))"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_update_cache\fP (\fBSSL\fP *s, int mode)"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_get_evp\fP (const \fBSSL_SESSION\fP *s, const \fBEVP_CIPHER\fP **enc, const \fBEVP_MD\fP **md, int *mac_pkey_type, int *mac_secret_size, \fBSSL_COMP\fP **comp)"
+.br
+.ti -1c
+.RI "int \fBssl_get_handshake_digest\fP (int i, long *mask, const \fBEVP_MD\fP **md)"
+.br
+.ti -1c
+.RI "int \fBssl_cipher_get_cert_index\fP (const \fBSSL_CIPHER\fP *\fBc\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl_get_cipher_by_char\fP (\fBSSL\fP *ssl, const unsigned char *ptr)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set0_chain\fP (\fBCERT\fP *\fBc\fP, \fBSTACK_OF\fP(\fBX509\fP)*chain)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set1_chain\fP (\fBCERT\fP *\fBc\fP, \fBSTACK_OF\fP(\fBX509\fP)*chain)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_add0_chain_cert\fP (\fBCERT\fP *\fBc\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_add1_chain_cert\fP (\fBCERT\fP *\fBc\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_select_current\fP (\fBCERT\fP *\fBc\fP, \fBX509\fP *\fBx\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set_current\fP (\fBCERT\fP *\fBc\fP, long arg)"
+.br
+.ti -1c
+.RI "\fBX509\fP * \fBssl_cert_get0_next_certificate\fP (\fBCERT\fP *\fBc\fP, int first)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_cert_set_cert_cb\fP (\fBCERT\fP *\fBc\fP, int(*\fBcb\fP)(\fBSSL\fP *ssl, \fBvoid\fP *arg), \fBvoid\fP *arg)"
+.br
+.ti -1c
+.RI "int \fBssl_verify_cert_chain\fP (\fBSSL\fP *s, \fBSTACK_OF\fP(\fBX509\fP)*sk)"
+.br
+.ti -1c
+.RI "int \fBssl_add_cert_chain\fP (\fBSSL\fP *s, \fBCERT_PKEY\fP *cpk, unsigned long *l)"
+.br
+.ti -1c
+.RI "int \fBssl_build_cert_chain\fP (\fBCERT\fP *\fBc\fP, \fBX509_STORE\fP *chain_store, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_set_cert_store\fP (\fBCERT\fP *\fBc\fP, \fBX509_STORE\fP *store, int chain, int ref)"
+.br
+.ti -1c
+.RI "int \fBssl_undefined_function\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_undefined_void_function\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_undefined_const_function\fP (const \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBCERT_PKEY\fP * \fBssl_get_server_send_pkey\fP (const \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_get_server_cert_serverinfo\fP (\fBSSL\fP *s, const unsigned char **serverinfo, size_t *serverinfo_length)"
+.br
+.ti -1c
+.RI "\fBEVP_PKEY\fP * \fBssl_get_sign_pkey\fP (\fBSSL\fP *s, const \fBSSL_CIPHER\fP *\fBc\fP, const \fBEVP_MD\fP **pmd)"
+.br
+.ti -1c
+.RI "int \fBssl_cert_type\fP (\fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_set_cert_masks\fP (\fBCERT\fP *\fBc\fP, const \fBSSL_CIPHER\fP *cipher)"
+.br
+.ti -1c
+.RI "int \fBssl_verify_alarm_type\fP (long \fBtype\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_load_ciphers\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_fill_hello_random\fP (\fBSSL\fP *s, int server, unsigned char *field, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_enc_init\fP (\fBSSL\fP *s, int client)"
+.br
+.ti -1c
+.RI "int \fBssl2_generate_key_material\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl2_enc\fP (\fBSSL\fP *s, int send_data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl2_mac\fP (\fBSSL\fP *s, unsigned char *mac, int send_data)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl2_get_cipher_by_char\fP (const unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_put_cipher_by_char\fP (const \fBSSL_CIPHER\fP *\fBc\fP, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_part_read\fP (\fBSSL\fP *s, unsigned long f, int i)"
+.br
+.ti -1c
+.RI "int \fBssl2_do_write\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl2_set_certificate\fP (\fBSSL\fP *s, int \fBtype\fP, int \fBlen\fP, const unsigned char *data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl2_return_error\fP (\fBSSL\fP *s, int reason)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl2_write_error\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl2_num_ciphers\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl2_get_cipher\fP (unsigned int \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_new\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl2_free\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl2_accept\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl2_connect\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl2_read\fP (\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_peek\fP (\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_write\fP (\fBSSL\fP *s, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl2_shutdown\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl2_clear\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long \fBssl2_ctrl\fP (\fBSSL\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long \fBssl2_ctx_ctrl\fP (\fBSSL_CTX\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long \fBssl2_callback_ctrl\fP (\fBSSL\fP *s, int cmd, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "long \fBssl2_ctx_callback_ctrl\fP (\fBSSL_CTX\fP *s, int cmd, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBssl2_pending\fP (const \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long \fBssl2_default_timeout\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl3_get_cipher_by_char\fP (const unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_put_cipher_by_char\fP (const \fBSSL_CIPHER\fP *\fBc\fP, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_init_finished_mac\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_newsession_ticket\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_cert_status\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_finished\fP (\fBSSL\fP *s, int state_a, int state_b)"
+.br
+.ti -1c
+.RI "int \fBssl3_setup_key_block\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_change_cipher_spec\fP (\fBSSL\fP *s, int state_a, int state_b)"
+.br
+.ti -1c
+.RI "int \fBssl3_change_cipher_state\fP (\fBSSL\fP *s, int which)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_cleanup_key_block\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_write\fP (\fBSSL\fP *s, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_alert\fP (\fBSSL\fP *s, int level, int desc)"
+.br
+.ti -1c
+.RI "int \fBssl3_generate_master_secret\fP (\fBSSL\fP *s, unsigned char *out, unsigned char *\fBp\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_req_cert_type\fP (\fBSSL\fP *s, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "long \fBssl3_get_message\fP (\fBSSL\fP *s, int st1, int stn, int mt, long max, int *ok)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_finished\fP (\fBSSL\fP *s, int \fBa\fP, int b, const char *sender, int slen)"
+.br
+.ti -1c
+.RI "int \fBssl3_num_ciphers\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl3_get_cipher\fP (unsigned int \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_renegotiate\fP (\fBSSL\fP *ssl)"
+.br
+.ti -1c
+.RI "int \fBssl3_renegotiate_check\fP (\fBSSL\fP *ssl)"
+.br
+.ti -1c
+.RI "int \fBssl3_dispatch_alert\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_read_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, unsigned char *buf, int \fBlen\fP, int peek)"
+.br
+.ti -1c
+.RI "int \fBssl3_write_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_final_finish_mac\fP (\fBSSL\fP *s, const char *sender, int slen, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_cert_verify_mac\fP (\fBSSL\fP *s, int md_nid, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_finish_mac\fP (\fBSSL\fP *s, const unsigned char *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_enc\fP (\fBSSL\fP *s, int send_data)"
+.br
+.ti -1c
+.RI "int \fBn_ssl3_mac\fP (\fBSSL\fP *ssl, unsigned char *md, int send_data)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_free_digest_list\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "unsigned long \fBssl3_output_cert_chain\fP (\fBSSL\fP *s, \fBCERT_PKEY\fP *cpk)"
+.br
+.ti -1c
+.RI "\fBSSL_CIPHER\fP * \fBssl3_choose_cipher\fP (\fBSSL\fP *ssl, \fBSTACK_OF\fP(\fBSSL_CIPHER\fP)*clnt, \fBSTACK_OF\fP(\fBSSL_CIPHER\fP)*srvr)"
+.br
+.ti -1c
+.RI "int \fBssl3_setup_buffers\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_setup_read_buffer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_setup_write_buffer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_release_read_buffer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_release_write_buffer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_digest_cached_records\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_new\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_free\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_accept\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_connect\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_read\fP (\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_peek\fP (\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_write\fP (\fBSSL\fP *s, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_shutdown\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_clear\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long \fBssl3_ctrl\fP (\fBSSL\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long \fBssl3_ctx_ctrl\fP (\fBSSL_CTX\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long \fBssl3_callback_ctrl\fP (\fBSSL\fP *s, int cmd, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "long \fBssl3_ctx_callback_ctrl\fP (\fBSSL_CTX\fP *s, int cmd, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBssl3_pending\fP (const \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_record_sequence_update\fP (unsigned char *seq)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_change_cipher_spec\fP (\fBSSL\fP *ssl)"
+.br
+.ti -1c
+.RI "long \fBssl3_default_timeout\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_set_handshake_header\fP (\fBSSL\fP *s, int htype, unsigned long \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_handshake_write\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl23_num_ciphers\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl23_get_cipher\fP (unsigned int \fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBssl23_read\fP (\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl23_peek\fP (\fBSSL\fP *s, \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl23_write\fP (\fBSSL\fP *s, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBssl23_put_cipher_by_char\fP (const \fBSSL_CIPHER\fP *\fBc\fP, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBssl23_get_cipher_by_char\fP (const unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "long \fBssl23_default_timeout\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "long \fBtls1_default_timeout\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBdtls1_do_write\fP (\fBSSL\fP *s, int \fBtype\fP)"
+.br
+.ti -1c
+.RI "int \fBssl3_read_n\fP (\fBSSL\fP *s, int n, int max, int extend)"
+.br
+.ti -1c
+.RI "int \fBdtls1_read_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, unsigned char *buf, int \fBlen\fP, int peek)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_compress\fP (\fBSSL\fP *ssl)"
+.br
+.ti -1c
+.RI "int \fBssl3_do_uncompress\fP (\fBSSL\fP *ssl)"
+.br
+.ti -1c
+.RI "int \fBssl3_write_pending\fP (\fBSSL\fP *s, int \fBtype\fP, const unsigned char *buf, unsigned int \fBlen\fP)"
+.br
+.ti -1c
+.RI "unsigned char * \fBdtls1_set_message_header\fP (\fBSSL\fP *s, unsigned char *\fBp\fP, unsigned char mt, unsigned long \fBlen\fP, unsigned long frag_off, unsigned long frag_len)"
+.br
+.ti -1c
+.RI "int \fBdtls1_write_app_data_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBdtls1_write_bytes\fP (\fBSSL\fP *s, int \fBtype\fP, const \fBvoid\fP *buf, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBdtls1_send_change_cipher_spec\fP (\fBSSL\fP *s, int \fBa\fP, int b)"
+.br
+.ti -1c
+.RI "int \fBdtls1_read_failed\fP (\fBSSL\fP *s, int code)"
+.br
+.ti -1c
+.RI "int \fBdtls1_buffer_message\fP (\fBSSL\fP *s, int ccs)"
+.br
+.ti -1c
+.RI "int \fBdtls1_retransmit_message\fP (\fBSSL\fP *s, unsigned short seq, unsigned long frag_off, int *found)"
+.br
+.ti -1c
+.RI "int \fBdtls1_get_queue_priority\fP (unsigned short seq, int is_ccs)"
+.br
+.ti -1c
+.RI "int \fBdtls1_retransmit_buffered_messages\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_clear_record_buffer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_get_message_header\fP (unsigned char *data, struct \fBhm_header_st\fP *msg_hdr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_get_ccs_header\fP (unsigned char *data, struct \fBccs_header_st\fP *ccs_hdr)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_reset_seq_numbers\fP (\fBSSL\fP *s, int rw)"
+.br
+.ti -1c
+.RI "long \fBdtls1_default_timeout\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "struct timeval * \fBdtls1_get_timeout\fP (\fBSSL\fP *s, struct timeval *timeleft)"
+.br
+.ti -1c
+.RI "int \fBdtls1_check_timeout_num\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_handle_timeout\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "const \fBSSL_CIPHER\fP * \fBdtls1_get_cipher\fP (unsigned int \fBu\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_start_timer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_stop_timer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_is_timer_expired\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_double_timeout\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_send_newsession_ticket\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "unsigned int \fBdtls1_min_mtu\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "unsigned int \fBdtls1_link_min_mtu\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_hm_fragment_free\fP (\fBhm_fragment\fP *frag)"
+.br
+.ti -1c
+.RI "int \fBssl3_client_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_server_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_certificate_request\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_new_session_ticket\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_cert_status\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_server_done\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_client_verify\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_client_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_do_client_cert_cb\fP (\fBSSL\fP *s, \fBX509\fP **px509, \fBEVP_PKEY\fP **ppkey)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_client_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_server_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_check_cert_and_algorithm\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_next_proto\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_client_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_client_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_hello\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_hello_request\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_certificate_request\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_send_server_done\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_client_certificate\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_client_key_exchange\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_cert_verify\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl3_get_next_proto\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl23_accept\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl23_connect\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl23_read_bytes\fP (\fBSSL\fP *s, int n)"
+.br
+.ti -1c
+.RI "int \fBssl23_write_bytes\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_new\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBtls1_free\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBtls1_clear\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long \fBtls1_ctrl\fP (\fBSSL\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "long \fBtls1_callback_ctrl\fP (\fBSSL\fP *s, int cmd, \fBvoid\fP(*\fBfp\fP)(\fBvoid\fP))"
+.br
+.ti -1c
+.RI "int \fBdtls1_new\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_accept\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_connect\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_free\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBdtls1_clear\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long \fBdtls1_ctrl\fP (\fBSSL\fP *s, int cmd, long larg, \fBvoid\fP *parg)"
+.br
+.ti -1c
+.RI "int \fBdtls1_shutdown\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "long \fBdtls1_get_message\fP (\fBSSL\fP *s, int st1, int stn, int mt, long max, int *ok)"
+.br
+.ti -1c
+.RI "int \fBdtls1_get_record\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdo_dtls1_write\fP (\fBSSL\fP *s, int \fBtype\fP, const unsigned char *buf, unsigned int \fBlen\fP, int create_empty_fragement)"
+.br
+.ti -1c
+.RI "int \fBdtls1_dispatch_alert\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_init_wbio_buffer\fP (\fBSSL\fP *s, int push)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_free_wbio_buffer\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_change_cipher_state\fP (\fBSSL\fP *s, int which)"
+.br
+.ti -1c
+.RI "int \fBtls1_setup_key_block\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_enc\fP (\fBSSL\fP *s, int snd)"
+.br
+.ti -1c
+.RI "int \fBtls1_final_finish_mac\fP (\fBSSL\fP *s, const char *str, int slen, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBtls1_cert_verify_mac\fP (\fBSSL\fP *s, int md_nid, unsigned char *\fBp\fP)"
+.br
+.ti -1c
+.RI "int \fBtls1_mac\fP (\fBSSL\fP *ssl, unsigned char *md, int snd)"
+.br
+.ti -1c
+.RI "int \fBtls1_generate_master_secret\fP (\fBSSL\fP *s, unsigned char *out, unsigned char *\fBp\fP, int \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBtls1_export_keying_material\fP (\fBSSL\fP *s, unsigned char *out, size_t olen, const char *label, size_t llen, const unsigned char *\fBp\fP, size_t plen, int use_context)"
+.br
+.ti -1c
+.RI "int \fBtls1_alert_code\fP (int code)"
+.br
+.ti -1c
+.RI "int \fBssl3_alert_code\fP (int code)"
+.br
+.ti -1c
+.RI "int \fBssl_ok\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_check_srvr_ecc_cert_and_alg\fP (\fBX509\fP *\fBx\fP, \fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBSSL_COMP\fP * \fBssl3_comp_find\fP (\fBSTACK_OF\fP(\fBSSL_COMP\fP)*sk, int n)"
+.br
+.ti -1c
+.RI "int \fBtls1_ec_curve_id2nid\fP (int curve_id)"
+.br
+.ti -1c
+.RI "int \fBtls1_ec_nid2curve_id\fP (int \fBnid\fP)"
+.br
+.ti -1c
+.RI "int \fBtls1_check_curve\fP (\fBSSL\fP *s, const unsigned char *\fBp\fP, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBtls1_shared_curve\fP (\fBSSL\fP *s, int nmatch)"
+.br
+.ti -1c
+.RI "int \fBtls1_set_curves\fP (unsigned char **pext, size_t *pextlen, int *curves, size_t ncurves)"
+.br
+.ti -1c
+.RI "int \fBtls1_set_curves_list\fP (unsigned char **pext, size_t *pextlen, const char *str)"
+.br
+.ti -1c
+.RI "int \fBtls1_check_ec_tmp_key\fP (\fBSSL\fP *s, unsigned long id)"
+.br
+.ti -1c
+.RI "int \fBtls1_shared_list\fP (\fBSSL\fP *s, const unsigned char *l1, size_t l1len, const unsigned char *l2, size_t l2len, int nmatch)"
+.br
+.ti -1c
+.RI "unsigned char * \fBssl_add_clienthello_tlsext\fP (\fBSSL\fP *s, unsigned char *buf, unsigned char *limit, int *al)"
+.br
+.ti -1c
+.RI "unsigned char * \fBssl_add_serverhello_tlsext\fP (\fBSSL\fP *s, unsigned char *buf, unsigned char *limit, int *al)"
+.br
+.ti -1c
+.RI "int \fBssl_parse_clienthello_tlsext\fP (\fBSSL\fP *s, unsigned char **data, unsigned char *limit)"
+.br
+.ti -1c
+.RI "int \fBtls1_set_server_sigalgs\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_check_clienthello_tlsext_late\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_parse_serverhello_tlsext\fP (\fBSSL\fP *s, unsigned char **data, unsigned char *d, int n)"
+.br
+.ti -1c
+.RI "int \fBssl_prepare_clienthello_tlsext\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_prepare_serverhello_tlsext\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_heartbeat\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_heartbeat\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_process_heartbeat\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBdtls1_process_heartbeat\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_process_ticket\fP (\fBSSL\fP *s, unsigned char *session_id, int \fBlen\fP, const unsigned char *limit, \fBSSL_SESSION\fP **ret)"
+.br
+.ti -1c
+.RI "int \fBtls12_get_sigandhash\fP (unsigned char *\fBp\fP, const \fBEVP_PKEY\fP *pk, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "int \fBtls12_get_sigid\fP (const \fBEVP_PKEY\fP *pk)"
+.br
+.ti -1c
+.RI "const \fBEVP_MD\fP * \fBtls12_get_hash\fP (unsigned char hash_alg)"
+.br
+.ti -1c
+.RI "int \fBtls1_set_sigalgs_list\fP (\fBCERT\fP *\fBc\fP, const char *str, int client)"
+.br
+.ti -1c
+.RI "int \fBtls1_set_sigalgs\fP (\fBCERT\fP *\fBc\fP, const int *salg, size_t salglen, int client)"
+.br
+.ti -1c
+.RI "int \fBtls1_check_chain\fP (\fBSSL\fP *s, \fBX509\fP *\fBx\fP, \fBEVP_PKEY\fP *pk, \fBSTACK_OF\fP(\fBX509\fP)*chain, int idx)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBtls1_set_cert_validity\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "\fBEVP_MD_CTX\fP * \fBssl_replace_hash\fP (\fBEVP_MD_CTX\fP **\fBhash\fP, const \fBEVP_MD\fP *md)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_clear_hash_ctx\fP (\fBEVP_MD_CTX\fP **\fBhash\fP)"
+.br
+.ti -1c
+.RI "int \fBssl_add_serverhello_renegotiate_ext\fP (\fBSSL\fP *s, unsigned char *\fBp\fP, int *\fBlen\fP, int maxlen)"
+.br
+.ti -1c
+.RI "int \fBssl_parse_serverhello_renegotiate_ext\fP (\fBSSL\fP *s, unsigned char *d, int \fBlen\fP, int *al)"
+.br
+.ti -1c
+.RI "int \fBssl_add_clienthello_renegotiate_ext\fP (\fBSSL\fP *s, unsigned char *\fBp\fP, int *\fBlen\fP, int maxlen)"
+.br
+.ti -1c
+.RI "int \fBssl_parse_clienthello_renegotiate_ext\fP (\fBSSL\fP *s, unsigned char *d, int \fBlen\fP, int *al)"
+.br
+.ti -1c
+.RI "long \fBssl_get_algorithm2\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBtls1_save_sigalgs\fP (\fBSSL\fP *s, const unsigned char *data, int dsize)"
+.br
+.ti -1c
+.RI "int \fBtls1_process_sigalgs\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "size_t \fBtls12_get_psigalgs\fP (\fBSSL\fP *s, const unsigned char **psigs)"
+.br
+.ti -1c
+.RI "int \fBtls12_check_peer_sigalg\fP (const \fBEVP_MD\fP **pmd, \fBSSL\fP *s, const unsigned char *sig, \fBEVP_PKEY\fP *pkey)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl_set_client_disabled\fP (\fBSSL\fP *s)"
+.br
+.ti -1c
+.RI "int \fBssl_add_clienthello_use_srtp_ext\fP (\fBSSL\fP *s, unsigned char *\fBp\fP, int *\fBlen\fP, int maxlen)"
+.br
+.ti -1c
+.RI "int \fBssl_parse_clienthello_use_srtp_ext\fP (\fBSSL\fP *s, unsigned char *d, int \fBlen\fP, int *al)"
+.br
+.ti -1c
+.RI "int \fBssl_add_serverhello_use_srtp_ext\fP (\fBSSL\fP *s, unsigned char *\fBp\fP, int *\fBlen\fP, int maxlen)"
+.br
+.ti -1c
+.RI "int \fBssl_parse_serverhello_use_srtp_ext\fP (\fBSSL\fP *s, unsigned char *d, int \fBlen\fP, int *al)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBssl3_cbc_copy_mac\fP (unsigned char *out, const \fBSSL3_RECORD\fP *rec, unsigned md_size, unsigned orig_len)"
+.br
+.ti -1c
+.RI "int \fBssl3_cbc_remove_padding\fP (const \fBSSL\fP *s, \fBSSL3_RECORD\fP *rec, unsigned block_size, unsigned mac_size)"
+.br
+.ti -1c
+.RI "int \fBtls1_cbc_remove_padding\fP (const \fBSSL\fP *s, \fBSSL3_RECORD\fP *rec, unsigned block_size, unsigned mac_size)"
+.br
+.ti -1c
+.RI "char \fBssl3_cbc_record_digest_supported\fP (const \fBEVP_MD_CTX\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBssl3_cbc_digest_record\fP (const \fBEVP_MD_CTX\fP *ctx, unsigned char *md_out, size_t *md_out_size, const unsigned char header[13], const unsigned char *data, size_t data_plus_mac_size, size_t data_plus_mac_plus_padding_size, const unsigned char *mac_secret, unsigned mac_secret_length, char is_sslv3)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBtls_fips_digest_extra\fP (const \fBEVP_CIPHER_CTX\fP *cipher_ctx, \fBEVP_MD_CTX\fP *mac_ctx, const unsigned char *data, size_t data_len, size_t orig_len)"
+.br
+.ti -1c
+.RI "int \fBsrp_verify_server_param\fP (\fBSSL\fP *s, int *al)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBcustom_ext_init\fP (\fBcustom_ext_methods\fP *meths)"
+.br
+.ti -1c
+.RI "int \fBcustom_ext_parse\fP (\fBSSL\fP *s, int server, unsigned int ext_type, const unsigned char *ext_data, size_t ext_size, int *al)"
+.br
+.ti -1c
+.RI "int \fBcustom_ext_add\fP (\fBSSL\fP *s, int server, unsigned char **pret, unsigned char *limit, int *al)"
+.br
+.ti -1c
+.RI "int \fBcustom_exts_copy\fP (\fBcustom_ext_methods\fP *dst, const \fBcustom_ext_methods\fP *src)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBcustom_exts_free\fP (\fBcustom_ext_methods\fP *exts)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBssl3_undef_enc_method\fP"
+.br
+.ti -1c
+.RI "\fBOPENSSL_EXTERN\fP const \fBSSL_CIPHER\fP \fBssl2_ciphers\fP []"
+.br
+.ti -1c
+.RI "\fBOPENSSL_EXTERN\fP \fBSSL_CIPHER\fP \fBssl3_ciphers\fP []"
+.br
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBTLSv1_enc_data\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBTLSv1_1_enc_data\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBTLSv1_2_enc_data\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBSSLv3_enc_data\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBDTLSv1_enc_data\fP"
+.br
+.ti -1c
+.RI "\fBSSL3_ENC_METHOD\fP \fBDTLSv1_2_enc_data\fP"
+.br
+.ti -1c
+.RI "unsigned char * \fBp\fP"
+.br
+.ti -1c
+.RI "unsigned char int \fBnum\fP"
+.br
+.ti -1c
+.RI "const char * \fBrule_str\fP"
+.br
+.ti -1c
+.RI "const char \fBCERT\fP * \fBc\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define c2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l = ((unsigned long)(*((c)++)))     , \
+                         l|=(((unsigned long)(*((c)++)))<< 8), \
+                         l|=(((unsigned long)(*((c)++)))<<16), \
+                         l|=(((unsigned long)(*((c)++)))<<24))
+.fi
+.PP
+Definition at line 175 of file ssl_locl\&.h\&.
+.SS "#define c2ln(\fBc\fP, l1, l2, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        l1=l2=0; \
+                        switch (n) { \
+                        case 8: l2 =((unsigned long)(*(--(c))))<<24; \
+                        case 7: l2|=((unsigned long)(*(--(c))))<<16; \
+                        case 6: l2|=((unsigned long)(*(--(c))))<< 8; \
+                        case 5: l2|=((unsigned long)(*(--(c))));     \
+                        case 4: l1 =((unsigned long)(*(--(c))))<<24; \
+                        case 3: l1|=((unsigned long)(*(--(c))))<<16; \
+                        case 2: l1|=((unsigned long)(*(--(c))))<< 8; \
+                        case 1: l1|=((unsigned long)(*(--(c))));     \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 181 of file ssl_locl\&.h\&.
+.SS "#define l2c(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)    )&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>24)&0xff))
+.fi
+.PP
+Definition at line 196 of file ssl_locl\&.h\&.
+.SS "#define n2l(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((unsigned long)(*((c)++)))<<24, \
+                         l|=((unsigned long)(*((c)++)))<<16, \
+                         l|=((unsigned long)(*((c)++)))<< 8, \
+                         l|=((unsigned long)(*((c)++))))
+.fi
+.PP
+Definition at line 201 of file ssl_locl\&.h\&.
+.SS "#define l2n(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)>>24)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8)&0xff), \
+                         *((c)++)=(unsigned char)(((l)    )&0xff))
+.fi
+.PP
+Definition at line 206 of file ssl_locl\&.h\&.
+.SS "#define l2n6(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)>>40)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>32)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>24)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8)&0xff), \
+                         *((c)++)=(unsigned char)(((l)    )&0xff))
+.fi
+.PP
+Definition at line 211 of file ssl_locl\&.h\&.
+.SS "#define l2n8(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+(*((c)++)=(unsigned char)(((l)>>56)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>48)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>40)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>32)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>24)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>>16)&0xff), \
+                         *((c)++)=(unsigned char)(((l)>> 8)&0xff), \
+                         *((c)++)=(unsigned char)(((l)    )&0xff))
+.fi
+.PP
+Definition at line 218 of file ssl_locl\&.h\&.
+.SS "#define n2l6(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+(l =((BN_ULLONG)(*((c)++)))<<40, \
+                         l|=((BN_ULLONG)(*((c)++)))<<32, \
+                         l|=((BN_ULLONG)(*((c)++)))<<24, \
+                         l|=((BN_ULLONG)(*((c)++)))<<16, \
+                         l|=((BN_ULLONG)(*((c)++)))<< 8, \
+                         l|=((BN_ULLONG)(*((c)++))))
+.fi
+.PP
+Definition at line 227 of file ssl_locl\&.h\&.
+.SS "#define l2cn(l1, l2, \fBc\fP, n)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+                        c+=n; \
+                        switch (n) { \
+                        case 8: *(--(c))=(unsigned char)(((l2)>>24)&0xff); \
+                        case 7: *(--(c))=(unsigned char)(((l2)>>16)&0xff); \
+                        case 6: *(--(c))=(unsigned char)(((l2)>> 8)&0xff); \
+                        case 5: *(--(c))=(unsigned char)(((l2)    )&0xff); \
+                        case 4: *(--(c))=(unsigned char)(((l1)>>24)&0xff); \
+                        case 3: *(--(c))=(unsigned char)(((l1)>>16)&0xff); \
+                        case 2: *(--(c))=(unsigned char)(((l1)>> 8)&0xff); \
+                        case 1: *(--(c))=(unsigned char)(((l1)    )&0xff); \
+                                } \
+                        }
+.fi
+.PP
+Definition at line 235 of file ssl_locl\&.h\&.
+.SS "#define n2s(\fBc\fP, s)"
+\fBValue:\fP
+.PP
+.nf
+((s=(((unsigned int)(c[0]))<< 8)| \
+                            (((unsigned int)(c[1]))    )),c+=2)
+.fi
+.PP
+Definition at line 249 of file ssl_locl\&.h\&.
+.SS "#define s2n(s, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+((c[0]=(unsigned char)(((s)>> 8)&0xff), \
+                          c[1]=(unsigned char)(((s)    )&0xff)),c+=2)
+.fi
+.PP
+Definition at line 251 of file ssl_locl\&.h\&.
+.SS "#define n2l3(\fBc\fP, l)"
+\fBValue:\fP
+.PP
+.nf
+((l =(((unsigned long)(c[0]))<<16)| \
+                             (((unsigned long)(c[1]))<< 8)| \
+                             (((unsigned long)(c[2]))    )),c+=3)
+.fi
+.PP
+Definition at line 254 of file ssl_locl\&.h\&.
+.SS "#define l2n3(l, \fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+((c[0]=(unsigned char)(((l)>>16)&0xff), \
+                          c[1]=(unsigned char)(((l)>> 8)&0xff), \
+                          c[2]=(unsigned char)(((l)    )&0xff)),c+=3)
+.fi
+.PP
+Definition at line 258 of file ssl_locl\&.h\&.
+.SS "#define SSL_DECRYPT   0"
+
+.PP
+Definition at line 264 of file ssl_locl\&.h\&.
+.SS "#define SSL_ENCRYPT   1"
+
+.PP
+Definition at line 265 of file ssl_locl\&.h\&.
+.SS "#define TWO_BYTE_BIT   0x80"
+
+.PP
+Definition at line 267 of file ssl_locl\&.h\&.
+.SS "#define SEC_ESC_BIT   0x40"
+
+.PP
+Definition at line 268 of file ssl_locl\&.h\&.
+.SS "#define TWO_BYTE_MASK   0x7fff"
+
+.PP
+Definition at line 269 of file ssl_locl\&.h\&.
+.SS "#define THREE_BYTE_MASK   0x3fff"
+
+.PP
+Definition at line 270 of file ssl_locl\&.h\&.
+.SS "#define INC32(\fBa\fP)   ((\fBa\fP)=((\fBa\fP)+1)&0xffffffffL)"
+
+.PP
+Definition at line 272 of file ssl_locl\&.h\&.
+.SS "#define DEC32(\fBa\fP)   ((\fBa\fP)=((\fBa\fP)\-1)&0xffffffffL)"
+
+.PP
+Definition at line 273 of file ssl_locl\&.h\&.
+.SS "#define MAX_MAC_SIZE   20     /* up from 16 for SSLv3 */"
+
+.PP
+Definition at line 274 of file ssl_locl\&.h\&.
+.SS "#define SSL_kRSA   0x00000001L"
+
+.PP
+Definition at line 292 of file ssl_locl\&.h\&.
+.SS "#define SSL_kDHr   0x00000002L"
+
+.PP
+Definition at line 294 of file ssl_locl\&.h\&.
+.SS "#define SSL_kDHd   0x00000004L"
+
+.PP
+Definition at line 296 of file ssl_locl\&.h\&.
+.SS "#define SSL_kEDH   0x00000008L"
+
+.PP
+Definition at line 298 of file ssl_locl\&.h\&.
+.SS "#define SSL_kDHE   \fBSSL_kEDH\fP"
+
+.PP
+Definition at line 300 of file ssl_locl\&.h\&.
+.SS "#define SSL_kKRB5   0x00000010L"
+
+.PP
+Definition at line 302 of file ssl_locl\&.h\&.
+.SS "#define SSL_kECDHr   0x00000020L"
+
+.PP
+Definition at line 304 of file ssl_locl\&.h\&.
+.SS "#define SSL_kECDHe   0x00000040L"
+
+.PP
+Definition at line 306 of file ssl_locl\&.h\&.
+.SS "#define SSL_kEECDH   0x00000080L"
+
+.PP
+Definition at line 308 of file ssl_locl\&.h\&.
+.SS "#define SSL_kECDHE   \fBSSL_kEECDH\fP"
+
+.PP
+Definition at line 310 of file ssl_locl\&.h\&.
+.SS "#define SSL_kPSK   0x00000100L"
+
+.PP
+Definition at line 312 of file ssl_locl\&.h\&.
+.SS "#define SSL_kGOST   0x00000200L"
+
+.PP
+Definition at line 314 of file ssl_locl\&.h\&.
+.SS "#define SSL_kSRP   0x00000400L"
+
+.PP
+Definition at line 316 of file ssl_locl\&.h\&.
+.SS "#define SSL_aRSA   0x00000001L"
+
+.PP
+Definition at line 320 of file ssl_locl\&.h\&.
+.SS "#define SSL_aDSS   0x00000002L"
+
+.PP
+Definition at line 322 of file ssl_locl\&.h\&.
+.SS "#define SSL_aNULL   0x00000004L"
+
+.PP
+Definition at line 324 of file ssl_locl\&.h\&.
+.SS "#define SSL_aDH   0x00000008L"
+
+.PP
+Definition at line 326 of file ssl_locl\&.h\&.
+.SS "#define SSL_aECDH   0x00000010L"
+
+.PP
+Definition at line 328 of file ssl_locl\&.h\&.
+.SS "#define SSL_aKRB5   0x00000020L"
+
+.PP
+Definition at line 330 of file ssl_locl\&.h\&.
+.SS "#define SSL_aECDSA   0x00000040L"
+
+.PP
+Definition at line 332 of file ssl_locl\&.h\&.
+.SS "#define SSL_aPSK   0x00000080L"
+
+.PP
+Definition at line 334 of file ssl_locl\&.h\&.
+.SS "#define SSL_aGOST94   0x00000100L"
+
+.PP
+Definition at line 336 of file ssl_locl\&.h\&.
+.SS "#define SSL_aGOST01   0x00000200L"
+
+.PP
+Definition at line 338 of file ssl_locl\&.h\&.
+.SS "#define SSL_aSRP   0x00000400L"
+
+.PP
+Definition at line 340 of file ssl_locl\&.h\&.
+.SS "#define SSL_DES   0x00000001L"
+
+.PP
+Definition at line 343 of file ssl_locl\&.h\&.
+.SS "#define SSL_3DES   0x00000002L"
+
+.PP
+Definition at line 344 of file ssl_locl\&.h\&.
+.SS "#define SSL_RC4   0x00000004L"
+
+.PP
+Definition at line 345 of file ssl_locl\&.h\&.
+.SS "#define SSL_RC2   0x00000008L"
+
+.PP
+Definition at line 346 of file ssl_locl\&.h\&.
+.SS "#define SSL_IDEA   0x00000010L"
+
+.PP
+Definition at line 347 of file ssl_locl\&.h\&.
+.SS "#define SSL_eNULL   0x00000020L"
+
+.PP
+Definition at line 348 of file ssl_locl\&.h\&.
+.SS "#define SSL_AES128   0x00000040L"
+
+.PP
+Definition at line 349 of file ssl_locl\&.h\&.
+.SS "#define SSL_AES256   0x00000080L"
+
+.PP
+Definition at line 350 of file ssl_locl\&.h\&.
+.SS "#define SSL_CAMELLIA128   0x00000100L"
+
+.PP
+Definition at line 351 of file ssl_locl\&.h\&.
+.SS "#define SSL_CAMELLIA256   0x00000200L"
+
+.PP
+Definition at line 352 of file ssl_locl\&.h\&.
+.SS "#define SSL_eGOST2814789CNT   0x00000400L"
+
+.PP
+Definition at line 353 of file ssl_locl\&.h\&.
+.SS "#define SSL_SEED   0x00000800L"
+
+.PP
+Definition at line 354 of file ssl_locl\&.h\&.
+.SS "#define SSL_AES128GCM   0x00001000L"
+
+.PP
+Definition at line 355 of file ssl_locl\&.h\&.
+.SS "#define SSL_AES256GCM   0x00002000L"
+
+.PP
+Definition at line 356 of file ssl_locl\&.h\&.
+.SS "#define SSL_AES   (\fBSSL_AES128\fP|\fBSSL_AES256\fP|\fBSSL_AES128GCM\fP|\fBSSL_AES256GCM\fP)"
+
+.PP
+Definition at line 358 of file ssl_locl\&.h\&.
+.SS "#define SSL_CAMELLIA   (\fBSSL_CAMELLIA128\fP|\fBSSL_CAMELLIA256\fP)"
+
+.PP
+Definition at line 359 of file ssl_locl\&.h\&.
+.SS "#define SSL_MD5   0x00000001L"
+
+.PP
+Definition at line 363 of file ssl_locl\&.h\&.
+.SS "#define SSL_SHA1   0x00000002L"
+
+.PP
+Definition at line 364 of file ssl_locl\&.h\&.
+.SS "#define SSL_GOST94   0x00000004L"
+
+.PP
+Definition at line 365 of file ssl_locl\&.h\&.
+.SS "#define SSL_GOST89MAC   0x00000008L"
+
+.PP
+Definition at line 366 of file ssl_locl\&.h\&.
+.SS "#define SSL_SHA256   0x00000010L"
+
+.PP
+Definition at line 367 of file ssl_locl\&.h\&.
+.SS "#define SSL_SHA384   0x00000020L"
+
+.PP
+Definition at line 368 of file ssl_locl\&.h\&.
+.SS "#define SSL_AEAD   0x00000040L"
+
+.PP
+Definition at line 370 of file ssl_locl\&.h\&.
+.SS "#define SSL_SSLV2   0x00000001UL"
+
+.PP
+Definition at line 373 of file ssl_locl\&.h\&.
+.SS "#define SSL_SSLV3   0x00000002UL"
+
+.PP
+Definition at line 374 of file ssl_locl\&.h\&.
+.SS "#define SSL_TLSV1   \fBSSL_SSLV3\fP/* for now */"
+
+.PP
+Definition at line 375 of file ssl_locl\&.h\&.
+.SS "#define SSL_TLSV1_2   0x00000004UL"
+
+.PP
+Definition at line 376 of file ssl_locl\&.h\&.
+.SS "#define SSL_HANDSHAKE_MAC_MD5   0x10"
+
+.PP
+Definition at line 380 of file ssl_locl\&.h\&.
+.SS "#define SSL_HANDSHAKE_MAC_SHA   0x20"
+
+.PP
+Definition at line 381 of file ssl_locl\&.h\&.
+.SS "#define SSL_HANDSHAKE_MAC_GOST94   0x40"
+
+.PP
+Definition at line 382 of file ssl_locl\&.h\&.
+.SS "#define SSL_HANDSHAKE_MAC_SHA256   0x80"
+
+.PP
+Definition at line 383 of file ssl_locl\&.h\&.
+.SS "#define SSL_HANDSHAKE_MAC_SHA384   0x100"
+
+.PP
+Definition at line 384 of file ssl_locl\&.h\&.
+.SS "#define SSL_HANDSHAKE_MAC_DEFAULT   (\fBSSL_HANDSHAKE_MAC_MD5\fP | \fBSSL_HANDSHAKE_MAC_SHA\fP)"
+
+.PP
+Definition at line 385 of file ssl_locl\&.h\&.
+.SS "#define SSL_MAX_DIGEST   6"
+
+.PP
+Definition at line 391 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_DGST_MASK   (0xff << TLS1_PRF_DGST_SHIFT)"
+
+.PP
+Definition at line 393 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_DGST_SHIFT   10"
+
+.PP
+Definition at line 395 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_MD5   (\fBSSL_HANDSHAKE_MAC_MD5\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+
+.PP
+Definition at line 396 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_SHA1   (\fBSSL_HANDSHAKE_MAC_SHA\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+
+.PP
+Definition at line 397 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_SHA256   (\fBSSL_HANDSHAKE_MAC_SHA256\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+
+.PP
+Definition at line 398 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_SHA384   (\fBSSL_HANDSHAKE_MAC_SHA384\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+
+.PP
+Definition at line 399 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF_GOST94   (\fBSSL_HANDSHAKE_MAC_GOST94\fP << \fBTLS1_PRF_DGST_SHIFT\fP)"
+
+.PP
+Definition at line 400 of file ssl_locl\&.h\&.
+.SS "#define TLS1_PRF   (\fBTLS1_PRF_MD5\fP | \fBTLS1_PRF_SHA1\fP)"
+
+.PP
+Definition at line 401 of file ssl_locl\&.h\&.
+.SS "#define TLS1_STREAM_MAC   0x04"
+
+.PP
+Definition at line 407 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXP_MASK   0x00000003L"
+
+.PP
+Definition at line 424 of file ssl_locl\&.h\&.
+.SS "#define SSL_STRONG_MASK   0x000001fcL"
+
+.PP
+Definition at line 425 of file ssl_locl\&.h\&.
+.SS "#define SSL_NOT_EXP   0x00000001L"
+
+.PP
+Definition at line 427 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXPORT   0x00000002L"
+
+.PP
+Definition at line 428 of file ssl_locl\&.h\&.
+.SS "#define SSL_STRONG_NONE   0x00000004L"
+
+.PP
+Definition at line 430 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXP40   0x00000008L"
+
+.PP
+Definition at line 431 of file ssl_locl\&.h\&.
+.SS "#define SSL_MICRO   (\fBSSL_EXP40\fP)"
+
+.PP
+Definition at line 432 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXP56   0x00000010L"
+
+.PP
+Definition at line 433 of file ssl_locl\&.h\&.
+.SS "#define SSL_MINI   (\fBSSL_EXP56\fP)"
+
+.PP
+Definition at line 434 of file ssl_locl\&.h\&.
+.SS "#define SSL_LOW   0x00000020L"
+
+.PP
+Definition at line 435 of file ssl_locl\&.h\&.
+.SS "#define SSL_MEDIUM   0x00000040L"
+
+.PP
+Definition at line 436 of file ssl_locl\&.h\&.
+.SS "#define SSL_HIGH   0x00000080L"
+
+.PP
+Definition at line 437 of file ssl_locl\&.h\&.
+.SS "#define SSL_FIPS   0x00000100L"
+
+.PP
+Definition at line 438 of file ssl_locl\&.h\&.
+.SS "#define SSL_NOT_DEFAULT   0x00000200L"
+
+.PP
+Definition at line 439 of file ssl_locl\&.h\&.
+.SS "#define SSL_IS_EXPORT(\fBa\fP)   ((\fBa\fP)&\fBSSL_EXPORT\fP)"
+
+.PP
+Definition at line 456 of file ssl_locl\&.h\&.
+.SS "#define SSL_IS_EXPORT56(\fBa\fP)   ((\fBa\fP)&\fBSSL_EXP56\fP)"
+
+.PP
+Definition at line 457 of file ssl_locl\&.h\&.
+.SS "#define SSL_IS_EXPORT40(\fBa\fP)   ((\fBa\fP)&\fBSSL_EXP40\fP)"
+
+.PP
+Definition at line 458 of file ssl_locl\&.h\&.
+.SS "#define SSL_C_IS_EXPORT(\fBc\fP)   \fBSSL_IS_EXPORT\fP((\fBc\fP)\->algo_strength)"
+
+.PP
+Definition at line 459 of file ssl_locl\&.h\&.
+.SS "#define SSL_C_IS_EXPORT56(\fBc\fP)   \fBSSL_IS_EXPORT56\fP((\fBc\fP)\->algo_strength)"
+
+.PP
+Definition at line 460 of file ssl_locl\&.h\&.
+.SS "#define SSL_C_IS_EXPORT40(\fBc\fP)   \fBSSL_IS_EXPORT40\fP((\fBc\fP)\->algo_strength)"
+
+.PP
+Definition at line 461 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXPORT_KEYLENGTH(\fBa\fP, s)"
+\fBValue:\fP
+.PP
+.nf
+(SSL_IS_EXPORT40(s) ? 5 : \
+                                 (a) == SSL_DES ? 8 : 7)
+.fi
+.PP
+Definition at line 463 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXPORT_PKEYLENGTH(\fBa\fP)   (\fBSSL_IS_EXPORT40\fP(\fBa\fP) ? 512 : 1024)"
+
+.PP
+Definition at line 465 of file ssl_locl\&.h\&.
+.SS "#define SSL_C_EXPORT_KEYLENGTH(\fBc\fP)"
+\fBValue:\fP
+.PP
+.nf
+SSL_EXPORT_KEYLENGTH((c)->algorithm_enc, \
+                                (c)->algo_strength)
+.fi
+.PP
+Definition at line 466 of file ssl_locl\&.h\&.
+.SS "#define SSL_C_EXPORT_PKEYLENGTH(\fBc\fP)   \fBSSL_EXPORT_PKEYLENGTH\fP((\fBc\fP)\->algo_strength)"
+
+.PP
+Definition at line 468 of file ssl_locl\&.h\&.
+.SS "#define SSL_IS_DTLS(s)   (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_DTLS\fP)"
+
+.PP
+Definition at line 471 of file ssl_locl\&.h\&.
+.SS "#define SSL_USE_EXPLICIT_IV(s)   (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_EXPLICIT_IV\fP)"
+
+.PP
+Definition at line 473 of file ssl_locl\&.h\&.
+.SS "#define SSL_USE_SIGALGS(s)   (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_SIGALGS\fP)"
+
+.PP
+Definition at line 479 of file ssl_locl\&.h\&.
+.SS "#define SSL_USE_TLS1_2_CIPHERS(s)   (s\->method\->\fBssl3_enc\fP\->enc_flags & \fBSSL_ENC_FLAG_TLS1_2_CIPHERS\fP)"
+
+.PP
+Definition at line 485 of file ssl_locl\&.h\&.
+.SS "#define SSL_CLIENT_USE_TLS1_2_CIPHERS(s)"
+\fBValue:\fP
+.PP
+.nf
+((SSL_IS_DTLS(s) && s->client_version <= DTLS1_2_VERSION) || \
+                (!SSL_IS_DTLS(s) && s->client_version >= TLS1_2_VERSION))
+.fi
+.PP
+Definition at line 491 of file ssl_locl\&.h\&.
+.SS "#define SSL_CLIENT_USE_SIGALGS(s)   \fBSSL_CLIENT_USE_TLS1_2_CIPHERS\fP(s)"
+
+.PP
+Definition at line 498 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_RSA_ENC   0"
+
+.PP
+Definition at line 502 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_RSA_SIGN   1"
+
+.PP
+Definition at line 503 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_DSA_SIGN   2"
+
+.PP
+Definition at line 504 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_DH_RSA   3"
+
+.PP
+Definition at line 505 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_DH_DSA   4"
+
+.PP
+Definition at line 506 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_ECC   5"
+
+.PP
+Definition at line 507 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_GOST94   6"
+
+.PP
+Definition at line 508 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_GOST01   7"
+
+.PP
+Definition at line 509 of file ssl_locl\&.h\&.
+.SS "#define SSL_PKEY_NUM   8"
+
+.PP
+Definition at line 510 of file ssl_locl\&.h\&.
+.SS "#define EXPLICIT_PRIME_CURVE_TYPE   1"
+
+.PP
+Definition at line 531 of file ssl_locl\&.h\&.
+.SS "#define EXPLICIT_CHAR2_CURVE_TYPE   2"
+
+.PP
+Definition at line 532 of file ssl_locl\&.h\&.
+.SS "#define NAMED_CURVE_TYPE   3"
+
+.PP
+Definition at line 533 of file ssl_locl\&.h\&.
+.SS "#define tls1_suiteb(s)   (s\->cert\->cert_flags & \fBSSL_CERT_FLAG_SUITEB_128_LOS\fP)"
+
+.PP
+Definition at line 562 of file ssl_locl\&.h\&.
+.SS "#define SSL_CERT_FLAGS_CHECK_TLS_STRICT   (\fBSSL_CERT_FLAG_SUITEB_128_LOS\fP|\fBSSL_CERT_FLAG_TLS_STRICT\fP)"
+
+.PP
+Definition at line 564 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXT_FLAG_RECEIVED   0x1"
+
+.PP
+Definition at line 587 of file ssl_locl\&.h\&.
+.SS "#define SSL_EXT_FLAG_SENT   0x2"
+
+.PP
+Definition at line 592 of file ssl_locl\&.h\&.
+.SS "#define FP_ICC   (int (*)(const \fBvoid\fP *,const \fBvoid\fP *))"
+
+.PP
+Definition at line 767 of file ssl_locl\&.h\&.
+.SS "#define ssl_put_cipher_by_char(ssl, ciph, ptr)   ((ssl)\->method\->put_cipher_by_char((ciph),(ptr)))"
+
+.PP
+Definition at line 768 of file ssl_locl\&.h\&.
+.SS "#define SSL_HM_HEADER_LENGTH(s)   s\->method\->\fBssl3_enc\fP\->hhlen"
+
+.PP
+Definition at line 804 of file ssl_locl\&.h\&.
+.SS "#define ssl_handshake_start(s)   (((unsigned char *)s\->init_buf\->data) + s\->method\->\fBssl3_enc\fP\->hhlen)"
+
+.PP
+Definition at line 805 of file ssl_locl\&.h\&.
+.SS "#define ssl_set_handshake_header(s, htype, \fBlen\fP)   s\->method\->\fBssl3_enc\fP\->set_handshake_header(s, htype, \fBlen\fP)"
+
+.PP
+Definition at line 807 of file ssl_locl\&.h\&.
+.SS "#define ssl_do_write(s)   s\->method\->\fBssl3_enc\fP\->do_write(s)"
+
+.PP
+Definition at line 809 of file ssl_locl\&.h\&.
+.SS "#define SSL_ENC_FLAG_EXPLICIT_IV   0x1"
+
+.PP
+Definition at line 814 of file ssl_locl\&.h\&.
+.SS "#define SSL_ENC_FLAG_SIGALGS   0x2"
+
+.PP
+Definition at line 816 of file ssl_locl\&.h\&.
+.SS "#define SSL_ENC_FLAG_SHA256_PRF   0x4"
+
+.PP
+Definition at line 818 of file ssl_locl\&.h\&.
+.SS "#define SSL_ENC_FLAG_DTLS   0x8"
+
+.PP
+Definition at line 820 of file ssl_locl\&.h\&.
+.SS "#define SSL_ENC_FLAG_TLS1_2_CIPHERS   0x10"
+
+.PP
+Definition at line 825 of file ssl_locl\&.h\&.
+.SS "#define IMPLEMENT_tls_meth_func(\fBversion\fP, func_name, s_accept, s_connect, s_get_meth, enc_data)"
+
+.PP
+Definition at line 862 of file ssl_locl\&.h\&.
+.SS "#define IMPLEMENT_ssl3_meth_func(func_name, s_accept, s_connect, s_get_meth)"
+
+.PP
+Definition at line 900 of file ssl_locl\&.h\&.
+.SS "#define IMPLEMENT_ssl23_meth_func(func_name, s_accept, s_connect, s_get_meth)"
+
+.PP
+Definition at line 937 of file ssl_locl\&.h\&.
+.SS "#define IMPLEMENT_ssl2_meth_func(func_name, s_accept, s_connect, s_get_meth)"
+
+.PP
+Definition at line 974 of file ssl_locl\&.h\&.
+.SS "#define IMPLEMENT_dtls1_meth_func(\fBversion\fP, func_name, s_accept, s_connect, s_get_meth, enc_data)"
+
+.PP
+Definition at line 1011 of file ssl_locl\&.h\&.
+.SS "#define tlsext_tick_md   \fBEVP_sha256\fP"
+
+.PP
+Definition at line 1398 of file ssl_locl\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBcert_pkey_st\fP  \fBCERT_PKEY\fP"
+
+.SS "typedef struct \fBcert_st\fP  \fBCERT\fP"
+
+.SS "typedef struct \fBsess_cert_st\fP  \fBSESS_CERT\fP"
+
+.SS "typedef struct \fBssl3_enc_method\fP  \fBSSL3_ENC_METHOD\fP"
+
+.SS "typedef struct \fBssl3_comp_st\fP  \fBSSL3_COMP\fP"
+
+.SS "typedef struct \fBssl3_buf_freelist_st\fP  \fBSSL3_BUF_FREELIST\fP"
+
+.SS "typedef struct \fBssl3_buf_freelist_entry_st\fP  \fBSSL3_BUF_FREELIST_ENTRY\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBSSL_METHOD\fP* ssl_bad_method (int ver)"
+
+.SS "\fBvoid\fP ssl_clear_cipher_ctx (\fBSSL\fP * s)"
+
+.SS "int ssl_clear_bad_session (\fBSSL\fP * s)"
+
+.SS "\fBCERT\fP* ssl_cert_new (\fBvoid\fP)"
+
+.SS "\fBCERT\fP* ssl_cert_dup (\fBCERT\fP * cert)"
+
+.SS "\fBvoid\fP ssl_cert_set_default_md (\fBCERT\fP * cert)"
+
+.SS "int ssl_cert_inst (\fBCERT\fP ** o)"
+
+.SS "\fBvoid\fP ssl_cert_clear_certs (\fBCERT\fP * c)"
+
+.SS "\fBvoid\fP ssl_cert_free (\fBCERT\fP * c)"
+
+.SS "\fBSESS_CERT\fP* ssl_sess_cert_new (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ssl_sess_cert_free (\fBSESS_CERT\fP * sc)"
+
+.SS "int ssl_set_peer_cert_type (\fBSESS_CERT\fP * c, int type)"
+
+.SS "int ssl_get_new_session (\fBSSL\fP * s, int session)"
+
+.SS "int ssl_get_prev_session (\fBSSL\fP * s, unsigned char * session, int len, const unsigned char * limit)"
+
+.SS "\fBSSL_SESSION\fP* ssl_session_dup (\fBSSL_SESSION\fP * src, int ticket)"
+
+.SS "int ssl_cipher_id_cmp (const \fBSSL_CIPHER\fP * a, const \fBSSL_CIPHER\fP * b)"
+
+.SS "DECLARE_OBJ_BSEARCH_GLOBAL_CMP_FN (\fBSSL_CIPHER\fP, \fBSSL_CIPHER\fP, ssl_cipher_id)"
+
+.SS "int ssl_cipher_ptr_id_cmp (const \fBSSL_CIPHER\fP *const * ap, const \fBSSL_CIPHER\fP *const * bp)"
+
+.SS "STACK_OF (\fBSSL_CIPHER\fP)"
+
+.SS "int ssl_cipher_list_to_bytes (\fBSSL\fP * s, \fBSTACK_OF\fP(\fBSSL_CIPHER\fP)* sk, unsigned char * p, int(*)(const \fBSSL_CIPHER\fP *,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   unsigned char *) put_cb)"
+
+.SS "\fBvoid\fP ssl_update_cache (\fBSSL\fP * s, int mode)"
+
+.SS "int ssl_cipher_get_evp (const \fBSSL_SESSION\fP * s, const \fBEVP_CIPHER\fP ** enc, const \fBEVP_MD\fP ** md, int * mac_pkey_type, int * mac_secret_size, \fBSSL_COMP\fP ** comp)"
+
+.SS "int ssl_get_handshake_digest (int i, long * mask, const \fBEVP_MD\fP ** md)"
+
+.SS "int ssl_cipher_get_cert_index (const \fBSSL_CIPHER\fP * c)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl_get_cipher_by_char (\fBSSL\fP * ssl, const unsigned char * ptr)"
+
+.SS "int ssl_cert_set0_chain (\fBCERT\fP * c, \fBSTACK_OF\fP(\fBX509\fP)* chain)"
+
+.SS "int ssl_cert_set1_chain (\fBCERT\fP * c, \fBSTACK_OF\fP(\fBX509\fP)* chain)"
+
+.SS "int ssl_cert_add0_chain_cert (\fBCERT\fP * c, \fBX509\fP * x)"
+
+.SS "int ssl_cert_add1_chain_cert (\fBCERT\fP * c, \fBX509\fP * x)"
+
+.SS "int ssl_cert_select_current (\fBCERT\fP * c, \fBX509\fP * x)"
+
+.SS "int ssl_cert_set_current (\fBCERT\fP * c, long arg)"
+
+.SS "\fBX509\fP* ssl_cert_get0_next_certificate (\fBCERT\fP * c, int first)"
+
+.SS "\fBvoid\fP ssl_cert_set_cert_cb (\fBCERT\fP * c, int(*)(\fBSSL\fP *ssl, \fBvoid\fP *arg) cb, \fBvoid\fP * arg)"
+
+.SS "int ssl_verify_cert_chain (\fBSSL\fP * s, \fBSTACK_OF\fP(\fBX509\fP)* sk)"
+
+.SS "int ssl_add_cert_chain (\fBSSL\fP * s, \fBCERT_PKEY\fP * cpk, unsigned long * l)"
+
+.SS "int ssl_build_cert_chain (\fBCERT\fP * c, \fBX509_STORE\fP * chain_store, int flags)"
+
+.SS "int ssl_cert_set_cert_store (\fBCERT\fP * c, \fBX509_STORE\fP * store, int chain, int ref)"
+
+.SS "int ssl_undefined_function (\fBSSL\fP * s)"
+
+.SS "int ssl_undefined_void_function (\fBvoid\fP)"
+
+.SS "int ssl_undefined_const_function (const \fBSSL\fP * s)"
+
+.SS "\fBCERT_PKEY\fP* ssl_get_server_send_pkey (const \fBSSL\fP * s)"
+
+.SS "int ssl_get_server_cert_serverinfo (\fBSSL\fP * s, const unsigned char ** serverinfo, size_t * serverinfo_length)"
+
+.SS "\fBEVP_PKEY\fP* ssl_get_sign_pkey (\fBSSL\fP * s, const \fBSSL_CIPHER\fP * c, const \fBEVP_MD\fP ** pmd)"
+
+.SS "int ssl_cert_type (\fBX509\fP * x, \fBEVP_PKEY\fP * pkey)"
+
+.SS "\fBvoid\fP ssl_set_cert_masks (\fBCERT\fP * c, const \fBSSL_CIPHER\fP * cipher)"
+
+.SS "int ssl_verify_alarm_type (long type)"
+
+.SS "\fBvoid\fP ssl_load_ciphers (\fBvoid\fP)"
+
+.SS "int ssl_fill_hello_random (\fBSSL\fP * s, int server, unsigned char * field, int len)"
+
+.SS "int ssl2_enc_init (\fBSSL\fP * s, int client)"
+
+.SS "int ssl2_generate_key_material (\fBSSL\fP * s)"
+
+.SS "int ssl2_enc (\fBSSL\fP * s, int send_data)"
+
+.SS "\fBvoid\fP ssl2_mac (\fBSSL\fP * s, unsigned char * mac, int send_data)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl2_get_cipher_by_char (const unsigned char * p)"
+
+.SS "int ssl2_put_cipher_by_char (const \fBSSL_CIPHER\fP * c, unsigned char * p)"
+
+.SS "int ssl2_part_read (\fBSSL\fP * s, unsigned long f, int i)"
+
+.SS "int ssl2_do_write (\fBSSL\fP * s)"
+
+.SS "int ssl2_set_certificate (\fBSSL\fP * s, int type, int len, const unsigned char * data)"
+
+.SS "\fBvoid\fP ssl2_return_error (\fBSSL\fP * s, int reason)"
+
+.SS "\fBvoid\fP ssl2_write_error (\fBSSL\fP * s)"
+
+.SS "int ssl2_num_ciphers (\fBvoid\fP)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl2_get_cipher (unsigned int u)"
+
+.SS "int ssl2_new (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP ssl2_free (\fBSSL\fP * s)"
+
+.SS "int ssl2_accept (\fBSSL\fP * s)"
+
+.SS "int ssl2_connect (\fBSSL\fP * s)"
+
+.SS "int ssl2_read (\fBSSL\fP * s, \fBvoid\fP * buf, int len)"
+
+.SS "int ssl2_peek (\fBSSL\fP * s, \fBvoid\fP * buf, int len)"
+
+.SS "int ssl2_write (\fBSSL\fP * s, const \fBvoid\fP * buf, int len)"
+
+.SS "int ssl2_shutdown (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP ssl2_clear (\fBSSL\fP * s)"
+
+.SS "long ssl2_ctrl (\fBSSL\fP * s, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "long ssl2_ctx_ctrl (\fBSSL_CTX\fP * s, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "long ssl2_callback_ctrl (\fBSSL\fP * s, int cmd, \fBvoid\fP(*)(\fBvoid\fP) fp)"
+
+.SS "long ssl2_ctx_callback_ctrl (\fBSSL_CTX\fP * s, int cmd, \fBvoid\fP(*)(\fBvoid\fP) fp)"
+
+.SS "int ssl2_pending (const \fBSSL\fP * s)"
+
+.SS "long ssl2_default_timeout (\fBvoid\fP)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl3_get_cipher_by_char (const unsigned char * p)"
+
+.SS "int ssl3_put_cipher_by_char (const \fBSSL_CIPHER\fP * c, unsigned char * p)"
+
+.SS "\fBvoid\fP ssl3_init_finished_mac (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_server_certificate (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_newsession_ticket (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_cert_status (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_finished (\fBSSL\fP * s, int state_a, int state_b)"
+
+.SS "int ssl3_setup_key_block (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_change_cipher_spec (\fBSSL\fP * s, int state_a, int state_b)"
+
+.SS "int ssl3_change_cipher_state (\fBSSL\fP * s, int which)"
+
+.SS "\fBvoid\fP ssl3_cleanup_key_block (\fBSSL\fP * s)"
+
+.SS "int ssl3_do_write (\fBSSL\fP * s, int type)"
+
+.SS "int ssl3_send_alert (\fBSSL\fP * s, int level, int desc)"
+
+.SS "int ssl3_generate_master_secret (\fBSSL\fP * s, unsigned char * out, unsigned char * p, int len)"
+
+.SS "int ssl3_get_req_cert_type (\fBSSL\fP * s, unsigned char * p)"
+
+.SS "long ssl3_get_message (\fBSSL\fP * s, int st1, int stn, int mt, long max, int * ok)"
+
+.SS "int ssl3_send_finished (\fBSSL\fP * s, int a, int b, const char * sender, int slen)"
+
+.SS "int ssl3_num_ciphers (\fBvoid\fP)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl3_get_cipher (unsigned int u)"
+
+.SS "int ssl3_renegotiate (\fBSSL\fP * ssl)"
+
+.SS "int ssl3_renegotiate_check (\fBSSL\fP * ssl)"
+
+.SS "int ssl3_dispatch_alert (\fBSSL\fP * s)"
+
+.SS "int ssl3_read_bytes (\fBSSL\fP * s, int type, unsigned char * buf, int len, int peek)"
+
+.SS "int ssl3_write_bytes (\fBSSL\fP * s, int type, const \fBvoid\fP * buf, int len)"
+
+.SS "int ssl3_final_finish_mac (\fBSSL\fP * s, const char * sender, int slen, unsigned char * p)"
+
+.SS "int ssl3_cert_verify_mac (\fBSSL\fP * s, int md_nid, unsigned char * p)"
+
+.SS "\fBvoid\fP ssl3_finish_mac (\fBSSL\fP * s, const unsigned char * buf, int len)"
+
+.SS "int ssl3_enc (\fBSSL\fP * s, int send_data)"
+
+.SS "int n_ssl3_mac (\fBSSL\fP * ssl, unsigned char * md, int send_data)"
+
+.SS "\fBvoid\fP ssl3_free_digest_list (\fBSSL\fP * s)"
+
+.SS "unsigned long ssl3_output_cert_chain (\fBSSL\fP * s, \fBCERT_PKEY\fP * cpk)"
+
+.SS "\fBSSL_CIPHER\fP* ssl3_choose_cipher (\fBSSL\fP * ssl, \fBSTACK_OF\fP(\fBSSL_CIPHER\fP)* clnt, \fBSTACK_OF\fP(\fBSSL_CIPHER\fP)* srvr)"
+
+.SS "int ssl3_setup_buffers (\fBSSL\fP * s)"
+
+.SS "int ssl3_setup_read_buffer (\fBSSL\fP * s)"
+
+.SS "int ssl3_setup_write_buffer (\fBSSL\fP * s)"
+
+.SS "int ssl3_release_read_buffer (\fBSSL\fP * s)"
+
+.SS "int ssl3_release_write_buffer (\fBSSL\fP * s)"
+
+.SS "int ssl3_digest_cached_records (\fBSSL\fP * s)"
+
+.SS "int ssl3_new (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP ssl3_free (\fBSSL\fP * s)"
+
+.SS "int ssl3_accept (\fBSSL\fP * s)"
+
+.SS "int ssl3_connect (\fBSSL\fP * s)"
+
+.SS "int ssl3_read (\fBSSL\fP * s, \fBvoid\fP * buf, int len)"
+
+.SS "int ssl3_peek (\fBSSL\fP * s, \fBvoid\fP * buf, int len)"
+
+.SS "int ssl3_write (\fBSSL\fP * s, const \fBvoid\fP * buf, int len)"
+
+.SS "int ssl3_shutdown (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP ssl3_clear (\fBSSL\fP * s)"
+
+.SS "long ssl3_ctrl (\fBSSL\fP * s, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "long ssl3_ctx_ctrl (\fBSSL_CTX\fP * s, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "long ssl3_callback_ctrl (\fBSSL\fP * s, int cmd, \fBvoid\fP(*)(\fBvoid\fP) fp)"
+
+.SS "long ssl3_ctx_callback_ctrl (\fBSSL_CTX\fP * s, int cmd, \fBvoid\fP(*)(\fBvoid\fP) fp)"
+
+.SS "int ssl3_pending (const \fBSSL\fP * s)"
+
+.SS "\fBvoid\fP ssl3_record_sequence_update (unsigned char * seq)"
+
+.SS "int ssl3_do_change_cipher_spec (\fBSSL\fP * ssl)"
+
+.SS "long ssl3_default_timeout (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ssl3_set_handshake_header (\fBSSL\fP * s, int htype, unsigned long len)"
+
+.SS "int ssl3_handshake_write (\fBSSL\fP * s)"
+
+.SS "int ssl23_num_ciphers (\fBvoid\fP)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl23_get_cipher (unsigned int u)"
+
+.SS "int ssl23_read (\fBSSL\fP * s, \fBvoid\fP * buf, int len)"
+
+.SS "int ssl23_peek (\fBSSL\fP * s, \fBvoid\fP * buf, int len)"
+
+.SS "int ssl23_write (\fBSSL\fP * s, const \fBvoid\fP * buf, int len)"
+
+.SS "int ssl23_put_cipher_by_char (const \fBSSL_CIPHER\fP * c, unsigned char * p)"
+
+.SS "const \fBSSL_CIPHER\fP* ssl23_get_cipher_by_char (const unsigned char * p)"
+
+.SS "long ssl23_default_timeout (\fBvoid\fP)"
+
+.SS "long tls1_default_timeout (\fBvoid\fP)"
+
+.SS "int dtls1_do_write (\fBSSL\fP * s, int type)"
+
+.SS "int ssl3_read_n (\fBSSL\fP * s, int n, int max, int extend)"
+
+.SS "int dtls1_read_bytes (\fBSSL\fP * s, int type, unsigned char * buf, int len, int peek)"
+
+.SS "int ssl3_do_compress (\fBSSL\fP * ssl)"
+
+.SS "int ssl3_do_uncompress (\fBSSL\fP * ssl)"
+
+.SS "int ssl3_write_pending (\fBSSL\fP * s, int type, const unsigned char * buf, unsigned int len)"
+
+.SS "unsigned char* dtls1_set_message_header (\fBSSL\fP * s, unsigned char * p, unsigned char mt, unsigned long len, unsigned long frag_off, unsigned long frag_len)"
+
+.SS "int dtls1_write_app_data_bytes (\fBSSL\fP * s, int type, const \fBvoid\fP * buf, int len)"
+
+.SS "int dtls1_write_bytes (\fBSSL\fP * s, int type, const \fBvoid\fP * buf, int len)"
+
+.SS "int dtls1_send_change_cipher_spec (\fBSSL\fP * s, int a, int b)"
+
+.SS "int dtls1_read_failed (\fBSSL\fP * s, int code)"
+
+.SS "int dtls1_buffer_message (\fBSSL\fP * s, int ccs)"
+
+.SS "int dtls1_retransmit_message (\fBSSL\fP * s, unsigned short seq, unsigned long frag_off, int * found)"
+
+.SS "int dtls1_get_queue_priority (unsigned short seq, int is_ccs)"
+
+.SS "int dtls1_retransmit_buffered_messages (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP dtls1_clear_record_buffer (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP dtls1_get_message_header (unsigned char * data, struct \fBhm_header_st\fP * msg_hdr)"
+
+.SS "\fBvoid\fP dtls1_get_ccs_header (unsigned char * data, struct \fBccs_header_st\fP * ccs_hdr)"
+
+.SS "\fBvoid\fP dtls1_reset_seq_numbers (\fBSSL\fP * s, int rw)"
+
+.SS "long dtls1_default_timeout (\fBvoid\fP)"
+
+.SS "struct timeval* dtls1_get_timeout (\fBSSL\fP * s, struct timeval * timeleft)"
+
+.SS "int dtls1_check_timeout_num (\fBSSL\fP * s)"
+
+.SS "int dtls1_handle_timeout (\fBSSL\fP * s)"
+
+.SS "const \fBSSL_CIPHER\fP* dtls1_get_cipher (unsigned int u)"
+
+.SS "\fBvoid\fP dtls1_start_timer (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP dtls1_stop_timer (\fBSSL\fP * s)"
+
+.SS "int dtls1_is_timer_expired (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP dtls1_double_timeout (\fBSSL\fP * s)"
+
+.SS "int dtls1_send_newsession_ticket (\fBSSL\fP * s)"
+
+.SS "unsigned int dtls1_min_mtu (\fBSSL\fP * s)"
+
+.SS "unsigned int dtls1_link_min_mtu (\fBvoid\fP)"
+
+.SS "\fBvoid\fP dtls1_hm_fragment_free (\fBhm_fragment\fP * frag)"
+
+.SS "int ssl3_client_hello (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_server_hello (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_certificate_request (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_new_session_ticket (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_cert_status (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_server_done (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_client_verify (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_client_certificate (\fBSSL\fP * s)"
+
+.SS "int ssl_do_client_cert_cb (\fBSSL\fP * s, \fBX509\fP ** px509, \fBEVP_PKEY\fP ** ppkey)"
+
+.SS "int ssl3_send_client_key_exchange (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_key_exchange (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_server_certificate (\fBSSL\fP * s)"
+
+.SS "int ssl3_check_cert_and_algorithm (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_next_proto (\fBSSL\fP * s)"
+
+.SS "int dtls1_client_hello (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_client_hello (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_server_hello (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_hello_request (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_server_key_exchange (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_certificate_request (\fBSSL\fP * s)"
+
+.SS "int ssl3_send_server_done (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_client_certificate (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_client_key_exchange (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_cert_verify (\fBSSL\fP * s)"
+
+.SS "int ssl3_get_next_proto (\fBSSL\fP * s)"
+
+.SS "int ssl23_accept (\fBSSL\fP * s)"
+
+.SS "int ssl23_connect (\fBSSL\fP * s)"
+
+.SS "int ssl23_read_bytes (\fBSSL\fP * s, int n)"
+
+.SS "int ssl23_write_bytes (\fBSSL\fP * s)"
+
+.SS "int tls1_new (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP tls1_free (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP tls1_clear (\fBSSL\fP * s)"
+
+.SS "long tls1_ctrl (\fBSSL\fP * s, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "long tls1_callback_ctrl (\fBSSL\fP * s, int cmd, \fBvoid\fP(*)(\fBvoid\fP) fp)"
+
+.SS "int dtls1_new (\fBSSL\fP * s)"
+
+.SS "int dtls1_accept (\fBSSL\fP * s)"
+
+.SS "int dtls1_connect (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP dtls1_free (\fBSSL\fP * s)"
+
+.SS "\fBvoid\fP dtls1_clear (\fBSSL\fP * s)"
+
+.SS "long dtls1_ctrl (\fBSSL\fP * s, int cmd, long larg, \fBvoid\fP * parg)"
+
+.SS "int dtls1_shutdown (\fBSSL\fP * s)"
+
+.SS "long dtls1_get_message (\fBSSL\fP * s, int st1, int stn, int mt, long max, int * ok)"
+
+.SS "int dtls1_get_record (\fBSSL\fP * s)"
+
+.SS "int do_dtls1_write (\fBSSL\fP * s, int type, const unsigned char * buf, unsigned int len, int create_empty_fragement)"
+
+.SS "int dtls1_dispatch_alert (\fBSSL\fP * s)"
+
+.SS "int ssl_init_wbio_buffer (\fBSSL\fP * s, int push)"
+
+.SS "\fBvoid\fP ssl_free_wbio_buffer (\fBSSL\fP * s)"
+
+.SS "int tls1_change_cipher_state (\fBSSL\fP * s, int which)"
+
+.SS "int tls1_setup_key_block (\fBSSL\fP * s)"
+
+.SS "int tls1_enc (\fBSSL\fP * s, int snd)"
+
+.SS "int tls1_final_finish_mac (\fBSSL\fP * s, const char * str, int slen, unsigned char * p)"
+
+.SS "int tls1_cert_verify_mac (\fBSSL\fP * s, int md_nid, unsigned char * p)"
+
+.SS "int tls1_mac (\fBSSL\fP * ssl, unsigned char * md, int snd)"
+
+.SS "int tls1_generate_master_secret (\fBSSL\fP * s, unsigned char * out, unsigned char * p, int len)"
+
+.SS "int tls1_export_keying_material (\fBSSL\fP * s, unsigned char * out, size_t olen, const char * label, size_t llen, const unsigned char * p, size_t plen, int use_context)"
+
+.SS "int tls1_alert_code (int code)"
+
+.SS "int ssl3_alert_code (int code)"
+
+.SS "int ssl_ok (\fBSSL\fP * s)"
+
+.SS "int ssl_check_srvr_ecc_cert_and_alg (\fBX509\fP * x, \fBSSL\fP * s)"
+
+.SS "\fBSSL_COMP\fP* ssl3_comp_find (\fBSTACK_OF\fP(\fBSSL_COMP\fP)* sk, int n)"
+
+.SS "int tls1_ec_curve_id2nid (int curve_id)"
+
+.SS "int tls1_ec_nid2curve_id (int nid)"
+
+.SS "int tls1_check_curve (\fBSSL\fP * s, const unsigned char * p, size_t len)"
+
+.SS "int tls1_shared_curve (\fBSSL\fP * s, int nmatch)"
+
+.SS "int tls1_set_curves (unsigned char ** pext, size_t * pextlen, int * curves, size_t ncurves)"
+
+.SS "int tls1_set_curves_list (unsigned char ** pext, size_t * pextlen, const char * str)"
+
+.SS "int tls1_check_ec_tmp_key (\fBSSL\fP * s, unsigned long id)"
+
+.SS "int tls1_shared_list (\fBSSL\fP * s, const unsigned char * l1, size_t l1len, const unsigned char * l2, size_t l2len, int nmatch)"
+
+.SS "unsigned char* ssl_add_clienthello_tlsext (\fBSSL\fP * s, unsigned char * buf, unsigned char * limit, int * al)"
+
+.SS "unsigned char* ssl_add_serverhello_tlsext (\fBSSL\fP * s, unsigned char * buf, unsigned char * limit, int * al)"
+
+.SS "int ssl_parse_clienthello_tlsext (\fBSSL\fP * s, unsigned char ** data, unsigned char * limit)"
+
+.SS "int tls1_set_server_sigalgs (\fBSSL\fP * s)"
+
+.SS "int ssl_check_clienthello_tlsext_late (\fBSSL\fP * s)"
+
+.SS "int ssl_parse_serverhello_tlsext (\fBSSL\fP * s, unsigned char ** data, unsigned char * d, int n)"
+
+.SS "int ssl_prepare_clienthello_tlsext (\fBSSL\fP * s)"
+
+.SS "int ssl_prepare_serverhello_tlsext (\fBSSL\fP * s)"
+
+.SS "int tls1_heartbeat (\fBSSL\fP * s)"
+
+.SS "int dtls1_heartbeat (\fBSSL\fP * s)"
+
+.SS "int tls1_process_heartbeat (\fBSSL\fP * s)"
+
+.SS "int dtls1_process_heartbeat (\fBSSL\fP * s)"
+
+.SS "int tls1_process_ticket (\fBSSL\fP * s, unsigned char * session_id, int len, const unsigned char * limit, \fBSSL_SESSION\fP ** ret)"
+
+.SS "int tls12_get_sigandhash (unsigned char * p, const \fBEVP_PKEY\fP * pk, const \fBEVP_MD\fP * md)"
+
+.SS "int tls12_get_sigid (const \fBEVP_PKEY\fP * pk)"
+
+.SS "const \fBEVP_MD\fP* tls12_get_hash (unsigned char hash_alg)"
+
+.SS "int tls1_set_sigalgs_list (\fBCERT\fP * c, const char * str, int client)"
+
+.SS "int tls1_set_sigalgs (\fBCERT\fP * c, const int * salg, size_t salglen, int client)"
+
+.SS "int tls1_check_chain (\fBSSL\fP * s, \fBX509\fP * x, \fBEVP_PKEY\fP * pk, \fBSTACK_OF\fP(\fBX509\fP)* chain, int idx)"
+
+.SS "\fBvoid\fP tls1_set_cert_validity (\fBSSL\fP * s)"
+
+.SS "\fBEVP_MD_CTX\fP* ssl_replace_hash (\fBEVP_MD_CTX\fP ** hash, const \fBEVP_MD\fP * md)"
+
+.SS "\fBvoid\fP ssl_clear_hash_ctx (\fBEVP_MD_CTX\fP ** hash)"
+
+.SS "int ssl_add_serverhello_renegotiate_ext (\fBSSL\fP * s, unsigned char * p, int * len, int maxlen)"
+
+.SS "int ssl_parse_serverhello_renegotiate_ext (\fBSSL\fP * s, unsigned char * d, int len, int * al)"
+
+.SS "int ssl_add_clienthello_renegotiate_ext (\fBSSL\fP * s, unsigned char * p, int * len, int maxlen)"
+
+.SS "int ssl_parse_clienthello_renegotiate_ext (\fBSSL\fP * s, unsigned char * d, int len, int * al)"
+
+.SS "long ssl_get_algorithm2 (\fBSSL\fP * s)"
+
+.SS "int tls1_save_sigalgs (\fBSSL\fP * s, const unsigned char * data, int dsize)"
+
+.SS "int tls1_process_sigalgs (\fBSSL\fP * s)"
+
+.SS "size_t tls12_get_psigalgs (\fBSSL\fP * s, const unsigned char ** psigs)"
+
+.SS "int tls12_check_peer_sigalg (const \fBEVP_MD\fP ** pmd, \fBSSL\fP * s, const unsigned char * sig, \fBEVP_PKEY\fP * pkey)"
+
+.SS "\fBvoid\fP ssl_set_client_disabled (\fBSSL\fP * s)"
+
+.SS "int ssl_add_clienthello_use_srtp_ext (\fBSSL\fP * s, unsigned char * p, int * len, int maxlen)"
+
+.SS "int ssl_parse_clienthello_use_srtp_ext (\fBSSL\fP * s, unsigned char * d, int len, int * al)"
+
+.SS "int ssl_add_serverhello_use_srtp_ext (\fBSSL\fP * s, unsigned char * p, int * len, int maxlen)"
+
+.SS "int ssl_parse_serverhello_use_srtp_ext (\fBSSL\fP * s, unsigned char * d, int len, int * al)"
+
+.SS "\fBvoid\fP ssl3_cbc_copy_mac (unsigned char * out, const \fBSSL3_RECORD\fP * rec, unsigned md_size, unsigned orig_len)"
+
+.SS "int ssl3_cbc_remove_padding (const \fBSSL\fP * s, \fBSSL3_RECORD\fP * rec, unsigned block_size, unsigned mac_size)"
+
+.SS "int tls1_cbc_remove_padding (const \fBSSL\fP * s, \fBSSL3_RECORD\fP * rec, unsigned block_size, unsigned mac_size)"
+
+.SS "char ssl3_cbc_record_digest_supported (const \fBEVP_MD_CTX\fP * ctx)"
+
+.SS "int ssl3_cbc_digest_record (const \fBEVP_MD_CTX\fP * ctx, unsigned char * md_out, size_t * md_out_size, const unsigned char header[13], const unsigned char * data, size_t data_plus_mac_size, size_t data_plus_mac_plus_padding_size, const unsigned char * mac_secret, unsigned mac_secret_length, char is_sslv3)"
+
+.SS "\fBvoid\fP tls_fips_digest_extra (const \fBEVP_CIPHER_CTX\fP * cipher_ctx, \fBEVP_MD_CTX\fP * mac_ctx, const unsigned char * data, size_t data_len, size_t orig_len)"
+
+.SS "int srp_verify_server_param (\fBSSL\fP * s, int * al)"
+
+.SS "\fBvoid\fP custom_ext_init (\fBcustom_ext_methods\fP * meths)"
+
+.SS "int custom_ext_parse (\fBSSL\fP * s, int server, unsigned int ext_type, const unsigned char * ext_data, size_t ext_size, int * al)"
+
+.SS "int custom_ext_add (\fBSSL\fP * s, int server, unsigned char ** pret, unsigned char * limit, int * al)"
+
+.SS "int custom_exts_copy (\fBcustom_ext_methods\fP * dst, const \fBcustom_ext_methods\fP * src)"
+
+.SS "\fBvoid\fP custom_exts_free (\fBcustom_ext_methods\fP * exts)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBSSL3_ENC_METHOD\fP ssl3_undef_enc_method"
+
+.SS "\fBOPENSSL_EXTERN\fP const \fBSSL_CIPHER\fP ssl2_ciphers[]"
+
+.PP
+Definition at line 850 of file ssl_locl\&.h\&.
+.SS "\fBOPENSSL_EXTERN\fP \fBSSL_CIPHER\fP ssl3_ciphers[]"
+
+.PP
+Definition at line 851 of file ssl_locl\&.h\&.
+.SS "\fBSSL3_ENC_METHOD\fP TLSv1_enc_data"
+
+.SS "\fBSSL3_ENC_METHOD\fP TLSv1_1_enc_data"
+
+.SS "\fBSSL3_ENC_METHOD\fP TLSv1_2_enc_data"
+
+.SS "\fBSSL3_ENC_METHOD\fP SSLv3_enc_data"
+
+.SS "\fBSSL3_ENC_METHOD\fP DTLSv1_enc_data"
+
+.SS "\fBSSL3_ENC_METHOD\fP DTLSv1_2_enc_data"
+
+.SS "unsigned char* p"
+
+.PP
+Definition at line 1077 of file ssl_locl\&.h\&.
+.SS "unsigned char int num"
+
+.PP
+Definition at line 1077 of file ssl_locl\&.h\&.
+.SS "const char* rule_str"
+
+.PP
+Definition at line 1087 of file ssl_locl\&.h\&.
+.SS "const char \fBCERT\fP* c"
+
+.PP
+Definition at line 1087 of file ssl_locl\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

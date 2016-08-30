@@ -1,0 +1,199 @@
+.TH "s2n_resume_test" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n_resume_test \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "def \fBtry_resume\fP (endpoint, port, cipher, ssl_version)"
+.br
+.ti -1c
+.RI "def \fBmain\fP (argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "list \fBS2N_CIPHERS\fP"
+.br
+.ti -1c
+.RI "dictionary \fBPROTO_VERS_TO_STR\fP"
+.br
+.ti -1c
+.RI "dictionary \fBPROTO_VERS_TO_ARG\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "def s2n_resume_test\&.try_resume ( endpoint,  port,  cipher,  ssl_version)"
+
+.PP
+Definition at line 63 of file s2n_resume_test\&.py\&.
+.PP
+.nf
+63 def try_resume(endpoint, port, cipher, ssl_version):
+64     # Fire up s2nd
+65     s2nd = subprocess\&.Popen(["\&.\&./\&.\&./bin/s2nd", "-c", "test_all", str(endpoint), str(port)], stdin=subprocess\&.PIPE, stdout=subprocess\&.PIPE)
+66 
+67     # Make sure it's running
+68     s2nd\&.stdout\&.readline()
+69 
+70     # Fire up s_client
+71     s_client = subprocess\&.Popen(["\&.\&./\&.\&./libcrypto-root/bin/openssl", "s_client", PROTO_VERS_TO_ARG[ssl_version], "-cipher", cipher,
+72                                  "-quiet", "-reconnect", "-connect", str(endpoint) + ":" + str(port)], stdin=subprocess\&.PIPE, stdout=subprocess\&.PIPE,
+73                                  stderr=subprocess\&.DEVNULL)
+74 
+75     # Wait until the 6th connection
+76     seperators = 0
+77     for line in s2nd\&.stdout:
+78         line = line\&.decode("utf-8")\&.strip()
+79         if line\&.startswith("Resumed session"):
+80             seperators += 1
+81         if seperators == 5:
+82             break
+83 
+84     if seperators != 5:
+85         return -1
+86 
+87     # Write the cipher name towards s2n
+88     s_client\&.stdin\&.write((cipher + "\n")\&.encode("utf-8"))
+89     s_client\&.stdin\&.flush()
+90 
+91     # Read it
+92     found = 0
+93     for line in range(0, 10):
+94         output = s2nd\&.stdout\&.readline()\&.decode("utf-8")
+95         if output\&.strip() == cipher:
+96             found = 1
+97             break
+98 
+99     if found == 0:
+100         return -1
+101 
+102     # Write the cipher name from s2n
+103     s2nd\&.stdin\&.write((cipher + "\n")\&.encode("utf-8"))
+104     s2nd\&.stdin\&.flush()
+105     found = 0
+106     for line in range(0, 10):
+107         output = s_client\&.stdout\&.readline()\&.decode("utf-8")
+108         if output\&.strip() == cipher:
+109             found = 1
+110             break
+111 
+112     if found == 0:
+113         return -1
+114 
+115     s_client\&.kill()
+116     s_client\&.wait()
+117     s2nd\&.kill()
+118     s2nd\&.wait()
+119 
+120     return 0
+121 
+.fi
+.SS "def s2n_resume_test\&.main ( argv)"
+
+.PP
+Definition at line 122 of file s2n_resume_test\&.py\&.
+.PP
+.nf
+122 def main(argv):
+123     if len(argv) < 2:
+124         print("s2n_resume_test\&.py host port")
+125         sys\&.exit(1)
+126 
+127     print("\nRunning resumption tests with: " + os\&.popen('\&.\&./\&.\&./libcrypto-root/bin/openssl version')\&.read())
+128     failed = 0
+129     for ssl_version in [ssl\&.PROTOCOL_SSLv3, ssl\&.PROTOCOL_TLSv1, ssl\&.PROTOCOL_TLSv1_1, ssl\&.PROTOCOL_TLSv1_2]:
+130         print("\n\tTesting ciphers using client version: " + PROTO_VERS_TO_STR[ssl_version])
+131         for cipher in S2N_CIPHERS:
+132             cipher_name = cipher[0]
+133             cipher_vers = cipher[1]
+134 
+135             if ssl_version < cipher_vers:
+136                 continue
+137 
+138             ret = try_resume(argv[0], int(argv[1]), cipher_name, ssl_version)
+139             print("Cipher: %-30s Vers: %-10s \&.\&.\&. " % (cipher_name, PROTO_VERS_TO_STR[ssl_version]), end='')
+140             if ret == 0:
+141                 if sys\&.stdout\&.isatty():
+142                     print("\033[32;1mPASSED\033[0m")
+143                 else:
+144                     print("PASSED")
+145             else:
+146                 if sys\&.stdout\&.isatty():
+147                     print("\033[31;1mFAILED\033[0m")
+148                 else:
+149                     print("FAILED")
+150                 failed = 1
+151     return failed
+152 
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "list S2N_CIPHERS"
+\fBInitial value:\fP
+.PP
+.nf
+1 = [
+2     ("RC4-MD5", ssl\&.PROTOCOL_SSLv3),
+3     ("RC4-SHA", ssl\&.PROTOCOL_SSLv3),
+4     ("DES-CBC3-SHA", ssl\&.PROTOCOL_SSLv3),
+5     ("EDH-RSA-DES-CBC3-SHA", ssl\&.PROTOCOL_SSLv3),
+6     ("AES128-SHA", ssl\&.PROTOCOL_TLSv1),
+7     ("DHE-RSA-AES128-SHA", ssl\&.PROTOCOL_TLSv1),
+8     ("AES256-SHA", ssl\&.PROTOCOL_TLSv1),
+9     ("DHE-RSA-AES256-SHA", ssl\&.PROTOCOL_TLSv1),
+10     ("AES128-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+11     ("AES256-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+12     ("DHE-RSA-AES128-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+13     ("DHE-RSA-AES256-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+14     ("AES128-GCM-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+15     ("AES256-GCM-SHA384", ssl\&.PROTOCOL_TLSv1_2),
+16     ("DHE-RSA-AES128-GCM-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+17     ("ECDHE-RSA-DES-CBC3-SHA", ssl\&.PROTOCOL_TLSv1),
+18     ("ECDHE-RSA-AES128-SHA", ssl\&.PROTOCOL_TLSv1),
+19     ("ECDHE-RSA-AES256-SHA", ssl\&.PROTOCOL_TLSv1),
+20     ("ECDHE-RSA-AES128-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+21     ("ECDHE-RSA-AES256-SHA384", ssl\&.PROTOCOL_TLSv1_2),
+22     ("ECDHE-RSA-AES128-GCM-SHA256", ssl\&.PROTOCOL_TLSv1_2),
+23     ("ECDHE-RSA-AES256-GCM-SHA384", ssl\&.PROTOCOL_TLSv1_2),
+24 ]
+.fi
+.PP
+Definition at line 24 of file s2n_resume_test\&.py\&.
+.SS "dictionary PROTO_VERS_TO_STR"
+\fBInitial value:\fP
+.PP
+.nf
+1 = {
+2     ssl\&.PROTOCOL_SSLv3 : "SSLv3",
+3     ssl\&.PROTOCOL_TLSv1 : "TLSv1\&.0",
+4     ssl\&.PROTOCOL_TLSv1_1 : "TLSv1\&.1",
+5     ssl\&.PROTOCOL_TLSv1_2 : "TLSv1\&.2",
+6 }
+.fi
+.PP
+Definition at line 49 of file s2n_resume_test\&.py\&.
+.SS "dictionary PROTO_VERS_TO_ARG"
+\fBInitial value:\fP
+.PP
+.nf
+1 = {
+2     ssl\&.PROTOCOL_SSLv3 : "-ssl3",
+3     ssl\&.PROTOCOL_TLSv1 : "-tls1",
+4     ssl\&.PROTOCOL_TLSv1_1 : "-tls1_1",
+5     ssl\&.PROTOCOL_TLSv1_2 : "-tls1_2",
+6 }
+.fi
+.PP
+Definition at line 56 of file s2n_resume_test\&.py\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

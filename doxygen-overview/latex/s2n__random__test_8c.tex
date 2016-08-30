@@ -1,0 +1,412 @@
+\hypertarget{s2n__random__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+random\+\_\+test.c File Reference}
+\label{s2n__random__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+random\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+random\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/wait.\+h$>$}\\*
+{\ttfamily \#include $<$pthread.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+random\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$ \hyperlink{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1}{thread\+\_\+safety\+\_\+tester} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$slot)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2n__random__test_8c_a0a0bb254c244a22ef260308af94339db}{process\+\_\+safety\+\_\+tester} (int write\+\_\+fd)
+\item 
+int \hyperlink{s2n__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+random\+\_\+test.\+c@{s2n\+\_\+random\+\_\+test.\+c}!thread\+\_\+safety\+\_\+tester@{thread\+\_\+safety\+\_\+tester}}
+\index{thread\+\_\+safety\+\_\+tester@{thread\+\_\+safety\+\_\+tester}!s2n\+\_\+random\+\_\+test.\+c@{s2n\+\_\+random\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{thread\+\_\+safety\+\_\+tester(void $\ast$slot)}{thread_safety_tester(void *slot)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void}$\ast$ thread\+\_\+safety\+\_\+tester (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{slot}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1}{}\label{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1}
+
+
+Definition at line 26 of file s2n\+\_\+random\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+27 \{
+28     intptr\_t slotnum = (intptr\_t) slot;
+29     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} blob = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = thread\_data[slotnum], .size = 100 \};
+30 
+31     \hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob);
+32 
+33     \textcolor{keywordflow}{return} NULL;
+34 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=261pt]{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random\+\_\+test.\+c@{s2n\+\_\+random\+\_\+test.\+c}!process\+\_\+safety\+\_\+tester@{process\+\_\+safety\+\_\+tester}}
+\index{process\+\_\+safety\+\_\+tester@{process\+\_\+safety\+\_\+tester}!s2n\+\_\+random\+\_\+test.\+c@{s2n\+\_\+random\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{process\+\_\+safety\+\_\+tester(int write\+\_\+fd)}{process_safety_tester(int write_fd)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} process\+\_\+safety\+\_\+tester (
+\begin{DoxyParamCaption}
+\item[{int}]{write\+\_\+fd}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random__test_8c_a0a0bb254c244a22ef260308af94339db}{}\label{s2n__random__test_8c_a0a0bb254c244a22ef260308af94339db}
+
+
+Definition at line 36 of file s2n\+\_\+random\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+37 \{
+38     uint8\_t pad[100];
+39 
+40     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} blob = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = pad, .size = 100 \};
+41     \hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob);
+42 
+43     \textcolor{comment}{/* Write the data we got to our pipe */}
+44     \textcolor{keywordflow}{if} (write(write\_fd, pad, 100) != 100) \{
+45         \_exit(100);
+46     \}
+47 
+48     \textcolor{comment}{/* Close the pipe and exit */}
+49     close(write\_fd);
+50     \_exit(0);
+51 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random__test_8c_a0a0bb254c244a22ef260308af94339db_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{s2n__random__test_8c_a0a0bb254c244a22ef260308af94339db_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+random\+\_\+test.\+c@{s2n\+\_\+random\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+random\+\_\+test.\+c@{s2n\+\_\+random\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 53 of file s2n\+\_\+random\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+54 \{
+55     uint8\_t \hyperlink{crypto_2x509v3_2x509v3_8h_ab3c186980893d6836a68407d221ae9c9}{bits}[8] = \{ 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 \};
+56     uint8\_t bit\_set\_run[8];
+57     intptr\_t slot;
+58     \textcolor{keywordtype}{int} \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p}[2], status;
+59     pid\_t pid;
+60     uint8\_t \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[5120];
+61     uint8\_t child\_data[100];
+62     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} blob = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = data \};
+63 
+64     pthread\_t threads[2];
+65 
+66     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+67 
+68     \textcolor{comment}{/* Get one byte of data, to make sure the pool is (almost) full */}
+69     blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 1;
+70     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+71 
+72     \textcolor{comment}{/* Create two threads and have them each grab 100 bytes */}
+73     slot = 0;
+74     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pthread\_create(&threads[0], NULL, 
+      \hyperlink{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1}{thread\_safety\_tester}, (\textcolor{keywordtype}{void} *)slot));
+75     slot = 1;
+76     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pthread\_create(&threads[1], NULL, 
+      \hyperlink{s2n__random__test_8c_a7eb50df7530d7148fc0545de3c404fd1}{thread\_safety\_tester}, (\textcolor{keywordtype}{void} *)slot));
+77 
+78     \textcolor{comment}{/* Wait for those threads to finish */}
+79     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pthread\_join(threads[0], NULL));
+80     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pthread\_join(threads[1], NULL));
+81 
+82     \textcolor{comment}{/* Confirm that their data differs from each other */}
+83     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(memcmp(thread\_data[0], thread\_data[1], 100), 0);
+84 
+85     \textcolor{comment}{/* Confirm that their data differs from the parent thread */}
+86     blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 100;
+87     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+88     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(memcmp(thread\_data[0], data, 100), 0);
+89     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(memcmp(thread\_data[1], data, 100), 0);
+90 
+91     \textcolor{comment}{/* Create a pipe */}
+92     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+93 
+94     \textcolor{comment}{/* Create a child process */}
+95     pid = fork();
+96     \textcolor{keywordflow}{if} (pid == 0) \{
+97         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+98         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+99         \hyperlink{s2n__random__test_8c_a0a0bb254c244a22ef260308af94339db}{process\_safety\_tester}(p[1]);
+100     \}
+101 
+102     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+103     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+104 
+105     \textcolor{comment}{/* Read the child's data from the pipe */}
+106     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(read(p[0], child\_data, 100), 100);
+107 
+108     \textcolor{comment}{/* Get 100 bytes here in the parent process */}
+109     blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = 100;
+110     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+111 
+112     \textcolor{comment}{/* Confirm they differ */}
+113     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(memcmp(child\_data, data, 100), 0);
+114 
+115     \textcolor{comment}{/* Clean up */}
+116     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+117     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+118     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+119 
+120     \textcolor{comment}{/* Get two sets of data in the same process/thread, and confirm that they}
+121 \textcolor{comment}{     * differ}
+122 \textcolor{comment}{     */}
+123     blob.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = child\_data;
+124     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+125     blob.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data};
+126     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+127     \hyperlink{s2n__test_8h_ab2e8a76bb5b142d6279d1e449dbefdc7}{EXPECT\_NOT\_EQUAL}(memcmp(child\_data, data, 100), 0);
+128 
+129     \textcolor{comment}{/* Try to fetch a volume of randomly generated data, every size between 1 and 5120}
+130 \textcolor{comment}{     * bytes.}
+131 \textcolor{comment}{     */}
+132     \textcolor{keywordtype}{int} trailing\_zeros[8];
+133 
+134     memset(trailing\_zeros, 0, \textcolor{keyword}{sizeof}(trailing\_zeros));
+135     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 5120; i++) \{
+136         blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = i;
+137         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_a5cfef84444cc08086a4098569c9f1fc8}{s2n\_get\_public\_random\_data}(&blob));
+138 
+139         \textcolor{keywordflow}{if} (i >= 64) \{
+140             \textcolor{comment}{/* Set the run counts to 0 */}
+141             memset(bit\_set\_run, 0, 8);
+142 
+143             \textcolor{comment}{/* Apply 8 monobit tests to the data. Basically, we're}
+144 \textcolor{comment}{             * looking for successive runs where a given bit is set.}
+145 \textcolor{comment}{             * If a run exists with any particular bit 64 times in }
+146 \textcolor{comment}{             * a row, then the data doesn't look randomly generated.}
+147 \textcolor{comment}{             */}
+148             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+149                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < 8; k++) \{
+150                     \textcolor{keywordflow}{if} (data[j] & bits[k]) \{
+151                         bit\_set\_run[k]++;
+152 
+153                         \textcolor{keywordflow}{if} (j >= 64) \{
+154                             \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(bit\_set\_run[k] < 64);
+155                         \}
+156                     \} \textcolor{keywordflow}{else} \{
+157                         bit\_set\_run[k] = 0;
+158                     \}
+159                 \}
+160             \}
+161         \}
+162         \textcolor{comment}{/* A common mistake in array filling leaves the last bytes zero}
+163 \textcolor{comment}{         * depending on the length.}
+164 \textcolor{comment}{         */}
+165         \textcolor{keywordtype}{int} remainder = i % 8;
+166         \textcolor{keywordtype}{int} non\_zero\_found = 0;
+167         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = i - remainder; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < i; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+168             non\_zero\_found |= data[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}];
+169         \}
+170         \textcolor{keywordflow}{if} (!non\_zero\_found) \{
+171             trailing\_zeros[remainder]++;
+172         \}
+173     \}
+174     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = 1; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < 8; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+175         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(trailing\_zeros[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}] < 5120 / 16);
+176     \}
+177 
+178     memset(trailing\_zeros, 0, \textcolor{keyword}{sizeof}(trailing\_zeros));
+179     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 5120; i++) \{
+180         blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = i;
+181         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__random_8c_aaad2cf7ed73ddf58358fb714b1abfb39}{s2n\_get\_private\_random\_data}(&blob));
+182 
+183         \textcolor{keywordflow}{if} (i >= 64) \{
+184             \textcolor{comment}{/* Set the run counts to 0 */}
+185             memset(bit\_set\_run, 0, 8);
+186 
+187             \textcolor{comment}{/* Apply 8 monobit tests to the data. Basically, we're}
+188 \textcolor{comment}{             * looking for successive runs where a given bit is set.}
+189 \textcolor{comment}{             * If a run exists with any particular bit 64 times in }
+190 \textcolor{comment}{             * a row, then the data doesn't look randomly generated.}
+191 \textcolor{comment}{             */}
+192             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+193                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < 8; k++) \{
+194                     \textcolor{keywordflow}{if} (data[j] & bits[k]) \{
+195                         bit\_set\_run[k]++;
+196 
+197                         \textcolor{keywordflow}{if} (j >= 64) \{
+198                             \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(bit\_set\_run[k] < 64);
+199                         \}
+200                     \} \textcolor{keywordflow}{else} \{
+201                         bit\_set\_run[k] = 0;
+202                     \}
+203                 \}
+204             \}
+205         \}
+206         \textcolor{comment}{/* A common mistake in array filling leaves the last bytes zero}
+207 \textcolor{comment}{         * depending on the length.}
+208 \textcolor{comment}{         */}
+209         \textcolor{keywordtype}{int} remainder = i % 8;
+210         \textcolor{keywordtype}{int} non\_zero\_found = 0;
+211         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = i - remainder; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < i; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+212             non\_zero\_found |= data[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}];
+213         \}
+214         \textcolor{keywordflow}{if} (!non\_zero\_found) \{
+215             trailing\_zeros[remainder]++;
+216         \}
+217     \}
+218     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = 1; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < 8; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+219         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(trailing\_zeros[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}] < 5120 / 16);
+220     \}
+221 
+222     memset(trailing\_zeros, 0, \textcolor{keyword}{sizeof}(trailing\_zeros));
+223     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 5120; i++) \{
+224         blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = i;
+225         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\_get\_urandom\_data}(&blob));
+226 
+227         \textcolor{keywordflow}{if} (i >= 64) \{
+228             \textcolor{comment}{/* Set the run counts to 0 */}
+229             memset(bit\_set\_run, 0, 8);
+230 
+231             \textcolor{comment}{/* Apply 8 monobit tests to the data. Basically, we're}
+232 \textcolor{comment}{             * looking for successive runs where a given bit is set.}
+233 \textcolor{comment}{             * If a run exists with any particular bit 64 times in }
+234 \textcolor{comment}{             * a row, then the data doesn't look randomly generated.}
+235 \textcolor{comment}{             */}
+236             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+237                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < 8; k++) \{
+238                     \textcolor{keywordflow}{if} (data[j] & bits[k]) \{
+239                         bit\_set\_run[k]++;
+240 
+241                         \textcolor{keywordflow}{if} (j >= 64) \{
+242                             \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(bit\_set\_run[k] < 64);
+243                         \}
+244                     \} \textcolor{keywordflow}{else} \{
+245                         bit\_set\_run[k] = 0;
+246                     \}
+247                 \}
+248             \}
+249         \}
+250         \textcolor{comment}{/* A common mistake in array filling leaves the last bytes zero}
+251 \textcolor{comment}{         * depending on the length.}
+252 \textcolor{comment}{         */}
+253         \textcolor{keywordtype}{int} remainder = i % 8;
+254         \textcolor{keywordtype}{int} non\_zero\_found = 0;
+255         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = i - remainder; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < i; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+256             non\_zero\_found |= data[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}];
+257         \}
+258         \textcolor{keywordflow}{if} (!non\_zero\_found) \{
+259             trailing\_zeros[remainder]++;
+260         \}
+261     \}
+262     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = 1; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < 8; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+263         \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(trailing\_zeros[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}] < 5120 / 16);
+264     \}
+265 
+266     \textcolor{keywordflow}{if} (\hyperlink{s2n__random_8c_a3d5fc4d21639fe086400e7337bc82666}{s2n\_cpu\_supports\_rdrand}()) \{
+267         memset(trailing\_zeros, 0, \textcolor{keyword}{sizeof}(trailing\_zeros));
+268         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 5120; i++) \{
+269             blob.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = i;
+270             \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{global__overrides_8c_a803d79131d0fb9d77393aae0cdc2c169}{s2n\_get\_urandom\_data}(&blob));
+271 
+272             \textcolor{keywordflow}{if} (i >= 64) \{
+273                 \textcolor{comment}{/* Set the run counts to 0 */}
+274                 memset(bit\_set\_run, 0, 8);
+275 
+276                 \textcolor{comment}{/* Apply 8 monobit tests to the data. Basically, we're}
+277 \textcolor{comment}{                 * looking for successive runs where a given bit is set.}
+278 \textcolor{comment}{                 * If a run exists with any particular bit 64 times in }
+279 \textcolor{comment}{                 * a row, then the data doesn't look randomly generated.}
+280 \textcolor{comment}{                 */}
+281                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < i; j++) \{
+282                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < 8; k++) \{
+283                         \textcolor{keywordflow}{if} (data[j] & bits[k]) \{
+284                             bit\_set\_run[k]++;
+285 
+286                             \textcolor{keywordflow}{if} (j >= 64) \{
+287                                 \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(bit\_set\_run[k] < 64);
+288                             \}
+289                         \} \textcolor{keywordflow}{else} \{
+290                             bit\_set\_run[k] = 0;
+291                         \}
+292                     \}
+293                 \}
+294             \}
+295             \textcolor{comment}{/* A common mistake in array filling leaves the last bytes zero}
+296 \textcolor{comment}{             * depending on the length}
+297 \textcolor{comment}{             */}
+298             \textcolor{keywordtype}{int} remainder = i % 8;
+299             \textcolor{keywordtype}{int} non\_zero\_found = 0;
+300             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = i - remainder; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < i; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+301               non\_zero\_found |= data[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}];
+302             \}
+303             \textcolor{keywordflow}{if} (!non\_zero\_found) \{
+304               trailing\_zeros[remainder]++;
+305             \}
+306         \}
+307         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} = 1; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t} < 8; \hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}++) \{
+308           \hyperlink{s2n__test_8h_a6474fff07a0989c773c61761119a28ab}{EXPECT\_TRUE}(trailing\_zeros[\hyperlink{crypto_2asn1_2asn1_8h_a3d54702d866c88bc4b3a88e68fb986d9}{t}] < 5120 / 16);
+309         \}
+310     \}
+311 
+312     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+313 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__random__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

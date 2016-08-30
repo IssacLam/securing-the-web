@@ -1,0 +1,58 @@
+.TH "s2n-master/utils/s2n_blob.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/utils/s2n_blob.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_blob_init\fP (struct \fBs2n_blob\fP *b, uint8_t *data, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_blob_zero\fP (struct \fBs2n_blob\fP *b)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_blob_init (struct \fBs2n_blob\fP * b, uint8_t * data, uint32_t size)"
+
+.PP
+Definition at line 25 of file s2n_blob\&.c\&.
+.PP
+.nf
+26 {
+27     b->data = data;
+28     b->size = size;
+29     return 0;
+30 }
+.fi
+.SS "int s2n_blob_zero (struct \fBs2n_blob\fP * b)"
+
+.PP
+Definition at line 32 of file s2n_blob\&.c\&.
+.PP
+.nf
+33 {
+34     memset_check(b->data, 0, b->size);
+35 
+36     return 0;
+37 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

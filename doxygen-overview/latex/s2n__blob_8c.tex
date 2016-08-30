@@ -1,0 +1,87 @@
+\hypertarget{s2n__blob_8c}{}\section{s2n-\/master/utils/s2n\+\_\+blob.c File Reference}
+\label{s2n__blob_8c}\index{s2n-\/master/utils/s2n\+\_\+blob.\+c@{s2n-\/master/utils/s2n\+\_\+blob.\+c}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+blob.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__blob_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__blob_8c_a1d3a7f2981b29945a491b6b8cf791c87}{s2n\+\_\+blob\+\_\+init} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$b, uint8\+\_\+t $\ast$data, uint32\+\_\+t size)
+\item 
+int \hyperlink{s2n__blob_8c_a241c17ca2593704ff88734d13659a877}{s2n\+\_\+blob\+\_\+zero} (struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$b)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+blob.\+c@{s2n\+\_\+blob.\+c}!s2n\+\_\+blob\+\_\+init@{s2n\+\_\+blob\+\_\+init}}
+\index{s2n\+\_\+blob\+\_\+init@{s2n\+\_\+blob\+\_\+init}!s2n\+\_\+blob.\+c@{s2n\+\_\+blob.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+blob\+\_\+init(struct s2n\+\_\+blob $\ast$b, uint8\+\_\+t $\ast$data, uint32\+\_\+t size)}{s2n_blob_init(struct s2n_blob *b, uint8_t *data, uint32_t size)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+blob\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{b, }
+\item[{uint8\+\_\+t $\ast$}]{data, }
+\item[{uint32\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__blob_8c_a1d3a7f2981b29945a491b6b8cf791c87}{}\label{s2n__blob_8c_a1d3a7f2981b29945a491b6b8cf791c87}
+
+
+Definition at line 25 of file s2n\+\_\+blob.\+c.
+
+
+\begin{DoxyCode}
+26 \{
+27     b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = data;
+28     b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = size;
+29     \textcolor{keywordflow}{return} 0;
+30 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{s2n__blob_8c_a1d3a7f2981b29945a491b6b8cf791c87_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+blob.\+c@{s2n\+\_\+blob.\+c}!s2n\+\_\+blob\+\_\+zero@{s2n\+\_\+blob\+\_\+zero}}
+\index{s2n\+\_\+blob\+\_\+zero@{s2n\+\_\+blob\+\_\+zero}!s2n\+\_\+blob.\+c@{s2n\+\_\+blob.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+blob\+\_\+zero(struct s2n\+\_\+blob $\ast$b)}{s2n_blob_zero(struct s2n_blob *b)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+blob\+\_\+zero (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__blob_8c_a241c17ca2593704ff88734d13659a877}{}\label{s2n__blob_8c_a241c17ca2593704ff88734d13659a877}
+
+
+Definition at line 32 of file s2n\+\_\+blob.\+c.
+
+
+\begin{DoxyCode}
+33 \{
+34     \hyperlink{s2n__safety_8h_ac8a7c6aaf1d67eeb681b00e9d271dfbe}{memset\_check}(b->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, 0, b->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size});
+35 
+36     \textcolor{keywordflow}{return} 0;
+37 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__blob_8c_a241c17ca2593704ff88734d13659a877_icgraph}
+\end{center}
+\end{figure}
+
+

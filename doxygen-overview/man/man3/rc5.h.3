@@ -1,0 +1,135 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/rc5/rc5.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/rc5/rc5.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/opensslconf\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBrc5_key_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBRC5_ENCRYPT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBRC5_DECRYPT\fP   0"
+.br
+.ti -1c
+.RI "#define \fBRC5_32_INT\fP   unsigned long"
+.br
+.ti -1c
+.RI "#define \fBRC5_32_BLOCK\fP   8"
+.br
+.ti -1c
+.RI "#define \fBRC5_32_KEY_LENGTH\fP   16/* This is \fBa\fP default, max is 255 */"
+.br
+.ti -1c
+.RI "#define \fBRC5_8_ROUNDS\fP   8"
+.br
+.ti -1c
+.RI "#define \fBRC5_12_ROUNDS\fP   12"
+.br
+.ti -1c
+.RI "#define \fBRC5_16_ROUNDS\fP   16"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBrc5_key_st\fP \fBRC5_32_KEY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_set_key\fP (\fBRC5_32_KEY\fP *key, int \fBlen\fP, const unsigned char *data, int rounds)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_ecb_encrypt\fP (const unsigned char *in, unsigned char *out, \fBRC5_32_KEY\fP *key, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_encrypt\fP (unsigned long *data, \fBRC5_32_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_decrypt\fP (unsigned long *data, \fBRC5_32_KEY\fP *key)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_cbc_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBRC5_32_KEY\fP *ks, unsigned char *iv, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_cfb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBRC5_32_KEY\fP *schedule, unsigned char *ivec, int *\fBnum\fP, int enc)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBRC5_32_ofb64_encrypt\fP (const unsigned char *in, unsigned char *out, long \fBlength\fP, \fBRC5_32_KEY\fP *schedule, unsigned char *ivec, int *\fBnum\fP)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define RC5_ENCRYPT   1"
+
+.PP
+Definition at line 72 of file rc5\&.h\&.
+.SS "#define RC5_DECRYPT   0"
+
+.PP
+Definition at line 73 of file rc5\&.h\&.
+.SS "#define RC5_32_INT   unsigned long"
+
+.PP
+Definition at line 76 of file rc5\&.h\&.
+.SS "#define RC5_32_BLOCK   8"
+
+.PP
+Definition at line 78 of file rc5\&.h\&.
+.SS "#define RC5_32_KEY_LENGTH   16/* This is \fBa\fP default, max is 255 */"
+
+.PP
+Definition at line 79 of file rc5\&.h\&.
+.SS "#define RC5_8_ROUNDS   8"
+
+.PP
+Definition at line 85 of file rc5\&.h\&.
+.SS "#define RC5_12_ROUNDS   12"
+
+.PP
+Definition at line 86 of file rc5\&.h\&.
+.SS "#define RC5_16_ROUNDS   16"
+
+.PP
+Definition at line 87 of file rc5\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBrc5_key_st\fP  \fBRC5_32_KEY\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP RC5_32_set_key (\fBRC5_32_KEY\fP * key, int len, const unsigned char * data, int rounds)"
+
+.SS "\fBvoid\fP RC5_32_ecb_encrypt (const unsigned char * in, unsigned char * out, \fBRC5_32_KEY\fP * key, int enc)"
+
+.SS "\fBvoid\fP RC5_32_encrypt (unsigned long * data, \fBRC5_32_KEY\fP * key)"
+
+.SS "\fBvoid\fP RC5_32_decrypt (unsigned long * data, \fBRC5_32_KEY\fP * key)"
+
+.SS "\fBvoid\fP RC5_32_cbc_encrypt (const unsigned char * in, unsigned char * out, long length, \fBRC5_32_KEY\fP * ks, unsigned char * iv, int enc)"
+
+.SS "\fBvoid\fP RC5_32_cfb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBRC5_32_KEY\fP * schedule, unsigned char * ivec, int * num, int enc)"
+
+.SS "\fBvoid\fP RC5_32_ofb64_encrypt (const unsigned char * in, unsigned char * out, long length, \fBRC5_32_KEY\fP * schedule, unsigned char * ivec, int * num)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

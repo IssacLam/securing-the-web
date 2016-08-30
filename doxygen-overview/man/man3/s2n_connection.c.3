@@ -1,0 +1,627 @@
+.TH "s2n-master/tls/s2n_connection.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_connection.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_alerts\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'tls/s2n_prf\&.h'\fP
+.br
+\fC#include 'crypto/s2n_cipher\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_timer\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBGCC_VERSION\fP"
+.br
+.ti -1c
+.RI "#define \fBONE_S\fP   INT64_C(1000000000)"
+.br
+.ti -1c
+.RI "#define \fBTEN_S\fP   INT64_C(10000000000)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_connection\fP * \fBs2n_connection_new\fP (\fBs2n_mode\fP mode)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_free\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_config\fP (struct \fBs2n_connection\fP *conn, struct \fBs2n_config\fP *\fBconfig\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_wipe\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_read_fd\fP (struct \fBs2n_connection\fP *conn, int rfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_write_fd\fP (struct \fBs2n_connection\fP *conn, int wfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_fd\fP (struct \fBs2n_connection\fP *conn, int fd)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_in\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "uint64_t \fBs2n_connection_get_wire_bytes_out\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_connection_get_cipher\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_server_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_actual_protocol_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_client_hello_version\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_get_alert\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_set_server_name\fP (struct \fBs2n_connection\fP *conn, const char *server_name)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_server_name\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const char * \fBs2n_get_application_protocol\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_set_blinding\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blinding\fP blinding)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_connection_get_delay\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_kill\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "const uint8_t * \fBs2n_connection_get_ocsp_response\fP (struct \fBs2n_connection\fP *conn, uint32_t *\fBlength\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_throughput\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_connection_prefer_low_latency\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define GCC_VERSION"
+\fBValue:\fP
+.PP
+.nf
+(__GNUC__ * 10000 \
+                     + __GNUC_MINOR__ * 100 \
+                     + __GNUC_PATCHLEVEL__)
+.fi
+.PP
+Definition at line 41 of file s2n_connection\&.c\&.
+.SS "#define ONE_S   INT64_C(1000000000)"
+
+.PP
+Definition at line 346 of file s2n_connection\&.c\&.
+.SS "#define TEN_S   INT64_C(10000000000)"
+
+.PP
+Definition at line 347 of file s2n_connection\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "struct \fBs2n_connection\fP* s2n_connection_new (\fBs2n_mode\fP mode)"
+
+.PP
+Definition at line 45 of file s2n_connection\&.c\&.
+.PP
+.nf
+46 {
+47     struct s2n_blob blob;
+48     struct s2n_connection *conn;
+49 
+50     GUARD_PTR(s2n_alloc(&blob, sizeof(struct s2n_connection)));
+51 
+52     GUARD_PTR(s2n_blob_zero(&blob));
+53 
+54     if (mode == S2N_CLIENT) {
+55         /* At present s2n is not suitable for use in client mode, as it
+56          * does not perform any certificate validation\&. However it is useful
+57          * to use S2N in client mode for testing purposes\&. An environment
+58          * variable is required to be set for the client mode to work\&.
+59          */
+60         if (getenv("S2N_ENABLE_CLIENT_MODE") == NULL) {
+61             GUARD_PTR(s2n_free(&blob));
+62             S2N_ERROR_PTR(S2N_ERR_CLIENT_MODE_DISABLED);
+63         }
+64     }
+65 
+66     /* Cast 'through' void to acknowledge that we are changing alignment,
+67      * which is ok, as blob\&.data is always aligned\&.
+68      */
+69     conn = (struct s2n_connection *)(void *)blob\&.data;
+70     conn->mode = mode;
+71     conn->blinding = S2N_BUILT_IN_BLINDING;
+72     conn->config = &s2n_default_config;
+73     conn->close_notify_queued = 0;
+74     conn->session_id_len = 0;
+75 
+76     /* Allocate the fixed-size stuffers */
+77     blob\&.data = conn->alert_in_data;
+78     blob\&.size = S2N_ALERT_LENGTH;
+79 
+80     GUARD_PTR(s2n_stuffer_init(&conn->alert_in, &blob));
+81 
+82     blob\&.data = conn->reader_alert_out_data;
+83     blob\&.size = S2N_ALERT_LENGTH;
+84 
+85     GUARD_PTR(s2n_stuffer_init(&conn->reader_alert_out, &blob));
+86 
+87     blob\&.data = conn->writer_alert_out_data;
+88     blob\&.size = S2N_ALERT_LENGTH;
+89 
+90     GUARD_PTR(s2n_stuffer_init(&conn->writer_alert_out, &blob));
+91     GUARD_PTR(s2n_stuffer_alloc(&conn->out, S2N_LARGE_RECORD_LENGTH));
+92 
+93     /* Initialize the growable stuffers\&. Zero length at first, but the resize
+94      * in _wipe will fix that 
+95      */
+96     blob\&.data = conn->header_in_data;
+97     blob\&.size = S2N_TLS_RECORD_HEADER_LENGTH;
+98 
+99     GUARD_PTR(s2n_stuffer_init(&conn->header_in, &blob));
+100     GUARD_PTR(s2n_stuffer_growable_alloc(&conn->in, 0));
+101     GUARD_PTR(s2n_stuffer_growable_alloc(&conn->handshake\&.io, 0));
+102     GUARD_PTR(s2n_connection_wipe(conn));
+103     GUARD_PTR(s2n_timer_start(conn->config, &conn->write_timer));
+104 
+105     return conn;
+106 }
+.fi
+.SS "int s2n_connection_free (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 129 of file s2n_connection\&.c\&.
+.PP
+.nf
+130 {
+131     struct s2n_blob blob;
+132 
+133     GUARD(s2n_connection_free_keys(conn));
+134 
+135     GUARD(s2n_stuffer_free(&conn->in));
+136     GUARD(s2n_stuffer_free(&conn->out));
+137     GUARD(s2n_stuffer_free(&conn->handshake\&.io));
+138 
+139     blob\&.data = (uint8_t *) conn;
+140     blob\&.size = sizeof(struct s2n_connection);
+141 
+142     GUARD(s2n_free(&blob));
+143     return 0;
+144 }
+.fi
+.SS "int s2n_connection_set_config (struct \fBs2n_connection\fP * conn, struct \fBs2n_config\fP * config)"
+
+.PP
+Definition at line 146 of file s2n_connection\&.c\&.
+.PP
+.nf
+147 {
+148     conn->config = config;
+149     return 0;
+150 }
+.fi
+.SS "int s2n_connection_wipe (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 152 of file s2n_connection\&.c\&.
+.PP
+.nf
+153 {
+154     /* First make a copy of everything we'd like to save, which isn't very
+155      * much\&.
+156      */
+157     int mode = conn->mode;
+158     struct s2n_config *config = conn->config;
+159     struct s2n_stuffer alert_in;
+160     struct s2n_stuffer reader_alert_out;
+161     struct s2n_stuffer writer_alert_out;
+162     struct s2n_stuffer handshake_io;
+163     struct s2n_stuffer header_in;
+164     struct s2n_stuffer in;
+165     struct s2n_stuffer out;
+166 
+167     /* Wipe all of the sensitive stuff */
+168     GUARD(s2n_connection_free_keys(conn));
+169     GUARD(s2n_stuffer_wipe(&conn->alert_in));
+170     GUARD(s2n_stuffer_wipe(&conn->reader_alert_out));
+171     GUARD(s2n_stuffer_wipe(&conn->writer_alert_out));
+172     GUARD(s2n_stuffer_wipe(&conn->handshake\&.io));
+173     GUARD(s2n_stuffer_wipe(&conn->header_in));
+174     GUARD(s2n_stuffer_wipe(&conn->in));
+175     GUARD(s2n_stuffer_wipe(&conn->out));
+176 
+177     /* Allocate or resize to their original sizes */
+178     GUARD(s2n_stuffer_resize(&conn->in, S2N_LARGE_FRAGMENT_LENGTH));
+179 
+180     /* Allocate memory for handling handshakes */
+181     GUARD(s2n_stuffer_resize(&conn->handshake\&.io, S2N_LARGE_RECORD_LENGTH));
+182 
+183     /* Clone the stuffers */
+184     /* ignore gcc 4\&.7 address warnings because dest is allocated on the stack */
+185     /* pragma gcc diagnostic was added in gcc 4\&.6 */
+186 #if defined(__GNUC__) && GCC_VERSION >= 40600
+187 #pragma GCC diagnostic push
+188 #pragma GCC diagnostic ignored "-Waddress"
+189 #endif
+190     memcpy_check(&alert_in, &conn->alert_in, sizeof(struct s2n_stuffer));
+191     memcpy_check(&reader_alert_out, &conn->reader_alert_out, sizeof(struct s2n_stuffer));
+192     memcpy_check(&writer_alert_out, &conn->writer_alert_out, sizeof(struct s2n_stuffer));
+193     memcpy_check(&handshake_io, &conn->handshake\&.io, sizeof(struct s2n_stuffer));
+194     memcpy_check(&header_in, &conn->header_in, sizeof(struct s2n_stuffer));
+195     memcpy_check(&in, &conn->in, sizeof(struct s2n_stuffer));
+196     memcpy_check(&out, &conn->out, sizeof(struct s2n_stuffer));
+197 #if defined(__GNUC__) && GCC_VERSION >= 40600
+198 #pragma GCC diagnostic pop
+199 #endif
+200 
+201     /* Zero the whole connection structure */
+202     memset_check(conn, 0, sizeof(struct s2n_connection));
+203 
+204     conn->readfd = -1;
+205     conn->writefd = -1;
+206     conn->mode = mode;
+207     conn->config = config;
+208     conn->close_notify_queued = 0;
+209     conn->initial\&.cipher_suite = &s2n_null_cipher_suite;
+210     conn->secure\&.cipher_suite = &s2n_null_cipher_suite;
+211     conn->server = &conn->initial;
+212     conn->client = &conn->initial;
+213     conn->max_fragment_length = S2N_SMALL_FRAGMENT_LENGTH;
+214     conn->handshake\&.handshake_type = INITIAL;
+215     conn->handshake\&.message_number = 0;
+216     GUARD(s2n_hash_init(&conn->handshake\&.md5, S2N_HASH_MD5));
+217     GUARD(s2n_hash_init(&conn->handshake\&.sha1, S2N_HASH_SHA1));
+218     GUARD(s2n_hash_init(&conn->handshake\&.sha256, S2N_HASH_SHA256));
+219     GUARD(s2n_hash_init(&conn->handshake\&.sha384, S2N_HASH_SHA384));
+220     GUARD(s2n_hmac_init(&conn->client->client_record_mac, S2N_HMAC_NONE, NULL, 0));
+221     GUARD(s2n_hmac_init(&conn->server->server_record_mac, S2N_HMAC_NONE, NULL, 0));
+222 
+223     memcpy_check(&conn->alert_in, &alert_in, sizeof(struct s2n_stuffer));
+224     memcpy_check(&conn->reader_alert_out, &reader_alert_out, sizeof(struct s2n_stuffer));
+225     memcpy_check(&conn->writer_alert_out, &writer_alert_out, sizeof(struct s2n_stuffer));
+226     memcpy_check(&conn->handshake\&.io, &handshake_io, sizeof(struct s2n_stuffer));
+227     memcpy_check(&conn->header_in, &header_in, sizeof(struct s2n_stuffer));
+228     memcpy_check(&conn->in, &in, sizeof(struct s2n_stuffer));
+229     memcpy_check(&conn->out, &out, sizeof(struct s2n_stuffer));
+230 
+231     /* Set everything to the highest version at first */
+232     conn->server_protocol_version = s2n_highest_protocol_version;
+233     conn->client_protocol_version = s2n_highest_protocol_version;
+234     conn->actual_protocol_version = s2n_highest_protocol_version;
+235 
+236     return 0;
+237 }
+.fi
+.SS "int s2n_connection_set_read_fd (struct \fBs2n_connection\fP * conn, int rfd)"
+
+.PP
+Definition at line 239 of file s2n_connection\&.c\&.
+.PP
+.nf
+240 {
+241     conn->readfd = rfd;
+242     return 0;
+243 }
+.fi
+.SS "int s2n_connection_set_write_fd (struct \fBs2n_connection\fP * conn, int wfd)"
+
+.PP
+Definition at line 245 of file s2n_connection\&.c\&.
+.PP
+.nf
+246 {
+247     conn->writefd = wfd;
+248     return 0;
+249 }
+.fi
+.SS "int s2n_connection_set_fd (struct \fBs2n_connection\fP * conn, int fd)"
+
+.PP
+Definition at line 251 of file s2n_connection\&.c\&.
+.PP
+.nf
+252 {
+253     GUARD(s2n_connection_set_read_fd(conn, fd));
+254     GUARD(s2n_connection_set_write_fd(conn, fd));
+255     return 0;
+256 }
+.fi
+.SS "uint64_t s2n_connection_get_wire_bytes_in (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 258 of file s2n_connection\&.c\&.
+.PP
+.nf
+259 {
+260     return conn->wire_bytes_in;
+261 }
+.fi
+.SS "uint64_t s2n_connection_get_wire_bytes_out (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 263 of file s2n_connection\&.c\&.
+.PP
+.nf
+264 {
+265     return conn->wire_bytes_out;
+266 }
+.fi
+.SS "const char* s2n_connection_get_cipher (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 268 of file s2n_connection\&.c\&.
+.PP
+.nf
+269 {
+270     return conn->secure\&.cipher_suite->name;
+271 }
+.fi
+.SS "int s2n_connection_get_client_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 273 of file s2n_connection\&.c\&.
+.PP
+.nf
+274 {
+275     return conn->client_protocol_version;
+276 }
+.fi
+.SS "int s2n_connection_get_server_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 278 of file s2n_connection\&.c\&.
+.PP
+.nf
+279 {
+280     return conn->server_protocol_version;
+281 }
+.fi
+.SS "int s2n_connection_get_actual_protocol_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 283 of file s2n_connection\&.c\&.
+.PP
+.nf
+284 {
+285     return conn->actual_protocol_version;
+286 }
+.fi
+.SS "int s2n_connection_get_client_hello_version (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 288 of file s2n_connection\&.c\&.
+.PP
+.nf
+289 {
+290     return conn->client_hello_version;
+291 }
+.fi
+.SS "int s2n_connection_get_alert (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 293 of file s2n_connection\&.c\&.
+.PP
+.nf
+294 {
+295     if (s2n_stuffer_data_available(&conn->alert_in) != 2) {
+296         S2N_ERROR(S2N_ERR_NO_ALERT);
+297     }
+298 
+299     uint8_t alert_code = 0;
+300     GUARD(s2n_stuffer_read_uint8(&conn->alert_in, &alert_code));
+301     GUARD(s2n_stuffer_read_uint8(&conn->alert_in, &alert_code));
+302 
+303     return alert_code;
+304 }
+.fi
+.SS "int s2n_set_server_name (struct \fBs2n_connection\fP * conn, const char * server_name)"
+
+.PP
+Definition at line 306 of file s2n_connection\&.c\&.
+.PP
+.nf
+307 {
+308     if (conn->mode != S2N_CLIENT) {
+309         S2N_ERROR(S2N_ERR_CLIENT_MODE);
+310     }
+311 
+312     int len = strlen(server_name);
+313     if (len > 255) {
+314         S2N_ERROR(S2N_ERR_SERVER_NAME_TOO_LONG);
+315     }
+316 
+317     memcpy_check(conn->server_name, server_name, len);
+318 
+319     return 0;
+320 }
+.fi
+.SS "const char* s2n_get_server_name (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 322 of file s2n_connection\&.c\&.
+.PP
+.nf
+323 {
+324     if (strlen(conn->server_name) == 0) {
+325         return NULL;
+326     }
+327 
+328     return conn->server_name;
+329 }
+.fi
+.SS "const char* s2n_get_application_protocol (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 331 of file s2n_connection\&.c\&.
+.PP
+.nf
+332 {
+333     if (strlen(conn->application_protocol) == 0) {
+334         return NULL;
+335     }
+336 
+337     return conn->application_protocol;
+338 }
+.fi
+.SS "int s2n_connection_set_blinding (struct \fBs2n_connection\fP * conn, \fBs2n_blinding\fP blinding)"
+
+.PP
+Definition at line 340 of file s2n_connection\&.c\&.
+.PP
+.nf
+341 {
+342     conn->blinding = blinding;
+343     return 0;
+344 }
+.fi
+.SS "int64_t s2n_connection_get_delay (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 349 of file s2n_connection\&.c\&.
+.PP
+.nf
+350 {
+351     if (!conn->delay) {
+352         return 0;
+353     }
+354 
+355     uint64_t elapsed;
+356     GUARD(s2n_timer_elapsed(conn->config, &conn->write_timer, &elapsed));
+357 
+358     if (elapsed > conn->delay) {
+359         return 0;
+360     }
+361 
+362     return conn->delay - elapsed;
+363 }
+.fi
+.SS "int s2n_connection_kill (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 365 of file s2n_connection\&.c\&.
+.PP
+.nf
+366 {
+367     conn->closed = 1;
+368 
+369     /* Delay between 10 and 30 seconds in nanoseconds */
+370     int64_t min = TEN_S, max = 3 * TEN_S;
+371 
+372     /* Keep track of the delay so that it can be enforced */
+373     conn->delay = min + s2n_public_random(max - min);
+374 
+375     /* Restart the write timer */
+376     GUARD(s2n_timer_start(conn->config, &conn->write_timer));
+377 
+378     if (conn->blinding == S2N_BUILT_IN_BLINDING) {
+379         struct timespec sleep_time = {\&.tv_sec = conn->delay / ONE_S,\&.tv_nsec = conn->delay % ONE_S };
+380         int r;
+381 
+382         do {
+383             r = nanosleep(&sleep_time, &sleep_time);
+384         }
+385         while (r != 0);
+386     }
+387 
+388     return 0;
+389 }
+.fi
+.SS "const uint8_t* s2n_connection_get_ocsp_response (struct \fBs2n_connection\fP * conn, uint32_t * length)"
+
+.PP
+Definition at line 391 of file s2n_connection\&.c\&.
+.PP
+.nf
+392 {
+393     if (!length) {
+394         return NULL;
+395     }
+396 
+397     *length = conn->status_response\&.size;
+398     return conn->status_response\&.data;
+399 }
+.fi
+.SS "int s2n_connection_prefer_throughput (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 401 of file s2n_connection\&.c\&.
+.PP
+.nf
+402 {
+403     conn->max_fragment_length = S2N_LARGE_FRAGMENT_LENGTH;
+404 
+405     return 0;
+406 }
+.fi
+.SS "int s2n_connection_prefer_low_latency (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 408 of file s2n_connection\&.c\&.
+.PP
+.nf
+409 {
+410     conn->max_fragment_length = S2N_SMALL_FRAGMENT_LENGTH;
+411 
+412     return 0;
+413 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,91 @@
+.TH "s2n-master/tls/s2n_client_ccs.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_client_ccs.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCHANGE_CIPHER_SPEC_TYPE\fP   1"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_client_ccs_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_client_ccs_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CHANGE_CIPHER_SPEC_TYPE   1"
+
+.PP
+Definition at line 29 of file s2n_client_ccs\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_client_ccs_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 31 of file s2n_client_ccs\&.c\&.
+.PP
+.nf
+32 {
+33     uint8_t type;
+34 
+35     GUARD(s2n_prf_client_finished(conn));
+36 
+37     struct s2n_blob seq = {\&.data = conn->secure\&.client_sequence_number,\&.size = sizeof(conn->secure\&.client_sequence_number) };
+38     GUARD(s2n_blob_zero(&seq));
+39 
+40     /* Update the client to use the cipher-suite */
+41     conn->client = &conn->secure;
+42 
+43     GUARD(s2n_stuffer_read_uint8(&conn->handshake\&.io, &type));
+44     if (type != CHANGE_CIPHER_SPEC_TYPE) {
+45         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+46     }
+47 
+48     /* Flush any partial alert messages that were pending */
+49     GUARD(s2n_stuffer_wipe(&conn->alert_in));
+50 
+51     return 0;
+52 }
+.fi
+.SS "int s2n_client_ccs_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 54 of file s2n_client_ccs\&.c\&.
+.PP
+.nf
+55 {
+56     GUARD(s2n_stuffer_write_uint8(&conn->handshake\&.io, CHANGE_CIPHER_SPEC_TYPE));
+57 
+58     return 0;
+59 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

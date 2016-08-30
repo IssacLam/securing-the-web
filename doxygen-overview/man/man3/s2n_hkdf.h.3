@@ -1,0 +1,43 @@
+.TH "s2n-master/crypto/s2n_hkdf.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_hkdf.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_hkdf\fP (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP *salt, const struct \fBs2n_blob\fP *key, const struct \fBs2n_blob\fP *info, struct \fBs2n_blob\fP *output)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_hkdf (\fBs2n_hmac_algorithm\fP alg, const struct \fBs2n_blob\fP * salt, const struct \fBs2n_blob\fP * key, const struct \fBs2n_blob\fP * info, struct \fBs2n_blob\fP * output)"
+
+.PP
+Definition at line 84 of file s2n_hkdf\&.c\&.
+.PP
+.nf
+85 {
+86     uint8_t prk_pad[MAX_DIGEST_SIZE];
+87     struct s2n_blob pseudo_rand_key = {\&.data = prk_pad,\&.size = sizeof(prk_pad) };
+88 
+89     GUARD(s2n_hkdf_extract(alg, salt, key, &pseudo_rand_key));
+90     GUARD(s2n_hkdf_expand(alg, &pseudo_rand_key, info, output));
+91 
+92     return 0;
+93 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,1170 @@
+.TH "err.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+err.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/ossl_typ\&.h>\fP
+.br
+\fC#include <openssl/bio\&.h>\fP
+.br
+\fC#include <openssl/lhash\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBerr_state_st\fP"
+.br
+.ti -1c
+.RI "struct \fBERR_string_data_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBERR_PUT_error\fP(\fBa\fP,  b,  \fBc\fP,  d,  \fBe\fP)               \fBERR_put_error\fP(\fBa\fP,b,\fBc\fP,d,\fBe\fP)"
+.br
+.ti -1c
+.RI "#define \fBERR_TXT_MALLOCED\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBERR_TXT_STRING\fP   0x02"
+.br
+.ti -1c
+.RI "#define \fBERR_FLAG_MARK\fP   0x01"
+.br
+.ti -1c
+.RI "#define \fBERR_NUM_ERRORS\fP   16"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_NONE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_SYS\fP   2"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_BN\fP   3"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_RSA\fP   4"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_DH\fP   5"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_EVP\fP   6"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_BUF\fP   7"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_OBJ\fP   8"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_PEM\fP   9"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_DSA\fP   10"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_X509\fP   11"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_ASN1\fP   13"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_CONF\fP   14"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_CRYPTO\fP   15"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_EC\fP   16"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_SSL\fP   20"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_BIO\fP   32"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_PKCS7\fP   33"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_X509V3\fP   34"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_PKCS12\fP   35"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_RAND\fP   36"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_DSO\fP   37"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_ENGINE\fP   38"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_OCSP\fP   39"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_UI\fP   40"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_COMP\fP   41"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_ECDSA\fP   42"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_ECDH\fP   43"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_STORE\fP   44"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_FIPS\fP   45"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_CMS\fP   46"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_TS\fP   47"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_HMAC\fP   48"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_JPAKE\fP   49"
+.br
+.ti -1c
+.RI "#define \fBERR_LIB_USER\fP   128"
+.br
+.ti -1c
+.RI "#define \fBSYSerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_SYS\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBBNerr\fP(f,  r)     \fBERR_PUT_error\fP(\fBERR_LIB_BN\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBRSAerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_RSA\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBDHerr\fP(f,  r)     \fBERR_PUT_error\fP(\fBERR_LIB_DH\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBEVPerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_EVP\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBBUFerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_BUF\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOBJerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_OBJ\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBPEMerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_PEM\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBDSAerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_DSA\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBX509err\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_X509\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBASN1err\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_ASN1\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCONFerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_CONF\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCRYPTOerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_CRYPTO\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBECerr\fP(f,  r)     \fBERR_PUT_error\fP(\fBERR_LIB_EC\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBSSLerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_SSL\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBBIOerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_BIO\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBPKCS7err\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_PKCS7\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBX509V3err\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_X509V3\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBPKCS12err\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_PKCS12\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBRANDerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_RAND\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBDSOerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_DSO\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBENGINEerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_ENGINE\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBOCSPerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_OCSP\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBUIerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_UI\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCOMPerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_COMP\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBECDSAerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_ECDSA\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBECDHerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_ECDH\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBSTOREerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_STORE\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBFIPSerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_FIPS\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBCMSerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_CMS\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBTSerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_TS\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBHMACerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_HMAC\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBJPAKEerr\fP(f,  r)   \fBERR_PUT_error\fP(\fBERR_LIB_JPAKE\fP,(f),(r),__FILE__,__LINE__)"
+.br
+.ti -1c
+.RI "#define \fBERR_PACK\fP(l,  f,  r)              "
+.br
+.ti -1c
+.RI "#define \fBERR_GET_LIB\fP(l)                   (int)((((unsigned long)l)>>24L)&0xffL)"
+.br
+.ti -1c
+.RI "#define \fBERR_GET_FUNC\fP(l)                 (int)((((unsigned long)l)>>12L)&0xfffL)"
+.br
+.ti -1c
+.RI "#define \fBERR_GET_REASON\fP(l)             (int)((l)&0xfffL)"
+.br
+.ti -1c
+.RI "#define \fBERR_FATAL_ERROR\fP(l)           (int)((l)&\fBERR_R_FATAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_FOPEN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_CONNECT\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_GETSERVBYNAME\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_SOCKET\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_IOCTLSOCKET\fP   5"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_BIND\fP   6"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_LISTEN\fP   7"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_ACCEPT\fP   8"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_WSASTARTUP\fP   9/* Winsock stuff */"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_OPENDIR\fP   10"
+.br
+.ti -1c
+.RI "#define \fBSYS_F_FREAD\fP   11"
+.br
+.ti -1c
+.RI "#define \fBERR_R_SYS_LIB\fP   \fBERR_LIB_SYS\fP/* 2 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_BN_LIB\fP   \fBERR_LIB_BN\fP/* 3 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_RSA_LIB\fP   \fBERR_LIB_RSA\fP/* 4 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_DH_LIB\fP   \fBERR_LIB_DH\fP/* 5 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_EVP_LIB\fP   \fBERR_LIB_EVP\fP/* 6 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_BUF_LIB\fP   \fBERR_LIB_BUF\fP/* 7 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_OBJ_LIB\fP   \fBERR_LIB_OBJ\fP/* 8 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_PEM_LIB\fP   \fBERR_LIB_PEM\fP/* 9 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_DSA_LIB\fP   \fBERR_LIB_DSA\fP/* 10 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_X509_LIB\fP   \fBERR_LIB_X509\fP/* 11 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_ASN1_LIB\fP   \fBERR_LIB_ASN1\fP/* 13 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_CONF_LIB\fP   \fBERR_LIB_CONF\fP/* 14 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_CRYPTO_LIB\fP   \fBERR_LIB_CRYPTO\fP/* 15 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_EC_LIB\fP   \fBERR_LIB_EC\fP/* 16 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_SSL_LIB\fP   \fBERR_LIB_SSL\fP/* 20 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_BIO_LIB\fP   \fBERR_LIB_BIO\fP/* 32 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_PKCS7_LIB\fP   \fBERR_LIB_PKCS7\fP/* 33 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_X509V3_LIB\fP   \fBERR_LIB_X509V3\fP/* 34 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_PKCS12_LIB\fP   \fBERR_LIB_PKCS12\fP/* 35 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_RAND_LIB\fP   \fBERR_LIB_RAND\fP/* 36 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_DSO_LIB\fP   \fBERR_LIB_DSO\fP/* 37 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_ENGINE_LIB\fP   \fBERR_LIB_ENGINE\fP/* 38 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_OCSP_LIB\fP   \fBERR_LIB_OCSP\fP/* 39 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_UI_LIB\fP   \fBERR_LIB_UI\fP/* 40 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_COMP_LIB\fP   \fBERR_LIB_COMP\fP/* 41 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_ECDSA_LIB\fP   \fBERR_LIB_ECDSA\fP/* 42 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_ECDH_LIB\fP   \fBERR_LIB_ECDH\fP/* 43 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_STORE_LIB\fP   \fBERR_LIB_STORE\fP/* 44 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_TS_LIB\fP   \fBERR_LIB_TS\fP/* 45 */"
+.br
+.ti -1c
+.RI "#define \fBERR_R_NESTED_ASN1_ERROR\fP   58"
+.br
+.ti -1c
+.RI "#define \fBERR_R_BAD_ASN1_OBJECT_HEADER\fP   59"
+.br
+.ti -1c
+.RI "#define \fBERR_R_BAD_GET_ASN1_OBJECT_CALL\fP   60"
+.br
+.ti -1c
+.RI "#define \fBERR_R_EXPECTING_AN_ASN1_SEQUENCE\fP   61"
+.br
+.ti -1c
+.RI "#define \fBERR_R_ASN1_LENGTH_MISMATCH\fP   62"
+.br
+.ti -1c
+.RI "#define \fBERR_R_MISSING_ASN1_EOS\fP   63"
+.br
+.ti -1c
+.RI "#define \fBERR_R_FATAL\fP   64"
+.br
+.ti -1c
+.RI "#define \fBERR_R_MALLOC_FAILURE\fP   (1|\fBERR_R_FATAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBERR_R_SHOULD_NOT_HAVE_BEEN_CALLED\fP   (2|\fBERR_R_FATAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBERR_R_PASSED_NULL_PARAMETER\fP   (3|\fBERR_R_FATAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBERR_R_INTERNAL_ERROR\fP   (4|\fBERR_R_FATAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBERR_R_DISABLED\fP   (5|\fBERR_R_FATAL\fP)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBerr_state_st\fP \fBERR_STATE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBERR_string_data_st\fP \fBERR_STRING_DATA\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBERR_put_error\fP (int lib, int func, int reason, const char *\fBfile\fP, int line)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_set_error_data\fP (char *data, int \fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_get_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_get_error_line\fP (const char **\fBfile\fP, int *line)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_get_error_line_data\fP (const char **\fBfile\fP, int *line, const char **data, int *\fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_error_line\fP (const char **\fBfile\fP, int *line)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_error_line_data\fP (const char **\fBfile\fP, int *line, const char **data, int *\fBflags\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_last_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_last_error_line\fP (const char **\fBfile\fP, int *line)"
+.br
+.ti -1c
+.RI "unsigned long \fBERR_peek_last_error_line_data\fP (const char **\fBfile\fP, int *line, const char **data, int *\fBflags\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_clear_error\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "char * \fBERR_error_string\fP (unsigned long \fBe\fP, char *buf)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_error_string_n\fP (unsigned long \fBe\fP, char *buf, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "const char * \fBERR_lib_error_string\fP (unsigned long \fBe\fP)"
+.br
+.ti -1c
+.RI "const char * \fBERR_func_error_string\fP (unsigned long \fBe\fP)"
+.br
+.ti -1c
+.RI "const char * \fBERR_reason_error_string\fP (unsigned long \fBe\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_print_errors_cb\fP (int(*\fBcb\fP)(const char *str, size_t \fBlen\fP, \fBvoid\fP *\fBu\fP), \fBvoid\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_print_errors_fp\fP (FILE *\fBfp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_print_errors\fP (\fBBIO\fP *\fBbp\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_add_error_data\fP (int \fBnum\fP,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_add_error_vdata\fP (int \fBnum\fP, va_list args)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_strings\fP (int lib, \fBERR_STRING_DATA\fP str[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_unload_strings\fP (int lib, \fBERR_STRING_DATA\fP str[])"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_ERR_strings\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_load_crypto_strings\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_free_strings\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_remove_thread_state\fP (const \fBCRYPTO_THREADID\fP *tid)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_remove_state\fP (unsigned long pid)"
+.br
+.ti -1c
+.RI "\fBERR_STATE\fP * \fBERR_get_state\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBLHASH_OF\fP (\fBERR_STRING_DATA\fP)*ERR_get_string_table(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBLHASH_OF\fP (\fBERR_STATE\fP)*ERR_get_err_state_table(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBERR_release_err_state_table\fP (\fBLHASH_OF\fP(\fBERR_STATE\fP)**\fBhash\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_get_next_error_library\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_set_mark\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_pop_to_mark\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "const \fBERR_FNS\fP * \fBERR_get_implementation\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBERR_set_implementation\fP (const \fBERR_FNS\fP *fns)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ASN1err(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_ASN1\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 213 of file include/openssl/err\&.h\&.
+.SS "#define BIOerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_BIO\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 218 of file include/openssl/err\&.h\&.
+.SS "#define BNerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_BN\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 204 of file include/openssl/err\&.h\&.
+.SS "#define BUFerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_BUF\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 208 of file include/openssl/err\&.h\&.
+.SS "#define CMSerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_CMS\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 232 of file include/openssl/err\&.h\&.
+.SS "#define COMPerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_COMP\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 227 of file include/openssl/err\&.h\&.
+.SS "#define CONFerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_CONF\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 214 of file include/openssl/err\&.h\&.
+.SS "#define CRYPTOerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_CRYPTO\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 215 of file include/openssl/err\&.h\&.
+.SS "#define DHerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_DH\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 206 of file include/openssl/err\&.h\&.
+.SS "#define DSAerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_DSA\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 211 of file include/openssl/err\&.h\&.
+.SS "#define DSOerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_DSO\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 223 of file include/openssl/err\&.h\&.
+.SS "#define ECDHerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_ECDH\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 229 of file include/openssl/err\&.h\&.
+.SS "#define ECDSAerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_ECDSA\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 228 of file include/openssl/err\&.h\&.
+.SS "#define ECerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_EC\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 216 of file include/openssl/err\&.h\&.
+.SS "#define ENGINEerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_ENGINE\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 224 of file include/openssl/err\&.h\&.
+.SS "#define ERR_FATAL_ERROR(l)   (int)((l)&\fBERR_R_FATAL\fP)"
+
+.PP
+Definition at line 247 of file include/openssl/err\&.h\&.
+.SS "#define ERR_FLAG_MARK   0x01"
+
+.PP
+Definition at line 145 of file include/openssl/err\&.h\&.
+.SS "#define ERR_GET_FUNC(l)   (int)((((unsigned long)l)>>12L)&0xfffL)"
+
+.PP
+Definition at line 245 of file include/openssl/err\&.h\&.
+.SS "#define ERR_GET_LIB(l)   (int)((((unsigned long)l)>>24L)&0xffL)"
+
+.PP
+Definition at line 244 of file include/openssl/err\&.h\&.
+.SS "#define ERR_GET_REASON(l)   (int)((l)&0xfffL)"
+
+.PP
+Definition at line 246 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_ASN1   13"
+
+.PP
+Definition at line 172 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_BIO   32"
+
+.PP
+Definition at line 182 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_BN   3"
+
+.PP
+Definition at line 162 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_BUF   7"
+
+.PP
+Definition at line 166 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_CMS   46"
+
+.PP
+Definition at line 196 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_COMP   41"
+
+.PP
+Definition at line 191 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_CONF   14"
+
+.PP
+Definition at line 173 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_CRYPTO   15"
+
+.PP
+Definition at line 174 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_DH   5"
+
+.PP
+Definition at line 164 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_DSA   10"
+
+.PP
+Definition at line 169 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_DSO   37"
+
+.PP
+Definition at line 187 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_EC   16"
+
+.PP
+Definition at line 175 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_ECDH   43"
+
+.PP
+Definition at line 193 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_ECDSA   42"
+
+.PP
+Definition at line 192 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_ENGINE   38"
+
+.PP
+Definition at line 188 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_EVP   6"
+
+.PP
+Definition at line 165 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_FIPS   45"
+
+.PP
+Definition at line 195 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_HMAC   48"
+
+.PP
+Definition at line 198 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_JPAKE   49"
+
+.PP
+Definition at line 199 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_NONE   1"
+
+.PP
+Definition at line 160 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_OBJ   8"
+
+.PP
+Definition at line 167 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_OCSP   39"
+
+.PP
+Definition at line 189 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_PEM   9"
+
+.PP
+Definition at line 168 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_PKCS12   35"
+
+.PP
+Definition at line 185 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_PKCS7   33"
+
+.PP
+Definition at line 183 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_RAND   36"
+
+.PP
+Definition at line 186 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_RSA   4"
+
+.PP
+Definition at line 163 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_SSL   20"
+
+.PP
+Definition at line 176 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_STORE   44"
+
+.PP
+Definition at line 194 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_SYS   2"
+
+.PP
+Definition at line 161 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_TS   47"
+
+.PP
+Definition at line 197 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_UI   40"
+
+.PP
+Definition at line 190 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_USER   128"
+
+.PP
+Definition at line 201 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_X509   11"
+
+.PP
+Definition at line 170 of file include/openssl/err\&.h\&.
+.SS "#define ERR_LIB_X509V3   34"
+
+.PP
+Definition at line 184 of file include/openssl/err\&.h\&.
+.SS "#define ERR_NUM_ERRORS   16"
+
+.PP
+Definition at line 147 of file include/openssl/err\&.h\&.
+.SS "#define ERR_PACK(l, f, r)"
+\fBValue:\fP
+.PP
+.nf
+(((((unsigned long)l)&0xffL)*0x1000000)| \
+                                ((((unsigned long)f)&0xfffL)*0x1000)| \
+                                ((((unsigned long)r)&0xfffL)))
+.fi
+.PP
+Definition at line 241 of file include/openssl/err\&.h\&.
+.SS "#define ERR_PUT_error(\fBa\fP, b, \fBc\fP, d, \fBe\fP)   \fBERR_put_error\fP(\fBa\fP,b,\fBc\fP,d,\fBe\fP)"
+
+.PP
+Definition at line 135 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_ASN1_LENGTH_MISMATCH   62"
+
+.PP
+Definition at line 297 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_ASN1_LIB   \fBERR_LIB_ASN1\fP/* 13 */"
+
+.PP
+Definition at line 273 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_BAD_ASN1_OBJECT_HEADER   59"
+
+.PP
+Definition at line 294 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_BAD_GET_ASN1_OBJECT_CALL   60"
+
+.PP
+Definition at line 295 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_BIO_LIB   \fBERR_LIB_BIO\fP/* 32 */"
+
+.PP
+Definition at line 278 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_BN_LIB   \fBERR_LIB_BN\fP/* 3 */"
+
+.PP
+Definition at line 264 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_BUF_LIB   \fBERR_LIB_BUF\fP/* 7 */"
+
+.PP
+Definition at line 268 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_COMP_LIB   \fBERR_LIB_COMP\fP/* 41 */"
+
+.PP
+Definition at line 287 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_CONF_LIB   \fBERR_LIB_CONF\fP/* 14 */"
+
+.PP
+Definition at line 274 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_CRYPTO_LIB   \fBERR_LIB_CRYPTO\fP/* 15 */"
+
+.PP
+Definition at line 275 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_DH_LIB   \fBERR_LIB_DH\fP/* 5 */"
+
+.PP
+Definition at line 266 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_DISABLED   (5|\fBERR_R_FATAL\fP)"
+
+.PP
+Definition at line 306 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_DSA_LIB   \fBERR_LIB_DSA\fP/* 10 */"
+
+.PP
+Definition at line 271 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_DSO_LIB   \fBERR_LIB_DSO\fP/* 37 */"
+
+.PP
+Definition at line 283 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_EC_LIB   \fBERR_LIB_EC\fP/* 16 */"
+
+.PP
+Definition at line 276 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_ECDH_LIB   \fBERR_LIB_ECDH\fP/* 43 */"
+
+.PP
+Definition at line 289 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_ECDSA_LIB   \fBERR_LIB_ECDSA\fP/* 42 */"
+
+.PP
+Definition at line 288 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_ENGINE_LIB   \fBERR_LIB_ENGINE\fP/* 38 */"
+
+.PP
+Definition at line 284 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_EVP_LIB   \fBERR_LIB_EVP\fP/* 6 */"
+
+.PP
+Definition at line 267 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_EXPECTING_AN_ASN1_SEQUENCE   61"
+
+.PP
+Definition at line 296 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_FATAL   64"
+
+.PP
+Definition at line 301 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_INTERNAL_ERROR   (4|\fBERR_R_FATAL\fP)"
+
+.PP
+Definition at line 305 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_MALLOC_FAILURE   (1|\fBERR_R_FATAL\fP)"
+
+.PP
+Definition at line 302 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_MISSING_ASN1_EOS   63"
+
+.PP
+Definition at line 298 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_NESTED_ASN1_ERROR   58"
+
+.PP
+Definition at line 293 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_OBJ_LIB   \fBERR_LIB_OBJ\fP/* 8 */"
+
+.PP
+Definition at line 269 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_OCSP_LIB   \fBERR_LIB_OCSP\fP/* 39 */"
+
+.PP
+Definition at line 285 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_PASSED_NULL_PARAMETER   (3|\fBERR_R_FATAL\fP)"
+
+.PP
+Definition at line 304 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_PEM_LIB   \fBERR_LIB_PEM\fP/* 9 */"
+
+.PP
+Definition at line 270 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_PKCS12_LIB   \fBERR_LIB_PKCS12\fP/* 35 */"
+
+.PP
+Definition at line 281 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_PKCS7_LIB   \fBERR_LIB_PKCS7\fP/* 33 */"
+
+.PP
+Definition at line 279 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_RAND_LIB   \fBERR_LIB_RAND\fP/* 36 */"
+
+.PP
+Definition at line 282 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_RSA_LIB   \fBERR_LIB_RSA\fP/* 4 */"
+
+.PP
+Definition at line 265 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED   (2|\fBERR_R_FATAL\fP)"
+
+.PP
+Definition at line 303 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_SSL_LIB   \fBERR_LIB_SSL\fP/* 20 */"
+
+.PP
+Definition at line 277 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_STORE_LIB   \fBERR_LIB_STORE\fP/* 44 */"
+
+.PP
+Definition at line 290 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_SYS_LIB   \fBERR_LIB_SYS\fP/* 2 */"
+
+.PP
+Definition at line 263 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_TS_LIB   \fBERR_LIB_TS\fP/* 45 */"
+
+.PP
+Definition at line 291 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_UI_LIB   \fBERR_LIB_UI\fP/* 40 */"
+
+.PP
+Definition at line 286 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_X509_LIB   \fBERR_LIB_X509\fP/* 11 */"
+
+.PP
+Definition at line 272 of file include/openssl/err\&.h\&.
+.SS "#define ERR_R_X509V3_LIB   \fBERR_LIB_X509V3\fP/* 34 */"
+
+.PP
+Definition at line 280 of file include/openssl/err\&.h\&.
+.SS "#define ERR_TXT_MALLOCED   0x01"
+
+.PP
+Definition at line 142 of file include/openssl/err\&.h\&.
+.SS "#define ERR_TXT_STRING   0x02"
+
+.PP
+Definition at line 143 of file include/openssl/err\&.h\&.
+.SS "#define EVPerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_EVP\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 207 of file include/openssl/err\&.h\&.
+.SS "#define FIPSerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_FIPS\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 231 of file include/openssl/err\&.h\&.
+.SS "#define HMACerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_HMAC\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 234 of file include/openssl/err\&.h\&.
+.SS "#define JPAKEerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_JPAKE\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 235 of file include/openssl/err\&.h\&.
+.SS "#define OBJerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_OBJ\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 209 of file include/openssl/err\&.h\&.
+.SS "#define OCSPerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_OCSP\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 225 of file include/openssl/err\&.h\&.
+.SS "#define PEMerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_PEM\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 210 of file include/openssl/err\&.h\&.
+.SS "#define PKCS12err(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_PKCS12\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 221 of file include/openssl/err\&.h\&.
+.SS "#define PKCS7err(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_PKCS7\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 219 of file include/openssl/err\&.h\&.
+.SS "#define RANDerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_RAND\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 222 of file include/openssl/err\&.h\&.
+.SS "#define RSAerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_RSA\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 205 of file include/openssl/err\&.h\&.
+.SS "#define SSLerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_SSL\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 217 of file include/openssl/err\&.h\&.
+.SS "#define STOREerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_STORE\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 230 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_ACCEPT   8"
+
+.PP
+Definition at line 257 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_BIND   6"
+
+.PP
+Definition at line 255 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_CONNECT   2"
+
+.PP
+Definition at line 251 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_FOPEN   1"
+
+.PP
+Definition at line 250 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_FREAD   11"
+
+.PP
+Definition at line 260 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_GETSERVBYNAME   3"
+
+.PP
+Definition at line 252 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_IOCTLSOCKET   5"
+
+.PP
+Definition at line 254 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_LISTEN   7"
+
+.PP
+Definition at line 256 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_OPENDIR   10"
+
+.PP
+Definition at line 259 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_SOCKET   4"
+
+.PP
+Definition at line 253 of file include/openssl/err\&.h\&.
+.SS "#define SYS_F_WSASTARTUP   9/* Winsock stuff */"
+
+.PP
+Definition at line 258 of file include/openssl/err\&.h\&.
+.SS "#define SYSerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_SYS\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 203 of file include/openssl/err\&.h\&.
+.SS "#define TSerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_TS\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 233 of file include/openssl/err\&.h\&.
+.SS "#define UIerr(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_UI\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 226 of file include/openssl/err\&.h\&.
+.SS "#define X509err(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_X509\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 212 of file include/openssl/err\&.h\&.
+.SS "#define X509V3err(f, r)   \fBERR_PUT_error\fP(\fBERR_LIB_X509V3\fP,(f),(r),__FILE__,__LINE__)"
+
+.PP
+Definition at line 220 of file include/openssl/err\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBerr_state_st\fP  \fBERR_STATE\fP"
+
+.SS "typedef struct \fBERR_string_data_st\fP  \fBERR_STRING_DATA\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP ERR_add_error_data (int num,  \&.\&.\&.)"
+
+.SS "\fBvoid\fP ERR_add_error_vdata (int num, va_list args)"
+
+.SS "\fBvoid\fP ERR_clear_error (\fBvoid\fP)"
+
+.SS "char* ERR_error_string (unsigned long e, char * buf)"
+
+.SS "\fBvoid\fP ERR_error_string_n (unsigned long e, char * buf, size_t len)"
+
+.SS "\fBvoid\fP ERR_free_strings (\fBvoid\fP)"
+
+.SS "const char* ERR_func_error_string (unsigned long e)"
+
+.SS "unsigned long ERR_get_error (\fBvoid\fP)"
+
+.SS "unsigned long ERR_get_error_line (const char ** file, int * line)"
+
+.SS "unsigned long ERR_get_error_line_data (const char ** file, int * line, const char ** data, int * flags)"
+
+.SS "const \fBERR_FNS\fP* ERR_get_implementation (\fBvoid\fP)"
+
+.SS "int ERR_get_next_error_library (\fBvoid\fP)"
+
+.SS "\fBERR_STATE\fP* ERR_get_state (\fBvoid\fP)"
+
+.SS "const char* ERR_lib_error_string (unsigned long e)"
+
+.SS "\fBvoid\fP ERR_load_crypto_strings (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ERR_load_ERR_strings (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ERR_load_strings (int lib, \fBERR_STRING_DATA\fP str[])"
+
+.SS "unsigned long ERR_peek_error (\fBvoid\fP)"
+
+.SS "unsigned long ERR_peek_error_line (const char ** file, int * line)"
+
+.SS "unsigned long ERR_peek_error_line_data (const char ** file, int * line, const char ** data, int * flags)"
+
+.SS "unsigned long ERR_peek_last_error (\fBvoid\fP)"
+
+.SS "unsigned long ERR_peek_last_error_line (const char ** file, int * line)"
+
+.SS "unsigned long ERR_peek_last_error_line_data (const char ** file, int * line, const char ** data, int * flags)"
+
+.SS "int ERR_pop_to_mark (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ERR_print_errors (\fBBIO\fP * bp)"
+
+.SS "\fBvoid\fP ERR_print_errors_cb (int(*)(const char *str, size_t \fBlen\fP, \fBvoid\fP *\fBu\fP) cb, \fBvoid\fP * u)"
+
+.SS "\fBvoid\fP ERR_print_errors_fp (FILE * fp)"
+
+.SS "\fBvoid\fP ERR_put_error (int lib, int func, int reason, const char * file, int line)"
+
+.SS "const char* ERR_reason_error_string (unsigned long e)"
+
+.SS "\fBvoid\fP ERR_release_err_state_table (\fBLHASH_OF\fP(\fBERR_STATE\fP)** hash)"
+
+.SS "\fBvoid\fP ERR_remove_state (unsigned long pid)"
+
+.SS "\fBvoid\fP ERR_remove_thread_state (const \fBCRYPTO_THREADID\fP * tid)"
+
+.SS "\fBvoid\fP ERR_set_error_data (char * data, int flags)"
+
+.SS "int ERR_set_implementation (const \fBERR_FNS\fP * fns)"
+
+.SS "int ERR_set_mark (\fBvoid\fP)"
+
+.SS "\fBvoid\fP ERR_unload_strings (int lib, \fBERR_STRING_DATA\fP str[])"
+
+.SS "LHASH_OF (\fBERR_STRING_DATA\fP)"
+
+.SS "LHASH_OF (\fBERR_STATE\fP)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

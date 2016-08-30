@@ -1,0 +1,82 @@
+\hypertarget{testutil_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/test/testutil.h File Reference}
+\label{testutil_8h}\index{s2n-\/master/libcrypto-\/build/openssl/test/testutil.\+h@{s2n-\/master/libcrypto-\/build/openssl/test/testutil.\+h}}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{testutil_8h_a6a98f9e30abd9eee8061d5c27e86075a}{S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE}(T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+R\+E\+\_\+\+T\+Y\+PE,  set\+\_\+up)
+\item 
+\#define \hyperlink{testutil_8h_ae789b679185c1043600df69207472fa5}{E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST}(execute\+\_\+func,  tear\+\_\+down)
+\item 
+\#define \hyperlink{testutil_8h_ae6aed67aeec4374d570721e9387cbf05}{testutil\+\_\+stringify\+\_\+helper}(s)~\#s
+\item 
+\#define \hyperlink{testutil_8h_ab6b9e8203828f299cc0f38c3d91a0417}{testutil\+\_\+stringify}(s)~\hyperlink{testutil_8h_ae6aed67aeec4374d570721e9387cbf05}{testutil\+\_\+stringify\+\_\+helper}(s)
+\item 
+\#define \hyperlink{testutil_8h_a19b326804265e9678902a9f34fac6ae9}{T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME}~\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+ \char`\"{}\+:\char`\"{} \hyperlink{testutil_8h_ab6b9e8203828f299cc0f38c3d91a0417}{testutil\+\_\+stringify}(\+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{testutil.\+h@{testutil.\+h}!S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE@{S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE}}
+\index{S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE@{S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE}!testutil.\+h@{testutil.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE}{SETUP_TEST_FIXTURE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+T\+U\+P\+\_\+\+T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+RE(
+\begin{DoxyParamCaption}
+\item[{}]{T\+E\+S\+T\+\_\+\+F\+I\+X\+T\+U\+R\+E\+\_\+\+T\+Y\+PE, }
+\item[{}]{set\+\_\+up}
+\end{DoxyParamCaption}
+)}\hypertarget{testutil_8h_a6a98f9e30abd9eee8061d5c27e86075a}{}\label{testutil_8h_a6a98f9e30abd9eee8061d5c27e86075a}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+TEST\_FIXTURE\_TYPE fixture = set\_up(\hyperlink{testutil_8h_a19b326804265e9678902a9f34fac6ae9}{TEST\_CASE\_NAME});\(\backslash\)
+        int result = 0
+\end{DoxyCode}
+
+
+Definition at line 93 of file testutil.\+h.
+
+\index{testutil.\+h@{testutil.\+h}!E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST@{E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST}}
+\index{E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST@{E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST}!testutil.\+h@{testutil.\+h}}
+\subsubsection[{\texorpdfstring{E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST}{EXECUTE_TEST}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+X\+E\+C\+U\+T\+E\+\_\+\+T\+E\+ST(
+\begin{DoxyParamCaption}
+\item[{}]{execute\+\_\+func, }
+\item[{}]{tear\+\_\+down}
+\end{DoxyParamCaption}
+)}\hypertarget{testutil_8h_ae789b679185c1043600df69207472fa5}{}\label{testutil_8h_ae789b679185c1043600df69207472fa5}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{if} (execute\_func(fixture) != 0) result = 1;\(\backslash\)
+        tear\_down(fixture);\(\backslash\)
+        return result
+\end{DoxyCode}
+
+
+Definition at line 97 of file testutil.\+h.
+
+\index{testutil.\+h@{testutil.\+h}!testutil\+\_\+stringify\+\_\+helper@{testutil\+\_\+stringify\+\_\+helper}}
+\index{testutil\+\_\+stringify\+\_\+helper@{testutil\+\_\+stringify\+\_\+helper}!testutil.\+h@{testutil.\+h}}
+\subsubsection[{\texorpdfstring{testutil\+\_\+stringify\+\_\+helper}{testutil_stringify_helper}}]{\setlength{\rightskip}{0pt plus 5cm}\#define testutil\+\_\+stringify\+\_\+helper(
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)~\#s}\hypertarget{testutil_8h_ae6aed67aeec4374d570721e9387cbf05}{}\label{testutil_8h_ae6aed67aeec4374d570721e9387cbf05}
+
+
+Definition at line 110 of file testutil.\+h.
+
+\index{testutil.\+h@{testutil.\+h}!testutil\+\_\+stringify@{testutil\+\_\+stringify}}
+\index{testutil\+\_\+stringify@{testutil\+\_\+stringify}!testutil.\+h@{testutil.\+h}}
+\subsubsection[{\texorpdfstring{testutil\+\_\+stringify}{testutil_stringify}}]{\setlength{\rightskip}{0pt plus 5cm}\#define testutil\+\_\+stringify(
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)~{\bf testutil\+\_\+stringify\+\_\+helper}(s)}\hypertarget{testutil_8h_ab6b9e8203828f299cc0f38c3d91a0417}{}\label{testutil_8h_ab6b9e8203828f299cc0f38c3d91a0417}
+
+
+Definition at line 111 of file testutil.\+h.
+
+\index{testutil.\+h@{testutil.\+h}!T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME@{T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME}}
+\index{T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME@{T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME}!testutil.\+h@{testutil.\+h}}
+\subsubsection[{\texorpdfstring{T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME}{TEST_CASE_NAME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+E\+S\+T\+\_\+\+C\+A\+S\+E\+\_\+\+N\+A\+ME~\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+ \char`\"{}\+:\char`\"{} {\bf testutil\+\_\+stringify}(\+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+)}\hypertarget{testutil_8h_a19b326804265e9678902a9f34fac6ae9}{}\label{testutil_8h_a19b326804265e9678902a9f34fac6ae9}
+
+
+Definition at line 112 of file testutil.\+h.
+

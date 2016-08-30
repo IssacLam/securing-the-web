@@ -1,0 +1,285 @@
+.TH "srp.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+srp.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <openssl/safestack\&.h>\fP
+.br
+\fC#include <openssl/bn\&.h>\fP
+.br
+\fC#include <openssl/crypto\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSRP_gN_cache_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSRP_user_pwd_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSRP_VBASE_st\fP"
+.br
+.ti -1c
+.RI "struct \fBSRP_gN_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSRP_NO_ERROR\fP   0"
+.br
+.ti -1c
+.RI "#define \fBSRP_ERR_VBASE_INCOMPLETE_FILE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSRP_ERR_VBASE_BN_LIB\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSRP_ERR_OPEN_FILE\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSRP_ERR_MEMORY\fP   4"
+.br
+.ti -1c
+.RI "#define \fBDB_srptype\fP   0"
+.br
+.ti -1c
+.RI "#define \fBDB_srpverifier\fP   1"
+.br
+.ti -1c
+.RI "#define \fBDB_srpsalt\fP   2"
+.br
+.ti -1c
+.RI "#define \fBDB_srpid\fP   3"
+.br
+.ti -1c
+.RI "#define \fBDB_srpgN\fP   4"
+.br
+.ti -1c
+.RI "#define \fBDB_srpinfo\fP   5"
+.br
+.ti -1c
+.RI "#define \fBDB_NUMBER\fP   6"
+.br
+.ti -1c
+.RI "#define \fBDB_SRP_INDEX\fP   '\fBI\fP'"
+.br
+.ti -1c
+.RI "#define \fBDB_SRP_VALID\fP   'V'"
+.br
+.ti -1c
+.RI "#define \fBDB_SRP_REVOKED\fP   'R'"
+.br
+.ti -1c
+.RI "#define \fBDB_SRP_MODIF\fP   'v'"
+.br
+.ti -1c
+.RI "#define \fBSRP_MINIMAL_N\fP   1024"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBSRP_gN_cache_st\fP \fBSRP_gN_cache\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSRP_user_pwd_st\fP \fBSRP_user_pwd\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSRP_VBASE_st\fP \fBSRP_VBASE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBSRP_gN_st\fP \fBSRP_gN\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBSRP_user_pwd_free\fP (\fBSRP_user_pwd\fP *user_pwd)"
+.br
+.ti -1c
+.RI "\fBSRP_VBASE\fP * \fBSRP_VBASE_new\fP (char *seed_key)"
+.br
+.ti -1c
+.RI "int \fBSRP_VBASE_free\fP (\fBSRP_VBASE\fP *vb)"
+.br
+.ti -1c
+.RI "int \fBSRP_VBASE_init\fP (\fBSRP_VBASE\fP *vb, char *verifier_file)"
+.br
+.ti -1c
+.RI "\fBSRP_user_pwd\fP * \fBSRP_VBASE_get_by_user\fP (\fBSRP_VBASE\fP *vb, char *username)"
+.br
+.ti -1c
+.RI "\fBSRP_user_pwd\fP * \fBSRP_VBASE_get1_by_user\fP (\fBSRP_VBASE\fP *vb, char *username)"
+.br
+.ti -1c
+.RI "char * \fBSRP_create_verifier\fP (const char *user, const char *\fBpass\fP, char **salt, char **verifier, const char *N, const char *g)"
+.br
+.ti -1c
+.RI "int \fBSRP_create_verifier_BN\fP (const char *user, const char *\fBpass\fP, \fBBIGNUM\fP **salt, \fBBIGNUM\fP **verifier, \fBBIGNUM\fP *N, \fBBIGNUM\fP *g)"
+.br
+.ti -1c
+.RI "char * \fBSRP_check_known_gN_param\fP (\fBBIGNUM\fP *g, \fBBIGNUM\fP *N)"
+.br
+.ti -1c
+.RI "\fBSRP_gN\fP * \fBSRP_get_default_gN\fP (const char *id)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSRP_Calc_server_key\fP (\fBBIGNUM\fP *A, \fBBIGNUM\fP *v, \fBBIGNUM\fP *\fBu\fP, \fBBIGNUM\fP *b, \fBBIGNUM\fP *N)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSRP_Calc_B\fP (\fBBIGNUM\fP *b, \fBBIGNUM\fP *N, \fBBIGNUM\fP *g, \fBBIGNUM\fP *v)"
+.br
+.ti -1c
+.RI "int \fBSRP_Verify_A_mod_N\fP (\fBBIGNUM\fP *A, \fBBIGNUM\fP *N)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSRP_Calc_u\fP (\fBBIGNUM\fP *A, \fBBIGNUM\fP *B, \fBBIGNUM\fP *N)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSRP_Calc_x\fP (\fBBIGNUM\fP *s, const char *user, const char *\fBpass\fP)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSRP_Calc_A\fP (\fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *N, \fBBIGNUM\fP *g)"
+.br
+.ti -1c
+.RI "\fBBIGNUM\fP * \fBSRP_Calc_client_key\fP (\fBBIGNUM\fP *N, \fBBIGNUM\fP *B, \fBBIGNUM\fP *g, \fBBIGNUM\fP *\fBx\fP, \fBBIGNUM\fP *\fBa\fP, \fBBIGNUM\fP *\fBu\fP)"
+.br
+.ti -1c
+.RI "int \fBSRP_Verify_B_mod_N\fP (\fBBIGNUM\fP *B, \fBBIGNUM\fP *N)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DB_NUMBER   6"
+
+.PP
+Definition at line 147 of file include/openssl/srp\&.h\&.
+.SS "#define DB_SRP_INDEX   '\fBI\fP'"
+
+.PP
+Definition at line 149 of file include/openssl/srp\&.h\&.
+.SS "#define DB_SRP_MODIF   'v'"
+
+.PP
+Definition at line 152 of file include/openssl/srp\&.h\&.
+.SS "#define DB_SRP_REVOKED   'R'"
+
+.PP
+Definition at line 151 of file include/openssl/srp\&.h\&.
+.SS "#define DB_SRP_VALID   'V'"
+
+.PP
+Definition at line 150 of file include/openssl/srp\&.h\&.
+.SS "#define DB_srpgN   4"
+
+.PP
+Definition at line 144 of file include/openssl/srp\&.h\&.
+.SS "#define DB_srpid   3"
+
+.PP
+Definition at line 143 of file include/openssl/srp\&.h\&.
+.SS "#define DB_srpinfo   5"
+
+.PP
+Definition at line 145 of file include/openssl/srp\&.h\&.
+.SS "#define DB_srpsalt   2"
+
+.PP
+Definition at line 142 of file include/openssl/srp\&.h\&.
+.SS "#define DB_srptype   0"
+
+.PP
+Definition at line 140 of file include/openssl/srp\&.h\&.
+.SS "#define DB_srpverifier   1"
+
+.PP
+Definition at line 141 of file include/openssl/srp\&.h\&.
+.SS "#define SRP_ERR_MEMORY   4"
+
+.PP
+Definition at line 138 of file include/openssl/srp\&.h\&.
+.SS "#define SRP_ERR_OPEN_FILE   3"
+
+.PP
+Definition at line 137 of file include/openssl/srp\&.h\&.
+.SS "#define SRP_ERR_VBASE_BN_LIB   2"
+
+.PP
+Definition at line 136 of file include/openssl/srp\&.h\&.
+.SS "#define SRP_ERR_VBASE_INCOMPLETE_FILE   1"
+
+.PP
+Definition at line 135 of file include/openssl/srp\&.h\&.
+.SS "#define SRP_MINIMAL_N   1024"
+
+.PP
+Definition at line 172 of file include/openssl/srp\&.h\&.
+.SS "#define SRP_NO_ERROR   0"
+
+.PP
+Definition at line 134 of file include/openssl/srp\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBSRP_gN_st\fP  \fBSRP_gN\fP"
+
+.SS "typedef struct \fBSRP_gN_cache_st\fP  \fBSRP_gN_cache\fP"
+
+.SS "typedef struct \fBSRP_user_pwd_st\fP  \fBSRP_user_pwd\fP"
+
+.SS "typedef struct \fBSRP_VBASE_st\fP  \fBSRP_VBASE\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBBIGNUM\fP* SRP_Calc_A (\fBBIGNUM\fP * a, \fBBIGNUM\fP * N, \fBBIGNUM\fP * g)"
+
+.SS "\fBBIGNUM\fP* SRP_Calc_B (\fBBIGNUM\fP * b, \fBBIGNUM\fP * N, \fBBIGNUM\fP * g, \fBBIGNUM\fP * v)"
+
+.SS "\fBBIGNUM\fP* SRP_Calc_client_key (\fBBIGNUM\fP * N, \fBBIGNUM\fP * B, \fBBIGNUM\fP * g, \fBBIGNUM\fP * x, \fBBIGNUM\fP * a, \fBBIGNUM\fP * u)"
+
+.SS "\fBBIGNUM\fP* SRP_Calc_server_key (\fBBIGNUM\fP * A, \fBBIGNUM\fP * v, \fBBIGNUM\fP * u, \fBBIGNUM\fP * b, \fBBIGNUM\fP * N)"
+
+.SS "\fBBIGNUM\fP* SRP_Calc_u (\fBBIGNUM\fP * A, \fBBIGNUM\fP * B, \fBBIGNUM\fP * N)"
+
+.SS "\fBBIGNUM\fP* SRP_Calc_x (\fBBIGNUM\fP * s, const char * user, const char * pass)"
+
+.SS "char* SRP_check_known_gN_param (\fBBIGNUM\fP * g, \fBBIGNUM\fP * N)"
+
+.SS "char* SRP_create_verifier (const char * user, const char * pass, char ** salt, char ** verifier, const char * N, const char * g)"
+
+.SS "int SRP_create_verifier_BN (const char * user, const char * pass, \fBBIGNUM\fP ** salt, \fBBIGNUM\fP ** verifier, \fBBIGNUM\fP * N, \fBBIGNUM\fP * g)"
+
+.SS "\fBSRP_gN\fP* SRP_get_default_gN (const char * id)"
+
+.SS "\fBvoid\fP SRP_user_pwd_free (\fBSRP_user_pwd\fP * user_pwd)"
+
+.SS "int SRP_VBASE_free (\fBSRP_VBASE\fP * vb)"
+
+.SS "\fBSRP_user_pwd\fP* SRP_VBASE_get1_by_user (\fBSRP_VBASE\fP * vb, char * username)"
+
+.SS "\fBSRP_user_pwd\fP* SRP_VBASE_get_by_user (\fBSRP_VBASE\fP * vb, char * username)"
+
+.SS "int SRP_VBASE_init (\fBSRP_VBASE\fP * vb, char * verifier_file)"
+
+.SS "\fBSRP_VBASE\fP* SRP_VBASE_new (char * seed_key)"
+
+.SS "int SRP_Verify_A_mod_N (\fBBIGNUM\fP * A, \fBBIGNUM\fP * N)"
+
+.SS "int SRP_Verify_B_mod_N (\fBBIGNUM\fP * B, \fBBIGNUM\fP * N)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,517 @@
+.TH "s2n-master/libcrypto-build/openssl/engines/vendor_defns/cswift.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/engines/vendor_defns/cswift.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fB_SW_U64\fP"
+.br
+.ti -1c
+.RI "struct \fB_SW_LARGENUMBER\fP"
+.br
+.ti -1c
+.RI "struct \fB_SW_CRT\fP"
+.br
+.ti -1c
+.RI "struct \fB_SW_EXP\fP"
+.br
+.ti -1c
+.RI "struct \fB_SW_DSA\fP"
+.br
+.ti -1c
+.RI "struct \fB_SW_NVDATA\fP"
+.br
+.ti -1c
+.RI "struct \fB_SW_PARAM\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSW_OK\fP   (0L)"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_BASE\fP   (\-10000L)"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NO_CARD\fP   (\fBSW_ERR_BASE\fP\-1) /* The Card is not present */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_CARD_NOT_READY\fP   (\fBSW_ERR_BASE\fP\-2) /* The card has not powered */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_TIME_OUT\fP   (\fBSW_ERR_BASE\fP\-3) /* Execution \fBof\fP \fBa\fP command */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NO_EXECUTE\fP   (\fBSW_ERR_BASE\fP\-4) /* The Card failed to */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_INPUT_NULL_PTR\fP   (\fBSW_ERR_BASE\fP\-5) /* \fBa\fP required pointer is */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_INPUT_SIZE\fP   (\fBSW_ERR_BASE\fP\-6) /* size is invalid, too */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_INVALID_HANDLE\fP   (\fBSW_ERR_BASE\fP\-7) /* Invalid SW_ACC_CONTEXT */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_PENDING\fP   (\fBSW_ERR_BASE\fP\-8) /* A request is already out\- */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_AVAILABLE\fP   (\fBSW_ERR_BASE\fP\-9) /* A result is available\&.  */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NO_PENDING\fP   (\fBSW_ERR_BASE\fP\-10) /* No request is pending\&.  */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NO_MEMORY\fP   (\fBSW_ERR_BASE\fP\-11) /* Not enough memory */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_BAD_ALGORITHM\fP   (\fBSW_ERR_BASE\fP\-12) /* Invalid algorithm \fBtype\fP */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_MISSING_KEY\fP   (\fBSW_ERR_BASE\fP\-13) /* No key is associated with */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_KEY_CMD_MISMATCH\fP   (\fBSW_ERR_BASE\fP\-14) /* Cannot perform requested */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NOT_IMPLEMENTED\fP   (\fBSW_ERR_BASE\fP\-15) /* Not implemented */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_BAD_COMMAND\fP   (\fBSW_ERR_BASE\fP\-16) /* Bad command code */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_BAD_ITEM_SIZE\fP   (\fBSW_ERR_BASE\fP\-17) /* too small or too large in */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_BAD_ACCNUM\fP   (\fBSW_ERR_BASE\fP\-18) /* Bad accelerator number */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_SELFTEST_FAIL\fP   (\fBSW_ERR_BASE\fP\-19) /* At least one \fBof\fP the self */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_MISALIGN\fP   (\fBSW_ERR_BASE\fP\-20) /* Certain alogrithms require */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_OUTPUT_NULL_PTR\fP   (\fBSW_ERR_BASE\fP\-21) /* \fBa\fP required pointer is */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_OUTPUT_SIZE\fP   (\fBSW_ERR_BASE\fP\-22) /* size is invalid, too */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_FIRMWARE_CHECKSUM\fP   (\fBSW_ERR_BASE\fP\-23) /* firmware checksum mismatch */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_UNKNOWN_FIRMWARE\fP   (\fBSW_ERR_BASE\fP\-24) /* unknown firmware error */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_INTERRUPT\fP   (\fBSW_ERR_BASE\fP\-25) /* request is abort when */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NVWRITE_FAIL\fP   (\fBSW_ERR_BASE\fP\-26) /* error in writing to Non\- */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_NVWRITE_RANGE\fP   (\fBSW_ERR_BASE\fP\-27) /* out \fBof\fP range error in */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_RNG_ERROR\fP   (\fBSW_ERR_BASE\fP\-28) /* Random Number Generation */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_DSS_FAILURE\fP   (\fBSW_ERR_BASE\fP\-29) /* DSS Sign or Verify failure */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_MODEXP_FAILURE\fP   (\fBSW_ERR_BASE\fP\-30) /* Failure in various math */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_ONBOARD_MEMORY\fP   (\fBSW_ERR_BASE\fP\-31) /* Error in accessing on \- */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_FIRMWARE_VERSION\fP   (\fBSW_ERR_BASE\fP\-32) /* Wrong \fBversion\fP in firmware */"
+.br
+.ti -1c
+.RI "#define \fBSW_ERR_ZERO_WORKING_ACCELERATOR\fP   (\fBSW_ERR_BASE\fP\-44) /* All accelerators are bad */"
+.br
+.ti -1c
+.RI "#define \fBSW_ALG_CRT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSW_ALG_EXP\fP   2"
+.br
+.ti -1c
+.RI "#define \fBSW_ALG_DSA\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSW_ALG_NVDATA\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_MODEXP_CRT\fP   1   /* perform Modular Exponentiation using */"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_MODEXP\fP   2   /* perform Modular Exponentiation */"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_DSS_SIGN\fP   3   /* perform DSS sign */"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_DSS_VERIFY\fP   4   /* perform DSS verify */"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_RAND\fP   5   /* perform random number generation */"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_NVREAD\fP   6   /* perform read to nonvolatile RAM */"
+.br
+.ti -1c
+.RI "#define \fBSW_CMD_NVWRITE\fP   7   /* perform write to nonvolatile RAM */"
+.br
+.ti -1c
+.RI "#define \fBSW_OS_INVALID_HANDLE\fP   (\-1)"
+.br
+.ti -1c
+.RI "#define \fBSW_CALLCONV\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef long \fBSW_STATUS\fP"
+.br
+.ti -1c
+.RI "typedef unsigned char \fBSW_BYTE\fP"
+.br
+.ti -1c
+.RI "typedef unsigned short \fBSW_U16\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBSW_U32\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_U64\fP \fBSW_U64\fP"
+.br
+.ti -1c
+.RI "typedef \fBSW_U32\fP \fBSW_ALGTYPE\fP"
+.br
+.ti -1c
+.RI "typedef \fBSW_U32\fP \fBSW_STATE\fP"
+.br
+.ti -1c
+.RI "typedef \fBSW_U32\fP \fBSW_COMMAND_CODE\fP"
+.br
+.ti -1c
+.RI "typedef \fBSW_U32\fP \fBSW_COMMAND_BITMAP\fP[4]"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_LARGENUMBER\fP \fBSW_LARGENUMBER\fP"
+.br
+.ti -1c
+.RI "typedef int \fBSW_OSHANDLE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_CRT\fP \fBSW_CRT\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_EXP\fP \fBSW_EXP\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_DSA\fP \fBSW_DSA\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_NVDATA\fP \fBSW_NVDATA\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_SW_PARAM\fP \fBSW_PARAM\fP"
+.br
+.ti -1c
+.RI "typedef \fBSW_U32\fP \fBSW_CONTEXT_HANDLE\fP"
+.br
+.ti -1c
+.RI "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP \fBt_swAcquireAccContext\fP(\fBSW_CONTEXT_HANDLE\fP *hac)"
+.br
+.ti -1c
+.RI "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP \fBt_swAttachKeyParam\fP(\fBSW_CONTEXT_HANDLE\fP hac, \fBSW_PARAM\fP *key_params)"
+.br
+.ti -1c
+.RI "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP \fBt_swSimpleRequest\fP(\fBSW_CONTEXT_HANDLE\fP hac, \fBSW_COMMAND_CODE\fP cmd, \fBSW_LARGENUMBER\fP pin[], \fBSW_U32\fP pin_count, \fBSW_LARGENUMBER\fP pout[], \fBSW_U32\fP pout_count)"
+.br
+.ti -1c
+.RI "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP \fBt_swReleaseAccContext\fP(\fBSW_CONTEXT_HANDLE\fP hac)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SW_OK   (0L)"
+
+.PP
+Definition at line 50 of file cswift\&.h\&.
+.SS "#define SW_ERR_BASE   (\-10000L)"
+
+.PP
+Definition at line 51 of file cswift\&.h\&.
+.SS "#define SW_ERR_NO_CARD   (\fBSW_ERR_BASE\fP\-1) /* The Card is not present */"
+
+.PP
+Definition at line 52 of file cswift\&.h\&.
+.SS "#define SW_ERR_CARD_NOT_READY   (\fBSW_ERR_BASE\fP\-2) /* The card has not powered */"
+
+.PP
+Definition at line 53 of file cswift\&.h\&.
+.SS "#define SW_ERR_TIME_OUT   (\fBSW_ERR_BASE\fP\-3) /* Execution \fBof\fP \fBa\fP command */"
+
+.PP
+Definition at line 55 of file cswift\&.h\&.
+.SS "#define SW_ERR_NO_EXECUTE   (\fBSW_ERR_BASE\fP\-4) /* The Card failed to */"
+
+.PP
+Definition at line 57 of file cswift\&.h\&.
+.SS "#define SW_ERR_INPUT_NULL_PTR   (\fBSW_ERR_BASE\fP\-5) /* \fBa\fP required pointer is */"
+
+.PP
+Definition at line 59 of file cswift\&.h\&.
+.SS "#define SW_ERR_INPUT_SIZE   (\fBSW_ERR_BASE\fP\-6) /* size is invalid, too */"
+
+.PP
+Definition at line 61 of file cswift\&.h\&.
+.SS "#define SW_ERR_INVALID_HANDLE   (\fBSW_ERR_BASE\fP\-7) /* Invalid SW_ACC_CONTEXT */"
+
+.PP
+Definition at line 63 of file cswift\&.h\&.
+.SS "#define SW_ERR_PENDING   (\fBSW_ERR_BASE\fP\-8) /* A request is already out\- */"
+
+.PP
+Definition at line 65 of file cswift\&.h\&.
+.SS "#define SW_ERR_AVAILABLE   (\fBSW_ERR_BASE\fP\-9) /* A result is available\&.  */"
+
+.PP
+Definition at line 68 of file cswift\&.h\&.
+.SS "#define SW_ERR_NO_PENDING   (\fBSW_ERR_BASE\fP\-10) /* No request is pending\&.  */"
+
+.PP
+Definition at line 69 of file cswift\&.h\&.
+.SS "#define SW_ERR_NO_MEMORY   (\fBSW_ERR_BASE\fP\-11) /* Not enough memory */"
+
+.PP
+Definition at line 70 of file cswift\&.h\&.
+.SS "#define SW_ERR_BAD_ALGORITHM   (\fBSW_ERR_BASE\fP\-12) /* Invalid algorithm \fBtype\fP */"
+
+.PP
+Definition at line 71 of file cswift\&.h\&.
+.SS "#define SW_ERR_MISSING_KEY   (\fBSW_ERR_BASE\fP\-13) /* No key is associated with */"
+
+.PP
+Definition at line 73 of file cswift\&.h\&.
+.SS "#define SW_ERR_KEY_CMD_MISMATCH   (\fBSW_ERR_BASE\fP\-14) /* Cannot perform requested */"
+
+.PP
+Definition at line 77 of file cswift\&.h\&.
+.SS "#define SW_ERR_NOT_IMPLEMENTED   (\fBSW_ERR_BASE\fP\-15) /* Not implemented */"
+
+.PP
+Definition at line 84 of file cswift\&.h\&.
+.SS "#define SW_ERR_BAD_COMMAND   (\fBSW_ERR_BASE\fP\-16) /* Bad command code */"
+
+.PP
+Definition at line 86 of file cswift\&.h\&.
+.SS "#define SW_ERR_BAD_ITEM_SIZE   (\fBSW_ERR_BASE\fP\-17) /* too small or too large in */"
+
+.PP
+Definition at line 87 of file cswift\&.h\&.
+.SS "#define SW_ERR_BAD_ACCNUM   (\fBSW_ERR_BASE\fP\-18) /* Bad accelerator number */"
+
+.PP
+Definition at line 90 of file cswift\&.h\&.
+.SS "#define SW_ERR_SELFTEST_FAIL   (\fBSW_ERR_BASE\fP\-19) /* At least one \fBof\fP the self */"
+
+.PP
+Definition at line 91 of file cswift\&.h\&.
+.SS "#define SW_ERR_MISALIGN   (\fBSW_ERR_BASE\fP\-20) /* Certain alogrithms require */"
+
+.PP
+Definition at line 96 of file cswift\&.h\&.
+.SS "#define SW_ERR_OUTPUT_NULL_PTR   (\fBSW_ERR_BASE\fP\-21) /* \fBa\fP required pointer is */"
+
+.PP
+Definition at line 100 of file cswift\&.h\&.
+.SS "#define SW_ERR_OUTPUT_SIZE   (\fBSW_ERR_BASE\fP\-22) /* size is invalid, too */"
+
+.PP
+Definition at line 103 of file cswift\&.h\&.
+.SS "#define SW_ERR_FIRMWARE_CHECKSUM   (\fBSW_ERR_BASE\fP\-23) /* firmware checksum mismatch */"
+
+.PP
+Definition at line 106 of file cswift\&.h\&.
+.SS "#define SW_ERR_UNKNOWN_FIRMWARE   (\fBSW_ERR_BASE\fP\-24) /* unknown firmware error */"
+
+.PP
+Definition at line 109 of file cswift\&.h\&.
+.SS "#define SW_ERR_INTERRUPT   (\fBSW_ERR_BASE\fP\-25) /* request is abort when */"
+
+.PP
+Definition at line 111 of file cswift\&.h\&.
+.SS "#define SW_ERR_NVWRITE_FAIL   (\fBSW_ERR_BASE\fP\-26) /* error in writing to Non\- */"
+
+.PP
+Definition at line 114 of file cswift\&.h\&.
+.SS "#define SW_ERR_NVWRITE_RANGE   (\fBSW_ERR_BASE\fP\-27) /* out \fBof\fP range error in */"
+
+.PP
+Definition at line 116 of file cswift\&.h\&.
+.SS "#define SW_ERR_RNG_ERROR   (\fBSW_ERR_BASE\fP\-28) /* Random Number Generation */"
+
+.PP
+Definition at line 118 of file cswift\&.h\&.
+.SS "#define SW_ERR_DSS_FAILURE   (\fBSW_ERR_BASE\fP\-29) /* DSS Sign or Verify failure */"
+
+.PP
+Definition at line 120 of file cswift\&.h\&.
+.SS "#define SW_ERR_MODEXP_FAILURE   (\fBSW_ERR_BASE\fP\-30) /* Failure in various math */"
+
+.PP
+Definition at line 121 of file cswift\&.h\&.
+.SS "#define SW_ERR_ONBOARD_MEMORY   (\fBSW_ERR_BASE\fP\-31) /* Error in accessing on \- */"
+
+.PP
+Definition at line 123 of file cswift\&.h\&.
+.SS "#define SW_ERR_FIRMWARE_VERSION   (\fBSW_ERR_BASE\fP\-32) /* Wrong \fBversion\fP in firmware */"
+
+.PP
+Definition at line 125 of file cswift\&.h\&.
+.SS "#define SW_ERR_ZERO_WORKING_ACCELERATOR   (\fBSW_ERR_BASE\fP\-44) /* All accelerators are bad */"
+
+.PP
+Definition at line 128 of file cswift\&.h\&.
+.SS "#define SW_ALG_CRT   1"
+
+.PP
+Definition at line 132 of file cswift\&.h\&.
+.SS "#define SW_ALG_EXP   2"
+
+.PP
+Definition at line 133 of file cswift\&.h\&.
+.SS "#define SW_ALG_DSA   3"
+
+.PP
+Definition at line 134 of file cswift\&.h\&.
+.SS "#define SW_ALG_NVDATA   4"
+
+.PP
+Definition at line 135 of file cswift\&.h\&.
+.SS "#define SW_CMD_MODEXP_CRT   1   /* perform Modular Exponentiation using */"
+
+.PP
+Definition at line 138 of file cswift\&.h\&.
+.SS "#define SW_CMD_MODEXP   2   /* perform Modular Exponentiation */"
+
+.PP
+Definition at line 140 of file cswift\&.h\&.
+.SS "#define SW_CMD_DSS_SIGN   3   /* perform DSS sign */"
+
+.PP
+Definition at line 141 of file cswift\&.h\&.
+.SS "#define SW_CMD_DSS_VERIFY   4   /* perform DSS verify */"
+
+.PP
+Definition at line 142 of file cswift\&.h\&.
+.SS "#define SW_CMD_RAND   5   /* perform random number generation */"
+
+.PP
+Definition at line 143 of file cswift\&.h\&.
+.SS "#define SW_CMD_NVREAD   6   /* perform read to nonvolatile RAM */"
+
+.PP
+Definition at line 144 of file cswift\&.h\&.
+.SS "#define SW_CMD_NVWRITE   7   /* perform write to nonvolatile RAM */"
+
+.PP
+Definition at line 145 of file cswift\&.h\&.
+.SS "#define SW_OS_INVALID_HANDLE   (\-1)"
+
+.PP
+Definition at line 175 of file cswift\&.h\&.
+.SS "#define SW_CALLCONV"
+
+.PP
+Definition at line 176 of file cswift\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef long \fBSW_STATUS\fP"
+
+.PP
+Definition at line 25 of file cswift\&.h\&.
+.SS "typedef unsigned char \fBSW_BYTE\fP"
+
+.PP
+Definition at line 26 of file cswift\&.h\&.
+.SS "typedef unsigned short \fBSW_U16\fP"
+
+.PP
+Definition at line 27 of file cswift\&.h\&.
+.SS "typedef unsigned long \fBSW_U32\fP"
+
+.PP
+Definition at line 32 of file cswift\&.h\&.
+.SS "typedef struct \fB_SW_U64\fP  \fBSW_U64\fP"
+
+.SS "typedef \fBSW_U32\fP \fBSW_ALGTYPE\fP"
+
+.PP
+Definition at line 147 of file cswift\&.h\&.
+.SS "typedef \fBSW_U32\fP \fBSW_STATE\fP"
+
+.PP
+Definition at line 148 of file cswift\&.h\&.
+.SS "typedef \fBSW_U32\fP \fBSW_COMMAND_CODE\fP"
+
+.PP
+Definition at line 149 of file cswift\&.h\&.
+.SS "typedef \fBSW_U32\fP SW_COMMAND_BITMAP[4]"
+
+.PP
+Definition at line 150 of file cswift\&.h\&.
+.SS "typedef struct \fB_SW_LARGENUMBER\fP  \fBSW_LARGENUMBER\fP"
+
+.SS "typedef int \fBSW_OSHANDLE\fP"
+
+.PP
+Definition at line 174 of file cswift\&.h\&.
+.SS "typedef struct \fB_SW_CRT\fP  \fBSW_CRT\fP"
+
+.SS "typedef struct \fB_SW_EXP\fP  \fBSW_EXP\fP"
+
+.SS "typedef struct \fB_SW_DSA\fP  \fBSW_DSA\fP"
+
+.SS "typedef struct \fB_SW_NVDATA\fP  \fBSW_NVDATA\fP"
+
+.SS "typedef struct \fB_SW_PARAM\fP  \fBSW_PARAM\fP"
+
+.SS "typedef \fBSW_U32\fP \fBSW_CONTEXT_HANDLE\fP"
+
+.PP
+Definition at line 214 of file cswift\&.h\&.
+.SS "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP t_swAcquireAccContext(\fBSW_CONTEXT_HANDLE\fP *hac)"
+
+.PP
+Definition at line 220 of file cswift\&.h\&.
+.SS "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP t_swAttachKeyParam(\fBSW_CONTEXT_HANDLE\fP hac, \fBSW_PARAM\fP *key_params)"
+
+.PP
+Definition at line 222 of file cswift\&.h\&.
+.SS "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP t_swSimpleRequest(\fBSW_CONTEXT_HANDLE\fP hac, \fBSW_COMMAND_CODE\fP cmd, \fBSW_LARGENUMBER\fP pin[], \fBSW_U32\fP pin_count, \fBSW_LARGENUMBER\fP pout[], \fBSW_U32\fP pout_count)"
+
+.PP
+Definition at line 224 of file cswift\&.h\&.
+.SS "typedef \fBSW_STATUS\fP \fBSW_CALLCONV\fP t_swReleaseAccContext(\fBSW_CONTEXT_HANDLE\fP hac)"
+
+.PP
+Definition at line 230 of file cswift\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

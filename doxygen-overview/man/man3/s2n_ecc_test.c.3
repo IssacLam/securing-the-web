@@ -1,0 +1,76 @@
+.TH "s2n-master/tests/unit/s2n_ecc_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_ecc_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'crypto/s2n_ecc\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 23 of file s2n_ecc_test\&.c\&.
+.PP
+.nf
+24 {
+25     BEGIN_TEST();
+26 
+27     /* Test generate->write->read->compute_shared with all supported curves */
+28     for (int i = 0; i < sizeof(s2n_ecc_supported_curves) / sizeof(s2n_ecc_supported_curves[0]); i++) {
+29         struct s2n_ecc_params server_params, client_params;
+30         struct s2n_stuffer wire;
+31         struct s2n_blob server_shared, client_shared, ecdh_params_sent, ecdh_params_received;
+32 
+33         EXPECT_SUCCESS(s2n_stuffer_growable_alloc(&wire, 1024));
+34 
+35         /* Server generates a key for a given curve */
+36         server_params\&.negotiated_curve = &s2n_ecc_supported_curves[i];
+37         EXPECT_SUCCESS(s2n_ecc_generate_ephemeral_key(&server_params));
+38         /* Server sends the public */
+39         EXPECT_SUCCESS(s2n_ecc_write_ecc_params(&server_params, &wire, &ecdh_params_sent));
+40         /* Client reads the public */
+41         EXPECT_SUCCESS(s2n_ecc_read_ecc_params(&client_params, &wire, &ecdh_params_received));
+42         /* The client got the curve */
+43         EXPECT_EQUAL(client_params\&.negotiated_curve, server_params\&.negotiated_curve);
+44 
+45         /* Client sends its public */
+46         EXPECT_SUCCESS(s2n_ecc_compute_shared_secret_as_client(&client_params, &wire, &client_shared));
+47         /* Server receives it */
+48         EXPECT_SUCCESS(s2n_ecc_compute_shared_secret_as_server(&server_params, &wire, &server_shared));
+49         /* Shared is the same for the client and the server */
+50         EXPECT_EQUAL(client_shared\&.size, server_shared\&.size);
+51         EXPECT_BYTEARRAY_EQUAL(client_shared\&.data, server_shared\&.data, client_shared\&.size);
+52 
+53         /* Clean up */
+54         EXPECT_SUCCESS(s2n_stuffer_free(&wire));
+55         EXPECT_SUCCESS(s2n_free(&server_shared));
+56         EXPECT_SUCCESS(s2n_free(&client_shared));
+57         EXPECT_SUCCESS(s2n_ecc_params_free(&server_params));
+58         EXPECT_SUCCESS(s2n_ecc_params_free(&client_params));
+59     }
+60 
+61     END_TEST();
+62     return 0;
+63 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

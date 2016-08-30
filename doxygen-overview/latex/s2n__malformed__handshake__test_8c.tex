@@ -1,0 +1,502 @@
+\hypertarget{s2n__malformed__handshake__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+malformed\+\_\+handshake\+\_\+test.c File Reference}
+\label{s2n__malformed__handshake__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/wait.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+connection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}tls/s2n\+\_\+handshake.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__malformed__handshake__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__malformed__handshake__test_8c_afe02a145f0d3a71b14d61e2774987f9d}{T\+L\+S\+\_\+\+A\+L\+E\+RT}~21
+\item 
+\#define \hyperlink{s2n__malformed__handshake__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE}~22
+\item 
+\#define \hyperlink{s2n__malformed__handshake__test_8c_ac73f405c69af9ff269769efd8eba125f}{T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT}~24
+\item 
+\#define \hyperlink{s2n__malformed__handshake__test_8c_ac56686e866d4e21e0b112979b16cd453}{Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557c}{message\+\_\+type\+\_\+t} \hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type} (struct \hyperlink{structs2n__connection}{s2n\+\_\+connection} $\ast$conn)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\+\_\+messages} (int write\+\_\+fd, uint8\+\_\+t $\ast$server\+\_\+hello, uint32\+\_\+t server\+\_\+hello\+\_\+len, uint8\+\_\+t $\ast$\hyperlink{s2n__fragmentation__coalescing__test_8c_a6f8e086c4374b9500a7200a82eb494df}{server\+\_\+cert}, uint32\+\_\+t server\+\_\+cert\+\_\+len)
+\item 
+int \hyperlink{s2n__malformed__handshake__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!T\+L\+S\+\_\+\+A\+L\+E\+RT@{T\+L\+S\+\_\+\+A\+L\+E\+RT}}
+\index{T\+L\+S\+\_\+\+A\+L\+E\+RT@{T\+L\+S\+\_\+\+A\+L\+E\+RT}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+A\+L\+E\+RT}{TLS_ALERT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+A\+L\+E\+RT~21}\hypertarget{s2n__malformed__handshake__test_8c_afe02a145f0d3a71b14d61e2774987f9d}{}\label{s2n__malformed__handshake__test_8c_afe02a145f0d3a71b14d61e2774987f9d}
+
+
+Definition at line 28 of file s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c.
+
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE@{T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE}}
+\index{T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE@{T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE}{TLS_HANDSHAKE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+H\+A\+N\+D\+S\+H\+A\+KE~22}\hypertarget{s2n__malformed__handshake__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{}\label{s2n__malformed__handshake__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}
+
+
+Definition at line 29 of file s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c.
+
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT@{T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT}}
+\index{T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT@{T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT}{TLS_HEARTBEAT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+L\+S\+\_\+\+H\+E\+A\+R\+T\+B\+E\+AT~24}\hypertarget{s2n__malformed__handshake__test_8c_ac73f405c69af9ff269769efd8eba125f}{}\label{s2n__malformed__handshake__test_8c_ac73f405c69af9ff269769efd8eba125f}
+
+
+Definition at line 30 of file s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c.
+
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE@{Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE}}
+\index{Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE@{Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE}{ZERO_TO_THIRTY_ONE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+E\+R\+O\+\_\+\+T\+O\+\_\+\+T\+H\+I\+R\+T\+Y\+\_\+\+O\+NE}\hypertarget{s2n__malformed__handshake__test_8c_ac56686e866d4e21e0b112979b16cd453}{}\label{s2n__malformed__handshake__test_8c_ac56686e866d4e21e0b112979b16cd453}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, \(\backslash\)
+                            0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 
+      0x1D, 0x1E, 0x1F
+\end{DoxyCode}
+
+
+Definition at line 32 of file s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type@{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type}}
+\index{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type@{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type(struct s2n\+\_\+connection $\ast$conn)}{s2n_conn_get_current_message_type(struct s2n_connection *conn)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf message\+\_\+type\+\_\+t} s2n\+\_\+conn\+\_\+get\+\_\+current\+\_\+message\+\_\+type (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+connection} $\ast$}]{conn}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{}\label{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}
+
+
+Definition at line 113 of file s2n\+\_\+handshake\+\_\+io.\+c.
+
+
+\begin{DoxyCode}
+114 \{
+115     \textcolor{keywordflow}{return} \hyperlink{s2n__handshake__io_8c_a38b7ad67505bd79bb3599c3a1504c51e}{ACTIVE\_MESSAGE}(conn);
+116 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!send\+\_\+messages@{send\+\_\+messages}}
+\index{send\+\_\+messages@{send\+\_\+messages}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{send\+\_\+messages(int write\+\_\+fd, uint8\+\_\+t $\ast$server\+\_\+hello, uint32\+\_\+t server\+\_\+hello\+\_\+len, uint8\+\_\+t $\ast$server\+\_\+cert, uint32\+\_\+t server\+\_\+cert\+\_\+len)}{send_messages(int write_fd, uint8_t *server_hello, uint32_t server_hello_len, uint8_t *server_cert, uint32_t server_cert_len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} send\+\_\+messages (
+\begin{DoxyParamCaption}
+\item[{int}]{write\+\_\+fd, }
+\item[{uint8\+\_\+t $\ast$}]{server\+\_\+hello, }
+\item[{uint32\+\_\+t}]{server\+\_\+hello\+\_\+len, }
+\item[{uint8\+\_\+t $\ast$}]{server\+\_\+cert, }
+\item[{uint32\+\_\+t}]{server\+\_\+cert\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{}\label{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}
+
+
+Definition at line 203 of file s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+204 \{
+205     uint8\_t record\_header[5] = \{ \hyperlink{s2n__malformed__handshake__test_8c_a04fd920fd9f28238887e4c6417b4d4cc}{TLS\_HANDSHAKE}, 0x03, 0x03, (server\_hello\_len >> 8), 
+      server\_hello\_len & 0xff \};
+206 
+207     \textcolor{keywordflow}{if} (write(write\_fd, record\_header, 5) != 5) \{
+208         \_exit(100);
+209     \}
+210 
+211     \textcolor{keywordflow}{if} (write(write\_fd, server\_hello, server\_hello\_len) != server\_hello\_len) \{
+212         \_exit(100);
+213     \}
+214 
+215     record\_header[3] = (server\_cert\_len >> 8);
+216     record\_header[4] = server\_cert\_len & 0xff;
+217 
+218     \textcolor{keywordflow}{if} (write(write\_fd, record\_header, 5) != 5) \{
+219         \_exit(100);
+220     \}
+221 
+222     \textcolor{keywordflow}{if} (write(write\_fd, \hyperlink{s2n__fragmentation__coalescing__test_8c_a6f8e086c4374b9500a7200a82eb494df}{server\_cert}, server\_cert\_len) != server\_cert\_len) \{
+223         \_exit(100);
+224     \}
+225 
+226     \textcolor{comment}{/* Close the pipe and exit */}
+227     close(write\_fd);
+228 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c@{s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__malformed__handshake__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__malformed__handshake__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 230 of file s2n\+\_\+malformed\+\_\+handshake\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+231 \{
+232     \textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} *conn;
+233     \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status} blocked;
+234     \textcolor{keywordtype}{int} status;
+235     pid\_t pid;
+236     \textcolor{keywordtype}{int} \hyperlink{ssl__locl_8h_a4014c6f4a6fa0e565ca592bcaca0fa58}{p}[2];
+237 
+238     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+239 
+240     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(setenv(\textcolor{stringliteral}{"S2N\_ENABLE\_CLIENT\_MODE"}, \textcolor{stringliteral}{"1"}, 0));
+241     \hyperlink{s2n__test_8h_a555ed2148eff1d467ef9ec5eac91bdc2}{EXPECT\_NOT\_NULL}(conn = \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(
+      \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT}));
+242 
+243     \textcolor{comment}{/* Test a good certificate list */}
+244 
+245     \textcolor{comment}{/* Create a pipe */}
+246     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+247 
+248     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+249 
+250     \textcolor{comment}{/* Set up the connection to read from the fd */}
+251     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, p[0]));
+252 
+253     \textcolor{comment}{/* Pretend the client hello has already been set */}
+254     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+255     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a37342dbc9310ac8f4dbb4bdaef29de26}{message\_number} = \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca28914d3bb26ec8c2bd2d5ad9781cbf8c}{SERVER\_HELLO};
+256 
+257     \textcolor{comment}{/* Create a child process */}
+258     pid = fork();
+259     \textcolor{keywordflow}{if} (pid == 0) \{
+260         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+261         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+262 
+263         \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\_messages}(p[1], \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}, \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}), good\_certificate\_list, \textcolor{keyword}{sizeof}(good\_certificate\_list));
+264 
+265         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+266         \_exit(0);
+267     \}
+268 
+269     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+270     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+271 
+272     \textcolor{comment}{/* Negotiate the handshake. This will fail due to EOF, but that's ok. Turn off Blinding before
+       negotiation so that}
+273 \textcolor{comment}{     * server doesn't delay its response and test finishes quickly. */}
+274     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+275     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+276 
+277     \textcolor{comment}{/* Verify that the data is as we expect it */}
+278     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}, 
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a9d334a2514e7cddcfc0799e8f02fb102}{zero\_to\_thirty\_one}, 32), 0);
+279 
+280     \textcolor{comment}{/* Check that the server hello message was processed .. we should be HELLO DONE */}
+281     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\_conn\_get\_current\_message\_type}(conn), 
+      \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca27c9351168f8b8c04e98d7bfb5f1aef9}{SERVER\_HELLO\_DONE});
+282 
+283     \textcolor{comment}{/* Clean up */}
+284     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+285     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+286     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+287 
+288     \textcolor{comment}{/* Test an empty certificate list */}
+289 
+290     \textcolor{comment}{/* Create a pipe */}
+291     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+292 
+293     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+294 
+295     \textcolor{comment}{/* Set up the connection to read from the fd */}
+296     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, p[0]));
+297 
+298     \textcolor{comment}{/* Pretend the client hello has already been set */}
+299     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+300     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a37342dbc9310ac8f4dbb4bdaef29de26}{message\_number} = \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca28914d3bb26ec8c2bd2d5ad9781cbf8c}{SERVER\_HELLO};
+301 
+302     \textcolor{comment}{/* Create a child process */}
+303     pid = fork();
+304     \textcolor{keywordflow}{if} (pid == 0) \{
+305         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+306         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+307 
+308         \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\_messages}(p[1], \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}, \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}), empty\_certificate\_list, \textcolor{keyword}{sizeof}(empty\_certificate\_list));
+309 
+310         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+311         \_exit(0);
+312     \}
+313 
+314     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+315     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+316 
+317     \textcolor{comment}{/* Negotiate the handshake. This will fail due to EOF, but that's ok. Turn off Blinding before
+       negotiation so that}
+318 \textcolor{comment}{     * server doesn't delay its response and test finishes quickly. */}
+319     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+320     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+321 
+322     \textcolor{comment}{/* Verify that the data is as we expect it */}
+323     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}, 
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a9d334a2514e7cddcfc0799e8f02fb102}{zero\_to\_thirty\_one}, 32), 0);
+324 
+325     \textcolor{comment}{/* Check that the server hello message was not processed, we're stuck in SERVER\_CERT */}
+326     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\_conn\_get\_current\_message\_type}(conn), 
+      \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca4fa0b8ef81392fad2cfb9dc57309edbd}{SERVER\_CERT});
+327 
+328     \textcolor{comment}{/* Clean up */}
+329     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+330     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+331     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+332 
+333     \textcolor{comment}{/* Test an empty certificate */}
+334 
+335     \textcolor{comment}{/* Create a pipe */}
+336     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+337 
+338     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+339 
+340     \textcolor{comment}{/* Set up the connection to read from the fd */}
+341     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, p[0]));
+342 
+343     \textcolor{comment}{/* Pretend the client hello has already been set */}
+344     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+345     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a37342dbc9310ac8f4dbb4bdaef29de26}{message\_number} = \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca28914d3bb26ec8c2bd2d5ad9781cbf8c}{SERVER\_HELLO};
+346 
+347     \textcolor{comment}{/* Create a child process */}
+348     pid = fork();
+349     \textcolor{keywordflow}{if} (pid == 0) \{
+350         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+351         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+352 
+353         \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\_messages}(p[1], \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}, \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}), empty\_certificate, \textcolor{keyword}{sizeof}(empty\_certificate));
+354 
+355         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+356         \_exit(0);
+357     \}
+358 
+359     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+360     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+361 
+362     \textcolor{comment}{/* Negotiate the handshake. This will fail due to EOF, but that's ok. Turn off Blinding before
+       negotiation so that}
+363 \textcolor{comment}{     * server doesn't delay its response and test finishes quickly. */}
+364     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+365     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+366 
+367     \textcolor{comment}{/* Verify that the data is as we expect it */}
+368     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}, 
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a9d334a2514e7cddcfc0799e8f02fb102}{zero\_to\_thirty\_one}, 32), 0);
+369 
+370     \textcolor{comment}{/* Check that the server hello message was not processed, we're stuck in SERVER\_CERT */}
+371     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\_conn\_get\_current\_message\_type}(conn), 
+      \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca4fa0b8ef81392fad2cfb9dc57309edbd}{SERVER\_CERT});
+372 
+373     \textcolor{comment}{/* Clean up */}
+374     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+375     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+376     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+377 
+378     \textcolor{comment}{/* Test an 'too large' certificate list */}
+379 
+380     \textcolor{comment}{/* Create a pipe */}
+381     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+382 
+383     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+384 
+385     \textcolor{comment}{/* Set up the connection to read from the fd */}
+386     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, p[0]));
+387 
+388     \textcolor{comment}{/* Pretend the client hello has already been set */}
+389     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+390     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a37342dbc9310ac8f4dbb4bdaef29de26}{message\_number} = \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca28914d3bb26ec8c2bd2d5ad9781cbf8c}{SERVER\_HELLO};
+391 
+392     \textcolor{comment}{/* Create a child process */}
+393     pid = fork();
+394     \textcolor{keywordflow}{if} (pid == 0) \{
+395         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+396         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+397 
+398         \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\_messages}(p[1], \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}, \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}), certificate\_list\_too\_large, \textcolor{keyword}{sizeof}(certificate\_list\_too\_large));
+399 
+400         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+401         \_exit(0);
+402     \}
+403 
+404     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+405     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+406 
+407     \textcolor{comment}{/* Negotiate the handshake. This will fail due to EOF, but that's ok. Turn off Blinding before
+       negotiation so that}
+408 \textcolor{comment}{     * server doesn't delay its response and test finishes quickly. */}
+409     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+410     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+411 
+412     \textcolor{comment}{/* Verify that the data is as we expect it */}
+413     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}, 
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a9d334a2514e7cddcfc0799e8f02fb102}{zero\_to\_thirty\_one}, 32), 0);
+414 
+415     \textcolor{comment}{/* Check that the server hello message was not processed, we're stuck in SERVER\_CERT */}
+416     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\_conn\_get\_current\_message\_type}(conn), 
+      \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca4fa0b8ef81392fad2cfb9dc57309edbd}{SERVER\_CERT});
+417 
+418     \textcolor{comment}{/* Clean up */}
+419     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+420     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+421     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+422 
+423     \textcolor{comment}{/* Test an 'too large' certificate */}
+424 
+425     \textcolor{comment}{/* Create a pipe */}
+426     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+427 
+428     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+429 
+430     \textcolor{comment}{/* Set up the connection to read from the fd */}
+431     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, p[0]));
+432 
+433     \textcolor{comment}{/* Pretend the client hello has already been set */}
+434     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+435     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a37342dbc9310ac8f4dbb4bdaef29de26}{message\_number} = \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca28914d3bb26ec8c2bd2d5ad9781cbf8c}{SERVER\_HELLO};
+436 
+437     \textcolor{comment}{/* Create a child process */}
+438     pid = fork();
+439     \textcolor{keywordflow}{if} (pid == 0) \{
+440         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+441         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+442 
+443         \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\_messages}(p[1], \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}, \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}), certificate\_too\_large, \textcolor{keyword}{sizeof}(certificate\_too\_large));
+444 
+445         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+446         \_exit(0);
+447     \}
+448 
+449     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+450     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+451 
+452     \textcolor{comment}{/* Negotiate the handshake. This will fail due to EOF, but that's ok. Turn off Blinding before
+       negotiation so that}
+453 \textcolor{comment}{     * server doesn't delay its response and test finishes quickly. */}
+454     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+455     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+456 
+457     \textcolor{comment}{/* Verify that the data is as we expect it */}
+458     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}, 
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a9d334a2514e7cddcfc0799e8f02fb102}{zero\_to\_thirty\_one}, 32), 0);
+459 
+460     \textcolor{comment}{/* Check that the server hello message was not processed, we're stuck in SERVER\_CERT */}
+461     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\_conn\_get\_current\_message\_type}(conn), 
+      \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca4fa0b8ef81392fad2cfb9dc57309edbd}{SERVER\_CERT});
+462 
+463     \textcolor{comment}{/* Clean up */}
+464     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+465     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+466     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+467 
+468     \textcolor{comment}{/* Test an 'too large' handshake */}
+469 
+470     \textcolor{comment}{/* Create a pipe */}
+471     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(pipe(p));
+472 
+473     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(conn));
+474 
+475     \textcolor{comment}{/* Set up the connection to read from the fd */}
+476     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(conn, p[0]));
+477 
+478     \textcolor{comment}{/* Pretend the client hello has already been set */}
+479     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a8b8974068a8f2c38a061ffb495a5ca1c}{handshake\_type} = FULL\_NO\_PFS;
+480     conn->\hyperlink{structs2n__connection_a902584c57c26269c7cbf42e4770ed356}{handshake}.\hyperlink{structs2n__handshake_a37342dbc9310ac8f4dbb4bdaef29de26}{message\_number} = \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca28914d3bb26ec8c2bd2d5ad9781cbf8c}{SERVER\_HELLO};
+481 
+482     \textcolor{comment}{/* Create a child process */}
+483     pid = fork();
+484     \textcolor{keywordflow}{if} (pid == 0) \{
+485         \textcolor{comment}{/* This is the child process, close the read end of the pipe */}
+486         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+487 
+488         \hyperlink{s2n__malformed__handshake__test_8c_a0d67101bf4796caf937fb56fc0825414}{send\_messages}(p[1], \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}, \textcolor{keyword}{sizeof}(
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a08831b3611d4c85bc362ceb8ce6c48d7}{server\_hello\_message}), certificate\_list\_too\_large, \textcolor{keyword}{sizeof}(certificate\_list\_too\_large));
+489 
+490         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(conn));
+491         \_exit(0);
+492     \}
+493 
+494     \textcolor{comment}{/* This is the parent process, close the write end of the pipe */}
+495     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[1]));
+496 
+497     \textcolor{comment}{/* Negotiate the handshake. This will fail due to EOF, but that's ok. Turn off Blinding before
+       negotiation so that}
+498 \textcolor{comment}{     * server doesn't delay its response and test finishes quickly. */}
+499     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(conn, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING}));
+500     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(conn, &blocked));
+501 
+502     \textcolor{comment}{/* Verify that the data is as we expect it */}
+503     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(memcmp(conn->\hyperlink{structs2n__connection_aaa284f060d5075d1526931181d9e4fa7}{secure}.\hyperlink{structs2n__crypto__parameters_ae6ef2eba6c9afbd8345314a05422a2e4}{server\_random}, 
+      \hyperlink{s2n__fragmentation__coalescing__test_8c_a9d334a2514e7cddcfc0799e8f02fb102}{zero\_to\_thirty\_one}, 32), 0);
+504 
+505     \textcolor{comment}{/* Check that the server hello message was not processed, we're stuck in SERVER\_CERT */}
+506     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(\hyperlink{s2n__malformed__handshake__test_8c_ad1a464c4f0d92cf0ac994ecd7693bd10}{s2n\_conn\_get\_current\_message\_type}(conn), 
+      \hyperlink{s2n__handshake_8h_a78b97fef55da786a15a849fd9d7e557ca4fa0b8ef81392fad2cfb9dc57309edbd}{SERVER\_CERT});
+507 
+508     \textcolor{comment}{/* Clean up */}
+509     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(waitpid(pid, &status, 0), pid);
+510     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(status, 0);
+511     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(close(p[0]));
+512 
+513     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+514 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__malformed__handshake__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

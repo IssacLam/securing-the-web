@@ -1,0 +1,147 @@
+\hypertarget{structs2n__cipher}{}\section{s2n\+\_\+cipher Struct Reference}
+\label{structs2n__cipher}\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+
+
+{\ttfamily \#include $<$s2n\+\_\+cipher.\+h$>$}
+
+
+
+Collaboration diagram for s2n\+\_\+cipher\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structs2n__cipher__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5a67a2e47925a8915cedd60c12c952a85d}{S2\+N\+\_\+\+S\+T\+R\+E\+AM}, 
+\hyperlink{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ab230bfe57512cd4305631ef6f92da966}{S2\+N\+\_\+\+C\+BC}, 
+\hyperlink{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ad3bf6902b630c4f86723fff6e6ce85f5}{S2\+N\+\_\+\+A\+E\+AD}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+enum s2n\+\_\+cipher\+:: \{ ... \}  \hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \hyperlink{structs2n__stream__cipher}{s2n\_stream\_cipher} \hyperlink{structs2n__cipher_a86b4ea19595781516c4e0a14c959db1c}{stream}\\
+\>struct \hyperlink{structs2n__aead__cipher}{s2n\_aead\_cipher} \hyperlink{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{aead}\\
+\>struct \hyperlink{structs2n__cbc__cipher}{s2n\_cbc\_cipher} \hyperlink{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}{cbc}\\
+\} \hyperlink{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{io}\\
+
+\end{tabbing}\item 
+uint8\+\_\+t \hyperlink{structs2n__cipher_a4c6bbff7566595ecff207dc0b73b3ae8}{key\+\_\+material\+\_\+size}
+\item 
+int($\ast$ \hyperlink{structs2n__cipher_a80fc23a245ab999bcc8dcc5b949cc542}{init} )(struct \hyperlink{structs2n__session__key}{s2n\+\_\+session\+\_\+key} $\ast$key)
+\item 
+int($\ast$ \hyperlink{structs2n__cipher_ad1e19d6d38d153a7a35e69c00cf101c1}{get\+\_\+decryption\+\_\+key} )(struct \hyperlink{structs2n__session__key}{s2n\+\_\+session\+\_\+key} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$in)
+\item 
+int($\ast$ \hyperlink{structs2n__cipher_a4ceb5624c688f6180fd838ac799bde36}{get\+\_\+encryption\+\_\+key} )(struct \hyperlink{structs2n__session__key}{s2n\+\_\+session\+\_\+key} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$in)
+\item 
+int($\ast$ \hyperlink{structs2n__cipher_aefd41942eaf98d2033c2a778adac0149}{destroy\+\_\+key} )(struct \hyperlink{structs2n__session__key}{s2n\+\_\+session\+\_\+key} $\ast$key)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 61 of file s2n\+\_\+cipher.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\subsubsection[{\texorpdfstring{anonymous enum}{anonymous enum}}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\hypertarget{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5}{}\label{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S2\+N\+\_\+\+S\+T\+R\+E\+AM@{S2\+N\+\_\+\+S\+T\+R\+E\+AM}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!S2\+N\+\_\+\+S\+T\+R\+E\+AM@{S2\+N\+\_\+\+S\+T\+R\+E\+AM}}\item[{\em 
+S2\+N\+\_\+\+S\+T\+R\+E\+AM\hypertarget{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5a67a2e47925a8915cedd60c12c952a85d}{}\label{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5a67a2e47925a8915cedd60c12c952a85d}
+}]\index{S2\+N\+\_\+\+C\+BC@{S2\+N\+\_\+\+C\+BC}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!S2\+N\+\_\+\+C\+BC@{S2\+N\+\_\+\+C\+BC}}\item[{\em 
+S2\+N\+\_\+\+C\+BC\hypertarget{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ab230bfe57512cd4305631ef6f92da966}{}\label{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ab230bfe57512cd4305631ef6f92da966}
+}]\index{S2\+N\+\_\+\+A\+E\+AD@{S2\+N\+\_\+\+A\+E\+AD}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!S2\+N\+\_\+\+A\+E\+AD@{S2\+N\+\_\+\+A\+E\+AD}}\item[{\em 
+S2\+N\+\_\+\+A\+E\+AD\hypertarget{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ad3bf6902b630c4f86723fff6e6ce85f5}{}\label{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ad3bf6902b630c4f86723fff6e6ce85f5}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 62 of file s2n\+\_\+cipher.\+h.
+
+
+\begin{DoxyCode}
+62 \{ \hyperlink{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5a67a2e47925a8915cedd60c12c952a85d}{S2N\_STREAM}, \hyperlink{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ab230bfe57512cd4305631ef6f92da966}{S2N\_CBC}, \hyperlink{structs2n__cipher_a99fb83031ce9923c84392b4e92f956b5ad3bf6902b630c4f86723fff6e6ce85f5}{S2N\_AEAD} \} \hyperlink{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{type};
+\end{DoxyCode}
+
+
+\subsection{Field Documentation}
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!type@{type}}
+\index{type@{type}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}enum \{ ... \}   type}\hypertarget{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}{}\label{structs2n__cipher_a7d741701c2036f0ec21372f9d8271b6c}
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!stream@{stream}}
+\index{stream@{stream}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{stream}{stream}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+stream\+\_\+cipher} stream}\hypertarget{structs2n__cipher_a86b4ea19595781516c4e0a14c959db1c}{}\label{structs2n__cipher_a86b4ea19595781516c4e0a14c959db1c}
+
+
+Definition at line 64 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!aead@{aead}}
+\index{aead@{aead}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{aead}{aead}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+aead\+\_\+cipher} aead}\hypertarget{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}{}\label{structs2n__cipher_a8d9b4c808e73d45bcd7d54784bef3ee0}
+
+
+Definition at line 65 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!cbc@{cbc}}
+\index{cbc@{cbc}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{cbc}{cbc}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+cbc\+\_\+cipher} cbc}\hypertarget{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}{}\label{structs2n__cipher_a1d48a8097823a3ed051e801f20f149b4}
+
+
+Definition at line 66 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!io@{io}}
+\index{io@{io}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{io}{io}}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}   io}\hypertarget{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}{}\label{structs2n__cipher_a4ea01e42d7c92d02b72ff99c9cac3ab3}
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!key\+\_\+material\+\_\+size@{key\+\_\+material\+\_\+size}}
+\index{key\+\_\+material\+\_\+size@{key\+\_\+material\+\_\+size}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{key\+\_\+material\+\_\+size}{key_material_size}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t key\+\_\+material\+\_\+size}\hypertarget{structs2n__cipher_a4c6bbff7566595ecff207dc0b73b3ae8}{}\label{structs2n__cipher_a4c6bbff7566595ecff207dc0b73b3ae8}
+
+
+Definition at line 68 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!init@{init}}
+\index{init@{init}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{init}{init}}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ init) (struct {\bf s2n\+\_\+session\+\_\+key} $\ast$key)}\hypertarget{structs2n__cipher_a80fc23a245ab999bcc8dcc5b949cc542}{}\label{structs2n__cipher_a80fc23a245ab999bcc8dcc5b949cc542}
+
+
+Definition at line 69 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!get\+\_\+decryption\+\_\+key@{get\+\_\+decryption\+\_\+key}}
+\index{get\+\_\+decryption\+\_\+key@{get\+\_\+decryption\+\_\+key}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{get\+\_\+decryption\+\_\+key}{get_decryption_key}}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ get\+\_\+decryption\+\_\+key) (struct {\bf s2n\+\_\+session\+\_\+key} $\ast$key, struct {\bf s2n\+\_\+blob} $\ast$in)}\hypertarget{structs2n__cipher_ad1e19d6d38d153a7a35e69c00cf101c1}{}\label{structs2n__cipher_ad1e19d6d38d153a7a35e69c00cf101c1}
+
+
+Definition at line 70 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!get\+\_\+encryption\+\_\+key@{get\+\_\+encryption\+\_\+key}}
+\index{get\+\_\+encryption\+\_\+key@{get\+\_\+encryption\+\_\+key}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{get\+\_\+encryption\+\_\+key}{get_encryption_key}}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ get\+\_\+encryption\+\_\+key) (struct {\bf s2n\+\_\+session\+\_\+key} $\ast$key, struct {\bf s2n\+\_\+blob} $\ast$in)}\hypertarget{structs2n__cipher_a4ceb5624c688f6180fd838ac799bde36}{}\label{structs2n__cipher_a4ceb5624c688f6180fd838ac799bde36}
+
+
+Definition at line 71 of file s2n\+\_\+cipher.\+h.
+
+\index{s2n\+\_\+cipher@{s2n\+\_\+cipher}!destroy\+\_\+key@{destroy\+\_\+key}}
+\index{destroy\+\_\+key@{destroy\+\_\+key}!s2n\+\_\+cipher@{s2n\+\_\+cipher}}
+\subsubsection[{\texorpdfstring{destroy\+\_\+key}{destroy_key}}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ destroy\+\_\+key) (struct {\bf s2n\+\_\+session\+\_\+key} $\ast$key)}\hypertarget{structs2n__cipher_aefd41942eaf98d2033c2a778adac0149}{}\label{structs2n__cipher_aefd41942eaf98d2033c2a778adac0149}
+
+
+Definition at line 72 of file s2n\+\_\+cipher.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+s2n-\/master/crypto/\hyperlink{s2n__cipher_8h}{s2n\+\_\+cipher.\+h}\end{DoxyCompactItemize}

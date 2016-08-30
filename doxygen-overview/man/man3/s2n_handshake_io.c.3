@@ -1,0 +1,262 @@
+.TH "s2n-master/tls/s2n_handshake_io.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_handshake_io.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/param\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'tls/s2n_resume\&.h'\fP
+.br
+\fC#include 'tls/s2n_alerts\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_handshake_action\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS_HELLO_REQUEST\fP   0"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_HELLO\fP   1"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_HELLO\fP   2"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_CERT\fP   11"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_KEY\fP   12"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_CERT_REQ\fP   13"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_HELLO_DONE\fP   14"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_CERT\fP   11  /* Same as \fBSERVER_CERT\fP */"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_CERT_VERIFY\fP   15"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_KEY\fP   16"
+.br
+.ti -1c
+.RI "#define \fBTLS_CLIENT_FINISHED\fP   20"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_FINISHED\fP   20  /* Same as \fBCLIENT_FINISHED\fP */"
+.br
+.ti -1c
+.RI "#define \fBTLS_SERVER_CERT_STATUS\fP   22"
+.br
+.ti -1c
+.RI "#define \fBACTIVE_MESSAGE\fP(conn)   handshakes[ (conn)\->handshake\&.handshake_type ][ (conn)\->handshake\&.message_number ]"
+.br
+.ti -1c
+.RI "#define \fBACTIVE_STATE\fP(conn)   state_machine[ \fBACTIVE_MESSAGE\fP( (conn) ) ]"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBmessage_type_t\fP \fBs2n_conn_get_current_message_type\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_conn_set_handshake_type\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_negotiate\fP (struct \fBs2n_connection\fP *conn, \fBs2n_blocked_status\fP *blocked)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TLS_HELLO_REQUEST   0"
+
+.PP
+Definition at line 36 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_HELLO   1"
+
+.PP
+Definition at line 37 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_HELLO   2"
+
+.PP
+Definition at line 38 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_CERT   11"
+
+.PP
+Definition at line 39 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_KEY   12"
+
+.PP
+Definition at line 40 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_CERT_REQ   13"
+
+.PP
+Definition at line 41 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_HELLO_DONE   14"
+
+.PP
+Definition at line 42 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_CERT   11  /* Same as \fBSERVER_CERT\fP */"
+
+.PP
+Definition at line 43 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_CERT_VERIFY   15"
+
+.PP
+Definition at line 44 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_KEY   16"
+
+.PP
+Definition at line 45 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_CLIENT_FINISHED   20"
+
+.PP
+Definition at line 46 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_FINISHED   20  /* Same as \fBCLIENT_FINISHED\fP */"
+
+.PP
+Definition at line 47 of file s2n_handshake_io\&.c\&.
+.SS "#define TLS_SERVER_CERT_STATUS   22"
+
+.PP
+Definition at line 48 of file s2n_handshake_io\&.c\&.
+.SS "#define ACTIVE_MESSAGE(conn)   handshakes[ (conn)\->handshake\&.handshake_type ][ (conn)\->handshake\&.message_number ]"
+
+.PP
+Definition at line 109 of file s2n_handshake_io\&.c\&.
+.SS "#define ACTIVE_STATE(conn)   state_machine[ \fBACTIVE_MESSAGE\fP( (conn) ) ]"
+
+.PP
+Definition at line 110 of file s2n_handshake_io\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBmessage_type_t\fP s2n_conn_get_current_message_type (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 113 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+114 {
+115     return ACTIVE_MESSAGE(conn);
+116 }
+.fi
+.SS "int s2n_conn_set_handshake_type (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 118 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+119 {
+120     if (s2n_is_caching_enabled(conn->config)) {
+121         if (!s2n_resume_from_cache(conn)) {
+122             conn->handshake\&.handshake_type = RESUME;
+123             return 0;
+124         }
+125 
+126         if (conn->mode == S2N_SERVER) {
+127             struct s2n_blob session_id = {\&.data = conn->session_id,\&.size = S2N_TLS_SESSION_ID_MAX_LEN };
+128 
+129             /* Generate a new session id */
+130             GUARD(s2n_get_public_random_data(&session_id));
+131             conn->session_id_len = S2N_TLS_SESSION_ID_MAX_LEN;
+132         }
+133     }
+134 
+135     if (conn->secure\&.cipher_suite->key_exchange_alg->flags & S2N_KEY_EXCHANGE_EPH) {
+136         conn->handshake\&.handshake_type = FULL_WITH_PFS;
+137 
+138         if (s2n_server_can_send_ocsp(conn)) {
+139             conn->handshake\&.handshake_type = FULL_WITH_PFS_WITH_STATUS;
+140         }
+141     } else {
+142         conn->handshake\&.handshake_type = FULL_NO_PFS;
+143 
+144         if (s2n_server_can_send_ocsp(conn)) {
+145             conn->handshake\&.handshake_type = FULL_NO_PFS_WITH_STATUS;
+146         }
+147     }
+148 
+149     return 0;
+150 }
+.fi
+.SS "int s2n_negotiate (struct \fBs2n_connection\fP * conn, \fBs2n_blocked_status\fP * blocked)"
+
+.PP
+Definition at line 395 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+396 {
+397     char this = 'S';
+398     if (conn->mode == S2N_CLIENT) {
+399         this = 'C';
+400     }
+401 
+402     while (ACTIVE_STATE(conn)\&.writer != 'B') {
+403 
+404         /* Flush any pending I/O or alert messages */
+405         GUARD(s2n_flush(conn, blocked));
+406 
+407         if (ACTIVE_STATE(conn)\&.writer == this) {
+408             *blocked = S2N_BLOCKED_ON_WRITE;
+409             GUARD(handshake_write_io(conn));
+410         } else {
+411             *blocked = S2N_BLOCKED_ON_READ;
+412             if (handshake_read_io(conn) < 0) {
+413                 if (s2n_errno != S2N_ERR_BLOCKED && s2n_is_caching_enabled(conn->config) && conn->session_id_len) {
+414                     conn->config->cache_delete(conn->config->cache_delete_data, conn->session_id, conn->session_id_len);
+415                 }
+416 
+417                 return -1;
+418             }
+419         }
+420 
+421         /* If the handshake has just ended, free up memory */
+422         if (ACTIVE_STATE(conn)\&.writer == 'B') {
+423             GUARD(s2n_stuffer_resize(&conn->handshake\&.io, 0));
+424         }
+425     }
+426 
+427     *blocked = S2N_NOT_BLOCKED;
+428 
+429     return 0;
+430 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

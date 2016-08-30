@@ -1,0 +1,1453 @@
+.TH "asn1t.h" 3 "Fri Aug 12 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+asn1t.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include <openssl/e_os2\&.h>\fP
+.br
+\fC#include <openssl/asn1\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBASN1_TEMPLATE_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_ADB_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_ADB_TABLE_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_ITEM_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_TLC_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_COMPAT_FUNCS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_EXTERN_FUNCS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_PRIMITIVE_FUNCS_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_AUX_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_PRINT_ARG_st\fP"
+.br
+.ti -1c
+.RI "struct \fBASN1_STREAM_ARG_st\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBASN1_ADB_ptr\fP(iptr)   ((const \fBASN1_ADB\fP *)(iptr))"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITEM_start\fP(itname)   \fBOPENSSL_GLOBAL\fP const \fBASN1_ITEM\fP itname##_it = {"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITEM_end\fP(itname)   };"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITEM_TEMPLATE\fP(tname)   static const \fBASN1_TEMPLATE\fP tname##_item_tt"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITEM_TEMPLATE_END\fP(tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE\fP(tname)   static const \fBASN1_TEMPLATE\fP tname##_seq_tt[]"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_END\fP(stname)   \fBASN1_SEQUENCE_END_name\fP(stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_END_name\fP(stname,  tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_NDEF_SEQUENCE\fP(tname)   \fBASN1_SEQUENCE\fP(tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_NDEF_SEQUENCE_cb\fP(tname,  \fBcb\fP)   \fBASN1_SEQUENCE_cb\fP(tname, \fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_cb\fP(tname,  \fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_BROKEN_SEQUENCE\fP(tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_ref\fP(tname,  \fBcb\fP,  lck)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_enc\fP(tname,  enc,  \fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_NDEF_SEQUENCE_END\fP(tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_BROKEN_SEQUENCE_END\fP(stname)   \fBASN1_SEQUENCE_END_ref\fP(stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_END_enc\fP(stname,  tname)   \fBASN1_SEQUENCE_END_ref\fP(stname, tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_END_cb\fP(stname,  tname)   \fBASN1_SEQUENCE_END_ref\fP(stname, tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_END_ref\fP(stname,  tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_NDEF_SEQUENCE_END_cb\fP(stname,  tname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_CHOICE\fP(tname)   static const \fBASN1_TEMPLATE\fP tname##_ch_tt[]"
+.br
+.ti -1c
+.RI "#define \fBASN1_CHOICE_cb\fP(tname,  \fBcb\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_CHOICE_END\fP(stname)   \fBASN1_CHOICE_END_name\fP(stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_CHOICE_END_name\fP(stname,  tname)   \fBASN1_CHOICE_END_selector\fP(stname, tname, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_CHOICE_END_selector\fP(stname,  tname,  selname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_CHOICE_END_cb\fP(stname,  tname,  selname)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EX_TEMPLATE_TYPE\fP(\fBflags\fP,  tag,  name,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EX_TYPE\fP(\fBflags\fP,  tag,  stname,  field,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EX_COMBINE\fP(\fBflags\fP,  tag,  \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP_EX\fP(stname,  field,  \fBtype\fP,  tag,  \fBex\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_IMPLICIT\fP | \fBex\fP, tag, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP_EX\fP(stname,  field,  \fBtype\fP,  tag,  \fBex\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_EXPLICIT\fP | \fBex\fP, tag, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_ADB_OBJECT\fP(tblname)   { \fBASN1_TFLG_ADB_OID\fP, \-1, 0, #tblname, (const \fBASN1_ITEM\fP *)&(tblname##_adb) }"
+.br
+.ti -1c
+.RI "#define \fBASN1_ADB_INTEGER\fP(tblname)   { \fBASN1_TFLG_ADB_INT\fP, \-1, 0, #tblname, (const \fBASN1_ITEM\fP *)&(tblname##_adb) }"
+.br
+.ti -1c
+.RI "#define \fBASN1_SIMPLE\fP(stname,  field,  \fBtype\fP)   \fBASN1_EX_TYPE\fP(0,0, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_OPT\fP(stname,  field,  \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_OPTIONAL\fP, 0, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, 0)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_OPTIONAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, 0)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_OPTIONAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_OF\fP(stname,  field,  \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SEQUENCE_OF\fP, 0, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SEQUENCE_OF_OPT\fP(stname,  field,  \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SEQUENCE_OF\fP|\fBASN1_TFLG_OPTIONAL\fP, 0, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SET_OF\fP(stname,  field,  \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SET_OF\fP, 0, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_SET_OF_OPT\fP(stname,  field,  \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SET_OF\fP|\fBASN1_TFLG_OPTIONAL\fP, 0, stname, field, \fBtype\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP_SET_OF\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP_SET_OF\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP_SET_OF_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP_SET_OF_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP_SEQUENCE_OF\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_IMP_SEQUENCE_OF_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP_SEQUENCE_OF\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_EXP_SEQUENCE_OF_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_NDEF_EXP\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_NDEF\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_NDEF_EXP_OPT\fP(stname,  field,  \fBtype\fP,  tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_OPTIONAL\fP|\fBASN1_TFLG_NDEF\fP)"
+.br
+.ti -1c
+.RI "#define \fBASN1_ADB\fP(name)   static const \fBASN1_ADB_TABLE\fP name##_adbtbl[]"
+.br
+.ti -1c
+.RI "#define \fBASN1_ADB_END\fP(name,  \fBflags\fP,  field,  app_table,  def,  none)"
+.br
+.ti -1c
+.RI "#define \fBADB_ENTRY\fP(val,  template)   {val, template}"
+.br
+.ti -1c
+.RI "#define \fBASN1_ADB_TEMPLATE\fP(name)   static const \fBASN1_TEMPLATE\fP name##_tt"
+.br
+.ti -1c
+.RI "#define \fBASN1_TEMPLATE_item\fP(\fBt\fP)   (\fBt\fP\->item_ptr)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TEMPLATE_adb\fP(\fBt\fP)   (\fBt\fP\->item_ptr)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_OPTIONAL\fP   (0x1)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_SET_OF\fP   (0x1 << 1)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_SEQUENCE_OF\fP   (0x2 << 1)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_SET_ORDER\fP   (0x3 << 1)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_SK_MASK\fP   (0x3 << 1)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_IMPTAG\fP   (0x1 << 3)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_EXPTAG\fP   (0x2 << 3)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_TAG_MASK\fP   (0x3 << 3)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_IMPLICIT\fP   \fBASN1_TFLG_IMPTAG\fP|\fBASN1_TFLG_CONTEXT\fP"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_EXPLICIT\fP   \fBASN1_TFLG_EXPTAG\fP|\fBASN1_TFLG_CONTEXT\fP"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_UNIVERSAL\fP   (0x0<<6)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_APPLICATION\fP   (0x1<<6)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_CONTEXT\fP   (0x2<<6)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_PRIVATE\fP   (0x3<<6)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_TAG_CLASS\fP   (0x3<<6)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_ADB_MASK\fP   (0x3<<8)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_ADB_OID\fP   (0x1<<8)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_ADB_INT\fP   (0x1<<9)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_COMBINE\fP   (0x1<<10)"
+.br
+.ti -1c
+.RI "#define \fBASN1_TFLG_NDEF\fP   (0x1<<11)"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_PRIMITIVE\fP   0x0"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_SEQUENCE\fP   0x1"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_CHOICE\fP   0x2"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_COMPAT\fP   0x3"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_EXTERN\fP   0x4"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_MSTRING\fP   0x5"
+.br
+.ti -1c
+.RI "#define \fBASN1_ITYPE_NDEF_SEQUENCE\fP   0x6"
+.br
+.ti -1c
+.RI "#define \fBASN1_AFLG_REFCOUNT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBASN1_AFLG_ENCODING\fP   2"
+.br
+.ti -1c
+.RI "#define \fBASN1_AFLG_BROKEN\fP   4"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_NEW_PRE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_NEW_POST\fP   1"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_FREE_PRE\fP   2"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_FREE_POST\fP   3"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_D2I_PRE\fP   4"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_D2I_POST\fP   5"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_I2D_PRE\fP   6"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_I2D_POST\fP   7"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_PRINT_PRE\fP   8"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_PRINT_POST\fP   9"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_STREAM_PRE\fP   10"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_STREAM_POST\fP   11"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_DETACHED_PRE\fP   12"
+.br
+.ti -1c
+.RI "#define \fBASN1_OP_DETACHED_POST\fP   13"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_TYPE\fP(stname)   \fBIMPLEMENT_ASN1_TYPE_ex\fP(stname, stname, 0)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_TYPE_ex\fP(itname,  vname,  \fBex\fP)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_MSTRING\fP(itname,  mask)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_COMPAT_ASN1\fP(sname)   \fBIMPLEMENT_COMPAT_ASN1_type\fP(sname, \fBV_ASN1_SEQUENCE\fP)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_COMPAT_ASN1_type\fP(sname,  tag)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_EXTERN_ASN1\fP(sname,  tag,  fptrs)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_FUNCTIONS\fP(stname)   \fBIMPLEMENT_ASN1_FUNCTIONS_fname\fP(stname, stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_FUNCTIONS_name\fP(stname,  itname)   \fBIMPLEMENT_ASN1_FUNCTIONS_fname\fP(stname, itname, itname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_FUNCTIONS_ENCODE_name\fP(stname,  itname)   IMPLEMENT_ASN1_FUNCTIONS_ENCODE_fname(stname, itname, itname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS\fP(stname)   \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS_pfname\fP(static, stname, stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS\fP(stname)   \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname\fP(stname, stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS_pfname\fP(pre,  stname,  itname,  fname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname\fP(stname,  itname,  fname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_FUNCTIONS_fname\fP(stname,  itname,  fname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_ENCODE_FUNCTIONS_fname\fP(stname,  itname,  fname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_NDEF_FUNCTION\fP(stname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname\fP(stname,  itname,  fname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_DUP_FUNCTION\fP(stname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_PRINT_FUNCTION\fP(stname)   \fBIMPLEMENT_ASN1_PRINT_FUNCTION_fname\fP(stname, stname, stname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_PRINT_FUNCTION_fname\fP(stname,  itname,  fname)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_FUNCTIONS_const\fP(name)   \fBIMPLEMENT_ASN1_FUNCTIONS_const_fname\fP(name, name, name)"
+.br
+.ti -1c
+.RI "#define \fBIMPLEMENT_ASN1_FUNCTIONS_const_fname\fP(stname,  itname,  fname)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBASN1_ADB_TABLE_st\fP \fBASN1_ADB_TABLE\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_ADB_st\fP \fBASN1_ADB\fP"
+.br
+.ti -1c
+.RI "typedef \fBASN1_VALUE\fP * \fBASN1_new_func\fP(\fBvoid\fP)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP \fBASN1_free_func\fP(\fBASN1_VALUE\fP *\fBa\fP)"
+.br
+.ti -1c
+.RI "typedef \fBASN1_VALUE\fP * \fBASN1_d2i_func\fP(\fBASN1_VALUE\fP **\fBa\fP, const unsigned char **in, long \fBlength\fP)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_i2d_func\fP(\fBASN1_VALUE\fP *\fBa\fP, unsigned char **in)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_ex_d2i\fP(\fBASN1_VALUE\fP **pval, const unsigned char **in, long \fBlen\fP, const \fBASN1_ITEM\fP *it, int tag, int aclass, char opt, \fBASN1_TLC\fP *ctx)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_ex_i2d\fP(\fBASN1_VALUE\fP **pval, unsigned char **out, const \fBASN1_ITEM\fP *it, int tag, int aclass)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_ex_new_func\fP(\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP \fBASN1_ex_free_func\fP(\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_ex_print_func\fP(\fBBIO\fP *out, \fBASN1_VALUE\fP **pval, int indent, const char *fname, const \fBASN1_PCTX\fP *pctx)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_primitive_i2c\fP(\fBASN1_VALUE\fP **pval, unsigned char *cont, int *putype, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_primitive_c2i\fP(\fBASN1_VALUE\fP **pval, const unsigned char *cont, int \fBlen\fP, int utype, char *free_cont, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_primitive_print\fP(\fBBIO\fP *out, \fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it, int indent, const \fBASN1_PCTX\fP *pctx)"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_COMPAT_FUNCS_st\fP \fBASN1_COMPAT_FUNCS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_EXTERN_FUNCS_st\fP \fBASN1_EXTERN_FUNCS\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_PRIMITIVE_FUNCS_st\fP \fBASN1_PRIMITIVE_FUNCS\fP"
+.br
+.ti -1c
+.RI "typedef int \fBASN1_aux_cb\fP(int operation, \fBASN1_VALUE\fP **in, const \fBASN1_ITEM\fP *it, \fBvoid\fP *exarg)"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_AUX_st\fP \fBASN1_AUX\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_PRINT_ARG_st\fP \fBASN1_PRINT_ARG\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBASN1_STREAM_ARG_st\fP \fBASN1_STREAM_ARG\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBASN1_item_ex_new\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBASN1_item_ex_free\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBASN1_template_new\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_TEMPLATE\fP *tt)"
+.br
+.ti -1c
+.RI "int \fBASN1_primitive_new\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBASN1_template_free\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_TEMPLATE\fP *tt)"
+.br
+.ti -1c
+.RI "int \fBASN1_template_d2i\fP (\fBASN1_VALUE\fP **pval, const unsigned char **in, long \fBlen\fP, const \fBASN1_TEMPLATE\fP *tt)"
+.br
+.ti -1c
+.RI "int \fBASN1_item_ex_d2i\fP (\fBASN1_VALUE\fP **pval, const unsigned char **in, long \fBlen\fP, const \fBASN1_ITEM\fP *it, int tag, int aclass, char opt, \fBASN1_TLC\fP *ctx)"
+.br
+.ti -1c
+.RI "int \fBASN1_item_ex_i2d\fP (\fBASN1_VALUE\fP **pval, unsigned char **out, const \fBASN1_ITEM\fP *it, int tag, int aclass)"
+.br
+.ti -1c
+.RI "int \fBASN1_template_i2d\fP (\fBASN1_VALUE\fP **pval, unsigned char **out, const \fBASN1_TEMPLATE\fP *tt)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBASN1_primitive_free\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBasn1_ex_i2c\fP (\fBASN1_VALUE\fP **pval, unsigned char *cont, int *putype, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBasn1_ex_c2i\fP (\fBASN1_VALUE\fP **pval, const unsigned char *cont, int \fBlen\fP, int utype, char *free_cont, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBasn1_get_choice_selector\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBasn1_set_choice_selector\fP (\fBASN1_VALUE\fP **pval, int value, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "\fBASN1_VALUE\fP ** \fBasn1_get_field_ptr\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_TEMPLATE\fP *tt)"
+.br
+.ti -1c
+.RI "const \fBASN1_TEMPLATE\fP * \fBasn1_do_adb\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_TEMPLATE\fP *tt, int nullerr)"
+.br
+.ti -1c
+.RI "int \fBasn1_do_lock\fP (\fBASN1_VALUE\fP **pval, int op, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBasn1_enc_init\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBasn1_enc_free\fP (\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBasn1_enc_restore\fP (int *\fBlen\fP, unsigned char **out, \fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+.br
+.ti -1c
+.RI "int \fBasn1_enc_save\fP (\fBASN1_VALUE\fP **pval, const unsigned char *in, int inlen, const \fBASN1_ITEM\fP *it)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ADB_ENTRY(val, template)   {val, template}"
+
+.PP
+Definition at line 432 of file include/openssl/asn1t\&.h\&.
+.SS "#define \fBASN1_ADB\fP(name)   static const \fBASN1_ADB_TABLE\fP name##_adbtbl[]"
+
+.PP
+Definition at line 393 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ADB_END(name, \fBflags\fP, field, app_table, def, none)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        static const ASN1_ADB name##_adb = {\
+                flags,\
+                offsetof(name, field),\
+                app_table,\
+                name##_adbtbl,\
+                sizeof(name##_adbtbl) / sizeof(ASN1_ADB_TABLE),\
+                def,\
+                none\
+        }
+.fi
+.PP
+Definition at line 398 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ADB_INTEGER(tblname)   { \fBASN1_TFLG_ADB_INT\fP, \-1, 0, #tblname, (const \fBASN1_ITEM\fP *)&(tblname##_adb) }"
+
+.PP
+Definition at line 319 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ADB_OBJECT(tblname)   { \fBASN1_TFLG_ADB_OID\fP, \-1, 0, #tblname, (const \fBASN1_ITEM\fP *)&(tblname##_adb) }"
+
+.PP
+Definition at line 318 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ADB_ptr(iptr)   ((const \fBASN1_ADB\fP *)(iptr))"
+
+.PP
+Definition at line 80 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ADB_TEMPLATE(name)   static const \fBASN1_TEMPLATE\fP name##_tt"
+
+.PP
+Definition at line 434 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_AFLG_BROKEN   4"
+
+.PP
+Definition at line 757 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_AFLG_ENCODING   2"
+
+.PP
+Definition at line 755 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_AFLG_REFCOUNT   1"
+
+.PP
+Definition at line 753 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_BROKEN_SEQUENCE(tname)"
+\fBValue:\fP
+.PP
+.nf
+static const ASN1_AUX tname##_aux = {NULL, ASN1_AFLG_BROKEN, 0, 0, 0, 0}; \
+        ASN1_SEQUENCE(tname)
+.fi
+.PP
+Definition at line 176 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_BROKEN_SEQUENCE_END(stname)   \fBASN1_SEQUENCE_END_ref\fP(stname, stname)"
+
+.PP
+Definition at line 200 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_CHOICE(tname)   static const \fBASN1_TEMPLATE\fP tname##_ch_tt[]"
+
+.PP
+Definition at line 253 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_CHOICE_cb(tname, \fBcb\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const ASN1_AUX tname##_aux = {NULL, 0, 0, 0, cb, 0}; \
+        ASN1_CHOICE(tname)
+.fi
+.PP
+Definition at line 256 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_CHOICE_END(stname)   \fBASN1_CHOICE_END_name\fP(stname, stname)"
+
+.PP
+Definition at line 260 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_CHOICE_END_cb(stname, tname, selname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_CHOICE,\
+                offsetof(stname,selname) ,\
+                tname##_ch_tt,\
+                sizeof(tname##_ch_tt) / sizeof(ASN1_TEMPLATE),\
+                &tname##_aux,\
+                sizeof(stname),\
+                #stname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 276 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_CHOICE_END_name(stname, tname)   \fBASN1_CHOICE_END_selector\fP(stname, tname, \fBtype\fP)"
+
+.PP
+Definition at line 262 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_CHOICE_END_selector(stname, tname, selname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_CHOICE,\
+                offsetof(stname,selname) ,\
+                tname##_ch_tt,\
+                sizeof(tname##_ch_tt) / sizeof(ASN1_TEMPLATE),\
+                NULL,\
+                sizeof(stname),\
+                #stname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 264 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EX_COMBINE(\fBflags\fP, tag, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        (flags)|ASN1_TFLG_COMBINE, (tag), 0, NULL, ASN1_ITEM_ref(type) }
+.fi
+.PP
+Definition at line 304 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EX_TEMPLATE_TYPE(\fBflags\fP, tag, name, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        (flags), (tag), 0,\
+        #name, ASN1_ITEM_ref(type) }
+.fi
+.PP
+Definition at line 290 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EX_TYPE(\fBflags\fP, tag, stname, field, \fBtype\fP)"
+\fBValue:\fP
+.PP
+.nf
+{ \
+        (flags), (tag), offsetof(stname, field),\
+        #field, ASN1_ITEM_ref(type) }
+.fi
+.PP
+Definition at line 298 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, 0)"
+
+.PP
+Definition at line 338 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP_EX(stname, field, \fBtype\fP, tag, \fBex\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_EXPLICIT\fP | \fBex\fP, tag, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 312 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_OPTIONAL\fP)"
+
+.PP
+Definition at line 339 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP_SEQUENCE_OF(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP)"
+
+.PP
+Definition at line 377 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP_SEQUENCE_OF_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+
+.PP
+Definition at line 380 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP_SET_OF(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP)"
+
+.PP
+Definition at line 362 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_EXP_SET_OF_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+
+.PP
+Definition at line 368 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP(stname, field, \fBtype\fP, tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, 0)"
+
+.PP
+Definition at line 331 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP_EX(stname, field, \fBtype\fP, tag, \fBex\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_IMPLICIT\fP | \fBex\fP, tag, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 309 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_OPTIONAL\fP)"
+
+.PP
+Definition at line 334 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP_SEQUENCE_OF(stname, field, \fBtype\fP, tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP)"
+
+.PP
+Definition at line 371 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP_SEQUENCE_OF_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SEQUENCE_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+
+.PP
+Definition at line 374 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP_SET_OF(stname, field, \fBtype\fP, tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP)"
+
+.PP
+Definition at line 359 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_IMP_SET_OF_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_IMP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_SET_OF\fP|\fBASN1_TFLG_OPTIONAL\fP)"
+
+.PP
+Definition at line 365 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITEM_end(itname)   };"
+
+.PP
+Definition at line 87 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITEM_start(itname)   \fBOPENSSL_GLOBAL\fP const \fBASN1_ITEM\fP itname##_it = {"
+
+.PP
+Definition at line 84 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITEM_TEMPLATE(tname)   static const \fBASN1_TEMPLATE\fP tname##_item_tt"
+
+.PP
+Definition at line 111 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITEM_TEMPLATE_END(tname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_PRIMITIVE,\
+                -1,\
+                &tname##_item_tt,\
+                0,\
+                NULL,\
+                0,\
+                #tname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 114 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_CHOICE   0x2"
+
+.PP
+Definition at line 626 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_COMPAT   0x3"
+
+.PP
+Definition at line 628 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_EXTERN   0x4"
+
+.PP
+Definition at line 630 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_MSTRING   0x5"
+
+.PP
+Definition at line 632 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_NDEF_SEQUENCE   0x6"
+
+.PP
+Definition at line 634 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_PRIMITIVE   0x0"
+
+.PP
+Definition at line 622 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_ITYPE_SEQUENCE   0x1"
+
+.PP
+Definition at line 624 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_NDEF_EXP(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_NDEF\fP)"
+
+.PP
+Definition at line 384 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_NDEF_EXP_OPT(stname, field, \fBtype\fP, tag)   \fBASN1_EXP_EX\fP(stname, field, \fBtype\fP, tag, \fBASN1_TFLG_OPTIONAL\fP|\fBASN1_TFLG_NDEF\fP)"
+
+.PP
+Definition at line 388 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_NDEF_SEQUENCE(tname)   \fBASN1_SEQUENCE\fP(tname)"
+
+.PP
+Definition at line 166 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_NDEF_SEQUENCE_cb(tname, \fBcb\fP)   \fBASN1_SEQUENCE_cb\fP(tname, \fBcb\fP)"
+
+.PP
+Definition at line 169 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_NDEF_SEQUENCE_END(tname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_NDEF_SEQUENCE,\
+                V_ASN1_SEQUENCE,\
+                tname##_seq_tt,\
+                sizeof(tname##_seq_tt) / sizeof(ASN1_TEMPLATE),\
+                NULL,\
+                sizeof(tname),\
+                #tname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 188 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_NDEF_SEQUENCE_END_cb(stname, tname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_NDEF_SEQUENCE,\
+                V_ASN1_SEQUENCE,\
+                tname##_seq_tt,\
+                sizeof(tname##_seq_tt) / sizeof(ASN1_TEMPLATE),\
+                &tname##_aux,\
+                sizeof(stname),\
+                #stname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 218 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_D2I_POST   5"
+
+.PP
+Definition at line 766 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_D2I_PRE   4"
+
+.PP
+Definition at line 765 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_DETACHED_POST   13"
+
+.PP
+Definition at line 774 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_DETACHED_PRE   12"
+
+.PP
+Definition at line 773 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_FREE_POST   3"
+
+.PP
+Definition at line 764 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_FREE_PRE   2"
+
+.PP
+Definition at line 763 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_I2D_POST   7"
+
+.PP
+Definition at line 768 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_I2D_PRE   6"
+
+.PP
+Definition at line 767 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_NEW_POST   1"
+
+.PP
+Definition at line 762 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_NEW_PRE   0"
+
+.PP
+Definition at line 761 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_PRINT_POST   9"
+
+.PP
+Definition at line 770 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_PRINT_PRE   8"
+
+.PP
+Definition at line 769 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_STREAM_POST   11"
+
+.PP
+Definition at line 772 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OP_STREAM_PRE   10"
+
+.PP
+Definition at line 771 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_OPT(stname, field, \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_OPTIONAL\fP, 0, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 328 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE(tname)   static const \fBASN1_TEMPLATE\fP tname##_seq_tt[]"
+
+.PP
+Definition at line 149 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_cb(tname, \fBcb\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const ASN1_AUX tname##_aux = {NULL, 0, 0, 0, cb, 0}; \
+        ASN1_SEQUENCE(tname)
+.fi
+.PP
+Definition at line 172 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_enc(tname, enc, \fBcb\fP)"
+\fBValue:\fP
+.PP
+.nf
+static const ASN1_AUX tname##_aux = {NULL, ASN1_AFLG_ENCODING, 0, 0, cb, offsetof(tname, enc)}; \
+        ASN1_SEQUENCE(tname)
+.fi
+.PP
+Definition at line 184 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_END(stname)   \fBASN1_SEQUENCE_END_name\fP(stname, stname)"
+
+.PP
+Definition at line 152 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_END_cb(stname, tname)   \fBASN1_SEQUENCE_END_ref\fP(stname, tname)"
+
+.PP
+Definition at line 204 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_END_enc(stname, tname)   \fBASN1_SEQUENCE_END_ref\fP(stname, tname)"
+
+.PP
+Definition at line 202 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_END_name(stname, tname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_SEQUENCE,\
+                V_ASN1_SEQUENCE,\
+                tname##_seq_tt,\
+                sizeof(tname##_seq_tt) / sizeof(ASN1_TEMPLATE),\
+                NULL,\
+                sizeof(stname),\
+                #stname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 154 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_END_ref(stname, tname)"
+\fBValue:\fP
+.PP
+.nf
+;\
+        ASN1_ITEM_start(tname) \
+                ASN1_ITYPE_SEQUENCE,\
+                V_ASN1_SEQUENCE,\
+                tname##_seq_tt,\
+                sizeof(tname##_seq_tt) / sizeof(ASN1_TEMPLATE),\
+                &tname##_aux,\
+                sizeof(stname),\
+                #stname \
+        ASN1_ITEM_end(tname)
+.fi
+.PP
+Definition at line 206 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_OF(stname, field, \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SEQUENCE_OF\fP, 0, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 342 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_OF_OPT(stname, field, \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SEQUENCE_OF\fP|\fBASN1_TFLG_OPTIONAL\fP, 0, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 346 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SEQUENCE_ref(tname, \fBcb\fP, lck)"
+\fBValue:\fP
+.PP
+.nf
+static const ASN1_AUX tname##_aux = {NULL, ASN1_AFLG_REFCOUNT, offsetof(tname, references), lck, cb, 0}; \
+        ASN1_SEQUENCE(tname)
+.fi
+.PP
+Definition at line 180 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SET_OF(stname, field, \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SET_OF\fP, 0, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 351 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SET_OF_OPT(stname, field, \fBtype\fP)   \fBASN1_EX_TYPE\fP(\fBASN1_TFLG_SET_OF\fP|\fBASN1_TFLG_OPTIONAL\fP, 0, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 354 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_SIMPLE(stname, field, \fBtype\fP)   \fBASN1_EX_TYPE\fP(0,0, stname, field, \fBtype\fP)"
+
+.PP
+Definition at line 325 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TEMPLATE_adb(\fBt\fP)   (\fBt\fP\->item_ptr)"
+
+.PP
+Definition at line 456 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TEMPLATE_item(\fBt\fP)   (\fBt\fP\->item_ptr)"
+
+.PP
+Definition at line 455 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_ADB_INT   (0x1<<9)"
+
+.PP
+Definition at line 543 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_ADB_MASK   (0x3<<8)"
+
+.PP
+Definition at line 539 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_ADB_OID   (0x1<<8)"
+
+.PP
+Definition at line 541 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_APPLICATION   (0x1<<6)"
+
+.PP
+Definition at line 525 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_COMBINE   (0x1<<10)"
+
+.PP
+Definition at line 552 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_CONTEXT   (0x2<<6)"
+
+.PP
+Definition at line 527 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_EXPLICIT   \fBASN1_TFLG_EXPTAG\fP|\fBASN1_TFLG_CONTEXT\fP"
+
+.PP
+Definition at line 514 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_EXPTAG   (0x2 << 3)"
+
+.PP
+Definition at line 506 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_IMPLICIT   \fBASN1_TFLG_IMPTAG\fP|\fBASN1_TFLG_CONTEXT\fP"
+
+.PP
+Definition at line 511 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_IMPTAG   (0x1 << 3)"
+
+.PP
+Definition at line 503 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_NDEF   (0x1<<11)"
+
+.PP
+Definition at line 559 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_OPTIONAL   (0x1)"
+
+.PP
+Definition at line 479 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_PRIVATE   (0x3<<6)"
+
+.PP
+Definition at line 529 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_SEQUENCE_OF   (0x2 << 1)"
+
+.PP
+Definition at line 485 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_SET_OF   (0x1 << 1)"
+
+.PP
+Definition at line 482 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_SET_ORDER   (0x3 << 1)"
+
+.PP
+Definition at line 492 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_SK_MASK   (0x3 << 1)"
+
+.PP
+Definition at line 495 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_TAG_CLASS   (0x3<<6)"
+
+.PP
+Definition at line 531 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_TAG_MASK   (0x3 << 3)"
+
+.PP
+Definition at line 508 of file include/openssl/asn1t\&.h\&.
+.SS "#define ASN1_TFLG_UNIVERSAL   (0x0<<6)"
+
+.PP
+Definition at line 523 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_ALLOC_FUNCTIONS(stname)   \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname\fP(stname, stname, stname)"
+
+.PP
+Definition at line 833 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname(stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+stname *fname##_new(void) \
+        { \
+                return (stname *)ASN1_item_new(ASN1_ITEM_rptr(itname)); \
+        } \
+        void fname##_free(stname *a) \
+        { \
+                ASN1_item_free((ASN1_VALUE *)a, ASN1_ITEM_rptr(itname)); \
+        }
+.fi
+.PP
+Definition at line 846 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_ALLOC_FUNCTIONS_pfname(pre, stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+pre stname *fname##_new(void) \
+        { \
+                return (stname *)ASN1_item_new(ASN1_ITEM_rptr(itname)); \
+        } \
+        pre void fname##_free(stname *a) \
+        { \
+                ASN1_item_free((ASN1_VALUE *)a, ASN1_ITEM_rptr(itname)); \
+        }
+.fi
+.PP
+Definition at line 836 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_DUP_FUNCTION(stname)"
+\fBValue:\fP
+.PP
+.nf
+stname * stname##_dup(stname *x) \
+        { \
+        return ASN1_item_dup(ASN1_ITEM_rptr(stname), x); \
+        }
+.fi
+.PP
+Definition at line 890 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname(stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+stname *d2i_##fname(stname **a, const unsigned char **in, long len) \
+        { \
+                return (stname *)ASN1_item_d2i((ASN1_VALUE **)a, in, len, ASN1_ITEM_rptr(itname));\
+        } \
+        int i2d_##fname(const stname *a, unsigned char **out) \
+        { \
+                return ASN1_item_i2d((ASN1_VALUE *)a, out, ASN1_ITEM_rptr(itname));\
+        }
+.fi
+.PP
+Definition at line 880 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_ENCODE_FUNCTIONS_fname(stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+stname *d2i_##fname(stname **a, const unsigned char **in, long len) \
+        { \
+                return (stname *)ASN1_item_d2i((ASN1_VALUE **)a, in, len, ASN1_ITEM_rptr(itname));\
+        } \
+        int i2d_##fname(stname *a, unsigned char **out) \
+        { \
+                return ASN1_item_i2d((ASN1_VALUE *)a, out, ASN1_ITEM_rptr(itname));\
+        }
+.fi
+.PP
+Definition at line 860 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_FUNCTIONS(stname)   \fBIMPLEMENT_ASN1_FUNCTIONS_fname\fP(stname, stname, stname)"
+
+.PP
+Definition at line 823 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_FUNCTIONS_const(name)   \fBIMPLEMENT_ASN1_FUNCTIONS_const_fname\fP(name, name, name)"
+
+.PP
+Definition at line 907 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_FUNCTIONS_const_fname(stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname(stname, itname, fname) \
+        IMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname(stname, itname, fname)
+.fi
+.PP
+Definition at line 910 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_FUNCTIONS_ENCODE_name(stname, itname)   IMPLEMENT_ASN1_FUNCTIONS_ENCODE_fname(stname, itname, itname)"
+
+.PP
+Definition at line 827 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_FUNCTIONS_fname(stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+IMPLEMENT_ASN1_ENCODE_FUNCTIONS_fname(stname, itname, fname) \
+        IMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname(stname, itname, fname)
+.fi
+.PP
+Definition at line 856 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_FUNCTIONS_name(stname, itname)   \fBIMPLEMENT_ASN1_FUNCTIONS_fname\fP(stname, itname, itname)"
+
+.PP
+Definition at line 825 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_MSTRING(itname, mask)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_ITEM_start(itname) \
+                                        ASN1_ITYPE_MSTRING, mask, NULL, 0, NULL, sizeof(ASN1_STRING), #itname \
+                                ASN1_ITEM_end(itname)
+.fi
+.PP
+Definition at line 784 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_NDEF_FUNCTION(stname)"
+\fBValue:\fP
+.PP
+.nf
+int i2d_##stname##_NDEF(stname *a, unsigned char **out) \
+        { \
+                return ASN1_item_ndef_i2d((ASN1_VALUE *)a, out, ASN1_ITEM_rptr(stname));\
+        }
+.fi
+.PP
+Definition at line 870 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_PRINT_FUNCTION(stname)   \fBIMPLEMENT_ASN1_PRINT_FUNCTION_fname\fP(stname, stname, stname)"
+
+.PP
+Definition at line 896 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_PRINT_FUNCTION_fname(stname, itname, fname)"
+\fBValue:\fP
+.PP
+.nf
+int fname##_print_ctx(BIO *out, stname *x, int indent, \
+                                                const ASN1_PCTX *pctx) \
+        { \
+                return ASN1_item_print(out, (ASN1_VALUE *)x, indent, \
+                        ASN1_ITEM_rptr(itname), pctx); \
+        }
+.fi
+.PP
+Definition at line 899 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_TYPE(stname)   \fBIMPLEMENT_ASN1_TYPE_ex\fP(stname, stname, 0)"
+
+.PP
+Definition at line 777 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_ASN1_TYPE_ex(itname, vname, \fBex\fP)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_ITEM_start(itname) \
+                                        ASN1_ITYPE_PRIMITIVE, V_##vname, NULL, 0, NULL, ex, #itname \\
+                                ASN1_ITEM_end(itname)
+.fi
+.PP
+Definition at line 778 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_COMPAT_ASN1(sname)   \fBIMPLEMENT_COMPAT_ASN1_type\fP(sname, \fBV_ASN1_SEQUENCE\fP)"
+
+.PP
+Definition at line 791 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_COMPAT_ASN1_type(sname, tag)"
+\fBValue:\fP
+.PP
+.nf
+static const ASN1_COMPAT_FUNCS sname##_ff = { \
+                (ASN1_new_func *)sname##_new, \
+                (ASN1_free_func *)sname##_free, \
+                (ASN1_d2i_func *)d2i_##sname, \
+                (ASN1_i2d_func *)i2d_##sname, \
+        }; \
+        ASN1_ITEM_start(sname) \
+                ASN1_ITYPE_COMPAT, \
+                tag, \
+                NULL, \
+                0, \
+                &sname##_ff, \
+                0, \
+                #sname \
+        ASN1_ITEM_end(sname)
+.fi
+.PP
+Definition at line 793 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_EXTERN_ASN1(sname, tag, fptrs)"
+\fBValue:\fP
+.PP
+.nf
+ASN1_ITEM_start(sname) \
+                ASN1_ITYPE_EXTERN, \
+                tag, \
+                NULL, \
+                0, \
+                &fptrs, \
+                0, \
+                #sname \
+        ASN1_ITEM_end(sname)
+.fi
+.PP
+Definition at line 810 of file include/openssl/asn1t\&.h\&.
+.SS "#define IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS(stname)   \fBIMPLEMENT_ASN1_ALLOC_FUNCTIONS_pfname\fP(static, stname, stname, stname)"
+
+.PP
+Definition at line 830 of file include/openssl/asn1t\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBASN1_ADB_st\fP \fBASN1_ADB\fP"
+
+.PP
+Definition at line 459 of file include/openssl/asn1t\&.h\&.
+.SS "typedef struct \fBASN1_ADB_TABLE_st\fP \fBASN1_ADB_TABLE\fP"
+
+.PP
+Definition at line 458 of file include/openssl/asn1t\&.h\&.
+.SS "typedef struct \fBASN1_AUX_st\fP  \fBASN1_AUX\fP"
+
+.SS "typedef int ASN1_aux_cb(int operation, \fBASN1_VALUE\fP **in, const \fBASN1_ITEM\fP *it, \fBvoid\fP *exarg)"
+
+.PP
+Definition at line 721 of file include/openssl/asn1t\&.h\&.
+.SS "typedef struct \fBASN1_COMPAT_FUNCS_st\fP  \fBASN1_COMPAT_FUNCS\fP"
+
+.SS "typedef \fBASN1_VALUE\fP* ASN1_d2i_func(\fBASN1_VALUE\fP **\fBa\fP, const unsigned char **in, long \fBlength\fP)"
+
+.PP
+Definition at line 654 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_ex_d2i(\fBASN1_VALUE\fP **pval, const unsigned char **in, long \fBlen\fP, const \fBASN1_ITEM\fP *it, int tag, int aclass, char opt, \fBASN1_TLC\fP *ctx)"
+
+.PP
+Definition at line 658 of file include/openssl/asn1t\&.h\&.
+.SS "typedef \fBvoid\fP ASN1_ex_free_func(\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+
+.PP
+Definition at line 665 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_ex_i2d(\fBASN1_VALUE\fP **pval, unsigned char **out, const \fBASN1_ITEM\fP *it, int tag, int aclass)"
+
+.PP
+Definition at line 662 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_ex_new_func(\fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it)"
+
+.PP
+Definition at line 664 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_ex_print_func(\fBBIO\fP *out, \fBASN1_VALUE\fP **pval, int indent, const char *fname, const \fBASN1_PCTX\fP *pctx)"
+
+.PP
+Definition at line 667 of file include/openssl/asn1t\&.h\&.
+.SS "typedef struct \fBASN1_EXTERN_FUNCS_st\fP  \fBASN1_EXTERN_FUNCS\fP"
+
+.SS "typedef \fBvoid\fP ASN1_free_func(\fBASN1_VALUE\fP *\fBa\fP)"
+
+.PP
+Definition at line 653 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_i2d_func(\fBASN1_VALUE\fP *\fBa\fP, unsigned char **in)"
+
+.PP
+Definition at line 656 of file include/openssl/asn1t\&.h\&.
+.SS "typedef \fBASN1_VALUE\fP* ASN1_new_func(\fBvoid\fP)"
+
+.PP
+Definition at line 652 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_primitive_c2i(\fBASN1_VALUE\fP **pval, const unsigned char *cont, int \fBlen\fP, int utype, char *free_cont, const \fBASN1_ITEM\fP *it)"
+
+.PP
+Definition at line 673 of file include/openssl/asn1t\&.h\&.
+.SS "typedef struct \fBASN1_PRIMITIVE_FUNCS_st\fP  \fBASN1_PRIMITIVE_FUNCS\fP"
+
+.SS "typedef int ASN1_primitive_i2c(\fBASN1_VALUE\fP **pval, unsigned char *cont, int *putype, const \fBASN1_ITEM\fP *it)"
+
+.PP
+Definition at line 671 of file include/openssl/asn1t\&.h\&.
+.SS "typedef int ASN1_primitive_print(\fBBIO\fP *out, \fBASN1_VALUE\fP **pval, const \fBASN1_ITEM\fP *it, int indent, const \fBASN1_PCTX\fP *pctx)"
+
+.PP
+Definition at line 676 of file include/openssl/asn1t\&.h\&.
+.SS "typedef struct \fBASN1_PRINT_ARG_st\fP  \fBASN1_PRINT_ARG\fP"
+
+.SS "typedef struct \fBASN1_STREAM_ARG_st\fP  \fBASN1_STREAM_ARG\fP"
+
+.SH "Function Documentation"
+.PP 
+.SS "const \fBASN1_TEMPLATE\fP* asn1_do_adb (\fBASN1_VALUE\fP ** pval, const \fBASN1_TEMPLATE\fP * tt, int nullerr)"
+
+.SS "int asn1_do_lock (\fBASN1_VALUE\fP ** pval, int op, const \fBASN1_ITEM\fP * it)"
+
+.SS "\fBvoid\fP asn1_enc_free (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "\fBvoid\fP asn1_enc_init (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "int asn1_enc_restore (int * len, unsigned char ** out, \fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "int asn1_enc_save (\fBASN1_VALUE\fP ** pval, const unsigned char * in, int inlen, const \fBASN1_ITEM\fP * it)"
+
+.SS "int asn1_ex_c2i (\fBASN1_VALUE\fP ** pval, const unsigned char * cont, int len, int utype, char * free_cont, const \fBASN1_ITEM\fP * it)"
+
+.SS "int asn1_ex_i2c (\fBASN1_VALUE\fP ** pval, unsigned char * cont, int * putype, const \fBASN1_ITEM\fP * it)"
+
+.SS "int asn1_get_choice_selector (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "\fBASN1_VALUE\fP** asn1_get_field_ptr (\fBASN1_VALUE\fP ** pval, const \fBASN1_TEMPLATE\fP * tt)"
+
+.SS "int ASN1_item_ex_d2i (\fBASN1_VALUE\fP ** pval, const unsigned char ** in, long len, const \fBASN1_ITEM\fP * it, int tag, int aclass, char opt, \fBASN1_TLC\fP * ctx)"
+
+.SS "\fBvoid\fP ASN1_item_ex_free (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "int ASN1_item_ex_i2d (\fBASN1_VALUE\fP ** pval, unsigned char ** out, const \fBASN1_ITEM\fP * it, int tag, int aclass)"
+
+.SS "int ASN1_item_ex_new (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "\fBvoid\fP ASN1_primitive_free (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "int ASN1_primitive_new (\fBASN1_VALUE\fP ** pval, const \fBASN1_ITEM\fP * it)"
+
+.SS "int asn1_set_choice_selector (\fBASN1_VALUE\fP ** pval, int value, const \fBASN1_ITEM\fP * it)"
+
+.SS "int ASN1_template_d2i (\fBASN1_VALUE\fP ** pval, const unsigned char ** in, long len, const \fBASN1_TEMPLATE\fP * tt)"
+
+.SS "\fBvoid\fP ASN1_template_free (\fBASN1_VALUE\fP ** pval, const \fBASN1_TEMPLATE\fP * tt)"
+
+.SS "int ASN1_template_i2d (\fBASN1_VALUE\fP ** pval, unsigned char ** out, const \fBASN1_TEMPLATE\fP * tt)"
+
+.SS "int ASN1_template_new (\fBASN1_VALUE\fP ** pval, const \fBASN1_TEMPLATE\fP * tt)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

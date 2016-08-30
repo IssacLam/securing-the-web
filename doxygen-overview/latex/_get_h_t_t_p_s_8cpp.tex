@@ -1,0 +1,278 @@
+\hypertarget{_get_h_t_t_p_s_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\+Get\+H\+T\+T\+PS.src/\+Get\+H\+T\+T\+PS.cpp File Reference}
+\label{_get_h_t_t_p_s_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\+Get\+H\+T\+T\+P\+S.\+src/\+Get\+H\+T\+T\+P\+S.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/\+Mac\+O\+S/\+Get\+H\+T\+T\+P\+S.\+src/\+Get\+H\+T\+T\+P\+S.\+cpp}}
+{\ttfamily \#include \char`\"{}C\+P\+String\+Utils.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Error\+Handling.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mac\+Socket.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Randomizer.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$openssl/ssl.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/err.\+h$>$}\\*
+{\ttfamily \#include $<$timer.\+h$>$}\\*
+Include dependency graph for Get\+H\+T\+T\+P\+S.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_get_h_t_t_p_s_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_get_h_t_t_p_s_8cpp_a2e7a7c141f768d876a85ff4b2cf67bdb}{k\+H\+T\+T\+P\+S\+\_\+\+D\+NS}~\char`\"{}www.\+apache-\/ssl.\+org\char`\"{}
+\item 
+\#define \hyperlink{_get_h_t_t_p_s_8cpp_a4ab1b408d031d4fef278aa28446cd373}{k\+H\+T\+T\+P\+S\+\_\+\+Port}~443
+\item 
+\#define \hyperlink{_get_h_t_t_p_s_8cpp_ac5df8e0b28bdc36c704fb888e66d186e}{k\+H\+T\+T\+P\+S\+\_\+\+U\+RI}~\char`\"{}/\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+O\+S\+Err \hyperlink{_get_h_t_t_p_s_8cpp_aaf770f84fc1a287f30caf265318c70ca}{My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$in\+User\+Ref\+Ptr)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{_get_h_t_t_p_s_8cpp_a6288eba0f8e8ad3ab1544ad731eb7667}{main} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}!k\+H\+T\+T\+P\+S\+\_\+\+D\+NS@{k\+H\+T\+T\+P\+S\+\_\+\+D\+NS}}
+\index{k\+H\+T\+T\+P\+S\+\_\+\+D\+NS@{k\+H\+T\+T\+P\+S\+\_\+\+D\+NS}!Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+H\+T\+T\+P\+S\+\_\+\+D\+NS}{kHTTPS_DNS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define k\+H\+T\+T\+P\+S\+\_\+\+D\+NS~\char`\"{}www.\+apache-\/ssl.\+org\char`\"{}}\hypertarget{_get_h_t_t_p_s_8cpp_a2e7a7c141f768d876a85ff4b2cf67bdb}{}\label{_get_h_t_t_p_s_8cpp_a2e7a7c141f768d876a85ff4b2cf67bdb}
+
+
+Definition at line 42 of file Get\+H\+T\+T\+P\+S.\+cpp.
+
+\index{Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}!k\+H\+T\+T\+P\+S\+\_\+\+Port@{k\+H\+T\+T\+P\+S\+\_\+\+Port}}
+\index{k\+H\+T\+T\+P\+S\+\_\+\+Port@{k\+H\+T\+T\+P\+S\+\_\+\+Port}!Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+H\+T\+T\+P\+S\+\_\+\+Port}{kHTTPS_Port}}]{\setlength{\rightskip}{0pt plus 5cm}\#define k\+H\+T\+T\+P\+S\+\_\+\+Port~443}\hypertarget{_get_h_t_t_p_s_8cpp_a4ab1b408d031d4fef278aa28446cd373}{}\label{_get_h_t_t_p_s_8cpp_a4ab1b408d031d4fef278aa28446cd373}
+
+
+Definition at line 43 of file Get\+H\+T\+T\+P\+S.\+cpp.
+
+\index{Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}!k\+H\+T\+T\+P\+S\+\_\+\+U\+RI@{k\+H\+T\+T\+P\+S\+\_\+\+U\+RI}}
+\index{k\+H\+T\+T\+P\+S\+\_\+\+U\+RI@{k\+H\+T\+T\+P\+S\+\_\+\+U\+RI}!Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+H\+T\+T\+P\+S\+\_\+\+U\+RI}{kHTTPS_URI}}]{\setlength{\rightskip}{0pt plus 5cm}\#define k\+H\+T\+T\+P\+S\+\_\+\+U\+RI~\char`\"{}/\char`\"{}}\hypertarget{_get_h_t_t_p_s_8cpp_ac5df8e0b28bdc36c704fb888e66d186e}{}\label{_get_h_t_t_p_s_8cpp_ac5df8e0b28bdc36c704fb888e66d186e}
+
+
+Definition at line 44 of file Get\+H\+T\+T\+P\+S.\+cpp.
+
+
+
+\subsection{Function Documentation}
+\index{Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}!My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback@{My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback}}
+\index{My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback@{My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback}!Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}}
+\subsubsection[{\texorpdfstring{My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback(void $\ast$in\+User\+Ref\+Ptr)}{MyMacSocket_IdleWaitCallback(void *inUserRefPtr)}}]{\setlength{\rightskip}{0pt plus 5cm}O\+S\+Err My\+Mac\+Socket\+\_\+\+Idle\+Wait\+Callback (
+\begin{DoxyParamCaption}
+\item[{{\bf void} $\ast$}]{in\+User\+Ref\+Ptr}
+\end{DoxyParamCaption}
+)}\hypertarget{_get_h_t_t_p_s_8cpp_aaf770f84fc1a287f30caf265318c70ca}{}\label{_get_h_t_t_p_s_8cpp_aaf770f84fc1a287f30caf265318c70ca}
+
+
+Definition at line 53 of file Get\+H\+T\+T\+P\+S.\+cpp.
+
+
+\begin{DoxyCode}
+54 \{
+55 \textcolor{preprocessor}{#pragma unused(inUserRefPtr)}
+56 
+57 EventRecord     theEvent;
+58     ::EventAvail(everyEvent,&theEvent);
+59     
+60     \hyperlink{class_c_randomizer}{CRandomizer} *randomizer = (\hyperlink{class_c_randomizer}{CRandomizer}*)inUserRefPtr;
+61     \textcolor{keywordflow}{if} (randomizer)
+62         randomizer->\hyperlink{class_c_randomizer_a106ea95e959a42130d3098ff0238327b}{PeriodicAction}();
+63 
+64     \textcolor{keywordflow}{return}(noErr);
+65 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_get_h_t_t_p_s_8cpp_aaf770f84fc1a287f30caf265318c70ca_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{_get_h_t_t_p_s_8cpp_aaf770f84fc1a287f30caf265318c70ca_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}!main@{main}}
+\index{main@{main}!Get\+H\+T\+T\+P\+S.\+cpp@{Get\+H\+T\+T\+P\+S.\+cpp}}
+\subsubsection[{\texorpdfstring{main(void)}{main(void)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_get_h_t_t_p_s_8cpp_a6288eba0f8e8ad3ab1544ad731eb7667}{}\label{_get_h_t_t_p_s_8cpp_a6288eba0f8e8ad3ab1544ad731eb7667}
+
+
+Definition at line 70 of file Get\+H\+T\+T\+P\+S.\+cpp.
+
+
+\begin{DoxyCode}
+71 \{
+72     OSErr               errCode;
+73     \textcolor{keywordtype}{int}                 theSocket = -1;
+74     \textcolor{keywordtype}{int}                 theTimeout = 30;
+75 
+76     \hyperlink{structssl__ctx__st}{SSL\_CTX}              *ssl\_ctx = nil;
+77     \hyperlink{structssl__st}{SSL}                  *ssl = nil;
+78 
+79     \textcolor{keywordtype}{char}                tempString[256];
+80     UnsignedWide        microTickCount;
+81 
+82 
+83     \hyperlink{class_c_randomizer}{CRandomizer} randomizer;
+84     
+85     printf(\textcolor{stringliteral}{"OpenSSL Demo by Roy Wood, roy@centricsystems.ca\(\backslash\)n\(\backslash\)n"});
+86     
+87     \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(errCode = \hyperlink{_mac_socket_8cpp_a91d52f2a1e1d9a99d8ce34322d58b30f}{MacSocket\_Startup}());
+88 
+89 
+90 
+91     \textcolor{comment}{//  Create a socket-like object}
+92     
+93     \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(errCode = \hyperlink{_mac_socket_8cpp_a9199d71ef00996fe1a945e38ae988fac}{MacSocket\_socket}(&theSocket,\textcolor{keyword}{false},theTimeout * 60,
+      \hyperlink{_get_h_t_t_p_s_8cpp_aaf770f84fc1a287f30caf265318c70ca}{MyMacSocket\_IdleWaitCallback},&randomizer));
+94 
+95     
+96     \textcolor{comment}{//  Set up the connect string and try to connect}
+97     
+98     \hyperlink{_c_p_string_utils_8cpp_adaef1a07385d214d2f78f5a795219dd8}{CopyCStrAndInsertCStrLongIntIntoCStr}(\textcolor{stringliteral}{"%s:%ld"},
+      \hyperlink{_get_h_t_t_p_s_8cpp_a2e7a7c141f768d876a85ff4b2cf67bdb}{kHTTPS\_DNS},\hyperlink{_get_h_t_t_p_s_8cpp_a4ab1b408d031d4fef278aa28446cd373}{kHTTPS\_Port},tempString,\textcolor{keyword}{sizeof}(tempString));
+99     
+100     printf(\textcolor{stringliteral}{"Connecting to %s....\(\backslash\)n"},tempString);
+101 
+102     \hyperlink{_error_handling_8hpp_a2cb4692435f14372deeeb0e4911057d9}{BailIfError}(errCode = \hyperlink{_mac_socket_8cpp_a83d3eb3355c78c206f549c81024f0d89}{MacSocket\_connect}(theSocket,tempString));
+103     
+104     
+105     \textcolor{comment}{//  Init SSL stuff}
+106     
+107     \hyperlink{include_2openssl_2ssl_8h_accb99e9f2be3b424cda1854c15f04a0f}{SSL\_load\_error\_strings}();
+108     
+109     \hyperlink{include_2openssl_2ssl_8h_aa6dbc21131f20b0dee3adc58f3f4e7cd}{SSLeay\_add\_ssl\_algorithms}();
+110     
+111     
+112     \textcolor{comment}{//  Pick the SSL method}
+113     
+114 \textcolor{comment}{//  ssl\_ctx = SSL\_CTX\_new(SSLv2\_client\_method());}
+115     ssl\_ctx = \hyperlink{include_2openssl_2ssl_8h_a4f19b32a7539849b34cab831fc4ea869}{SSL\_CTX\_new}(\hyperlink{include_2openssl_2ssl_8h_a6c96da2082830756400948e3517a5aa2}{SSLv23\_client\_method}());
+116 \textcolor{comment}{//  ssl\_ctx = SSL\_CTX\_new(SSLv3\_client\_method());}
+117             
+118 
+119     \textcolor{comment}{//  Create an SSL thingey and try to negotiate the connection}
+120     
+121     ssl = \hyperlink{include_2openssl_2ssl_8h_a1874e8b72da196e3300b265937aa6da4}{SSL\_new}(ssl\_ctx);
+122     
+123     \hyperlink{include_2openssl_2ssl_8h_a8b2968941090031b610cc8340da79743}{SSL\_set\_fd}(ssl,theSocket);
+124     
+125     errCode = \hyperlink{include_2openssl_2ssl_8h_a652e4f10d91b1ba4f994b0c8e19c7585}{SSL\_connect}(ssl);
+126     
+127     \textcolor{keywordflow}{if} (errCode < 0)
+128     \{
+129         \hyperlink{_error_handling_8hpp_abbc2f61b7f1a165c23ee9ce9110d7bf5}{SetErrorMessageAndLongIntAndBail}(\textcolor{stringliteral}{"OpenSSL: Can't initiate SSL
+       connection, SSL\_connect() = "},errCode);
+130     \}
+131     
+132     \textcolor{comment}{//  Request the URI from the host}
+133     
+134     \hyperlink{_c_p_string_utils_8cpp_a658e88bafe1cb451f10d3f01a7264359}{CopyCStrToCStr}(\textcolor{stringliteral}{"GET "},tempString,\textcolor{keyword}{sizeof}(tempString));
+135     \hyperlink{_c_p_string_utils_8cpp_a5a59076beb65283c27a32e2a441b83a5}{ConcatCStrToCStr}(\hyperlink{_get_h_t_t_p_s_8cpp_ac5df8e0b28bdc36c704fb888e66d186e}{kHTTPS\_URI},tempString,\textcolor{keyword}{sizeof}(tempString));
+136     \hyperlink{_c_p_string_utils_8cpp_a5a59076beb65283c27a32e2a441b83a5}{ConcatCStrToCStr}(\textcolor{stringliteral}{" HTTP/1.0\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"},tempString,\textcolor{keyword}{sizeof}(tempString));
+137 
+138     
+139     errCode = \hyperlink{include_2openssl_2ssl_8h_ab1bc7aefe47a9d6801b113165ac8b1f0}{SSL\_write}(ssl,tempString,\hyperlink{_c_p_string_utils_8cpp_a7bfc8229791c1db249bbe38fbbc4cabf}{CStrLength}(tempString));
+140     
+141     \textcolor{keywordflow}{if} (errCode < 0)
+142     \{
+143         \hyperlink{_error_handling_8hpp_abbc2f61b7f1a165c23ee9ce9110d7bf5}{SetErrorMessageAndLongIntAndBail}(\textcolor{stringliteral}{"OpenSSL: Error writing data via
+       ssl, SSL\_write() = "},errCode);
+144     \}
+145     
+146 
+147     \textcolor{keywordflow}{for} (;;)
+148     \{
+149     \textcolor{keywordtype}{char}    tempString[256];
+150     \textcolor{keywordtype}{int}     bytesRead;
+151         
+152 
+153         \textcolor{comment}{//  Read some bytes and dump them to the console}
+154         
+155         bytesRead = \hyperlink{include_2openssl_2ssl_8h_a52e9679615a056e80c5d9bbb3324e1ca}{SSL\_read}(ssl,tempString,\textcolor{keyword}{sizeof}(tempString) - 1);
+156         
+157         \textcolor{keywordflow}{if} (bytesRead == 0 && \hyperlink{_mac_socket_8cpp_a398e104ab81c50f4d7a57bbefdba9cf2}{MacSocket\_RemoteEndIsClosing}(theSocket))
+158         \{
+159             \textcolor{keywordflow}{break};
+160         \}
+161         
+162         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (bytesRead < 0)
+163         \{
+164             \hyperlink{_error_handling_8hpp_abbc2f61b7f1a165c23ee9ce9110d7bf5}{SetErrorMessageAndLongIntAndBail}(\textcolor{stringliteral}{"OpenSSL: Error reading data
+       via ssl, SSL\_read() = "},bytesRead);
+165         \}
+166         
+167         
+168         tempString[bytesRead] = \textcolor{charliteral}{'\(\backslash\)0'};
+169         
+170         printf(\textcolor{stringliteral}{"%s"}, tempString);
+171     \}
+172     
+173     printf(\textcolor{stringliteral}{"\(\backslash\)n\(\backslash\)n\(\backslash\)n"});
+174     
+175     \textcolor{comment}{//  All done!}
+176     
+177     errCode = noErr;
+178     
+179     
+180 EXITPOINT:
+181 
+182     \textcolor{comment}{//  Clean up and go home}
+183     
+184     \textcolor{keywordflow}{if} (theSocket >= 0)
+185     \{
+186         \hyperlink{_mac_socket_8cpp_ae7060b6ecc78644c7fd6d9c973dc0efc}{MacSocket\_close}(theSocket);
+187     \}
+188     
+189     \textcolor{keywordflow}{if} (ssl != nil)
+190     \{
+191         \hyperlink{include_2openssl_2ssl_8h_add9f91511b7a494f4910b0e3567d7d99}{SSL\_free}(ssl);
+192     \}
+193     
+194     \textcolor{keywordflow}{if} (ssl\_ctx != nil)
+195     \{
+196         \hyperlink{include_2openssl_2ssl_8h_ab78736366f5d2176ff31cc266467c7d7}{SSL\_CTX\_free}(ssl\_ctx);
+197     \}
+198     
+199     
+200     \textcolor{keywordflow}{if} (errCode != noErr)
+201     \{
+202         printf(\textcolor{stringliteral}{"An error occurred:\(\backslash\)n"});
+203         
+204         printf(\textcolor{stringliteral}{"%s"},\hyperlink{_error_handling_8cpp_a98c7958fea7cb23f86e262d397bebad6}{GetErrorMessage}());
+205     \}
+206     
+207     
+208     \hyperlink{_mac_socket_8cpp_a77c99e91e5f0f081168da67afe0555cb}{MacSocket\_Shutdown}();
+209 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_get_h_t_t_p_s_8cpp_a6288eba0f8e8ad3ab1544ad731eb7667_cgraph}
+\end{center}
+\end{figure}
+
+

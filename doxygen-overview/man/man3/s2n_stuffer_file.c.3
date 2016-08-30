@@ -1,0 +1,155 @@
+.TH "s2n-master/stuffer/s2n_stuffer_file.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/stuffer/s2n_stuffer_file.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <sys/mman\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_stuffer_recv_from_fd\fP (struct \fBs2n_stuffer\fP *stuffer, int rfd, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_send_to_fd\fP (struct \fBs2n_stuffer\fP *stuffer, int wfd, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_alloc_ro_from_fd\fP (struct \fBs2n_stuffer\fP *stuffer, int rfd)"
+.br
+.ti -1c
+.RI "int \fBs2n_stuffer_alloc_ro_from_file\fP (struct \fBs2n_stuffer\fP *stuffer, const char *\fBfile\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_stuffer_recv_from_fd (struct \fBs2n_stuffer\fP * stuffer, int rfd, uint32_t len)"
+
+.PP
+Definition at line 29 of file s2n_stuffer_file\&.c\&.
+.PP
+.nf
+30 {
+31 
+32     /* Make sure we have enough space to write */
+33     GUARD(s2n_stuffer_skip_write(stuffer, len));
+34 
+35     /* "undo" the skip write */
+36     stuffer->write_cursor -= len;
+37 
+38   READ:
+39     errno = 0;
+40     int r = read(rfd, stuffer->blob\&.data + stuffer->write_cursor, len);
+41     if (r < 0) {
+42         if (errno == EINTR) {
+43             goto READ;
+44         }
+45         return -1;
+46     }
+47 
+48     /* Record just how many bytes we have written */
+49     stuffer->write_cursor += r;
+50     stuffer->wiped = 0;
+51 
+52     return r;
+53 }
+.fi
+.SS "int s2n_stuffer_send_to_fd (struct \fBs2n_stuffer\fP * stuffer, int wfd, uint32_t len)"
+
+.PP
+Definition at line 55 of file s2n_stuffer_file\&.c\&.
+.PP
+.nf
+56 {
+57     /* Make sure we even have the data */
+58     GUARD(s2n_stuffer_skip_read(stuffer, len));
+59 
+60     /* "undo" the skip read */
+61     stuffer->read_cursor -= len;
+62 
+63   WRITE:
+64     errno = 0;
+65     int w = write(wfd, stuffer->blob\&.data + stuffer->read_cursor, len);
+66     if (w < 0) {
+67         if (errno == EINTR) {
+68             goto WRITE;
+69         }
+70         return -1;
+71     }
+72 
+73     stuffer->read_cursor += w;
+74 
+75     return w;
+76 }
+.fi
+.SS "int s2n_stuffer_alloc_ro_from_fd (struct \fBs2n_stuffer\fP * stuffer, int rfd)"
+
+.PP
+Definition at line 78 of file s2n_stuffer_file\&.c\&.
+.PP
+.nf
+79 {
+80     struct stat st;
+81 
+82     if (fstat(rfd, &st) < 0) {
+83         S2N_ERROR(S2N_ERR_FSTAT);
+84     }
+85 
+86     stuffer->blob\&.data = mmap(0, st\&.st_size, PROT_READ, MAP_PRIVATE, rfd, 0);
+87     if (stuffer->blob\&.data == MAP_FAILED) {
+88         S2N_ERROR(S2N_ERR_MMAP);
+89     }
+90 
+91     stuffer->blob\&.size = st\&.st_size;
+92 
+93     return s2n_stuffer_init(stuffer, &stuffer->blob);
+94 }
+.fi
+.SS "int s2n_stuffer_alloc_ro_from_file (struct \fBs2n_stuffer\fP * stuffer, const char * file)"
+
+.PP
+Definition at line 96 of file s2n_stuffer_file\&.c\&.
+.PP
+.nf
+97 {
+98     int fd;
+99 
+100   OPEN:
+101     fd = open(file, O_RDONLY);
+102     if (fd < 0) {
+103         if (errno == EINTR) {
+104             goto OPEN;
+105         }
+106         S2N_ERROR(S2N_ERR_OPEN);
+107     }
+108 
+109     int r = s2n_stuffer_alloc_ro_from_fd(stuffer, fd);
+110 
+111     GUARD(close(fd));
+112 
+113     return r;
+114 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

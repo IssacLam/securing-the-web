@@ -1,0 +1,63 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/bf/bfs.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/bf/bfs.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/blowfish\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP main (int argc, char * argv[])"
+
+.PP
+Definition at line 37 of file bfs\&.cpp\&.
+.PP
+.nf
+38     {
+39     BF_KEY key;
+40     unsigned long s1,s2,e1,e2;
+41     unsigned long data[2];
+42     int i,j;
+43 
+44     for (j=0; j<6; j++)
+45         {
+46         for (i=0; i<1000; i++) 
+47             {
+48             BF_encrypt(&data[0],&key);
+49             GetTSC(s1);
+50             BF_encrypt(&data[0],&key);
+51             BF_encrypt(&data[0],&key);
+52             BF_encrypt(&data[0],&key);
+53             GetTSC(e1);
+54             GetTSC(s2);
+55             BF_encrypt(&data[0],&key);
+56             BF_encrypt(&data[0],&key);
+57             BF_encrypt(&data[0],&key);
+58             BF_encrypt(&data[0],&key);
+59             GetTSC(e2);
+60             BF_encrypt(&data[0],&key);
+61             }
+62 
+63         printf("blowfish %d %d (%d)\n",
+64             e1-s1,e2-s2,((e2-s2)-(e1-s1)));
+65         }
+66     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

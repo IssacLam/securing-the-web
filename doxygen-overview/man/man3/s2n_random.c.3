@@ -1,0 +1,438 @@
+.TH "s2n-master/utils/s2n_random.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/utils/s2n_random.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/engine\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <sys/param\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <limits\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <cpuid\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_drbg\&.h'\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_mem\&.h'\fP
+.br
+\fC#include <openssl/rand\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBENTROPY_SOURCE\fP   '/dev/urandom'"
+.br
+.ti -1c
+.RI "#define \fBRDRAND_ECX_FLAG\fP   0x40000000"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBs2n_on_fork\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_public_random_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_private_random_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_public_random_bytes_used\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_private_random_bytes_used\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_urandom_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_public_random\fP (int64_t max)"
+.br
+.ti -1c
+.RI "int \fBs2n_openssl_compat_rand\fP (unsigned char *buf, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_openssl_compat_status\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_openssl_compat_init\fP (\fBENGINE\fP *unused)"
+.br
+.ti -1c
+.RI "int \fBs2n_init\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_cleanup\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_cpu_supports_rdrand\fP ()"
+.br
+.ti -1c
+.RI "int \fBs2n_get_rdrand_data\fP (struct \fBs2n_blob\fP *out)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBRAND_METHOD\fP \fBs2n_openssl_rand_method\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ENTROPY_SOURCE   '/dev/urandom'"
+
+.PP
+Definition at line 42 of file s2n_random\&.c\&.
+.SS "#define RDRAND_ECX_FLAG   0x40000000"
+
+.PP
+Definition at line 45 of file s2n_random\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP s2n_on_fork (\fBvoid\fP)"
+
+.PP
+Definition at line 55 of file s2n_random\&.c\&.
+.PP
+.nf
+56 {
+57     zero_if_forked = 0;
+58 }
+.fi
+.SS "int s2n_get_public_random_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 83 of file s2n_random\&.c\&.
+.PP
+.nf
+84 {
+85     GUARD(s2n_defend_if_forked());
+86     GUARD(s2n_drbg_generate(&per_thread_public_drbg, blob));
+87 
+88     return 0;
+89 }
+.fi
+.SS "int s2n_get_private_random_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 91 of file s2n_random\&.c\&.
+.PP
+.nf
+92 {
+93     GUARD(s2n_defend_if_forked());
+94     GUARD(s2n_drbg_generate(&per_thread_private_drbg, blob));
+95 
+96     return 0;
+97 }
+.fi
+.SS "int s2n_get_public_random_bytes_used (\fBvoid\fP)"
+
+.PP
+Definition at line 99 of file s2n_random\&.c\&.
+.PP
+.nf
+100 {
+101     return s2n_drbg_bytes_used(&per_thread_public_drbg);
+102 }
+.fi
+.SS "int s2n_get_private_random_bytes_used (\fBvoid\fP)"
+
+.PP
+Definition at line 104 of file s2n_random\&.c\&.
+.PP
+.nf
+105 {
+106     return s2n_drbg_bytes_used(&per_thread_private_drbg);
+107 }
+.fi
+.SS "int s2n_get_urandom_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 109 of file s2n_random\&.c\&.
+.PP
+.nf
+110 {
+111     uint32_t n = blob->size;
+112     uint8_t *data = blob->data;
+113 
+114     if (entropy_fd == -1) {
+115         S2N_ERROR(S2N_ERR_RANDOM_UNITIALIZED);
+116     }
+117 
+118     while (n) {
+119         int r = read(entropy_fd, data, n);
+120         if (r <= 0) {
+121             sleep(1);
+122             continue;
+123         }
+124 
+125         data += r;
+126         n -= r;
+127     }
+128 
+129     return 0;
+130 }
+.fi
+.SS "int64_t s2n_public_random (int64_t max)"
+
+.PP
+Definition at line 132 of file s2n_random\&.c\&.
+.PP
+.nf
+133 {
+134     uint64_t r;
+135 
+136     gt_check(max, 0);
+137 
+138     while (1) {
+139         struct s2n_blob blob = {\&.data = (void *)&r, sizeof(r) };
+140         GUARD(s2n_get_public_random_data(&blob));
+141 
+142         /* Imagine an int was one byte and UINT_MAX was 256\&. If the
+143          * caller asked for s2n_random(129, \&.\&.\&.) we'd end up in
+144          * trouble\&. Each number in the range 0\&.\&.\&.127 would be twice
+145          * as likely as 128\&. That's because r == 0 % 129 -> 0, and
+146          * r == 129 % 129 -> 0, but only r == 128 returns 128,
+147          * r == 257 is out of range\&.
+148          *
+149          * To de-bias the dice, we discard values of r that are higher
+150          * that the highest multiple of 'max' an int can support\&. If
+151          * max is a uint, then in the worst case we discard 50% - 1 r's\&.
+152          * But since 'max' is an int and INT_MAX is <= UINT_MAX / 2,
+153          * in the worst case we discard 25% - 1 r's\&.
+154          */
+155         if (r < (UINT64_MAX - (UINT64_MAX % max))) {
+156             return r % max;
+157         }
+158     }
+159 
+160     return -1;
+161 }
+.fi
+.SS "int s2n_openssl_compat_rand (unsigned char * buf, int num)"
+
+.PP
+Definition at line 165 of file s2n_random\&.c\&.
+.PP
+.nf
+166 {
+167     struct s2n_blob out = {\&.data = buf,\&.size = num };
+168 
+169     if (s2n_get_private_random_data(&out) < 0) {
+170         return 0;
+171     }
+172     return 1;
+173 }
+.fi
+.SS "int s2n_openssl_compat_status (\fBvoid\fP)"
+
+.PP
+Definition at line 175 of file s2n_random\&.c\&.
+.PP
+.nf
+176 {
+177     return 1;
+178 }
+.fi
+.SS "int s2n_openssl_compat_init (\fBENGINE\fP * unused)"
+
+.PP
+Definition at line 180 of file s2n_random\&.c\&.
+.PP
+.nf
+181 {
+182     return 1;
+183 }
+.fi
+.SS "int s2n_init (\fBvoid\fP)"
+
+.PP
+Definition at line 195 of file s2n_random\&.c\&.
+.PP
+.nf
+196 {
+197     GUARD(s2n_mem_init());
+198 
+199   OPEN:
+200     entropy_fd = open(ENTROPY_SOURCE, O_RDONLY);
+201     if (entropy_fd == -1) {
+202         if (errno == EINTR) {
+203             goto OPEN;
+204         }
+205         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+206     }
+207 #if defined(MAP_INHERIT_ZERO)
+208     zero_if_forked_ptr = mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+209     if (zero_if_forked_ptr == MAP_FAILED) {
+210         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+211     }
+212 
+213     if (minherit(zero_if_forked_ptr, sizeof(int), MAP_INHERIT_ZERO) == -1) {
+214         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+215     }
+216 #else
+217 
+218     if (pthread_atfork(NULL, NULL, s2n_on_fork) != 0) {
+219         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+220     }
+221 #endif
+222 
+223     GUARD(s2n_defend_if_forked());
+224 
+225 #if !defined(OPENSSL_IS_BORINGSSL) && !defined(OPENSSL_FIPS) && !defined(LIBRESSL_VERSION_NUMBER)
+226     /* Create an engine */
+227     ENGINE *e = ENGINE_new();
+228     if (e == NULL ||
+229         ENGINE_set_id(e, "s2n") != 1 ||
+230         ENGINE_set_name(e, "s2n entropy generator") != 1 ||
+231         ENGINE_set_flags(e, ENGINE_FLAGS_NO_REGISTER_ALL) != 1 ||
+232         ENGINE_set_init_function(e, s2n_openssl_compat_init) != 1 || ENGINE_set_RAND(e, &s2n_openssl_rand_method) != 1 || ENGINE_add(e) != 1 || ENGINE_free(e) != 1) {
+233         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+234     }
+235 
+236     /* Use that engine for rand() */
+237     e = ENGINE_by_id("s2n");
+238     if (e == NULL || ENGINE_init(e) != 1 || ENGINE_set_default(e, ENGINE_METHOD_RAND) != 1) {
+239         S2N_ERROR(S2N_ERR_OPEN_RANDOM);
+240     }
+241 #endif
+242 
+243     return 0;
+244 }
+.fi
+.SS "int s2n_cleanup (\fBvoid\fP)"
+
+.PP
+Definition at line 246 of file s2n_random\&.c\&.
+.PP
+.nf
+247 {
+248     if (entropy_fd == -1) {
+249         S2N_ERROR(S2N_ERR_NOT_INITIALIZED);
+250     }
+251 
+252     GUARD(s2n_drbg_wipe(&per_thread_private_drbg));
+253     GUARD(s2n_drbg_wipe(&per_thread_public_drbg));
+254     GUARD(close(entropy_fd));
+255     entropy_fd = -1;
+256 
+257     return 0;
+258 }
+.fi
+.SS "int s2n_cpu_supports_rdrand ()"
+
+.PP
+Definition at line 260 of file s2n_random\&.c\&.
+.PP
+.nf
+261 {
+262 #if defined(__x86_64__)||defined(__i386__)
+263     uint32_t eax, ebx, ecx, edx;
+264     if (!__get_cpuid(1, &eax, &ebx, &ecx, &edx)) {
+265         return 0;
+266     }
+267 
+268     if (ecx & RDRAND_ECX_FLAG) {
+269         return 1;
+270     }
+271 #endif
+272     return 0;
+273 }
+.fi
+.SS "int s2n_get_rdrand_data (struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 284 of file s2n_random\&.c\&.
+.PP
+.nf
+285 {
+286 
+287 #if defined(__x86_64__)||defined(__i386__)
+288     int space_remaining = 0;
+289     struct s2n_stuffer stuffer;
+290     union {
+291         uint64_t u64;
+292         uint8_t u8[8];
+293     } output;
+294 
+295     GUARD(s2n_stuffer_init(&stuffer, out));
+296 
+297     while ((space_remaining = s2n_stuffer_space_remaining(&stuffer))) {
+298         int success = 0;
+299 
+300         for (int tries = 0; tries < 10; tries++) {
+301             __asm__ __volatile__("\&.byte 0x48;\n" "\&.byte 0x0f;\n" "\&.byte 0xc7;\n" "\&.byte 0xf0;\n" "adcl $0x00, %%ebx;\n":"=b"(success), "=a"(output\&.u64)
+302                                  :"b"(0)
+303                                  :"cc");
+304 
+305             if (success) {
+306                 break;
+307             }
+308         }
+309 
+310         if (!success) {
+311             return -1;
+312         }
+313 
+314         int data_to_fill = MIN(sizeof(output), space_remaining);
+315 
+316         GUARD(s2n_stuffer_write_bytes(&stuffer, output\&.u8, data_to_fill));
+317     }
+318 
+319     return 0;
+320 #else
+321     return -1;
+322 #endif
+323 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "\fBRAND_METHOD\fP s2n_openssl_rand_method"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.seed = NULL,
+    \&.bytes = s2n_openssl_compat_rand,
+    \&.cleanup = NULL,
+    \&.add = NULL,
+    \&.pseudorand = s2n_openssl_compat_rand,
+    \&.status = s2n_openssl_compat_status
+}
+.fi
+.PP
+Definition at line 185 of file s2n_random\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

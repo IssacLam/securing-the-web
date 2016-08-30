@@ -1,0 +1,174 @@
+\hypertarget{crypto_2hmac_2hmac_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/hmac/hmac.h File Reference}
+\label{crypto_2hmac_2hmac_8h}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/hmac/hmac.\+h@{s2n-\/master/libcrypto-\/build/openssl/crypto/hmac/hmac.\+h}}
+{\ttfamily \#include $<$openssl/opensslconf.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/evp.\+h$>$}\\*
+Include dependency graph for hmac.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{crypto_2hmac_2hmac_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structhmac__ctx__st}{hmac\+\_\+ctx\+\_\+st}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{crypto_2hmac_2hmac_8h_a70c2f521a62974fcae381df08f89c7a7}{H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK}~128/$\ast$ largest known is \hyperlink{include_2openssl_2sha_8h_a04bb32cdae505b6eecc6b1b016e6c99b}{S\+H\+A512} $\ast$/
+\item 
+\#define \hyperlink{crypto_2hmac_2hmac_8h_a140d6705643d78a1cf34ae7c65d9f506}{H\+M\+A\+C\+\_\+size}(\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})    ~(\hyperlink{include_2openssl_2evp_8h_a90cd9b536d07403d5d14fde98299a6a7}{E\+V\+P\+\_\+\+M\+D\+\_\+size}((\hyperlink{apps_8h_a58a5cbe6bfe72fab1de65113aef90aa0}{e})-\/$>$md))
+\item 
+\#define \hyperlink{crypto_2hmac_2hmac_8h_a321b14bdf5ffe7ceca1c854d1d19c8ef}{H\+M\+A\+C\+\_\+cleanup}(ctx)~\hyperlink{include_2openssl_2hmac_8h_ad3131144aba13d6dae9bbcb53666761a}{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup}(ctx)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structhmac__ctx__st}{hmac\+\_\+ctx\+\_\+st} \hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{crypto_2hmac_2hmac_8h_a978cd73c621384dc42a70d04bd264150}{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{crypto_2hmac_2hmac_8h_ad3131144aba13d6dae9bbcb53666761a}{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+int \hyperlink{crypto_2hmac_2hmac_8h_ad6db50b7431101629c8349b4778b598a}{H\+M\+A\+C\+\_\+\+Init} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$key, int \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$md)
+\item 
+int \hyperlink{crypto_2hmac_2hmac_8h_ac3399d766f7dd7e46b6766b16962f8db}{H\+M\+A\+C\+\_\+\+Init\+\_\+ex} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$key, int \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}, const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$md, \hyperlink{crypto_2ossl__typ_8h_abac45b251498719318e60ab8d6192510}{E\+N\+G\+I\+NE} $\ast$impl)
+\item 
+int \hyperlink{crypto_2hmac_2hmac_8h_afa7c2f0856ee825a8d1292b1db2ee6bf}{H\+M\+A\+C\+\_\+\+Update} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx, const unsigned char $\ast$data, size\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{crypto_2hmac_2hmac_8h_af90028523c5de48499b8b44c231be195}{H\+M\+A\+C\+\_\+\+Final} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx, unsigned char $\ast$md, unsigned int $\ast$\hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+unsigned char $\ast$ \hyperlink{crypto_2hmac_2hmac_8h_af8e23e6f0c107db2b1eb8b2bad23c5d1}{H\+M\+AC} (const \hyperlink{crypto_2ossl__typ_8h_aac66cf010326fa9a927c2a34888f45d3}{E\+V\+P\+\_\+\+MD} $\ast$evp\+\_\+md, const \hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} $\ast$key, int key\+\_\+len, const unsigned char $\ast$d, size\+\_\+t n, unsigned char $\ast$md, unsigned int $\ast$md\+\_\+len)
+\item 
+int \hyperlink{crypto_2hmac_2hmac_8h_aa68d50676d4387bfb046b1a4d62b192d}{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$dctx, \hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$sctx)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{crypto_2hmac_2hmac_8h_a29ffe6b3eb6a5bdaaf8d6c747bf6869d}{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags} (\hyperlink{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{H\+M\+A\+C\+\_\+\+C\+TX} $\ast$ctx, unsigned long \hyperlink{include_2openssl_2pkcs7_8h_ac8bf36fe0577cba66bccda3a6f7e80a4}{flags})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK@{H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK}}
+\index{H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK@{H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK}{HMAC_MAX_MD_CBLOCK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+M\+A\+C\+\_\+\+M\+A\+X\+\_\+\+M\+D\+\_\+\+C\+B\+L\+O\+CK~128/$\ast$ largest known is {\bf S\+H\+A512} $\ast$/}\hypertarget{crypto_2hmac_2hmac_8h_a70c2f521a62974fcae381df08f89c7a7}{}\label{crypto_2hmac_2hmac_8h_a70c2f521a62974fcae381df08f89c7a7}
+
+
+Definition at line 69 of file hmac.\+h.
+
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+size@{H\+M\+A\+C\+\_\+size}}
+\index{H\+M\+A\+C\+\_\+size@{H\+M\+A\+C\+\_\+size}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+size}{HMAC_size}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+M\+A\+C\+\_\+size(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf e}}
+\end{DoxyParamCaption}
+)~({\bf E\+V\+P\+\_\+\+M\+D\+\_\+size}(({\bf e})-\/$>$md))}\hypertarget{crypto_2hmac_2hmac_8h_a140d6705643d78a1cf34ae7c65d9f506}{}\label{crypto_2hmac_2hmac_8h_a140d6705643d78a1cf34ae7c65d9f506}
+
+
+Definition at line 84 of file hmac.\+h.
+
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+cleanup@{H\+M\+A\+C\+\_\+cleanup}}
+\index{H\+M\+A\+C\+\_\+cleanup@{H\+M\+A\+C\+\_\+cleanup}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+cleanup}{HMAC_cleanup}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+M\+A\+C\+\_\+cleanup(
+\begin{DoxyParamCaption}
+\item[{}]{ctx}
+\end{DoxyParamCaption}
+)~{\bf H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup}(ctx)}\hypertarget{crypto_2hmac_2hmac_8h_a321b14bdf5ffe7ceca1c854d1d19c8ef}{}\label{crypto_2hmac_2hmac_8h_a321b14bdf5ffe7ceca1c854d1d19c8ef}
+
+
+Definition at line 90 of file hmac.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+C\+TX@{H\+M\+A\+C\+\_\+\+C\+TX}}
+\index{H\+M\+A\+C\+\_\+\+C\+TX@{H\+M\+A\+C\+\_\+\+C\+TX}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+C\+TX}{HMAC_CTX}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf hmac\+\_\+ctx\+\_\+st}  {\bf H\+M\+A\+C\+\_\+\+C\+TX}}\hypertarget{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}{}\label{crypto_2hmac_2hmac_8h_aac042740b33d6ad59d219de07a6f8461}
+
+
+\subsection{Function Documentation}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init}}
+\index{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx)}{HMAC_CTX_init(HMAC_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_a978cd73c621384dc42a70d04bd264150}{}\label{crypto_2hmac_2hmac_8h_a978cd73c621384dc42a70d04bd264150}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup}}
+\index{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx)}{HMAC_CTX_cleanup(HMAC_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+cleanup (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_ad3131144aba13d6dae9bbcb53666761a}{}\label{crypto_2hmac_2hmac_8h_ad3131144aba13d6dae9bbcb53666761a}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+Init@{H\+M\+A\+C\+\_\+\+Init}}
+\index{H\+M\+A\+C\+\_\+\+Init@{H\+M\+A\+C\+\_\+\+Init}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+Init(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx, const void $\ast$key, int len, const E\+V\+P\+\_\+\+M\+D $\ast$md)}{HMAC_Init(HMAC_CTX *ctx, const void *key, int len, const EVP_MD *md)}}]{\setlength{\rightskip}{0pt plus 5cm}int H\+M\+A\+C\+\_\+\+Init (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const {\bf void} $\ast$}]{key, }
+\item[{int}]{len, }
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{md}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_ad6db50b7431101629c8349b4778b598a}{}\label{crypto_2hmac_2hmac_8h_ad6db50b7431101629c8349b4778b598a}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+Init\+\_\+ex@{H\+M\+A\+C\+\_\+\+Init\+\_\+ex}}
+\index{H\+M\+A\+C\+\_\+\+Init\+\_\+ex@{H\+M\+A\+C\+\_\+\+Init\+\_\+ex}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+Init\+\_\+ex(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx, const void $\ast$key, int len, const E\+V\+P\+\_\+\+M\+D $\ast$md, E\+N\+G\+I\+N\+E $\ast$impl)}{HMAC_Init_ex(HMAC_CTX *ctx, const void *key, int len, const EVP_MD *md, ENGINE *impl)}}]{\setlength{\rightskip}{0pt plus 5cm}int H\+M\+A\+C\+\_\+\+Init\+\_\+ex (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const {\bf void} $\ast$}]{key, }
+\item[{int}]{len, }
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{md, }
+\item[{{\bf E\+N\+G\+I\+NE} $\ast$}]{impl}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_ac3399d766f7dd7e46b6766b16962f8db}{}\label{crypto_2hmac_2hmac_8h_ac3399d766f7dd7e46b6766b16962f8db}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+Update@{H\+M\+A\+C\+\_\+\+Update}}
+\index{H\+M\+A\+C\+\_\+\+Update@{H\+M\+A\+C\+\_\+\+Update}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+Update(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx, const unsigned char $\ast$data, size\+\_\+t len)}{HMAC_Update(HMAC_CTX *ctx, const unsigned char *data, size_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int H\+M\+A\+C\+\_\+\+Update (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{const unsigned char $\ast$}]{data, }
+\item[{size\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_afa7c2f0856ee825a8d1292b1db2ee6bf}{}\label{crypto_2hmac_2hmac_8h_afa7c2f0856ee825a8d1292b1db2ee6bf}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+Final@{H\+M\+A\+C\+\_\+\+Final}}
+\index{H\+M\+A\+C\+\_\+\+Final@{H\+M\+A\+C\+\_\+\+Final}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+Final(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx, unsigned char $\ast$md, unsigned int $\ast$len)}{HMAC_Final(HMAC_CTX *ctx, unsigned char *md, unsigned int *len)}}]{\setlength{\rightskip}{0pt plus 5cm}int H\+M\+A\+C\+\_\+\+Final (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{unsigned char $\ast$}]{md, }
+\item[{unsigned int $\ast$}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_af90028523c5de48499b8b44c231be195}{}\label{crypto_2hmac_2hmac_8h_af90028523c5de48499b8b44c231be195}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+AC@{H\+M\+AC}}
+\index{H\+M\+AC@{H\+M\+AC}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C(const E\+V\+P\+\_\+\+M\+D $\ast$evp\+\_\+md, const void $\ast$key, int key\+\_\+len, const unsigned char $\ast$d, size\+\_\+t n, unsigned char $\ast$md, unsigned int $\ast$md\+\_\+len)}{HMAC(const EVP_MD *evp_md, const void *key, int key_len, const unsigned char *d, size_t n, unsigned char *md, unsigned int *md_len)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ H\+M\+AC (
+\begin{DoxyParamCaption}
+\item[{const {\bf E\+V\+P\+\_\+\+MD} $\ast$}]{evp\+\_\+md, }
+\item[{const {\bf void} $\ast$}]{key, }
+\item[{int}]{key\+\_\+len, }
+\item[{const unsigned char $\ast$}]{d, }
+\item[{size\+\_\+t}]{n, }
+\item[{unsigned char $\ast$}]{md, }
+\item[{unsigned int $\ast$}]{md\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_af8e23e6f0c107db2b1eb8b2bad23c5d1}{}\label{crypto_2hmac_2hmac_8h_af8e23e6f0c107db2b1eb8b2bad23c5d1}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy}}
+\index{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$dctx, H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$sctx)}{HMAC_CTX_copy(HMAC_CTX *dctx, HMAC_CTX *sctx)}}]{\setlength{\rightskip}{0pt plus 5cm}int H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+copy (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{dctx, }
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{sctx}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_aa68d50676d4387bfb046b1a4d62b192d}{}\label{crypto_2hmac_2hmac_8h_aa68d50676d4387bfb046b1a4d62b192d}
+\index{crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}!H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags}}
+\index{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags@{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags}!crypto/hmac/hmac.\+h@{crypto/hmac/hmac.\+h}}
+\subsubsection[{\texorpdfstring{H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags(\+H\+M\+A\+C\+\_\+\+C\+T\+X $\ast$ctx, unsigned long flags)}{HMAC_CTX_set_flags(HMAC_CTX *ctx, unsigned long flags)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} H\+M\+A\+C\+\_\+\+C\+T\+X\+\_\+set\+\_\+flags (
+\begin{DoxyParamCaption}
+\item[{{\bf H\+M\+A\+C\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{unsigned long}]{flags}
+\end{DoxyParamCaption}
+)}\hypertarget{crypto_2hmac_2hmac_8h_a29ffe6b3eb6a5bdaaf8d6c747bf6869d}{}\label{crypto_2hmac_2hmac_8h_a29ffe6b3eb6a5bdaaf8d6c747bf6869d}

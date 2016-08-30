@@ -1,0 +1,647 @@
+.TH "s2n-master/tests/unit/s2n_client_extensions_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_client_extensions_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBZERO_TO_THIRTY_ONE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBmessage_type_t\fP \fBs2n_conn_get_current_message_type\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ZERO_TO_THIRTY_ONE"
+\fBValue:\fP
+.PP
+.nf
+0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, \
+                            0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F
+.fi
+.PP
+Definition at line 29 of file s2n_client_extensions_test\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBmessage_type_t\fP s2n_conn_get_current_message_type (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 113 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+114 {
+115     return ACTIVE_MESSAGE(conn);
+116 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 138 of file s2n_client_extensions_test\&.c\&.
+.PP
+.nf
+139 {
+140     BEGIN_TEST();
+141 
+142     EXPECT_SUCCESS(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+143     EXPECT_SUCCESS(setenv("S2N_DONT_MLOCK", "1", 0));
+144 
+145     /* Client doens't use the server name extension\&. */
+146     {
+147         struct s2n_connection *client_conn;
+148         struct s2n_connection *server_conn;
+149         struct s2n_config *server_config;
+150         int server_to_client[2];
+151         int client_to_server[2];
+152 
+153         /* Create nonblocking pipes */
+154         EXPECT_SUCCESS(pipe(server_to_client));
+155         EXPECT_SUCCESS(pipe(client_to_server));
+156         for (int i = 0; i < 2; i++) {
+157            EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+158            EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+159         }
+160 
+161         EXPECT_NOT_NULL(client_conn = s2n_connection_new(S2N_CLIENT));
+162         EXPECT_SUCCESS(s2n_connection_set_read_fd(client_conn, server_to_client[0]));
+163         EXPECT_SUCCESS(s2n_connection_set_write_fd(client_conn, client_to_server[1]));
+164 
+165         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+166         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+167         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+168 
+169         EXPECT_NOT_NULL(server_config = s2n_config_new());
+170         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(server_config, certificate, private_key));
+171         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+172 
+173         EXPECT_SUCCESS(s2n_negotiate_test_server_and_client(server_conn, client_conn));
+174 
+175         /* Verify that the server didn't receive the server name\&. */
+176         EXPECT_NULL(s2n_get_server_name(server_conn));
+177 
+178         EXPECT_SUCCESS(s2n_shutdown_test_server_and_client(server_conn, client_conn));
+179 
+180         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+181         EXPECT_SUCCESS(s2n_connection_free(client_conn));
+182 
+183         EXPECT_SUCCESS(s2n_config_free(server_config));
+184 
+185         for (int i = 0; i < 2; i++) {
+186            EXPECT_SUCCESS(close(server_to_client[i]));
+187            EXPECT_SUCCESS(close(client_to_server[i]));
+188         }
+189     }
+190 
+191     /* Client uses the server name extension\&. */
+192     {
+193         struct s2n_connection *client_conn;
+194         struct s2n_connection *server_conn;
+195         struct s2n_config *server_config;
+196         int server_to_client[2];
+197         int client_to_server[2];
+198 
+199         const char *sent_server_name = "awesome\&.amazonaws\&.com";
+200         const char *received_server_name;
+201 
+202         /* Create nonblocking pipes */
+203         EXPECT_SUCCESS(pipe(server_to_client));
+204         EXPECT_SUCCESS(pipe(client_to_server));
+205         for (int i = 0; i < 2; i++) {
+206             EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+207             EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+208         }
+209 
+210         EXPECT_NOT_NULL(client_conn = s2n_connection_new(S2N_CLIENT));
+211         EXPECT_SUCCESS(s2n_connection_set_read_fd(client_conn, server_to_client[0]));
+212         EXPECT_SUCCESS(s2n_connection_set_write_fd(client_conn, client_to_server[1]));
+213 
+214         /* Set the server name */
+215         EXPECT_SUCCESS(s2n_set_server_name(client_conn, sent_server_name));
+216 
+217         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+218         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+219         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+220 
+221         EXPECT_NOT_NULL(server_config = s2n_config_new());
+222         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(server_config, certificate, private_key));
+223         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+224 
+225         EXPECT_SUCCESS(s2n_negotiate_test_server_and_client(server_conn, client_conn));
+226 
+227         /* Verify that the server name was received intact\&. */
+228         EXPECT_NOT_NULL(received_server_name = s2n_get_server_name(server_conn));
+229         EXPECT_EQUAL(strlen(received_server_name), strlen(sent_server_name));
+230         EXPECT_BYTEARRAY_EQUAL(received_server_name, sent_server_name, strlen(received_server_name));
+231 
+232         EXPECT_SUCCESS(s2n_shutdown_test_server_and_client(server_conn, client_conn));
+233 
+234         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+235         EXPECT_SUCCESS(s2n_connection_free(client_conn));
+236 
+237         EXPECT_SUCCESS(s2n_config_free(server_config));
+238         for (int i = 0; i < 2; i++) {
+239             EXPECT_SUCCESS(close(server_to_client[i]));
+240             EXPECT_SUCCESS(close(client_to_server[i]));
+241         }
+242     }
+243 
+244     /* Client sends multiple server names\&. */
+245     {
+246         struct s2n_connection *server_conn;
+247         struct s2n_config *server_config;
+248         s2n_blocked_status server_blocked;
+249         int server_to_client[2];
+250         int client_to_server[2];
+251         const char *sent_server_name = "svr";
+252         const char *received_server_name;
+253 
+254         uint8_t client_extensions[] = {
+255             /* Extension type TLS_EXTENSION_SERVER_NAME */
+256             0x00, 0x00,
+257             /* Extension size */
+258             0x00, 0x0C,
+259             /* All server names len */
+260             0x00, 0x0A,
+261             /* First server name type - host name */
+262             0x00,
+263             /* First server name len */
+264             0x00, 0x03,
+265             /* First server name, matches sent_server_name */
+266             's', 'v', 'r',
+267             /* Second server name type - host name */
+268             0x00,
+269             /* Second server name len */
+270             0x00, 0x01,
+271             /* Second server name */
+272             0xFF,
+273         };
+274         int client_extensions_len = sizeof(client_extensions);
+275         uint8_t client_hello_message[] = {
+276             /* Protocol version TLS 1\&.2 */
+277             0x03, 0x03,
+278             /* Client random */
+279             ZERO_TO_THIRTY_ONE,
+280             /* SessionID len - 32 bytes */
+281             0x20,
+282             /* Session ID */
+283             ZERO_TO_THIRTY_ONE,
+284             /* Cipher suites len */
+285             0x00, 0x02,
+286             /* Cipher suite - TLS_RSA_WITH_AES_128_CBC_SHA256 */
+287             0x00, 0x3C,
+288             /* Compression methods len */
+289             0x01,
+290             /* Compression method - none */
+291             0x00,
+292             /* Extensions len */
+293             (client_extensions_len >> 8) & 0xff, (client_extensions_len & 0xff),
+294         };
+295         int body_len = sizeof(client_hello_message) + client_extensions_len;
+296         uint8_t message_header[] = {
+297             /* Handshake message type CLIENT HELLO */
+298             0x01,
+299             /* Body len */
+300             (body_len >> 16) & 0xff, (body_len >> 8) & 0xff, (body_len & 0xff),
+301         };
+302         int message_len = sizeof(message_header) + body_len;
+303         uint8_t record_header[] = {
+304             /* Record type HANDSHAKE */
+305             0x16,
+306             /* Protocol version TLS 1\&.2 */
+307             0x03, 0x03,
+308             /* Message len */
+309             (message_len >> 8) & 0xff, (message_len & 0xff),
+310         };
+311 
+312         /* Create nonblocking pipes */
+313         EXPECT_SUCCESS(pipe(server_to_client));
+314         EXPECT_SUCCESS(pipe(client_to_server));
+315         for (int i = 0; i < 2; i++) {
+316             EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+317             EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+318         }
+319 
+320         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+321         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+322         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+323 
+324         EXPECT_NOT_NULL(server_config = s2n_config_new());
+325         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(server_config, certificate, private_key));
+326         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+327 
+328         /* Send the client hello */
+329         EXPECT_EQUAL(write(client_to_server[1], record_header, sizeof(record_header)), sizeof(record_header));
+330         EXPECT_EQUAL(write(client_to_server[1], message_header, sizeof(message_header)), sizeof(message_header));
+331         EXPECT_EQUAL(write(client_to_server[1], client_hello_message, sizeof(client_hello_message)), sizeof(client_hello_message));
+332         EXPECT_EQUAL(write(client_to_server[1], client_extensions, sizeof(client_extensions)), sizeof(client_extensions));
+333 
+334         /* Verify that the CLIENT HELLO is accepted */
+335         s2n_negotiate(server_conn, &server_blocked);
+336         EXPECT_TRUE(s2n_conn_get_current_message_type(server_conn) > CLIENT_HELLO);
+337         EXPECT_EQUAL(server_conn->handshake\&.handshake_type, FULL_NO_PFS);
+338 
+339         /* Verify that the server name was received intact\&. */
+340         EXPECT_NOT_NULL(received_server_name = s2n_get_server_name(server_conn));
+341         EXPECT_EQUAL(strlen(received_server_name), strlen(sent_server_name));
+342         EXPECT_BYTEARRAY_EQUAL(received_server_name, sent_server_name, strlen(received_server_name));
+343 
+344         /* Not a real tls client but make sure we block on its close_notify */
+345         int shutdown_rc = s2n_shutdown(server_conn, &server_blocked);
+346         EXPECT_EQUAL(shutdown_rc, -1);
+347         EXPECT_EQUAL(errno, EAGAIN);
+348         EXPECT_EQUAL(server_conn->close_notify_queued, 1);
+349 
+350         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+351 
+352         EXPECT_SUCCESS(s2n_config_free(server_config));
+353         for (int i = 0; i < 2; i++) {
+354             EXPECT_SUCCESS(close(server_to_client[i]));
+355             EXPECT_SUCCESS(close(client_to_server[i]));
+356         }
+357     }
+358 
+359     /* Client sends a valid initial renegotiation_info */
+360     {
+361         struct s2n_connection *server_conn;
+362         struct s2n_config *server_config;
+363         s2n_blocked_status server_blocked;
+364         int server_to_client[2];
+365         int client_to_server[2];
+366 
+367         uint8_t client_extensions[] = {
+368             /* Extension type TLS_EXTENSION_RENEGOTIATION_INFO */
+369             0xff, 0x01,
+370             /* Extension size */
+371             0x00, 0x01,
+372             /* Empty renegotiated_connection */
+373             0x00,
+374         };
+375         int client_extensions_len = sizeof(client_extensions);
+376         uint8_t client_hello_message[] = {
+377             /* Protocol version TLS 1\&.2 */
+378             0x03, 0x03,
+379             /* Client random */
+380             ZERO_TO_THIRTY_ONE,
+381             /* SessionID len - 32 bytes */
+382             0x20,
+383             /* Session ID */
+384             ZERO_TO_THIRTY_ONE,
+385             /* Cipher suites len */
+386             0x00, 0x02,
+387             /* Cipher suite - TLS_RSA_WITH_AES_128_CBC_SHA256 */
+388             0x00, 0x3C,
+389             /* Compression methods len */
+390             0x01,
+391             /* Compression method - none */
+392             0x00,
+393             /* Extensions len */
+394             (client_extensions_len >> 8) & 0xff, (client_extensions_len & 0xff),
+395         };
+396         int body_len = sizeof(client_hello_message) + client_extensions_len;
+397         uint8_t message_header[] = {
+398             /* Handshake message type CLIENT HELLO */
+399             0x01,
+400             /* Body len */
+401             (body_len >> 16) & 0xff, (body_len >> 8) & 0xff, (body_len & 0xff),
+402         };
+403         int message_len = sizeof(message_header) + body_len;
+404         uint8_t record_header[] = {
+405             /* Record type HANDSHAKE */
+406             0x16,
+407             /* Protocol version TLS 1\&.2 */
+408             0x03, 0x03,
+409             /* Message len */
+410             (message_len >> 8) & 0xff, (message_len & 0xff),
+411         };
+412 
+413         /* Create nonblocking pipes */
+414         EXPECT_SUCCESS(pipe(server_to_client));
+415         EXPECT_SUCCESS(pipe(client_to_server));
+416         for (int i = 0; i < 2; i++) {
+417             EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+418             EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+419         }
+420 
+421         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+422         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+423         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+424 
+425         EXPECT_NOT_NULL(server_config = s2n_config_new());
+426         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(server_config, certificate, private_key));
+427         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+428 
+429         /* Send the client hello */
+430         EXPECT_EQUAL(write(client_to_server[1], record_header, sizeof(record_header)), sizeof(record_header));
+431         EXPECT_EQUAL(write(client_to_server[1], message_header, sizeof(message_header)), sizeof(message_header));
+432         EXPECT_EQUAL(write(client_to_server[1], client_hello_message, sizeof(client_hello_message)), sizeof(client_hello_message));
+433         EXPECT_EQUAL(write(client_to_server[1], client_extensions, sizeof(client_extensions)), sizeof(client_extensions));
+434 
+435         /* Verify that the CLIENT HELLO is accepted */
+436         s2n_negotiate(server_conn, &server_blocked);
+437         EXPECT_TRUE(s2n_conn_get_current_message_type(server_conn) > CLIENT_HELLO);
+438         EXPECT_EQUAL(server_conn->handshake\&.handshake_type, FULL_NO_PFS);
+439 
+440         /* Verify that the that we detected secure_renegotiation */
+441         EXPECT_EQUAL(server_conn->secure_renegotiation, 1);
+442 
+443         /* Not a real tls client but make sure we block on its close_notify */
+444         int shutdown_rc = s2n_shutdown(server_conn, &server_blocked);
+445         EXPECT_EQUAL(shutdown_rc, -1);
+446         EXPECT_EQUAL(errno, EAGAIN);
+447         EXPECT_EQUAL(server_conn->close_notify_queued, 1);
+448 
+449         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+450 
+451         EXPECT_SUCCESS(s2n_config_free(server_config));
+452         for (int i = 0; i < 2; i++) {
+453             EXPECT_SUCCESS(close(server_to_client[i]));
+454             EXPECT_SUCCESS(close(client_to_server[i]));
+455         }
+456     }
+457 
+458     /* Client sends a non-empty initial renegotiation_info */
+459     {
+460         struct s2n_connection *server_conn;
+461         struct s2n_config *server_config;
+462         s2n_blocked_status server_blocked;
+463         int server_to_client[2];
+464         int client_to_server[2];
+465 
+466         uint8_t client_extensions[] = {
+467             /* Extension type TLS_EXTENSION_RENEGOTIATION_INFO */
+468             0xff, 0x01,
+469             /* Extension size */
+470             0x00, 0x21,
+471             /* renegotiated_connection len */
+472             0x20,
+473             /* fake enegotiated_connection */
+474             ZERO_TO_THIRTY_ONE,
+475         };
+476         int client_extensions_len = sizeof(client_extensions);
+477         uint8_t client_hello_message[] = {
+478             /* Protocol version TLS 1\&.2 */
+479             0x03, 0x03,
+480             /* Client random */
+481             ZERO_TO_THIRTY_ONE,
+482             /* SessionID len - 32 bytes */
+483             0x20,
+484             /* Session ID */
+485             ZERO_TO_THIRTY_ONE,
+486             /* Cipher suites len */
+487             0x00, 0x02,
+488             /* Cipher suite - TLS_RSA_WITH_AES_128_CBC_SHA256 */
+489             0x00, 0x3C,
+490             /* Compression methods len */
+491             0x01,
+492             /* Compression method - none */
+493             0x00,
+494             /* Extensions len */
+495             (client_extensions_len >> 8) & 0xff, (client_extensions_len & 0xff),
+496         };
+497         int body_len = sizeof(client_hello_message) + client_extensions_len;
+498         uint8_t message_header[] = {
+499             /* Handshake message type CLIENT HELLO */
+500             0x01,
+501             /* Body len */
+502             (body_len >> 16) & 0xff, (body_len >> 8) & 0xff, (body_len & 0xff),
+503         };
+504         int message_len = sizeof(message_header) + body_len;
+505         uint8_t record_header[] = {
+506             /* Record type HANDSHAKE */
+507             0x16,
+508             /* Protocol version TLS 1\&.2 */
+509             0x03, 0x03,
+510             /* Message len */
+511             (message_len >> 8) & 0xff, (message_len & 0xff),
+512         };
+513 
+514         /* Create nonblocking pipes */
+515         EXPECT_SUCCESS(pipe(server_to_client));
+516         EXPECT_SUCCESS(pipe(client_to_server));
+517         for (int i = 0; i < 2; i++) {
+518             EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+519             EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+520         }
+521 
+522         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+523         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+524         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+525 
+526         EXPECT_NOT_NULL(server_config = s2n_config_new());
+527         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(server_config, certificate, private_key));
+528         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+529 
+530         /* Send the client hello */
+531         EXPECT_EQUAL(write(client_to_server[1], record_header, sizeof(record_header)), sizeof(record_header));
+532         EXPECT_EQUAL(write(client_to_server[1], message_header, sizeof(message_header)), sizeof(message_header));
+533         EXPECT_EQUAL(write(client_to_server[1], client_hello_message, sizeof(client_hello_message)), sizeof(client_hello_message));
+534         EXPECT_EQUAL(write(client_to_server[1], client_extensions, sizeof(client_extensions)), sizeof(client_extensions));
+535 
+536         /* Verify that we fail for non-empty renegotiated_connection */
+537         EXPECT_SUCCESS(s2n_connection_set_blinding(server_conn, S2N_SELF_SERVICE_BLINDING));
+538         s2n_negotiate(server_conn, &server_blocked);
+539         EXPECT_EQUAL(s2n_errno, S2N_ERR_NON_EMPTY_RENEGOTIATION_INFO);
+540 
+541         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+542 
+543         EXPECT_SUCCESS(s2n_config_free(server_config));
+544         for (int i = 0; i < 2; i++) {
+545             EXPECT_SUCCESS(close(server_to_client[i]));
+546             EXPECT_SUCCESS(close(client_to_server[i]));
+547         }
+548     }
+549 
+550     /* Client doesn't use the OCSP extension\&. */
+551     {
+552         struct s2n_connection *client_conn;
+553         struct s2n_connection *server_conn;
+554         struct s2n_config *server_config;
+555         int server_to_client[2];
+556         int client_to_server[2];
+557         uint32_t length;
+558 
+559         /* Create nonblocking pipes */
+560         EXPECT_SUCCESS(pipe(server_to_client));
+561         EXPECT_SUCCESS(pipe(client_to_server));
+562         for (int i = 0; i < 2; i++) {
+563            EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+564            EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+565         }
+566 
+567         EXPECT_NOT_NULL(client_conn = s2n_connection_new(S2N_CLIENT));
+568         EXPECT_SUCCESS(s2n_connection_set_read_fd(client_conn, server_to_client[0]));
+569         EXPECT_SUCCESS(s2n_connection_set_write_fd(client_conn, client_to_server[1]));
+570 
+571         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+572         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+573         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+574 
+575         EXPECT_NOT_NULL(server_config = s2n_config_new());
+576         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key_with_status(server_config, certificate, private_key, server_ocsp_status, sizeof(server_ocsp_status)));
+577         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+578 
+579         EXPECT_SUCCESS(s2n_negotiate_test_server_and_client(server_conn, client_conn));
+580 
+581         /* Verify that the client didn't receive an OCSP response\&. */
+582         EXPECT_NULL(s2n_connection_get_ocsp_response(client_conn, &length));
+583         EXPECT_EQUAL(length, 0);
+584 
+585         EXPECT_SUCCESS(s2n_shutdown_test_server_and_client(server_conn, client_conn));
+586 
+587         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+588         EXPECT_SUCCESS(s2n_connection_free(client_conn));
+589 
+590         EXPECT_SUCCESS(s2n_config_free(server_config));
+591 
+592         for (int i = 0; i < 2; i++) {
+593            EXPECT_SUCCESS(close(server_to_client[i]));
+594            EXPECT_SUCCESS(close(client_to_server[i]));
+595         }
+596     }
+597 
+598     /* Server doesn't support the OCSP extension\&. */
+599     {
+600         struct s2n_connection *client_conn;
+601         struct s2n_connection *server_conn;
+602         struct s2n_config *server_config;
+603         struct s2n_config *client_config;
+604         int server_to_client[2];
+605         int client_to_server[2];
+606         uint32_t length;
+607 
+608         /* Create nonblocking pipes */
+609         EXPECT_SUCCESS(pipe(server_to_client));
+610         EXPECT_SUCCESS(pipe(client_to_server));
+611         for (int i = 0; i < 2; i++) {
+612            EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+613            EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+614         }
+615 
+616         EXPECT_NOT_NULL(client_conn = s2n_connection_new(S2N_CLIENT));
+617         EXPECT_SUCCESS(s2n_connection_set_read_fd(client_conn, server_to_client[0]));
+618         EXPECT_SUCCESS(s2n_connection_set_write_fd(client_conn, client_to_server[1]));
+619 
+620         EXPECT_NOT_NULL(client_config = s2n_config_new());
+621         EXPECT_SUCCESS(s2n_config_set_status_request_type(client_config, S2N_STATUS_REQUEST_OCSP));
+622         EXPECT_SUCCESS(s2n_connection_set_config(client_conn, client_config));
+623 
+624         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+625         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+626         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+627 
+628         EXPECT_NOT_NULL(server_config = s2n_config_new());
+629         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(server_config, certificate, private_key));
+630         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+631 
+632         EXPECT_SUCCESS(s2n_negotiate_test_server_and_client(server_conn, client_conn));
+633 
+634         /* Verify that the client didn't receive an OCSP response\&. */
+635         EXPECT_NULL(s2n_connection_get_ocsp_response(client_conn, &length));
+636         EXPECT_EQUAL(length, 0);
+637 
+638         EXPECT_SUCCESS(s2n_shutdown_test_server_and_client(server_conn, client_conn));
+639 
+640         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+641         EXPECT_SUCCESS(s2n_connection_free(client_conn));
+642 
+643         EXPECT_SUCCESS(s2n_config_free(server_config));
+644         EXPECT_SUCCESS(s2n_config_free(client_config));
+645 
+646         for (int i = 0; i < 2; i++) {
+647            EXPECT_SUCCESS(close(server_to_client[i]));
+648            EXPECT_SUCCESS(close(client_to_server[i]));
+649         }
+650     }
+651 
+652     /* Server and client support the OCSP extension\&. */
+653     {
+654         struct s2n_connection *client_conn;
+655         struct s2n_connection *server_conn;
+656         struct s2n_config *server_config;
+657         struct s2n_config *client_config;
+658         int server_to_client[2];
+659         int client_to_server[2];
+660         uint32_t length;
+661 
+662         /* Create nonblocking pipes */
+663         EXPECT_SUCCESS(pipe(server_to_client));
+664         EXPECT_SUCCESS(pipe(client_to_server));
+665         for (int i = 0; i < 2; i++) {
+666            EXPECT_NOT_EQUAL(fcntl(server_to_client[i], F_SETFL, fcntl(server_to_client[i], F_GETFL) | O_NONBLOCK), -1);
+667            EXPECT_NOT_EQUAL(fcntl(client_to_server[i], F_SETFL, fcntl(client_to_server[i], F_GETFL) | O_NONBLOCK), -1);
+668         }
+669 
+670         EXPECT_NOT_NULL(client_conn = s2n_connection_new(S2N_CLIENT));
+671         EXPECT_SUCCESS(s2n_connection_set_read_fd(client_conn, server_to_client[0]));
+672         EXPECT_SUCCESS(s2n_connection_set_write_fd(client_conn, client_to_server[1]));
+673 
+674         EXPECT_NOT_NULL(client_config = s2n_config_new());
+675         EXPECT_SUCCESS(s2n_config_set_status_request_type(client_config, S2N_STATUS_REQUEST_OCSP));
+676         EXPECT_SUCCESS(s2n_connection_set_config(client_conn, client_config));
+677 
+678         EXPECT_NOT_NULL(server_conn = s2n_connection_new(S2N_SERVER));
+679         EXPECT_SUCCESS(s2n_connection_set_read_fd(server_conn, client_to_server[0]));
+680         EXPECT_SUCCESS(s2n_connection_set_write_fd(server_conn, server_to_client[1]));
+681 
+682         EXPECT_NOT_NULL(server_config = s2n_config_new());
+683         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key_with_status(server_config, certificate, private_key, server_ocsp_status, sizeof(server_ocsp_status)));
+684         EXPECT_SUCCESS(s2n_connection_set_config(server_conn, server_config));
+685 
+686         EXPECT_SUCCESS(s2n_negotiate_test_server_and_client(server_conn, client_conn));
+687 
+688         /* Verify that the client didn't receive an OCSP response\&. */
+689         EXPECT_NULL(s2n_connection_get_ocsp_response(client_conn, &length));
+690         EXPECT_EQUAL(length, 0);
+691 
+692         EXPECT_SUCCESS(s2n_shutdown_test_server_and_client(server_conn, client_conn));
+693 
+694         EXPECT_SUCCESS(s2n_connection_free(server_conn));
+695         EXPECT_SUCCESS(s2n_connection_free(client_conn));
+696 
+697         EXPECT_SUCCESS(s2n_config_free(server_config));
+698         EXPECT_SUCCESS(s2n_config_free(client_config));
+699 
+700         for (int i = 0; i < 2; i++) {
+701            EXPECT_SUCCESS(close(server_to_client[i]));
+702            EXPECT_SUCCESS(close(client_to_server[i]));
+703         }
+704     }
+705 
+706     END_TEST();
+707     return 0;
+708 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

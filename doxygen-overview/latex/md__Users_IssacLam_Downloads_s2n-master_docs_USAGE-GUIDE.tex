@@ -1,0 +1,765 @@
+s2n is a C library, and is built using Make. To clone the latest copy of s2n from git use\+:
+
+
+\begin{DoxyCode}
+1 git clone https://github.com/awslabs/s2n.git
+2 cd s2n
+\end{DoxyCode}
+
+
+\subsection*{Building s2n with existing libcrypto}
+
+To build s2n with an existing libcrypto installation, store its root folder in the {\ttfamily L\+I\+B\+C\+R\+Y\+P\+T\+O\+\_\+\+R\+O\+OT} environment variable. 
+\begin{DoxyCode}
+1 # /usr/local/ssl/lib should contain libcrypto.a
+2 LIBCRYPTO\_ROOT=/usr/local/ssl make
+\end{DoxyCode}
+
+
+\subsection*{Building s2n with Libre\+S\+SL}
+
+To build s2n with Libre\+S\+SL, do the following\+:
+
+
+\begin{DoxyCode}
+1 # We keep the build artifacts in the -build directory
+2 cd libcrypto-build
+3 
+4 # Download the latest version of LibreSSL
+5 curl -O http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-x.y.z.tar.gz
+6 tar -xzvf libressl-x.y.z.tar.gz
+7 
+8 # Build LibreSSL's libcrypto
+9 cd libressl-x.y.z
+10 ./configure --prefix=`pwd`/../../libcrypto-root/
+11 make CFLAGS=-fPIC install
+12 
+13 # Make to the main s2n directory
+14 cd ../../
+15 
+16 # Build s2n
+17 make
+\end{DoxyCode}
+
+
+once built, static and dynamic libraries for s2n will be available in the lib/ directory.
+
+\subsection*{Building s2n with Boring\+S\+SL}
+
+To build s2n with Boring\+S\+SL, you must check out a copy of the Boring\+S\+SL directly via git. This procedure has been tested with fb68d6c901b98ffe15b8890d00bc819bf44c5f01 of Boring\+S\+SL.
+
+
+\begin{DoxyCode}
+1 # We keep the build artifacts in the -build directory
+2 cd libcrypto-build
+3 
+4 # Clone BoringSSL
+5 git clone https://boringssl.googlesource.com/boringssl
+6 
+7 # Build BoringSSL
+8 cd boringssl
+9 mkdir build
+10 cd build
+11 cmake -DCMAKE\_C\_FLAGS="-fPIC" ../
+12 make
+13 
+14 # Copy the built library and includes
+15 mkdir ../../../libcrypto-root/lib/
+16 cp crypto/libcrypto.a ../../../libcrypto-root/lib/
+17 cp -r ../include/ ../../../libcrypto-root/include
+18 
+19 # Build s2n
+20 cd ../../../
+21 make
+\end{DoxyCode}
+
+
+once built, static and dynamic libraries for s2n will be available in the lib/ directory.
+
+\subsection*{Building s2n with Open\+S\+S\+L-\/1.\+0.\+2}
+
+To build s2n with Open\+S\+S\+L-\/1.\+0.\+2, do the following\+:
+
+
+\begin{DoxyCode}
+1 # We keep the build artifacts in the -build directory
+2 cd libcrypto-build
+3 
+4 # Download the latest version of OpenSSL
+5 curl -LO https://www.openssl.org/source/openssl-1.0.2-latest.tar.gz
+6 tar -xzvf openssl-1.0.2-latest.tar.gz
+7 
+8 # Build openssl' libcrypto  (NOTE: check directory name 1.0.2-latest unpacked as)
+9 cd openssl-1.0.2d
+10 ./config -fPIC no-shared no-libunbound no-gmp no-jpake no-krb5              \(\backslash\)
+11          no-md2 no-rc5 no-rfc3779 no-sctp no-ssl-trace no-store no-zlib     \(\backslash\)
+12          no-hw no-mdc2 no-seed no-idea enable-ec-nist\_64\_gcc\_128 no-camellia\(\backslash\)
+13          no-bf no-ripemd no-dsa no-ssl2 no-ssl3 no-capieng                  \(\backslash\)
+14          -DSSL\_FORBID\_ENULL -DOPENSSL\_NO\_DTLS1 -DOPENSSL\_NO\_HEARTBEATS      \(\backslash\)
+15          --prefix=`pwd`/../../libcrypto-root/
+16 make depend
+17 make
+18 make install
+19 
+20 # Make to the main s2n directory
+21 cd ../../
+22 
+23 # Build s2n
+24 make
+\end{DoxyCode}
+
+
+{\bfseries Mac Users\+:} please replace \char`\"{}./config\char`\"{} with \char`\"{}./\+Configure darwin64-\/x86\+\_\+64-\/cc\char`\"{}.
+
+once built, static and dynamic libraries for s2n will be available in the lib/ directory.
+
+\subsection*{mlock() and system limits}
+
+Internally s2n uses mlock() to prevent memory from being swapped to disk. The s2n build tests may fail in some environments where the default limit on locked memory is too low. To check this limit, run\+:
+
+
+\begin{DoxyCode}
+1 ulimit -l
+\end{DoxyCode}
+
+
+to raise the limit, consult the documentation for your platform.
+
+\subsubsection*{Disabling mlock()}
+
+To disable s2n\textquotesingle{}s mlock behavior, run your application with the {\ttfamily S2\+N\+\_\+\+D\+O\+N\+T\+\_\+\+M\+L\+O\+CK} environment variable set. s2n also reads this for unit tests. Try {\ttfamily S2\+N\+\_\+\+D\+O\+N\+T\+\_\+\+M\+L\+O\+CK=1 make} if you\textquotesingle{}re having mlock failures during unit tests.
+
+\subsection*{client mode}
+
+At this time s2n does not perform certificate validation and client mode is disabled as a precaution. To enable client mode for testing and development, set the {\bfseries S2\+N\+\_\+\+E\+N\+A\+B\+L\+E\+\_\+\+C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE} environment variable.
+
+
+\begin{DoxyCode}
+1 export S2N\_ENABLE\_CLIENT\_MODE=1
+\end{DoxyCode}
+
+
+\section*{s2n A\+PI}
+
+The A\+PI exposed by s2n is the set of functions and declarations that are in the \char`\"{}s2n.\+h\char`\"{} header file. Any functions and declarations that are in the \char`\"{}s2n.\+h\char`\"{} file are intended to be stable (A\+PI and A\+BI) within major version numbers of s2n releases. Other functions and structures used in s2n internally can not be considered stable and their parameters, names, and sizes may change.
+
+At this time (Summer 2015), there has been no numbered release of s2n and all A\+P\+Is are subject to change based on the feedback and preferences of early adopters.
+
+\subsection*{Preprocessor macros}
+
+s2n defines five preprocessor macros that are used to determine what version of S\+S\+L/\+T\+LS is in use on a connection.
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#define S2N\_SSLv2 20}
+\textcolor{preprocessor}{#define S2N\_SSLv3 30}
+\textcolor{preprocessor}{#define S2N\_TLS10 31}
+\textcolor{preprocessor}{#define S2N\_TLS11 32}
+\textcolor{preprocessor}{#define S2N\_TLS12 33}
+\end{DoxyCode}
+
+
+These correspond to S\+S\+L2.\+0, S\+S\+L3.\+0, T\+L\+S1.\+0, T\+L\+S1.\+1 and T\+L\+S1.\+2 respectively. Note that s2n does not support S\+S\+L2.\+0 for sending and receiving encrypted data, but does accept S\+S\+L2.\+0 hello messages.
+
+\subsection*{Enums}
+
+s2n defines four enum types\+:
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{ \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdba6d8d11a87ee62316e49b1b166c2b2c52}{S2N\_SERVER}, \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdbac93ba9ce574a0b5893fe2a5960e1785d}{S2N\_CLIENT} \} \hyperlink{s2n_8h_a77a64e3b657f90d221c5faf99c643cdb}{s2n\_mode};
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+mode} is used to declare connections as server or client type, respectively. At this time, s2n does not function as a client and only S2\+N\+\_\+\+S\+E\+R\+V\+ER should be used.
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{ \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED}, \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15daf76a7c83e9548139b7b8d50bdd5ff323}{S2N\_BLOCKED\_ON\_READ}, 
+      \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15daefb6db9aaec431d69fc4c1249bc432e3}{S2N\_BLOCKED\_ON\_WRITE} \} \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15d}{s2n\_blocked\_status};
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+blocked\+\_\+status} is used in non-\/blocking mode to indicate in which direction s2n became blocked on I/O before it returned control to the caller. This allows an application to avoid retrying s2n operations until I/O is possible in that direction.
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{ \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a090459f0733b199be908d881d7db871f}{S2N\_BUILT\_IN\_BLINDING}, 
+      \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62a1b0ee228485be6bb2d6e2129827d51d2}{S2N\_SELF\_SERVICE\_BLINDING} \} \hyperlink{s2n_8h_a364ad496c9dd42fd3117a2f9d3289e62}{s2n\_blinding};
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+blinding} is used to opt-\/out of s2n\textquotesingle{}s built-\/in blinding. Blinding is a mitigation against timing side-\/channels which in some cases can leak information about encrypted data. By default s2n will cause a thread to sleep between 1ms and 10 seconds whenever tampering is detected.
+
+Setting the {\bfseries S2\+N\+\_\+\+S\+E\+L\+F\+\_\+\+S\+E\+R\+V\+I\+C\+E\+\_\+\+B\+L\+I\+N\+D\+I\+NG} option with {\bfseries s2n\+\_\+connection\+\_\+set\+\_\+blinding} turns off this behavior. This is useful for applications that are handling many connections in a single thread. In that case, if \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\+\_\+recv()} or \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\+\_\+negotiate()} return an error, self-\/service applications should call {\bfseries s2n\+\_\+connection\+\_\+get\+\_\+delay} and pause activity on the connection for the specified number of nanoseconds before calling close() or shutdown().
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{ \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635aea0f05b257857adc1282f77c5414e35a}{S2N\_STATUS\_REQUEST\_NONE}, 
+      \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635a3e83f0e90eef54adc21b3d97a9a0d9b8}{S2N\_STATUS\_REQUEST\_OCSP} \} \hyperlink{s2n_8h_a7d38e45340d223d0100a2d4bc0526635}{s2n\_status\_request\_type};
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+status\+\_\+request\+\_\+type} is used to define the type, if any, of certificate status request an S2\+N\+\_\+\+C\+L\+I\+E\+NT should make during the handshake. The only supported status request type is O\+C\+SP, {\bfseries S2\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+Q\+U\+E\+S\+T\+\_\+\+O\+C\+SP}.
+
+\subsection*{Opaque structures}
+
+s2n defines two opaque structures that are used for managed objects. Because these structures are opaque, they can only be safely referenced indirectly through pointers and their sizes may change with future versions of s2n.
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config};
+\textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection};
+\end{DoxyCode}
+
+
+{\bfseries \hyperlink{structs2n__config}{s2n\+\_\+config}} structures are a configuration object, used by servers for holding cryptographic certificates, keys and preferences. {\bfseries \hyperlink{structs2n__connection}{s2n\+\_\+connection}} structures are used to track each connection.
+
+\subsection*{Error handling}
+
+s2n functions that return \textquotesingle{}int\textquotesingle{} return 0 to indicate success and -\/1 to indicate failure. s2n functions that return pointer types return N\+U\+LL in the case of failure. When an s2n function returns a failure, s2n\+\_\+errno will be set to a value corresponding to the error. This error value can be translated into a string explaining the error in English by calling s2n\+\_\+strerror(s2n\+\_\+errno, \char`\"{}\+E\+N\char`\"{});
+
+Example\+:
+
+
+\begin{DoxyCode}
+1 if (s2n\_config\_set\_cipher\_preferences(config, prefs) < 0) \{
+2     printf("Setting cipher prefs failed! %s", (s2n\_strerror(s2n\_errno, "EN"));
+3     return -1;
+4 \}
+\end{DoxyCode}
+
+
+\subsubsection*{Error categories}
+
+s2n organizes errors into different \char`\"{}types\char`\"{} to allow applications to do logic on error values without catching all possibilities. Applications using non-\/blocking I/O should check error type to determine if the I/O operation failed because it would block or for some other error. To retrieve the type for a given error use {\ttfamily \hyperlink{s2n_8h_a526856aac3b44999c3f716a3df648da1}{s2n\+\_\+error\+\_\+get\+\_\+type()}}. Applications should perform any error handling logic using these high level types\+:
+
+
+\begin{DoxyCode}
+1 S2N\_ERR\_T\_OK=0, /* No error */
+2 S2N\_ERR\_T\_IO, /* Underlying I/O operation failed, check system errno */
+3 S2N\_ERR\_T\_CLOSED, /* EOF */
+4 S2N\_ERR\_T\_BLOCKED, /* Underlying I/O operation would block */
+5 S2N\_ERR\_T\_ALERT, /* Incoming Alert */
+6 S2N\_ERR\_T\_PROTO, /* Failure in some part of the TLS protocol. Ex: CBC verification failure */
+7 S2N\_ERR\_T\_INTERNAL, /* Error internal to s2n. A precondition could have failed. */
+8 S2N\_ERR\_T\_USAGE /* User input error. Ex: Providing an invalid cipher preference version */
+\end{DoxyCode}
+
+
+Here\textquotesingle{}s an example that handles errors based on type\+:
+
+
+\begin{DoxyCode}
+1 if (s2n\_recv(conn, &blocked) < 0) \{
+2     switch(s2n\_error\_get\_type(s2n\_errno)) \{
+3         case S2N\_ERR\_T\_BLOCKED:
+4             /* Blocked, come back later */
+5             return -1;
+6         case S2N\_ERR\_T\_CLOSED:
+7             return 0;
+8         case S2N\_ERR\_T\_IO:
+9             handle\_io\_err();
+10             return -1;
+11         case S2N\_ERR\_T\_PROTO:
+12             handle\_proto\_err();
+13             return -1;
+14         case S2N\_ERR\_T\_ALERT:
+15             log\_alert(s2n\_connection\_get\_alert(conn));
+16             return -1;
+17         /* Everything else */
+18         default:
+19             log\_other\_error();
+20             return -1;
+21     \}
+22 \}
+\end{DoxyCode}
+
+
+\subsection*{Initialization and teardown}
+
+\subsubsection*{s2n\+\_\+init}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_abc620f8194383c6fcddd911edcf7d692}{s2n\_init}();
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+init} initializes the s2n library and should be called once in your application, before any other s2n functions are called. Failure to call \hyperlink{s2n_8h_abc620f8194383c6fcddd911edcf7d692}{s2n\+\_\+init()} will result in errors from other s2n functions.
+
+\subsubsection*{s2n\+\_\+cleanup}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a907fdf445e5fb1752f1b18f0ddf935b3}{s2n\_cleanup}();
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+cleanup} cleans up any internal resources used by s2n. This function should be called from each thread or process that is created subsequent to calling {\bfseries s2n\+\_\+init} when that thread or process is done calling other s2n functions.
+
+\subsection*{Configuration-\/oriented functions}
+
+\subsubsection*{s2n\+\_\+config\+\_\+new}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__config}{s2n\_config} * \hyperlink{s2n_8h_a29ce06d12862218a283abdac554c8e19}{s2n\_config\_new}();
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+new} returns a new configuration object suitable for associating certs and keys. This object can (and should) be associated with many connection objects.
+
+\subsubsection*{s2n\+\_\+config\+\_\+free}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }int \hyperlink{s2n_8h_a25b7d82e94f572b657be3936196222c3}{s2n\_config\_free}(struct \hyperlink{structs2n__config}{s2n\_config} *\hyperlink{apps_8h_a67aa6ff0076e9d4fb2b5ad9e6fcb4d89}{config});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+free} frees the memory associated with an {\bfseries \hyperlink{structs2n__config}{s2n\+\_\+config}} object.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+cipher\+\_\+preferences}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a21b09fcd09e2d33e8ed9389a109f2ab2}{s2n\_config\_set\_cipher\_preferences}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config,
+                                      \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\hyperlink{s2n__config_8c_aa31f487a99743d24af9076a3e11e5425}{version});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+cipher\+\_\+preferences} sets the ciphersuite and protocol versions. The currently supported versions are;
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*11{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}{\bf version }&{\bf S\+S\+Lv3 }&{\bf T\+L\+S1.\+0 }&{\bf T\+L\+S1.\+1 }&{\bf T\+L\+S1.\+2 }&{\bf A\+E\+S-\/\+C\+BC }&{\bf A\+E\+S-\/\+G\+CM }&{\bf 3\+D\+ES }&{\bf R\+C4 }&{\bf D\+HE }&{\bf E\+C\+D\+HE  }\\\cline{1-11}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}{\bf version }&{\bf S\+S\+Lv3 }&{\bf T\+L\+S1.\+0 }&{\bf T\+L\+S1.\+1 }&{\bf T\+L\+S1.\+2 }&{\bf A\+E\+S-\/\+C\+BC }&{\bf A\+E\+S-\/\+G\+CM }&{\bf 3\+D\+ES }&{\bf R\+C4 }&{\bf D\+HE }&{\bf E\+C\+D\+HE  }\\\cline{1-11}
+\endhead
+\char`\"{}default\char`\"{} &&X &X &X &X &X &X &&&X \\\cline{1-11}
+\char`\"{}20160411\char`\"{} &&X &X &X &X &X &X &&&X \\\cline{1-11}
+\char`\"{}20150306\char`\"{} &&X &X &X &X &X &X &&&X \\\cline{1-11}
+\char`\"{}20150214\char`\"{} &&X &X &X &X &X &X &&X &\\\cline{1-11}
+\char`\"{}20150202\char`\"{} &&X &X &X &X &&X &&X &\\\cline{1-11}
+\char`\"{}20141001\char`\"{} &&X &X &X &X &&X &X &X &\\\cline{1-11}
+\char`\"{}20140601\char`\"{} &X &X &X &X &X &&X &X &X &\\\cline{1-11}
+\end{longtabu}
+The \char`\"{}default\char`\"{} version is special in that it will be updated with future s2n changes and ciphersuites and protocol versions may be added and removed, or their internal order of preference might change. Numbered versions are fixed and will never change.
+
+\char`\"{}20160411\char`\"{} follows the same general preference order as \char`\"{}default\char`\"{}. The main difference is it has a C\+BC cipher suite at the top. This is to accomodate certain Java clients that have poor G\+CM implementations. Users of s2n who have found G\+CM to be hurting performance for their clients should consider this version.
+
+s2n does not expose an A\+PI to control the order of preference for each ciphersuite or protocol version. s2n follows the following order\+:
+
+
+\begin{DoxyEnumerate}
+\item Always prefer the highest protocol version supported
+\item Always use forward secrecy where possible. Prefer E\+C\+D\+HE over D\+HE.
+\item Prefer encryption ciphers in the following order\+: A\+E\+S128, 3\+D\+ES, A\+E\+S256, R\+C4.
+\item Prefer record authentication modes in the following order\+: G\+CM, S\+H\+A256, S\+H\+A1, M\+D5.
+\end{DoxyEnumerate}
+
+\subsubsection*{s2n\+\_\+config\+\_\+add\+\_\+cert\+\_\+chain\+\_\+and\+\_\+key}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a315153a7f97b2568970c19f7bf1d372e}{s2n\_config\_add\_cert\_chain\_and\_key}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, 
+                                      \textcolor{keywordtype}{char} *cert\_chain\_pem, 
+                                      \textcolor{keywordtype}{char} *private\_key\_pem);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+add\+\_\+cert\+\_\+chain\+\_\+and\+\_\+key} associates a certificate chain and a private key, with an {\bfseries \hyperlink{structs2n__config}{s2n\+\_\+config}} object. At present, only one certificate-\/chain/key pair may be associated with a config.
+
+{\bfseries cert\+\_\+chain\+\_\+pem} should be a P\+EM encoded certificate chain, with the first certificate in the chain being your servers certificate. {\bfseries private\+\_\+key\+\_\+pem} should be a P\+EM encoded private key corresponding to the server certificate.
+
+\subsubsection*{s2n\+\_\+config\+\_\+add\+\_\+cert\+\_\+chain\+\_\+and\+\_\+key\+\_\+with\+\_\+status}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a0275e457e9c62cf1d5b9a1126e853003}{s2n\_config\_add\_cert\_chain\_and\_key\_with\_status}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, 
+                                                  \textcolor{keywordtype}{char} *cert\_chain\_pem, 
+                                                  \textcolor{keywordtype}{char} *private\_key\_pem,
+                                                  \textcolor{keyword}{const} uint8\_t *status,
+                                                  uint32\_t \hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+add\+\_\+cert\+\_\+chain\+\_\+and\+\_\+key\+\_\+with\+\_\+status} performs the same function as s2n\+\_\+config\+\_\+add\+\_\+cert\+\_\+chain\+\_\+and\+\_\+key, and associates an O\+C\+SP status response with the server certificate. If a client requests the O\+C\+SP status of the server certificate, this is the response used in the Certificate\+Status handshake message.
+
+\subsubsection*{s2n\+\_\+config\+\_\+add\+\_\+dhparams}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a82513564c95dc7a4174c3d04eb043564}{s2n\_config\_add\_dhparams}(\textcolor{keyword}{struct} \hyperlink{structs2n__config}{s2n\_config} *config, 
+                            \textcolor{keywordtype}{char} *dhparams\_pem);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+add\+\_\+dhparams} associates a set of Diffie-\/\+Hellman parameters with an {\bfseries \hyperlink{structs2n__config}{s2n\+\_\+config}} object. {\bfseries dhparams\+\_\+pem} should be P\+EM encoded DH parameters.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+protocol\+\_\+preferences}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a9f5f2fca97444f9c039a3681c2351fb0}{s2n\_config\_set\_protocol\_preferences}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config,
+                                        \textcolor{keyword}{const} \textcolor{keywordtype}{char} **protocols,
+                                        \textcolor{keywordtype}{int} protocol\_count);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+protocol\+\_\+preferences} sets the application protocol preferences on an {\bfseries \hyperlink{structs2n__config}{s2n\+\_\+config}} object. {\bfseries protocols} is a list in order of preference, with most preferred protocol first, and of length {\bfseries protocol\+\_\+count}. When acting as an {\bfseries S2\+N\+\_\+\+C\+L\+I\+E\+NT} the protocol list is included in the Client Hello message as the A\+L\+PN extension. As an {\bfseries S2\+N\+\_\+\+S\+E\+R\+V\+ER}, the list is used to negotiate a mutual application protocol with the client.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+status\+\_\+request\+\_\+type}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_ae98f2b06b3311e7e845e938392d3505d}{s2n\_config\_set\_status\_request\_type}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, s2n\_status\_request\_type \hyperlink{crypto_2x509_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+status\+\_\+request\+\_\+type} Sets up an S2\+N\+\_\+\+C\+L\+I\+E\+NT to request the server certificate status during an S\+SL handshake. If set to S2\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+Q\+U\+E\+S\+T\+\_\+\+N\+O\+NE, no status request is made.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+nanoseconds\+\_\+since\+\_\+epoch\+\_\+callback}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a55f4687b7def930a7ac41335d35d72ef}{s2n\_config\_set\_nanoseconds\_since\_epoch\_callback}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, \textcolor{keywordtype}{int} (*nanoseconds\_since\_epoch)(\textcolor{keywordtype}{void} *, uint64\_t *), \textcolor{keywordtype}{void} * data);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+nanoseconds\+\_\+since\+\_\+epoch\+\_\+callback} allows the caller to set a callback function that will be used to get the time. The callback function takes two arguments; a pointer to abitrary data for use within the callback, and a pointer to a 64 bit unsigned integer. The first pointer will be set to the value of {\bfseries data} which supplied by the caller when setting the callback. The integer pointed to by the second pointer should be set to the number of nanoseconds since the Unix epoch (Midnight, January 1st, 1970). The function should return 0 on success and -\/1 on error. The function is also required to implement a monotonic time source; the number of nanoseconds returned should never decrease between calls.
+
+\subsection*{Session Caching related calls}
+
+s2n includes support for resuming from cached S\+S\+L/\+T\+LS session, provided the caller sets (and implements) three callback functions.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+cache\+\_\+store\+\_\+callback}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a2b4ec043b39d8a0e3f4f5113e941c338}{s2n\_config\_set\_cache\_store\_callback}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, \textcolor{keywordtype}{int} (*\hyperlink{s2nd_8c_a9415451f8ae94353430b3e0890ad6196}{cache\_store})(\textcolor{keywordtype}{void} *, uint64\_t ttl\_in\_seconds, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *
+      key, uint64\_t key\_size, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *value, uint64\_t value\_size), \textcolor{keywordtype}{void} *data);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+cache\+\_\+store\+\_\+callback} allows the caller to set a callback function that will be used to store S\+SL session data in a cache. The callback function takes six arguments\+: a pointer to abitrary data for use within the callback, a 64-\/bit unsigned integer specifying the number of seconds the session data may be stored for, a pointer to a key which can be used to retrieve the cached entry, a 64 bit unsigned integer specifying the size of this key, a pointer to a value which should be stored, and a 64 bit unsigned integer specified the size of this value.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+cache\+\_\+retrieve\+\_\+callback}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_ab1cd3ada52e3854db427d219a7183de2}{s2n\_config\_set\_cache\_retrieve\_callback}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, \textcolor{keywordtype}{int} (*\hyperlink{s2nd_8c_a0153b562f602987e5668497ccb285868}{cache\_retrieve})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *key, uint64\_t 
+      key\_size, \textcolor{keywordtype}{void} *value, uint64\_t *value\_size), \textcolor{keywordtype}{void} *data)
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+cache\+\_\+retrieve\+\_\+callback} allows the caller to set a callback function that will be used to retrieve S\+SL session data from a cache. The callback function takes five arguments\+: a pointer to abitrary data for use within the callback, a pointer to a key which can be used to retrieve the cached entry, a 64 bit unsigned integer specifying the size of this key, a pointer to a memory location where the value should be stored, and a pointer to a 64 bit unsigned integer specifing the size of this value. Initially $\ast$value\+\_\+size will be set to the amount of space allocated for the value, the callback should set $\ast$value\+\_\+size to the actual size of the data returned. If there is insufficient space, -\/1 should be returned.
+
+\subsubsection*{s2n\+\_\+config\+\_\+set\+\_\+cache\+\_\+delete\+\_\+callback}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a5a13d9dc1fefcdd6c08c329e47f84e9e}{s2n\_config\_set\_cache\_delete\_callback}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__config}{s2n\_config} *config, \textcolor{keywordtype}{int} (*\hyperlink{s2nd_8c_a82dfd7cd8c27b3f6e78bc51538e81dce}{cache\_delete}))(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *key, uint64\_t key\_size),
+       \textcolor{keywordtype}{void} *data);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+config\+\_\+set\+\_\+cache\+\_\+delete\+\_\+callback} allows the caller to set a callback function that will be used to delete S\+SL session data from a cache. The callback function takes three arguments\+: a pointer to abitrary data for use within the callback, a pointer to a key which can be used to delete the cached entry, and a 64 bit unsigned integer specifying the size of this key.
+
+\subsection*{Connection-\/oriented functions}
+
+\subsubsection*{s2n\+\_\+connection\+\_\+new}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{struct }\hyperlink{structs2n__connection}{s2n\_connection} * \hyperlink{s2n_8h_acffb3a7098380db63bc23498482ee4b9}{s2n\_connection\_new}(s2n\_mode 
+      \hyperlink{structs2n__connection_a080df3a36b82d7a11f200fdf1a38f360}{mode});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+new} creates a new connection object. Each s2n S\+S\+L/\+T\+LS connection uses one of these objects. These connection objects can be operated on by up to two threads at a time, one sender and one receiver, but neither sending nor receiving are atomic, so if these objects are being called by multiple sender or receiver threads, you must perform your own locking to ensure that only one sender or receiver is active at a time. The {\bfseries mode} parameters specifies if the caller is a server, or is a client.
+
+Connections objects are re-\/usable across many connections, and should be re-\/used (to avoid deallocating and allocating memory). You should wipe connections immediately after use.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+set\+\_\+config}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a85ced5d91831da552d5c4997a3f30abb}{s2n\_connection\_set\_config}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, 
+                              \textcolor{keyword}{struct} \hyperlink{structs2n__config}{s2n\_config} *config);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+set\+\_\+config} Associates a configuration object with a connection.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+set\+\_\+fd}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a80776ecf7e726f52165cdec5e2652d1e}{s2n\_connection\_set\_fd}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, 
+                          \textcolor{keywordtype}{int} \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd});
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a098af174491e2fe62cb0635d1adab854}{s2n\_connection\_set\_read\_fd}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, 
+                               \textcolor{keywordtype}{int} \hyperlink{structs2n__connection_ab8b1e66f9a7b17fa4541b1733b87e011}{readfd});
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_ab340fbb2459b04d8f6d2803483a14ab1}{s2n\_connection\_set\_write\_fd}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, 
+                                \textcolor{keywordtype}{int} \hyperlink{structs2n__connection_abb118879baad1066df4d078fdb2da908}{writefd});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+set\+\_\+fd} sets the file-\/descriptor for an s2n connection. This file-\/descriptor should be active and connected. s2n also supports setting the read and write file-\/descriptors to different values (for pipes or other unusual types of I/O).
+
+\subsubsection*{s2n\+\_\+set\+\_\+server\+\_\+name}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a9b37f3c0364e6de9f0b534e624204f62}{s2n\_set\_server\_name}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, 
+                        \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\hyperlink{structs2n__connection_aaeec7205ccf6834a5eaf18d9a5eb8936}{server\_name});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+set\+\_\+server\+\_\+name} Sets the server name for the connection. In future, this can be used by clients who wish to use the T\+LS \char`\"{}\+Server Name indicator\char`\"{} extension. At present, client functionality is disabled.
+
+\subsubsection*{s2n\+\_\+get\+\_\+server\+\_\+name}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{const} \textcolor{keywordtype}{char} *\hyperlink{s2n_8h_a541a5e22fc8b6295e4c6bb1692cdd850}{s2n\_get\_server\_name}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+get\+\_\+server\+\_\+name} returns the server name associated with a connection, or N\+U\+LL if none is found. This can be used by a server to determine which server name the client is using.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+set\+\_\+blinding}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a7b2423a701b89f7ca3a4de550c519d35}{s2n\_connection\_set\_blinding}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, 
+      s2n\_blinding \hyperlink{structs2n__connection_a1bfa8f7b48f1d0d742fed4a18b4d3f40}{blinding});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+set\+\_\+blinding} can be used to configure s2n to either use built-\/in blinding (set blinding to S2\+N\+\_\+\+B\+U\+I\+L\+T\+\_\+\+I\+N\+\_\+\+B\+L\+I\+N\+D\+I\+NG) or self-\/service blinding (set blinding to S2\+N\+\_\+\+S\+E\+L\+F\+\_\+\+S\+E\+R\+V\+I\+C\+E\+\_\+\+B\+L\+I\+N\+D\+I\+NG).
+
+\subsubsection*{s2n\+\_\+connection\+\_\+get\+\_\+delay}
+
+
+\begin{DoxyCode}
+int64\_t \hyperlink{s2n_8h_aebf38ba3c1ebd08e7fdd185d8f3ec521}{s2n\_connection\_get\_delay}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+get\+\_\+delay} returns the number of nanoseconds an application using self-\/service blinding should pause before calling close() or shutdown().
+
+\subsubsection*{\hyperlink{s2n__connection_8c_ab242f62c5824c72476844970b1ae7301}{s2n\+\_\+connection\+\_\+prefer\+\_\+throughput(struct s2n\+\_\+connection $\ast$conn)}}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_ab242f62c5824c72476844970b1ae7301}{s2n\_connection\_prefer\_throughput}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a332427237ca8907196034ac5768a65bf}{s2n\_connection\_prefer\_low\_latency}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+prefer\+\_\+throughput} and {\bfseries s2n\+\_\+connection\+\_\+prefer\+\_\+low\+\_\+latency} change the behavior of s2n when sending data to prefer either throughput or low latency. Connections prefering low latency will be encrypted using small record sizes that can be decrypted sooner by the recipient. Connections prefering throughput will use large record sizes that minimize overhead.
+
+Connections prefer low latency by default.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+get\+\_\+wire\+\_\+bytes}
+
+
+\begin{DoxyCode}
+uint64\_t \hyperlink{s2n_8h_a4d1194b561c825208d387b4660670b63}{s2n\_connection\_get\_wire\_bytes\_in}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+uint64\_t \hyperlink{s2n_8h_a43ef96c4123345ccc7952a387125409e}{s2n\_connection\_get\_wire\_bytes\_out}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+get\+\_\+wire\+\_\+bytes\+\_\+in} and {\bfseries s2n\+\_\+connection\+\_\+get\+\_\+wire\+\_\+bytes\+\_\+out} return the number of bytes transmitted by s2n \char`\"{}on the wire\char`\"{}, in and out respectively.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+get\+\_\+protocol\+\_\+version}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a3d4e8c095c40ea7689f14022567cd3e9}{s2n\_connection\_get\_client\_hello\_version}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_af15303e1d72a95320b6138edeef7a6ab}{s2n\_connection\_get\_client\_protocol\_version}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_ae2ea6a2e6468883f56459431f2024b0f}{s2n\_connection\_get\_server\_protocol\_version}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a4cb9df94e1fe137f10040fbfc1ad98f9}{s2n\_connection\_get\_actual\_protocol\_version}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+get\+\_\+client\+\_\+protocol\+\_\+version} returns the protocol version number supported by the client, {\bfseries s2n\+\_\+connection\+\_\+get\+\_\+server\+\_\+protocol\+\_\+version} returns the protocol version number supported by the server and {\bfseries s2n\+\_\+connection\+\_\+get\+\_\+actual\+\_\+protocol\+\_\+version} returns the protocol version number actually used by s2n for the connection. {\bfseries s2n\+\_\+connection\+\_\+get\+\_\+client\+\_\+hello\+\_\+version} returns the protocol version used in the initial client hello message.
+
+Each version number value corresponds to the macros defined as {\bfseries S2\+N\+\_\+\+S\+S\+Lv2}, {\bfseries S2\+N\+\_\+\+S\+S\+Lv3}, {\bfseries S2\+N\+\_\+\+T\+L\+S10}, {\bfseries S2\+N\+\_\+\+T\+L\+S11} and {\bfseries S2\+N\+\_\+\+T\+L\+S12}.
+
+\subsubsection*{s2n\+\_\+get\+\_\+application\+\_\+protocol}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{const} \textcolor{keywordtype}{char} *\hyperlink{s2n_8h_a5a0e7b4549f38de84e325e221b596908}{s2n\_get\_application\_protocol}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+get\+\_\+application\+\_\+protocol} returns the negotiated application protocol for a {\bfseries \hyperlink{structs2n__connection}{s2n\+\_\+connection}}. In the event of no protocol being negotiated, N\+U\+LL is returned.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+get\+\_\+ocsp\+\_\+response}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{const} uint8\_t *\hyperlink{s2n_8h_a2b18cd3437636a7a21e10f3d5d09ff9d}{s2n\_connection\_get\_ocsp\_response}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn, uint32\_t *\hyperlink{crypto_2asn1_2asn1_8h_a5a2d57a92488e64c730cabc247c9d5b5}{length});
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+get\+\_\+ocsp\+\_\+response} returns the O\+C\+SP response sent by a server during the handshake. If no status response is received, N\+U\+LL is returned.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+get\+\_\+alert}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a6726a1cbae275671f2751ac610dc5f0f}{s2n\_connection\_get\_alert}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+If a connection was shut down by the peer, {\bfseries s2n\+\_\+connection\+\_\+get\+\_\+alert} returns the T\+LS alert code that caused a connection to be shut down. s2n considers all T\+LS alerts fatal and shuts down a connection whenever one is received.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+get\+\_\+cipher}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{const} \textcolor{keywordtype}{char} * \hyperlink{s2n_8h_a119c0252cf7edde4d4a5c65f8cd23721}{s2n\_connection\_get\_cipher}(\textcolor{keyword}{struct} 
+      \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+get\+\_\+cipher} returns a string indicating the cipher suite negotiated by s2n for a connection in Openssl format, e.\+g. \char`\"{}\+E\+C\+D\+H\+E-\/\+R\+S\+A-\/\+A\+E\+S128-\/\+G\+C\+M-\/\+S\+H\+A256\char`\"{}.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+wipe}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_aa869211ca9b49f497cdb5579935203de}{s2n\_connection\_wipe}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+wipe} erases all data associated with a connection including pending reads.
+
+\subsubsection*{s2n\+\_\+connection\+\_\+free}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a03ed084d7fb943c7d32b13075ed8eff7}{s2n\_connection\_free}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+connection\+\_\+free} frees the memory associated with an \hyperlink{structs2n__connection}{s2n\+\_\+connection} handle.
+
+\subsection*{I/O functions}
+
+s2n supports both blocking and non-\/blocking I/O. To use s2n in non-\/blocking mode, set the underlying file descriptors as non-\/blocking (i.\+e. with {\bfseries fcntl}). In blocking mode, each s2n I/O function will not return until it is complete. In non-\/blocking mode an s2n I/O function may return while there is still I/O pending. In this case the value of the {\bfseries blocked} parameter will be set to either {\bfseries S2\+N\+\_\+\+B\+L\+O\+C\+K\+E\+D\+\_\+\+O\+N\+\_\+\+R\+E\+AD} or {\bfseries S2\+N\+\_\+\+B\+L\+O\+C\+K\+E\+D\+\_\+\+O\+N\+\_\+\+W\+R\+I\+TE}, depending on the direction in which s2n is blocked.
+
+s2n I/O functions should be called repeatedly until the {\bfseries blocked} parameter is {\bfseries S2\+N\+\_\+\+N\+O\+T\+\_\+\+B\+L\+O\+C\+K\+ED}.
+
+\subsubsection*{s2n\+\_\+negotiate}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a309d98d4c1adfd10c5dd62192f4c1051}{s2n\_negotiate}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn, s2n\_blocked\_status *blocked);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+negotiate} performs the initial \char`\"{}handshake\char`\"{} phase of a T\+LS connection and must be called before any {\bfseries s2n\+\_\+recv} or {\bfseries s2n\+\_\+send} calls.
+
+\subsubsection*{s2n\+\_\+send}
+
+
+\begin{DoxyCode}
+ssize\_t \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn 
+              \textcolor{keywordtype}{void} *buf,
+              ssize\_t size,
+              s2n\_blocked\_status *blocked);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+send} writes and encrypts {\bfseries size$\ast$ of $\ast$$\ast$buf} data to the associated connection. {\bfseries s2n\+\_\+send} will return the number of bytes written, and may indicate a partial write. Partial writes are possible not just for non-\/blocking I/O, but also for connections aborted while active. {\bfseries N\+O\+TE\+:} Unlike Open\+S\+SL, repeated calls to {\bfseries s2n\+\_\+send} should not duplicate the original parameters, but should update {\bfseries buf} and {\bfseries size} per the indication of size written. For example;
+
+
+\begin{DoxyCode}
+s2n\_blocked\_status blocked;
+\textcolor{keywordtype}{int} written = 0;
+\textcolor{keywordtype}{char} data[10]; \textcolor{comment}{/* Some data we want to write */}
+\textcolor{keywordflow}{do} \{
+    \textcolor{keywordtype}{int} w = \hyperlink{s2n_8h_a6d221800840cc73c57109088dac2f467}{s2n\_send}(conn, data + written, 10 - written, &blocked);
+    \textcolor{keywordflow}{if} (w < 0) \{
+        \textcolor{comment}{/* Some kind of error */}
+        \textcolor{keywordflow}{break};
+    \}
+    written += w;
+\} \textcolor{keywordflow}{while} (blocked != \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED}); 
+\end{DoxyCode}
+
+
+\subsubsection*{s2n\+\_\+recv}
+
+
+\begin{DoxyCode}
+ssize\_t \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn,
+             \textcolor{keywordtype}{void} *buf,
+             ssize\_t size,
+             s2n\_blocked\_status *blocked);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+recv} decrypts and reads {\bfseries size$\ast$ to $\ast$$\ast$buf} data from the associated connection. {\bfseries s2n\+\_\+recv} will return the number of bytes read and also return \char`\"{}0\char`\"{} on connection shutdown by the peer.
+
+{\bfseries N\+O\+TE\+:} Unlike Open\+S\+SL, repeated calls to {\bfseries s2n\+\_\+recv} should not duplicate the original parameters, but should update {\bfseries buf} and {\bfseries size} per the indication of size read. For example;
+
+
+\begin{DoxyCode}
+s2n\_blocked\_status blocked;
+\textcolor{keywordtype}{int} bytes\_read = 0;
+\textcolor{keywordtype}{char} data[10];
+\textcolor{keywordflow}{do} \{
+    \textcolor{keywordtype}{int} r = \hyperlink{s2n_8h_afede11e597a4db3024ec2b68733a643d}{s2n\_recv}(conn, data + bytes\_read, 10 - bytes\_read, &blocked);
+    \textcolor{keywordflow}{if} (r < 0) \{
+        \textcolor{comment}{/* Some kind of error */}
+        \textcolor{keywordflow}{break};
+    \}
+    bytes\_read += r;
+\} \textcolor{keywordflow}{while} (blocked != \hyperlink{s2n_8h_af70ca0b089daa98cd79a424d3f6af15da7afdc9e789b567fe89c7142f34ec3ebd}{S2N\_NOT\_BLOCKED});
+\end{DoxyCode}
+
+
+\subsubsection*{s2n\+\_\+shutdown}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} \hyperlink{s2n_8h_a1cb034f97199a7f7d7888a447cf0fe67}{s2n\_shutdown}(\textcolor{keyword}{struct} \hyperlink{structs2n__connection}{s2n\_connection} *conn,
+                 s2n\_blocked\_status *blocked);
+\end{DoxyCode}
+
+
+{\bfseries s2n\+\_\+shutdown} shuts down the s2n connection. Once a connection has been shut down it is not available for reading or writing.
+
+\section*{Examples}
+
+To understand the A\+PI it may be easiest to see examples in action. s2n\textquotesingle{}s \href{https://github.com/awslabs/s2n/blob/master/bin/}{\tt bin/} directory includes an example client (s2nc) and server (s2nd). 

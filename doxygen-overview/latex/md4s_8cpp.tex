@@ -1,0 +1,104 @@
+\hypertarget{md4s_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/md4/md4s.cpp File Reference}
+\label{md4s_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/md4/md4s.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/crypto/md4/md4s.\+cpp}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/md4.\+h$>$}\\*
+Include dependency graph for md4s.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{md4s_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}{md4\+\_\+block\+\_\+x86} (\hyperlink{crypto_2md4_2md4_8h_a304a0316e739d70b9d117dcb782bfc13}{M\+D4\+\_\+\+C\+TX} $\ast$ctx, unsigned char $\ast$buffer, int \hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{md4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{md4s.\+cpp@{md4s.\+cpp}!md4\+\_\+block\+\_\+x86@{md4\+\_\+block\+\_\+x86}}
+\index{md4\+\_\+block\+\_\+x86@{md4\+\_\+block\+\_\+x86}!md4s.\+cpp@{md4s.\+cpp}}
+\subsubsection[{\texorpdfstring{md4\+\_\+block\+\_\+x86(\+M\+D4\+\_\+\+C\+T\+X $\ast$ctx, unsigned char $\ast$buffer, int num)}{md4_block_x86(MD4_CTX *ctx, unsigned char *buffer, int num)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} md4\+\_\+block\+\_\+x86 (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+D4\+\_\+\+C\+TX} $\ast$}]{ctx, }
+\item[{unsigned char $\ast$}]{buffer, }
+\item[{int}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}{}\label{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{md4s_8cpp_a2cb746661191065247d26d3e92b5f473_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{md4s.\+cpp@{md4s.\+cpp}!main@{main}}
+\index{main@{main}!md4s.\+cpp@{md4s.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{md4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{}\label{md4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}
+
+
+Definition at line 41 of file md4s.\+cpp.
+
+
+\begin{DoxyCode}
+42     \{
+43     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} buffer[64*256];
+44     \hyperlink{struct_m_d4state__st}{MD4\_CTX} ctx;
+45     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} s1,s2,e1,e2;
+46     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} k[16];
+47     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[2];
+48     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} iv[8];
+49     \textcolor{keywordtype}{int} i,\hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num}=0,numm;
+50     \textcolor{keywordtype}{int} j=0;
+51 
+52     \textcolor{keywordflow}{if} (argc >= 2)
+53         num=atoi(argv[1]);
+54 
+55     \textcolor{keywordflow}{if} (num == 0) num=16;
+56     \textcolor{keywordflow}{if} (num > 250) num=16;
+57     numm=num+2;
+58     num*=64;
+59     numm*=64;
+60 
+61     \textcolor{keywordflow}{for} (j=0; j<6; j++)
+62         \{
+63         \textcolor{keywordflow}{for} (i=0; i<10; i++) 
+64             \{
+65             \hyperlink{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}{md4\_block\_x86}(&ctx,buffer,numm);
+66             GetTSC(s1);
+67             \hyperlink{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}{md4\_block\_x86}(&ctx,buffer,numm);
+68             GetTSC(e1);
+69             GetTSC(s2);
+70             \hyperlink{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}{md4\_block\_x86}(&ctx,buffer,num);
+71             GetTSC(e2);
+72             \hyperlink{md4s_8cpp_a2cb746661191065247d26d3e92b5f473}{md4\_block\_x86}(&ctx,buffer,num);
+73             \}
+74         printf(\textcolor{stringliteral}{"md4 (%d bytes) %d %d (%.2f)\(\backslash\)n"},num,
+75             e1-s1,e2-s2,(\textcolor{keywordtype}{double})((e1-s1)-(e2-s2))/2);
+76         \}
+77     \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{md4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f_cgraph}
+\end{center}
+\end{figure}
+
+

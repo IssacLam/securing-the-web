@@ -1,0 +1,158 @@
+.TH "s2n-master/tests/s2n_test.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/s2n_test.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBEGIN_TEST\fP()   int test_count = 0; \fBEXPECT_SUCCESS\fP(\fBs2n_init\fP()); { fprintf(stdout, 'Running %\-50s \&.\&.\&. ', __FILE__); }"
+.br
+.ti -1c
+.RI "#define \fBEND_TEST\fP()  "
+.br
+.ti -1c
+.RI "#define \fBFAIL\fP()           \fBFAIL_MSG\fP('');"
+.br
+.ti -1c
+.RI "#define \fBFAIL_MSG\fP(msg)"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_TRUE\fP(condition)       { test_count++; if ( !(condition) ) { \fBFAIL_MSG\fP( #condition ' is not true '); } }"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_FALSE\fP(condition)     \fBEXPECT_TRUE\fP( !(condition) )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_EQUAL\fP(p1,  p2)           \fBEXPECT_TRUE\fP( (p1) == (p2) )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_NOT_EQUAL\fP(p1,  p2)   \fBEXPECT_FALSE\fP( (p1) == (p2) )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_NULL\fP(ptr)           \fBEXPECT_EQUAL\fP( ptr, NULL )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_NOT_NULL\fP(ptr)   \fBEXPECT_NOT_EQUAL\fP( ptr, NULL )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_FAILURE\fP(function_call)   { \fBEXPECT_EQUAL\fP( (function_call) ,  \-1 ); \fBEXPECT_NOT_EQUAL\fP(\fBs2n_errno\fP, 0); \fBEXPECT_NOT_NULL\fP(\fBs2n_debug_str\fP); \fBs2n_errno\fP = 0; \fBs2n_debug_str\fP = NULL; }"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_SUCCESS\fP(function_call)   \fBEXPECT_NOT_EQUAL\fP( (function_call) ,  \-1 )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_BYTEARRAY_EQUAL\fP(p1,  p2,  l)   \fBEXPECT_EQUAL\fP( memcmp( (p1), (p2), (l) ), 0 )"
+.br
+.ti -1c
+.RI "#define \fBEXPECT_STRING_EQUAL\fP(p1,  p2)   \fBEXPECT_EQUAL\fP( strcmp( (p1), (p2) ), 0 )"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BEGIN_TEST()   int test_count = 0; \fBEXPECT_SUCCESS\fP(\fBs2n_init\fP()); { fprintf(stdout, 'Running %\-50s \&.\&.\&. ', __FILE__); }"
+This is a very basic, but functional unit testing framework\&. All testing should happen in \fBmain()\fP and start with a \fBBEGIN_TEST()\fP and end with an \fBEND_TEST()\fP; 
+.PP
+Definition at line 31 of file s2n_test\&.h\&.
+.SS "#define END_TEST()"
+\fBValue:\fP
+.PP
+.nf
+EXPECT_SUCCESS(s2n_cleanup()); { if (isatty(fileno(stdout))) { \
+                            if (test_count) { \
+                                fprintf(stdout, "\033[32;1mPASSED\033[0m %10d tests\n", test_count ); \
+                            }\
+                            else {\
+                                fprintf(stdout, "\033[33;1mSKIPPED\033[0m       ALL tests\n" ); \
+                            }\
+                       } \
+                       else { \
+                            if (test_count) { \
+                                fprintf(stdout, "PASSED %10d tests\n", test_count ); \
+                            }\
+                            else {\
+                                fprintf(stdout, "SKIPPED       ALL tests\n" ); \
+                            }\
+                       } \
+                       return 0;\
+                    }
+.fi
+.PP
+Definition at line 32 of file s2n_test\&.h\&.
+.SS "#define FAIL()   \fBFAIL_MSG\fP('');"
+
+.PP
+Definition at line 51 of file s2n_test\&.h\&.
+.SS "#define FAIL_MSG(msg)"
+\fBValue:\fP
+.PP
+.nf
+{ if (isatty(fileno(stdout))) { \
+                            fprintf(stdout, "\033[31;1mFAILED test %d\033[0m\n%s (%s line %d)\nError Message: '%s'\n Debug String: '%s'\n", test_count, (msg), __FILE__, __LINE__, s2n_strerror(s2n_errno, "EN"), s2n_debug_str); \
+                          } \
+                          else { \
+                            fprintf(stdout, "FAILED test %d\n%s (%s line %d)\nError Message: '%s'\n Debug String: '%s'\n", test_count, (msg), __FILE__, __LINE__, s2n_strerror(s2n_errno, "EN"), s2n_debug_str); \
+                          } \
+                          exit(1);  \
+                        }
+.fi
+.PP
+Definition at line 53 of file s2n_test\&.h\&.
+.SS "#define EXPECT_TRUE(condition)   { test_count++; if ( !(condition) ) { \fBFAIL_MSG\fP( #condition ' is not true '); } }"
+
+.PP
+Definition at line 62 of file s2n_test\&.h\&.
+.SS "#define EXPECT_FALSE(condition)   \fBEXPECT_TRUE\fP( !(condition) )"
+
+.PP
+Definition at line 63 of file s2n_test\&.h\&.
+.SS "#define EXPECT_EQUAL(p1, p2)   \fBEXPECT_TRUE\fP( (p1) == (p2) )"
+
+.PP
+Definition at line 65 of file s2n_test\&.h\&.
+.SS "#define EXPECT_NOT_EQUAL(p1, p2)   \fBEXPECT_FALSE\fP( (p1) == (p2) )"
+
+.PP
+Definition at line 66 of file s2n_test\&.h\&.
+.SS "#define EXPECT_NULL(ptr)   \fBEXPECT_EQUAL\fP( ptr, NULL )"
+
+.PP
+Definition at line 68 of file s2n_test\&.h\&.
+.SS "#define EXPECT_NOT_NULL(ptr)   \fBEXPECT_NOT_EQUAL\fP( ptr, NULL )"
+
+.PP
+Definition at line 69 of file s2n_test\&.h\&.
+.SS "#define EXPECT_FAILURE(function_call)   { \fBEXPECT_EQUAL\fP( (function_call) ,  \-1 ); \fBEXPECT_NOT_EQUAL\fP(\fBs2n_errno\fP, 0); \fBEXPECT_NOT_NULL\fP(\fBs2n_debug_str\fP); \fBs2n_errno\fP = 0; \fBs2n_debug_str\fP = NULL; }"
+
+.PP
+Definition at line 71 of file s2n_test\&.h\&.
+.SS "#define EXPECT_SUCCESS(function_call)   \fBEXPECT_NOT_EQUAL\fP( (function_call) ,  \-1 )"
+
+.PP
+Definition at line 72 of file s2n_test\&.h\&.
+.SS "#define EXPECT_BYTEARRAY_EQUAL(p1, p2, l)   \fBEXPECT_EQUAL\fP( memcmp( (p1), (p2), (l) ), 0 )"
+
+.PP
+Definition at line 74 of file s2n_test\&.h\&.
+.SS "#define EXPECT_STRING_EQUAL(p1, p2)   \fBEXPECT_EQUAL\fP( strcmp( (p1), (p2) ), 0 )"
+
+.PP
+Definition at line 75 of file s2n_test\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

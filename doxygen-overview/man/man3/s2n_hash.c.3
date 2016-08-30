@@ -1,0 +1,225 @@
+.TH "s2n-master/crypto/s2n_hash.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_hash.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/md5\&.h>\fP
+.br
+\fC#include <openssl/sha\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_hash_digest_size\fP (\fBs2n_hash_algorithm\fP alg)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_init\fP (struct \fBs2n_hash_state\fP *state, \fBs2n_hash_algorithm\fP alg)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_update\fP (struct \fBs2n_hash_state\fP *state, const \fBvoid\fP *data, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_digest\fP (struct \fBs2n_hash_state\fP *state, \fBvoid\fP *out, uint32_t size)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_reset\fP (struct \fBs2n_hash_state\fP *state)"
+.br
+.ti -1c
+.RI "int \fBs2n_hash_copy\fP (struct \fBs2n_hash_state\fP *to, struct \fBs2n_hash_state\fP *from)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_hash_digest_size (\fBs2n_hash_algorithm\fP alg)"
+
+.PP
+Definition at line 25 of file s2n_hash\&.c\&.
+.PP
+.nf
+26 {
+27     int sizes[] =
+28         { 0, MD5_DIGEST_LENGTH, SHA_DIGEST_LENGTH, SHA224_DIGEST_LENGTH, SHA256_DIGEST_LENGTH, SHA384_DIGEST_LENGTH, SHA512_DIGEST_LENGTH, MD5_DIGEST_LENGTH + SHA_DIGEST_LENGTH };
+29 
+30     return sizes[alg];
+31 }
+.fi
+.SS "int s2n_hash_init (struct \fBs2n_hash_state\fP * state, \fBs2n_hash_algorithm\fP alg)"
+
+.PP
+Definition at line 33 of file s2n_hash\&.c\&.
+.PP
+.nf
+34 {
+35     int r;
+36     switch (alg) {
+37     case S2N_HASH_NONE:
+38         r = 1;
+39         break;
+40     case S2N_HASH_MD5:
+41         r = MD5_Init(&state->hash_ctx\&.md5);
+42         break;
+43     case S2N_HASH_SHA1:
+44         r = SHA1_Init(&state->hash_ctx\&.sha1);
+45         break;
+46     case S2N_HASH_SHA224:
+47         r = SHA224_Init(&state->hash_ctx\&.sha224);
+48         break;
+49     case S2N_HASH_SHA256:
+50         r = SHA256_Init(&state->hash_ctx\&.sha256);
+51         break;
+52     case S2N_HASH_SHA384:
+53         r = SHA384_Init(&state->hash_ctx\&.sha384);
+54         break;
+55     case S2N_HASH_SHA512:
+56         r = SHA512_Init(&state->hash_ctx\&.sha512);
+57         break;
+58     case S2N_HASH_MD5_SHA1:
+59         r = SHA1_Init(&state->hash_ctx\&.md5_sha1\&.sha1);
+60         r &= MD5_Init(&state->hash_ctx\&.md5_sha1\&.md5);
+61         break;
+62 
+63     default:
+64         S2N_ERROR(S2N_ERR_HASH_INVALID_ALGORITHM);
+65     }
+66 
+67     if (r == 0) {
+68         S2N_ERROR(S2N_ERR_HASH_INIT_FAILED);
+69     }
+70 
+71     state->alg = alg;
+72 
+73     return 0;
+74 }
+.fi
+.SS "int s2n_hash_update (struct \fBs2n_hash_state\fP * state, const \fBvoid\fP * data, uint32_t size)"
+
+.PP
+Definition at line 76 of file s2n_hash\&.c\&.
+.PP
+.nf
+77 {
+78     int r;
+79     switch (state->alg) {
+80     case S2N_HASH_NONE:
+81         r = 1;
+82         break;
+83     case S2N_HASH_MD5:
+84         r = MD5_Update(&state->hash_ctx\&.md5, data, size);
+85         break;
+86     case S2N_HASH_SHA1:
+87         r = SHA1_Update(&state->hash_ctx\&.sha1, data, size);
+88         break;
+89     case S2N_HASH_SHA224:
+90         r = SHA224_Update(&state->hash_ctx\&.sha224, data, size);
+91         break;
+92     case S2N_HASH_SHA256:
+93         r = SHA256_Update(&state->hash_ctx\&.sha256, data, size);
+94         break;
+95     case S2N_HASH_SHA384:
+96         r = SHA384_Update(&state->hash_ctx\&.sha384, data, size);
+97         break;
+98     case S2N_HASH_SHA512:
+99         r = SHA512_Update(&state->hash_ctx\&.sha512, data, size);
+100         break;
+101     case S2N_HASH_MD5_SHA1:
+102         r = SHA1_Update(&state->hash_ctx\&.md5_sha1\&.sha1, data, size);
+103         r &= MD5_Update(&state->hash_ctx\&.md5_sha1\&.md5, data, size);
+104         break;
+105     default:
+106         S2N_ERROR(S2N_ERR_HASH_INVALID_ALGORITHM);
+107     }
+108 
+109     if (r == 0) {
+110         S2N_ERROR(S2N_ERR_HASH_UPDATE_FAILED);
+111     }
+112 
+113     return 0;
+114 }
+.fi
+.SS "int s2n_hash_digest (struct \fBs2n_hash_state\fP * state, \fBvoid\fP * out, uint32_t size)"
+
+.PP
+Definition at line 116 of file s2n_hash\&.c\&.
+.PP
+.nf
+117 {
+118     int r;
+119     switch (state->alg) {
+120     case S2N_HASH_NONE:
+121         r = 1;
+122         break;
+123     case S2N_HASH_MD5:
+124         eq_check(size, MD5_DIGEST_LENGTH);
+125         r = MD5_Final(out, &state->hash_ctx\&.md5);
+126         break;
+127     case S2N_HASH_SHA1:
+128         eq_check(size, SHA_DIGEST_LENGTH);
+129         r = SHA1_Final(out, &state->hash_ctx\&.sha1);
+130         break;
+131     case S2N_HASH_SHA224:
+132         eq_check(size, SHA224_DIGEST_LENGTH);
+133         r = SHA224_Final(out, &state->hash_ctx\&.sha224);
+134         break;
+135     case S2N_HASH_SHA256:
+136         eq_check(size, SHA256_DIGEST_LENGTH);
+137         r = SHA256_Final(out, &state->hash_ctx\&.sha256);
+138         break;
+139     case S2N_HASH_SHA384:
+140         eq_check(size, SHA384_DIGEST_LENGTH);
+141         r = SHA384_Final(out, &state->hash_ctx\&.sha384);
+142         break;
+143     case S2N_HASH_SHA512:
+144         eq_check(size, SHA512_DIGEST_LENGTH);
+145         r = SHA512_Final(out, &state->hash_ctx\&.sha512);
+146         break;
+147     case S2N_HASH_MD5_SHA1:
+148         eq_check(size, MD5_DIGEST_LENGTH + SHA_DIGEST_LENGTH);
+149         r = SHA1_Final(((uint8_t *) out) + MD5_DIGEST_LENGTH, &state->hash_ctx\&.md5_sha1\&.sha1);
+150         r &= MD5_Final(out, &state->hash_ctx\&.md5_sha1\&.md5);
+151         break;
+152     default:
+153         S2N_ERROR(S2N_ERR_HASH_INVALID_ALGORITHM);
+154     }
+155 
+156     if (r == 0) {
+157         S2N_ERROR(S2N_ERR_HASH_DIGEST_FAILED);
+158     }
+159 
+160     return 0;
+161 }
+.fi
+.SS "int s2n_hash_reset (struct \fBs2n_hash_state\fP * state)"
+
+.PP
+Definition at line 163 of file s2n_hash\&.c\&.
+.PP
+.nf
+164 {
+165     return s2n_hash_init(state, state->alg);
+166 }
+.fi
+.SS "int s2n_hash_copy (struct \fBs2n_hash_state\fP * to, struct \fBs2n_hash_state\fP * from)"
+
+.PP
+Definition at line 168 of file s2n_hash\&.c\&.
+.PP
+.nf
+169 {
+170     memcpy_check(to, from, sizeof(struct s2n_hash_state));
+171     return 0;
+172 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

@@ -1,0 +1,151 @@
+\hypertarget{s2n__hkdf_8c}{}\section{s2n-\/master/crypto/s2n\+\_\+hkdf.c File Reference}
+\label{s2n__hkdf_8c}\index{s2n-\/master/crypto/s2n\+\_\+hkdf.\+c@{s2n-\/master/crypto/s2n\+\_\+hkdf.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}crypto/s2n\+\_\+hmac.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+blob.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+mem.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+hkdf.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__hkdf_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{s2n__hkdf_8c_a3648a0060f8ca50e272210377e561d3f}{M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE}~64      /$\ast$ Current highest is \hyperlink{include_2openssl_2sha_8h_a04bb32cdae505b6eecc6b1b016e6c99b}{S\+H\+A512} $\ast$/
+\item 
+\#define \hyperlink{s2n__hkdf_8c_a666846aa37d4a24ea0f2ab0477217062}{M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS}~255
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__hkdf_8c_a9c6cabe5f7841673be19dbf9e8dad1a5}{s2n\+\_\+hkdf\+\_\+extract} (\hyperlink{s2n__hmac_8h_a05e34c658a0066b52f746b931d53dbf8}{s2n\+\_\+hmac\+\_\+algorithm} alg, const struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$salt, const struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$key, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$pseudo\+\_\+rand\+\_\+key)
+\item 
+int \hyperlink{s2n__hkdf_8c_a069710311186e543d82671356990fa80}{s2n\+\_\+hkdf} (\hyperlink{s2n__hmac_8h_a05e34c658a0066b52f746b931d53dbf8}{s2n\+\_\+hmac\+\_\+algorithm} alg, const struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$salt, const struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$key, const struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$info, struct \hyperlink{structs2n__blob}{s2n\+\_\+blob} $\ast$output)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}!M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE@{M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE}}
+\index{M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE@{M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE}!s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE}{MAX_DIGEST_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+D\+I\+G\+E\+S\+T\+\_\+\+S\+I\+ZE~64      /$\ast$ Current highest is {\bf S\+H\+A512} $\ast$/}\hypertarget{s2n__hkdf_8c_a3648a0060f8ca50e272210377e561d3f}{}\label{s2n__hkdf_8c_a3648a0060f8ca50e272210377e561d3f}
+
+
+Definition at line 26 of file s2n\+\_\+hkdf.\+c.
+
+\index{s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}!M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS@{M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS}}
+\index{M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS@{M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS}!s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS}{MAX_HKDF_ROUNDS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+H\+K\+D\+F\+\_\+\+R\+O\+U\+N\+DS~255}\hypertarget{s2n__hkdf_8c_a666846aa37d4a24ea0f2ab0477217062}{}\label{s2n__hkdf_8c_a666846aa37d4a24ea0f2ab0477217062}
+
+
+Definition at line 27 of file s2n\+\_\+hkdf.\+c.
+
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}!s2n\+\_\+hkdf\+\_\+extract@{s2n\+\_\+hkdf\+\_\+extract}}
+\index{s2n\+\_\+hkdf\+\_\+extract@{s2n\+\_\+hkdf\+\_\+extract}!s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+hkdf\+\_\+extract(s2n\+\_\+hmac\+\_\+algorithm alg, const struct s2n\+\_\+blob $\ast$salt, const struct s2n\+\_\+blob $\ast$key, struct s2n\+\_\+blob $\ast$pseudo\+\_\+rand\+\_\+key)}{s2n_hkdf_extract(s2n_hmac_algorithm alg, const struct s2n_blob *salt, const struct s2n_blob *key, struct s2n_blob *pseudo_rand_key)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+hkdf\+\_\+extract (
+\begin{DoxyParamCaption}
+\item[{{\bf s2n\+\_\+hmac\+\_\+algorithm}}]{alg, }
+\item[{const struct {\bf s2n\+\_\+blob} $\ast$}]{salt, }
+\item[{const struct {\bf s2n\+\_\+blob} $\ast$}]{key, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{pseudo\+\_\+rand\+\_\+key}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__hkdf_8c_a9c6cabe5f7841673be19dbf9e8dad1a5}{}\label{s2n__hkdf_8c_a9c6cabe5f7841673be19dbf9e8dad1a5}
+
+
+Definition at line 31 of file s2n\+\_\+hkdf.\+c.
+
+
+\begin{DoxyCode}
+32 \{
+33     \textcolor{keyword}{struct }\hyperlink{structs2n__hmac__state}{s2n\_hmac\_state} hmac;
+34     pseudo\_rand\_key->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = \hyperlink{s2n__hmac_8c_ad9e0cc00ac39458cba7a9b1792429dbd}{s2n\_hmac\_digest\_size}(\hyperlink{structs2n__hmac__state_ae2daecd156006e6cf5c5800a7293628c}{alg});
+35 
+36     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_ad5056a3fc151619a2935471a5861fc3d}{s2n\_hmac\_init}(&hmac, \hyperlink{structs2n__hmac__state_ae2daecd156006e6cf5c5800a7293628c}{alg}, salt->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, salt->
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+37     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a9dbba560a1ef91d4c2114c792f221333}{s2n\_hmac\_update}(&hmac, key->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, key->\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+38     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hmac_8c_a4501c4b9ea25f86e9c6c0e9d1bd9276b}{s2n\_hmac\_digest}(&hmac, pseudo\_rand\_key->\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}, pseudo\_rand\_key->
+      \hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size}));
+39 
+40     \textcolor{keywordflow}{return} 0;
+41 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__hkdf_8c_a9c6cabe5f7841673be19dbf9e8dad1a5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{s2n__hkdf_8c_a9c6cabe5f7841673be19dbf9e8dad1a5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}!s2n\+\_\+hkdf@{s2n\+\_\+hkdf}}
+\index{s2n\+\_\+hkdf@{s2n\+\_\+hkdf}!s2n\+\_\+hkdf.\+c@{s2n\+\_\+hkdf.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+hkdf(s2n\+\_\+hmac\+\_\+algorithm alg, const struct s2n\+\_\+blob $\ast$salt, const struct s2n\+\_\+blob $\ast$key, const struct s2n\+\_\+blob $\ast$info, struct s2n\+\_\+blob $\ast$output)}{s2n_hkdf(s2n_hmac_algorithm alg, const struct s2n_blob *salt, const struct s2n_blob *key, const struct s2n_blob *info, struct s2n_blob *output)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+hkdf (
+\begin{DoxyParamCaption}
+\item[{{\bf s2n\+\_\+hmac\+\_\+algorithm}}]{alg, }
+\item[{const struct {\bf s2n\+\_\+blob} $\ast$}]{salt, }
+\item[{const struct {\bf s2n\+\_\+blob} $\ast$}]{key, }
+\item[{const struct {\bf s2n\+\_\+blob} $\ast$}]{info, }
+\item[{struct {\bf s2n\+\_\+blob} $\ast$}]{output}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__hkdf_8c_a069710311186e543d82671356990fa80}{}\label{s2n__hkdf_8c_a069710311186e543d82671356990fa80}
+
+
+Definition at line 84 of file s2n\+\_\+hkdf.\+c.
+
+
+\begin{DoxyCode}
+85 \{
+86     uint8\_t prk\_pad[\hyperlink{s2n__hkdf_8c_a3648a0060f8ca50e272210377e561d3f}{MAX\_DIGEST\_SIZE}];
+87     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} pseudo\_rand\_key = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = prk\_pad,.size = \textcolor{keyword}{sizeof}(prk\_pad) \};
+88 
+89     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__hkdf_8c_a9c6cabe5f7841673be19dbf9e8dad1a5}{s2n\_hkdf\_extract}(alg, salt, key, &pseudo\_rand\_key));
+90     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(s2n\_hkdf\_expand(alg, &pseudo\_rand\_key, info, output));
+91 
+92     \textcolor{keywordflow}{return} 0;
+93 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__hkdf_8c_a069710311186e543d82671356990fa80_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{s2n__hkdf_8c_a069710311186e543d82671356990fa80_icgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,448 @@
+.TH "md___users__issac_lam__downloads_s2n-master_docs__d_e_v_e_l_o_p_m_e_n_t-_g_u_i_d_e" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+md___users__issac_lam__downloads_s2n-master_docs__d_e_v_e_l_o_p_m_e_n_t-_g_u_i_d_e \- Development guide for s2n 
+If you are curious about the internals of s2n, or interested in contributing to s2n, this document is for you\&. If instead you are interested in using s2n in an application that you are developing, please see the accompanying \fBhttps:\fP//github\&.com/awslabs/s2n/blob/master/docs/USAGE-GUIDE\&.md 'Usage Guide'\&.
+.PP
+.SS "s2n's development principles"
+.PP
+Before getting into the detail of how s2n works internally, it's worth covering s2n's development principles\&. These principles guide and inform many of the design decisions we'll go through\&. We're always open to new principles, if you can think of better ones and make a case for them\&.
+.PP
+.SS "Development principles"
+.PP
+.IP "\(bu" 2
+\fBMaintain an excellent TLS/SSL implementation\fP
+.br
+Although it's hidden '*under the hood*', TLS/SSL is the direct interface with customers and end-users\&. Good performance and security are critical to a positive experience\&.
+.IP "\(bu" 2
+\fBProtect user data and keys\fP
+.br
+Above all else, s2n must ensure that user data and private keys are being handled correctly and carefully\&. Security is often a matter of trade-offs and costs; we should always strive to increase the costs for attackers whenever the trade offs are acceptable to users\&.
+.IP "\(bu" 2
+\fBStay simple\fP
+.br
+Write as little code as necessary, omit rarely used optional features and support as few modes of operation as possible\&. We will also promote and encourage changes that reduce the size of our code base\&.
+.IP "\(bu" 2
+\fBWrite clear readable code with a light cognitive load\fP
+.br
+s2n's code must be concise, easy to follow and legible to a proficient C programmer\&. Our code should be organized in a way that divides the implementation up into small units of work, with the entire context necessary at hand\&. We should also minimize the number of branches in our code, the depth of our call stacks, and the number of members in our structures\&.
+.IP "\(bu" 2
+\fBDefend in depth and systematically\fP
+.br
+Great care and attention to detail is required to write good code, but we also use automation and mechanistic processes to protect against human error\&.
+.IP "\(bu" 2
+\fBBe easy to use and maintain sane defaults\fP
+.br
+It should be low effort, even for a novice developer, to use s2n in a safe way\&. We also shouldn't '*pass the buck*' and place the burden of subtle or complicated TLS-specific decision making upon application authors and system administrators\&.
+.IP "\(bu" 2
+\fBProvide great performance and responsiveness\fP
+.br
+TLS/SSL is rapidly becoming ubiquitous\&. Even small inefficiencies and overhead can become significant when multiplied by billions of users and quintillions of sessions\&.
+.IP "\(bu" 2
+\fBStay paranoid\fP
+.br
+s2n operates in a security critical space\&. Even with the most precautionary development methods it is impossible to guarantee the absence of defects\&. A subtle one-byte error on a single line may still cause problems\&.
+.IP "\(bu" 2
+\fBMake data-driven decisions\fP
+.br
+Opinions can differ on security best practices, sometimes in contradictory ways\&. Where possible, we are guided by facts and measurable data\&.
+.PP
+.PP
+.SS "Priorities"
+.PP
+When weighing up difficult implementation trade-offs our ordered set of priorities are:
+.PP
+.IP "1." 4
+Security
+.IP "2." 4
+Readability
+.IP "3." 4
+Ease of use
+.IP "4." 4
+Performance\&.
+.PP
+.PP
+.SS "Commit and code-review policy"
+.PP
+s2n is review-then-commit for code changes, and commit-then-review for documentation changes\&. Code additions are made by pull requests, no author may merge their own pull request on code\&. Changes to documentation, including code comments, may be made more freely\&.
+.PP
+.SS "Coding style and conventions"
+.PP
+Per our development principles, an important goal is to reduce the cognitive load required to read, review and extend s2n\&. Although s2n is written in C, s2n adopts several patterns more common to functional programming\&. Though they are used in a way that is idiomatic and shouldn't feel completely alien in C\&.
+.PP
+.SS "High level function design"
+.PP
+The first convention is that's s2n's functions are generally quite small, no more than a page or two at most and commonly just a few lines\&. Functions have a clear input and output and are in that sense 'pure' functions; for example handling a particular TLS handshake message type takes the message as input, and the output is connection state\&.
+.PP
+.PP
+.nf
+/* An idiomatic s2n function generally has:
+ * 
+ *  An int return value\&. This is used to signal success or error\&.
+ *  An input, often a struct\&.
+ *  An output, often a struct\&.
+ */
+int s2n_do_something(struct *some_input, struct *some_output);
+.fi
+.PP
+.PP
+s2n functions also operate in a message passing style\&. For example, a simplified version of the flow when handling a TLS client finished message might looks like this:
+.PP
+.PP
+each function handles a clear, well-defined piece of work, before passing on responsibility to the next function\&.
+.PP
+The second convention of s2n's functions is that functions are split into two kinds: those that handle control flow and coordinate other functions, and those that parse messages\&. For example, in the above diagram, it might appear that the functions are calling each other directly but we try to avoid that\&. Instead there is a coordinating outer function responsible for the flow control\&.
+.PP
+A simplified version of the coordinating function would resemble:
+.PP
+.PP
+.nf
+GUARD(s2n_stuffer_read(connection, input_stuffer));
+GUARD(s2n_cbc_aes_decrypt(input_stuffer, output_stuffer));
+GUARD(s2n_cbc_verify(output_stuffer));
+.fi
+.PP
+.PP
+Splitting things up this way leads to a shallower call stack, but the main benefit is that functions can read quite declaratively\&. In the case of message parsers, the function contents can read almost like schemas of the message being parsed\&.
+.PP
+A good example file for message parsing to look at is \fCtls/s2n_server_finished\&.c\fP\&. From reading the file it should be reasonably clear that a server finished message consists just of S2N_TLS_FINISHED_LEN number of bytes, what the next state is and so on\&.
+.PP
+As you may also see in that file, the functions for reading and writing a particular message type are in the same file\&. That way all of context and logic needed to handle that message type can be reviewed and thought about in one place\&.
+.PP
+.SS "Error handling and Macros"
+.PP
+As may also be clear from the above examples, s2n has some conventions for how errors are handled\&. Firstly, s2n functions should always return -1 or NULL on error, and 0 or a valid pointer on success\&. s2n also includes a thread local variable: s2n_errno, for indicating the cause of the error\&. This follows the convention set by libc (with errno), getaddrinfo (gai_errno), net-snmp (snmp_errno), and countless other libraries\&.
+.PP
+In s2n, we \fBalways\fP check return values\&. Because of that, the coding pattern:
+.PP
+.PP
+.nf
+if (s2n_do_something(with_something_else) < 0) {
+    return -1;
+}
+.fi
+.PP
+.PP
+is so common that \fButils/s2n_safety\&.h\fP provides two macros:
+.PP
+.PP
+.nf
+#define GUARD( x )      if ( (x) < 0 ) return -1
+#define GUARD_PTR( x )  if ( (x) < 0 ) return NULL
+.fi
+.PP
+.PP
+These macros should be used when calling functions you expect to succeed\&. Primarily these macros help save two lines that repeatedly clutter files, and secondarily they are very useful when developing and debugging code as it is easy to redefine the macro to implement a simple backtrace (even a simple printf will suffice, but a breakpoint is more usual)\&.
+.PP
+If a function does fail, it should use the \fBS2N_ERROR()\fP macro provided for surfacing the error to an application\&. New error translations, and their human-readable translations can be defined in \fCerror/s2n_errno\&.h\fP and \fCerror/s2n_errno\&.c\fP\&. When called, e\&.g\&.:
+.PP
+.PP
+.nf
+S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+.fi
+.PP
+.PP
+the macro will set s2n_errno correctly, as well as some useful debug strings, and return -1\&.
+.PP
+.SS "Safety checking"
+.PP
+\fCutils/s2n_safety\&.h\fP provides several more convenience macros intended to make safety and bounds checking easier\&. There are checked versions of memcpy and memset, as well as predicate testers like gte_check, inclusive_range_check, exclusive_range_check for performing simple comparisons in a systematic, error-handled, way\&.
+.PP
+\fINote\fP: In general, C preprocessor Macros with embedded control flow are a bad idea, but GUARD, S2N_ERROR and the safety checkers are so thoroughly used throughout s2n that it should be a clear and idiomatic pattern, almost forming a small domain specific language\&.
+.PP
+.SS "Control flow and the state machine"
+.PP
+Branches can be a source of cognitive load, as they ask the reader to follow a path of thinking, while also remembering that there is another path to be explored\&. When branches are nested they can often lead to impossible to grasp combinatorial explosions\&. s2n tries to systematically reduce the number of branches used in the code in several ways\&.
+.PP
+Firstly, there are almost no ifdef calls in s2n\&. Ifdefs can be a particularly penalizing source of cognitive load\&. In addition to being a branch, they also ask the reader to mix state from two different languages (C, and the C pre processor) and they tend to be associated with ugly rendering in IDEs and code formatters\&. In the few places where ifdef's are necessary, we use them in a careful way without compromising the integrity of the function\&. \fCtls/s2n_config\&.c\fP is a good example\&. Rather than mixing the Apple and non-Apple implementations and cluttering one function with several ifdefs, there is a complete implementation of the timer functionality for each platform\&. Within the POSIX implementation, an ifdef and define are used to use the most precise clock type, but in a way that does not compromise readability\&.
+.PP
+Secondly, s2n generally branches in the case of failure, rather than success\&. So instead of creating a nest of if's:
+.PP
+.PP
+.nf
+if (s2n_foo() == 0) {
+    if (s2n_bar() == 0) {
+         if (s2n_baz() == 0) {
+.fi
+.PP
+.PP
+we do:
+.PP
+.PP
+.nf
+GUARD(s2n_foo());
+GUARD(s2n_bar());
+GUARD(s2n_baz());
+.fi
+.PP
+.PP
+This pattern leads to a linear control flow, where the main body of a function describes everything that happens in a regular, '*happy*' case\&. Any deviation is usually a fatal error and we exit the function\&. This is safe because s2n rarely allocates resources, and so has nothing to clean up on error\&.
+.PP
+This pattern also leads to extremely few 'else' clauses in the s2n code base\&. Within s2n, else clauses should be treated with suspicion and examined for potential eradication\&. Where an else clause is necessary, we try to ensure that the first if block is the most likely case\&. This aids readability, and also results in a more efficient compiled instruction pipeline (although good CPU branch prediction will rapidly correct any mis-ordering)\&.
+.PP
+For branches on small enumerated types, s2n generally favors switch statements: though switch statements taking up more than about 25 lines of code are discouraged, and a 'default:' block is mandatory\&.
+.PP
+Another technique for complexity avoidance is that the core TLS state machine within s2n does not use branches and instead uses a table of function pointers (another technique borrowed from functional programming) to dispatch data to the correct handler\&. This is covered in more detail later in this document\&.
+.PP
+Lastly, s2n studiously avoids locks\&. s2n is designed to be thread-safe, but does so by using atomic data types in the small number of well-isolated variables that may be accessed by multiple threads\&.
+.PP
+.SS "Code formatting and commenting"
+.PP
+s2n is written in C99\&. The code formatting and indentation should be relatively clear from reading some s2n source files, but there is also an automated 'make indent' target that will indent the s2n sources\&.
+.PP
+There should be no need for comments to explain \fIwhat\fP s2n code is doing; variables and functions should be given clear and human-readable names that make their purpose and intent intuitive\&. Comments explaining \fIwhy\fP we are doing something are encouraged\&. Often some context setting is necessary; a reference to an RFC, or a reminder of some critical state that is hard to work directly into the immediate code in a natural way\&.
+.PP
+Every source code file must include a copy of the Apache Software License 2\&.0, as well as a correct copyright notification\&. The year of copyright should be the year in which the file was first created\&.
+.PP
+There is also a brief set of other coding conventions:
+.PP
+.IP "\(bu" 2
+s2n uses explicitly sized primitives where possible\&. E\&.g\&. uint8_t, uint32_t\&.
+.IP "\(bu" 2
+In general s2n uses unsigned ints for sizes, as TLS/SSL do the same\&.
+.IP "\(bu" 2
+Any structures exposed to application authors must be opaque: s2n manages the memory allocation and de-allocation\&.
+.IP "\(bu" 2
+Variables are declared closest to their first point of use, to maximize context around the typing\&.
+.IP "\(bu" 2
+Duplication of logic is discouraged
+.IP "\(bu" 2
+4 spaces, no tabs
+.IP "\(bu" 2
+Assuming a terminal that is 120 characters wide is ok
+.PP
+.PP
+.SS "Tests"
+.PP
+s2n is written in C99, a language which lacks a 'standard' testing framework\&. Although there are some more well used C++ testing frameworks, s2n also targets some embedded platforms on which a C++ compiler is unavailable\&.
+.PP
+Since testing and test-cases are absolutely mandatory for all s2n functionality, s2n includes its own small testing framework, defined in \fCtests/s2n_test\&.h\fP\&. The framework consists of 15 macros that allow you to start a test suite, which is a normal C application with a \fBmain()\fP function, and to validate various expectations\&.
+.PP
+Unit tests are added as \&.c files in \fCtests/unit/\fP\&. A simple example to look at is \fCtests/unit/s2n_stuffer_base64_test\&.c\fP\&. The tests are started with \fBBEGIN_TEST()\fP, and expectations are tested with EXPECT_SUCCESS and EXPECT_EQUAL before exiting with an END_TEST call\&.
+.PP
+The test framework will take care of compiling and executing the tests and indicates success or failure with green or red text in the console\&.
+.PP
+In addition to fully covering functionality in the correct cases, s2n tests are also expected to include adversarial or 'negative' test cases\&. For example the tests performed on record encryption validate that s2n is tamper resistant by attempting to actually tamper with records\&. Similarly, we validate that our memory handling routines cannot be over-filled by attempting to over-fill them\&.
+.PP
+To avoid adding unneeded code to the production build of s2n, there is also a small test library defined at \fCtests/testlib/\fP which includes routines useful for test cases\&. For example there is a hex parser and emitter, which is useful for defining network data in test cases, but not needed in production\&.
+.PP
+.SS "A tour of s2n memory handling: blobs and stuffers"
+.PP
+C has a history of issues around memory and buffer handling\&. To avoid problems in this area, s2n does not use C string functions or standard buffer manipulation patterns\&. Instead memory regions are tracked explicitly, with \fBs2n_blob\fP structures, and buffers are re-oriented as streams with \fBs2n_stuffer\fP structures\&.
+.PP
+.SS "\fBs2n_blob\fP : keeping track of memory ranges"
+.PP
+\fBs2n_blob\fP is a very simple data structure:
+.PP
+.PP
+.nf
+struct s2n_blob {
+    uint8_t *data;
+    uint32_t size;
+};
+.fi
+.PP
+.PP
+Functions that handle memory ranges are expected to at least use blobs (stuffers are better though, as we'll see)\&. A blob can be initialized with an existing memory buffer using \fBs2n_blob_init\fP, but \fCutils/s2n_mem\&.h\fP also defines routines for dynamically allocated blobs\&. For handling user data we prefer the latter, as s2n prevents the memory regions from being swapped to disk and from showing up in core files (where supported)\&.
+.PP
+.SS "\fBs2n_stuffer\fP : a streaming buffer"
+.PP
+The stuffer data structure included in s2n is intended to handle all protocol level input and output to memory buffers and is the real work-horse of s2n\&. At its core a stuffer is a blob and two cursors:
+.PP
+.PP
+.nf
+struct s2n_stuffer {
+    struct s2n_blob blob;
+    uint32_t read_cursor;
+    uint32_t write_cursor;
+    \&.\&.\&.
+};
+.fi
+.PP
+.PP
+This layout that makes it possible to implement a stream:
+.PP
+.PP
+All access to/from the stuffer goes 'through' s2n_stuffer_ functions\&. For example, we can write with \fB\fBs2n_stuffer_write()\fP\fP, and when we do the write cursor is incremented to the new position\&. We can read with \fB\fBs2n_stuffer_read()\fP\fP, and of course we can only read data as far as the write cursor (which is always at or ahead of the read cursor)\&. To protect user data, when we read data out of the stuffer, we wipe the copy of the data within the local stuffer memory\&. We also ensure that it's only possible to read as much data as is in the stuffer\&.
+.PP
+A stuffer can be initialized directly from a blob, which makes it fixed in size, or it can be allocated dynamically\&. In the latter case, we can also choose to make the stuffer growable (by using \fBs2n_stuffer_growable_alloc\fP instead of \fBs2n_stuffer_alloc\fP)\&. If a stuffer is growable then attempting to write past the end of the current blob will result in the blob being extended (by at least 1K at a time) to fit the data\&.
+.PP
+To further encourage stream-oriented programming, the stuffer is also the place where all marshaling and de-marshaling happens\&. For example you can read and write ints directly to a stuffer:
+.PP
+.PP
+.nf
+/* Read and write integers in network order */
+extern int s2n_stuffer_read_uint8(struct s2n_stuffer *stuffer, uint8_t *u);
+extern int s2n_stuffer_read_uint16(struct s2n_stuffer *stuffer, uint16_t *u);
+extern int s2n_stuffer_read_uint24(struct s2n_stuffer *stuffer, uint32_t *u);
+extern int s2n_stuffer_read_uint32(struct s2n_stuffer *stuffer, uint32_t *u);
+extern int s2n_stuffer_read_uint64(struct s2n_stuffer *stuffer, uint64_t *u);
+extern int s2n_stuffer_write_uint8(struct s2n_stuffer *stuffer, uint8_t u);
+extern int s2n_stuffer_write_uint16(struct s2n_stuffer *stuffer, uint16_t u);
+extern int s2n_stuffer_write_uint24(struct s2n_stuffer *stuffer, uint32_t u);
+extern int s2n_stuffer_write_uint32(struct s2n_stuffer *stuffer, uint32_t u);
+extern int s2n_stuffer_write_uint64(struct s2n_stuffer *stuffer, uint64_t u);
+.fi
+.PP
+.PP
+and there are other utility functions for handling base64 encoding to and from a stuffer, or text manipulation - like tokenization\&. The idea is to implement basic serializing just once, rather than spread out and duplicated across the message parsers, and to maximize the declarative nature of the I/O\&. For example, this code parses a TLS record header:
+.PP
+.PP
+.nf
+GUARD(s2n_stuffer_read_uint8(in, &message_type));
+GUARD(s2n_stuffer_read_uint8(in, &protocol_major_version));
+GUARD(s2n_stuffer_read_uint8(in, &protocol_minor_version));
+GUARD(s2n_stuffer_read_uint16(in, &record_size));
+.fi
+.PP
+.PP
+This pattern should make it very clear what the message format is, where the contents are being stored, and that we're handling things in a safe way\&.
+.PP
+There are times when we must interact with C functions from other libraries; for example when handling encryption and decryption\&. In these cases it is usually necessary to provide access to 'raw' pointers into stuffers\&. s2n provides two functions for this:
+.PP
+.PP
+.nf
+void *s2n_stuffer_raw_write(struct s2n_stuffer *stuffer, uint32_t data_len);
+void *s2n_stuffer_raw_read(struct s2n_stuffer *stuffer, uint32_t data_len);
+.fi
+.PP
+.PP
+the first function returns a pointer to the existing location of the write cursor, and then increments the write cursor by data_len, so an external function is free to write to the pointer, as long as it only writes data_len bytes\&. The second function does the same thing, except that it increments the read cursor\&. Use of these functions is discouraged and should only be done when necessary for compatibility\&.
+.PP
+One problem with returning raw pointers is that a pointer can become stale if the stuffer is later resized\&. Growable stuffers are resized using realloc(), which is free to copy and re-address memory\&. This could leave the original pointer location dangling, potentially leading to an invalid access\&. To prevent this, stuffers have a life-cycle and can be tainted, which prevents them from being resized within their present life-cycle\&.
+.PP
+Internally stuffers track 4 bits of state:
+.PP
+.PP
+.nf
+unsigned int alloced:1;
+unsigned int growable:1;
+unsigned int wiped:1;
+unsigned int tainted:1;
+.fi
+.PP
+.PP
+the first two bits of state track whether a stuffer was dynamically allocated (and so should be free'd later) and whether or not it is growable\&. The 'wiped' piece of state tracks whether a stuffer has been wiped clean and the data erased\&. If a stuffer has been fully read then it should be in a wiped state, but a stuffer is also explicitly wiped at the end of its lifecycle and this bit of state helps avoids needless zeroing of memory\&. tainted is set to 1 whenever the raw access functions are called\&. If a stuffer is currently tainted then it can not be resized and it becomes ungrowable\&. This is reset when a stuffer is explicitly wiped, which begins the life-cycle anew\&. So any pointers returned by the raw access functions are legal only until s2n_stuffer_wipe is called\&.
+.PP
+The end result is that this kind of pattern is legal:
+.PP
+.PP
+.nf
+GUARD(s2n_stuffer_growable_alloc(&in, 1500));
+GUARD(s2n_stuffer_write(&in, &fifteen_hundred_bytes_blob));
+uint8_t * ptr = s2n_stuffer_raw_read(&in, 1500);
+.fi
+.PP
+.PP
+but attempting to write more data would not be legal:
+.PP
+.PP
+.nf
+GUARD(s2n_stuffer_growable_alloc(&in, 1500));
+GUARD(s2n_stuffer_write(&in, &fifteen_hundred_bytes_blob));
+uint8_t * ptr = s2n_stuffer_raw_read(&in, 1500);
+
+/* This write will fail, the stuffer is no longer growable, as a raw
+ * pointer was taken */
+GUARD(s2n_stuffer_write(&in, &some_more_data_blob);
+
+/* Stuffer life cycle is now complete, reset everything and wipe */
+GUARD(s2n_stuffer_wipe(&in));
+.fi
+.PP
+.PP
+.SS "\fBs2n_connection\fP and the TLS state machine"
+.PP
+Every connection is associated with an \fBs2n_connection\fP structure\&. The details of this structure are opaque to applications, but internally it is where all of the TLS state is managed\&. To make sense of what is going on, it is necessary to understand how the TLS protocol works at the record and handshake layers\&.
+.PP
+When a TLS connection is being started, the first communication consists of handshake messages\&. The client sends the first message (a client hello), and then the server replies (with a server hello), and so on\&. Because a server must wait for a client and vice versa, this phase of a TLS connection is not full-duplex\&. To save on memory, s2n uses a single stuffer for both incoming and outgoing handshake messages and it is located as s2n_connection->handshake\&.io (which is a growable stuffer)\&.
+.PP
+Borrowing another trick from functional programming, the state machine for handling handshake messages is implemented using a table of function pointers, located in \fCtls/s2n_handshake_io\&.c\fP\&.
+.PP
+.PP
+.nf
+static struct s2n_handshake_action state_machine[] = {
+    /*Message type  Handshake type       Writer S2N_SERVER                S2N_CLIENT                   handshake\&.state              */
+    {TLS_HANDSHAKE, TLS_CLIENT_HELLO,      'C', {s2n_client_hello_recv,    s2n_client_hello_send}},    /* CLIENT_HELLO              */
+    {TLS_HANDSHAKE, TLS_SERVER_HELLO,      'S', {s2n_server_hello_send,    s2n_server_hello_recv}},    /* SERVER_HELLO              */
+    {TLS_HANDSHAKE, TLS_SERVER_CERT,       'S', {s2n_server_cert_send,     s2n_server_cert_recv}},     /* SERVER_CERT               */
+    {TLS_HANDSHAKE, TLS_SERVER_KEY,        'S', {s2n_server_key_send,      s2n_server_key_recv}},      /* SERVER_KEY                */
+    {TLS_HANDSHAKE, TLS_SERVER_CERT_REQ,   'S', {NULL,                     NULL}},                     /* SERVER_CERT_REQ           */
+    {TLS_HANDSHAKE, TLS_SERVER_HELLO_DONE, 'S', {s2n_server_done_send,     s2n_server_done_recv}},     /* SERVER_HELLO_DONE         */
+    {TLS_HANDSHAKE, TLS_CLIENT_CERT,       'C', {NULL,                     NULL}},                     /* CLIENT_CERT               */
+    {TLS_HANDSHAKE, TLS_CLIENT_KEY,        'C', {s2n_client_key_recv,      s2n_client_key_send}},      /* CLIENT_KEY                */
+    {TLS_HANDSHAKE, TLS_CLIENT_CERT_VERIFY,'C', {NULL,                     NULL}},                     /* CLIENT_CERT_VERIFY        */
+    {TLS_CHANGE_CIPHER_SPEC, 0,            'C', {s2n_client_ccs_recv,      s2n_client_ccs_send}},      /* CLIENT_CHANGE_CIPHER_SPEC */
+    {TLS_HANDSHAKE, TLS_CLIENT_FINISHED,   'C', {s2n_client_finished_recv, s2n_client_finished_send}}, /* CLIENT_FINISHED           */
+    {TLS_CHANGE_CIPHER_SPEC, 0,            'S', {s2n_server_ccs_send,      s2n_server_ccs_recv}},      /* SERVER_CHANGE_CIPHER_SPEC */
+    {TLS_HANDSHAKE, TLS_SERVER_FINISHED,   'S', {s2n_server_finished_send, s2n_server_finished_recv}}, /* SERVER_FINISHED           */
+    {TLS_APPLICATION_DATA, 0,              'B', {NULL, NULL}}    /* HANDSHAKE_OVER            */
+};
+.fi
+.PP
+.PP
+The 'writer' field indicates whether we expect a Client or a Server to write a particular message type (or 'B' for both in the case of an application data message, but we haven't gotten to that yet)\&. If s2n is acting as a server, then it attempts to read client messages, if it's acting as a client it will try to write it\&. To perform either operation it calls the relevant function pointer\&. This way the state machine can be very short and simple: write a handshake message out when we have one pending, and in the other direction read in data until we have a fully-buffered handshake message before then calling the relevant message parsing function\&.
+.PP
+One detail we've skipped over so far is that handshake messages are encapsulated by an additional record layer within the TLS protocol\&. As we've already seen, TLS records are fairly simple: just a 5 byte header indicating the message type (Handshake, application data, and alerts), protocol version, and record size\&. The remainder of the record is data and may or may not be encrypted\&. What isn't so simple is that TLS allows 'inner' messages, like Handshake message, to be fragmented across several records, and for a single record to contain multiple messages\&.
+.PP
+.PP
+In the outbound direction, s2n never coalesces multiple messages into a single record, so writing a handshake message is a simple matter of fragmenting the handshake message if necessary and writing the records\&. In the inbound direction, the small state machine in s2n_handshake_io\&.c takes care of any fragmentation and coalescing\&. See \fCtests/unit/s2n_fragmentation_coalescing_test\&.c\fP for our test cases covering the logic too\&.
+.PP
+To perform all of this, the \fBs2n_connection\fP structure has a few more internal stuffers:
+.PP
+.PP
+.nf
+struct s2n_stuffer header_in;
+struct s2n_stuffer in;
+struct s2n_stuffer out;
+struct s2n_stuffer alert_in;
+.fi
+.PP
+.PP
+'header_in' is a small 5 byte stuffer, which is used to read in a record header\&. Once that stuffer is full, and the size of the next record is determined (from that header), inward data is directed to the 'in' stuffer\&. The 'out' stuffer is for data that we are writing out; like an encrypted TLS record\&. 'alert_in' is for any TLS alert message that s2n receives from its peer\&. s2n treats all alerts as fatal, but we buffer the full alert message so that reason can be logged\&.
+.PP
+When past the handshake phase, s2n supports full-duplex I/O\&. Separate threads or event handlers are free to call s2n_send and s2n_recv on the same connection\&. Because either a read or a write may cause a connection to be closed, there are two additional stuffers for storing outbound alert messages:
+.PP
+.PP
+.nf
+struct s2n_stuffer reader_alert_out;
+struct s2n_stuffer writer_alert_out;
+.fi
+.PP
+.PP
+this pattern means that both the reader thread and writer thread can create pending alert messages without needing any locks\&. If either the reader or writer generates an alert, it also sets the 'closing' state to 1\&.
+.PP
+.PP
+.nf
+sig_atomic_t closing;
+sig_atomic_t closed;
+.fi
+.PP
+.PP
+'closing' is an atomic, but even if it were not it can only be changed from 0 to 1, so an over-write is harmless\&. Every time a TLS record is fully-written, \fBs2n_send()\fP checks to see if closing is set to 1\&. If it is then the reader or writer alert message will be sent (writer takes priority, if both are present) and the connection will be closed\&. Once the closed is 1, no more I/O may be sent or received on the connection\&.
+.PP
+.SS "s2n and entropy"
+.PP
+s2n provides two deterministic random number generators to every thread\&. \fB\fBs2n_get_public_random_data()\fP\fP should be used to generate any data that is exposed in a public context including nonces, initialization vectors, and randomized timing values\&. \fB\fBs2n_get_private_random_data()\fP\fP should be used for data which must be kept secret\&. Additionally s2n over-rides libcrypto's entropy generation with \fB\fBs2n_get_private_random_data()\fP\fP\&.
+.PP
+.SS "Contributing to s2n"
+.PP
+We are happy to accept contributions to s2n\&. We suggest the following general procedure:
+.PP
+.IP "\(bu" 2
+Please read all of the documentation available in the s2n 'docs/' directory\&. This development guide along with the usage guide should give a good flavor for what the goals of s2n are and whether they line up with your idea for a contribution
+.IP "\(bu" 2
+If you have an idea for a significant contribution, it is worth first cutting an issue and discussing the change\&. Get feedback on the API design, or what the feature might require, before writing code\&.
+.IP "\(bu" 2
+If you discover a security critical bug, please report it via http://aws.amazon.com/security/vulnerability-reporting/ and \fBdo not\fP create a public issue\&.
+.IP "\(bu" 2
+Create a git fork of the s2n repository and prepare your changes locally within your fork\&.
+.IP "\(bu" 2
+When you're ready, and when all tests are passing, create a pull request to the master awslabs s2n repository\&.
+.IP "\(bu" 2
+All changes to s2n go through code review and legal review\&. All submissions and contributions are made under the terms of the Apache Software License 2\&.0\&. For larger contributions, we may ask you to sign a contributor license agreement\&.
+.IP "\(bu" 2
+s2n undergoes periodic government and commercial security analyses, including code audits and penetration tests\&. To participate in these analyses, we may ask you to sign a Non Disclosure Agreement\&. 
+.PP
+

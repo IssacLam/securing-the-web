@@ -1,0 +1,218 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/conf/conf_def.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/conf/conf_def.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCONF_NUMBER\fP   1"
+.br
+.ti -1c
+.RI "#define \fBCONF_UPPER\fP   2"
+.br
+.ti -1c
+.RI "#define \fBCONF_LOWER\fP   4"
+.br
+.ti -1c
+.RI "#define \fBCONF_UNDER\fP   256"
+.br
+.ti -1c
+.RI "#define \fBCONF_PUNCTUATION\fP   512"
+.br
+.ti -1c
+.RI "#define \fBCONF_WS\fP   16"
+.br
+.ti -1c
+.RI "#define \fBCONF_ESC\fP   32"
+.br
+.ti -1c
+.RI "#define \fBCONF_QUOTE\fP   64"
+.br
+.ti -1c
+.RI "#define \fBCONF_DQUOTE\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBCONF_COMMENT\fP   128"
+.br
+.ti -1c
+.RI "#define \fBCONF_FCOMMENT\fP   2048"
+.br
+.ti -1c
+.RI "#define \fBCONF_EOF\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCONF_HIGHBIT\fP   4096"
+.br
+.ti -1c
+.RI "#define \fBCONF_ALPHA\fP   (\fBCONF_UPPER\fP|\fBCONF_LOWER\fP)"
+.br
+.ti -1c
+.RI "#define \fBCONF_ALPHA_NUMERIC\fP   (\fBCONF_ALPHA\fP|\fBCONF_NUMBER\fP|\fBCONF_UNDER\fP)"
+.br
+.ti -1c
+.RI "#define \fBCONF_ALPHA_NUMERIC_PUNCT\fP"
+.br
+.ti -1c
+.RI "#define \fBKEYTYPES\fP(\fBc\fP)                         ((unsigned short *)((\fBc\fP)\->meth_data))"
+.br
+.ti -1c
+.RI "#define \fBIS_COMMENT\fP(\fBc\fP,  \fBa\fP)               (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_COMMENT)"
+.br
+.ti -1c
+.RI "#define \fBIS_FCOMMENT\fP(\fBc\fP,  \fBa\fP)             (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_FCOMMENT)"
+.br
+.ti -1c
+.RI "#define \fBIS_EOF\fP(\fBc\fP,  \fBa\fP)                       (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_EOF)"
+.br
+.ti -1c
+.RI "#define \fBIS_ESC\fP(\fBc\fP,  \fBa\fP)                       (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_ESC)"
+.br
+.ti -1c
+.RI "#define \fBIS_NUMBER\fP(\fBc\fP,  \fBa\fP)                 (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_NUMBER)"
+.br
+.ti -1c
+.RI "#define \fBIS_WS\fP(\fBc\fP,  \fBa\fP)                         (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_WS)"
+.br
+.ti -1c
+.RI "#define \fBIS_ALPHA_NUMERIC\fP(\fBc\fP,  \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_ALPHA_NUMERIC)"
+.br
+.ti -1c
+.RI "#define \fBIS_ALPHA_NUMERIC_PUNCT\fP(\fBc\fP,  \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_ALPHA_NUMERIC_PUNCT)"
+.br
+.ti -1c
+.RI "#define \fBIS_QUOTE\fP(\fBc\fP,  \fBa\fP)                   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_QUOTE)"
+.br
+.ti -1c
+.RI "#define \fBIS_DQUOTE\fP(\fBc\fP,  \fBa\fP)                 (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_DQUOTE)"
+.br
+.ti -1c
+.RI "#define \fBIS_HIGHBIT\fP(\fBc\fP,  \fBa\fP)               (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_HIGHBIT)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CONF_NUMBER   1"
+
+.PP
+Definition at line 64 of file conf_def\&.h\&.
+.SS "#define CONF_UPPER   2"
+
+.PP
+Definition at line 65 of file conf_def\&.h\&.
+.SS "#define CONF_LOWER   4"
+
+.PP
+Definition at line 66 of file conf_def\&.h\&.
+.SS "#define CONF_UNDER   256"
+
+.PP
+Definition at line 67 of file conf_def\&.h\&.
+.SS "#define CONF_PUNCTUATION   512"
+
+.PP
+Definition at line 68 of file conf_def\&.h\&.
+.SS "#define CONF_WS   16"
+
+.PP
+Definition at line 69 of file conf_def\&.h\&.
+.SS "#define CONF_ESC   32"
+
+.PP
+Definition at line 70 of file conf_def\&.h\&.
+.SS "#define CONF_QUOTE   64"
+
+.PP
+Definition at line 71 of file conf_def\&.h\&.
+.SS "#define CONF_DQUOTE   1024"
+
+.PP
+Definition at line 72 of file conf_def\&.h\&.
+.SS "#define CONF_COMMENT   128"
+
+.PP
+Definition at line 73 of file conf_def\&.h\&.
+.SS "#define CONF_FCOMMENT   2048"
+
+.PP
+Definition at line 74 of file conf_def\&.h\&.
+.SS "#define CONF_EOF   8"
+
+.PP
+Definition at line 75 of file conf_def\&.h\&.
+.SS "#define CONF_HIGHBIT   4096"
+
+.PP
+Definition at line 76 of file conf_def\&.h\&.
+.SS "#define CONF_ALPHA   (\fBCONF_UPPER\fP|\fBCONF_LOWER\fP)"
+
+.PP
+Definition at line 77 of file conf_def\&.h\&.
+.SS "#define CONF_ALPHA_NUMERIC   (\fBCONF_ALPHA\fP|\fBCONF_NUMBER\fP|\fBCONF_UNDER\fP)"
+
+.PP
+Definition at line 78 of file conf_def\&.h\&.
+.SS "#define CONF_ALPHA_NUMERIC_PUNCT"
+\fBValue:\fP
+.PP
+.nf
+(CONF_ALPHA|CONF_NUMBER|CONF_UNDER| \
+                                        CONF_PUNCTUATION)
+.fi
+.PP
+Definition at line 79 of file conf_def\&.h\&.
+.SS "#define KEYTYPES(\fBc\fP)   ((unsigned short *)((\fBc\fP)\->meth_data))"
+
+.PP
+Definition at line 82 of file conf_def\&.h\&.
+.SS "#define IS_COMMENT(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_COMMENT)"
+
+.PP
+Definition at line 84 of file conf_def\&.h\&.
+.SS "#define IS_FCOMMENT(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_FCOMMENT)"
+
+.PP
+Definition at line 85 of file conf_def\&.h\&.
+.SS "#define IS_EOF(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_EOF)"
+
+.PP
+Definition at line 86 of file conf_def\&.h\&.
+.SS "#define IS_ESC(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_ESC)"
+
+.PP
+Definition at line 87 of file conf_def\&.h\&.
+.SS "#define IS_NUMBER(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_NUMBER)"
+
+.PP
+Definition at line 88 of file conf_def\&.h\&.
+.SS "#define IS_WS(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_WS)"
+
+.PP
+Definition at line 89 of file conf_def\&.h\&.
+.SS "#define IS_ALPHA_NUMERIC(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_ALPHA_NUMERIC)"
+
+.PP
+Definition at line 90 of file conf_def\&.h\&.
+.SS "#define IS_ALPHA_NUMERIC_PUNCT(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_ALPHA_NUMERIC_PUNCT)"
+
+.PP
+Definition at line 91 of file conf_def\&.h\&.
+.SS "#define IS_QUOTE(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_QUOTE)"
+
+.PP
+Definition at line 93 of file conf_def\&.h\&.
+.SS "#define IS_DQUOTE(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_DQUOTE)"
+
+.PP
+Definition at line 94 of file conf_def\&.h\&.
+.SS "#define IS_HIGHBIT(\fBc\fP, \fBa\fP)   (\fBKEYTYPES\fP(\fBc\fP)[(\fBa\fP)&0xff]&CONF_HIGHBIT)"
+
+.PP
+Definition at line 95 of file conf_def\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

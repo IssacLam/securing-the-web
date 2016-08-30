@@ -1,0 +1,301 @@
+.TH "s2n-master/crypto/s2n_dhe.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_dhe.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/dh\&.h>\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_dh_params\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_pkcs3_to_dh_params\fP (struct \fBs2n_dh_params\fP *dh_params, struct \fBs2n_blob\fP *pkcs3)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_p_g_Ys_to_dh_params\fP (struct \fBs2n_dh_params\fP *dh_params, struct \fBs2n_blob\fP *\fBp\fP, struct \fBs2n_blob\fP *g, struct \fBs2n_blob\fP *ys)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_params_to_p_g_Ys\fP (struct \fBs2n_dh_params\fP *server_dh_params, struct \fBs2n_stuffer\fP *out, struct \fBs2n_blob\fP *output)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_compute_shared_secret_as_server\fP (struct \fBs2n_dh_params\fP *server_dh_params, struct \fBs2n_stuffer\fP *Yc_in, struct \fBs2n_blob\fP *shared_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_compute_shared_secret_as_client\fP (struct \fBs2n_dh_params\fP *server_dh_params, struct \fBs2n_stuffer\fP *Yc_out, struct \fBs2n_blob\fP *shared_key)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_params_copy\fP (struct \fBs2n_dh_params\fP *from, struct \fBs2n_dh_params\fP *to)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_params_check\fP (struct \fBs2n_dh_params\fP *params)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_generate_ephemeral_key\fP (struct \fBs2n_dh_params\fP *dh_params)"
+.br
+.ti -1c
+.RI "int \fBs2n_dh_params_free\fP (struct \fBs2n_dh_params\fP *dh_params)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_pkcs3_to_dh_params (struct \fBs2n_dh_params\fP * dh_params, struct \fBs2n_blob\fP * pkcs3)"
+
+.PP
+Definition at line 65 of file s2n_dhe\&.c\&.
+.PP
+.nf
+66 {
+67     uint8_t *original_ptr = pkcs3->data;
+68     dh_params->dh = d2i_DHparams(NULL, (const unsigned char **)(void *)&pkcs3->data, pkcs3->size);
+69     GUARD(s2n_check_p_g_dh_params(dh_params));
+70     if (pkcs3->data - original_ptr != pkcs3->size) {
+71         DH_free(dh_params->dh);
+72         S2N_ERROR(S2N_ERR_INVALID_PKCS3);
+73     }
+74     pkcs3->data = original_ptr;
+75 
+76     /* Require at least 2048 bits for the DH size */
+77     if (DH_size(dh_params->dh) < (2048 / 8)) {
+78         DH_free(dh_params->dh);
+79         S2N_ERROR(S2N_ERR_DH_TOO_SMALL);
+80     }
+81 
+82     /* Check the generator and prime */
+83     GUARD(s2n_dh_params_check(dh_params));
+84 
+85     return 0;
+86 }
+.fi
+.SS "int s2n_dh_p_g_Ys_to_dh_params (struct \fBs2n_dh_params\fP * dh_params, struct \fBs2n_blob\fP * p, struct \fBs2n_blob\fP * g, struct \fBs2n_blob\fP * ys)"
+
+.PP
+Definition at line 88 of file s2n_dhe\&.c\&.
+.PP
+.nf
+89 {
+90     server_dh_params->dh = DH_new();
+91     if (server_dh_params->dh == NULL) {
+92         S2N_ERROR(S2N_ERR_DH_PARAMS_CREATE);
+93     }
+94 
+95     server_dh_params->dh->p = BN_bin2bn((const unsigned char *)p->data, p->size, NULL);
+96     server_dh_params->dh->g = BN_bin2bn((const unsigned char *)g->data, g->size, NULL);
+97     server_dh_params->dh->pub_key = BN_bin2bn((const unsigned char *)Ys->data, Ys->size, NULL);
+98 
+99     GUARD(s2n_check_all_dh_params(server_dh_params));
+100 
+101     return 0;
+102 }
+.fi
+.SS "int s2n_dh_params_to_p_g_Ys (struct \fBs2n_dh_params\fP * server_dh_params, struct \fBs2n_stuffer\fP * out, struct \fBs2n_blob\fP * output)"
+
+.PP
+Definition at line 104 of file s2n_dhe\&.c\&.
+.PP
+.nf
+105 {
+106     GUARD(s2n_check_all_dh_params(server_dh_params));
+107 
+108     uint16_t p_size = BN_num_bytes(server_dh_params->dh->p);
+109     uint16_t g_size = BN_num_bytes(server_dh_params->dh->g);
+110     uint16_t Ys_size = BN_num_bytes(server_dh_params->dh->pub_key);
+111     uint8_t *p;
+112     uint8_t *g;
+113     uint8_t *Ys;
+114 
+115     output->data = s2n_stuffer_raw_write(out, 0);
+116     notnull_check(output->data);
+117 
+118     GUARD(s2n_stuffer_write_uint16(out, p_size));
+119     p = s2n_stuffer_raw_write(out, p_size);
+120     notnull_check(p);
+121     if (BN_bn2bin(server_dh_params->dh->p, p) != p_size) {
+122         S2N_ERROR(S2N_ERR_DH_SERIAZING);
+123     }
+124 
+125     GUARD(s2n_stuffer_write_uint16(out, g_size));
+126     g = s2n_stuffer_raw_write(out, g_size);
+127     notnull_check(g);
+128     if (BN_bn2bin(server_dh_params->dh->g, g) != g_size) {
+129         S2N_ERROR(S2N_ERR_DH_SERIAZING);
+130     }
+131 
+132     GUARD(s2n_stuffer_write_uint16(out, Ys_size));
+133     Ys = s2n_stuffer_raw_write(out, Ys_size);
+134     notnull_check(Ys);
+135     if (BN_bn2bin(server_dh_params->dh->pub_key, Ys) != Ys_size) {
+136         S2N_ERROR(S2N_ERR_DH_SERIAZING);
+137     }
+138 
+139     output->size = p_size + 2 + g_size + 2 + Ys_size + 2;
+140 
+141     return 0;
+142 }
+.fi
+.SS "int s2n_dh_compute_shared_secret_as_server (struct \fBs2n_dh_params\fP * server_dh_params, struct \fBs2n_stuffer\fP * Yc_in, struct \fBs2n_blob\fP * shared_key)"
+
+.PP
+Definition at line 185 of file s2n_dhe\&.c\&.
+.PP
+.nf
+186 {
+187     uint16_t Yc_length;
+188     struct s2n_blob Yc;
+189     int shared_key_size;
+190     BIGNUM *pub_key;
+191 
+192     GUARD(s2n_check_all_dh_params(server_dh_params));
+193 
+194     GUARD(s2n_stuffer_read_uint16(Yc_in, &Yc_length));
+195     Yc\&.size = Yc_length;
+196     Yc\&.data = s2n_stuffer_raw_read(Yc_in, Yc\&.size);
+197     notnull_check(Yc\&.data);
+198 
+199     pub_key = BN_bin2bn((const unsigned char *)Yc\&.data, Yc\&.size, NULL);
+200     notnull_check(pub_key);
+201     GUARD(s2n_alloc(shared_key, DH_size(server_dh_params->dh)));
+202 
+203     shared_key_size = DH_compute_key(shared_key->data, pub_key, server_dh_params->dh);
+204     if (shared_key_size <= 0) {
+205         BN_free(pub_key);
+206         S2N_ERROR(S2N_ERR_DH_SHARED_SECRET);
+207     }
+208 
+209     shared_key->size = shared_key_size;
+210 
+211     BN_free(pub_key);
+212 
+213     return 0;
+214 }
+.fi
+.SS "int s2n_dh_compute_shared_secret_as_client (struct \fBs2n_dh_params\fP * server_dh_params, struct \fBs2n_stuffer\fP * Yc_out, struct \fBs2n_blob\fP * shared_key)"
+
+.PP
+Definition at line 144 of file s2n_dhe\&.c\&.
+.PP
+.nf
+145 {
+146     struct s2n_dh_params client_params;
+147     uint8_t *public_key;
+148     uint16_t public_key_size;
+149     int shared_key_size;
+150 
+151     GUARD(s2n_dh_params_check(server_dh_params));
+152     GUARD(s2n_dh_params_copy(server_dh_params, &client_params));
+153     GUARD(s2n_dh_generate_ephemeral_key(&client_params));
+154     GUARD(s2n_alloc(shared_key, DH_size(server_dh_params->dh)));
+155 
+156     public_key_size = BN_num_bytes(client_params\&.dh->pub_key);
+157     GUARD(s2n_stuffer_write_uint16(Yc_out, public_key_size));
+158     public_key = s2n_stuffer_raw_write(Yc_out, public_key_size);
+159     if (public_key == NULL) {
+160         GUARD(s2n_free(shared_key));
+161         GUARD(s2n_dh_params_free(&client_params));
+162         S2N_ERROR(S2N_ERR_DH_WRITING_PUBLIC_KEY);
+163     }
+164 
+165     if (BN_bn2bin(client_params\&.dh->pub_key, public_key) != public_key_size) {
+166         GUARD(s2n_free(shared_key));
+167         GUARD(s2n_dh_params_free(&client_params));
+168         S2N_ERROR(S2N_ERR_DH_COPYING_PUBLIC_KEY);
+169     }
+170 
+171     shared_key_size = DH_compute_key(shared_key->data, server_dh_params->dh->pub_key, client_params\&.dh);
+172     if (shared_key_size < 0) {
+173         GUARD(s2n_free(shared_key));
+174         GUARD(s2n_dh_params_free(&client_params));
+175         S2N_ERROR(S2N_ERR_DH_SHARED_SECRET);
+176     }
+177 
+178     shared_key->size = shared_key_size;
+179 
+180     GUARD(s2n_dh_params_free(&client_params));
+181 
+182     return 0;
+183 }
+.fi
+.SS "int s2n_dh_params_copy (struct \fBs2n_dh_params\fP * from, struct \fBs2n_dh_params\fP * to)"
+
+.PP
+Definition at line 231 of file s2n_dhe\&.c\&.
+.PP
+.nf
+232 {
+233     GUARD(s2n_check_p_g_dh_params(from));
+234 
+235     to->dh = DHparams_dup(from->dh);
+236     if (to->dh == NULL) {
+237         S2N_ERROR(S2N_ERR_DH_COPYING_PARAMETERS);
+238     }
+239 
+240     return 0;
+241 }
+.fi
+.SS "int s2n_dh_params_check (struct \fBs2n_dh_params\fP * params)"
+
+.PP
+Definition at line 216 of file s2n_dhe\&.c\&.
+.PP
+.nf
+217 {
+218     int codes = 0;
+219 
+220     if (DH_check(params->dh, &codes) == 0) {
+221         S2N_ERROR(S2N_ERR_DH_PARAMETER_CHECK);
+222     }
+223 
+224     if (codes != 0) {
+225         S2N_ERROR(S2N_ERR_DH_PARAMETER_CHECK);
+226     }
+227 
+228     return 0;
+229 }
+.fi
+.SS "int s2n_dh_generate_ephemeral_key (struct \fBs2n_dh_params\fP * dh_params)"
+
+.PP
+Definition at line 243 of file s2n_dhe\&.c\&.
+.PP
+.nf
+244 {
+245     GUARD(s2n_check_p_g_dh_params(dh_params));
+246 
+247     if (DH_generate_key(dh_params->dh) == 0) {
+248         S2N_ERROR(S2N_ERR_DH_GENERATING_PARAMETERS);
+249     }
+250 
+251     return 0;
+252 }
+.fi
+.SS "int s2n_dh_params_free (struct \fBs2n_dh_params\fP * dh_params)"
+
+.PP
+Definition at line 254 of file s2n_dhe\&.c\&.
+.PP
+.nf
+255 {
+256     notnull_check(dh_params);
+257     DH_free(dh_params->dh);
+258     dh_params->dh = NULL;
+259 
+260     return 0;
+261 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

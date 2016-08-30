@@ -1,0 +1,113 @@
+.TH "s2n-master/tests/fuzz/LD_PRELOAD/s2n_server_fuzz_test_overrides.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/fuzz/LD_PRELOAD/s2n_server_fuzz_test_overrides.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <dlfcn\&.h>\fP
+.br
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'crypto/s2n_rsa\&.h'\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_GNU_SOURCE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "time_t \fBtime\fP (time_t *__timer)"
+.br
+.ti -1c
+.RI "int \fBRSA_verify\fP (int dtype, const unsigned char *m, unsigned int m_len, const unsigned char *sigbuf, unsigned int siglen, \fBRSA\fP *rsa)"
+.br
+.ti -1c
+.RI "int \fBs2n_constant_time_equals\fP (const uint8_t *\fBa\fP, const uint8_t *b, uint32_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_client_key_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _GNU_SOURCE"
+
+.PP
+Definition at line 16 of file s2n_server_fuzz_test_overrides\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "time_t time (time_t * __timer)"
+
+.PP
+Definition at line 26 of file s2n_server_fuzz_test_overrides\&.c\&.
+.PP
+.nf
+27 {
+28     /* Always assume the time is zero when fuzzing the server, this is to ensure that Fuzz tests are deterministic and
+29      * don't depend on the time the test was run\&.
+30      */
+31     return 0;
+32 }
+.fi
+.SS "int RSA_verify (int dtype, const unsigned char * m, unsigned int m_len, const unsigned char * sigbuf, unsigned int siglen, \fBRSA\fP * rsa)"
+
+.PP
+Definition at line 35 of file s2n_server_fuzz_test_overrides\&.c\&.
+.PP
+.nf
+37 {
+38     /* Always assume that the RSA_verify function passes */
+39     return 1;
+40 }
+.fi
+.SS "int s2n_constant_time_equals (const uint8_t * a, const uint8_t * b, uint32_t len)"
+
+.PP
+Definition at line 42 of file s2n_server_fuzz_test_overrides\&.c\&.
+.PP
+.nf
+43 {
+44     /* Allow all signatures checked with s2n_constant_time_equals to always pass verification even if they are invalid
+45      * in order to aid code coverage with server fuzz test\&.
+46      */
+47     return !0;
+48 }
+.fi
+.SS "int s2n_rsa_client_key_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 50 of file s2n_server_fuzz_test_overrides\&.c\&.
+.PP
+.nf
+51 {
+52     /* Perform the original function */
+53     typedef int (*orig_s2n_rsa_client_key_recv_func_type)(struct s2n_connection *conn);
+54     orig_s2n_rsa_client_key_recv_func_type orig_s2n_rsa_client_key_recv;
+55     orig_s2n_rsa_client_key_recv = (orig_s2n_rsa_client_key_recv_func_type) dlsym(RTLD_NEXT, "s2n_rsa_client_key_recv");
+56     int original_return_code = orig_s2n_rsa_client_key_recv(conn);
+57 
+58     /* Then, overwrite the RSA Failed flag to false before returning, this will help fuzzing code coverage\&. */
+59     conn->handshake\&.rsa_failed = 0;
+60 
+61     return original_return_code;
+62 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

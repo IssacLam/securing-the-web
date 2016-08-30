@@ -1,0 +1,341 @@
+.TH "s2n-master/tests/unit/s2n_random_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_random_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP * \fBthread_safety_tester\fP (\fBvoid\fP *slot)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBprocess_safety_tester\fP (int write_fd)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP* thread_safety_tester (\fBvoid\fP * slot)"
+
+.PP
+Definition at line 26 of file s2n_random_test\&.c\&.
+.PP
+.nf
+27 {
+28     intptr_t slotnum = (intptr_t) slot;
+29     struct s2n_blob blob = {\&.data = thread_data[slotnum], \&.size = 100 };
+30 
+31     s2n_get_public_random_data(&blob);
+32 
+33     return NULL;
+34 }
+.fi
+.SS "\fBvoid\fP process_safety_tester (int write_fd)"
+
+.PP
+Definition at line 36 of file s2n_random_test\&.c\&.
+.PP
+.nf
+37 {
+38     uint8_t pad[100];
+39 
+40     struct s2n_blob blob = {\&.data = pad, \&.size = 100 };
+41     s2n_get_public_random_data(&blob);
+42 
+43     /* Write the data we got to our pipe */
+44     if (write(write_fd, pad, 100) != 100) {
+45         _exit(100);
+46     }
+47 
+48     /* Close the pipe and exit */
+49     close(write_fd);
+50     _exit(0);
+51 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 53 of file s2n_random_test\&.c\&.
+.PP
+.nf
+54 {
+55     uint8_t bits[8] = { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
+56     uint8_t bit_set_run[8];
+57     intptr_t slot;
+58     int p[2], status;
+59     pid_t pid;
+60     uint8_t data[5120];
+61     uint8_t child_data[100];
+62     struct s2n_blob blob = {\&.data = data };
+63 
+64     pthread_t threads[2];
+65 
+66     BEGIN_TEST();
+67 
+68     /* Get one byte of data, to make sure the pool is (almost) full */
+69     blob\&.size = 1;
+70     EXPECT_SUCCESS(s2n_get_public_random_data(&blob));
+71 
+72     /* Create two threads and have them each grab 100 bytes */
+73     slot = 0;
+74     EXPECT_SUCCESS(pthread_create(&threads[0], NULL, thread_safety_tester, (void *)slot));
+75     slot = 1;
+76     EXPECT_SUCCESS(pthread_create(&threads[1], NULL, thread_safety_tester, (void *)slot));
+77 
+78     /* Wait for those threads to finish */
+79     EXPECT_SUCCESS(pthread_join(threads[0], NULL));
+80     EXPECT_SUCCESS(pthread_join(threads[1], NULL));
+81 
+82     /* Confirm that their data differs from each other */
+83     EXPECT_NOT_EQUAL(memcmp(thread_data[0], thread_data[1], 100), 0);
+84 
+85     /* Confirm that their data differs from the parent thread */
+86     blob\&.size = 100;
+87     EXPECT_SUCCESS(s2n_get_public_random_data(&blob));
+88     EXPECT_NOT_EQUAL(memcmp(thread_data[0], data, 100), 0);
+89     EXPECT_NOT_EQUAL(memcmp(thread_data[1], data, 100), 0);
+90 
+91     /* Create a pipe */
+92     EXPECT_SUCCESS(pipe(p));
+93 
+94     /* Create a child process */
+95     pid = fork();
+96     if (pid == 0) {
+97         /* This is the child process, close the read end of the pipe */
+98         EXPECT_SUCCESS(close(p[0]));
+99         process_safety_tester(p[1]);
+100     }
+101 
+102     /* This is the parent process, close the write end of the pipe */
+103     EXPECT_SUCCESS(close(p[1]));
+104 
+105     /* Read the child's data from the pipe */
+106     EXPECT_EQUAL(read(p[0], child_data, 100), 100);
+107 
+108     /* Get 100 bytes here in the parent process */
+109     blob\&.size = 100;
+110     EXPECT_SUCCESS(s2n_get_public_random_data(&blob));
+111 
+112     /* Confirm they differ */
+113     EXPECT_NOT_EQUAL(memcmp(child_data, data, 100), 0);
+114 
+115     /* Clean up */
+116     EXPECT_EQUAL(waitpid(pid, &status, 0), pid);
+117     EXPECT_EQUAL(status, 0);
+118     EXPECT_SUCCESS(close(p[0]));
+119 
+120     /* Get two sets of data in the same process/thread, and confirm that they
+121      * differ
+122      */
+123     blob\&.data = child_data;
+124     EXPECT_SUCCESS(s2n_get_public_random_data(&blob));
+125     blob\&.data = data;
+126     EXPECT_SUCCESS(s2n_get_public_random_data(&blob));
+127     EXPECT_NOT_EQUAL(memcmp(child_data, data, 100), 0);
+128 
+129     /* Try to fetch a volume of randomly generated data, every size between 1 and 5120
+130      * bytes\&.
+131      */
+132     int trailing_zeros[8];
+133 
+134     memset(trailing_zeros, 0, sizeof(trailing_zeros));
+135     for (int i = 0; i < 5120; i++) {
+136         blob\&.size = i;
+137         EXPECT_SUCCESS(s2n_get_public_random_data(&blob));
+138 
+139         if (i >= 64) {
+140             /* Set the run counts to 0 */
+141             memset(bit_set_run, 0, 8);
+142 
+143             /* Apply 8 monobit tests to the data\&. Basically, we're
+144              * looking for successive runs where a given bit is set\&.
+145              * If a run exists with any particular bit 64 times in 
+146              * a row, then the data doesn't look randomly generated\&.
+147              */
+148             for (int j = 0; j < i; j++) {
+149                 for (int k = 0; k < 8; k++) {
+150                     if (data[j] & bits[k]) {
+151                         bit_set_run[k]++;
+152 
+153                         if (j >= 64) {
+154                             EXPECT_TRUE(bit_set_run[k] < 64);
+155                         }
+156                     } else {
+157                         bit_set_run[k] = 0;
+158                     }
+159                 }
+160             }
+161         }
+162         /* A common mistake in array filling leaves the last bytes zero
+163          * depending on the length\&.
+164          */
+165         int remainder = i % 8;
+166         int non_zero_found = 0;
+167         for (int t = i - remainder; t < i; t++) {
+168             non_zero_found |= data[t];
+169         }
+170         if (!non_zero_found) {
+171             trailing_zeros[remainder]++;
+172         }
+173     }
+174     for (int t = 1; t < 8; t++) {
+175         EXPECT_TRUE(trailing_zeros[t] < 5120 / 16);
+176     }
+177 
+178     memset(trailing_zeros, 0, sizeof(trailing_zeros));
+179     for (int i = 0; i < 5120; i++) {
+180         blob\&.size = i;
+181         EXPECT_SUCCESS(s2n_get_private_random_data(&blob));
+182 
+183         if (i >= 64) {
+184             /* Set the run counts to 0 */
+185             memset(bit_set_run, 0, 8);
+186 
+187             /* Apply 8 monobit tests to the data\&. Basically, we're
+188              * looking for successive runs where a given bit is set\&.
+189              * If a run exists with any particular bit 64 times in 
+190              * a row, then the data doesn't look randomly generated\&.
+191              */
+192             for (int j = 0; j < i; j++) {
+193                 for (int k = 0; k < 8; k++) {
+194                     if (data[j] & bits[k]) {
+195                         bit_set_run[k]++;
+196 
+197                         if (j >= 64) {
+198                             EXPECT_TRUE(bit_set_run[k] < 64);
+199                         }
+200                     } else {
+201                         bit_set_run[k] = 0;
+202                     }
+203                 }
+204             }
+205         }
+206         /* A common mistake in array filling leaves the last bytes zero
+207          * depending on the length\&.
+208          */
+209         int remainder = i % 8;
+210         int non_zero_found = 0;
+211         for (int t = i - remainder; t < i; t++) {
+212             non_zero_found |= data[t];
+213         }
+214         if (!non_zero_found) {
+215             trailing_zeros[remainder]++;
+216         }
+217     }
+218     for (int t = 1; t < 8; t++) {
+219         EXPECT_TRUE(trailing_zeros[t] < 5120 / 16);
+220     }
+221 
+222     memset(trailing_zeros, 0, sizeof(trailing_zeros));
+223     for (int i = 0; i < 5120; i++) {
+224         blob\&.size = i;
+225         EXPECT_SUCCESS(s2n_get_urandom_data(&blob));
+226 
+227         if (i >= 64) {
+228             /* Set the run counts to 0 */
+229             memset(bit_set_run, 0, 8);
+230 
+231             /* Apply 8 monobit tests to the data\&. Basically, we're
+232              * looking for successive runs where a given bit is set\&.
+233              * If a run exists with any particular bit 64 times in 
+234              * a row, then the data doesn't look randomly generated\&.
+235              */
+236             for (int j = 0; j < i; j++) {
+237                 for (int k = 0; k < 8; k++) {
+238                     if (data[j] & bits[k]) {
+239                         bit_set_run[k]++;
+240 
+241                         if (j >= 64) {
+242                             EXPECT_TRUE(bit_set_run[k] < 64);
+243                         }
+244                     } else {
+245                         bit_set_run[k] = 0;
+246                     }
+247                 }
+248             }
+249         }
+250         /* A common mistake in array filling leaves the last bytes zero
+251          * depending on the length\&.
+252          */
+253         int remainder = i % 8;
+254         int non_zero_found = 0;
+255         for (int t = i - remainder; t < i; t++) {
+256             non_zero_found |= data[t];
+257         }
+258         if (!non_zero_found) {
+259             trailing_zeros[remainder]++;
+260         }
+261     }
+262     for (int t = 1; t < 8; t++) {
+263         EXPECT_TRUE(trailing_zeros[t] < 5120 / 16);
+264     }
+265 
+266     if (s2n_cpu_supports_rdrand()) {
+267         memset(trailing_zeros, 0, sizeof(trailing_zeros));
+268         for (int i = 0; i < 5120; i++) {
+269             blob\&.size = i;
+270             EXPECT_SUCCESS(s2n_get_urandom_data(&blob));
+271 
+272             if (i >= 64) {
+273                 /* Set the run counts to 0 */
+274                 memset(bit_set_run, 0, 8);
+275 
+276                 /* Apply 8 monobit tests to the data\&. Basically, we're
+277                  * looking for successive runs where a given bit is set\&.
+278                  * If a run exists with any particular bit 64 times in 
+279                  * a row, then the data doesn't look randomly generated\&.
+280                  */
+281                 for (int j = 0; j < i; j++) {
+282                     for (int k = 0; k < 8; k++) {
+283                         if (data[j] & bits[k]) {
+284                             bit_set_run[k]++;
+285 
+286                             if (j >= 64) {
+287                                 EXPECT_TRUE(bit_set_run[k] < 64);
+288                             }
+289                         } else {
+290                             bit_set_run[k] = 0;
+291                         }
+292                     }
+293                 }
+294             }
+295             /* A common mistake in array filling leaves the last bytes zero
+296              * depending on the length
+297              */
+298             int remainder = i % 8;
+299             int non_zero_found = 0;
+300             for (int t = i - remainder; t < i; t++) {
+301               non_zero_found |= data[t];
+302             }
+303             if (!non_zero_found) {
+304               trailing_zeros[remainder]++;
+305             }
+306         }
+307         for (int t = 1; t < 8; t++) {
+308           EXPECT_TRUE(trailing_zeros[t] < 5120 / 16);
+309         }
+310     }
+311 
+312     END_TEST();
+313 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

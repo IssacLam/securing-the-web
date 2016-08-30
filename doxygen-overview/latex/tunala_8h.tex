@@ -1,0 +1,484 @@
+\hypertarget{tunala_8h}{}\section{s2n-\/master/libcrypto-\/build/openssl/demos/tunala/tunala.h File Reference}
+\label{tunala_8h}\index{s2n-\/master/libcrypto-\/build/openssl/demos/tunala/tunala.\+h@{s2n-\/master/libcrypto-\/build/openssl/demos/tunala/tunala.\+h}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$netdb.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/err.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/engine.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/ssl.\+h$>$}\\*
+Include dependency graph for tunala.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tunala_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__buffer__t}{\+\_\+buffer\+\_\+t}
+\item 
+struct \hyperlink{struct__state__machine__t}{\+\_\+state\+\_\+machine\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{tunala_8h_a87f68e96fb938eddc39ad1f19d923a96}{M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE}~16384
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct__buffer__t}{\+\_\+buffer\+\_\+t} \hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t}
+\item 
+typedef struct \hyperlink{struct__state__machine__t}{\+\_\+state\+\_\+machine\+\_\+t} \hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307}{sm\+\_\+buffer\+\_\+t} \{ \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307aed1b8d80500e87a085cd793b87447940}{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+IN}, 
+\hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307adba802ee7ab32bd77d9015b8ca6631d7}{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+O\+UT}, 
+\hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307ab733589b716671de1e464adc2e5585ac}{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+IN}, 
+\hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307accd6f3a5b071f939af7f8726ad18752b}{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+O\+UT}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_afaa7c3c748a82b2c27a7c055c4f223bc}{buffer\+\_\+init} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a54a5701d56ac5304d028c3de95e378ce}{buffer\+\_\+close} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+unsigned int \hyperlink{tunala_8h_ac7913904db9763e47d5a78692034e1e3}{buffer\+\_\+used} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+unsigned int \hyperlink{tunala_8h_a7ee9eb7750e4a695ed65779041d5cb39}{buffer\+\_\+unused} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+int \hyperlink{tunala_8h_a7f1fb5738422a91b89a59a3a2daf825e}{buffer\+\_\+full} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+int \hyperlink{tunala_8h_aaab4b860f650d0e34d9e6eed42115ceb}{buffer\+\_\+notfull} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+int \hyperlink{tunala_8h_a7eae868d27de22c527c26eb5265145ec}{buffer\+\_\+empty} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+int \hyperlink{tunala_8h_abf6cdf5f3ff64cd72df87a4af4b2fdfe}{buffer\+\_\+notempty} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+unsigned long \hyperlink{tunala_8h_a4bfe1df9122588515f6824ecb9eb347c}{buffer\+\_\+total\+\_\+in} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+unsigned long \hyperlink{tunala_8h_a22bbf513649b45d5bc3442bb39ff9e7c}{buffer\+\_\+total\+\_\+out} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf)
+\item 
+int \hyperlink{tunala_8h_a8cf7a0eb2fa4df69bf7aea297d573b27}{buffer\+\_\+from\+\_\+fd} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf, int fd)
+\item 
+int \hyperlink{tunala_8h_afa394d8a96369709f0ad969a952e73c6}{buffer\+\_\+to\+\_\+fd} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf, int fd)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_af4cb7ad889193f7468292547a5e7ec3f}{buffer\+\_\+from\+\_\+\+S\+SL} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf, \hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$ssl)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_afefabb2f146f8ecf10c6e42c79dce2bd}{buffer\+\_\+to\+\_\+\+S\+SL} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf, \hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$ssl)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a6f1aa654ac93ac9fd32c0ad6d66a3cb7}{buffer\+\_\+from\+\_\+\+B\+IO} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a9b2b883e86bfc787235912bfb5e3e23e}{buffer\+\_\+to\+\_\+\+B\+IO} (\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$buf, \hyperlink{crypto_2bio_2bio_8h_af3fabae1c9af50b9312cdff41e11d1dd}{B\+IO} $\ast$bio)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_af448ee99872b25deab730fac3422c51c}{cb\+\_\+ssl\+\_\+info} (const \hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$s, int where, int ret)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a622ff181fc4b68c2b06630dcbb128a32}{cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output} (F\+I\+LE $\ast$\hyperlink{include_2openssl_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp})
+\item 
+int \hyperlink{tunala_8h_a58f616e1e10d3754b2026562db2306fc}{cb\+\_\+ssl\+\_\+verify} (int ok, \hyperlink{crypto_2ossl__typ_8h_ae681945a2cf88d6337137dc0260a1545}{X509\+\_\+\+S\+T\+O\+R\+E\+\_\+\+C\+TX} $\ast$ctx)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a69e47f053c6cec1477b40a20e6b23b2f}{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output} (F\+I\+LE $\ast$\hyperlink{include_2openssl_2conf_8h_aa065f30aa9f5f9a42132c82c787ee70b}{fp})
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a591355a8bbbe45ba7a4987b81c25e9ee}{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth} (unsigned int verify\+\_\+depth)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a4a822791294ff65658372c2c8e601e41}{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level} (unsigned int level)
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a9ad4496a11f0a9f686bea793cb97f8b5}{R\+SA} $\ast$ \hyperlink{tunala_8h_a55ae3df3e63d7c6ea77fff2fb8559006}{cb\+\_\+generate\+\_\+tmp\+\_\+rsa} (\hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$s, int is\+\_\+export, int keylength)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_ae76833f6f8b3776658d16a1be6d51d21}{state\+\_\+machine\+\_\+init} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine)
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{tunala_8h_a9d3f030dbdc5d2f2cac30f41f0a6e48f}{state\+\_\+machine\+\_\+close} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine)
+\item 
+\hyperlink{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{buffer\+\_\+t} $\ast$ \hyperlink{tunala_8h_a2e796231c02a84893821842e7f5d56dd}{state\+\_\+machine\+\_\+get\+\_\+buffer} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine, \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307}{sm\+\_\+buffer\+\_\+t} \hyperlink{include_2openssl_2x509_8h_ab512b8f495325c7ea0f5a5a5d3f938eb}{type})
+\item 
+\hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$ \hyperlink{tunala_8h_a1290d8cdd45290b32d83a8da5941f700}{state\+\_\+machine\+\_\+get\+\_\+\+S\+SL} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine)
+\item 
+int \hyperlink{tunala_8h_a1076acb0ca90ec6c22fedc157b62acb6}{state\+\_\+machine\+\_\+set\+\_\+\+S\+SL} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine, \hyperlink{crypto_2ossl__typ_8h_a71f21e09bf365489dab9d85bd4785e24}{S\+SL} $\ast$ssl, int is\+\_\+server)
+\item 
+int \hyperlink{tunala_8h_a0c83621a3b373e69b056c2d388b85028}{state\+\_\+machine\+\_\+churn} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine)
+\item 
+int \hyperlink{tunala_8h_aaadb9f18069e862c112d6bb0050bf0ad}{state\+\_\+machine\+\_\+close\+\_\+clean} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine)
+\item 
+int \hyperlink{tunala_8h_ab37ee38400fe1f86f9c33481db29a90e}{state\+\_\+machine\+\_\+close\+\_\+dirty} (\hyperlink{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{state\+\_\+machine\+\_\+t} $\ast$machine)
+\item 
+int \hyperlink{tunala_8h_a214312e0f310c9a8cbddd97411828ab9}{ip\+\_\+initialise} (\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void})
+\item 
+int \hyperlink{tunala_8h_a4fd57d724206fa561b961e35496913fe}{ip\+\_\+create\+\_\+listener\+\_\+split} (const char $\ast$ip, unsigned short port)
+\item 
+int \hyperlink{tunala_8h_a2258f6539a7728f3d9bc4b40edbeb9d2}{ip\+\_\+create\+\_\+connection\+\_\+split} (const char $\ast$ip, unsigned short port)
+\item 
+int \hyperlink{tunala_8h_ab65f8b26ac16d41314011d1a18a8a985}{ip\+\_\+create\+\_\+listener} (const char $\ast$address)
+\item 
+int \hyperlink{tunala_8h_a9946ad170131d5cfbb693c18323712ea}{ip\+\_\+create\+\_\+connection} (const char $\ast$address)
+\item 
+int \hyperlink{tunala_8h_a3b0c98383b55634787c7d3009958c074}{ip\+\_\+parse\+\_\+address} (const char $\ast$address, const char $\ast$$\ast$parsed\+\_\+ip, unsigned short $\ast$port, int accept\+\_\+all\+\_\+ip)
+\item 
+int \hyperlink{tunala_8h_af59b18a07982e64a93297cbc144a7d41}{ip\+\_\+accept\+\_\+connection} (int listen\+\_\+fd)
+\item 
+int \hyperlink{tunala_8h_adfe4f998ddeb5021acb38579b5d5d58b}{int\+\_\+strtoul} (const char $\ast$str, unsigned long $\ast$val)
+\item 
+char $\ast$ \hyperlink{tunala_8h_ab3054bc957db93fd864d93aad9cbf97e}{int\+\_\+strstr} (const char $\ast$haystack, const char $\ast$needle)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{tunala.\+h@{tunala.\+h}!M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE@{M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE}}
+\index{M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE@{M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE}{MAX_DATA_SIZE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+D\+A\+T\+A\+\_\+\+S\+I\+ZE~16384}\hypertarget{tunala_8h_a87f68e96fb938eddc39ad1f19d923a96}{}\label{tunala_8h_a87f68e96fb938eddc39ad1f19d923a96}
+
+
+Definition at line 87 of file tunala.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+t@{buffer\+\_\+t}}
+\index{buffer\+\_\+t@{buffer\+\_\+t}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+t}{buffer_t}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+buffer\+\_\+t}  {\bf buffer\+\_\+t}}\hypertarget{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}{}\label{tunala_8h_a1ca7ebe52bb67d6b38a88cc0449bc5a1}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+t@{state\+\_\+machine\+\_\+t}}
+\index{state\+\_\+machine\+\_\+t@{state\+\_\+machine\+\_\+t}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+t}{state_machine_t}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+state\+\_\+machine\+\_\+t}  {\bf state\+\_\+machine\+\_\+t}}\hypertarget{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}{}\label{tunala_8h_a7492724e8711dcd64c1fa7e87b83ca54}
+
+
+\subsection{Enumeration Type Documentation}
+\index{tunala.\+h@{tunala.\+h}!sm\+\_\+buffer\+\_\+t@{sm\+\_\+buffer\+\_\+t}}
+\index{sm\+\_\+buffer\+\_\+t@{sm\+\_\+buffer\+\_\+t}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{sm\+\_\+buffer\+\_\+t}{sm_buffer_t}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf sm\+\_\+buffer\+\_\+t}}\hypertarget{tunala_8h_aede4773863e23d38f39e99e8074ec307}{}\label{tunala_8h_aede4773863e23d38f39e99e8074ec307}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+IN@{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+IN}!tunala.\+h@{tunala.\+h}}\index{tunala.\+h@{tunala.\+h}!S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+IN@{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+IN}}\item[{\em 
+S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+IN\hypertarget{tunala_8h_aede4773863e23d38f39e99e8074ec307aed1b8d80500e87a085cd793b87447940}{}\label{tunala_8h_aede4773863e23d38f39e99e8074ec307aed1b8d80500e87a085cd793b87447940}
+}]\index{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+O\+UT@{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+O\+UT}!tunala.\+h@{tunala.\+h}}\index{tunala.\+h@{tunala.\+h}!S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+O\+UT@{S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+O\+UT}}\item[{\em 
+S\+M\+\_\+\+C\+L\+E\+A\+N\+\_\+\+O\+UT\hypertarget{tunala_8h_aede4773863e23d38f39e99e8074ec307adba802ee7ab32bd77d9015b8ca6631d7}{}\label{tunala_8h_aede4773863e23d38f39e99e8074ec307adba802ee7ab32bd77d9015b8ca6631d7}
+}]\index{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+IN@{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+IN}!tunala.\+h@{tunala.\+h}}\index{tunala.\+h@{tunala.\+h}!S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+IN@{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+IN}}\item[{\em 
+S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+IN\hypertarget{tunala_8h_aede4773863e23d38f39e99e8074ec307ab733589b716671de1e464adc2e5585ac}{}\label{tunala_8h_aede4773863e23d38f39e99e8074ec307ab733589b716671de1e464adc2e5585ac}
+}]\index{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+O\+UT@{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+O\+UT}!tunala.\+h@{tunala.\+h}}\index{tunala.\+h@{tunala.\+h}!S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+O\+UT@{S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+O\+UT}}\item[{\em 
+S\+M\+\_\+\+D\+I\+R\+T\+Y\+\_\+\+O\+UT\hypertarget{tunala_8h_aede4773863e23d38f39e99e8074ec307accd6f3a5b071f939af7f8726ad18752b}{}\label{tunala_8h_aede4773863e23d38f39e99e8074ec307accd6f3a5b071f939af7f8726ad18752b}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 185 of file tunala.\+h.
+
+
+\begin{DoxyCode}
+185              \{
+186     \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307aed1b8d80500e87a085cd793b87447940}{SM\_CLEAN\_IN}, \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307adba802ee7ab32bd77d9015b8ca6631d7}{SM\_CLEAN\_OUT},
+187     \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307ab733589b716671de1e464adc2e5585ac}{SM\_DIRTY\_IN}, \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307accd6f3a5b071f939af7f8726ad18752b}{SM\_DIRTY\_OUT}
+188 \} \hyperlink{tunala_8h_aede4773863e23d38f39e99e8074ec307}{sm\_buffer\_t};
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+init@{buffer\+\_\+init}}
+\index{buffer\+\_\+init@{buffer\+\_\+init}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+init(buffer\+\_\+t $\ast$buf)}{buffer_init(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} buffer\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_afaa7c3c748a82b2c27a7c055c4f223bc}{}\label{tunala_8h_afaa7c3c748a82b2c27a7c055c4f223bc}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+close@{buffer\+\_\+close}}
+\index{buffer\+\_\+close@{buffer\+\_\+close}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+close(buffer\+\_\+t $\ast$buf)}{buffer_close(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} buffer\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a54a5701d56ac5304d028c3de95e378ce}{}\label{tunala_8h_a54a5701d56ac5304d028c3de95e378ce}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+used@{buffer\+\_\+used}}
+\index{buffer\+\_\+used@{buffer\+\_\+used}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+used(buffer\+\_\+t $\ast$buf)}{buffer_used(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int buffer\+\_\+used (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_ac7913904db9763e47d5a78692034e1e3}{}\label{tunala_8h_ac7913904db9763e47d5a78692034e1e3}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+unused@{buffer\+\_\+unused}}
+\index{buffer\+\_\+unused@{buffer\+\_\+unused}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+unused(buffer\+\_\+t $\ast$buf)}{buffer_unused(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int buffer\+\_\+unused (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a7ee9eb7750e4a695ed65779041d5cb39}{}\label{tunala_8h_a7ee9eb7750e4a695ed65779041d5cb39}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+full@{buffer\+\_\+full}}
+\index{buffer\+\_\+full@{buffer\+\_\+full}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+full(buffer\+\_\+t $\ast$buf)}{buffer_full(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}int buffer\+\_\+full (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a7f1fb5738422a91b89a59a3a2daf825e}{}\label{tunala_8h_a7f1fb5738422a91b89a59a3a2daf825e}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+notfull@{buffer\+\_\+notfull}}
+\index{buffer\+\_\+notfull@{buffer\+\_\+notfull}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+notfull(buffer\+\_\+t $\ast$buf)}{buffer_notfull(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}int buffer\+\_\+notfull (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_aaab4b860f650d0e34d9e6eed42115ceb}{}\label{tunala_8h_aaab4b860f650d0e34d9e6eed42115ceb}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+empty@{buffer\+\_\+empty}}
+\index{buffer\+\_\+empty@{buffer\+\_\+empty}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+empty(buffer\+\_\+t $\ast$buf)}{buffer_empty(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}int buffer\+\_\+empty (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a7eae868d27de22c527c26eb5265145ec}{}\label{tunala_8h_a7eae868d27de22c527c26eb5265145ec}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+notempty@{buffer\+\_\+notempty}}
+\index{buffer\+\_\+notempty@{buffer\+\_\+notempty}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+notempty(buffer\+\_\+t $\ast$buf)}{buffer_notempty(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}int buffer\+\_\+notempty (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_abf6cdf5f3ff64cd72df87a4af4b2fdfe}{}\label{tunala_8h_abf6cdf5f3ff64cd72df87a4af4b2fdfe}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+total\+\_\+in@{buffer\+\_\+total\+\_\+in}}
+\index{buffer\+\_\+total\+\_\+in@{buffer\+\_\+total\+\_\+in}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+total\+\_\+in(buffer\+\_\+t $\ast$buf)}{buffer_total_in(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long buffer\+\_\+total\+\_\+in (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a4bfe1df9122588515f6824ecb9eb347c}{}\label{tunala_8h_a4bfe1df9122588515f6824ecb9eb347c}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+total\+\_\+out@{buffer\+\_\+total\+\_\+out}}
+\index{buffer\+\_\+total\+\_\+out@{buffer\+\_\+total\+\_\+out}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+total\+\_\+out(buffer\+\_\+t $\ast$buf)}{buffer_total_out(buffer_t *buf)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long buffer\+\_\+total\+\_\+out (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a22bbf513649b45d5bc3442bb39ff9e7c}{}\label{tunala_8h_a22bbf513649b45d5bc3442bb39ff9e7c}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+from\+\_\+fd@{buffer\+\_\+from\+\_\+fd}}
+\index{buffer\+\_\+from\+\_\+fd@{buffer\+\_\+from\+\_\+fd}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+from\+\_\+fd(buffer\+\_\+t $\ast$buf, int fd)}{buffer_from_fd(buffer_t *buf, int fd)}}]{\setlength{\rightskip}{0pt plus 5cm}int buffer\+\_\+from\+\_\+fd (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf, }
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a8cf7a0eb2fa4df69bf7aea297d573b27}{}\label{tunala_8h_a8cf7a0eb2fa4df69bf7aea297d573b27}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+to\+\_\+fd@{buffer\+\_\+to\+\_\+fd}}
+\index{buffer\+\_\+to\+\_\+fd@{buffer\+\_\+to\+\_\+fd}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+to\+\_\+fd(buffer\+\_\+t $\ast$buf, int fd)}{buffer_to_fd(buffer_t *buf, int fd)}}]{\setlength{\rightskip}{0pt plus 5cm}int buffer\+\_\+to\+\_\+fd (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf, }
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_afa394d8a96369709f0ad969a952e73c6}{}\label{tunala_8h_afa394d8a96369709f0ad969a952e73c6}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+from\+\_\+\+S\+SL@{buffer\+\_\+from\+\_\+\+S\+SL}}
+\index{buffer\+\_\+from\+\_\+\+S\+SL@{buffer\+\_\+from\+\_\+\+S\+SL}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+from\+\_\+\+S\+S\+L(buffer\+\_\+t $\ast$buf, S\+S\+L $\ast$ssl)}{buffer_from_SSL(buffer_t *buf, SSL *ssl)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} buffer\+\_\+from\+\_\+\+S\+SL (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf, }
+\item[{{\bf S\+SL} $\ast$}]{ssl}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_af4cb7ad889193f7468292547a5e7ec3f}{}\label{tunala_8h_af4cb7ad889193f7468292547a5e7ec3f}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+to\+\_\+\+S\+SL@{buffer\+\_\+to\+\_\+\+S\+SL}}
+\index{buffer\+\_\+to\+\_\+\+S\+SL@{buffer\+\_\+to\+\_\+\+S\+SL}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+to\+\_\+\+S\+S\+L(buffer\+\_\+t $\ast$buf, S\+S\+L $\ast$ssl)}{buffer_to_SSL(buffer_t *buf, SSL *ssl)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} buffer\+\_\+to\+\_\+\+S\+SL (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf, }
+\item[{{\bf S\+SL} $\ast$}]{ssl}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_afefabb2f146f8ecf10c6e42c79dce2bd}{}\label{tunala_8h_afefabb2f146f8ecf10c6e42c79dce2bd}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+from\+\_\+\+B\+IO@{buffer\+\_\+from\+\_\+\+B\+IO}}
+\index{buffer\+\_\+from\+\_\+\+B\+IO@{buffer\+\_\+from\+\_\+\+B\+IO}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+from\+\_\+\+B\+I\+O(buffer\+\_\+t $\ast$buf, B\+I\+O $\ast$bio)}{buffer_from_BIO(buffer_t *buf, BIO *bio)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} buffer\+\_\+from\+\_\+\+B\+IO (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf, }
+\item[{{\bf B\+IO} $\ast$}]{bio}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a6f1aa654ac93ac9fd32c0ad6d66a3cb7}{}\label{tunala_8h_a6f1aa654ac93ac9fd32c0ad6d66a3cb7}
+\index{tunala.\+h@{tunala.\+h}!buffer\+\_\+to\+\_\+\+B\+IO@{buffer\+\_\+to\+\_\+\+B\+IO}}
+\index{buffer\+\_\+to\+\_\+\+B\+IO@{buffer\+\_\+to\+\_\+\+B\+IO}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{buffer\+\_\+to\+\_\+\+B\+I\+O(buffer\+\_\+t $\ast$buf, B\+I\+O $\ast$bio)}{buffer_to_BIO(buffer_t *buf, BIO *bio)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} buffer\+\_\+to\+\_\+\+B\+IO (
+\begin{DoxyParamCaption}
+\item[{{\bf buffer\+\_\+t} $\ast$}]{buf, }
+\item[{{\bf B\+IO} $\ast$}]{bio}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a9b2b883e86bfc787235912bfb5e3e23e}{}\label{tunala_8h_a9b2b883e86bfc787235912bfb5e3e23e}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+ssl\+\_\+info@{cb\+\_\+ssl\+\_\+info}}
+\index{cb\+\_\+ssl\+\_\+info@{cb\+\_\+ssl\+\_\+info}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+ssl\+\_\+info(const S\+S\+L $\ast$s, int where, int ret)}{cb_ssl_info(const SSL *s, int where, int ret)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} cb\+\_\+ssl\+\_\+info (
+\begin{DoxyParamCaption}
+\item[{const {\bf S\+SL} $\ast$}]{s, }
+\item[{int}]{where, }
+\item[{int}]{ret}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_af448ee99872b25deab730fac3422c51c}{}\label{tunala_8h_af448ee99872b25deab730fac3422c51c}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output@{cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output}}
+\index{cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output@{cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output(\+F\+I\+L\+E $\ast$fp)}{cb_ssl_info_set_output(FILE *fp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} cb\+\_\+ssl\+\_\+info\+\_\+set\+\_\+output (
+\begin{DoxyParamCaption}
+\item[{F\+I\+LE $\ast$}]{fp}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a622ff181fc4b68c2b06630dcbb128a32}{}\label{tunala_8h_a622ff181fc4b68c2b06630dcbb128a32}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+ssl\+\_\+verify@{cb\+\_\+ssl\+\_\+verify}}
+\index{cb\+\_\+ssl\+\_\+verify@{cb\+\_\+ssl\+\_\+verify}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+ssl\+\_\+verify(int ok, X509\+\_\+\+S\+T\+O\+R\+E\+\_\+\+C\+T\+X $\ast$ctx)}{cb_ssl_verify(int ok, X509_STORE_CTX *ctx)}}]{\setlength{\rightskip}{0pt plus 5cm}int cb\+\_\+ssl\+\_\+verify (
+\begin{DoxyParamCaption}
+\item[{int}]{ok, }
+\item[{{\bf X509\+\_\+\+S\+T\+O\+R\+E\+\_\+\+C\+TX} $\ast$}]{ctx}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a58f616e1e10d3754b2026562db2306fc}{}\label{tunala_8h_a58f616e1e10d3754b2026562db2306fc}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output@{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output}}
+\index{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output@{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output(\+F\+I\+L\+E $\ast$fp)}{cb_ssl_verify_set_output(FILE *fp)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+output (
+\begin{DoxyParamCaption}
+\item[{F\+I\+LE $\ast$}]{fp}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a69e47f053c6cec1477b40a20e6b23b2f}{}\label{tunala_8h_a69e47f053c6cec1477b40a20e6b23b2f}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth@{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth}}
+\index{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth@{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth(unsigned int verify\+\_\+depth)}{cb_ssl_verify_set_depth(unsigned int verify_depth)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+depth (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{verify\+\_\+depth}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a591355a8bbbe45ba7a4987b81c25e9ee}{}\label{tunala_8h_a591355a8bbbe45ba7a4987b81c25e9ee}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level@{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level}}
+\index{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level@{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level(unsigned int level)}{cb_ssl_verify_set_level(unsigned int level)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} cb\+\_\+ssl\+\_\+verify\+\_\+set\+\_\+level (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{level}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a4a822791294ff65658372c2c8e601e41}{}\label{tunala_8h_a4a822791294ff65658372c2c8e601e41}
+\index{tunala.\+h@{tunala.\+h}!cb\+\_\+generate\+\_\+tmp\+\_\+rsa@{cb\+\_\+generate\+\_\+tmp\+\_\+rsa}}
+\index{cb\+\_\+generate\+\_\+tmp\+\_\+rsa@{cb\+\_\+generate\+\_\+tmp\+\_\+rsa}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{cb\+\_\+generate\+\_\+tmp\+\_\+rsa(\+S\+S\+L $\ast$s, int is\+\_\+export, int keylength)}{cb_generate_tmp_rsa(SSL *s, int is_export, int keylength)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf R\+SA}$\ast$ cb\+\_\+generate\+\_\+tmp\+\_\+rsa (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+SL} $\ast$}]{s, }
+\item[{int}]{is\+\_\+export, }
+\item[{int}]{keylength}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a55ae3df3e63d7c6ea77fff2fb8559006}{}\label{tunala_8h_a55ae3df3e63d7c6ea77fff2fb8559006}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+init@{state\+\_\+machine\+\_\+init}}
+\index{state\+\_\+machine\+\_\+init@{state\+\_\+machine\+\_\+init}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+init(state\+\_\+machine\+\_\+t $\ast$machine)}{state_machine_init(state_machine_t *machine)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} state\+\_\+machine\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_ae76833f6f8b3776658d16a1be6d51d21}{}\label{tunala_8h_ae76833f6f8b3776658d16a1be6d51d21}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+close@{state\+\_\+machine\+\_\+close}}
+\index{state\+\_\+machine\+\_\+close@{state\+\_\+machine\+\_\+close}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+close(state\+\_\+machine\+\_\+t $\ast$machine)}{state_machine_close(state_machine_t *machine)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} state\+\_\+machine\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a9d3f030dbdc5d2f2cac30f41f0a6e48f}{}\label{tunala_8h_a9d3f030dbdc5d2f2cac30f41f0a6e48f}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+get\+\_\+buffer@{state\+\_\+machine\+\_\+get\+\_\+buffer}}
+\index{state\+\_\+machine\+\_\+get\+\_\+buffer@{state\+\_\+machine\+\_\+get\+\_\+buffer}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+get\+\_\+buffer(state\+\_\+machine\+\_\+t $\ast$machine, sm\+\_\+buffer\+\_\+t type)}{state_machine_get_buffer(state_machine_t *machine, sm_buffer_t type)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf buffer\+\_\+t}$\ast$ state\+\_\+machine\+\_\+get\+\_\+buffer (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine, }
+\item[{{\bf sm\+\_\+buffer\+\_\+t}}]{type}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a2e796231c02a84893821842e7f5d56dd}{}\label{tunala_8h_a2e796231c02a84893821842e7f5d56dd}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+get\+\_\+\+S\+SL@{state\+\_\+machine\+\_\+get\+\_\+\+S\+SL}}
+\index{state\+\_\+machine\+\_\+get\+\_\+\+S\+SL@{state\+\_\+machine\+\_\+get\+\_\+\+S\+SL}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+get\+\_\+\+S\+S\+L(state\+\_\+machine\+\_\+t $\ast$machine)}{state_machine_get_SSL(state_machine_t *machine)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+SL}$\ast$ state\+\_\+machine\+\_\+get\+\_\+\+S\+SL (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a1290d8cdd45290b32d83a8da5941f700}{}\label{tunala_8h_a1290d8cdd45290b32d83a8da5941f700}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+set\+\_\+\+S\+SL@{state\+\_\+machine\+\_\+set\+\_\+\+S\+SL}}
+\index{state\+\_\+machine\+\_\+set\+\_\+\+S\+SL@{state\+\_\+machine\+\_\+set\+\_\+\+S\+SL}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+set\+\_\+\+S\+S\+L(state\+\_\+machine\+\_\+t $\ast$machine, S\+S\+L $\ast$ssl, int is\+\_\+server)}{state_machine_set_SSL(state_machine_t *machine, SSL *ssl, int is_server)}}]{\setlength{\rightskip}{0pt plus 5cm}int state\+\_\+machine\+\_\+set\+\_\+\+S\+SL (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine, }
+\item[{{\bf S\+SL} $\ast$}]{ssl, }
+\item[{int}]{is\+\_\+server}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a1076acb0ca90ec6c22fedc157b62acb6}{}\label{tunala_8h_a1076acb0ca90ec6c22fedc157b62acb6}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+churn@{state\+\_\+machine\+\_\+churn}}
+\index{state\+\_\+machine\+\_\+churn@{state\+\_\+machine\+\_\+churn}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+churn(state\+\_\+machine\+\_\+t $\ast$machine)}{state_machine_churn(state_machine_t *machine)}}]{\setlength{\rightskip}{0pt plus 5cm}int state\+\_\+machine\+\_\+churn (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a0c83621a3b373e69b056c2d388b85028}{}\label{tunala_8h_a0c83621a3b373e69b056c2d388b85028}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+close\+\_\+clean@{state\+\_\+machine\+\_\+close\+\_\+clean}}
+\index{state\+\_\+machine\+\_\+close\+\_\+clean@{state\+\_\+machine\+\_\+close\+\_\+clean}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+close\+\_\+clean(state\+\_\+machine\+\_\+t $\ast$machine)}{state_machine_close_clean(state_machine_t *machine)}}]{\setlength{\rightskip}{0pt plus 5cm}int state\+\_\+machine\+\_\+close\+\_\+clean (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_aaadb9f18069e862c112d6bb0050bf0ad}{}\label{tunala_8h_aaadb9f18069e862c112d6bb0050bf0ad}
+\index{tunala.\+h@{tunala.\+h}!state\+\_\+machine\+\_\+close\+\_\+dirty@{state\+\_\+machine\+\_\+close\+\_\+dirty}}
+\index{state\+\_\+machine\+\_\+close\+\_\+dirty@{state\+\_\+machine\+\_\+close\+\_\+dirty}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{state\+\_\+machine\+\_\+close\+\_\+dirty(state\+\_\+machine\+\_\+t $\ast$machine)}{state_machine_close_dirty(state_machine_t *machine)}}]{\setlength{\rightskip}{0pt plus 5cm}int state\+\_\+machine\+\_\+close\+\_\+dirty (
+\begin{DoxyParamCaption}
+\item[{{\bf state\+\_\+machine\+\_\+t} $\ast$}]{machine}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_ab37ee38400fe1f86f9c33481db29a90e}{}\label{tunala_8h_ab37ee38400fe1f86f9c33481db29a90e}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+initialise@{ip\+\_\+initialise}}
+\index{ip\+\_\+initialise@{ip\+\_\+initialise}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+initialise(void)}{ip_initialise(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+initialise (
+\begin{DoxyParamCaption}
+\item[{{\bf void}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a214312e0f310c9a8cbddd97411828ab9}{}\label{tunala_8h_a214312e0f310c9a8cbddd97411828ab9}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+create\+\_\+listener\+\_\+split@{ip\+\_\+create\+\_\+listener\+\_\+split}}
+\index{ip\+\_\+create\+\_\+listener\+\_\+split@{ip\+\_\+create\+\_\+listener\+\_\+split}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+create\+\_\+listener\+\_\+split(const char $\ast$ip, unsigned short port)}{ip_create_listener_split(const char *ip, unsigned short port)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+create\+\_\+listener\+\_\+split (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ip, }
+\item[{unsigned short}]{port}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a4fd57d724206fa561b961e35496913fe}{}\label{tunala_8h_a4fd57d724206fa561b961e35496913fe}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+create\+\_\+connection\+\_\+split@{ip\+\_\+create\+\_\+connection\+\_\+split}}
+\index{ip\+\_\+create\+\_\+connection\+\_\+split@{ip\+\_\+create\+\_\+connection\+\_\+split}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+create\+\_\+connection\+\_\+split(const char $\ast$ip, unsigned short port)}{ip_create_connection_split(const char *ip, unsigned short port)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+create\+\_\+connection\+\_\+split (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{ip, }
+\item[{unsigned short}]{port}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a2258f6539a7728f3d9bc4b40edbeb9d2}{}\label{tunala_8h_a2258f6539a7728f3d9bc4b40edbeb9d2}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+create\+\_\+listener@{ip\+\_\+create\+\_\+listener}}
+\index{ip\+\_\+create\+\_\+listener@{ip\+\_\+create\+\_\+listener}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+create\+\_\+listener(const char $\ast$address)}{ip_create_listener(const char *address)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+create\+\_\+listener (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{address}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_ab65f8b26ac16d41314011d1a18a8a985}{}\label{tunala_8h_ab65f8b26ac16d41314011d1a18a8a985}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+create\+\_\+connection@{ip\+\_\+create\+\_\+connection}}
+\index{ip\+\_\+create\+\_\+connection@{ip\+\_\+create\+\_\+connection}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+create\+\_\+connection(const char $\ast$address)}{ip_create_connection(const char *address)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+create\+\_\+connection (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{address}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a9946ad170131d5cfbb693c18323712ea}{}\label{tunala_8h_a9946ad170131d5cfbb693c18323712ea}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+parse\+\_\+address@{ip\+\_\+parse\+\_\+address}}
+\index{ip\+\_\+parse\+\_\+address@{ip\+\_\+parse\+\_\+address}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+parse\+\_\+address(const char $\ast$address, const char $\ast$$\ast$parsed\+\_\+ip, unsigned short $\ast$port, int accept\+\_\+all\+\_\+ip)}{ip_parse_address(const char *address, const char **parsed_ip, unsigned short *port, int accept_all_ip)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+parse\+\_\+address (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{address, }
+\item[{const char $\ast$$\ast$}]{parsed\+\_\+ip, }
+\item[{unsigned short $\ast$}]{port, }
+\item[{int}]{accept\+\_\+all\+\_\+ip}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_a3b0c98383b55634787c7d3009958c074}{}\label{tunala_8h_a3b0c98383b55634787c7d3009958c074}
+\index{tunala.\+h@{tunala.\+h}!ip\+\_\+accept\+\_\+connection@{ip\+\_\+accept\+\_\+connection}}
+\index{ip\+\_\+accept\+\_\+connection@{ip\+\_\+accept\+\_\+connection}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{ip\+\_\+accept\+\_\+connection(int listen\+\_\+fd)}{ip_accept_connection(int listen_fd)}}]{\setlength{\rightskip}{0pt plus 5cm}int ip\+\_\+accept\+\_\+connection (
+\begin{DoxyParamCaption}
+\item[{int}]{listen\+\_\+fd}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_af59b18a07982e64a93297cbc144a7d41}{}\label{tunala_8h_af59b18a07982e64a93297cbc144a7d41}
+\index{tunala.\+h@{tunala.\+h}!int\+\_\+strtoul@{int\+\_\+strtoul}}
+\index{int\+\_\+strtoul@{int\+\_\+strtoul}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{int\+\_\+strtoul(const char $\ast$str, unsigned long $\ast$val)}{int_strtoul(const char *str, unsigned long *val)}}]{\setlength{\rightskip}{0pt plus 5cm}int int\+\_\+strtoul (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{str, }
+\item[{unsigned long $\ast$}]{val}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_adfe4f998ddeb5021acb38579b5d5d58b}{}\label{tunala_8h_adfe4f998ddeb5021acb38579b5d5d58b}
+\index{tunala.\+h@{tunala.\+h}!int\+\_\+strstr@{int\+\_\+strstr}}
+\index{int\+\_\+strstr@{int\+\_\+strstr}!tunala.\+h@{tunala.\+h}}
+\subsubsection[{\texorpdfstring{int\+\_\+strstr(const char $\ast$haystack, const char $\ast$needle)}{int_strstr(const char *haystack, const char *needle)}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ int\+\_\+strstr (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{haystack, }
+\item[{const char $\ast$}]{needle}
+\end{DoxyParamCaption}
+)}\hypertarget{tunala_8h_ab3054bc957db93fd864d93aad9cbf97e}{}\label{tunala_8h_ab3054bc957db93fd864d93aad9cbf97e}

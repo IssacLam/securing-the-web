@@ -1,0 +1,92 @@
+.TH "s2n-master/libcrypto-build/openssl/apps/testdsa.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/apps/testdsa.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDSA\fP * \fBget_dsa512\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBget_dsa1024\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "\fBDSA\fP * \fBget_dsa2048\fP (\fBvoid\fP)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBDSA\fP * get_dsa512 (\fBvoid\fP)"
+
+.PP
+Definition at line 43 of file testdsa\&.h\&.
+.PP
+.nf
+44 {
+45     DSA *dsa;
+46 
+47     if ((dsa = DSA_new()) == NULL)
+48         return (NULL);
+49     dsa->priv_key = BN_bin2bn(dsa512_priv, sizeof(dsa512_priv), NULL);
+50     dsa->pub_key = BN_bin2bn(dsa512_pub, sizeof(dsa512_pub), NULL);
+51     dsa->p = BN_bin2bn(dsa512_p, sizeof(dsa512_p), NULL);
+52     dsa->q = BN_bin2bn(dsa512_q, sizeof(dsa512_q), NULL);
+53     dsa->g = BN_bin2bn(dsa512_g, sizeof(dsa512_g), NULL);
+54     if ((dsa->priv_key == NULL) || (dsa->pub_key == NULL) || (dsa->p == NULL)
+55         || (dsa->q == NULL) || (dsa->g == NULL))
+56         return (NULL);
+57     return (dsa);
+58 }
+.fi
+.SS "\fBDSA\fP * get_dsa1024 (\fBvoid\fP)"
+
+.PP
+Definition at line 112 of file testdsa\&.h\&.
+.PP
+.nf
+113 {
+114     DSA *dsa;
+115 
+116     if ((dsa = DSA_new()) == NULL)
+117         return (NULL);
+118     dsa->priv_key = BN_bin2bn(dsa1024_priv, sizeof(dsa1024_priv), NULL);
+119     dsa->pub_key = BN_bin2bn(dsa1024_pub, sizeof(dsa1024_pub), NULL);
+120     dsa->p = BN_bin2bn(dsa1024_p, sizeof(dsa1024_p), NULL);
+121     dsa->q = BN_bin2bn(dsa1024_q, sizeof(dsa1024_q), NULL);
+122     dsa->g = BN_bin2bn(dsa1024_g, sizeof(dsa1024_g), NULL);
+123     if ((dsa->priv_key == NULL) || (dsa->pub_key == NULL) || (dsa->p == NULL)
+124         || (dsa->q == NULL) || (dsa->g == NULL))
+125         return (NULL);
+126     return (dsa);
+127 }
+.fi
+.SS "\fBDSA\fP * get_dsa2048 (\fBvoid\fP)"
+
+.PP
+Definition at line 214 of file testdsa\&.h\&.
+.PP
+.nf
+215 {
+216     DSA *dsa;
+217 
+218     if ((dsa = DSA_new()) == NULL)
+219         return (NULL);
+220     dsa->priv_key = BN_bin2bn(dsa2048_priv, sizeof(dsa2048_priv), NULL);
+221     dsa->pub_key = BN_bin2bn(dsa2048_pub, sizeof(dsa2048_pub), NULL);
+222     dsa->p = BN_bin2bn(dsa2048_p, sizeof(dsa2048_p), NULL);
+223     dsa->q = BN_bin2bn(dsa2048_q, sizeof(dsa2048_q), NULL);
+224     dsa->g = BN_bin2bn(dsa2048_g, sizeof(dsa2048_g), NULL);
+225     if ((dsa->priv_key == NULL) || (dsa->pub_key == NULL) || (dsa->p == NULL)
+226         || (dsa->q == NULL) || (dsa->g == NULL))
+227         return (NULL);
+228     return (dsa);
+229 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

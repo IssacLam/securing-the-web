@@ -1,0 +1,146 @@
+\hypertarget{s2n__stuffer__hex__test_8c}{}\section{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+hex\+\_\+test.c File Reference}
+\label{s2n__stuffer__hex__test_8c}\index{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c@{s2n-\/master/tests/unit/s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c}}
+{\ttfamily \#include \char`\"{}s2n\+\_\+test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}testlib/s2n\+\_\+testlib.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+random.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__hex__test_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__hex__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c}!main@{main}}
+\index{main@{main}!s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c@{s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__hex__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{s2n__stuffer__hex__test_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 22 of file s2n\+\_\+stuffer\+\_\+hex\+\_\+test.\+c.
+
+
+\begin{DoxyCode}
+23 \{
+24     uint8\_t pad[100];
+25     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} b = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = pad,.size = \textcolor{keyword}{sizeof}(pad) \};
+26     \textcolor{keyword}{struct }\hyperlink{structs2n__stuffer}{s2n\_stuffer} stuffer;
+27     uint8\_t \hyperlink{aes__locl_8h_aed742c436da53c1080638ce6ef7d13de}{u8};
+28     uint16\_t \hyperlink{aes__locl_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16};
+29     uint32\_t \hyperlink{aes__locl_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32};
+30     uint64\_t \hyperlink{modes__lcl_8h_ad758b7a5c3f18ed79d2fcd23d9f16357}{u64};
+31 
+32     \hyperlink{s2n__test_8h_abef58b8851265310b43e5b6d8c1d2ff5}{BEGIN\_TEST}();
+33 
+34     \textcolor{comment}{/* Create a 100 byte stuffer */}
+35     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&stuffer, &b));
+36 
+37     \textcolor{comment}{/* Try to write 51 1-byte ints bytes */}
+38     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 50; i++) \{
+39         uint8\_t value = i * (0xff / 50);
+40         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_afa09f772b334ba411a27ba2d52747b7d}{s2n\_stuffer\_write\_uint8\_hex}(&stuffer, value
+      ));
+41     \}
+42     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_afa09f772b334ba411a27ba2d52747b7d}{s2n\_stuffer\_write\_uint8\_hex}(&stuffer, 1));
+43 
+44     \textcolor{comment}{/* Read those back, and expect the same results */}
+45     \textcolor{keywordflow}{for} (int8\_t i = 0; i < 50; i++) \{
+46         uint8\_t value = i * (0xff / 50);
+47         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&stuffer, &u8));
+48         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(u8, value);
+49     \}
+50     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&stuffer, &u8));
+51 
+52     \textcolor{comment}{/* Try to write 26 2-byte ints bytes */}
+53     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+54     \textcolor{keywordflow}{for} (uint16\_t i = 0; i < 25; i++) \{
+55         uint16\_t value = i * (0xffff / 25);
+56         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_aed0ab9f1bb48ba81d2f43422b5c543e5}{s2n\_stuffer\_write\_uint16\_hex}(&stuffer, 
+      value));
+57     \}
+58     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_aed0ab9f1bb48ba81d2f43422b5c543e5}{s2n\_stuffer\_write\_uint16\_hex}(&stuffer, 1));
+59 
+60     \textcolor{comment}{/* Read those back, and expect the same results */}
+61     \textcolor{keywordflow}{for} (uint16\_t i = 0; i < 25; i++) \{
+62         uint16\_t value = i * (0xffff / 25);
+63         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a517d2c591ca95c161a672561e12c89b8}{s2n\_stuffer\_read\_uint16\_hex}(&stuffer, &u16)
+      );
+64         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u16);
+65     \}
+66     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a517d2c591ca95c161a672561e12c89b8}{s2n\_stuffer\_read\_uint16\_hex}(&stuffer, &u16));
+67 
+68     \textcolor{comment}{/* Try to write 13 4-byte ints bytes */}
+69     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+70     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(&stuffer, &b));
+71     \textcolor{keywordflow}{for} (uint32\_t i = 0; i < 12; i++) \{
+72         uint32\_t value = i * (0xffffffff / 12);
+73         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a1ee9f3813116985bd87e1fcf747f2187}{s2n\_stuffer\_write\_uint32\_hex}(&stuffer, 
+      value));
+74     \}
+75     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a1ee9f3813116985bd87e1fcf747f2187}{s2n\_stuffer\_write\_uint32\_hex}(&stuffer, 1));
+76 
+77     \textcolor{comment}{/* Read those back, and expect the same results */}
+78     \textcolor{keywordflow}{for} (uint32\_t i = 0; i < 12; i++) \{
+79         uint32\_t value = i * (0xffffffff / 12);
+80         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a8b0792099ca5ef6812afc44337ee8af0}{s2n\_stuffer\_read\_uint32\_hex}(&stuffer, &u32)
+      );
+81         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u32);
+82     \}
+83     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a8b0792099ca5ef6812afc44337ee8af0}{s2n\_stuffer\_read\_uint32\_hex}(&stuffer, &u32));
+84 
+85     \textcolor{comment}{/* Try to write 7 8-byte ints bytes */}
+86     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+87     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 6; i++) \{
+88         uint64\_t value = i * (0xffffffffffffffff / 6);
+89         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a03dd5e430cd385de83b204fba40c2d1f}{s2n\_stuffer\_write\_uint64\_hex}(&stuffer, 
+      value));
+90     \}
+91     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a03dd5e430cd385de83b204fba40c2d1f}{s2n\_stuffer\_write\_uint64\_hex}(&stuffer, 1));
+92 
+93     \textcolor{comment}{/* Read those back, and expect the same results */}
+94     \textcolor{keywordflow}{for} (uint64\_t i = 0; i < 6; i++) \{
+95         uint64\_t value = i * (0xffffffffffffffff / 6);
+96         \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a9bd6a743e1bc57c276e2af9300a81933}{s2n\_stuffer\_read\_uint64\_hex}(&stuffer, &u64)
+      );
+97         \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(value, u64);
+98     \}
+99     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a9bd6a743e1bc57c276e2af9300a81933}{s2n\_stuffer\_read\_uint64\_hex}(&stuffer, &u64));
+100 
+101     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_a2b6b54f7856d92f06f823bc26d10f4ba}{s2n\_stuffer\_wipe}(&stuffer));
+102     uint8\_t hex[] = \textcolor{stringliteral}{"f0F0Zz"};
+103     \textcolor{keyword}{struct }\hyperlink{structs2n__blob}{s2n\_blob} text = \{.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = hex,.size = strlen((\textcolor{keywordtype}{char} *)hex) \};
+104     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer_8c_ad77ea23089bbeb19b897a73bf6ca3fde}{s2n\_stuffer\_write}(&stuffer, &text));
+105 
+106     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&stuffer, &u8));
+107     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(u8, 240);
+108     \hyperlink{s2n__test_8h_ad26d98d36bb5f8a59a90fe3a16d0297e}{EXPECT\_SUCCESS}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&stuffer, &u8));
+109     \hyperlink{s2n__test_8h_aea4dfdd3a9d6afc7bbb40248a8437774}{EXPECT\_EQUAL}(u8, 240);
+110     \hyperlink{s2n__test_8h_aeb59a103f4f1f44916f910eb73080c3e}{EXPECT\_FAILURE}(\hyperlink{s2n__stuffer__hex_8c_a98bbca4d5251f6db21061e6feb95da1b}{s2n\_stuffer\_read\_uint8\_hex}(&stuffer, &u8));
+111 
+112     \hyperlink{s2n__test_8h_a45a83f30c32ca6265c28a1bef6dbe046}{END\_TEST}();
+113 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__hex__test_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,103 @@
+.TH "s2n-master/error/s2n_errno.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/error/s2n_errno.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <strings\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs2n_error_translation\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBs2n_strerror\fP (int error, const char *lang)"
+.br
+.ti -1c
+.RI "int \fBs2n_error_get_type\fP (int error)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "__thread int \fBs2n_errno\fP"
+.br
+.ti -1c
+.RI "__thread const char * \fBs2n_debug_str\fP"
+.br
+.ti -1c
+.RI "struct \fBs2n_error_translation\fP \fBEN\fP []"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "const char* s2n_strerror (int error, const char * lang)"
+
+.PP
+Definition at line 110 of file s2n_errno\&.c\&.
+.PP
+.nf
+111 {
+112     const char *no_such_language = "Language is not supported for error translation";
+113     const char *no_such_error = "Internal s2n error";
+114 
+115     if (lang == NULL) {
+116         lang = "EN";
+117     }
+118 
+119     if (strcasecmp(lang, "EN")) {
+120         return no_such_language;
+121     }
+122 
+123     for (int i = 0; i < (sizeof(EN) / sizeof(struct s2n_error_translation)); i++) {
+124         if (EN[i]\&.errno_value == error) {
+125             return EN[i]\&.str;
+126         }
+127     }
+128 
+129     return no_such_error;
+130 }
+.fi
+.SS "int s2n_error_get_type (int error)"
+
+.PP
+Definition at line 132 of file s2n_errno\&.c\&.
+.PP
+.nf
+133 {
+134     return (error >> S2N_ERR_NUM_VALUE_BITS);
+135 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "__thread int s2n_errno"
+
+.PP
+Definition at line 23 of file s2n_errno\&.c\&.
+.SS "__thread const char* s2n_debug_str"
+
+.PP
+Definition at line 24 of file s2n_errno\&.c\&.
+.SS "struct \fBs2n_error_translation\fP EN[]"
+
+.PP
+Definition at line 31 of file s2n_errno\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

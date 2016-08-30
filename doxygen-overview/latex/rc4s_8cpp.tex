@@ -1,0 +1,81 @@
+\hypertarget{rc4s_8cpp}{}\section{s2n-\/master/libcrypto-\/build/openssl/crypto/rc4/rc4s.cpp File Reference}
+\label{rc4s_8cpp}\index{s2n-\/master/libcrypto-\/build/openssl/crypto/rc4/rc4s.\+cpp@{s2n-\/master/libcrypto-\/build/openssl/crypto/rc4/rc4s.\+cpp}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/rc4.\+h$>$}\\*
+Include dependency graph for rc4s.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{rc4s_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hw__4758__cca_8h_afad4d591c7931ff6dc5bf69c76c96aa0}{void} \hyperlink{rc4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{rc4s.\+cpp@{rc4s.\+cpp}!main@{main}}
+\index{main@{main}!rc4s.\+cpp@{rc4s.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$argv[])}{main(int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf void} main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{rc4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}{}\label{rc4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f}
+
+
+Definition at line 37 of file rc4s.\+cpp.
+
+
+\begin{DoxyCode}
+38     \{
+39     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} buffer[1024];
+40     \hyperlink{structrc4__key__st}{RC4\_KEY} ctx;
+41     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} s1,s2,e1,e2;
+42     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} k[16];
+43     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data}[2];
+44     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} iv[8];
+45     \textcolor{keywordtype}{int} i,\hyperlink{ssl__locl_8h_acc57d6ccf009b225ff81bbd136682d08}{num}=64,numm;
+46     \textcolor{keywordtype}{int} j=0;
+47 
+48     \textcolor{keywordflow}{if} (argc >= 2)
+49         num=atoi(argv[1]);
+50 
+51     \textcolor{keywordflow}{if} (num == 0) num=256;
+52     \textcolor{keywordflow}{if} (num > 1024-16) num=1024-16;
+53     numm=num+8;
+54 
+55     \textcolor{keywordflow}{for} (j=0; j<6; j++)
+56         \{
+57         \textcolor{keywordflow}{for} (i=0; i<10; i++) 
+58             \{
+59             \hyperlink{crypto_2rc4_2rc4_8h_a44045c1dfa0694a55f08a99556d8ab14}{RC4}(&ctx,numm,buffer,buffer);
+60             GetTSC(s1);
+61             \hyperlink{crypto_2rc4_2rc4_8h_a44045c1dfa0694a55f08a99556d8ab14}{RC4}(&ctx,numm,buffer,buffer);
+62             GetTSC(e1);
+63             GetTSC(s2);
+64             \hyperlink{crypto_2rc4_2rc4_8h_a44045c1dfa0694a55f08a99556d8ab14}{RC4}(&ctx,num,buffer,buffer);
+65             GetTSC(e2);
+66             \hyperlink{crypto_2rc4_2rc4_8h_a44045c1dfa0694a55f08a99556d8ab14}{RC4}(&ctx,num,buffer,buffer);
+67             \}
+68 
+69         printf(\textcolor{stringliteral}{"RC4 (%d bytes) %d %d (%d) - 8 bytes\(\backslash\)n"},num,
+70             e1-s1,e2-s2,(e1-s1)-(e2-s2));
+71         \}
+72     \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{rc4s_8cpp_a91a3bbcc7eb26e8695255b2795d6e46f_cgraph}
+\end{center}
+\end{figure}
+
+

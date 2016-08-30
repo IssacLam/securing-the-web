@@ -1,0 +1,75 @@
+.TH "s2n-master/libcrypto-build/openssl/crypto/md4/md4s.cpp" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/crypto/md4/md4s.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <openssl/md4\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmd4_block_x86\fP (\fBMD4_CTX\fP *ctx, unsigned char *buffer, int \fBnum\fP)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP md4_block_x86 (\fBMD4_CTX\fP * ctx, unsigned char * buffer, int num)"
+
+.SS "\fBvoid\fP main (int argc, char * argv[])"
+
+.PP
+Definition at line 41 of file md4s\&.cpp\&.
+.PP
+.nf
+42     {
+43     unsigned char buffer[64*256];
+44     MD4_CTX ctx;
+45     unsigned long s1,s2,e1,e2;
+46     unsigned char k[16];
+47     unsigned long data[2];
+48     unsigned char iv[8];
+49     int i,num=0,numm;
+50     int j=0;
+51 
+52     if (argc >= 2)
+53         num=atoi(argv[1]);
+54 
+55     if (num == 0) num=16;
+56     if (num > 250) num=16;
+57     numm=num+2;
+58     num*=64;
+59     numm*=64;
+60 
+61     for (j=0; j<6; j++)
+62         {
+63         for (i=0; i<10; i++) 
+64             {
+65             md4_block_x86(&ctx,buffer,numm);
+66             GetTSC(s1);
+67             md4_block_x86(&ctx,buffer,numm);
+68             GetTSC(e1);
+69             GetTSC(s2);
+70             md4_block_x86(&ctx,buffer,num);
+71             GetTSC(e2);
+72             md4_block_x86(&ctx,buffer,num);
+73             }
+74         printf("md4 (%d bytes) %d %d (%\&.2f)\n",num,
+75             e1-s1,e2-s2,(double)((e1-s1)-(e2-s2))/2);
+76         }
+77     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

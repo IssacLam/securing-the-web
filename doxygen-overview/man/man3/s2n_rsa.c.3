@@ -1,0 +1,319 @@
+.TH "s2n-master/crypto/s2n_rsa.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/crypto/s2n_rsa.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <openssl/rsa\&.h>\fP
+.br
+\fC#include <openssl/x509\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'crypto/s2n_rsa\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_asn1der_to_rsa_public_key\fP (struct \fBs2n_rsa_public_key\fP *key, struct \fBs2n_blob\fP *asn1der)"
+.br
+.ti -1c
+.RI "int \fBs2n_asn1der_to_rsa_private_key\fP (struct \fBs2n_rsa_private_key\fP *key, struct \fBs2n_blob\fP *asn1der)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_public_key_free\fP (struct \fBs2n_rsa_public_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_private_key_free\fP (struct \fBs2n_rsa_private_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_public_encrypted_size\fP (struct \fBs2n_rsa_public_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_private_encrypted_size\fP (struct \fBs2n_rsa_private_key\fP *key)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_sign\fP (struct \fBs2n_rsa_private_key\fP *key, struct \fBs2n_hash_state\fP *digest, struct \fBs2n_blob\fP *signature)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_verify\fP (struct \fBs2n_rsa_public_key\fP *key, struct \fBs2n_hash_state\fP *digest, struct \fBs2n_blob\fP *signature)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_encrypt\fP (struct \fBs2n_rsa_public_key\fP *key, struct \fBs2n_blob\fP *in, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_decrypt\fP (struct \fBs2n_rsa_private_key\fP *key, struct \fBs2n_blob\fP *in, struct \fBs2n_blob\fP *out)"
+.br
+.ti -1c
+.RI "int \fBs2n_rsa_keys_match\fP (struct \fBs2n_rsa_public_key\fP *pub, struct \fBs2n_rsa_private_key\fP *priv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_asn1der_to_rsa_public_key (struct \fBs2n_rsa_public_key\fP * key, struct \fBs2n_blob\fP * asn1der)"
+
+.PP
+Definition at line 31 of file s2n_rsa\&.c\&.
+.PP
+.nf
+32 {
+33     uint8_t *original_ptr = asn1der->data;
+34     X509 *cert = d2i_X509(NULL, (const unsigned char **)(void *)&asn1der->data, asn1der->size);
+35     if (cert == NULL) {
+36         S2N_ERROR(S2N_ERR_DECODE_CERTIFICATE);
+37     }
+38     if (asn1der->data - original_ptr != asn1der->size) {
+39         X509_free(cert);
+40         S2N_ERROR(S2N_ERR_DECODE_CERTIFICATE);
+41     }
+42     asn1der->data = original_ptr;
+43 
+44     EVP_PKEY *public_key = X509_get_pubkey(cert);
+45     X509_free(cert);
+46 
+47     if (public_key == NULL) {
+48         S2N_ERROR(S2N_ERR_DECODE_CERTIFICATE);
+49     }
+50 
+51     if (public_key->type != EVP_PKEY_RSA) {
+52         EVP_PKEY_free(public_key);
+53         S2N_ERROR(S2N_ERR_DECODE_CERTIFICATE);
+54     }
+55 
+56     key->rsa = EVP_PKEY_get1_RSA(public_key);
+57     if (key->rsa == NULL) {
+58         EVP_PKEY_free(public_key);
+59         S2N_ERROR(S2N_ERR_DECODE_CERTIFICATE);
+60     }
+61 
+62     EVP_PKEY_free(public_key);
+63 
+64     return 0;
+65 }
+.fi
+.SS "int s2n_asn1der_to_rsa_private_key (struct \fBs2n_rsa_private_key\fP * key, struct \fBs2n_blob\fP * asn1der)"
+
+.PP
+Definition at line 67 of file s2n_rsa\&.c\&.
+.PP
+.nf
+68 {
+69     uint8_t *original_ptr = asn1der->data;
+70 
+71     key->rsa = d2i_RSAPrivateKey(NULL, (const unsigned char **)(void *)&asn1der->data, asn1der->size);
+72     if (key->rsa == NULL) {
+73         S2N_ERROR(S2N_ERR_DECODE_PRIVATE_KEY);
+74     }
+75     if (asn1der->data - original_ptr != asn1der->size) {
+76         S2N_ERROR(S2N_ERR_DECODE_PRIVATE_KEY);
+77     }
+78 
+79     return 0;
+80 }
+.fi
+.SS "int s2n_rsa_public_key_free (struct \fBs2n_rsa_public_key\fP * key)"
+
+.PP
+Definition at line 82 of file s2n_rsa\&.c\&.
+.PP
+.nf
+83 {
+84     RSA_free(key->rsa);
+85     key->rsa = NULL;
+86     return 0;
+87 }
+.fi
+.SS "int s2n_rsa_private_key_free (struct \fBs2n_rsa_private_key\fP * key)"
+
+.PP
+Definition at line 89 of file s2n_rsa\&.c\&.
+.PP
+.nf
+90 {
+91     RSA_free(key->rsa);
+92     key->rsa = NULL;
+93     return 0;
+94 }
+.fi
+.SS "int s2n_rsa_public_encrypted_size (struct \fBs2n_rsa_public_key\fP * key)"
+
+.PP
+Definition at line 96 of file s2n_rsa\&.c\&.
+.PP
+.nf
+97 {
+98     notnull_check(key->rsa);
+99     notnull_check(key->rsa->n);
+100 
+101     return RSA_size(key->rsa);
+102 }
+.fi
+.SS "int s2n_rsa_private_encrypted_size (struct \fBs2n_rsa_private_key\fP * key)"
+
+.PP
+Definition at line 104 of file s2n_rsa\&.c\&.
+.PP
+.nf
+105 {
+106     notnull_check(key->rsa);
+107     notnull_check(key->rsa->n);
+108 
+109     return RSA_size(key->rsa);
+110 }
+.fi
+.SS "int s2n_rsa_sign (struct \fBs2n_rsa_private_key\fP * key, struct \fBs2n_hash_state\fP * digest, struct \fBs2n_blob\fP * signature)"
+
+.PP
+Definition at line 112 of file s2n_rsa\&.c\&.
+.PP
+.nf
+113 {
+114     uint8_t digest_out[MD5_DIGEST_LENGTH + SHA_DIGEST_LENGTH];
+115 
+116     int type, digest_length;
+117     if (digest->alg == S2N_HASH_MD5_SHA1) {
+118         type = NID_md5_sha1;
+119         digest_length = MD5_DIGEST_LENGTH + SHA_DIGEST_LENGTH;
+120     } else if (digest->alg == S2N_HASH_SHA1) {
+121         type = NID_sha1;
+122         digest_length = SHA_DIGEST_LENGTH;
+123     } else {
+124         S2N_ERROR(S2N_ERR_HASH_INVALID_ALGORITHM);
+125     }
+126 
+127     GUARD(s2n_hash_digest(digest, digest_out, digest_length));
+128 
+129     unsigned int signature_size = signature->size;
+130     if (RSA_sign(type, digest_out, digest_length, signature->data, &signature_size, key->rsa) == 0) {
+131         S2N_ERROR(S2N_ERR_SIGN);
+132     }
+133     if (signature_size > signature->size) {
+134         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+135     }
+136     signature->size = signature_size;
+137 
+138     return 0;
+139 }
+.fi
+.SS "int s2n_rsa_verify (struct \fBs2n_rsa_public_key\fP * key, struct \fBs2n_hash_state\fP * digest, struct \fBs2n_blob\fP * signature)"
+
+.PP
+Definition at line 141 of file s2n_rsa\&.c\&.
+.PP
+.nf
+142 {
+143     uint8_t digest_out[MD5_DIGEST_LENGTH + SHA_DIGEST_LENGTH];
+144 
+145     int type, digest_length;
+146     if (digest->alg == S2N_HASH_MD5_SHA1) {
+147         type = NID_md5_sha1;
+148         digest_length = MD5_DIGEST_LENGTH + SHA_DIGEST_LENGTH;
+149     } else if (digest->alg == S2N_HASH_SHA1) {
+150         type = NID_sha1;
+151         digest_length = SHA_DIGEST_LENGTH;
+152     } else {
+153         S2N_ERROR(S2N_ERR_HASH_INVALID_ALGORITHM);
+154     }
+155 
+156     GUARD(s2n_hash_digest(digest, digest_out, digest_length));
+157 
+158     if (RSA_verify(type, digest_out, digest_length, signature->data, signature->size, key->rsa) == 0) {
+159         S2N_ERROR(S2N_ERR_VERIFY_SIGNATURE);
+160     }
+161 
+162     return 0;
+163 }
+.fi
+.SS "int s2n_rsa_encrypt (struct \fBs2n_rsa_public_key\fP * key, struct \fBs2n_blob\fP * in, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 165 of file s2n_rsa\&.c\&.
+.PP
+.nf
+166 {
+167     if (out->size < s2n_rsa_public_encrypted_size(key)) {
+168         S2N_ERROR(S2N_ERR_NOMEM);
+169     }
+170 
+171     int r = RSA_public_encrypt(in->size, (unsigned char *)in->data, (unsigned char *)out->data, key->rsa, RSA_PKCS1_PADDING);
+172     if (r != out->size) {
+173         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+174     }
+175 
+176     return 0;
+177 }
+.fi
+.SS "int s2n_rsa_decrypt (struct \fBs2n_rsa_private_key\fP * key, struct \fBs2n_blob\fP * in, struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 179 of file s2n_rsa\&.c\&.
+.PP
+.nf
+180 {
+181     unsigned char intermediate[4096];
+182     if (s2n_rsa_private_encrypted_size(key) > sizeof(intermediate)) {
+183         S2N_ERROR(S2N_ERR_NOMEM);
+184     }
+185 
+186     if (out->size > sizeof(intermediate)) {
+187         S2N_ERROR(S2N_ERR_NOMEM);
+188     }
+189 
+190     int r = RSA_private_decrypt(in->size, (unsigned char *)in->data, intermediate, key->rsa, RSA_PKCS1_PADDING);
+191     GUARD(s2n_constant_time_copy_or_dont(out->data, intermediate, out->size, r != out->size));
+192     if (r != out->size) {
+193         S2N_ERROR(S2N_ERR_SIZE_MISMATCH);
+194     }
+195 
+196     return 0;
+197 }
+.fi
+.SS "int s2n_rsa_keys_match (struct \fBs2n_rsa_public_key\fP * pub, struct \fBs2n_rsa_private_key\fP * priv)"
+
+.PP
+Definition at line 199 of file s2n_rsa\&.c\&.
+.PP
+.nf
+200 {
+201     uint8_t plain_inpad[36], plain_outpad[36], encpad[8192];
+202     struct s2n_blob plain_in, plain_out, enc;
+203 
+204     plain_in\&.data = plain_inpad;
+205     plain_in\&.size = sizeof(plain_inpad);
+206     GUARD(s2n_get_private_random_data(&plain_in));
+207 
+208     enc\&.data = encpad;
+209     enc\&.size = s2n_rsa_public_encrypted_size(pub);
+210     lte_check(enc\&.size, sizeof(encpad));
+211     GUARD(s2n_rsa_encrypt(pub, &plain_in, &enc));
+212 
+213     plain_out\&.data = plain_outpad;
+214     plain_out\&.size = sizeof(plain_outpad);
+215     GUARD(s2n_rsa_decrypt(priv, &enc, &plain_out));
+216 
+217     if (memcmp(plain_in\&.data, plain_out\&.data, plain_in\&.size)) {
+218         S2N_ERROR(S2N_ERR_KEY_MISMATCH);
+219     }
+220 
+221     return 0;
+222 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

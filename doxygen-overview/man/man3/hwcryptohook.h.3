@@ -1,0 +1,275 @@
+.TH "s2n-master/libcrypto-build/openssl/engines/vendor_defns/hwcryptohook.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/libcrypto-build/openssl/engines/vendor_defns/hwcryptohook.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBHWCryptoHook_ErrMsgBuf\fP"
+.br
+.ti -1c
+.RI "struct \fBHWCryptoHook_MPIStruct\fP"
+.br
+.ti -1c
+.RI "struct \fBHWCryptoHook_InitInfo\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHWCRYPTOHOOK_DECLARE_APPTYPES\fP   1"
+.br
+.ti -1c
+.RI "#define \fBHWCRYPTOHOOK_ERROR_FAILED\fP   \-1"
+.br
+.ti -1c
+.RI "#define \fBHWCRYPTOHOOK_ERROR_FALLBACK\fP   \-2"
+.br
+.ti -1c
+.RI "#define \fBHWCRYPTOHOOK_ERROR_MPISIZE\fP   \-3"
+.br
+.ti -1c
+.RI "#define \fBHWCryptoHook_InitFlags_FallbackModExp\fP   0x0002UL"
+.br
+.ti -1c
+.RI "#define \fBHWCryptoHook_InitFlags_FallbackRSAImmed\fP   0x0004UL"
+.br
+.ti -1c
+.RI "#define \fBHWCryptoHook_InitFlags_SimpleForkCheck\fP   0x0010UL"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct HWCryptoHook_MutexValue \fBHWCryptoHook_Mutex\fP"
+.br
+.ti -1c
+.RI "typedef struct HWCryptoHook_CondVarValue \fBHWCryptoHook_CondVar\fP"
+.br
+.ti -1c
+.RI "typedef struct HWCryptoHook_PassphraseContextValue \fBHWCryptoHook_PassphraseContext\fP"
+.br
+.ti -1c
+.RI "typedef struct HWCryptoHook_CallerContextValue \fBHWCryptoHook_CallerContext\fP"
+.br
+.ti -1c
+.RI "typedef struct HWCryptoHook_Context * \fBHWCryptoHook_ContextHandle\fP"
+.br
+.ti -1c
+.RI "typedef struct HWCryptoHook_RSAKey * \fBHWCryptoHook_RSAKeyHandle\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBHWCryptoHook_MPIStruct\fP \fBHWCryptoHook_MPI\fP"
+.br
+.ti -1c
+.RI "typedef \fBHWCryptoHook_ContextHandle\fP \fBHWCryptoHook_Init_t\fP(const \fBHWCryptoHook_InitInfo\fP *initinfo, size_t initinfosize, const \fBHWCryptoHook_ErrMsgBuf\fP *errors, \fBHWCryptoHook_CallerContext\fP *cactx)"
+.br
+.ti -1c
+.RI "typedef \fBvoid\fP \fBHWCryptoHook_Finish_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RandomBytes_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx, unsigned char *buf, size_t \fBlen\fP, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_ModExp_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP \fBa\fP, \fBHWCryptoHook_MPI\fP \fBp\fP, \fBHWCryptoHook_MPI\fP n, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RSAImmedPub_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP m, \fBHWCryptoHook_MPI\fP \fBe\fP, \fBHWCryptoHook_MPI\fP n, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_ModExpCRT_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP \fBa\fP, \fBHWCryptoHook_MPI\fP \fBp\fP, \fBHWCryptoHook_MPI\fP q, \fBHWCryptoHook_MPI\fP dmp1, \fBHWCryptoHook_MPI\fP dmq1, \fBHWCryptoHook_MPI\fP iqmp, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RSAImmedPriv_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP m, \fBHWCryptoHook_MPI\fP \fBp\fP, \fBHWCryptoHook_MPI\fP q, \fBHWCryptoHook_MPI\fP dmp1, \fBHWCryptoHook_MPI\fP dmq1, \fBHWCryptoHook_MPI\fP iqmp, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RSALoadKey_t\fP(\fBHWCryptoHook_ContextHandle\fP hwctx, const char *key_ident, \fBHWCryptoHook_RSAKeyHandle\fP *keyhandle_r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors, \fBHWCryptoHook_PassphraseContext\fP *ppctx)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RSAGetPublicKey_t\fP(\fBHWCryptoHook_RSAKeyHandle\fP k, \fBHWCryptoHook_MPI\fP *n, \fBHWCryptoHook_MPI\fP *\fBe\fP, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RSAUnloadKey_t\fP(\fBHWCryptoHook_RSAKeyHandle\fP k, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.ti -1c
+.RI "typedef int \fBHWCryptoHook_RSA_t\fP(\fBHWCryptoHook_MPI\fP m, \fBHWCryptoHook_RSAKeyHandle\fP k, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBHWCryptoHook_Init_t\fP \fBHWCryptoHook_Init\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_Finish_t\fP \fBHWCryptoHook_Finish\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RandomBytes_t\fP \fBHWCryptoHook_RandomBytes\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_ModExp_t\fP \fBHWCryptoHook_ModExp\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RSAImmedPub_t\fP \fBHWCryptoHook_RSAImmedPub\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_ModExpCRT_t\fP \fBHWCryptoHook_ModExpCRT\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RSAImmedPriv_t\fP \fBHWCryptoHook_RSAImmedPriv\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RSALoadKey_t\fP \fBHWCryptoHook_RSALoadKey\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RSAGetPublicKey_t\fP \fBHWCryptoHook_RSAGetPublicKey\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RSAUnloadKey_t\fP \fBHWCryptoHook_RSAUnloadKey\fP"
+.br
+.ti -1c
+.RI "\fBHWCryptoHook_RSA_t\fP \fBHWCryptoHook_RSA\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define HWCRYPTOHOOK_DECLARE_APPTYPES   1"
+
+.PP
+Definition at line 78 of file hwcryptohook\&.h\&.
+.SS "#define HWCRYPTOHOOK_ERROR_FAILED   \-1"
+
+.PP
+Definition at line 81 of file hwcryptohook\&.h\&.
+.SS "#define HWCRYPTOHOOK_ERROR_FALLBACK   \-2"
+
+.PP
+Definition at line 82 of file hwcryptohook\&.h\&.
+.SS "#define HWCRYPTOHOOK_ERROR_MPISIZE   \-3"
+
+.PP
+Definition at line 83 of file hwcryptohook\&.h\&.
+.SS "#define HWCryptoHook_InitFlags_FallbackModExp   0x0002UL"
+
+.PP
+Definition at line 149 of file hwcryptohook\&.h\&.
+.SS "#define HWCryptoHook_InitFlags_FallbackRSAImmed   0x0004UL"
+
+.PP
+Definition at line 150 of file hwcryptohook\&.h\&.
+.SS "#define HWCryptoHook_InitFlags_SimpleForkCheck   0x0010UL"
+
+.PP
+Definition at line 162 of file hwcryptohook\&.h\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct HWCryptoHook_MutexValue \fBHWCryptoHook_Mutex\fP"
+
+.PP
+Definition at line 97 of file hwcryptohook\&.h\&.
+.SS "typedef struct HWCryptoHook_CondVarValue \fBHWCryptoHook_CondVar\fP"
+
+.PP
+Definition at line 98 of file hwcryptohook\&.h\&.
+.SS "typedef struct HWCryptoHook_PassphraseContextValue \fBHWCryptoHook_PassphraseContext\fP"
+
+.PP
+Definition at line 99 of file hwcryptohook\&.h\&.
+.SS "typedef struct HWCryptoHook_CallerContextValue \fBHWCryptoHook_CallerContext\fP"
+
+.PP
+Definition at line 101 of file hwcryptohook\&.h\&.
+.SS "typedef struct HWCryptoHook_Context* \fBHWCryptoHook_ContextHandle\fP"
+
+.PP
+Definition at line 110 of file hwcryptohook\&.h\&.
+.SS "typedef struct HWCryptoHook_RSAKey* \fBHWCryptoHook_RSAKeyHandle\fP"
+
+.PP
+Definition at line 111 of file hwcryptohook\&.h\&.
+.SS "typedef struct \fBHWCryptoHook_MPIStruct\fP  \fBHWCryptoHook_MPI\fP"
+
+.SS "typedef \fBHWCryptoHook_ContextHandle\fP HWCryptoHook_Init_t(const \fBHWCryptoHook_InitInfo\fP *initinfo, size_t initinfosize, const \fBHWCryptoHook_ErrMsgBuf\fP *errors, \fBHWCryptoHook_CallerContext\fP *cactx)"
+
+.PP
+Definition at line 330 of file hwcryptohook\&.h\&.
+.SS "typedef \fBvoid\fP HWCryptoHook_Finish_t(\fBHWCryptoHook_ContextHandle\fP hwctx)"
+
+.PP
+Definition at line 368 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RandomBytes_t(\fBHWCryptoHook_ContextHandle\fP hwctx, unsigned char *buf, size_t \fBlen\fP, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 373 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_ModExp_t(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP \fBa\fP, \fBHWCryptoHook_MPI\fP \fBp\fP, \fBHWCryptoHook_MPI\fP n, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 379 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RSAImmedPub_t(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP m, \fBHWCryptoHook_MPI\fP \fBe\fP, \fBHWCryptoHook_MPI\fP n, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 388 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_ModExpCRT_t(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP \fBa\fP, \fBHWCryptoHook_MPI\fP \fBp\fP, \fBHWCryptoHook_MPI\fP q, \fBHWCryptoHook_MPI\fP dmp1, \fBHWCryptoHook_MPI\fP dmq1, \fBHWCryptoHook_MPI\fP iqmp, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 397 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RSAImmedPriv_t(\fBHWCryptoHook_ContextHandle\fP hwctx, \fBHWCryptoHook_MPI\fP m, \fBHWCryptoHook_MPI\fP \fBp\fP, \fBHWCryptoHook_MPI\fP q, \fBHWCryptoHook_MPI\fP dmp1, \fBHWCryptoHook_MPI\fP dmq1, \fBHWCryptoHook_MPI\fP iqmp, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 409 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RSALoadKey_t(\fBHWCryptoHook_ContextHandle\fP hwctx, const char *key_ident, \fBHWCryptoHook_RSAKeyHandle\fP *keyhandle_r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors, \fBHWCryptoHook_PassphraseContext\fP *ppctx)"
+
+.PP
+Definition at line 437 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RSAGetPublicKey_t(\fBHWCryptoHook_RSAKeyHandle\fP k, \fBHWCryptoHook_MPI\fP *n, \fBHWCryptoHook_MPI\fP *\fBe\fP, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 462 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RSAUnloadKey_t(\fBHWCryptoHook_RSAKeyHandle\fP k, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 489 of file hwcryptohook\&.h\&.
+.SS "typedef int HWCryptoHook_RSA_t(\fBHWCryptoHook_MPI\fP m, \fBHWCryptoHook_RSAKeyHandle\fP k, \fBHWCryptoHook_MPI\fP *r, const \fBHWCryptoHook_ErrMsgBuf\fP *errors)"
+
+.PP
+Definition at line 495 of file hwcryptohook\&.h\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBHWCryptoHook_Init_t\fP HWCryptoHook_Init"
+
+.SS "\fBHWCryptoHook_Finish_t\fP HWCryptoHook_Finish"
+
+.SS "\fBHWCryptoHook_RandomBytes_t\fP HWCryptoHook_RandomBytes"
+
+.SS "\fBHWCryptoHook_ModExp_t\fP HWCryptoHook_ModExp"
+
+.SS "\fBHWCryptoHook_RSAImmedPub_t\fP HWCryptoHook_RSAImmedPub"
+
+.SS "\fBHWCryptoHook_ModExpCRT_t\fP HWCryptoHook_ModExpCRT"
+
+.SS "\fBHWCryptoHook_RSAImmedPriv_t\fP HWCryptoHook_RSAImmedPriv"
+
+.SS "\fBHWCryptoHook_RSALoadKey_t\fP HWCryptoHook_RSALoadKey"
+
+.SS "\fBHWCryptoHook_RSAGetPublicKey_t\fP HWCryptoHook_RSAGetPublicKey"
+
+.SS "\fBHWCryptoHook_RSAUnloadKey_t\fP HWCryptoHook_RSAUnloadKey"
+
+.SS "\fBHWCryptoHook_RSA_t\fP HWCryptoHook_RSA"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

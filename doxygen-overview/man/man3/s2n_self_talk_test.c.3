@@ -1,0 +1,176 @@
+.TH "s2n-master/tests/unit/s2n_self_talk_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_self_talk_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvoid\fP \fBmock_client\fP (int writefd, int readfd)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBvoid\fP mock_client (int writefd, int readfd)"
+
+.PP
+Definition at line 88 of file s2n_self_talk_test\&.c\&.
+.PP
+.nf
+89 {
+90     char buffer[0xffff];
+91     struct s2n_connection *conn;
+92     s2n_blocked_status blocked;
+93 
+94     /* Give the server a chance to listen */
+95     sleep(1);
+96 
+97     conn = s2n_connection_new(S2N_CLIENT);
+98 
+99     s2n_connection_set_read_fd(conn, readfd);
+100     s2n_connection_set_write_fd(conn, writefd);
+101 
+102     s2n_negotiate(conn, &blocked);
+103 
+104     for (int i = 1; i < 0xffff; i += 100) {
+105         for (int j = 0; j < i; j++) {
+106             buffer[j] = 33;
+107         }
+108 
+109         s2n_send(conn, buffer, i, &blocked);
+110     }
+111 
+112     int shutdown_rc = -1;
+113     while(shutdown_rc != 0) {
+114         shutdown_rc = s2n_shutdown(conn, &blocked);
+115     }
+116 
+117     s2n_connection_free(conn);
+118 
+119     /* Give the server a chance to a void a sigpipe */
+120     sleep(1);
+121 
+122     _exit(0);
+123 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 125 of file s2n_self_talk_test\&.c\&.
+.PP
+.nf
+126 {
+127     struct s2n_connection *conn;
+128     struct s2n_config *config;
+129     s2n_blocked_status blocked;
+130     int status;
+131     pid_t pid;
+132     int server_to_client[2];
+133     int client_to_server[2];
+134 
+135     BEGIN_TEST();
+136 
+137     EXPECT_SUCCESS(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+138 
+139     /* Create a pipe */
+140 
+141     for (int is_dh_key_exchange = 0; is_dh_key_exchange <= 1; is_dh_key_exchange++) {
+142         EXPECT_SUCCESS(pipe(server_to_client));
+143         EXPECT_SUCCESS(pipe(client_to_server));
+144 
+145 
+146 
+147         /* Create a child process */
+148         pid = fork();
+149         if (pid == 0) {
+150             /* This is the child process, close the read end of the pipe */
+151             EXPECT_SUCCESS(close(client_to_server[0]));
+152             EXPECT_SUCCESS(close(server_to_client[1]));
+153 
+154             /* Write the fragmented hello message */
+155             mock_client(client_to_server[1], server_to_client[0]);
+156         }
+157 
+158         /* This is the parent */
+159         EXPECT_SUCCESS(close(client_to_server[1]));
+160         EXPECT_SUCCESS(close(server_to_client[0]));
+161 
+162         EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_SERVER));
+163         EXPECT_NOT_NULL(config = s2n_config_new());
+164 
+165         EXPECT_SUCCESS(s2n_config_add_cert_chain_and_key(config, certificate, private_key));
+166         if (is_dh_key_exchange) {
+167             EXPECT_SUCCESS(s2n_config_add_dhparams(config, dhparams));
+168         }
+169 
+170         EXPECT_SUCCESS(s2n_connection_set_config(conn, config));
+171 
+172         /* Set up the connection to read from the fd */
+173         EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, client_to_server[0]));
+174         EXPECT_SUCCESS(s2n_connection_set_write_fd(conn, server_to_client[1]));
+175 
+176         /* Negotiate the handshake\&. */
+177         EXPECT_SUCCESS(s2n_negotiate(conn, &blocked));
+178 
+179         char buffer[0xffff];
+180         for (int i = 1; i < 0xffff; i += 100) {
+181             char * ptr = buffer;
+182             int bytes_read = 0;
+183             int size = i;
+184 
+185             do {
+186                 EXPECT_SUCCESS(bytes_read = s2n_recv(conn, ptr, size, &blocked));
+187 
+188                 size -= bytes_read;
+189                 ptr += bytes_read;
+190             } while(size);
+191 
+192             for (int j = 0; j < i; j++) {
+193                 EXPECT_EQUAL(buffer[j], 33);
+194             }
+195         }
+196 
+197         int shutdown_rc = -1;
+198         do {
+199             shutdown_rc = s2n_shutdown(conn, &blocked);
+200             EXPECT_TRUE(shutdown_rc == 0 || (errno == EAGAIN && blocked));
+201         } while(shutdown_rc != 0);
+202 
+203         EXPECT_SUCCESS(s2n_connection_free(conn));
+204 
+205         EXPECT_SUCCESS(s2n_config_free(config));
+206 
+207         /* Clean up */
+208         EXPECT_EQUAL(waitpid(-1, &status, 0), pid);
+209         EXPECT_EQUAL(status, 0);
+210     }
+211 
+212     END_TEST();
+213     return 0;
+214 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

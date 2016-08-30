@@ -1,0 +1,242 @@
+\hypertarget{s2n__stuffer__file_8c}{}\section{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+file.c File Reference}
+\label{s2n__stuffer__file_8c}\index{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+file.\+c@{s2n-\/master/stuffer/s2n\+\_\+stuffer\+\_\+file.\+c}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/stat.\+h$>$}\\*
+{\ttfamily \#include $<$sys/mman.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stuffer/s2n\+\_\+stuffer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}utils/s2n\+\_\+safety.\+h\char`\"{}}\\*
+Include dependency graph for s2n\+\_\+stuffer\+\_\+file.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__file_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{s2n__stuffer__file_8c_a19fe623439e89aeadbac10e98b7a8896}{s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, int rfd, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{s2n__stuffer__file_8c_a40bf61bc8745a2d894dd558a2885a66b}{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, int wfd, uint32\+\_\+t \hyperlink{include_2openssl_2x509_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len})
+\item 
+int \hyperlink{s2n__stuffer__file_8c_a7e1a6aea446682c18e113fabcaca5dbe}{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, int rfd)
+\item 
+int \hyperlink{s2n__stuffer__file_8c_a631c457c3b360e7d3ce77077d97db7b3}{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file} (struct \hyperlink{structs2n__stuffer}{s2n\+\_\+stuffer} $\ast$stuffer, const char $\ast$\hyperlink{include_2openssl_2conf_8h_af0baa3ccdd9d2a6adf03b72e2bea5789}{file})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}!s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd@{s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd}}
+\index{s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd@{s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd}!s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd(struct s2n\+\_\+stuffer $\ast$stuffer, int rfd, uint32\+\_\+t len)}{s2n_stuffer_recv_from_fd(struct s2n_stuffer *stuffer, int rfd, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+recv\+\_\+from\+\_\+fd (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{int}]{rfd, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__file_8c_a19fe623439e89aeadbac10e98b7a8896}{}\label{s2n__stuffer__file_8c_a19fe623439e89aeadbac10e98b7a8896}
+
+
+Definition at line 29 of file s2n\+\_\+stuffer\+\_\+file.\+c.
+
+
+\begin{DoxyCode}
+30 \{
+31 
+32     \textcolor{comment}{/* Make sure we have enough space to write */}
+33     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a7ef8f252a4b5b3d0bb793e1906d1b876}{s2n\_stuffer\_skip\_write}(stuffer, \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}));
+34 
+35     \textcolor{comment}{/* "undo" the skip write */}
+36     stuffer->\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor} -= \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len};
+37 
+38   READ:
+39     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = 0;
+40     \textcolor{keywordtype}{int} r = read(rfd, stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} + stuffer->\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor}, 
+      \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len});
+41     \textcolor{keywordflow}{if} (r < 0) \{
+42         \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+43             \textcolor{keywordflow}{goto} READ;
+44         \}
+45         \textcolor{keywordflow}{return} -1;
+46     \}
+47 
+48     \textcolor{comment}{/* Record just how many bytes we have written */}
+49     stuffer->\hyperlink{structs2n__stuffer_a19d9286958de6627ef95be4d9b9b3d1a}{write\_cursor} += r;
+50     stuffer->\hyperlink{structs2n__stuffer_a245e885035adb556e385c8d954b95f5d}{wiped} = 0;
+51 
+52     \textcolor{keywordflow}{return} r;
+53 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__file_8c_a19fe623439e89aeadbac10e98b7a8896_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__file_8c_a19fe623439e89aeadbac10e98b7a8896_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}!s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd@{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd}}
+\index{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd@{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd}!s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd(struct s2n\+\_\+stuffer $\ast$stuffer, int wfd, uint32\+\_\+t len)}{s2n_stuffer_send_to_fd(struct s2n_stuffer *stuffer, int wfd, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+send\+\_\+to\+\_\+fd (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{int}]{wfd, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__file_8c_a40bf61bc8745a2d894dd558a2885a66b}{}\label{s2n__stuffer__file_8c_a40bf61bc8745a2d894dd558a2885a66b}
+
+
+Definition at line 55 of file s2n\+\_\+stuffer\+\_\+file.\+c.
+
+
+\begin{DoxyCode}
+56 \{
+57     \textcolor{comment}{/* Make sure we even have the data */}
+58     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(\hyperlink{s2n__stuffer_8c_a0d643b31c896c7f6f2c058977cf46c3b}{s2n\_stuffer\_skip\_read}(stuffer, \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len}));
+59 
+60     \textcolor{comment}{/* "undo" the skip read */}
+61     stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} -= \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len};
+62 
+63   WRITE:
+64     \hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} = 0;
+65     \textcolor{keywordtype}{int} w = write(wfd, stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} + stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor}, 
+      \hyperlink{crypto_2asn1_2asn1_8h_ad8c3db4434e9cb5cd772cc009f40e856}{len});
+66     \textcolor{keywordflow}{if} (w < 0) \{
+67         \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+68             \textcolor{keywordflow}{goto} WRITE;
+69         \}
+70         \textcolor{keywordflow}{return} -1;
+71     \}
+72 
+73     stuffer->\hyperlink{structs2n__stuffer_a5d643ee7dd6cd0eba779a284dce4a3f6}{read\_cursor} += w;
+74 
+75     \textcolor{keywordflow}{return} w;
+76 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__file_8c_a40bf61bc8745a2d894dd558a2885a66b_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}!s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd@{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd}}
+\index{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd@{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd}!s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd(struct s2n\+\_\+stuffer $\ast$stuffer, int rfd)}{s2n_stuffer_alloc_ro_from_fd(struct s2n_stuffer *stuffer, int rfd)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+fd (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{int}]{rfd}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__file_8c_a7e1a6aea446682c18e113fabcaca5dbe}{}\label{s2n__stuffer__file_8c_a7e1a6aea446682c18e113fabcaca5dbe}
+
+
+Definition at line 78 of file s2n\+\_\+stuffer\+\_\+file.\+c.
+
+
+\begin{DoxyCode}
+79 \{
+80     \textcolor{keyword}{struct }stat st;
+81 
+82     \textcolor{keywordflow}{if} (fstat(rfd, &st) < 0) \{
+83         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374abde844e98846fede82302b8fd5011a40}{S2N\_ERR\_FSTAT});
+84     \}
+85 
+86     stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} = mmap(0, st.st\_size, PROT\_READ, MAP\_PRIVATE, rfd, 0);
+87     \textcolor{keywordflow}{if} (stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_abe222f6d3581e7920dcad5306cc906a8}{data} == MAP\_FAILED) \{
+88         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374a0ff34e4f61f50cdd411779a62c007ef9}{S2N\_ERR\_MMAP});
+89     \}
+90 
+91     stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob}.\hyperlink{structs2n__blob_ab2c6b258f02add8fdf4cfc7c371dd772}{size} = st.st\_size;
+92 
+93     \textcolor{keywordflow}{return} \hyperlink{s2n__stuffer_8c_af556836db8ed75fdb89af3d418fab2ee}{s2n\_stuffer\_init}(stuffer, &stuffer->\hyperlink{structs2n__stuffer_ab95f00f583f1cb41ae00918e9ea180c9}{blob});
+94 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{s2n__stuffer__file_8c_a7e1a6aea446682c18e113fabcaca5dbe_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=328pt]{s2n__stuffer__file_8c_a7e1a6aea446682c18e113fabcaca5dbe_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}!s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file@{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file}}
+\index{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file@{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file}!s2n\+\_\+stuffer\+\_\+file.\+c@{s2n\+\_\+stuffer\+\_\+file.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file(struct s2n\+\_\+stuffer $\ast$stuffer, const char $\ast$file)}{s2n_stuffer_alloc_ro_from_file(struct s2n_stuffer *stuffer, const char *file)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+stuffer\+\_\+alloc\+\_\+ro\+\_\+from\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{struct {\bf s2n\+\_\+stuffer} $\ast$}]{stuffer, }
+\item[{const char $\ast$}]{file}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__stuffer__file_8c_a631c457c3b360e7d3ce77077d97db7b3}{}\label{s2n__stuffer__file_8c_a631c457c3b360e7d3ce77077d97db7b3}
+
+
+Definition at line 96 of file s2n\+\_\+stuffer\+\_\+file.\+c.
+
+
+\begin{DoxyCode}
+97 \{
+98     \textcolor{keywordtype}{int} fd;
+99 
+100   OPEN:
+101     fd = open(\hyperlink{apps_8h_a29e8a72bd9d3020e517d381df2eab3cb}{file}, O\_RDONLY);
+102     \textcolor{keywordflow}{if} (fd < 0) \{
+103         \textcolor{keywordflow}{if} (\hyperlink{_mac_socket_8cpp_ad65a8842cc674e3ddf69355898c0ecbf}{errno} == EINTR) \{
+104             \textcolor{keywordflow}{goto} OPEN;
+105         \}
+106         \hyperlink{s2n__errno_8h_a4728100d8e1cd9097e9318a7e9fed9a9}{S2N\_ERROR}(\hyperlink{s2n__errno_8h_a64ed9ec59a957387654c5e5865325374aa974803af263a6b745dd91845c0d8d8f}{S2N\_ERR\_OPEN});
+107     \}
+108 
+109     \textcolor{keywordtype}{int} r = \hyperlink{s2n__stuffer__file_8c_a7e1a6aea446682c18e113fabcaca5dbe}{s2n\_stuffer\_alloc\_ro\_from\_fd}(stuffer, fd);
+110 
+111     \hyperlink{s2n__safety_8h_ad400572229cc8e40f7996837deb680f3}{GUARD}(close(fd));
+112 
+113     \textcolor{keywordflow}{return} r;
+114 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__stuffer__file_8c_a631c457c3b360e7d3ce77077d97db7b3_cgraph}
+\end{center}
+\end{figure}
+
+

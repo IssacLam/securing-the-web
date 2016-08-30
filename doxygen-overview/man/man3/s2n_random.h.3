@@ -1,0 +1,210 @@
+.TH "s2n-master/utils/s2n_random.h" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/utils/s2n_random.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'utils/s2n_blob\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_get_public_random_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_public_random_bytes_used\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_private_random_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_private_random_bytes_used\fP (\fBvoid\fP)"
+.br
+.ti -1c
+.RI "int \fBs2n_get_urandom_data\fP (struct \fBs2n_blob\fP *blob)"
+.br
+.ti -1c
+.RI "int64_t \fBs2n_public_random\fP (int64_t max)"
+.br
+.ti -1c
+.RI "int \fBs2n_cpu_supports_rdrand\fP ()"
+.br
+.ti -1c
+.RI "int \fBs2n_get_rdrand_data\fP (struct \fBs2n_blob\fP *out)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_get_public_random_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 83 of file s2n_random\&.c\&.
+.PP
+.nf
+84 {
+85     GUARD(s2n_defend_if_forked());
+86     GUARD(s2n_drbg_generate(&per_thread_public_drbg, blob));
+87 
+88     return 0;
+89 }
+.fi
+.SS "int s2n_get_public_random_bytes_used (\fBvoid\fP)"
+
+.PP
+Definition at line 99 of file s2n_random\&.c\&.
+.PP
+.nf
+100 {
+101     return s2n_drbg_bytes_used(&per_thread_public_drbg);
+102 }
+.fi
+.SS "int s2n_get_private_random_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 91 of file s2n_random\&.c\&.
+.PP
+.nf
+92 {
+93     GUARD(s2n_defend_if_forked());
+94     GUARD(s2n_drbg_generate(&per_thread_private_drbg, blob));
+95 
+96     return 0;
+97 }
+.fi
+.SS "int s2n_get_private_random_bytes_used (\fBvoid\fP)"
+
+.PP
+Definition at line 104 of file s2n_random\&.c\&.
+.PP
+.nf
+105 {
+106     return s2n_drbg_bytes_used(&per_thread_private_drbg);
+107 }
+.fi
+.SS "int s2n_get_urandom_data (struct \fBs2n_blob\fP * blob)"
+
+.PP
+Definition at line 56 of file global_overrides\&.c\&.
+.PP
+.nf
+56                                                {
+57 
+58     /* If fuzzing, only generate "fake" random numbers in order to ensure that fuzz tests are deterministic and repeatable\&.
+59      * This function should generate non-zero values since this function may be called repeatedly at startup until a
+60      * non-zero value is generated\&.
+61      */
+62     for(int i=0; i < blob->size; i++){
+63        blob->data[i] = 4; /* Fake RNG\&. Chosen by fair dice roll\&. https://xkcd\&.com/221/ */
+64     }
+65     return 0;
+66 }
+.fi
+.SS "int64_t s2n_public_random (int64_t max)"
+
+.PP
+Definition at line 132 of file s2n_random\&.c\&.
+.PP
+.nf
+133 {
+134     uint64_t r;
+135 
+136     gt_check(max, 0);
+137 
+138     while (1) {
+139         struct s2n_blob blob = {\&.data = (void *)&r, sizeof(r) };
+140         GUARD(s2n_get_public_random_data(&blob));
+141 
+142         /* Imagine an int was one byte and UINT_MAX was 256\&. If the
+143          * caller asked for s2n_random(129, \&.\&.\&.) we'd end up in
+144          * trouble\&. Each number in the range 0\&.\&.\&.127 would be twice
+145          * as likely as 128\&. That's because r == 0 % 129 -> 0, and
+146          * r == 129 % 129 -> 0, but only r == 128 returns 128,
+147          * r == 257 is out of range\&.
+148          *
+149          * To de-bias the dice, we discard values of r that are higher
+150          * that the highest multiple of 'max' an int can support\&. If
+151          * max is a uint, then in the worst case we discard 50% - 1 r's\&.
+152          * But since 'max' is an int and INT_MAX is <= UINT_MAX / 2,
+153          * in the worst case we discard 25% - 1 r's\&.
+154          */
+155         if (r < (UINT64_MAX - (UINT64_MAX % max))) {
+156             return r % max;
+157         }
+158     }
+159 
+160     return -1;
+161 }
+.fi
+.SS "int s2n_cpu_supports_rdrand ()"
+
+.PP
+Definition at line 260 of file s2n_random\&.c\&.
+.PP
+.nf
+261 {
+262 #if defined(__x86_64__)||defined(__i386__)
+263     uint32_t eax, ebx, ecx, edx;
+264     if (!__get_cpuid(1, &eax, &ebx, &ecx, &edx)) {
+265         return 0;
+266     }
+267 
+268     if (ecx & RDRAND_ECX_FLAG) {
+269         return 1;
+270     }
+271 #endif
+272     return 0;
+273 }
+.fi
+.SS "int s2n_get_rdrand_data (struct \fBs2n_blob\fP * out)"
+
+.PP
+Definition at line 284 of file s2n_random\&.c\&.
+.PP
+.nf
+285 {
+286 
+287 #if defined(__x86_64__)||defined(__i386__)
+288     int space_remaining = 0;
+289     struct s2n_stuffer stuffer;
+290     union {
+291         uint64_t u64;
+292         uint8_t u8[8];
+293     } output;
+294 
+295     GUARD(s2n_stuffer_init(&stuffer, out));
+296 
+297     while ((space_remaining = s2n_stuffer_space_remaining(&stuffer))) {
+298         int success = 0;
+299 
+300         for (int tries = 0; tries < 10; tries++) {
+301             __asm__ __volatile__("\&.byte 0x48;\n" "\&.byte 0x0f;\n" "\&.byte 0xc7;\n" "\&.byte 0xf0;\n" "adcl $0x00, %%ebx;\n":"=b"(success), "=a"(output\&.u64)
+302                                  :"b"(0)
+303                                  :"cc");
+304 
+305             if (success) {
+306                 break;
+307             }
+308         }
+309 
+310         if (!success) {
+311             return -1;
+312         }
+313 
+314         int data_to_fill = MIN(sizeof(output), space_remaining);
+315 
+316         GUARD(s2n_stuffer_write_bytes(&stuffer, output\&.u8, data_to_fill));
+317     }
+318 
+319     return 0;
+320 #else
+321     return -1;
+322 #endif
+323 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

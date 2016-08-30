@@ -1,0 +1,106 @@
+.TH "s2n-master/tls/s2n_server_cert.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tls/s2n_server_cert.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'error/s2n_errno\&.h'\fP
+.br
+\fC#include 'tls/s2n_cipher_suites\&.h'\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_config\&.h'\fP
+.br
+\fC#include 'tls/s2n_tls\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'utils/s2n_safety\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBs2n_server_cert_recv\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "int \fBs2n_server_cert_send\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int s2n_server_cert_recv (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 29 of file s2n_server_cert\&.c\&.
+.PP
+.nf
+30 {
+31     uint32_t size_of_all_certificates;
+32 
+33     GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, &size_of_all_certificates));
+34 
+35     if (size_of_all_certificates > s2n_stuffer_data_available(&conn->handshake\&.io) || size_of_all_certificates < 3) {
+36         S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+37     }
+38 
+39     int certificate_count = 0;
+40     while (s2n_stuffer_data_available(&conn->handshake\&.io)) {
+41         uint32_t certificate_size;
+42 
+43         GUARD(s2n_stuffer_read_uint24(&conn->handshake\&.io, &certificate_size));
+44 
+45         if (certificate_size > s2n_stuffer_data_available(&conn->handshake\&.io) || certificate_size == 0) {
+46             S2N_ERROR(S2N_ERR_BAD_MESSAGE);
+47         }
+48 
+49         struct s2n_blob asn1cert;
+50         asn1cert\&.data = s2n_stuffer_raw_read(&conn->handshake\&.io, certificate_size);
+51         asn1cert\&.size = certificate_size;
+52         notnull_check(asn1cert\&.data);
+53 
+54         /* TODO: certificate validation goes here */
+55         gt_check(certificate_size, 0);
+56 
+57         /* Pull the public key from the first certificate */
+58         if (certificate_count == 0) {
+59             GUARD(s2n_asn1der_to_rsa_public_key(&conn->secure\&.server_rsa_public_key, &asn1cert));
+60         }
+61 
+62         certificate_count++;
+63     }
+64 
+65     gte_check(certificate_count, 1);
+66 
+67     return 0;
+68 }
+.fi
+.SS "int s2n_server_cert_send (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 70 of file s2n_server_cert\&.c\&.
+.PP
+.nf
+71 {
+72     struct s2n_cert_chain *head = conn->server->chosen_cert_chain->head;
+73 
+74     GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, conn->server->chosen_cert_chain->chain_size));
+75 
+76     while (head) {
+77         GUARD(s2n_stuffer_write_uint24(&conn->handshake\&.io, head->cert\&.size));
+78         GUARD(s2n_stuffer_write_bytes(&conn->handshake\&.io, head->cert\&.data, head->cert\&.size));
+79         head = head->next;
+80     }
+81 
+82     return 0;
+83 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

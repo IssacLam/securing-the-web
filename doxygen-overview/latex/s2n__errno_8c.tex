@@ -1,0 +1,135 @@
+\hypertarget{s2n__errno_8c}{}\section{s2n-\/master/error/s2n\+\_\+errno.c File Reference}
+\label{s2n__errno_8c}\index{s2n-\/master/error/s2n\+\_\+errno.\+c@{s2n-\/master/error/s2n\+\_\+errno.\+c}}
+{\ttfamily \#include $<$strings.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}error/s2n\+\_\+errno.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$s2n.\+h$>$}\\*
+Include dependency graph for s2n\+\_\+errno.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__errno_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structs2n__error__translation}{s2n\+\_\+error\+\_\+translation}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{s2n__errno_8c_ae437dde74e36e51acb16397be23df69b}{s2n\+\_\+strerror} (int error, const char $\ast$lang)
+\item 
+int \hyperlink{s2n__errno_8c_a526856aac3b44999c3f716a3df648da1}{s2n\+\_\+error\+\_\+get\+\_\+type} (int error)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\+\_\+\+\_\+thread int \hyperlink{s2n__errno_8c_a40090b57614b9677d4cbcdd3c3276e7d}{s2n\+\_\+errno}
+\item 
+\+\_\+\+\_\+thread const char $\ast$ \hyperlink{s2n__errno_8c_aa49f28a1b495ce5ff49417b96a9972f5}{s2n\+\_\+debug\+\_\+str}
+\item 
+struct \hyperlink{structs2n__error__translation}{s2n\+\_\+error\+\_\+translation} \hyperlink{s2n__errno_8c_a2ed543ac0b22c9c14bd34b1fa16ecdf3}{EN} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}!s2n\+\_\+strerror@{s2n\+\_\+strerror}}
+\index{s2n\+\_\+strerror@{s2n\+\_\+strerror}!s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+strerror(int error, const char $\ast$lang)}{s2n_strerror(int error, const char *lang)}}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ s2n\+\_\+strerror (
+\begin{DoxyParamCaption}
+\item[{int}]{error, }
+\item[{const char $\ast$}]{lang}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__errno_8c_ae437dde74e36e51acb16397be23df69b}{}\label{s2n__errno_8c_ae437dde74e36e51acb16397be23df69b}
+
+
+Definition at line 110 of file s2n\+\_\+errno.\+c.
+
+
+\begin{DoxyCode}
+111 \{
+112     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *no\_such\_language = \textcolor{stringliteral}{"Language is not supported for error translation"};
+113     \textcolor{keyword}{const} \textcolor{keywordtype}{char} *no\_such\_error = \textcolor{stringliteral}{"Internal s2n error"};
+114 
+115     \textcolor{keywordflow}{if} (lang == NULL) \{
+116         lang = \textcolor{stringliteral}{"EN"};
+117     \}
+118 
+119     \textcolor{keywordflow}{if} (strcasecmp(lang, \textcolor{stringliteral}{"EN"})) \{
+120         \textcolor{keywordflow}{return} no\_such\_language;
+121     \}
+122 
+123     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (\textcolor{keyword}{sizeof}(\hyperlink{s2n__errno_8c_a2ed543ac0b22c9c14bd34b1fa16ecdf3}{EN}) / \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structs2n__error__translation}{s2n\_error\_translation})); i++) \{
+124         \textcolor{keywordflow}{if} (\hyperlink{s2n__errno_8c_a2ed543ac0b22c9c14bd34b1fa16ecdf3}{EN}[i].errno\_value == error) \{
+125             \textcolor{keywordflow}{return} \hyperlink{s2n__errno_8c_a2ed543ac0b22c9c14bd34b1fa16ecdf3}{EN}[i].\hyperlink{structs2n__error__translation_af25d6dc49269fa2003ac7c7fa6f13915}{str};
+126         \}
+127     \}
+128 
+129     \textcolor{keywordflow}{return} no\_such\_error;
+130 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{s2n__errno_8c_ae437dde74e36e51acb16397be23df69b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}!s2n\+\_\+error\+\_\+get\+\_\+type@{s2n\+\_\+error\+\_\+get\+\_\+type}}
+\index{s2n\+\_\+error\+\_\+get\+\_\+type@{s2n\+\_\+error\+\_\+get\+\_\+type}!s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+error\+\_\+get\+\_\+type(int error)}{s2n_error_get_type(int error)}}]{\setlength{\rightskip}{0pt plus 5cm}int s2n\+\_\+error\+\_\+get\+\_\+type (
+\begin{DoxyParamCaption}
+\item[{int}]{error}
+\end{DoxyParamCaption}
+)}\hypertarget{s2n__errno_8c_a526856aac3b44999c3f716a3df648da1}{}\label{s2n__errno_8c_a526856aac3b44999c3f716a3df648da1}
+
+
+Definition at line 132 of file s2n\+\_\+errno.\+c.
+
+
+\begin{DoxyCode}
+133 \{
+134     \textcolor{keywordflow}{return} (error >> \hyperlink{s2n__errno_8h_a1a86b63d8625767c980e66a13dc39126}{S2N\_ERR\_NUM\_VALUE\_BITS});
+135 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{s2n__errno_8c_a526856aac3b44999c3f716a3df648da1_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}!s2n\+\_\+errno@{s2n\+\_\+errno}}
+\index{s2n\+\_\+errno@{s2n\+\_\+errno}!s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+errno}{s2n_errno}}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+thread int s2n\+\_\+errno}\hypertarget{s2n__errno_8c_a40090b57614b9677d4cbcdd3c3276e7d}{}\label{s2n__errno_8c_a40090b57614b9677d4cbcdd3c3276e7d}
+
+
+Definition at line 23 of file s2n\+\_\+errno.\+c.
+
+\index{s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}!s2n\+\_\+debug\+\_\+str@{s2n\+\_\+debug\+\_\+str}}
+\index{s2n\+\_\+debug\+\_\+str@{s2n\+\_\+debug\+\_\+str}!s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}}
+\subsubsection[{\texorpdfstring{s2n\+\_\+debug\+\_\+str}{s2n_debug_str}}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+thread const char$\ast$ s2n\+\_\+debug\+\_\+str}\hypertarget{s2n__errno_8c_aa49f28a1b495ce5ff49417b96a9972f5}{}\label{s2n__errno_8c_aa49f28a1b495ce5ff49417b96a9972f5}
+
+
+Definition at line 24 of file s2n\+\_\+errno.\+c.
+
+\index{s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}!EN@{EN}}
+\index{EN@{EN}!s2n\+\_\+errno.\+c@{s2n\+\_\+errno.\+c}}
+\subsubsection[{\texorpdfstring{EN}{EN}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf s2n\+\_\+error\+\_\+translation} EN\mbox{[}$\,$\mbox{]}}\hypertarget{s2n__errno_8c_a2ed543ac0b22c9c14bd34b1fa16ecdf3}{}\label{s2n__errno_8c_a2ed543ac0b22c9c14bd34b1fa16ecdf3}
+
+
+Definition at line 31 of file s2n\+\_\+errno.\+c.
+

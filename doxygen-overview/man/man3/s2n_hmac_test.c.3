@@ -1,0 +1,235 @@
+.TH "s2n-master/tests/unit/s2n_hmac_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_hmac_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'testlib/s2n_testlib\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hash\&.h'\fP
+.br
+\fC#include 'crypto/s2n_hmac\&.h'\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 24 of file s2n_hmac_test\&.c\&.
+.PP
+.nf
+25 {
+26     uint8_t digest_pad[256];
+27     uint8_t check_pad[256];
+28     uint8_t output_pad[256];
+29     struct s2n_stuffer output;
+30     uint8_t sekrit[] = "sekrit";
+31     uint8_t longsekrit[] = "This is a really really really long key on purpose to make sure that it's longer than the block size";
+32     uint8_t hello[] = "Hello world!";
+33     struct s2n_hmac_state hmac, copy;
+34     struct s2n_hmac_state cmac;
+35 
+36     struct s2n_blob out = {\&.data = output_pad,\&.size = sizeof(output_pad) };
+37 
+38     BEGIN_TEST();
+39 
+40     /* Initialise our output stuffers */
+41     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+42 
+43     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_MD5), 16);
+44     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_MD5, sekrit, strlen((char *)sekrit)));
+45     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+46     EXPECT_SUCCESS(s2n_hmac_copy(&copy, &hmac));
+47     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 16));
+48 
+49     for (int i = 0; i < 16; i++) {
+50         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+51     }
+52 
+53     /* Reference value from python */
+54     EXPECT_EQUAL(memcmp(output_pad, "3ad68c53dc1a3cf35f6469877fae4585", 16 * 2), 0);
+55 
+56     /* Check the copy */
+57     EXPECT_SUCCESS(s2n_hmac_digest(&copy, digest_pad, 16));
+58 
+59     for (int i = 0; i < 16; i++) {
+60         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+61     }
+62 
+63     /* Reference value from python */
+64     EXPECT_EQUAL(memcmp(output_pad, "3ad68c53dc1a3cf35f6469877fae4585", 16 * 2), 0);
+65 
+66     /* Test that a reset works */
+67     EXPECT_SUCCESS(s2n_hmac_reset(&hmac));
+68     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+69     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 16));
+70 
+71     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+72     for (int i = 0; i < 16; i++) {
+73         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+74     }
+75 
+76     /* Reference value from python */
+77     EXPECT_EQUAL(memcmp(output_pad, "3ad68c53dc1a3cf35f6469877fae4585", 16 * 2), 0);
+78 
+79     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_MD5, longsekrit, strlen((char *)longsekrit)));
+80     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+81     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 16));
+82 
+83     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+84     for (int i = 0; i < 16; i++) {
+85         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+86     }
+87 
+88     /* Reference value from python */
+89     EXPECT_EQUAL(memcmp(output_pad, "2ce569d61f4ee6ad9ceebe02a112ace7", 16 * 2), 0);
+90 
+91     /* Test that a reset works */
+92     EXPECT_SUCCESS(s2n_hmac_reset(&hmac));
+93     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+94     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 16));
+95 
+96     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+97     for (int i = 0; i < 16; i++) {
+98         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+99     }
+100 
+101     /* Reference value from python */
+102     EXPECT_EQUAL(memcmp(output_pad, "2ce569d61f4ee6ad9ceebe02a112ace7", 16 * 2), 0);
+103 
+104     /* Verify that _verify works */
+105     EXPECT_SUCCESS(s2n_hmac_init(&cmac, S2N_HMAC_MD5, longsekrit, strlen((char *)longsekrit)));
+106     EXPECT_SUCCESS(s2n_hmac_update(&cmac, hello, strlen((char *)hello)));
+107     EXPECT_SUCCESS(s2n_hmac_digest(&cmac, check_pad, 16));
+108     EXPECT_SUCCESS(s2n_hmac_digest_verify(digest_pad, check_pad, 16));
+109 
+110     /* Try SHA1 */
+111     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_SHA1), 20);
+112     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_SHA1, sekrit, strlen((char *)sekrit)));
+113     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+114     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 20));
+115 
+116     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+117     for (int i = 0; i < 20; i++) {
+118         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+119     }
+120 
+121     /* Reference value from python */
+122     EXPECT_EQUAL(memcmp(output_pad, "6d301861b599938eca94f6de917362886d97882f", 20 * 2), 0);
+123 
+124     /* Try SHA256 */
+125     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_SHA256), 32);
+126     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_SHA256, sekrit, strlen((char *)sekrit)));
+127     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+128     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 32));
+129 
+130     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+131     for (int i = 0; i < 32; i++) {
+132         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+133     }
+134 
+135     /* Reference value from python */
+136     EXPECT_EQUAL(memcmp(output_pad, "adc20b12d236e6d1824d690622e33ead4f67ba5a2be9606fe762b2dd859a78a9", 32 * 2), 0);
+137 
+138     /* Try SHA384 */
+139     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_SHA384), 48);
+140     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_SHA384, sekrit, strlen((char *)sekrit)));
+141     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+142     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 48));
+143 
+144     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+145     for (int i = 0; i < 48; i++) {
+146         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+147     }
+148 
+149     /* Reference value from python */
+150     EXPECT_EQUAL(memcmp(output_pad, "8552563cadd583b79dcc7225bb79bc6483c63f259187162e1c9d4283eb6299ef1bc3ca81c0c40fc7b22f7a1f3b93adb4", 48 * 2), 0);
+151 
+152     /* Try SHA512 */
+153     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_SHA512), 64);
+154     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_SHA512, sekrit, strlen((char *)sekrit)));
+155     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+156     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 64));
+157 
+158     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+159     for (int i = 0; i < 64; i++) {
+160         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+161     }
+162 
+163     /* Reference value from python */
+164     EXPECT_EQUAL(memcmp(output_pad, "0a834a1ed265042e2897405edb4fdd9818950cd5bea10b828f2fed45a1cb6dbd2107e4b04eb20f211998cd4e8c7e11ebdcb0103ac63882481e1bb8083d07f4be", 64 * 2), 0);
+165 
+166     /* Try SSLv3 MD5 */
+167     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_SSLv3_MD5), 16);
+168     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_SSLv3_MD5, sekrit, strlen((char *)sekrit)));
+169     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+170     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 16));
+171 
+172     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+173     for (int i = 0; i < 16; i++) {
+174         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+175     }
+176 
+177     /* Reference value from Go */
+178     EXPECT_EQUAL(memcmp(output_pad, "d4f0d06b9765de23e6c3e33a24c5ded0", 16 * 2), 0);
+179 
+180     /* Test that a reset works */
+181     EXPECT_SUCCESS(s2n_hmac_reset(&hmac));
+182     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+183     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 16));
+184 
+185     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+186     for (int i = 0; i < 16; i++) {
+187         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+188     }
+189 
+190     EXPECT_EQUAL(memcmp(output_pad, "d4f0d06b9765de23e6c3e33a24c5ded0", 16 * 2), 0);
+191 
+192     /* Try SSLv3 SHA1 */
+193     EXPECT_EQUAL(s2n_hmac_digest_size(S2N_HMAC_SSLv3_SHA1), 20);
+194     EXPECT_SUCCESS(s2n_hmac_init(&hmac, S2N_HMAC_SSLv3_SHA1, sekrit, strlen((char *)sekrit)));
+195     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+196     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 20));
+197 
+198     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+199     for (int i = 0; i < 20; i++) {
+200         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+201     }
+202 
+203     /* Reference value from Go */
+204     EXPECT_EQUAL(memcmp(output_pad, "b0c66179f6eb5a46b4b7c4fca84b3ea5161b7326", 20 * 2), 0);
+205 
+206     /* Test that a reset works */
+207     EXPECT_SUCCESS(s2n_hmac_reset(&hmac));
+208     EXPECT_SUCCESS(s2n_hmac_update(&hmac, hello, strlen((char *)hello)));
+209     EXPECT_SUCCESS(s2n_hmac_digest(&hmac, digest_pad, 20));
+210 
+211     EXPECT_SUCCESS(s2n_stuffer_init(&output, &out));
+212     for (int i = 0; i < 20; i++) {
+213         EXPECT_SUCCESS(s2n_stuffer_write_uint8_hex(&output, digest_pad[i]));
+214     }
+215 
+216     EXPECT_EQUAL(memcmp(output_pad, "b0c66179f6eb5a46b4b7c4fca84b3ea5161b7326", 20 * 2), 0);
+217 
+218     END_TEST();
+219 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

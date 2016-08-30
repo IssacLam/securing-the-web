@@ -1,0 +1,115 @@
+.TH "s2n-master/tests/unit/s2n_tls_record_stuffer_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_tls_record_stuffer_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include 'stuffer/s2n_stuffer\&.h'\fP
+.br
+\fC#include 'tls/s2n_record\&.h'\fP
+.br
+\fC#include 'utils/s2n_random\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 22 of file s2n_tls_record_stuffer_test\&.c\&.
+.PP
+.nf
+23 {
+24 #if 0
+25     uint8_t plaintext_pad[S2N_TLS_MAXIMUM_RECORD_LENGTH + 1];
+26     uint8_t encrypted_pad[S2N_TLS_MAXIMUM_RECORD_LENGTH + 1];
+27     uint8_t entropy[S2N_TLS_MAXIMUM_RECORD_LENGTH + 1];
+28     struct s2n_record_stuffer writer;
+29     uint8_t protocol_version[2] = { 3, 0 };
+30 
+31     BEGIN_TEST();
+32 
+33     EXPECT_FAILURE(s2n_tls_record_stuffer_init(&writer, plaintext_pad, encrypted_pad, S2N_TLS_MAXIMUM_RECORD_LENGTH - 1, &error_message));
+34     EXPECT_SUCCESS(s2n_tls_record_stuffer_init(&writer, plaintext_pad, encrypted_pad, S2N_TLS_MAXIMUM_RECORD_LENGTH + 1, &error_message));
+35 
+36     /* Record is too short */
+37     EXPECT_FAILURE(s2n_tls_record_finalize(&writer, &error_message));
+38 
+39     /* Add a header */
+40     EXPECT_SUCCESS(s2n_tls_record_write_header(&writer, 1, protocol_version, &error_message));
+41     EXPECT_EQUAL(s2n_stuffer_data_available(&writer\&.plaintext_stuffer), S2N_TLS_MINIMUM_RECORD_LENGTH);
+42 
+43     /* Should now be finalizable */
+44     EXPECT_SUCCESS(s2n_tls_record_finalize(&writer, &error_message));
+45 
+46     uint8_t expected[] = { 1, 3, 0, 0, 0 };
+47     EXPECT_BYTEARRAY_EQUAL(plaintext_pad, expected, 5);
+48 
+49     /* Get some Random data */
+50     EXPECT_SUCCESS(s2n_get_random_data(entropy, sizeof(entropy), &error_message));
+51 
+52     /* Write our maximum record payload */
+53     EXPECT_SUCCESS(s2n_stuffer_write(&writer\&.plaintext_stuffer, entropy, S2N_TLS_MAXIMUM_FRAGMENT_LENGTH, &error_message));
+54     EXPECT_SUCCESS(s2n_tls_record_finalize(&writer, &error_message));
+55     uint8_t expected2[] = { 1, 3, 0, 0x48, 0x00 };
+56     EXPECT_BYTEARRAY_EQUAL(plaintext_pad, expected2, 5);
+57 
+58     /* Try one higher, make sure it fails */
+59     EXPECT_SUCCESS(s2n_stuffer_write(&writer\&.plaintext_stuffer, entropy, 1, &error_message));
+60     EXPECT_FAILURE(s2n_tls_record_finalize(&writer, &error_message));
+61 
+62     /* Try SSL2 now \&.\&.\&. */
+63     EXPECT_SUCCESS(s2n_tls_record_stuffer_init(&writer, plaintext_pad, encrypted_pad, S2N_TLS_MAXIMUM_RECORD_LENGTH + 1, &error_message));
+64 
+65     /* Record is too short */
+66     EXPECT_FAILURE(s2n_ssl2_record_finalize(&writer, &error_message));
+67 
+68     /* Add a header */
+69     EXPECT_SUCCESS(s2n_ssl2_record_write_header(&writer, 1, protocol_version, &error_message));
+70     EXPECT_EQUAL(s2n_stuffer_data_available(&writer\&.plaintext_stuffer), 5);
+71 
+72     /* Still not finalizeable */
+73     EXPECT_FAILURE(s2n_ssl2_record_finalize(&writer, &error_message));
+74 
+75     /* Add the 22 bytes of mandatory header data */
+76     EXPECT_SUCCESS(s2n_stuffer_write_uint16(&writer\&.plaintext_stuffer, 0, &error_message));
+77     EXPECT_SUCCESS(s2n_stuffer_write_uint16(&writer\&.plaintext_stuffer, 0, &error_message));
+78     EXPECT_SUCCESS(s2n_stuffer_write_uint16(&writer\&.plaintext_stuffer, 16, &error_message));
+79     EXPECT_SUCCESS(s2n_stuffer_write(&writer\&.plaintext_stuffer, entropy, 16, &error_message));
+80 
+81     /* Now we can finalize */
+82     EXPECT_SUCCESS(s2n_ssl2_record_finalize(&writer, &error_message));
+83 
+84     uint8_t expected3[] = { 0x80, 0x19, 1, 3, 0, 0, 0, 0, 0, 0, 16 };
+85     EXPECT_BYTEARRAY_EQUAL(plaintext_pad, expected3, 11);
+86 
+87     /* Write our maximum record payload */
+88     EXPECT_SUCCESS(s2n_stuffer_write(&writer\&.plaintext_stuffer, entropy, S2N_SSL2_MAXIMUM_MESSAGE_LENGTH, &error_message));
+89     EXPECT_SUCCESS(s2n_ssl2_record_finalize(&writer, &error_message));
+90 
+91     uint8_t expected4[] = { 0xbf, 0xfd, 1, 3, 0, 0, 0, 0, 0, 0, 16 };
+92     EXPECT_BYTEARRAY_EQUAL(plaintext_pad, expected4, 11);
+93 
+94     /* Try one higher, make sure it fails */
+95     EXPECT_SUCCESS(s2n_stuffer_write(&writer\&.plaintext_stuffer, entropy, 1, &error_message));
+96     EXPECT_FAILURE(s2n_ssl2_record_finalize(&writer, &error_message));
+97 
+98     END_TEST();
+99 #endif
+100     return 0;
+101 }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.

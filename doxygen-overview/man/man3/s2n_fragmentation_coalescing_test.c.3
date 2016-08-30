@@ -1,0 +1,677 @@
+.TH "s2n-master/tests/unit/s2n_fragmentation_coalescing_test.c" 3 "Fri Aug 19 2016" "s2n-doxygen-full" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s2n-master/tests/unit/s2n_fragmentation_coalescing_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 's2n_test\&.h'\fP
+.br
+\fC#include <sys/wait\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <s2n\&.h>\fP
+.br
+\fC#include 'tls/s2n_connection\&.h'\fP
+.br
+\fC#include 'tls/s2n_handshake\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTLS_ALERT\fP   21"
+.br
+.ti -1c
+.RI "#define \fBTLS_HANDSHAKE\fP   22"
+.br
+.ti -1c
+.RI "#define \fBTLS_HEARTBEAT\fP   24"
+.br
+.ti -1c
+.RI "#define \fBZERO_TO_THIRTY_ONE\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBmessage_type_t\fP \fBs2n_conn_get_current_message_type\fP (struct \fBs2n_connection\fP *conn)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBfragmented_message\fP (int write_fd)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBcoalesced_message\fP (int write_fd)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBinterleaved_message\fP (int write_fd)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBinterleaved_fragmented_fatal_alert\fP (int write_fd)"
+.br
+.ti -1c
+.RI "\fBvoid\fP \fBinterleaved_fragmented_warning_alert\fP (int write_fd)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "uint8_t \fBzero_to_thirty_one\fP [] = { \fBZERO_TO_THIRTY_ONE\fP }"
+.br
+.ti -1c
+.RI "uint8_t \fBserver_hello_message\fP []"
+.br
+.ti -1c
+.RI "uint8_t \fBserver_cert\fP []"
+.br
+.ti -1c
+.RI "uint8_t \fBheartbeat_message\fP []"
+.br
+.ti -1c
+.RI "uint8_t \fBwarning_alert\fP []"
+.br
+.ti -1c
+.RI "uint8_t \fBfatal_alert\fP []"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TLS_ALERT   21"
+
+.PP
+Definition at line 37 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "#define TLS_HANDSHAKE   22"
+
+.PP
+Definition at line 38 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "#define TLS_HEARTBEAT   24"
+
+.PP
+Definition at line 39 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "#define ZERO_TO_THIRTY_ONE"
+\fBValue:\fP
+.PP
+.nf
+0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, \
+                            0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F
+.fi
+.PP
+Definition at line 41 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBmessage_type_t\fP s2n_conn_get_current_message_type (struct \fBs2n_connection\fP * conn)"
+
+.PP
+Definition at line 113 of file s2n_handshake_io\&.c\&.
+.PP
+.nf
+114 {
+115     return ACTIVE_MESSAGE(conn);
+116 }
+.fi
+.SS "\fBvoid\fP fragmented_message (int write_fd)"
+
+.PP
+Definition at line 170 of file s2n_fragmentation_coalescing_test\&.c\&.
+.PP
+.nf
+171 {
+172     int written = 0;
+173     /* Split the hello message into 5 fragments and write it */
+174     for (int i = 0; i < 5; i++) {
+175         int length = sizeof(server_hello_message) / 5;
+176 
+177         if (i == 0) {
+178             length += sizeof(server_hello_message) % 5;
+179         }
+180 
+181         uint8_t record_header[5] = { TLS_HANDSHAKE, 0x03, 0x03, (length >> 8), length & 0xff };
+182 
+183         if (write(write_fd, record_header, 5) != 5) {
+184             _exit(100);
+185         }
+186 
+187         if (write(write_fd, server_hello_message + written, length) != length) {
+188             _exit(100);
+189         }
+190 
+191         written += length;
+192     }
+193 
+194     /* Close the pipe and exit */
+195     close(write_fd);
+196 }
+.fi
+.SS "\fBvoid\fP coalesced_message (int write_fd)"
+
+.PP
+Definition at line 198 of file s2n_fragmentation_coalescing_test\&.c\&.
+.PP
+.nf
+199 {
+200     int length = sizeof(server_hello_message) + sizeof(server_cert);
+201 
+202     uint8_t record_header[5] = { TLS_HANDSHAKE, 0x03, 0x03, (length >> 8), length & 0xff };
+203 
+204     if (write(write_fd, record_header, 5) != 5) {
+205         _exit(100);
+206     }
+207 
+208     if (write(write_fd, server_hello_message, sizeof(server_hello_message)) != sizeof(server_hello_message)) {
+209         _exit(100);
+210     }
+211 
+212     if (write(write_fd, server_cert, sizeof(server_cert)) != sizeof(server_cert)) {
+213         _exit(100);
+214     }
+215 
+216     close(write_fd);
+217 }
+.fi
+.SS "\fBvoid\fP interleaved_message (int write_fd)"
+
+.PP
+Definition at line 219 of file s2n_fragmentation_coalescing_test\&.c\&.
+.PP
+.nf
+220 {
+221     int length = sizeof(server_hello_message) / 2;
+222     uint8_t record_header[5] = { TLS_HANDSHAKE, 0x03, 0x03, (length >> 8), length & 0xff };
+223     int written = 0;
+224 
+225     /* Write half of the message */
+226     if (write(write_fd, record_header, 5) != 5) {
+227         _exit(100);
+228     }
+229     if (write(write_fd, server_hello_message, length) != length) {
+230         _exit(100);
+231     }
+232     written += length;
+233 
+234     /* Write the heartbeat record */
+235     record_header[0] = TLS_HEARTBEAT;
+236     record_header[3] = sizeof(heartbeat_message) >> 8;
+237     record_header[4] = sizeof(heartbeat_message) & 0xff;
+238 
+239     if (write(write_fd, record_header, 5) != 5) {
+240         _exit(100);
+241     }
+242     if (write(write_fd, heartbeat_message, sizeof(heartbeat_message)) != sizeof(heartbeat_message)) {
+243         _exit(100);
+244     }
+245 
+246     /* Write the rest of the hello message */
+247     length = sizeof(server_hello_message) - written;
+248     record_header[0] = TLS_HANDSHAKE;
+249     record_header[3] = length >> 8;
+250     record_header[4] = length & 0xff;
+251     if (write(write_fd, record_header, 5) != 5) {
+252         _exit(100);
+253     }
+254     if (write(write_fd, server_hello_message + written, length) != length) {
+255         _exit(100);
+256     }
+257 
+258     /* Close the pipe and exit */
+259     close(write_fd);
+260 }
+.fi
+.SS "\fBvoid\fP interleaved_fragmented_fatal_alert (int write_fd)"
+
+.PP
+Definition at line 262 of file s2n_fragmentation_coalescing_test\&.c\&.
+.PP
+.nf
+263 {
+264     int length = sizeof(server_hello_message) / 2;
+265     uint8_t record_header[5] = { TLS_HANDSHAKE, 0x03, 0x03, (length >> 8), length & 0xff };
+266     int written = 0;
+267 
+268     /* Write half of the message */
+269     if (write(write_fd, record_header, 5) != 5) {
+270         _exit(100);
+271     }
+272     if (write(write_fd, server_hello_message, length) != length) {
+273         _exit(100);
+274     }
+275     written += length;
+276 
+277     /* Write half of the alert message */
+278     record_header[0] = TLS_ALERT;
+279     record_header[3] = 0;
+280     record_header[4] = 1;
+281 
+282     if (write(write_fd, record_header, 5) != 5) {
+283         _exit(100);
+284     }
+285     if (write(write_fd, fatal_alert, 1) != 1) {
+286         _exit(100);
+287     }
+288 
+289     /* Write another quarter of the of the hello message */
+290     length = sizeof(server_hello_message) / 4;
+291     record_header[0] = TLS_HANDSHAKE;
+292     record_header[3] = length >> 8;
+293     record_header[4] = length & 0xff;
+294     if (write(write_fd, record_header, 5) != 5) {
+295         _exit(100);
+296     }
+297     if (write(write_fd, server_hello_message + written, length) != length) {
+298         _exit(100);
+299     }
+300     written += length;
+301 
+302     /* Write second half of the alert message */
+303     record_header[0] = TLS_ALERT;
+304     record_header[3] = 0;
+305     record_header[4] = 1;
+306 
+307     if (write(write_fd, record_header, 5) != 5) {
+308         _exit(100);
+309     }
+310     if (write(write_fd, fatal_alert + 1, 1) != 1) {
+311         _exit(100);
+312     }
+313 
+314     /* Write the rest of the hello message */
+315     length = sizeof(server_hello_message) - written;
+316     record_header[0] = TLS_HANDSHAKE;
+317     record_header[3] = length >> 8;
+318     record_header[4] = length & 0xff;
+319     if (write(write_fd, record_header, 5) != 5) {
+320         _exit(100);
+321     }
+322     if (write(write_fd, server_hello_message + written, length) != length) {
+323         _exit(100);
+324     }
+325 
+326     /* Close the pipe and exit */
+327     close(write_fd);
+328 }
+.fi
+.SS "\fBvoid\fP interleaved_fragmented_warning_alert (int write_fd)"
+
+.PP
+Definition at line 330 of file s2n_fragmentation_coalescing_test\&.c\&.
+.PP
+.nf
+331 {
+332     int length = sizeof(server_hello_message) / 2;
+333     uint8_t record_header[5] = { TLS_HANDSHAKE, 0x03, 0x03, (length >> 8), length & 0xff };
+334     int written = 0;
+335 
+336     /* Write half of the message */
+337     if (write(write_fd, record_header, 5) != 5) {
+338         _exit(100);
+339     }
+340     if (write(write_fd, server_hello_message, length) != length) {
+341         _exit(100);
+342     }
+343     written += length;
+344 
+345     /* Write half of the alert message */
+346     record_header[0] = TLS_ALERT;
+347     record_header[3] = 0;
+348     record_header[4] = 1;
+349     if (write(write_fd, warning_alert, 1) != 1) {
+350         _exit(100);
+351     }
+352 
+353     /* Write another quarter of the of the hello message */
+354     length = sizeof(server_hello_message) / 4;
+355     record_header[0] = TLS_HANDSHAKE;
+356     record_header[3] = length >> 8;
+357     record_header[4] = length & 0xff;
+358     if (write(write_fd, record_header, 5) != 5) {
+359         _exit(100);
+360     }
+361     if (write(write_fd, server_hello_message + written, length) != length) {
+362         _exit(100);
+363     }
+364     written += length;
+365 
+366     /* Write second half of the alert message */
+367     record_header[0] = TLS_ALERT;
+368     record_header[3] = 0;
+369     record_header[4] = 1;
+370 
+371     if (write(write_fd, record_header, 5) != 5) {
+372         _exit(100);
+373     }
+374     if (write(write_fd, warning_alert + 1, 1) != 1) {
+375         _exit(100);
+376     }
+377 
+378     /* Write the rest of the hello message */
+379     length = sizeof(server_hello_message) - written;
+380     record_header[0] = TLS_HANDSHAKE;
+381     record_header[3] = length >> 8;
+382     record_header[4] = length & 0xff;
+383     if (write(write_fd, record_header, 5) != 5) {
+384         _exit(100);
+385     }
+386     if (write(write_fd, server_hello_message + written, length) != length) {
+387         _exit(100);
+388     }
+389 
+390     /* Close the pipe and exit */
+391     close(write_fd);
+392 }
+.fi
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 394 of file s2n_fragmentation_coalescing_test\&.c\&.
+.PP
+.nf
+395 {
+396     struct s2n_connection *conn;
+397     s2n_blocked_status blocked;
+398     int status;
+399     pid_t pid;
+400     int p[2];
+401 
+402     BEGIN_TEST();
+403 
+404     EXPECT_SUCCESS(setenv("S2N_ENABLE_CLIENT_MODE", "1", 0));
+405     EXPECT_NOT_NULL(conn = s2n_connection_new(S2N_CLIENT));
+406 
+407     /* Create a pipe */
+408     EXPECT_SUCCESS(pipe(p));
+409 
+410     /* Set up the connection to read from the fd */
+411     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, p[0]));
+412 
+413     /* Pretend the client hello has already been set */
+414     conn->handshake\&.handshake_type = FULL_NO_PFS;
+415     conn->handshake\&.message_number = SERVER_HELLO;
+416 
+417     /* Create a child process */
+418     pid = fork();
+419     if (pid == 0) {
+420         /* This is the child process, close the read end of the pipe */
+421         EXPECT_SUCCESS(close(p[0]));
+422 
+423         /* Write the fragmented hello message */
+424         fragmented_message(p[1]);
+425         EXPECT_SUCCESS(s2n_connection_free(conn));
+426         _exit(0);
+427     }
+428 
+429     /* This is the parent process, close the write end of the pipe */
+430     EXPECT_SUCCESS(close(p[1]));
+431 
+432     /* Negotiate the handshake\&. This will fail due to EOF, but that's ok\&. */
+433     EXPECT_FAILURE(s2n_negotiate(conn, &blocked));
+434 
+435     /* Verify that the data is as we expect it */
+436     EXPECT_EQUAL(memcmp(conn->secure\&.server_random, zero_to_thirty_one, 32), 0);
+437 
+438     /* Check that the server hello message was processed */
+439     EXPECT_EQUAL(s2n_conn_get_current_message_type(conn), SERVER_CERT);
+440 
+441     /* Clean up */
+442     EXPECT_EQUAL(waitpid(pid, &status, 0), pid);
+443     EXPECT_EQUAL(status, 0);
+444     EXPECT_SUCCESS(close(p[0]));
+445 
+446     /* Create a pipe */
+447     EXPECT_SUCCESS(pipe(p));
+448 
+449     /* Wipe the connection */
+450     EXPECT_SUCCESS(s2n_connection_wipe(conn));
+451 
+452     /* Set up the connection to read from the fd */
+453     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, p[0]));
+454 
+455     /* Pretend the client hello has already been set */
+456     conn->handshake\&.handshake_type = FULL_NO_PFS;
+457     conn->handshake\&.message_number = SERVER_HELLO;
+458 
+459     /* Create a child process */
+460     pid = fork();
+461     if (pid == 0) {
+462         /* This is the child process, close the read end of the pipe */
+463         EXPECT_SUCCESS(close(p[0]));
+464 
+465         /* Write the fragmented hello message */
+466         coalesced_message(p[1]);
+467         EXPECT_SUCCESS(s2n_connection_free(conn));
+468         _exit(0);
+469     }
+470 
+471     /* This is the parent process, close the write end of the pipe */
+472     EXPECT_SUCCESS(close(p[1]));
+473 
+474     /* Negotiate the handshake\&. This will fail due to EOF, but that's ok\&. */
+475     EXPECT_FAILURE(s2n_negotiate(conn, &blocked));
+476 
+477     /* Verify that the data is as we expect it */
+478     EXPECT_EQUAL(memcmp(conn->secure\&.server_random, zero_to_thirty_one, 32), 0);
+479 
+480     /* Check that the server done message was processed */
+481     EXPECT_EQUAL(s2n_conn_get_current_message_type(conn), SERVER_HELLO_DONE);
+482 
+483     /* Clean up */
+484     EXPECT_EQUAL(waitpid(pid, &status, 0), pid);
+485     EXPECT_EQUAL(status, 0);
+486     EXPECT_SUCCESS(close(p[0]));
+487 
+488     /* Create a pipe */
+489     EXPECT_SUCCESS(pipe(p));
+490 
+491     /* Wipe the connection */
+492     EXPECT_SUCCESS(s2n_connection_wipe(conn));
+493 
+494     /* Set up the connection to read from the fd */
+495     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, p[0]));
+496 
+497     /* Pretend the client hello has already been set */
+498     conn->handshake\&.handshake_type = FULL_NO_PFS;
+499     conn->handshake\&.message_number = SERVER_HELLO;
+500 
+501     /* Create a child process */
+502     pid = fork();
+503     if (pid == 0) {
+504         /* This is the child process, close the read end of the pipe */
+505         EXPECT_SUCCESS(close(p[0]));
+506 
+507         /* Write the fragmented hello message */
+508         interleaved_message(p[1]);
+509         EXPECT_SUCCESS(s2n_connection_free(conn));
+510         _exit(0);
+511     }
+512 
+513     /* This is the parent process, close the write end of the pipe */
+514     EXPECT_SUCCESS(close(p[1]));
+515 
+516     /* Negotiate the handshake\&. This will fail due to EOF, but that's ok\&. */
+517     EXPECT_FAILURE(s2n_negotiate(conn, &blocked));
+518 
+519     /* Verify that the data is as we expect it */
+520     EXPECT_EQUAL(memcmp(conn->secure\&.server_random, zero_to_thirty_one, 32), 0);
+521 
+522     /* Check that the server hello message was processed */
+523     EXPECT_EQUAL(s2n_conn_get_current_message_type(conn), SERVER_CERT);
+524 
+525     /* Clean up */
+526     EXPECT_EQUAL(waitpid(pid, &status, 0), pid);
+527     EXPECT_EQUAL(status, 0);
+528     EXPECT_SUCCESS(close(p[0]));
+529 
+530     /* Create a pipe */
+531     EXPECT_SUCCESS(pipe(p));
+532 
+533     /* Wipe the connection */
+534     EXPECT_SUCCESS(s2n_connection_wipe(conn));
+535 
+536     /* Set up the connection to read from the fd */
+537     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, p[0]));
+538 
+539     /* Pretend the client hello has already been set */
+540     conn->handshake\&.handshake_type = FULL_NO_PFS;
+541     conn->handshake\&.message_number = SERVER_HELLO;
+542 
+543     /* Create a child process */
+544     pid = fork();
+545     if (pid == 0) {
+546         /* This is the child process, close the read end of the pipe */
+547         EXPECT_SUCCESS(close(p[0]));
+548 
+549         /* Write the fragmented hello message */
+550         interleaved_fragmented_warning_alert(p[1]);
+551         EXPECT_SUCCESS(s2n_connection_free(conn));
+552         _exit(0);
+553     }
+554 
+555     /* This is the parent process, close the write end of the pipe */
+556     EXPECT_SUCCESS(close(p[1]));
+557 
+558     /* Negotiate the handshake\&. This will fail due to EOF, but that's ok\&. */
+559     EXPECT_FAILURE(s2n_negotiate(conn, &blocked));
+560 
+561     /* Verify that the data is as we expect it */
+562     EXPECT_NOT_EQUAL(memcmp(conn->secure\&.server_random, zero_to_thirty_one, 32), 0);
+563 
+564     /* Check that the server hello message was not processed */
+565     EXPECT_EQUAL(s2n_conn_get_current_message_type(conn), SERVER_HELLO);
+566 
+567     /* Clean up */
+568     EXPECT_EQUAL(waitpid(pid, &status, 0), pid);
+569     EXPECT_EQUAL(status, 0);
+570     EXPECT_SUCCESS(close(p[0]));
+571 
+572     /* Create a pipe */
+573     EXPECT_SUCCESS(pipe(p));
+574 
+575     /* Wipe the connection */
+576     EXPECT_SUCCESS(s2n_connection_wipe(conn));
+577 
+578     /* Set up the connection to read from the fd */
+579     EXPECT_SUCCESS(s2n_connection_set_read_fd(conn, p[0]));
+580 
+581     /* Pretend the client hello has already been set */
+582     conn->handshake\&.handshake_type = FULL_NO_PFS;
+583     conn->handshake\&.message_number = SERVER_HELLO;
+584 
+585     /* Create a child process */
+586     pid = fork();
+587     if (pid == 0) {
+588         /* This is the child process, close the read end of the pipe */
+589         EXPECT_SUCCESS(close(p[0]));
+590 
+591         /* Write the fragmented hello message */
+592         interleaved_fragmented_fatal_alert(p[1]);
+593         EXPECT_SUCCESS(s2n_connection_free(conn));
+594         _exit(0);
+595     }
+596 
+597     /* This is the parent process, close the write end of the pipe */
+598     EXPECT_SUCCESS(close(p[1]));
+599 
+600     /* Negotiate the handshake\&. This will fail due to EOF, but that's ok\&. */
+601     EXPECT_FAILURE(s2n_negotiate(conn, &blocked));
+602 
+603     /* Verify that the data failed */
+604     EXPECT_NOT_EQUAL(memcmp(conn->secure\&.server_random, zero_to_thirty_one, 32), 0);
+605 
+606     /* Check that the server hello message was not processed */
+607     EXPECT_NOT_EQUAL(s2n_conn_get_current_message_type(conn), SERVER_CERT);
+608 
+609     /* Clean up */
+610     EXPECT_EQUAL(waitpid(pid, &status, 0), pid);
+611     EXPECT_EQUAL(status, 0);
+612     EXPECT_SUCCESS(close(p[0]));
+613 
+614     EXPECT_SUCCESS(s2n_connection_free(conn));
+615 
+616     END_TEST();
+617 }
+.fi
+.SH "Variable Documentation"
+.PP 
+.SS "uint8_t zero_to_thirty_one[] = { \fBZERO_TO_THIRTY_ONE\fP }"
+
+.PP
+Definition at line 44 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "uint8_t server_hello_message[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {  
+    0x02,
+
+    
+    0x00, 0x00, 0x46,
+
+    
+    0x03, 0x03,
+
+    
+    ZERO_TO_THIRTY_ONE,
+
+    
+    0x20,
+
+    
+    ZERO_TO_THIRTY_ONE,
+
+    
+    0x00, 0x05,
+
+    
+    0x00
+}
+.fi
+.PP
+Definition at line 46 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "uint8_t server_cert[]"
+
+.PP
+Definition at line 71 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "uint8_t heartbeat_message[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {     
+    0x01, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 
+    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10
+}
+.fi
+.PP
+Definition at line 155 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "uint8_t warning_alert[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {       
+    0x02, 0x5a
+}
+.fi
+.PP
+Definition at line 160 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SS "uint8_t fatal_alert[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {       
+    0x01, 0x0a
+}
+.fi
+.PP
+Definition at line 164 of file s2n_fragmentation_coalescing_test\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for s2n-doxygen-full from the source code\&.
