@@ -1,0 +1,79 @@
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[node distance=17pt and 11pt,
+    title/.style={font=\fontsize{7}{7}\color{black!60}\ttfamily},
+    typetag/.style={rectangle, draw=black!50, font=\scriptsize\ttfamily}
+    ]
+    
+    \node (libcrypto_title) [title] { libcrypto };
+
+    \node (bn) [typetag, below=of libcrypto_title.west, anchor=west, xshift=2mm] { bn.h };
+    \node (dh) [typetag, below=of bn.west, anchor=west] { dh.h };
+    \node (ec) [typetag, below=of dh.west, anchor=west] { ec.h };
+    \node (ecdh) [typetag, below=of ec.west, anchor=west] {ecdh.h};
+            
+    \node (engine) [typetag, right=of bn] {engine.h};
+    \node (evp) [typetag, below=of engine.west, anchor=west] {evp.h};
+    \node (md5) [typetag, below=of evp.west, anchor=west] {md5.h};
+    \node (rc4) [typetag, below=of md5.west, anchor=west] {rc4.h};
+            
+    \node (rsa) [typetag, right=of engine] {rsa.h};
+    \node (sha) [typetag, below=of rsa.west, anchor=west] {sha.h};
+    \node (x509) [typetag, below=of sha.west, anchor=west] {x509.h};
+        
+    \node (libcrypto)  [fit=(libcrypto_title)(x509)(rc4), draw] {};
+    
+    \node (libssl_title) [right=4cm of libcrypto_title, title] { libssl };
+    
+    \begin{scope}[on background layer]
+       \node (libssl) [fill=black!10, fit=(libssl_title), draw] {};
+    \end{scope}
+
+    \node (openssl_title) [above=0.4cm of libcrypto_title, title, anchor=east, xshift=2mm] { OpenSSL };
+    
+    \node (openssl)  [fit=(libcrypto)(openssl_title)(libssl), draw] {};
+    
+    \node (ol_title) [title, left=1.2cm of openssl_title] { System Library };
+    
+    \node (mman) [typetag, below=of ol_title.west, anchor=west, xshift=2mm] { sys/mman.h };
+    \node (param) [typetag, below=of mman.west, anchor=west] { sys/param.h };
+    \node (stat) [typetag, below=of param.west, anchor=west] { sys/stat.h };
+    \node (time) [typetag, below=of stat.west, anchor=west] { mach/mach\_time.h };
+            
+    \node (ol)  [fit=(ol_title)(time), draw] {};
+    
+    \node (sl_title) [title, left=1.2 cm of ol_title] { Standard C99 Library };
+    
+    \node (fcntl) [typetag, below=of sl_title.west, anchor=west, xshift=2mm] { fcntl.h };
+    \node (pthread) [typetag, below=of fcntl.west, anchor=west] { pthread.h };
+    \node (stdint) [typetag, below=of pthread.west, anchor=west] { stdint.h };
+    \node (stdlib) [typetag, below=of stdint.west, anchor=west] { stdlib.h };
+    
+    \node (string) [typetag, right=of fcntl, anchor=west] { string.h };
+    \node (strings) [typetag, below=of string.west, anchor=west] { strings.h };
+    \node (time) [typetag, below=of strings.west, anchor=west] { time.h };
+    \node (unistd) [typetag, below=of time.west, anchor=west] { unistd.h };
+    
+    \node (c99)  [fit=(sl_title)(unistd)(strings), draw] {};
+    
+    \node (s2n_title) [title, above=of sl_title, anchor=east, xshift=-8mm, font=\scriptsize\ttfamily] {s2n};
+    
+    \node (s2n)  [fit=(s2n_title)(c99)(libcrypto)(openssl.south), draw] {};
+    
+    \node (user_title) [title, above=of s2n_title, anchor=west, xshift=-6mm] {User's Server Implementation};
+    
+    \node (USI) [fit=(s2n)(user_title), draw] {};
+    
+    \begin{scope}[on background layer]
+       \node (libssl) [fill=green!10, fit=(c99)(libcrypto)] {};
+    \end{scope}
+    
+    % \draw[dashed, color=red] ($(user_title.south east) + (10, -0.05)$) -- ($(user_title.south west) - (0.5, 0.05)$);
+    
+    \draw[dashed, color=red] ($(s2n_title.south east) + (13, -0.05)$) -- ($(s2n_title.south west) - (0.7, 0.05)$);
+    
+\end{tikzpicture}
+
+\caption{The Architecture of s2n }
+\label{fig:s2nStructure}
+\end{figure}

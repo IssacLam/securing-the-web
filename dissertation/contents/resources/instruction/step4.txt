@@ -1,0 +1,24 @@
+$ cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n/stuffer/s2n_stuffer.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwindset s2n_sslv3_mac_init.0:49,s2n_sslv3_mac_init.1:49,s2n_hmac_init.6:129,s2n_hmac_init.7:129,s2n_hmac_init.8:129,s2n_sslv3_mac_digest.0:49
+
+CBMC version 5.4 64-bit x86_64 macos
+Parsing ./s2n-harness/module/s2n_hmac_harness.c
+...
+size of program expression: 12072 steps
+simple slicing removed 545 assignments
+Generated 306 VCC(s), 256 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+1340716 variables, 5211423 clauses
+SAT checker: instance is UNSATISFIABLE
+Runtime decision procedure: 12.026s
+
+** Results:
+[__builtin___memcpy_chk.assertion.1] memcpy n is least or equal to zero: SUCCESS
+...
+[CC_SHA512_Final.assertion.2] ERROR: CC_SHA512_Final c is null: SUCCESS
+
+** 0 of 38 failed (1 iteration)
+VERIFICATION SUCCESSFUL

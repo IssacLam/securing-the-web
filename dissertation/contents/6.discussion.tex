@@ -1,0 +1,88 @@
+\chapter{Discussion and lessons learnt}
+\section{Memory safety of the s2n implementation}
+Consider that BMC guarantees all bugs are detected within the given bound. More importantly, with a bound that is large enough to cover the function usage, it can prove the absence of all bugs in the implementation. As mentioned in Section~\ref{sec:lba}, we chose the maximum number of loop iterations as the LUBs in our verification. It can ensure complete coverage in the function verification. Therefore, our verification results can also show the memory safety of those verified implementations, except for two verification harnesses, \code{s2n_stuffer_base64_harness.c} and \code{s2n_stuffer_text_harness.c}. As their chosen LUBs do not cover the entire loop iterations due to the limited scalability of BMC, as marked in the verification results in Section~\ref{sec:mcr}.
+
+\section{Trade-offs in Software Verification}
+During this project, we made some trade-offs regarding the properties of the triangle model mentioned in Section~\ref{sec:osv} to obtain this successful result. First of all, we make use of over-approximation in order to scale up the verification capability of model checking. However, the drawback is the false alarms to the verification. The use of human assistance at this point can help minimise the number of false alarms.
+
+\paragraph{Trade-off between Under- and Over- Approximation}
+Model checking is an under-approximation verification technique that would produce no false alarms. In order to achieve this result, CBMC requires that the detailed implementations of all functions involved to be included, including those underlying software packages and system libraries. However, in this case, s2n is not a stand-alone software package, to include the implementations of external functions would enlarge the exploration space and exceed our verification scope. Moreover, sometimes the documentations only provide some descriptions of the functions rather than the detail implementations. Hence, we have to always create stubs for those functions with over-approximations as mentioned in Section~\ref{subsec:stubbing}. In addition, we further simplified some functions depending on the verification needs by using over-approximation as mentioned in Section~\ref{sec:suc}.
+
+\paragraph{Trade-off between Automation and Human-assisted} To remain a low false alarm rate while using over-approximation, human effort is needed. Besides the use of over-approximation as described above, without considering the function usage contracts, the verification can also produce false alarms. Since s2n is not a single-function software package, an appropriate execution environment is essential to the verification. Therefore, human assistance is required to capture the function usage contracts for preparing proper harnesses with suitable LUBs as mentioned in Section~\ref{sec:cfuc} and Section~\ref{sec:lba}.
+
+\section{Manual Loop Bounds Analysis Effort for BMC}
+As mentioned in Section~\ref{sec:lba}, loop bounds analysis is performed on all functions involved in the verification and the maximum numbers of iterations are chosen as the LUBs. This can ensure the coverage of the verification in order to detect bugs and more importantly to show the memory safety of the implementations. Our approach is slightly different from the study conducted by Y. Kim et al. \cite{7091291}. Instead of showing the memory safety of the implementation, they were focused on detecting bugs only. They chose the minimal number of iterations to exit a loop as their loop unwinding bounds. By increasing the number in each iteration, hopefully, a witness to the property violation will exist. In this case, a sound upper bound is good enough for detecting bugs, but not enough for showing the memory safety. The authors further concluded that without an accurate loop bounds analysis, there are possibilities to make the verification fail to detect bugs even if a large LUB is used. Since the choices of LUBs directly affect the quality of verification results and the effectiveness of BMC, the manual effort of loop bounds analysis is indispensable.
+
+
+\section{Dealing with the Scalability of BMC}
+During this project, we observed that the key limitation of BMC is the lack of scalability. This is a well-known limitation of model checking due to state explosions, which makes it hard to be applicable to industrial software \cite{7091291}. Since industrial software always consists of numerous loops, sometimes even be nested, and also with a huge number of iterations, this is the main cause of the exponential complexity as well as state explosions. For example, some string manipulation functions in s2n, such as \code{s2n_stuffer_read_base64()}, will iterate over the entire memory space of a given \code{char} array. It is impractical to use the maximum values of \code{uint64_t} as the LUBs of such functions. As an example to demonstrate this impracticality, it takes more than 5 hours to convert explored space into SSA form when 49 is chosen as its LUB. In this case, we have chosen a smaller number as the LUB in order to reduce the exploration space and keep up with the verification. Due to the insufficient LUB coverage, the memory safety of those functions are not guaranteed, but nevertheless, the verification is still useful for detecting bugs in that limited coverage. Besides choosing a smaller LUB, simplifying some complex computations and those verified functions is also a viable way to scale up the verification further, as mentioned in Section~\ref{sec:suc}.
+
+
+\section{Limitations on Functional Correctness Verification}
+Due to the use of non-determinism, stubs only return a valid result but not necessarily a correct one, as described in Section~\ref{subsec:stubbing}. This makes the correctness of several functional properties unverifiable. For example, the functional properties of the hash function are as follows:
+
+\begin{enumerate}[nolistsep]
+    \item The same input string must have the same hash value.
+    \item Similar inputs result in very different hash values.
+    \item There is fixed output size for variable input size.
+\end{enumerate}
+
+\noindent 
+Only the $3^{rd}$ property is able to be verified while other properties require deterministic values to verify the functional correctness. In contrast, deductive verification could be a better choice to verify such properties. Since it performs the verification over the dynamic execution instead of static execution, it does not require the source code of the underlying software packages and a large number of memory space. However, this would heavily rely on human efforts for capturing the specifications and introducing invariants for each function to support the verification. 
+
+\section{Inconvenience Syntax to Loop Bounds Analysis}
+During the loop bounds analysis, we found two kinds of loop declaration that require extra effort to review the actual loop implementation manually. 
+
+\paragraph{while(1) loops} This syntax is used for string manipulations and listening to the connections. However, it makes the unwinding assertions always fail no matter how large the value of LUB is, as shown below. Therefore, the iterative algorithm for guessing LUBs cannot be applied to \code{while(1)} loops and manual review is needed.
+
+\begin{listing}
+\codeFromFile{c}{./contents/code/implementations/harmfulua.c}{}{}
+\caption{A failure condition for unwinding assertions}
+\end{listing}
+
+
+\paragraph{do \dots while(0) loops}
+This syntax is commonly used for convenience to declare a multi-statement macro correctly. The details are explained in the example below: Suppose we have two macros declared, where \code{A()} should be followed by \code{B()}:
+
+\begin{table}[h]
+\codeFromFile{c}{./contents/code/demos/while0.c}{}{}
+% \begin{minted}[frame=single, breaklines, linenos, fontsize=\footnotesize]{c}
+% #define F(x) A(x); B(x);
+% #define G(x) do { A(x); B(x); } while(0)
+% \end{minted}
+
+\centering
+\begin{minipage}[t]{.4\textwidth}
+\centering
+\codeFromFile{c}{./contents/code/demos/wrongWhile0.c}{}{}
+
+% \begin{minted}[frame=single, breaklines, linenos, fontsize=\footnotesize]{c}
+% if(cond)
+%     F(x);
+
+% /* is equivalent to */
+% if(cond)
+%     A(x);
+% B(x);
+% \end{minted}
+\end{minipage}\hfill
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\codeFromFile{c}{./contents/code/demos/correctWhile0.c}{}{}
+% \begin{minted}[frame=single, breaklines, linenos, fontsize=\footnotesize]{c}
+% if(cond)
+%     G(x);
+
+% /* is equivalent to */
+% if(cond) {
+%     A(x); B(x);
+% }
+% \end{minted}
+\end{minipage}
+\subfloat[Incorrect nested statements as expected]{\hspace{.4\linewidth}}\hfill
+\subfloat[Correct nested statements as expected]{\hspace{.5\linewidth}}
+% \caption{An example of loop bound detection}
+% \label{table:lbd}
+\end{table}
+
+A set of safety checks in s2n is declared using \code{do |$\dots$| while(0)} loop macros, listed in Appendix~\ref{app:s2nSafety}, and they are applied to the entire s2n implementation. This syntax will burden the workload on loop bounds analysis when using the \code{--show-loop} option in CBMC. Since all of them will be listed in the result, an extra manual effort is needed to filter them out from the loop bounds analysis.

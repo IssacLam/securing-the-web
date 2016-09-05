@@ -1,0 +1,9 @@
+$ cbmc -I ./s2n -I ./s2n/api -I ./s2n/libcrypto-build/openssl/include ./s2n-harness/module/s2n_hmac_harness.c ./s2n/crypto/s2n_hmac.c ./s2n/crypto/s2n_hash.c ./s2n/stuffer/s2n_stuffer.c ./s2n-lib/CommonCrypto/CommonDigest.c --unwind 1 | grep "loop"
+
+...
+Not unwinding loop s2n_sslv3_mac_init.0 iteration 1 (1 max) file ./s2n/crypto/s2n_hmac.c line 51 function s2n_sslv3_mac_init thread 0
+Not unwinding loop s2n_sslv3_mac_init.1 iteration 1 (1 max) file ./s2n/crypto/s2n_hmac.c line 59 function s2n_sslv3_mac_init thread 0
+Not unwinding loop s2n_hmac_init.6 iteration 1 (1 max) file ./s2n/crypto/s2n_hmac.c line 156 function s2n_hmac_init thread 0
+Not unwinding loop s2n_hmac_init.7 iteration 1 (1 max) file ./s2n/crypto/s2n_hmac.c line 159 function s2n_hmac_init thread 0
+Not unwinding loop s2n_hmac_init.8 iteration 1 (1 max) file ./s2n/crypto/s2n_hmac.c line 166 function s2n_hmac_init thread 0
+Not unwinding loop s2n_sslv3_mac_digest.0 iteration 1 (1 max) file ./s2n/crypto/s2n_hmac.c line 73 function s2n_sslv3_mac_digest thread 0

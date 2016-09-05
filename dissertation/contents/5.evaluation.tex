@@ -1,0 +1,174 @@
+\chapter{Experimental Evaluation}
+
+\section{Achievement}
+After the verification, we have successfully found two arithmetic overflow bugs in the s2n implementation and thus provided the corresponding solutions. The details are described in Section~\ref{seb:df} . A pull request\footnote{https://github.com/awslabs/s2n/pull/288} was submitted to the s2n Github repository and accepted by the Amazon s2n developers. They showed interest in our findings and wish to include the use of our techniques into their project. The details of the pull request and the conversation are shown in the screenshot in Figure~\ref{fig:achievement} below:
+
+\begin{figure} [tp]
+    \centering
+    \includegraphics[width=\textwidth]{./contents/images/github-pullrequest.png}
+    \caption{The screen capture of the accepted pull request and related conversations }
+    \label{fig:achievement}
+\end{figure}
+
+
+\section{Detected Failures} \label{seb:df}
+In this verification, CBMC reports 14 failures in seven different harnesses with all built-in checkers enabled, as mentioned in Section~\ref{sec:cbmcps}. By tracing the cause of the failures, we have discovered the similarity between the causes of failures and they can be concluded into four key issues: two bugs, one expected behaviour and one false alarm. Each key issue will be discussed in detail below:
+
+\subsection{Unsigned Overflow on Memory Allocation}
+An unsigned overflow failure is detected in the implementation of \code{s2n_realloc()} (line 56). The error trace and the implementation are listed in Listing~\ref{lst:eris2nRealloc} below:
+
+\begin{listing}[ht]
+\codeFromFile{text}{./contents/resources/verification-results/s2n_mem_harness-unsigned_overflow.txt}{detected-failures/s2n\_mem\_harness-unsigned\_overflow.txt}{}
+
+\codeFromFile[firstline=50, lastline=  56]{c}{./contents/code/implementations/s2n_mem.c}{s2n/utils/s2n\_mem.c}{}
+\caption{The error trace and the implementation of \code{s2n_realloc()}}
+\label{lst:eris2nRealloc}
+\end{listing}
+
+Regarding the implementation of \code{s2n_realloc()}, we can see that there is no upper bounds check on the variable \code{size} before line 56. Since the value of \code{size} is given by the caller functions and it can be any possible value of type \code{uint32_t}, an unsigned overflow will occur at \code{(size + (page_size - 1))} operation (line 56) when the value of \code{size} is greater than \code{4,294,963,201}. Note that the value of \code{page_size} is commonly 4096 bytes (4KB), which is the default in s2n.
+% This overflow can cause a sufficient memory allocation error as the value of \code{allocate}
+This unsigned overflow can be prevented by rearranging the sequence of the calculation as shown below: (as compared to line 56 of Listing~\ref{lst:eris2nRealloc})
+
+\begin{listing}[ht]
+\codeFromFile[firstline=58, lastline=59]{c}{./contents/code/implementations/s2n_mem.c}{s2n/utils/s2n\_mem.c}{}
+\caption{A fix for the implementation \code{s2n_realloc()}}
+\label{lst:fis2nRealloc}
+\end{listing}
+
+
+\subsection{Signed Overflow on Type Conversion}
+Another arithmetic overflow failure is detected on a type conversion in \code{s2n_connection_get_delay()} (line 379). The error trace and the detailed implementation are listed below: 
+
+\begin{listing}[H]
+\codeFromFile{text}{./contents/resources/verification-results/s2n_connection_gs_harness-signed_overflow.txt}{detected-failures/s2n\_connection\_gs\_harness-signed\_overflow.txt}{}
+
+\codeFromFile[firstline=370, lastline=380]{c}{./contents/code/implementations/s2n_connection.c}{s2n/tls/s2n\_connection.c}{}
+\caption{The error trace and the implementation of \code{s2n_connection_get_delay()}}
+\end{listing}
+
+This arithmetic overflow is due to the return type (\code{int64_t}) and the type of return variable (\code{uint64_t}) being inconsistent. Moreover, a signed integer overflow is an undefined behaviour in ANSI-C. As this is an API level function, the non-deterministic return value can lead to an unexpected behaviour in a third-party server implementation. This problem can be fixed with a correct return type of the function as shown below:
+
+\begin{listing}[ht]
+\codeFromFile[firstline=368, lastline=368]{c}{./contents/code/implementations/s2n_connection.c}{s2n/tls/s2n\_connection.c}{}
+\caption{A fix for the implementation \code{s2n_connection_get_delay()}}
+\end{listing}
+
+\subsection{Memory Leaks on Error Exit}
+Among 14 of the failures, five of them indicate memory leaks have occurred when the s2n process exit on error. According to the development guide, the error handling in s2n is done by the macros defined in \code{s2n_error.h} and \code{s2n_safety.h}, which return \code{-1} or \code{NULL} value directly in order to terminate the process immediately when an error exists. As a result, the process does not have a chance to deallocate the already allocated dynamic memory properly, and all of them remain in the heap after the process has been terminated. The suggested practice for error handling in s2n and the macros are shown in the following code snippets:
+
+\begin{listing}[ht]
+\codeFromFile[firstline=43, lastline=49]{c}{./contents/code/headers/s2n_safety.h}{s2n/utils/s2n\_safety.h}{}
+
+\codeFromFile[firstline=28, lastline=29]{c}{./contents/code/headers/s2n_errno.h}{s2n/error/s2n\_errno.h}{}
+
+\caption{The error handling and safety checking macros of s2n}
+\end{listing}
+
+The intention of the process is to guarantee its termination and in the case of error handling that is what the above macros are doing. Since most of the mainstream operating systems are able to reclaim all the heap memory allocated to the terminated process, therefore, this error handling behaviour is reasonable and does not count as a bug.
+
+
+\subsection{Buffer over-read on \code{strlen()}}
+In order to ensure maximum coverage of the harness, we allow all \code{char} arrays to carry every possible combination of values, even of those without any terminating character \code{'\0'}. However, three spurious warnings were detected on \code{strlen()} due to this approximation. Regarding the implementation of \code{strlen()}, it requires the input \code{char} array to be a string, which means an array must contain a terminating character \code{'\0'}.
+
+\begin{listing}[ht]
+\codeFromFile{c}{./contents/code/stubs/strlen.c}{cbmc/src/ansi-c/library/string.c}{}
+\caption{The implementation of \code{strlen()} provided by CBMC}
+\label{lst:strlen}
+\end{listing}
+
+This is the only criterion of using the function \code{strlen()} and we were not aware of that at the beginning. After a manual review on the verification result, we were able to trace this missing condition. A simple fix is done on the corresponding harnesses listed below. By introducing an assumption that the \code{char} array must carry at least one \code{'\0'} value, \code{s2n_stuffer_base64_harness.c} (line 15) and \code{s2n_connection_gs_harness.c} (line 16), the false alarms are removed.
+
+\begin{listing}[ht]
+\codeFromFile[firstline=14, lastline=15]{c}{./contents/code/harnesses/s2n_stuffer_base64_harness.c}{s2n-harness/module/s2n\_stuffer\_base64\_harness.c}{}
+
+\codeFromFile[firstline=14, lastline=16]{c}{./contents/code/harnesses/s2n_connection_gs_harness.c}{s2n-harness/module/s2n\_connection\_gs\_harness.c}{}
+\caption{Fixed the missing condition on 2 verification harnesses}
+\end{listing}
+
+\section{Loop Bounds Analysis Results}
+There are over 50 different loops involved in the functions covered by the verification. 26 of whose LUBs are not able to be detected by CBMC automatically through syntactic analysis. We found most of the LUBs to be related to several particular sizes of data block, therefore there are some repeating LUBs, such as 17, 33, 49, 129 and 257. In Table~\ref{tab:lba}, it lists out the analysis results of all 26 loops in detail. The first four columns show the loop IDs given by CBMC, the filenames, the line numbers of where the loops are located, and LUBs of the loops respectively. The descriptions of the loops and the reasons for determining their corresponding LUBs are shown in the last column. 
+
+For example, the loop \code{s2n_sslv3_mac_init.1} (the second row of Table~\ref{tab:lba}) assigns the standard padding value over the data block. Since the SSLv3 MAC function only supports two hash algorithms, SHA1 and MD5, their block sizes are 40 bytes and 48 bytes respectively. This loop iterates at most 49 times before being terminated and therefore its LUB is 49.
+
+\input{./contents/images/loopBoundsAnalysisResult}
+
+\section{Model Checking Results}
+\label{sec:mcr}
+Note that, unfortunately, the complete verification reports generated by CBMC and the detailed error traces are not attached in this report due to the page limitation. For more information, please refer to the supplementary files or visit our Github repository\footnote{The Github repository of this project: https://github.com/IssacLam/securing-the-web}.
+
+This verification covers 67.4\% of all API-level functions and 52.3\% of all public functions. This limited coverage is due to the difficulty in verifying some of the core functions and the remaining functions that depend on them.
+% some core functions are unable to be verified and they are also involved in the verifications of the remaining functions. 
+For example, the verification of \code{s2n_connection_harness.c} (the $16^{th}$ row of Table~\ref{tab:mcr}) is killed by the terminal during post-processing. Since the function \code{s2n_connection_new()} cannot be verified, we are not able to prepare a valid \code{s2n_connection} for verifying the functions depending on it. Moreover, the verification of \code{s2n_config_server_harness.c} (the $13^{th}$ of Table~\ref{tab:mcr}) has a problem during the conversion to SSA form, which is related to another core function \code{s2n_config_add_cert_chain_and_key()} for initialising a \code{s2n_config} with a certificate chain and keys.
+
+% We have located that the problem happened at the following part of the \code{s2n_connection_new()} implementation:
+
+% \begin{listing}[ht]
+% \codeFromFile[firstline=89, lastline=96]{c}{./contents/code/implementations/s2n_connection.c}{s2n/tls/s2n\_connection.c}{lst:code01}
+% \caption{Implementation of \code{s2n_connection_new()}.}
+% \end{listing}
+
+% \code{Connection process killed because of the  GUARD_PTR(s2n_stuffer_alloc(&conn->out, S2N_LARGE_RECORD_LENGTH)); (16384 + 5) line 91 in connection.c}
+
+% Similarly, \code{s2n_connection_wipe()} cannot be verified because of \code{GUARD(s2n_stuffer_resize(&conn->in, S2N_LARGE_FRAGMENT_LENGTH)) line 178 in connection.c}
+
+The experimental results are summarised in Table~\ref{tab:mcr} below. The first three columns are the names of verification harnesses, the verification results of the corresponding iterations, and the numbers of failed tests over the total numbers of tests respectively. The next three columns are the times used in generating 
+SAT formulas, solving the formulas and the overall execution time in seconds. The seventh and the eighth columns are the numbers of verification conditions generated by CBMC and the number of remaining verification conditions after simplification. The last two columns show the number of variables and clauses in the SAT formula.
+
+\input{./contents/images/modelCheckingResult}
+
+The complexity of s2n and the coverage of the verification are visualised in Figure~\ref{fig:tvcntospfc} below. Due to the limited paper space, a simplified overview of s2n that only contains public functions is shown. Different colours are used in the figure and the colours correspond to:
+\begin{enumerate}[nolistsep]
+    \item Orange: API-level functions
+    \item Green: Public functions covered in the verification
+    \item Purple: External functions modelled by stubs
+\end{enumerate}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[height=0.95\textheight,keepaspectratio]{./contents/images/call-graph-color.png}
+    \caption{The Verification Coverage \& The Overview of s2n Public Function Calls}
+    \label{fig:tvcntospfc}
+\end{figure}
+
+\section{Threats to Validity} % write about 2 pages
+\subsection{Repeatability}
+All materials involved in this experiment, including the file structure of this repository, the executions, and all verification harnesses are attached in Appendix~\ref{app:fileStructure},~\ref{app:executionCommand} and ~\ref{app:harnesses}. However, due to the limited page space, all stubs we have created in this project are not attached in this report. For more information, please refer to the supplementary files or visit our Github repository\footnote{The Github repository of this project: https://github.com/IssacLam/securing-the-web}. This experiment can simply be repeated by following the instructions described in Chapter~\ref{chpt:verification}. In this sense, the repeatability of this experiment would not be a concern. 
+
+\subsection{Execution Environment Dependency}
+Regarding the execution environment, as described in Section~\ref{sec:tsc} and Section~\ref{sec:ee}, OpenSSL is chosen as the \textit{libcrypto} cryptography library provider and this experiment is performed on Mac OS X. Some system dependent functions in s2n will behave differently since various underlying software packages or system libraries are being used. Therefore, the experimental results of those functions can be different from ours. Otherwise, the same results can be obtained under the same experiment setup, except the times. 
+
+\subsection{Verification Tool Dependency}
+Concerning the reliability of CBMC, bugs could possibly exist in its implementation, and it might miss some bugs, but would not affect the result of those bugs we have found. Since the given violation traces locate exactly where the bugs are, and more importantly it is confirmed by Amazon s2n developers, this is solid evidence for supporting our hypothesis that CBMC is able to hunt down hidden bugs in the s2n implementation not found by the other common testing techniques used in the industry. However, it should be noted that any bugs missed by CBMC could be a threat to the claiming of the memory safety of the implementation since there is no detailed report for showing how the properties are verified. 
+
+\subsection{Correctness of the Verification Harnesses}
+As mentioned in Section~\ref{sec:cfuc}, harnesses are used to prepare the environment for the verification with respect to the function usage contracts. If a harness has any conflicts with the contracts, false alarms will be generated. Since CBMC has traces for any violation, everything can be traced back to the cause. By examining the verification results, we are able to tell whether the conflict is in the harness or the targeted implementation, as described in Section~\ref{seb:df}. Therefore, the correctness of verification harnesses is not a potential threat to the verification result as all conflicts can be determined by reviewing the error traces.
+
+% In addition, the machines we used to run experiments
+% were not dedicated to our experiments; other users, other
+% experiments, backups, and network activity may affect the timing
+% results.
+
+% Andrews, J.H., Briand, L.C., Labiche, Y.: Is mutation an appropriate tool for testing experiments? In: International Conference on Software Engineering (2005)
+
+% Threats to Validity
+% • Internal:
+% • The programs, test pools, and faults used as is
+% • No guarantee that test pools have the same detection power and
+% coverage
+% • Except Space, others have “realistic” hand seeded faults
+% • Programs could be of varying complexity
+% • Other mutation operators could produce varying results
+% • Fixed size of test suite
+% • External:
+% • Relates to our ability to generalize the results of the experiment to industrial practice
+% • Only one program with real faults used
+
+% • Construct:
+% • Concerns the way we defined our measurement
+% • Does it measure the detection power of test sets
+% and detectability of faults?
+% • This was justified before
+% • Conclusion:
+% • Relates to subject selection, data collection, validity
+% of the statistical tests, and measurement reliability
+% • Addressed during the design of the experiment

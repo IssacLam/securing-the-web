@@ -1,0 +1,16 @@
+/* detail error trace is omitted */
+
+State 248 file ./s2n/tls/s2n_config.c line 41 function get_nanoseconds_since_epoch thread 0
+----------------------------------------------------
+  current_time=6423702844750168064ul (0101100100100101100100111011001111111100000000000000000000000000)
+
+State 254 file ./s2n/utils/s2n_timer.c line 35 function s2n_timer_elapsed thread 0
+----------------------------------------------------
+  elapsed=4227858432ul (0000000000000000000000000000000011111100000000000000000000000000)
+
+Violated property:
+  file ./s2n/tls/s2n_connection.c line 385 function s2n_connection_get_delay
+  arithmetic overflow on unsigned to signed type conversion in (signed long long int)(conn->delay - elapsed)
+  !(conn->delay + -elapsed >= 9223372036854775808ull)
+
+VERIFICATION FAILED

@@ -1,0 +1,28 @@
+\chapter{Conclusion and Future Work}
+In this project, we applied CBMC to verify the memory safety of Amazon's s2n TLS implementation and successfully found two arithmetic overflow bugs in it. The corresponding solutions are reported to the s2n Github repository, and the Amazon's s2n developers acknowledged the bugs and accepted our changes to the implementation according to our findings. Through this project, we have demonstrated that CBMC is capable of detecting hidden bugs in heavily tested critical industrial software such as s2n. In addition, our verification also shows the memory safety of s2n implementation by determining proper LUBs, which cover a sufficient number of loop iterations according to the function usage. In order to obtain this result, we have presented our verification approach with several key steps that require substantial human effort to scale up the verification and improve the precision of the verification result, which is one of the contributions of this project. However, due to the limitation of project time and the lack of scalability in BMC, our verification can only cover 67.4\% of all API-level functions and 52.3\% all of public functions in s2n.
+
+There is plenty of room for improvement and much need for continual work. We have come up with the following three suggestions:
+
+\paragraph{Extend the Verification Coverage} Due to the importance of securing the s2n implementation, a full coverage verification is needed. Besides covering all the s2n functions, the verification also needs to cover all execution environment setups, which support s2n, such as being built with the \code{libcrypto} library from different providers, running on 32-bit or 64-bit machines, and being executed with different security policies.
+
+\paragraph{Automated Loop Bounds Analysis} Concerning the necessity of loop bounds analysis, the required human effort could be one of the obstacles in applying BMC techniques to industrial practice. Therefore by reducing the verification effort, an automated loop bounds analysis heuristic is essential to making BMC widely used in the industry.
+
+\paragraph{Github Integration Tool} As Github is an extensively used platform for hosting most open source projects, an integration tool that can disseminate software verification, such as BMC, to Continuous Integration would not only support build automation and test automation, but also verification automation. As a result, BMC can even be universally adopted in non-critical software as well as improving software quality levels.
+
+% To what degree the result present I can conclude me hypothesis.
+
+% Using CBMC in the way describe 
+
+% hypothesis
+% method 
+% conclude 
+
+% 2 bugs \& 
+
+% YEah I have strong evidence to support.
+% I have evidence find bugs
+% some evidence proof the memory safety
+
+% If no bugs reported, 
+
+% How many bugs can find

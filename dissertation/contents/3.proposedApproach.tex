@@ -1,0 +1,227 @@
+\chapter{Hypothesis and Approach} % and System Implementation}
+\section{Hypothesis}
+\label{sec:hypothesis}
+In software verification, we are always interested in the question that: $$\text{"Does the \textit{System} meet its \textit{Specification}?"}$$
+
+
+\paragraph{System} In terms of the system, we will focus on Amazon's s2n implementation. Since s2n represents a critical part of the network infrastructure, providing security and privacy for network communications, as explained in Section~\ref{sec:s2n}, it is necessary to ensure the correctness and safety of its implementation. More importantly, Amazon has made a significant amount of effort and invested numerous resources on testing the implementation of s2n.
+
+\paragraph{Specification} The specification defines a wide range of properties describing the behaviours of a system, such as safety properties, functional properties, non-functional properties, etc. In this project, we aim at checking the memory safety properties of the s2n implementation, which include:
+
+\begin{multicols}{2}
+\begin{enumerate}[nosep]
+    \item Array Bounds (Buffer Overflows)
+    \item Pointer Safety (Null Dereference)
+    \item Memory Leak
+    \item Divided by Zero Check
+    \item Arithmetic Overflow
+        \begin{itemize}[nosep]
+            \item Unsigned Integer Overflow
+            \item Signed Integer Overflow
+            \item Float Overflow
+        \end{itemize}
+\end{enumerate}
+\end{multicols}
+
+Other properties can be checked by testing, but memory safety bugs are easily missed by such techniques due to the insufficient coverage, as mentioned in Section~\ref{subsubseb:d}.
+
+\paragraph{Verification Tool} CBMC is a bounded model checker designed for analysing the low-level properties of C/C++ implementations. It supports the full set of ANSI-C features, and it is also able to generate error traces on violations, which provides us with detailed evidence to support our hypothesis. Moreover, CBMC has been well developed and continuously maintained. It is a reliable tool for software verification.\\
+
+\noindent The following two questions will be the realms to investigate in this project:\\ Is it possible to
+\begin{enumerate}
+    \item Find bugs in a heavily tested critical network infrastructure (s2n) using CBMC?
+    \item Show the memory safety of the implementation?
+\end{enumerate}
+
+
+\section{Verification Approach}
+\subsection{Identifying the Verification Scope}
+Since s2n is not a stand-alone software package, it relies on the \textit{libcrypto} library, which is a general-purpose cryptography library, provided by OpenSSL. To study the structure of s2n, we construct a simple \textit{bash} program, shown in Appendix~\ref{app:efc}, to extract all the external function calls used in the s2n implementation, then examine and categorise each of them. The result, listed in Appendix~\ref{app:externalFunctions}, reveals that there are 112 different external function calls in total. Besides the \textit{libcrypto} library, s2n also stands on the standard C99 library and the system libraries. The architecture of s2n is outlined in Figure~\ref{fig:s2nStructure} below.
+
+\input{./contents/images/s2nStructure}
+
+Since CBMC requires the actual coding to perform the syntactic analysis, it is impractical to include all the implementations of lower-layer libraries for the verification as this will enlarge the exploration states and go beyond our scope. In addition, most of the system libraries and programming language libraries come along as compiled binary files instead of source files. In order to remain focused on the implementation of s2n, we create a set of stubs to model the behaviour of those underlying software packages and libraries (Highlighted in Green in Figure~\ref{fig:s2nStructure}) for which s2n is standing on. The details of stubbing are described in Section~\ref{subsec:stubbing}. 
+
+\subsection{Choosing the Suitable Approach}
+Regarding the verification of a software package, most of the research papers has not documented their verification approach or just simply verified a stand-alone function to demonstrate their proposed techniques. Hence, there is no conventional approach that could be adopted to this project. We believe that there are numerous verification approaches on various verification purposes and implementations of the targeted software. During our studies, we have considered and tried out three different approaches. We will discuss each of them as follows and we found that \textit{Bottom-up module-based approach} is the best fit for the s2n verification.
+
+\paragraph{Function-based approach} 
+This approach verifies every single function independently, which does not take the function usage contracts, such as the execution environment and the order of function calls, into account. It is only application for verifying stand-alone functions that are supposed to handle all exceptions themselves. However, this approach will produce a large number of false alarms while being applied to verify an object-oriented software, such as s2n. We constructed a \textit{bash} program to go through all the CBMC built-in checkers over every s2n function, and the verification results of using this approach is listed as follows:
+
+\begin{table}[htp]
+\centering
+\begin{threeparttable}
+     \renewcommand\TPTminimum{\linewidth}
+     \makebox[\linewidth]{%
+    \begin{tabular}{| c | c | c | c | c | c | c | c | c |}
+        \hline
+        Property checked & BC \tnote{1} & DBZC \tnote{2} & PC \tnote{3} & MLC \tnote{4} & SOC \tnote{5} & UOC \tnote{6} & FOC \tnote{7} & TO \tnote{8} \\
+        \hline
+        No. of alarms & 27 & 9 & 227 & 3 & 32 & 96 & 3 & 4  \\
+        \hline
+    \end{tabular}}
+    \begin{multicols}{3}
+    \begin{tablenotes}\footnotesize
+        \item[1] Array Bounds Check
+        \item[2] Divided By Zero Check
+        \item[3] Pointer Check
+        \item[4] Memory Leak Check
+        \item[5] Signed Overflow Check
+        \item[6] Unsigned Overflow Check
+        \item[7] Float Overflow Check
+        \item[8] Timeout (5 hours)
+    \end{tablenotes}
+    \end{multicols}
+    \caption{Number of false alarms generated by using function-based approach}
+    \label{tab:my_label}
+\end{threeparttable}
+\end{table}
+According to the s2n development guide, the caller functions are responsible for providing all well-defined function parameters and doing all error handling. These numbers of false alarms are generated regardless of the function usage contracts. Therefore, this approach is not applicable and not reliable in this case as it requires a significant amount of human effort in reviewing each report. 
+
+\paragraph{Top-down module-based approach} This approach verifies the software package from the API level using some verification harnesses with respect to the function usage contracts. With the verification environments being the same as the realistic usage scenarios, it can minimise both the number of false alarms being generated and the verification effort for examining all of them. In the case, a counterexample indicates the absolute certainty of the presence of a bug and no false alarms would be generated.
+% This approach can minimise the number of false alarms being generated as well as the verification effort for examining all of them. Since the verification environments are well prepared as same as the realistic usage scenarios. The bug must be present if a counterexample is produced, which means no false alarms will be generated. 
+However, the workload can be extremely heavy for verifying such a bulky function call, which would easily lead to a state explosion and an indefinite verification. For example, we constructed a verification harness for verifying the initialisation of a \code{s2n_connection}, which involves more than 50 different sub-function calls. The harness and its execution command are as shown below:
+
+\begin{listing}[ht]
+\codeFromFile{bash}{./contents/code/harnesses/s2n_connection_harness.txt}{}{}
+
+\codeFromFile[firstline=3,lastline=7]{c}{./contents/code/harnesses/s2n_connection_harness.c}{s2n-harness/top-down/s2n\_connection\_harness.c}{}
+
+\caption{A harness for verifying \code{s2n_connection} with the execution command}
+\label{listing:s2n_test_harness}
+\end{listing}
+
+This process runs for more than 5 hours for state space exploration and is even killed by the terminal. Thus, this is also not an applicable approach for verifying s2n.
+
+\paragraph{Bottom-up module-based approach} This approach divides the software package into modules and then verifies one module at a time from the bottom level with respect to the function usage contracts. Once a module is verified, it can be replaced by an over-approximated model in order to simplify the complexity of its caller functions. Hence, the verification is able to scale up for the entire software package. This is the approach we will use for our verification. Regarding the over-approximation, we will use two different ways to reduce the functions' complexity as shown in Figure~\ref{fig:simplification} below.
+The details of stubbing and loop simplification are described in Section~\ref{subsec:stubbing} and Section~\ref{subsec:suc} respectively.
+
+\input{./contents/images/simplification}
+
+% For example, the following verification environment, as shown in the Figure~\ref{fig:oam} below, contains two huge loops \code{s2n_stuffer_skip_read} and \code{s2n_stuffer_skip_write}
+
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=\textwidth]{./contents/images/s2n_stuffer_text.png}
+%     \caption{Over Approximating Modules}
+%     \label{fig:oam}
+% \end{figure}
+
+% \section{Methodology}
+% % Proposed method.
+% In this project, we will verify the above software packages with the help of CBMC. The verification process can be separated into two stages. We will first conduct a low-level verification on them to ensure the memory safety with those generic checks provided by CMBC: 1) array bounds checks, 2) division by zero checks, 3) pointer checks, 4) memory leak checks, and 5) arithmetic over- and underflow checks.
+% % There are two different versions in order to support both signed types (e.g, int, long) and unsigned types (e.g, unsigned int, unsigned long). It will check whether there are any arithmetic over- and underflow on addition, subtraction, multiplication, division and negation operations. 
+
+% Then, we will go though the implementation and perform an application-level verification to ensure the correctness of the implementation. According to the approaches that the packages based on, we study the behaviour of each function, and then extract the specifications of them. Each specification consists of a pre-condition and a post-condition. A pre-condition stating the property required of the input is the responsibility of the environment. Hence, it is modelled by an assumption to assume the property holds before function has been executed. A post-condition describes the property of the output established by the function which is modelled by an assertion. Then, we inject these assumptions and assertions into each functions in order to capture the functional properties of the two applications. If all the properties pass the verification, then we can conclude that they are implemented correctly and memory safe.
+
+\subsection{Capturing the Function Usage Contracts}
+\label{sec:cfuc}
+After choosing a proper approach, we need to classify those functions into modules in order to study their usage contracts and then be able to prepare appropriate harnesses for the verification. This is different from most of the research studies in that those studies already have a given set of function properties whereas we have to extract them from the limited documentations. By scanning all the functions in s2n, we found 318 functions implemented in 50 different C implementation files. However, there is no official document describing the usage contract of each of them. Only a brief usage guide \footnote{s2n Usage Guide: https://github.com/awslabs/s2n/blob/master/docs/USAGE-GUIDE.md} for the API functions is available on the s2n Github repository. Although s2n is designed with readability in mind and most of the usages are guessable from the function name, the dependencies between functions are not clear, which is an obstacle to our verification. Thanks to \textbf{Doxygen}\footnote{The Doxygen Main Page: http://www.stack.nl/~dimitri/doxygen/}, a documentation generator, which allows us to have a detailed overview of all the functions and data structures in s2n. 
+
+Besides analysing the dependency graphs generated by Doxygen, 31 unit test cases that come along with the s2n repository are beneficial to the study of the function usage contracts as they are simulating the real scenario for using those functions. We can also transform those unit test cases into our verification harnesses by introducing non-determinism to such environments in order to extend the verification coverage, which is similar to the abstract testing approach in \cite{Merz:2015:BGT:2837773.2837824}. The harnesses we created in this verification are available in Appendix~\ref{app:harnesses}.
+
+\subsection{Function Call Graphs Analysis}
+As mentioned in the previous section, a set of dependency graphs, for example, function call graphs, are generated by using Doxygen. A clear overview of all functions helps us determine which function to begin with the verification and which functions are attainable or possible to be replaced by stubs. We use the analysis of \code{s2n_hash_test.c} as an example, which is shown in Figure~\ref{fig:aeoffcga} below. The left-hand side of the figure shows the original function call graph of the \code{s2n_hash_test}. The green highlight indicates that those external function calls, such as \code{SHA1_Init}, \code{SHA1_Update}, \code{SHA1_Final}, provided by the Common Crypto library of Mac OS X, are considered as beyond our verification scope. Hence, they are replaced by a corresponding model of \code{CommonCrypto/CommonDigest} implementations. Moreover, the red highlight indicates that the functions calls can be removed by non-determinism. As a result, the function dependencies are simplified as shown in the right-hand side of the figure. 
+% The details of each unit test cases transformation are described in the Section~\ref{sec:vc}. 
+
+\begin{figure}[hpt]
+    \centering
+    \includegraphics[width=.8\textwidth]{./contents/images/s2n_hash_test}
+    \subfloat[The function call graph of s2n\_hash\_test.]{\hspace{.5\linewidth}}
+    \subfloat[The simplified dependency of s2n\_hash\_harness.]{\hspace{.5\linewidth}}
+    \caption{An example of function call graph analysis}
+    \label{fig:aeoffcga}
+\end{figure}
+
+\subsection{Stubbing} \label{subsec:stubbing}
+A stub method is used to model the behaviour of a targeted function, like its input and output behaviour, without performing the actual computation and it would return a simple and valid result, but may not necessarily be correct. It is useful for simplifying the verification processes. We continue the case above to demonstrate how the models of functions, \code{SHA1_Init()} and \code{SHA1_Final()}, are created. Note that the following implementations of \code{SHA1_Init()} and \code{SHA1_Final()} are referenced from the document of Apple Open Source\footnote{The Open Source Apple: http://opensource.apple.com/}.
+
+\begin{listing}[hpt]
+\codeFromFile{c}{./contents/code/stubs/CC_SHA1_Init.c}{s2n-lib/CommonCrypto/CommonDigest.c}{} 
+\caption{The model of \code{CC_SHA1_Init()} implementation}
+\label{lst:sha1Init}
+\end{listing}
+
+Consider the model of \code{SHA1_Init()} shown in Listing~\ref{lst:sha1Init}. The assignments of the variable \code{context->state} (line 4-9) are not in our concern, and these can be replaced by a non-deterministic assignment (line 15). The only interest of the function is the memory safety of the pointer of the input parameter, therefore an assertion is needed for checking the validity of the pointer (line 12). Note that the definition of a valid pointer is always debatable as sometimes it can refer to a pointer that must be pointing to a particular range of memory addresses. In this case, a valid pointer means that it is not pointing to \code{NULL}. 
+
+\begin{listing}[hpt]
+\codeFromFile{c}{./contents/code/stubs/CC_SHA1_Final.c}{s2n-lib/CommonCrypto/CommonDigest.c}{}
+\caption{The model of \code{CC_SHA1_Final()} implementation}
+\label{lst:sha1Final}
+\end{listing}
+
+Consider the model of \code{SHA1_Final()} shown in Listing~\ref{lst:sha1Final}. Similar to modelling of the \code{CC_SHA1_Init()} above, we are not interested in the actual computation of SHA1 (line 5-21), thus the method calls of \code{Encode()} and \code{SHA1Update()} can be ignored. However, we have to ensure the pointer of \code{digest} and \code{context} are valid (line 24-25) and also model the value change to the variables (line 28). Concerning the array bounds safety that no memory access should exceed the allocated boundary of an array, we can model this behaviour by accessing the last byte of the array (line 31).
+
+
+\subsection{Loop Bound Analysis}
+\label{sec:lba}
+% A Survey of Automated Techniques for Formal Software Verification
+An appropriate bound is essential to bounded model checking, since it determines the number of loop unwinding, as mentioned in Section ~\ref{unwinding}, as well as the coverage of the analysis. In this project, we are not only aiming at finding bugs, but also showing the memory safety of the s2n implementation. Therefore, the Loop Unwinding Bound (LUB) is defined by the maximum number of loop iterations in order to make sure the verification can cover the entire execution paths. Normally, such LUBs can be detected by CBMC automatically via a syntactic analysis of loop structures, for example, the left side of Table~\ref{table:lbd}. In the case that the syntactic analysis fails, the right side of Table~\ref{table:lbd}, an iterative algorithm can be used to determine a suitable bound. At a first attempt, guessing the number of loop iterations with the help of the unwinding assertions, the \code{--unwinding-assertions} option of CBMC, a violation can indicate any excess of the guessed bound, hence a larger one is needed \cite{4544862, ckl2004}. Note that, according to the CPROVER manual, the number of unwindings is defined by the number of backjumps. In the example below, the condition \code{i<10} has at most 11 times of evaluation before terminating the loop. Therefore, the LUB of the loop should be 11 rather than 10. 
+
+\begin{table}[ht]
+\centering
+\begin{minipage}[t]{.4\textwidth}
+\centering
+\codeFromFile{c}{./contents/code/demos/boundedLoop.c}{}{}
+% \begin{minted}[frame=single, breaklines, linenos, fontsize=\footnotesize]{c}
+% int depth=10;
+% for(int i=0; i<depth; i++) { 
+%     /* do something */ 
+% }
+% \end{minted}
+\end{minipage}\hfill
+\begin{minipage}[t]{.5\textwidth}
+\centering
+\codeFromFile{c}{./contents/code/demos/unboundedLoop.c}{}{}
+% \begin{minted}[frame=single, breaklines, linenos, fontsize=\footnotesize]{c}
+% int depth=nondet_int();
+% __CPROVER_assume(depth>0 && depth<10);
+% for(int i=0; i<depth; i++) { 
+%     /* do something */ 
+% }
+% \end{minted}
+\end{minipage}
+\subfloat[A bound can be detected]{\hspace{.4\linewidth}}\hfill
+\subfloat[A bound cannot be detected]{\hspace{.5\linewidth}}
+\caption{An example of loop bound detection}
+\label{table:lbd}
+\end{table}
+
+Apart from guessing the bound of loops, a more precise loop analysis can be performed manually. By using the \code{--show-loops} option in CBMC, all loops in the included source files will be listed with a unique identifier. Then, each LUB can be determined by studying the function usage over the function caller graphs and they can be specified for some particular loops by using the \code{--unwindset} option with the loop ID, as shown below:
+
+\codeFromFile{bash}{./contents/code/demos/unwindset.sh}{}{}
+
+% \begin{minted}[frame=single, fontsize=\footnotesize]{bash}
+% Loop main.0:
+%   file demo.c line 5 function main
+  
+% > cbmc --unwindset main.0:10 demo.c
+% \end{minted}
+
+
+\subsection{Simplifying the Computations} \label{subsec:suc}
+\label{sec:suc}
+As functions can have dynamic loop bounds, such as string manipulation functions, their complexities are one of the major obstacles in scaling up our verification. To verify the memory safety of these functions, it is not necessary to check all iterations. Only the last iteration is needed since it is able to verify all the memory safety properties listed in Section~\ref{sec:hypothesis}. Consider the following situations:
+
+\begin{enumerate}
+    \item If a violation of any one of them can occur in any iteration, it can also happen and be detected in the last iteration.
+    \item If a buffer overflow only occurs in the last iteration of a monotone function, it will not happen and can not be detected in other iterations.
+\end{enumerate}
+
+Therefore, those iterations simply repeating the same computation are unnecessary to the verification except for the last iteration. In this case, we can simplify the loop by removing those redundant iterations with respect to the original control flow and error handling. 
+
+For example, the function \code{s2n_stuffer_read_base64()} converts a base64 string into ASCII string 3 bytes at a time. The detailed implementation of the function is shown in Listing~\ref{lst:simplifiedReadBase64} below. Regarding the memory safety verification described above, the computation of the conversion and the correctness of the output values are not our concern here. Therefore, the concrete value of the inverse array and those assignments that would not affect the control flow can be omitted (line 28, 54, 58, 64 \& 69). Moreover, the \code{do |$\dots$| while()} loop is simply repeating the conversion until the end of the input string, which is redundant for verifying the memory safety (line 36). We skip those iterations by using the \code{s2n_stuffer_skip_read()} provided in the same module (line 40). As a result, we have modelled the function in a loop-free manner, which can significantly reduce the workload in the loop unwinding process.  
+
+\begin{listing}
+\codeFromFile[firstline=28,lastline=74]{c}{./contents/code/implementations/s2n_stuffer_base64.c}{s2n-lib/s2n/s2n\_stuffer\_base64.c}{}
+\caption{The simplified model for \code{s2n_stuffer_read_base64()}}
+\label{lst:simplifiedReadBase64}
+\end{listing}
+
+Furthermore, during the verification, we observed that s2n's functions involve a huge number of memory manipulation function calls, such as \code{memset()}, \code{memcpy()}, \code{memcmp()}. In the same sense, we further simplify these functions in the built-in ANSI-C library provided by CBMC. The simplified models are listed in Listing~\ref{lst:mem} below. Note that after modifying any CBMC built-in libraries, it is necessary to rebuild CBMC in order to make it support the changes.
+
+\begin{listing}
+\codeFromFile{c}{./contents/code/stubs/mem.c}{cbmc/src/ansi-c/library/string.c}{}
+\caption{The implementation of \code{strlen()} provided by CBMC}
+\label{lst:mem}
+\end{listing}

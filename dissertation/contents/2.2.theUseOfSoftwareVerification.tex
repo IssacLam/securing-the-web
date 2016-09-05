@@ -1,0 +1,30 @@
+\subsection{The Use of Software Verification}
+Software verification is commonly used for two main purposes: 1) hunting bugs, and 2) proving the correctness of a program. Below are several case studies making good use of the model checking, which is the technique we focused on in this project:
+
+\subsubsection{Hunting bugs}
+% Towards Improving Software Security using Language Engineering and mbeddr C
+M. Voelter et al.\cite{Voelter:2015:TIS:2846696.2846698} took several well-known bugs as examples to show how the modular extension of the C programming language can improve software security. One of the examples is the Heartbleed bug in OpenSSL TLS mentioned in Section~\ref{sec:heartbleed bug}. By constructing a simple harness and a message with a non-deterministic data buffer, CBMC is able to identify the failure in a short period. This is a great demonstration of the importance of formal verification in software development. 
+
+% SAT-based Bounded Software Model Checking for Embedded Software: A Case Study
+Another remarkable case studies presented by Y. Kim and M. Kim \cite{7091291} has successfully detected four hidden bugs in an embedded software, lazybox ls, using CBMC. This study highlighted the pivot of loops analysis, determining the minimum iterations to exit a loop, to avoid false negative detections in practice. As an accurate unwinding loop bound can minimise the chances of missing bugs, state explosion, and execution timeout. The experiment also showed the effectiveness of using such model checking technique and its limitation on the loop analysis. 
+
+% Using Model Checking to Find Serious File System Errors
+There is a case study conducted by J. Yang et al. \cite{Yang:2006:UMC:1189256.1189259} demonstrated a systematical way to model check three widely-used and heavily-tested file systems. Two classes of checks are suggested: 1) generic checks for those general properties should hold at any point, and 2) consistency checks for the functional properties that the file system specified. Concerning the complexity of such file systems, it is impractical to be fully tested in the traditional way as there could be an exponential number of test cases for checking the recovery mechanism. Model checking make use of several state-reducing techniques, which makes it capable of exploring such vast state spaces efficiently. As a result, 32 serious bugs are found during the experiment.
+
+\subsubsection{Proving correctness}
+% very useful experiment
+% Verifying Code and Its Optimizations: An Experience Report
+An experience report presented by R. Metta \cite{Metta:2011:VCO:2004685.2005455} described their experience in verifying the correctness of a 200-line implementation of Cyclic Redundancy Check. The study indicated that sometimes the specification and verification process could hardly be automated and required intense human efforts even for such a small code bases. It is hard to scale up if such a program containing huge loops. The authors further suggested a bottom-up approach to verify the correctness of each function independently through CBMC first, and then to verify the correctness of the loop through an induction manually using CBMC. 
+
+% Verification of Safety-Critical Systems: A Case Study Report on Using Modern Model Checking Tools
+A. J{\"a}{\"a}skel{\"a}i et al. \cite{jskelinen_et_al:OASIcs:2012:3589} verified the implementation of the 2003 voting scheme in a systematic capability 3 level shutdown system through model checking. The experiment is conducted in two stages: 1) refine and translate the requirements into pseudo-code directly for a preliminary verification, and then move on to 2) verify the actual implementation of the voting scheme. The study concluded in several suggestions for using model checking techniques. Beginning with some simple test cases can help to understand how to give precise and effective assertions before jumping into those complicated properties. Fault seeding techniques are recommended for inexperienced users to check the correctness of assertions by introducing violation to the corresponding properties. 
+% done
+
+% Automated Verification for Functional and Relational Properties of Voting Rules
+Another study conducted by B. Beckert et al. \cite{beckertBormerKirsten2016} verified the functional and relational properties of voting rules, and demonstrated the effectiveness of using bounded model checking and deductive verification. Moreover, it also showed that the verification effort can be greatly reduced by using symmetry properties. 
+
+% can be very accurate, but it requires certain times and memory space for exploring the possible states.
+F. Werner and D. Farago \cite{Werner2010CorrectnessOS} investigated CBMC to the domain of wireless sensor networks and proved that it is capable of performing automatic verification on a system about 21000 LoC. It showed that the scalability could be greatly improved by the proposed abstractions and simplification heuristics, with the --slice-formula option enabled. The study further concluded that CBMC with the abstractions and heuristics is powerful enough to verify large scale programs. 
+
+\subsubsection{Other applications}
+There are several studies showing that model checking is applied to various usages, such as embedded software verification \cite{Cordeiro:2009:SBM:1747491.1747515, BK11}, cross-platform verification \cite{0fbeb641779543c98fb1d6ff2180664c}, sequentialisation-based verification \cite{6693139}, fault localisation \cite{Griesmayer:2007:AFL:1247747.1248089}, equivalence checking \cite{Lee2011}, cyber-physical system co-verification \cite{6649878}, and test-vector generation \cite{Angeletti2009}.

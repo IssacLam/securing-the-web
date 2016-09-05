@@ -1,0 +1,72 @@
+\begin{figure}[htp]
+\centering
+\begin{minipage}{.55\textwidth}
+\centering
+\begin{tikzpicture}
+    \node[] (before) {
+        \begin{tikzpicture}[node distance=1cm]
+            \node[world] (a) {};
+            \node[worldRed] (b) [right=of a] {};
+            \node[world] (c) [above right=of a] {};
+            \node[world] (d) [below right=of a] {};
+            \node[world] (e) [right=of b] {};
+            \node[world] (f) [above right=of b] {};
+            \node[world] (g) [below right=of b] {};
+            \path[->] (a) edge (b);
+            \path[->] (a) edge (c);
+            \path[->] (a) edge (d);
+            \path[->] (b) edge (e);
+            \path[->] (b) edge (f);
+            \path[->] (b) edge (g);
+        
+            \end{tikzpicture}
+    };
+    
+    \node[right=1cm of before] (after) {
+        \begin{tikzpicture}[node distance=1cm]
+            \node[world] (a) {};
+            \node[worldPurple] (b) [right=of a] {};
+            \node[world] (c) [above right=of a] {};
+            \node[world] (d) [below right=of a] {};
+            \path[->] (a) edge (b);
+            \path[->] (a) edge (c);
+            \path[->] (a) edge (d);
+
+            \end{tikzpicture}
+    };
+    \path[->, shorten >=0.3cm, shorten <=0.3cm, line width=2pt] (before) edge (after);
+\end{tikzpicture}
+\end{minipage}
+\vrule{}
+\begin{minipage}{.4\textwidth}
+\centering
+\begin{tikzpicture}]
+    \node[] (before) {
+        \begin{tikzpicture}[node distance=1cm]
+            \node[world] (a) {};
+            \node[worldRed] (b) [below=of a] {};
+            \node[world] (c) [below=of b] {};
+            \path[->] (a) edge (b);
+            \path[->] (b) edge (c);
+            \path[->, self] (b) edge (b);
+            \end{tikzpicture}
+    };
+    
+    \node[right=1cm of before] (after) {
+        \begin{tikzpicture}[node distance=1cm]
+           \node[world] (a) {};
+            \node[worldGreen] (b) [below=of a] {};
+            \node[world] (c) [below=of b] {};
+            \path[->] (a) edge (b);
+            \path[->] (b) edge (c);
+            \end{tikzpicture}
+    };
+    % \path[loosely dotted] (c) edge (d);
+    \path[->, shorten >=0.3cm, shorten <=0.3cm, line width=2pt] (before) edge (after);
+\end{tikzpicture}
+\end{minipage}
+    \subfloat[Stubbing]{\hspace{.55\linewidth}}
+    \subfloat[Loop Simplification]{\hspace{.4\linewidth}}
+\caption{The two possible ways used for over-approximation.}
+\label{fig:simplification}
+\end{figure}

@@ -1,0 +1,27 @@
+# -1. Install the Xcode from App store
+# 0. Install C/C++ compiler, Flex and Bison, and GNU make 
+$ xcode-select --install
+
+# 1. Download the latest version of CBMC from CBMC Github repository
+$ git clone https://github.com/diffblue/cbmc.git
+
+# 2. Move to cbmc/src directory
+$ cd cbmc/src
+
+# 3. Download the source code of MiniSat2 
+$ make minisat2-download
+
+# 4. Download the latest version of libzip from libzip Github repository
+$ git clone https://github.com/nih-at/libzip.git
+
+# 5. Download latest version of zlib from zlib Github repository
+$ git clone https://github.com/madler/zlib.git
+
+# 6. Build CBMC
+$ make
+
+# 7. Move the CBMC executable to /usr/local/bin directory
+$ mv cbmc/cbmc /usr/local/bin 
+
+# 8. Now you are ready to use cbmc 
+$ cbmc -h
